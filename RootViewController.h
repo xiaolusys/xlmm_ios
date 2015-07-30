@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RootViewController : UIViewController
+@interface RootViewController : UIViewController <NSURLConnectionDataDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewHeight;

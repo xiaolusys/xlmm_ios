@@ -159,7 +159,6 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVl-iD-07m" userLabel="Head View">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                    <color key="backgroundColor" red="0.16078431900000001" green="0.8078432083" blue="0.95294123890000004" alpha="1" colorSpace="deviceRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="Gsg-AZ-uBt"/>
                                     </constraints>
@@ -176,7 +175,6 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqI-W6-0dx" userLabel="Poster View">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                    <color key="backgroundColor" red="0.99215686270000003" green="0.92549019610000005" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="300" id="pTL-KM-Z2c"/>
                                     </constraints>
@@ -193,7 +191,6 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwa-jB-kw2" userLabel="Child View">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                    <color key="backgroundColor" red="0.16078431900000001" green="0.8078432083" blue="0.95294123890000004" alpha="1" colorSpace="deviceRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="480" id="4kB-3G-4vJ"/>
                                     </constraints>
@@ -210,7 +207,6 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iOj-cY-yHN" userLabel="Lady View">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                    <color key="backgroundColor" red="1" green="0.6207114655" blue="0.24758782879999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="480" id="EDV-A5-qZe"/>
                                     </constraints>
@@ -226,7 +222,6 @@
                                     </variation>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="SVl-iD-07m" firstAttribute="top" secondItem="Z0h-gi-RSF" secondAttribute="bottom" id="1lT-R9-XVG"/>
                                 <constraint firstItem="GqI-W6-0dx" firstAttribute="leading" secondItem="MAo-8g-aPp" secondAttribute="leading" id="2qR-go-fFA"/>
