@@ -9,11 +9,20 @@
 /* Begin PBXBuildFile section */
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
-		325BA0FA1B68B18A006D64BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F91B68B18A006D64BD /* ViewController.m */; };
-		325BA0FD1B68B18A006D64BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FB1B68B18A006D64BD /* Main.storyboard */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
+		325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA1181B68B22E006D64BD /* RootViewController.m */; };
+		325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1191B68B22E006D64BD /* RootViewController.xib */; };
+		325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 325BA11C1B68BA1B006D64BD /* goodsthumb.png */; };
+		325DF93E1B69B16000351ACA /* PosterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF93D1B69B16000351ACA /* PosterView.m */; };
+		325DF9401B69B17F00351ACA /* PosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF93F1B69B17F00351ACA /* PosterView.xib */; };
+		325DF9421B69B38400351ACA /* poster1.png in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9411B69B38400351ACA /* poster1.png */; };
+		325DF9441B69B38900351ACA /* poster2.png in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9431B69B38900351ACA /* poster2.png */; };
+		325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9471B69BD8B00351ACA /* GoodsView.m */; };
+		325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9491B69BD9D00351ACA /* GoodsView.xib */; };
+		325DF94D1B69D94400351ACA /* LadyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF94C1B69D94400351ACA /* LadyView.m */; };
+		325DF94F1B69D96800351ACA /* LadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF94E1B69D96800351ACA /* LadyView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +41,27 @@
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		325BA0F51B68B18A006D64BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		325BA0F61B68B18A006D64BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		325BA0F81B68B18A006D64BD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		325BA0F91B68B18A006D64BD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		325BA0FC1B68B18A006D64BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		325BA0FE1B68B18A006D64BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		325BA1011B68B18A006D64BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
+		325BA1171B68B22E006D64BD /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = ../RootViewController.h; sourceTree = "<group>"; };
+		325BA1181B68B22E006D64BD /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ../RootViewController.m; sourceTree = "<group>"; };
+		325BA1191B68B22E006D64BD /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RootViewController.xib; path = ../RootViewController.xib; sourceTree = "<group>"; };
+		325BA11C1B68BA1B006D64BD /* goodsthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodsthumb.png; sourceTree = "<group>"; };
+		325BA11E1B68BAF0006D64BD /* MMClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MMClass.h; path = ../MMClass.h; sourceTree = "<group>"; };
+		325DF93C1B69B16000351ACA /* PosterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterView.h; sourceTree = "<group>"; };
+		325DF93D1B69B16000351ACA /* PosterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterView.m; sourceTree = "<group>"; };
+		325DF93F1B69B17F00351ACA /* PosterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterView.xib; sourceTree = "<group>"; };
+		325DF9411B69B38400351ACA /* poster1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poster1.png; sourceTree = "<group>"; };
+		325DF9431B69B38900351ACA /* poster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poster2.png; sourceTree = "<group>"; };
+		325DF9461B69BD8B00351ACA /* GoodsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsView.h; sourceTree = "<group>"; };
+		325DF9471B69BD8B00351ACA /* GoodsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsView.m; sourceTree = "<group>"; };
+		325DF9491B69BD9D00351ACA /* GoodsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsView.xib; sourceTree = "<group>"; };
+		325DF94B1B69D94400351ACA /* LadyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyView.h; sourceTree = "<group>"; };
+		325DF94C1B69D94400351ACA /* LadyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyView.m; sourceTree = "<group>"; };
+		325DF94E1B69D96800351ACA /* LadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +88,9 @@
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
+				325BA11C1B68BA1B006D64BD /* goodsthumb.png */,
+				325DF9411B69B38400351ACA /* poster1.png */,
+				325DF9431B69B38900351ACA /* poster2.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,11 +108,12 @@
 			children = (
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
 				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
-				325BA0F81B68B18A006D64BD /* ViewController.h */,
-				325BA0F91B68B18A006D64BD /* ViewController.m */,
-				325BA0FB1B68B18A006D64BD /* Main.storyboard */,
+				325BA1171B68B22E006D64BD /* RootViewController.h */,
+				325BA1181B68B22E006D64BD /* RootViewController.m */,
+				325BA1191B68B22E006D64BD /* RootViewController.xib */,
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
 				325BA1001B68B18A006D64BD /* LaunchScreen.xib */,
+				325DF9451B69BCE200351ACA /* views */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
 			);
 			path = XLMM;
@@ -114,9 +140,26 @@
 		325BA10B1B68B18A006D64BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				325BA11E1B68BAF0006D64BD /* MMClass.h */,
 				325BA10C1B68B18A006D64BD /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		325DF9451B69BCE200351ACA /* views */ = {
+			isa = PBXGroup;
+			children = (
+				325DF93C1B69B16000351ACA /* PosterView.h */,
+				325DF93D1B69B16000351ACA /* PosterView.m */,
+				325DF93F1B69B17F00351ACA /* PosterView.xib */,
+				325DF9461B69BD8B00351ACA /* GoodsView.h */,
+				325DF9471B69BD8B00351ACA /* GoodsView.m */,
+				325DF9491B69BD9D00351ACA /* GoodsView.xib */,
+				325DF94B1B69D94400351ACA /* LadyView.h */,
+				325DF94C1B69D94400351ACA /* LadyView.m */,
+				325DF94E1B69D96800351ACA /* LadyView.xib */,
+			);
+			name = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,9 +242,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				325BA0FD1B68B18A006D64BD /* Main.storyboard in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
+				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
+				325DF9441B69B38900351ACA /* poster2.png in Resources */,
+				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
+				325DF9421B69B38400351ACA /* poster1.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
+				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
+				325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */,
+				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,9 +268,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				325BA0FA1B68B18A006D64BD /* ViewController.m in Sources */,
+				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
+				325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */,
+				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
+				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,14 +296,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		325BA0FB1B68B18A006D64BD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				325BA0FC1B68B18A006D64BD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		325BA1001B68B18A006D64BD /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -412,6 +456,7 @@
 				325BA1131B68B18A006D64BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		325BA1141B68B18A006D64BD /* Build configuration list for PBXNativeTarget "XLMMTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +465,7 @@
 				325BA1161B68B18A006D64BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
