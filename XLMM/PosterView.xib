@@ -42,15 +42,23 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="NJ3-fs-WiI" secondAttribute="trailing" constant="8" id="0CX-T6-y8P"/>
-                <constraint firstItem="mEq-d0-Of8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Ne-ns-6mx"/>
+                <constraint firstItem="mEq-d0-Of8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Ne-ns-6mx">
+                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="PPs-QV-pMN" secondAttribute="bottom" constant="4" id="CKV-zE-LIk"/>
                 <constraint firstItem="NJ3-fs-WiI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="GVc-v8-2hj"/>
-                <constraint firstAttribute="trailing" secondItem="mEq-d0-Of8" secondAttribute="trailing" id="QrQ-Sa-TTI"/>
+                <constraint firstAttribute="trailing" secondItem="mEq-d0-Of8" secondAttribute="trailing" id="QrQ-Sa-TTI">
+                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                </constraint>
                 <constraint firstItem="kCy-Qr-C10" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="140" id="T3r-oJ-fLo"/>
                 <constraint firstItem="PPs-QV-pMN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="WR0-cL-Lh6"/>
                 <constraint firstAttribute="bottom" secondItem="kCy-Qr-C10" secondAttribute="bottom" constant="4" id="egr-2q-9If"/>
-                <constraint firstItem="mEq-d0-Of8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rq3-7x-1Hp"/>
-                <constraint firstAttribute="bottom" secondItem="mEq-d0-Of8" secondAttribute="bottom" constant="30" id="sei-Dg-8Qv"/>
+                <constraint firstItem="mEq-d0-Of8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rq3-7x-1Hp">
+                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="mEq-d0-Of8" secondAttribute="bottom" constant="30" id="sei-Dg-8Qv">
+                    <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                </constraint>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -62,16 +70,16 @@
                     <exclude reference="NJ3-fs-WiI"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="8Ne-ns-6mx"/>
-                    <exclude reference="QrQ-Sa-TTI"/>
-                    <exclude reference="rq3-7x-1Hp"/>
-                    <exclude reference="sei-Dg-8Qv"/>
+                    <exclude reference="0CX-T6-y8P"/>
+                    <exclude reference="GVc-v8-2hj"/>
                     <exclude reference="CKV-zE-LIk"/>
                     <exclude reference="WR0-cL-Lh6"/>
                     <exclude reference="T3r-oJ-fLo"/>
                     <exclude reference="egr-2q-9If"/>
-                    <exclude reference="0CX-T6-y8P"/>
-                    <exclude reference="GVc-v8-2hj"/>
+                    <exclude reference="8Ne-ns-6mx"/>
+                    <exclude reference="QrQ-Sa-TTI"/>
+                    <exclude reference="rq3-7x-1Hp"/>
+                    <exclude reference="sei-Dg-8Qv"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -82,19 +90,19 @@
                     <include reference="NJ3-fs-WiI"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="8Ne-ns-6mx"/>
-                    <include reference="QrQ-Sa-TTI"/>
-                    <include reference="rq3-7x-1Hp"/>
-                    <include reference="sei-Dg-8Qv"/>
+                    <include reference="0CX-T6-y8P"/>
+                    <include reference="GVc-v8-2hj"/>
                     <include reference="CKV-zE-LIk"/>
                     <include reference="WR0-cL-Lh6"/>
                     <include reference="T3r-oJ-fLo"/>
                     <include reference="egr-2q-9If"/>
-                    <include reference="0CX-T6-y8P"/>
-                    <include reference="GVc-v8-2hj"/>
+                    <include reference="8Ne-ns-6mx"/>
+                    <include reference="QrQ-Sa-TTI"/>
+                    <include reference="rq3-7x-1Hp"/>
+                    <include reference="sei-Dg-8Qv"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="325" y="360"/>
+            <point key="canvasLocation" x="325" y="191"/>
         </view>
     </objects>
     <resources>

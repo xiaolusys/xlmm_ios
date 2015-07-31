@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
+            <connections>
+                <outlet property="infoLabel" destination="caN-TF-ldi" id="JI6-V5-AtH"/>
+                <outlet property="numberTextField" destination="ACE-Jx-PTo" id="PjD-MG-Nw0"/>
+                <outlet property="passwordLabel" destination="Tjw-mg-Zjh" id="0mI-Uq-CWv"/>
+                <outlet property="passwordTextField" destination="5db-gs-ILT" id="VXo-fK-JII"/>
+                <outlet property="resetPasswordTextField" destination="yhV-af-hK7" id="MFG-1x-u7y"/>
+                <outlet property="setPasswordTextField" destination="mm7-3F-530" id="xYV-lI-HTI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="此手机号码已注册，您可尝试修改密码~" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caN-TF-ldi">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bv5-wg-zEK">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACE-Jx-PTo" userLabel="Phone Number Text Field">
+                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5db-gs-ILT" userLabel="Password Text Field">
+                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zI-ty-f4U">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="获取验证码">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次密码输入不一致，请重新输入～" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjw-mg-Zjh">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置密码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BF3-YQ-0Da">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="确认密码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gw-5t-Pwm">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="6-16位数字字母组合" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mm7-3F-530" userLabel="SetPwd Text Field">
+                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xd-EC-sFi">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="1" green="0.6207114655" blue="0.24758782879999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                    <state key="normal" title="注册">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="registerButtonClicked:" destination="-1" eventType="touchUpInside" id="ftm-ZR-5ky"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请确认密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yhV-af-hK7" userLabel=" Reset Pwd Text Field">
+                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="mm7-3F-530" firstAttribute="leading" secondItem="BF3-YQ-0Da" secondAttribute="trailing" constant="10" id="1fY-wp-Hpr"/>
+                <constraint firstItem="BF3-YQ-0Da" firstAttribute="top" secondItem="Tjw-mg-Zjh" secondAttribute="bottom" constant="10" id="2hA-t2-BBa"/>
+                <constraint firstAttribute="trailing" secondItem="caN-TF-ldi" secondAttribute="trailing" constant="20" id="49B-XM-w7S"/>
+                <constraint firstItem="ACE-Jx-PTo" firstAttribute="leading" secondItem="bv5-wg-zEK" secondAttribute="trailing" constant="8" id="4T1-T7-pWW"/>
+                <constraint firstItem="5db-gs-ILT" firstAttribute="bottom" secondItem="1zI-ty-f4U" secondAttribute="bottom" id="ABI-ox-2Ai"/>
+                <constraint firstAttribute="trailing" secondItem="yhV-af-hK7" secondAttribute="trailing" constant="30" id="Ah5-By-dVj"/>
+                <constraint firstItem="ACE-Jx-PTo" firstAttribute="bottom" secondItem="bv5-wg-zEK" secondAttribute="bottom" id="B6B-yF-eWA"/>
+                <constraint firstItem="caN-TF-ldi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="BZn-29-5vw"/>
+                <constraint firstItem="1xd-EC-sFi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="CYR-Ge-K1g"/>
+                <constraint firstItem="2gw-5t-Pwm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="CpR-Cy-4cx"/>
+                <constraint firstAttribute="trailing" secondItem="mm7-3F-530" secondAttribute="trailing" constant="30" id="Csr-uD-ySk"/>
+                <constraint firstItem="caN-TF-ldi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="DD7-tD-gdc"/>
+                <constraint firstItem="bv5-wg-zEK" firstAttribute="top" secondItem="caN-TF-ldi" secondAttribute="bottom" constant="10" id="H2A-Qz-36v"/>
+                <constraint firstItem="Tjw-mg-Zjh" firstAttribute="top" secondItem="5db-gs-ILT" secondAttribute="bottom" constant="30" id="Hgd-QV-ZPD"/>
+                <constraint firstItem="5db-gs-ILT" firstAttribute="leading" secondItem="bv5-wg-zEK" secondAttribute="leading" id="JV0-rA-FUd"/>
+                <constraint firstAttribute="trailing" secondItem="1zI-ty-f4U" secondAttribute="trailing" constant="30" id="JVE-kL-H2S"/>
+                <constraint firstItem="Tjw-mg-Zjh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="KD8-xr-1aH"/>
+                <constraint firstItem="1xd-EC-sFi" firstAttribute="top" secondItem="yhV-af-hK7" secondAttribute="bottom" constant="30" id="MiO-2T-YbL"/>
+                <constraint firstAttribute="trailing" secondItem="1xd-EC-sFi" secondAttribute="trailing" constant="30" id="Nh5-Oj-6Gg"/>
+                <constraint firstItem="1zI-ty-f4U" firstAttribute="top" secondItem="ACE-Jx-PTo" secondAttribute="bottom" constant="20" id="PIH-Ac-PSU"/>
+                <constraint firstItem="BF3-YQ-0Da" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="WM5-jb-OBO"/>
+                <constraint firstItem="5db-gs-ILT" firstAttribute="width" secondItem="ACE-Jx-PTo" secondAttribute="width" id="X18-mq-WNU"/>
+                <constraint firstAttribute="trailing" secondItem="ACE-Jx-PTo" secondAttribute="trailing" constant="30" id="aWW-CQ-iyU"/>
+                <constraint firstItem="yhV-af-hK7" firstAttribute="bottom" secondItem="2gw-5t-Pwm" secondAttribute="bottom" id="cjN-ZS-1tO"/>
+                <constraint firstItem="bv5-wg-zEK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="jgx-WB-5jU"/>
+                <constraint firstItem="2gw-5t-Pwm" firstAttribute="top" secondItem="BF3-YQ-0Da" secondAttribute="bottom" constant="20" id="saK-NC-qI9"/>
+                <constraint firstItem="BF3-YQ-0Da" firstAttribute="bottom" secondItem="mm7-3F-530" secondAttribute="bottom" id="tOu-3Y-7OH"/>
+                <constraint firstItem="yhV-af-hK7" firstAttribute="leading" secondItem="2gw-5t-Pwm" secondAttribute="trailing" constant="10" id="tmr-D2-bAm"/>
+                <constraint firstAttribute="trailing" secondItem="Tjw-mg-Zjh" secondAttribute="trailing" constant="20" id="y8l-0d-tSB"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="caN-TF-ldi"/>
+                    <exclude reference="bv5-wg-zEK"/>
+                    <exclude reference="ACE-Jx-PTo"/>
+                    <exclude reference="5db-gs-ILT"/>
+                    <exclude reference="1zI-ty-f4U"/>
+                    <exclude reference="Tjw-mg-Zjh"/>
+                    <exclude reference="BF3-YQ-0Da"/>
+                    <exclude reference="2gw-5t-Pwm"/>
+                    <exclude reference="mm7-3F-530"/>
+                    <exclude reference="1xd-EC-sFi"/>
+                    <exclude reference="yhV-af-hK7"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="CpR-Cy-4cx"/>
+                    <exclude reference="saK-NC-qI9"/>
+                    <exclude reference="ABI-ox-2Ai"/>
+                    <exclude reference="JV0-rA-FUd"/>
+                    <exclude reference="X18-mq-WNU"/>
+                    <exclude reference="4T1-T7-pWW"/>
+                    <exclude reference="B6B-yF-eWA"/>
+                    <exclude reference="aWW-CQ-iyU"/>
+                    <exclude reference="2hA-t2-BBa"/>
+                    <exclude reference="WM5-jb-OBO"/>
+                    <exclude reference="tOu-3Y-7OH"/>
+                    <exclude reference="Hgd-QV-ZPD"/>
+                    <exclude reference="KD8-xr-1aH"/>
+                    <exclude reference="y8l-0d-tSB"/>
+                    <exclude reference="H2A-Qz-36v"/>
+                    <exclude reference="jgx-WB-5jU"/>
+                    <exclude reference="49B-XM-w7S"/>
+                    <exclude reference="BZn-29-5vw"/>
+                    <exclude reference="DD7-tD-gdc"/>
+                    <exclude reference="1fY-wp-Hpr"/>
+                    <exclude reference="Csr-uD-ySk"/>
+                    <exclude reference="Ah5-By-dVj"/>
+                    <exclude reference="cjN-ZS-1tO"/>
+                    <exclude reference="tmr-D2-bAm"/>
+                    <exclude reference="CYR-Ge-K1g"/>
+                    <exclude reference="MiO-2T-YbL"/>
+                    <exclude reference="Nh5-Oj-6Gg"/>
+                    <exclude reference="JVE-kL-H2S"/>
+                    <exclude reference="PIH-Ac-PSU"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="caN-TF-ldi"/>
+                    <include reference="bv5-wg-zEK"/>
+                    <include reference="ACE-Jx-PTo"/>
+                    <include reference="5db-gs-ILT"/>
+                    <include reference="1zI-ty-f4U"/>
+                    <include reference="Tjw-mg-Zjh"/>
+                    <include reference="BF3-YQ-0Da"/>
+                    <include reference="2gw-5t-Pwm"/>
+                    <include reference="mm7-3F-530"/>
+                    <include reference="1xd-EC-sFi"/>
+                    <include reference="yhV-af-hK7"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="CpR-Cy-4cx"/>
+                    <include reference="saK-NC-qI9"/>
+                    <include reference="ABI-ox-2Ai"/>
+                    <include reference="JV0-rA-FUd"/>
+                    <include reference="X18-mq-WNU"/>
+                    <include reference="4T1-T7-pWW"/>
+                    <include reference="B6B-yF-eWA"/>
+                    <include reference="aWW-CQ-iyU"/>
+                    <include reference="2hA-t2-BBa"/>
+                    <include reference="WM5-jb-OBO"/>
+                    <include reference="tOu-3Y-7OH"/>
+                    <include reference="Hgd-QV-ZPD"/>
+                    <include reference="KD8-xr-1aH"/>
+                    <include reference="y8l-0d-tSB"/>
+                    <include reference="H2A-Qz-36v"/>
+                    <include reference="jgx-WB-5jU"/>
+                    <include reference="49B-XM-w7S"/>
+                    <include reference="BZn-29-5vw"/>
+                    <include reference="DD7-tD-gdc"/>
+                    <include reference="1fY-wp-Hpr"/>
+                    <include reference="Csr-uD-ySk"/>
+                    <include reference="Ah5-By-dVj"/>
+                    <include reference="cjN-ZS-1tO"/>
+                    <include reference="tmr-D2-bAm"/>
+                    <include reference="CYR-Ge-K1g"/>
+                    <include reference="MiO-2T-YbL"/>
+                    <include reference="Nh5-Oj-6Gg"/>
+                    <include reference="JVE-kL-H2S"/>
+                    <include reference="PIH-Ac-PSU"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

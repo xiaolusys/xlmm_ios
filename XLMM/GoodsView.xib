@@ -23,7 +23,7 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6E-9x-nA9">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -56,7 +56,9 @@
                 <constraint firstItem="N6E-9x-nA9" firstAttribute="top" secondItem="GQK-Ui-JWh" secondAttribute="bottom" id="PsJ-eY-Pw5"/>
                 <constraint firstItem="u9g-wg-Arm" firstAttribute="top" secondItem="N6E-9x-nA9" secondAttribute="bottom" constant="2" id="bej-YS-udT"/>
                 <constraint firstItem="o1D-tf-xMc" firstAttribute="leading" secondItem="vfL-zY-dpI" secondAttribute="leading" id="gy8-Wy-opm"/>
-                <constraint firstItem="N6E-9x-nA9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="jwD-6e-QhS"/>
+                <constraint firstItem="N6E-9x-nA9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="jwD-6e-QhS">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="GQK-Ui-JWh" secondAttribute="bottom" constant="50" id="lD7-Lz-pyw"/>
                 <constraint firstItem="vfL-zY-dpI" firstAttribute="top" secondItem="N6E-9x-nA9" secondAttribute="bottom" constant="4" id="vTc-D3-RlX"/>
                 <constraint firstItem="GQK-Ui-JWh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xR2-Lw-qdA"/>
@@ -72,18 +74,18 @@
                     <exclude reference="vfL-zY-dpI"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="PsJ-eY-Pw5"/>
+                    <exclude reference="jwD-6e-QhS"/>
+                    <exclude reference="FHK-as-zPA"/>
+                    <exclude reference="KSC-aq-RGG"/>
+                    <exclude reference="gy8-Wy-opm"/>
+                    <exclude reference="GDc-qy-mPk"/>
+                    <exclude reference="bej-YS-udT"/>
+                    <exclude reference="vTc-D3-RlX"/>
                     <exclude reference="KIz-82-w1P"/>
                     <exclude reference="KrD-MW-njc"/>
                     <exclude reference="lD7-Lz-pyw"/>
                     <exclude reference="xR2-Lw-qdA"/>
-                    <exclude reference="PsJ-eY-Pw5"/>
-                    <exclude reference="jwD-6e-QhS"/>
-                    <exclude reference="GDc-qy-mPk"/>
-                    <exclude reference="bej-YS-udT"/>
-                    <exclude reference="FHK-as-zPA"/>
-                    <exclude reference="KSC-aq-RGG"/>
-                    <exclude reference="gy8-Wy-opm"/>
-                    <exclude reference="vTc-D3-RlX"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -95,18 +97,18 @@
                     <include reference="vfL-zY-dpI"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="PsJ-eY-Pw5"/>
+                    <include reference="jwD-6e-QhS"/>
+                    <include reference="FHK-as-zPA"/>
+                    <include reference="KSC-aq-RGG"/>
+                    <include reference="gy8-Wy-opm"/>
+                    <include reference="GDc-qy-mPk"/>
+                    <include reference="bej-YS-udT"/>
+                    <include reference="vTc-D3-RlX"/>
                     <include reference="KIz-82-w1P"/>
                     <include reference="KrD-MW-njc"/>
                     <include reference="lD7-Lz-pyw"/>
                     <include reference="xR2-Lw-qdA"/>
-                    <include reference="PsJ-eY-Pw5"/>
-                    <include reference="jwD-6e-QhS"/>
-                    <include reference="GDc-qy-mPk"/>
-                    <include reference="bej-YS-udT"/>
-                    <include reference="FHK-as-zPA"/>
-                    <include reference="KSC-aq-RGG"/>
-                    <include reference="gy8-Wy-opm"/>
-                    <include reference="vTc-D3-RlX"/>
                 </mask>
             </variation>
         </view>

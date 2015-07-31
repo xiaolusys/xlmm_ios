@@ -25,6 +25,12 @@
 		325DF94F1B69D96800351ACA /* LadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF94E1B69D96800351ACA /* LadyView.xib */; };
 		325DF9521B69F79400351ACA /* PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9511B69F79400351ACA /* PreviousViewController.m */; };
 		325DF9551B69FD8600351ACA /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
+		325DF9581B6A2B6F00351ACA /* ChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9571B6A2B6F00351ACA /* ChildModel.m */; };
+		325DF95B1B6A2B8100351ACA /* LadyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF95A1B6A2B8100351ACA /* LadyModel.m */; };
+		32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6A1B6AFD23006E806A /* LogInViewController.m */; };
+		32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C6B1B6AFD23006E806A /* LogInViewController.xib */; };
+		32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6F1B6AFD56006E806A /* RegisterViewController.m */; };
+		32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C701B6AFD56006E806A /* RegisterViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +74,16 @@
 		325DF9511B69F79400351ACA /* PreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviousViewController.m; sourceTree = "<group>"; };
 		325DF9531B69FD8600351ACA /* PosterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterModel.h; sourceTree = "<group>"; };
 		325DF9541B69FD8600351ACA /* PosterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterModel.m; sourceTree = "<group>"; };
+		325DF9561B6A2B6F00351ACA /* ChildModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildModel.h; sourceTree = "<group>"; };
+		325DF9571B6A2B6F00351ACA /* ChildModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildModel.m; sourceTree = "<group>"; };
+		325DF9591B6A2B8100351ACA /* LadyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyModel.h; sourceTree = "<group>"; };
+		325DF95A1B6A2B8100351ACA /* LadyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyModel.m; sourceTree = "<group>"; };
+		32620C691B6AFD23006E806A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		32620C6A1B6AFD23006E806A /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		32620C6B1B6AFD23006E806A /* LogInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
+		32620C6E1B6AFD56006E806A /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		32620C6F1B6AFD56006E806A /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		32620C701B6AFD56006E806A /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +128,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				325DF95C1B6A472600351ACA /* Controller */,
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
 				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
 				325BA1171B68B22E006D64BD /* RootViewController.h */,
@@ -168,8 +185,25 @@
 				325DF94B1B69D94400351ACA /* LadyView.h */,
 				325DF94C1B69D94400351ACA /* LadyView.m */,
 				325DF94E1B69D96800351ACA /* LadyView.xib */,
+				325DF9561B6A2B6F00351ACA /* ChildModel.h */,
+				325DF9571B6A2B6F00351ACA /* ChildModel.m */,
+				325DF9591B6A2B8100351ACA /* LadyModel.h */,
+				325DF95A1B6A2B8100351ACA /* LadyModel.m */,
 			);
 			name = views;
+			sourceTree = "<group>";
+		};
+		325DF95C1B6A472600351ACA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				32620C691B6AFD23006E806A /* LogInViewController.h */,
+				32620C6A1B6AFD23006E806A /* LogInViewController.m */,
+				32620C6B1B6AFD23006E806A /* LogInViewController.xib */,
+				32620C6E1B6AFD56006E806A /* RegisterViewController.h */,
+				32620C6F1B6AFD56006E806A /* RegisterViewController.m */,
+				32620C701B6AFD56006E806A /* RegisterViewController.xib */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,10 +286,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
+				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
@@ -279,10 +315,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				325DF9521B69F79400351ACA /* PreviousViewController.m in Sources */,
+				325DF95B1B6A2B8100351ACA /* LadyModel.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
+				325DF9581B6A2B6F00351ACA /* ChildModel.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */,
+				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
 				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,
