@@ -21,4 +21,8 @@
 #define kTODAY_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_today"
 #define kPREVIOUS_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_previous"
 
+#define kLADY_LIST_URL @"http://youni.huyi.so/rest/v1/products/ladylist"
+
+#define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
+
 #endif

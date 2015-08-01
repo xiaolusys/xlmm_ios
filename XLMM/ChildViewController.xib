@@ -54,7 +54,7 @@
                 </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9QH-ZB-iCK">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.99215686270000003" green="0.92549019610000005" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JpE-rW-zBN">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -92,17 +92,17 @@
                     <exclude reference="9QH-ZB-iCK"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="0j2-un-xjj"/>
+                    <exclude reference="9x5-wS-i7O"/>
+                    <exclude reference="WSC-3w-WCX"/>
+                    <exclude reference="vqP-0l-sPy"/>
+                    <exclude reference="zua-qg-0tc"/>
                     <exclude reference="LU7-o3-PCl"/>
                     <exclude reference="RnG-8X-fWu"/>
                     <exclude reference="0sl-Xx-WzN"/>
                     <exclude reference="93j-lP-eXX"/>
                     <exclude reference="ZH6-eF-zvr"/>
                     <exclude reference="zU9-BY-aFU"/>
-                    <exclude reference="0j2-un-xjj"/>
-                    <exclude reference="9x5-wS-i7O"/>
-                    <exclude reference="WSC-3w-WCX"/>
-                    <exclude reference="vqP-0l-sPy"/>
-                    <exclude reference="zua-qg-0tc"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -112,17 +112,17 @@
                     <include reference="9QH-ZB-iCK"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="0j2-un-xjj"/>
+                    <include reference="9x5-wS-i7O"/>
+                    <include reference="WSC-3w-WCX"/>
+                    <include reference="vqP-0l-sPy"/>
+                    <include reference="zua-qg-0tc"/>
                     <include reference="LU7-o3-PCl"/>
                     <include reference="RnG-8X-fWu"/>
                     <include reference="0sl-Xx-WzN"/>
                     <include reference="93j-lP-eXX"/>
                     <include reference="ZH6-eF-zvr"/>
                     <include reference="zU9-BY-aFU"/>
-                    <include reference="0j2-un-xjj"/>
-                    <include reference="9x5-wS-i7O"/>
-                    <include reference="WSC-3w-WCX"/>
-                    <include reference="vqP-0l-sPy"/>
-                    <include reference="zua-qg-0tc"/>
                 </mask>
             </variation>
         </view>

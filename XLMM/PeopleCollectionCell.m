@@ -7,11 +7,40 @@
 //
 
 #import "PeopleCollectionCell.h"
+#import "UIImageView+WebCache.h"
+#import "MMClass.h"
 
 @implementation PeopleCollectionCell
 
 - (void)awakeFromNib {
     // Initialization code
+}
+
+- (id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"PeopleCollectionCell" owner:self options:nil];
+        self.priceLabel.text = @"￥22";
+        self.oldPriceLabel.text = @"￥222";
+        self.nameLabel.text = @"hello";
+       // NSLog(@"%ld ", arrayOfViews.count);
+        if (arrayOfViews.count < 1) {
+            return nil;
+        }
+        if (![[arrayOfViews objectAtIndex:0]isKindOfClass:[UICollectionViewCell class]]) {
+            return nil;
+        }
+        self = [arrayOfViews objectAtIndex:0];
+    }
+    
+    return self;
+}
+
+- (void)fillData:(PeopleModel *)model{
+    [self.imageView sd_setImageWithURL:kLoansRRL(model.imageURL)];
+    self.nameLabel.text = model.name;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.oldPrice];
 }
 
 @end

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WomanViewController : UIViewController
+@interface WomanViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *womanCollectionView;
+
+
+- (IBAction)btnClicked:(UIButton *)sender;
+
 
 @end

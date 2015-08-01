@@ -8,6 +8,7 @@
 
 #import "ChildViewController.h"
 #import "LogInViewController.h"
+#import "PeopleCollectionCell.h"
 
 #import "MMClass.h"
 
@@ -39,8 +40,7 @@
     }
     self.dataArray = [[NSArray alloc] initWithObjects:firstSection, secondSection, nil];
     
-    UINib *nib = [UINib nibWithNibName:@"PeopleCollectionCell" bundle:nil];
-    [self.childCollectionView registerNib:nib forCellWithReuseIdentifier:@"PeopleCollectionCell"];
+  [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"PeopleCollectionCell"];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(172, 220)];
