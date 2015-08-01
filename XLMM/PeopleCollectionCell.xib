@@ -64,6 +64,12 @@
                 <constraint firstItem="KwN-i4-xoI" firstAttribute="top" secondItem="Rif-Ul-A9W" secondAttribute="bottom" constant="3" id="w8V-wB-AvK"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="wqW-Ne-Q0b"/>
             </constraints>
+            <connections>
+                <outlet property="imageView" destination="uhQ-WN-ROj" id="ofb-oQ-Aaa"/>
+                <outlet property="nameLabel" destination="Rif-Ul-A9W" id="Ndw-xA-ZIx"/>
+                <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="HlJ-TV-C1E"/>
+                <outlet property="priceLabel" destination="SQ1-Th-Bsz" id="tT1-t9-MI3"/>
+            </connections>
         </collectionViewCell>
     </objects>
     <resources>

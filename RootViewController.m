@@ -66,11 +66,11 @@
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     [self setInfo];
     [self setTitleImage];
-   [self downloadData];
+  // [self downloadData];
     
-    
-    WomanViewController *womanVC = [[WomanViewController alloc] init];
-    [self.navigationController pushViewController:womanVC animated:YES];
+    LogInViewController *login = [[LogInViewController alloc] init];
+    [self.navigationController pushViewController:login animated:YES];
+  
     
     
 }

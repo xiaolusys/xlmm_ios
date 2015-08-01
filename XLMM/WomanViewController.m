@@ -44,14 +44,13 @@
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(172, 220)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 0, 10);
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.womanCollectionView setCollectionViewLayout:flowLayout];
     
     dispatch_sync(kBgQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kLADY_LIST_URL)];
         [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
     });
-   // NSLog(@"333333");
 }
 
 - (void)mmParseData:(NSData *)responseData{
@@ -67,12 +66,6 @@
         model.price = [dic objectForKey:@"agent_price"];
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
         [self.dataArray addObject:model];
-    }
-    for (PeopleModel *model in self.dataArray) {
-       // MMLOG(model.imageURL);
-        MMLOG(model.name);
-//        MMLOG(model.price);
-//        MMLOG(model.oldPrice);
     }
     [self.womanCollectionView reloadData];
 }
@@ -93,9 +86,7 @@
     static NSString *cellIdentifier = kSampleCell;
   
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.nameLabel.text = @"helll";
-    cell.imageView.image = [UIImage imageNamed:@"poster1"];
-    MMLOG(cell.nameLabel.text);
+    [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
