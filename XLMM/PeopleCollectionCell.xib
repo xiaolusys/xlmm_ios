@@ -6,22 +6,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PeopleCollectionCell">
             <connections>
-                <outlet property="imageView" destination="uhQ-WN-ROj" id="Xim-4O-FWy"/>
-                <outlet property="nameLabel" destination="Rif-Ul-A9W" id="k82-gM-9Af"/>
-                <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="3xr-OS-PeM"/>
-                <outlet property="priceLabel" destination="SQ1-Th-Bsz" id="Rno-nR-qeZ"/>
+                <outlet property="imageView" destination="uhQ-WN-ROj" id="gGm-fs-m3Y"/>
+                <outlet property="nameLabel" destination="Rif-Ul-A9W" id="VDu-GZ-QIm"/>
+                <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="zC8-5Y-3L0"/>
+                <outlet property="priceLabel" destination="SQ1-Th-Bsz" id="iw0-cK-H56"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PeopleCollectionCell" id="gTV-IL-0wX" customClass="PeopleCollectionCell">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sampleCell" id="gTV-IL-0wX" customClass="PeopleCollectionCell">
             <rect key="frame" x="0.0" y="0.0" width="180" height="230"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="180" height="230"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
-                        <rect key="frame" x="0.0" y="0.0" width="180" height="190"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
                         <rect key="frame" x="0.0" y="190" width="180" height="21"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -46,6 +43,9 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="190"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>

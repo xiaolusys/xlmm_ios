@@ -20,10 +20,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"PeopleCollectionCell" owner:self options:nil];
-        self.priceLabel.text = @"￥22";
-        self.oldPriceLabel.text = @"￥222";
-        self.nameLabel.text = @"hello";
-       // NSLog(@"%ld ", arrayOfViews.count);
         if (arrayOfViews.count < 1) {
             return nil;
         }

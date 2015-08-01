@@ -13,7 +13,7 @@
 #import "PeopleModel.h"
 #import "UIImageView+WebCache.h"
 
-#define kReuseIdentifier @"PeopleCollectionCell"
+#define kSampleCell @"sampleCell"
 
 @interface WomanViewController ()
 
@@ -39,9 +39,8 @@
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
    
-    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"PeopleCollectionCell"];
+    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSampleCell];
     
-    //[self.womanCollectionView registerNib:[UINib nibWithNibName:@"PeopleCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleCollectionCell"];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(172, 220)];
@@ -91,10 +90,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    static NSString *cellIdentifier = kSampleCell;
   
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kReuseIdentifier forIndexPath:indexPath];
-    
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.nameLabel.text = @"helll";
+    cell.imageView.image = [UIImage imageNamed:@"poster1"];
+    MMLOG(cell.nameLabel.text);
     return cell;
 }
 
