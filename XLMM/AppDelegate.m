@@ -18,8 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
+    //创建导航控制器，添加根视图控制器
     RootViewController *root = [[RootViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = nav;

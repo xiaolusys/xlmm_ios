@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *setPasswordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *resetPasswordTextField;
 - (IBAction)registerButtonClicked:(UIButton *)sender;
+- (IBAction)getPasswordButtonClicked:(UIButton *)sender;
 
 @end

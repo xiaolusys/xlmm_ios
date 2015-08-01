@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LogInViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UITextField *userIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

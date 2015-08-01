@@ -17,80 +17,99 @@
 #import "LadyModel.h"
 #import "LogInViewController.h"
 #import "RegisterViewController.h"
+#import "UIImageView+WebCache.h"
+#import "ChildViewController.h"
+#import "WomanViewController.h"
 
 @interface RootViewController (){
-    BOOL isToday;
-    NSMutableArray *_prePosterArray;
-    NSMutableArray *_todayPosterArray;
-    NSMutableArray *_todayPromoteChildArray;
+    BOOL isToday;//
+    NSMutableArray *_prePosterArray;//保存昨日海报数据
+    NSMutableArray *_todayPosterArray;//存储今日海报数据
+    NSMutableArray *_todayPromoteChildArray;//今日推荐
     NSMutableArray *_todayPromoteLadyArray;
-    NSMutableArray *_prePromoteChildArray;
+    NSMutableArray *_prePromoteChildArray;//昨日推荐
     NSMutableArray *_prePromoteLadyArray;
-    
+    //保存下载的数据
     NSMutableData *_data;
+    
+    PosterView *posterViewOwner;
+    GoodsView *ownerGoodsView;
+    LadyView *ownerLadyView;
+
 }
 
 @end
 
 @implementation RootViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+  //  NSLog(@"appear");
+    [super viewWillAppear:animated];
+    NSArray *buttonArray = [self.buttonView subviews];
+    for (UIButton *button in buttonArray) {
+        button.backgroundColor = [UIColor clearColor];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //自定义导航栏信息
+    posterViewOwner = [PosterView new];
+    ownerGoodsView = [GoodsView new];
+    ownerLadyView = [LadyView new];
     isToday = YES;
     self.title = @"小鹿美美";
-    self.widthView.constant = SCREENWIDTH;
+  //  NSLog(@"root");
+    self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     [self setInfo];
     [self setTitleImage];
+  // [self downloadData];
     
-#if 1
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/posters/today"]];
+    
+    WomanViewController *womanVC = [[WomanViewController alloc] init];
+    [self.navigationController pushViewController:womanVC animated:YES];
+    
+    
+}
+
+- (void)downloadData{
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_POSTERS_URL)];
         [self performSelectorOnMainThread:@selector(fetchedTodayPosterData:) withObject:data waitUntilDone:YES];
         
-    });
+    });//下载今日海报
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_PROMOTE_URL)];
+        [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
+        
+    });//下载今日推荐
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/posters/previous"]];
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_POSTERS_URL)];
         [self performSelectorOnMainThread:@selector(fetchedPreviousPosterData:) withObject:data waitUntilDone:YES];
         
-    });
-    
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/products/promote_today"]];
-        [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
-        
-    });
-
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/products/promote_today"]];
-        [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
-        
-    });
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/products/promote_previous"]];
+    });//下载昨日海报
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_PROMOTE_URL)];
         [self performSelectorOnMainThread:@selector(fetchedPreviouspromoteData:) withObject:data waitUntilDone:YES];
-    });
-#endif
+    });//下载昨日推荐
 }
 
-- (void)updateData{
-  
-}
-
+#pragma mark ---JSON 解析 ------
+//昨日推荐 JSON 数据解析
 - (void) fetchedPreviouspromoteData:(NSData *)responseData{
     NSError *error;
     _prePromoteChildArray = [[NSMutableArray alloc] init];
     _prePromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
+//    NSLog(@"dic = %@", dic);
+    if ([childArray count] == 0) {
+        return;
+    }
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [childArray objectAtIndex:i];
         ChildModel *model = [[ChildModel alloc] init];
@@ -99,8 +118,9 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         [_prePromoteChildArray addObject:model];
+      //  NSLog(@"%@", _prePromoteChildArray);
     }
-   // [self createChildViewWithArray:_prePromoteChildArray];
+    [self createChildViewWithArray:_prePromoteChildArray];
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [ladyArray objectAtIndex:i];
@@ -111,15 +131,20 @@
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         [_prePromoteLadyArray addObject:model];
     }
-   // [self createLadyViewWithArray:_prePromoteLadyArray];
+    [self createLadyViewWithArray:_prePromoteLadyArray];
 }
 
+//今日推荐 JSON 数据解析
 - (void) fetchedTodaypromoteData:(NSData *)responseData{
     NSError *error;
     _todayPromoteChildArray = [[NSMutableArray alloc] init];
     _todayPromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
+   // NSLog(@"dic today = %@", dic);
+    if ([childArray count] == 0) {
+        return;
+    }
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [childArray objectAtIndex:i];
         ChildModel *model = [[ChildModel alloc] init];
@@ -142,12 +167,16 @@
     }
     [self createLadyViewWithArray:_todayPromoteLadyArray];
 }
-
+//昨日海报 JSON 数据解析
 - (void) fetchedPreviousPosterData:(NSData *)responseData{
     NSError *error;
     _prePosterArray = [[NSMutableArray alloc] init];
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&error];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    //NSLog(@"poster = %@", dic);
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
+    if ([wemArray count] == 0) {
+        return;
+    }
     NSDictionary *wonmendic = [wemArray objectAtIndex:0];
     NSArray *nameArr = [wonmendic objectForKey:@"subject"];
     PosterModel *model = [PosterModel new];
@@ -163,14 +192,20 @@
     model2.firstName = [nameArr2 objectAtIndex:0];
     model2.secondName = [nameArr2 objectAtIndex:1];
     [_prePosterArray addObject:model2];
-  //  [self createPosterViewWithArray:_prePosterArray];
+    [self createPosterViewWithArray:_prePosterArray];
 }
 - (void)fetchedTodayPosterData:(NSData *)responseData{
     NSError *error;
     _todayPosterArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+  //  NSLog(@"today poster = %@", dic);
+   
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
+  //  NSLog(@"%@", wemArray);
+    
+
     NSDictionary *wonmendic = [wemArray objectAtIndex:0];
+    
     NSArray *nameArr = [wonmendic objectForKey:@"subject"];
     PosterModel *model = [PosterModel new];
     model.imageURL = [wonmendic objectForKey:@"pic_link"];
@@ -188,6 +223,8 @@
     [self createPosterViewWithArray:_todayPosterArray];
 }
 
+#pragma mark ---JSON  解析 ----
+
 - (void)setInfo{
     //导航栏标题
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
@@ -196,11 +233,11 @@
     navLabel.font = [UIFont systemFontOfSize:30];
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
-    NSLog(@"%f", self.widthView.constant);
+ //   NSLog(@"%f", self.widthView.constant);
     //左边返回按钮
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.frame = CGRectMake(0, 0, 40 , 40);
-    [backButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
+    [backButton setBackgroundImage:LOADIMAGE(@"") forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -229,29 +266,40 @@
 }
 
 - (void)createPosterViewWithArray:(NSMutableArray *)array{
-    NSLog(@"posterView");
-    PosterView *owner = [PosterView new];
+    for(UIView *view in [_posterView subviews])
+    {
+        [view removeFromSuperview];
+    }
+    if ([array count] == 0) {
+        return;
+    }
     for (int i = 0; i<2; i++) {
-        [[NSBundle mainBundle] loadNibNamed:@"PosterView" owner:owner options:nil];
+        [[NSBundle mainBundle] loadNibNamed:@"PosterView" owner:posterViewOwner options:nil];
         CGRect rect = CGRectMake(0, 0 + 185 * i, SCREENWIDTH, 185);
-        owner.posterView.frame = rect;
+        posterViewOwner.posterView.frame = rect;
         PosterModel *model = (PosterModel *)[array objectAtIndex:i];
-        owner.leftLabel.text = model.firstName;
-        owner.rightLabel.text = model.secondName;
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.imageURL]]];
-        owner.imageView.image = image;
-        [self.posterView addSubview:owner.posterView];
+        posterViewOwner.leftLabel.text = model.firstName;
+        posterViewOwner.rightLabel.text = model.secondName;
+        [posterViewOwner.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+        [_posterView addSubview:posterViewOwner.posterView];
         UIButton *btn = [[UIButton alloc] initWithFrame:rect];
         btn.tag = 200 + i;
         btn.backgroundColor = [UIColor clearColor];
         [btn addTarget:self action:@selector(imageClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.posterView addSubview:btn];
+        [_posterView addSubview:btn];
     }
     
 }
 
 - (void) createChildViewWithArray:(NSMutableArray *)array{
-    NSLog(@"childView");
+    
+    for (UIView *view in [_childView subviews]) {
+        [view removeFromSuperview];
+    }
+    if ([array count] == 0) {
+        [self createDefaultChildView];
+        return;
+    }
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -274,31 +322,72 @@
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
-    GoodsView *owner = [GoodsView new];
     for (int i = 0; i<2; i++) {
         for (int j = 0; j<2; j++) {
-            [[NSBundle mainBundle] loadNibNamed:@"GoodsView" owner:owner options:nil];
+            [[NSBundle mainBundle] loadNibNamed:@"GoodsView" owner:ownerGoodsView options:nil];
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
-            owner.view.frame = rect;
+            ownerGoodsView.view.frame = rect;
             ChildModel *model = (ChildModel *)[array objectAtIndex:(i*2 + j)];
-            UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.imageURL]]];
-            owner.imageView.image = image;
-            owner.nameLabel.text = model.name;
-            owner.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
-            owner.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
-            [self.childView addSubview:owner.view];
+            [ownerGoodsView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            ownerGoodsView.nameLabel.text = model.name;
+            ownerGoodsView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
+            ownerGoodsView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
+            [_childView addSubview:ownerGoodsView.view];
             UIButton *btn = [[UIButton alloc] initWithFrame:rect];
             btn.tag = i*2 +j + 300;
             btn.backgroundColor = [UIColor clearColor];
             [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [self.childView addSubview:btn];
+            [_childView addSubview:btn];
+        }
+    }
+}
+
+- (void)createDefaultChildView{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
+    imageView.backgroundColor = [UIColor orangeColor];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
+    view.layer.cornerRadius = 4;
+    view.backgroundColor = [UIColor whiteColor];
+    [imageView addSubview:view];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.text = @"潮童专区";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22];
+    [imageView addSubview:label];
+    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
+    timaLabel.textAlignment = NSTextAlignmentLeft;
+    timaLabel.text = @"剩余2天1小时";
+    timaLabel.font = [UIFont systemFontOfSize:16];
+    timaLabel.textColor = [UIColor whiteColor];
+    [imageView addSubview:timaLabel];
+    [self.childView addSubview:imageView];
+    NSInteger margin = 5;
+    NSInteger width = (SCREENWIDTH - 3 * margin)/2;
+    NSInteger height = 230;
+    for (int i = 0; i<2; i++) {
+        for (int j = 0; j<2; j++) {
+            [[NSBundle mainBundle] loadNibNamed:@"GoodsView" owner:ownerGoodsView options:nil];
+            CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
+            ownerGoodsView.view.frame = rect;
+            [_childView addSubview:ownerGoodsView.view];
+            UIButton *btn = [[UIButton alloc] initWithFrame:rect];
+            btn.tag = i*2 +j + 300;
+            btn.backgroundColor = [UIColor clearColor];
+            [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_childView addSubview:btn];
         }
     }
 }
 
 - (void)createLadyViewWithArray:(NSMutableArray *)array{
-    NSLog(@"LadyView");
-    
+    for (UIView *view in [_ladyView subviews]) {
+        [view removeFromSuperview];
+    }
+    if ([array count] == 0) {
+        [self createDefaultLadyView];
+        return;
+    }
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -321,24 +410,61 @@
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
-    LadyView *owner = [LadyView new];
+  
     for (int i = 0; i<2; i++) {
         for (int j = 0; j<2; j++) {
-            [[NSBundle mainBundle] loadNibNamed:@"LadyView" owner:owner options:nil];
+            [[NSBundle mainBundle] loadNibNamed:@"LadyView" owner:ownerLadyView options:nil];
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
-            owner.view.frame = rect;
+            ownerLadyView.view.frame = rect;
             LadyModel *model = (LadyModel *)[array objectAtIndex:i*2 + j];
-            UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.imageURL]]];
-            owner.imageView.image = image;
-            owner.nameLabel.text = model.name;
-            owner.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
-            owner.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
-            [self.ladyView addSubview:owner.view];
+            [ownerLadyView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            ownerLadyView.nameLabel.text = model.name;
+            ownerLadyView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
+            ownerLadyView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
+            [_ladyView addSubview:ownerLadyView.view];
             UIButton *btn = [[UIButton alloc] initWithFrame:rect];
             btn.tag = i*2 +j + 400;
             btn.backgroundColor = [UIColor clearColor];
             [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [self.ladyView addSubview:btn];
+            [_ladyView addSubview:btn];
+        }
+    }
+}
+
+- (void)createDefaultLadyView{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
+    imageView.backgroundColor = [UIColor orangeColor];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
+    view.layer.cornerRadius = 4;
+    view.backgroundColor = [UIColor whiteColor];
+    [imageView addSubview:view];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.text = @"时尚女装";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22];
+    [imageView addSubview:label];
+    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
+    timaLabel.textAlignment = NSTextAlignmentLeft;
+    timaLabel.text = @"剩余2天1小时";
+    timaLabel.font = [UIFont systemFontOfSize:16];
+    timaLabel.textColor = [UIColor whiteColor];
+    [imageView addSubview:timaLabel];
+    [self.ladyView addSubview:imageView];
+    NSInteger margin = 5;
+    NSInteger width = (SCREENWIDTH - 3 * margin)/2;
+    NSInteger height = 230;
+    for (int i = 0; i<2; i++) {
+        for (int j = 0; j<2; j++) {
+            [[NSBundle mainBundle] loadNibNamed:@"LadyView" owner:ownerLadyView options:nil];
+            CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
+            ownerLadyView.view.frame = rect;
+            [_ladyView addSubview:ownerLadyView.view];
+            UIButton *btn = [[UIButton alloc] initWithFrame:rect];
+            btn.tag = i*2 +j + 400;
+            btn.backgroundColor = [UIColor clearColor];
+            [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_ladyView addSubview:btn];
         }
     }
 }
@@ -366,9 +492,11 @@
         }
     }
     if (sender.tag == 101) {
+        
         if (!isToday) {
+            
+
             isToday = YES;
-            NSLog(@"今日上新");
             [self createPosterViewWithArray:_todayPosterArray];
             [self createChildViewWithArray:_todayPromoteChildArray];
             [self createLadyViewWithArray:_todayPromoteLadyArray];
@@ -376,19 +504,25 @@
 
         }
     } else if (sender.tag == 102){
+       
         if (isToday) {
-            
+
             isToday = NO;
-            NSLog(@"昨日特卖");
             [self createPosterViewWithArray:_prePosterArray];
             [self createChildViewWithArray:_prePromoteChildArray];
             [self createLadyViewWithArray:_prePromoteLadyArray];
             self.headViewHeight.constant = 0;
         }
+        
     } else if (sender.tag == 103){
-        NSLog(@"103");
+        ChildViewController *childVC = [[ChildViewController alloc] init];
+        [self.navigationController pushViewController:childVC animated:YES];
+        
     } else if (sender.tag == 104){
         NSLog(@"104");
+        WomanViewController *womanVC = [[WomanViewController alloc] init];
+        [self.navigationController pushViewController:womanVC animated:YES];
+    
     }
 }
 

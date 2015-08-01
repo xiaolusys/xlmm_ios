@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootViewController">
             <connections>
+                <outlet property="buttonView" destination="Z0h-gi-RSF" id="Kq9-UZ-dZS"/>
                 <outlet property="childView" destination="rwa-jB-kw2" id="wti-4K-5yY"/>
                 <outlet property="headView" destination="SVl-iD-07m" id="4tY-u0-xCX"/>
                 <outlet property="headViewHeight" destination="Gsg-AZ-uBt" id="qAQ-Uw-QZB"/>

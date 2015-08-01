@@ -40,4 +40,8 @@
 - (IBAction)registerButtonClicked:(UIButton *)sender {
     NSLog(@"注册");
 }
+
+- (IBAction)getPasswordButtonClicked:(UIButton *)sender {
+    NSLog(@"获得验证码");
+}
 @end
