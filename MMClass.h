@@ -12,6 +12,7 @@
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 #define KTITLENAME @"小鹿美美"
+#define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
 #define LOADIMAGE(a) [UIImage imageNamed:a]
 #define kLoansRRL(a) [NSURL URLWithString:a]
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

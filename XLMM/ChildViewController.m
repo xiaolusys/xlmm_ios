@@ -39,7 +39,7 @@
   [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksampleCell];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(172, 220)];
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     

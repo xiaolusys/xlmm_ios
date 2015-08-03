@@ -20,6 +20,8 @@
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
 #import "WomanViewController.h"
+#import "PersonCenterViewController.h"
+
 
 @interface RootViewController (){
     BOOL isToday;//
@@ -67,16 +69,17 @@
     ownerLadyView = [LadyView new];
     isToday = YES;
     isLogin = NO;
-    self.title = @"小鹿美美";
+    //self.title = @"小鹿美美";
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     [self setInfo];
     [self setTitleImage];
-    [self downloadData];
+    //[self downloadData];
    
-    
+    PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
+    [self.navigationController pushViewController:personCenter animated:YES];
     
     
 }
@@ -540,11 +543,15 @@
 #pragma mark ------btnclicked--------
 
 - (void)login:(UIButton *)button{
-    if (!isLogin) {
+    if (isLogin) {
+        
         LogInViewController *login = [[LogInViewController alloc] init];
         [self.navigationController pushViewController:login animated:YES];
     
     }else{
+        
+        PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
+        [self.navigationController pushViewController:personCenter animated:YES];
         
     }
   
