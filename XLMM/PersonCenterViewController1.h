@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonCenterViewController1 : UIViewController
+@interface PersonCenterViewController1 : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end

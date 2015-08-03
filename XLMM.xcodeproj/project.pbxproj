@@ -29,6 +29,10 @@
 		3249B9AE1B6F38C20086D030 /* PersonCenterViewController9.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9AC1B6F38C20086D030 /* PersonCenterViewController9.xib */; };
 		3249B9B21B6F38D80086D030 /* PersonCenterViewController10.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */; };
 		3249B9B31B6F38D80086D030 /* PersonCenterViewController10.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */; };
+		3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */; };
+		3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */; };
+		3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */; };
+		3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -136,6 +140,12 @@
 		3249B9AF1B6F38D80086D030 /* PersonCenterViewController10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController10.h; sourceTree = "<group>"; };
 		3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController10.m; sourceTree = "<group>"; };
 		3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController10.xib; sourceTree = "<group>"; };
+		3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiFuCollectionCell.h; sourceTree = "<group>"; };
+		3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiFuCollectionCell.m; sourceTree = "<group>"; };
+		3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZhiFuCollectionCell.xib; sourceTree = "<group>"; };
+		3249B9B91B6F49A20086D030 /* ShouHuoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouHuoCollectionViewCell.h; sourceTree = "<group>"; };
+		3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouHuoCollectionViewCell.m; sourceTree = "<group>"; };
+		3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShouHuoCollectionViewCell.xib; sourceTree = "<group>"; };
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA0F21B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -302,6 +312,12 @@
 				3249B9AF1B6F38D80086D030 /* PersonCenterViewController10.h */,
 				3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */,
 				3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */,
+				3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */,
+				3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */,
+				3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */,
+				3249B9B91B6F49A20086D030 /* ShouHuoCollectionViewCell.h */,
+				3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */,
+				3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -592,6 +608,8 @@
 				3249B9A41B6F38A20086D030 /* PersonCenterViewController7.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
+				3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */,
+				3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
 				3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */,
@@ -642,6 +660,7 @@
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
 				3249B98A1B6F38410086D030 /* PersonCenterViewController2.m in Sources */,
+				3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */,
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
 				3249B9941B6F38660086D030 /* PersonCenterViewController4.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
@@ -650,6 +669,7 @@
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
+				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
