@@ -21,6 +21,9 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"登录";
     self.infoLabel.hidden = YES;
+    _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _passwordTextField.secureTextEntry = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,6 +40,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark -----UITextFieldDelegate 
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [textField becomeFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 - (IBAction)loginClicked:(UIButton *)sender {
     NSLog(@"登录");

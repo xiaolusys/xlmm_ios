@@ -11,5 +11,7 @@
 @interface ChildViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
+
 - (IBAction)btnClicked:(UIButton *)sender;
+
 @end

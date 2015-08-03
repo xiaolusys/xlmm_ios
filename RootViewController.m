@@ -23,15 +23,20 @@
 
 @interface RootViewController (){
     BOOL isToday;//
+    BOOL isLogin;
     NSMutableArray *_prePosterArray;//保存昨日海报数据
     NSMutableArray *_todayPosterArray;//存储今日海报数据
+    
     NSMutableArray *_todayPromoteChildArray;//今日推荐
     NSMutableArray *_todayPromoteLadyArray;
+    
     NSMutableArray *_prePromoteChildArray;//昨日推荐
     NSMutableArray *_prePromoteLadyArray;
+    
     //保存下载的数据
     NSMutableData *_data;
     
+    //
     PosterView *posterViewOwner;
     GoodsView *ownerGoodsView;
     LadyView *ownerLadyView;
@@ -42,9 +47,12 @@
 
 @implementation RootViewController
 
+
+
 - (void)viewWillAppear:(BOOL)animated{
   //  NSLog(@"appear");
     [super viewWillAppear:animated];
+    
     NSArray *buttonArray = [self.buttonView subviews];
     for (UIButton *button in buttonArray) {
         button.backgroundColor = [UIColor clearColor];
@@ -58,29 +66,31 @@
     ownerGoodsView = [GoodsView new];
     ownerLadyView = [LadyView new];
     isToday = YES;
+    isLogin = NO;
     self.title = @"小鹿美美";
-  //  NSLog(@"root");
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     [self setInfo];
     [self setTitleImage];
-  // [self downloadData];
+    [self downloadData];
+   
     
-    LogInViewController *login = [[LogInViewController alloc] init];
-    [self.navigationController pushViewController:login animated:YES];
-  
     
     
 }
 
+
+
 - (void)downloadData{
+
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_POSTERS_URL)];
         [self performSelectorOnMainThread:@selector(fetchedTodayPosterData:) withObject:data waitUntilDone:YES];
         
     });//下载今日海报
+    
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_PROMOTE_URL)];
         [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
@@ -92,6 +102,7 @@
         [self performSelectorOnMainThread:@selector(fetchedPreviousPosterData:) withObject:data waitUntilDone:YES];
         
     });//下载昨日海报
+    
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_PROMOTE_URL)];
         [self performSelectorOnMainThread:@selector(fetchedPreviouspromoteData:) withObject:data waitUntilDone:YES];
@@ -106,7 +117,7 @@
     _prePromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
-//    NSLog(@"dic = %@", dic);
+    NSLog(@"previous promote = %@", dic);
     if ([childArray count] == 0) {
         return;
     }
@@ -118,9 +129,9 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         [_prePromoteChildArray addObject:model];
-      //  NSLog(@"%@", _prePromoteChildArray);
     }
     [self createChildViewWithArray:_prePromoteChildArray];
+    
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [ladyArray objectAtIndex:i];
@@ -141,8 +152,12 @@
     _todayPromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
-   // NSLog(@"dic today = %@", dic);
+//    NSLog(@"today dic = %@", dic);
     if ([childArray count] == 0) {
+        
+        [self createChildViewWithArray:_todayPromoteChildArray];
+        [self createLadyViewWithArray:_todayPromoteLadyArray];
+        
         return;
     }
     for (int i = 0; i<4; i++) {
@@ -157,6 +172,7 @@
     [self createChildViewWithArray:_todayPromoteChildArray];
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
     for (int i = 0; i<4; i++) {
+        
         NSDictionary *child = [ladyArray objectAtIndex:i];
         LadyModel *model = [[LadyModel alloc] init];
         model.imageURL = [child objectForKey:@"pic_path"];
@@ -172,36 +188,50 @@
     NSError *error;
     _prePosterArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    //NSLog(@"poster = %@", dic);
+    NSLog(@"previous poster = %@", dic);
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
+   // NSLog(@"poster Array = %ld", (long)wemArray.count);
     if ([wemArray count] == 0) {
         return;
     }
     NSDictionary *wonmendic = [wemArray objectAtIndex:0];
     NSArray *nameArr = [wonmendic objectForKey:@"subject"];
+    
     PosterModel *model = [PosterModel new];
     model.imageURL = [wonmendic objectForKey:@"pic_link"];
     model.firstName = [nameArr objectAtIndex:0];
     model.secondName = [nameArr objectAtIndex:1];
     [_prePosterArray addObject:model];
-    PosterModel *model2 = [[PosterModel alloc] init];
+    
+    
+ 
     NSArray *childArray = [dic objectForKey:@"chd_posters"];
     NSDictionary *childdic = [childArray objectAtIndex:0];
     NSArray *nameArr2 = [childdic objectForKey:@"subject"];
+    
+    PosterModel *model2 = [[PosterModel alloc] init];
     model2.imageURL = [childdic objectForKey:@"pic_link"];
     model2.firstName = [nameArr2 objectAtIndex:0];
     model2.secondName = [nameArr2 objectAtIndex:1];
     [_prePosterArray addObject:model2];
+    
     [self createPosterViewWithArray:_prePosterArray];
 }
+
+//今日海报 JSON 数据解析
 - (void)fetchedTodayPosterData:(NSData *)responseData{
     NSError *error;
     _todayPosterArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-  //  NSLog(@"today poster = %@", dic);
+   // NSLog(@"today poster = %@", dic);
    
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
   //  NSLog(@"%@", wemArray);
+    if (wemArray.count == 0) {
+        [self createPosterViewWithArray:_todayPosterArray];
+        
+        return;
+    }
     
 
     NSDictionary *wonmendic = [wemArray objectAtIndex:0];
@@ -212,10 +242,12 @@
     model.firstName = [nameArr objectAtIndex:0];
     model.secondName = [nameArr objectAtIndex:1];
     [_todayPosterArray addObject:model];
-    PosterModel *model2 = [[PosterModel alloc] init];
+    
+   
     NSArray *childArray = [dic objectForKey:@"chd_posters"];
     NSDictionary *childdic = [childArray objectAtIndex:0];
     NSArray *nameArr2 = [childdic objectForKey:@"subject"];
+    PosterModel *model2 = [[PosterModel alloc] init];
     model2.imageURL = [childdic objectForKey:@"pic_link"];
     model2.firstName = [nameArr2 objectAtIndex:0];
     model2.secondName = [nameArr2 objectAtIndex:1];
@@ -270,7 +302,9 @@
     {
         [view removeFromSuperview];
     }
+    
     if ([array count] == 0) {
+        [self createDefaultPosterView];
         return;
     }
     for (int i = 0; i<2; i++) {
@@ -291,15 +325,33 @@
     
 }
 
+- (void)createDefaultPosterView{
+    
+    for (int i = 0; i<2; i++) {
+        [[NSBundle mainBundle] loadNibNamed:@"PosterView" owner:posterViewOwner options:nil];
+        CGRect rect = CGRectMake(0, 0 + 185 * i, SCREENWIDTH, 185);
+        posterViewOwner.posterView.frame = rect;
+        [_posterView addSubview:posterViewOwner.posterView];
+        UIButton *btn = [[UIButton alloc] initWithFrame:rect];
+        btn.tag = 200 + i;
+        btn.backgroundColor = [UIColor clearColor];
+        [btn addTarget:self action:@selector(imageClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_posterView addSubview:btn];
+    }
+
+}
+
 - (void) createChildViewWithArray:(NSMutableArray *)array{
     
     for (UIView *view in [_childView subviews]) {
         [view removeFromSuperview];
     }
+    
     if ([array count] == 0) {
         [self createDefaultChildView];
         return;
     }
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -319,6 +371,8 @@
     timaLabel.textColor = [UIColor whiteColor];
     [imageView addSubview:timaLabel];
     [self.childView addSubview:imageView];
+    
+    
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
@@ -343,6 +397,7 @@
 }
 
 - (void)createDefaultChildView{
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -362,6 +417,8 @@
     timaLabel.textColor = [UIColor whiteColor];
     [imageView addSubview:timaLabel];
     [self.childView addSubview:imageView];
+    
+    
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
@@ -378,16 +435,20 @@
             [_childView addSubview:btn];
         }
     }
+    
 }
 
 - (void)createLadyViewWithArray:(NSMutableArray *)array{
+    
     for (UIView *view in [_ladyView subviews]) {
         [view removeFromSuperview];
     }
+    
     if ([array count] == 0) {
         [self createDefaultLadyView];
         return;
     }
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -429,9 +490,11 @@
             [_ladyView addSubview:btn];
         }
     }
+    
 }
 
 - (void)createDefaultLadyView{
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     imageView.backgroundColor = [UIColor orangeColor];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
@@ -451,6 +514,8 @@
     timaLabel.textColor = [UIColor whiteColor];
     [imageView addSubview:timaLabel];
     [self.ladyView addSubview:imageView];
+    
+    
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
@@ -467,6 +532,7 @@
             [_ladyView addSubview:btn];
         }
     }
+    
 }
 
 
@@ -474,8 +540,14 @@
 #pragma mark ------btnclicked--------
 
 - (void)login:(UIButton *)button{
-    LogInViewController *login = [[LogInViewController alloc] init];
-    [self.navigationController pushViewController:login animated:YES];
+    if (!isLogin) {
+        LogInViewController *login = [[LogInViewController alloc] init];
+        [self.navigationController pushViewController:login animated:YES];
+    
+    }else{
+        
+    }
+  
 }
 
 - (void)backButtonClicked:(UIButton *)button{
@@ -483,7 +555,8 @@
 }
 
 - (IBAction)btnClicked:(UIButton *)sender {
-    for (int i = 101; i<= 104; i++) {
+    
+    for (int i = 101; i<= 102; i++) {
         if (sender.tag == i) {
             sender.backgroundColor = [UIColor orangeColor];
         } else {
@@ -519,7 +592,6 @@
         [self.navigationController pushViewController:childVC animated:YES];
         
     } else if (sender.tag == 104){
-        NSLog(@"104");
         WomanViewController *womanVC = [[WomanViewController alloc] init];
         [self.navigationController pushViewController:womanVC animated:YES];
     

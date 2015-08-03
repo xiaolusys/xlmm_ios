@@ -9,12 +9,15 @@
 #import "ChildViewController.h"
 #import "LogInViewController.h"
 #import "PeopleCollectionCell.h"
+#import "PeopleModel.h"
 
 #import "MMClass.h"
 
+#define ksampleCell @"sampleCell"
+
 @interface ChildViewController ()
 
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -32,21 +35,39 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-    NSMutableArray *firstSection = [[NSMutableArray alloc] init];
-    NSMutableArray *secondSection = [[NSMutableArray alloc] init];
-    for (int i=0; i<50; i++){
-        [firstSection addObject:[NSString stringWithFormat:@"单元格 %d", i]];
-        [secondSection addObject:[NSString stringWithFormat:@"数据项 %d", i]];
-    }
-    self.dataArray = [[NSArray alloc] initWithObjects:firstSection, secondSection, nil];
-    
-  [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"PeopleCollectionCell"];
+        
+  [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksampleCell];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(172, 220)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     
+    [self downloadData];
+    
+}
+
+- (void)downloadData{
+    dispatch_sync(kBgQueue, ^{
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kCHILD_LIST_URL)];
+        [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
+    });
+}
+
+- (void)mmParseData:(NSData *)responseData{
+    NSError *error;
+    _dataArray = [[NSMutableArray alloc] init];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+
+    NSArray *array = [json objectForKey:@"results"];
+    for (NSDictionary *dic in array) {
+        PeopleModel *model = [[PeopleModel alloc] init];
+        model.imageURL = [dic objectForKey:@"pic_path"];
+        model.name = [dic objectForKey:@"name"];
+        model.price = [dic objectForKey:@"agent_price"];
+        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+        [_dataArray addObject:model];
+    }
 }
 
 #pragma mark  -----CollectionViewDelete----
@@ -55,19 +76,22 @@
 
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return 22;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSMutableArray *data = [self.dataArray objectAtIndex:indexPath.section];
-    NSString *cellData = [data objectAtIndex:indexPath.row];
-    NSLog(@"data = %@", cellData);
-    static NSString *cellIdentifier = @"PeopleCollectionCell";
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-//    UILabel *titleLabel = (UILabel *)[cell viewWithTag:10];
-//    titleLabel.text = cellData;
+   
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksampleCell forIndexPath:indexPath];
+    [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"selected");
+}
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
 }
 
 

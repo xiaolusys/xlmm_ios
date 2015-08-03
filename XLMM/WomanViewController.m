@@ -29,7 +29,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self setInfo];
+    [self setLayout];
+   //注册信息。。。
+    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSampleCell];
+    
+    
+    
+    
+    [self downloadData];
+    
+}
+
+- (void)setLayout{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(172, 220)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
+    [self.womanCollectionView setCollectionViewLayout:flowLayout];
+}
+
+- (void)setInfo{
     self.title = @"时尚女装";
+    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 30, 30);
     [rightButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
@@ -38,15 +60,9 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-   
-    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSampleCell];
-    
-    
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(172, 220)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
-    [self.womanCollectionView setCollectionViewLayout:flowLayout];
-    
+}
+
+- (void)downloadData{
     dispatch_sync(kBgQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kLADY_LIST_URL)];
         [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
@@ -77,7 +93,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return 23;
     
 }
 
@@ -88,6 +104,13 @@
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"selected");
+}
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
 }
 
 #pragma mark  -----btnClicked:-----

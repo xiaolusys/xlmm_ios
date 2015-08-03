@@ -64,6 +64,10 @@
 		32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9601B6CCA41008530BA /* AFURLResponseSerialization.m */; };
 		32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9621B6CCA41008530BA /* AFURLSessionManager.m */; };
 		32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9641B6CCA41008530BA /* Reachability.m */; };
+		32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D96F1B6CCBCE008530BA /* Security.framework */; };
+		32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
+		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
+		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +186,10 @@
 		32F3D9621B6CCA41008530BA /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		32F3D9631B6CCA41008530BA /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		32F3D9641B6CCA41008530BA /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		32F3D96F1B6CCBCE008530BA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +197,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */,
+				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
+				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
+				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +220,10 @@
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
+				32F3D9751B6CCF83008530BA /* CoreLocation.framework */,
+				32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */,
+				32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */,
+				32F3D96F1B6CCBCE008530BA /* Security.framework */,
 				325BA11C1B68BA1B006D64BD /* goodsthumb.png */,
 				325DF9411B69B38400351ACA /* poster1.png */,
 				325DF9431B69B38900351ACA /* poster2.png */,
