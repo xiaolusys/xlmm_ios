@@ -84,6 +84,8 @@
 		3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
+		32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E329971B70C70000A6F0BC /* DetailViewController.m */; };
+		32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E329981B70C70000A6F0BC /* DetailViewController.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -239,6 +241,9 @@
 		3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32E329621B708A4000A6F0BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		32E329961B70C70000A6F0BC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		32E329971B70C70000A6F0BC /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		32E329981B70C70000A6F0BC /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		32F3D9501B6CCA41008530BA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		32F3D9521B6CCA41008530BA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -457,6 +462,9 @@
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
+				32E329961B70C70000A6F0BC /* DetailViewController.h */,
+				32E329971B70C70000A6F0BC /* DetailViewController.m */,
+				32E329981B70C70000A6F0BC /* DetailViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -619,6 +627,7 @@
 				3249B99A1B6F38770086D030 /* PersonCenterViewController5.xib in Resources */,
 				3264EA2B1B6C5D8700F36A8D /* WomanViewController.xib in Resources */,
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
+				32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */,
 				3249B9AE1B6F38C20086D030 /* PersonCenterViewController9.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
@@ -702,6 +711,7 @@
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
 				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
+				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,

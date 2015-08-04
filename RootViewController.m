@@ -21,6 +21,8 @@
 #import "ChildViewController.h"
 #import "WomanViewController.h"
 #import "PersonCenterViewController.h"
+#import "DetailViewController.h"
+
 
 
 
@@ -175,7 +177,7 @@
     _todayPromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
-//    NSLog(@"today dic = %@", dic);
+   // NSLog(@"today dic = %@", dic);
     if ([childArray count] == 0) {
         
         [self createChildViewWithArray:_todayPromoteChildArray];
@@ -190,13 +192,19 @@
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
-        model.productModel = [child objectForKey:@"product_model"];
-        NSDictionary *dic = [child objectForKey:@"product_model"];
-        if (dic != nil) {
-            NSLog(@" dic = %@", dic);
 
+        NSDictionary *dic = [child objectForKey:@"product_model"];
+        if ([dic class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            model.productModel = dic;
+            model.headImageURLArray = [dic objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic objectForKey:@"content_imgs"];
+           // NSLog(@"%@\n%@", model.headImageURLArray, model.contentImageURLArray);
+            
         }
-      
+       
+        
         [_todayPromoteChildArray addObject:model];
     }
     [self createChildViewWithArray:_todayPromoteChildArray];
@@ -209,6 +217,16 @@
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic2 = [child objectForKey:@"product_model"];
+        if ([dic2 class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            model.productModel = dic2;
+            model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        }
+        
         [_todayPromoteLadyArray addObject:model];
     }
     [self createLadyViewWithArray:_todayPromoteLadyArray];
@@ -416,6 +434,8 @@
             ownerGoodsView.nameLabel.text = model.name;
             ownerGoodsView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
             ownerGoodsView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
+        
+            
             [_childView addSubview:ownerGoodsView.view];
             UIButton *btn = [[UIButton alloc] initWithFrame:rect];
             btn.tag = i*2 +j + 300;
@@ -646,21 +666,146 @@
 
 - (void)goodsClicked:(UIButton *)button{
     if (button.tag == 300) {
-        NSLog(@"300");
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        ChildModel *model = [_todayPromoteChildArray objectAtIndex:0];
+        if (model.productModel != nil) {
+            
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+            
+            
+            
+        } else{
+            NSLog(@"单品");
+        }
     } else if (button.tag == 301){
-        NSLog(@"301");
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        ChildModel *model = [_todayPromoteChildArray objectAtIndex:1];
+        if (model.productModel != nil) {
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+            
+        }else{
+            NSLog(@"单品");
+        }
+        
     } else if (button.tag == 302){
-        NSLog(@"302");
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        ChildModel *model = [_todayPromoteChildArray objectAtIndex:2];
+        if (model.productModel != nil) {
+            
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+            
+        }else{
+            NSLog(@"单品");
+        }
+        
     } else if (button.tag == 303){
-        NSLog(@"303");
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        ChildModel *model = [_todayPromoteChildArray objectAtIndex:3];
+        if (model.productModel != nil) {
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+            
+            
+        }else{
+            NSLog(@"单品");
+        }
+        
     } else if (button.tag == 400){
-        NSLog(@"400");
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        LadyModel *model = _todayPromoteLadyArray[0];
+        if (model.productModel == nil) {
+            NSLog(@"单品");
+            
+     
+            
+            
+            
+        }else{
+            
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+        
     } else if (button.tag == 401){
-        NSLog(@"401");
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        LadyModel *model = _todayPromoteLadyArray[1];
+        if (model.productModel == nil) {
+            NSLog(@"单品");
+        }else{
+            
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+
     } else if (button.tag == 402){
-        NSLog(@"402");
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        LadyModel *model = _todayPromoteLadyArray[2];
+        if (model.productModel == nil) {
+            NSLog(@"单品");
+        }else{
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            
+            
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+
     } else if (button.tag == 403){
-        NSLog(@"403");
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        LadyModel *model = _todayPromoteLadyArray[3];
+        if (model.productModel == nil) {
+            NSLog(@"单品");
+        }else{
+            
+            DetailViewController *detailVC = [[DetailViewController alloc] init];
+            detailVC.headImageUrlArray = model.headImageURLArray;
+            detailVC.contentImageUrlArray = model.contentImageURLArray;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+
     }
 }
 
