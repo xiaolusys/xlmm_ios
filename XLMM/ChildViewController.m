@@ -40,7 +40,8 @@
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     
     [self downloadData];
@@ -48,19 +49,28 @@
 }
 
 - (void)downloadData{
+    
     dispatch_sync(kBgQueue, ^{
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kCHILD_LIST_URL)];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://youni.huyi.so/rest/v1/products/childlist"]];
+        
+        
+        if (data == nil) {
+            return ;
+        }
+        
         [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
     });
 }
 
 - (void)mmParseData:(NSData *)responseData{
     NSError *error;
+    
     _dataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 
     NSArray *array = [json objectForKey:@"results"];
-    for (NSDictionary *dic in array) {
+    
+      for (NSDictionary *dic in array) {
         PeopleModel *model = [[PeopleModel alloc] init];
         model.imageURL = [dic objectForKey:@"pic_path"];
         model.name = [dic objectForKey:@"name"];
@@ -76,14 +86,14 @@
 
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 22;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
    
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksampleCell forIndexPath:indexPath];
-    [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
+   [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
     return cell;
 }
 

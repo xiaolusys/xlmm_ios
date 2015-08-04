@@ -38,7 +38,7 @@
     
     
     
-    [self downloadData];
+   [self downloadData];
     
 }
 
@@ -65,6 +65,9 @@
 - (void)downloadData{
     dispatch_sync(kBgQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kLADY_LIST_URL)];
+        if (data == nil) {
+            return ;
+        }
         [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
     });
 }
@@ -93,7 +96,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 23;
+    return self.dataArray.count;
     
 }
 
@@ -103,6 +106,7 @@
   
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
+
     return cell;
 }
 

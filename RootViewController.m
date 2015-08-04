@@ -23,9 +23,10 @@
 #import "PersonCenterViewController.h"
 
 
+
 @interface RootViewController (){
     BOOL isToday;//
-    BOOL isLogin;
+
     NSMutableArray *_prePosterArray;//保存昨日海报数据
     NSMutableArray *_todayPosterArray;//存储今日海报数据
     
@@ -68,18 +69,25 @@
     ownerGoodsView = [GoodsView new];
     ownerLadyView = [LadyView new];
     isToday = YES;
-    isLogin = NO;
+//    isLogin = NO;
     //self.title = @"小鹿美美";
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:kIsLogin];
+    [userDefaults synchronize];
+    
+    
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     [self setInfo];
     [self setTitleImage];
-    //[self downloadData];
-   
-    PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
-    [self.navigationController pushViewController:personCenter animated:YES];
+    [self downloadData];
+ 
+    [self createDefaultLadyView];
+    [self createDefaultChildView];
+    [self createDefaultPosterView];
     
     
 }
@@ -90,24 +98,36 @@
 
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_POSTERS_URL)];
+        if (data == nil) {
+            return ;
+        }
         [self performSelectorOnMainThread:@selector(fetchedTodayPosterData:) withObject:data waitUntilDone:YES];
         
     });//下载今日海报
     
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_PROMOTE_URL)];
+        if (data == nil) {
+            return ;
+        }
         [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
         
     });//下载今日推荐
     
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_POSTERS_URL)];
+        if (data == nil) {
+            return ;
+        }
         [self performSelectorOnMainThread:@selector(fetchedPreviousPosterData:) withObject:data waitUntilDone:YES];
         
     });//下载昨日海报
     
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_PROMOTE_URL)];
+        if (data == nil) {
+            return ;
+        }
         [self performSelectorOnMainThread:@selector(fetchedPreviouspromoteData:) withObject:data waitUntilDone:YES];
     });//下载昨日推荐
 }
@@ -120,7 +140,7 @@
     _prePromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
-    NSLog(@"previous promote = %@", dic);
+   // NSLog(@"previous promote = %@", dic);
     if ([childArray count] == 0) {
         return;
     }
@@ -170,6 +190,13 @@
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        model.productModel = [child objectForKey:@"product_model"];
+        NSDictionary *dic = [child objectForKey:@"product_model"];
+        if (dic != nil) {
+            NSLog(@" dic = %@", dic);
+
+        }
+      
         [_todayPromoteChildArray addObject:model];
     }
     [self createChildViewWithArray:_todayPromoteChildArray];
@@ -191,7 +218,7 @@
     NSError *error;
     _prePosterArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    NSLog(@"previous poster = %@", dic);
+   // NSLog(@"previous poster = %@", dic);
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
    // NSLog(@"poster Array = %ld", (long)wemArray.count);
     if ([wemArray count] == 0) {
@@ -543,7 +570,11 @@
 #pragma mark ------btnclicked--------
 
 - (void)login:(UIButton *)button{
-    if (isLogin) {
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [userDefault boolForKey:kIsLogin];
+    
+    if (!isLogin) {
         
         LogInViewController *login = [[LogInViewController alloc] init];
         [self.navigationController pushViewController:login animated:YES];

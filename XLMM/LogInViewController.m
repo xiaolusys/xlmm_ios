@@ -8,6 +8,9 @@
 
 #import "LogInViewController.h"
 #import "RegisterViewController.h"
+#import "ModifyPasswordViewController.h"
+#import "MMClass.h"
+
 
 
 @interface LogInViewController ()
@@ -16,6 +19,15 @@
 
 @implementation LogInViewController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    _userIDTextField.text = [userDefault objectForKey:kUserName];
+    _passwordTextField.text = [userDefault objectForKey:kPassWord];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -23,6 +35,8 @@
     self.infoLabel.hidden = YES;
     _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTextField.secureTextEntry = YES;
+    
+    
     
 }
 
@@ -58,10 +72,16 @@
 
 - (IBAction)loginClicked:(UIButton *)sender {
     NSLog(@"登录");
+    if (YES) {
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        [userDefault setBool:YES forKey:kIsLogin];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
+    [self.navigationController pushViewController:[[ModifyPasswordViewController alloc] init] animated:YES];
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {

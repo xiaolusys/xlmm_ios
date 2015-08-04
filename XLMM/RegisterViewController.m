@@ -58,13 +58,53 @@
                                 @"password2":password2,
                                 };
     
-    [manager POST:@"http://192.168.1.41:8000/rest/v1/register/check_code_user" parameters:parameters
+    [manager POST:@"http://youni.huyi.so/rest/v1/register/check_code_user" parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
+            //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
+                          // [self.navigationController popViewControllerAnimated:YES];
+         
+              int result = [[responseObject objectForKey:@"result"] intValue];
+            
+              NSLog(@"result = %d", result);
+              if (YES) {
+                  self.passwordLabel.text = @"恭喜你，注册成功!";
+                  self.passwordLabel.hidden = NO;
+                  NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+                  [userDefault setObject:self.numberTextField.text forKey:kUserName];
+                  [userDefault setObject:self.setPasswordTextField.text forKey:kPassWord];
+                  [userDefault synchronize];
+                  
+                  
+              } else if(result == 0){
+                  self.passwordLabel.text = @"该手机已注册，请输入新的手机号";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 1){
+                  self.passwordLabel.text = @"验证码输入错误，请重新输入";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 2){
+                  self.passwordLabel.text = @"表单填写有误，请重新输入";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 3){
+                  self.passwordLabel.text = @"未获取验证码，请先获取验证码";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 4){
+                  self.passwordLabel.text = @" ";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 5){
+                  self.passwordLabel.text = @" ";
+                  self.passwordLabel.hidden = NO;
+              } else if(result == 6){
+                  self.passwordLabel.text = @" ";
+                  self.passwordLabel.hidden = NO;
+              }
+             
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
               NSLog(@"Error: %@", error);
+              
+              
           }];
 
 
@@ -79,10 +119,19 @@
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
     NSDictionary *parameters = @{@"vmobile": phoneNumber};
     
-    [manager POST:@"http://192.168.1.41:8000/rest/v1/register" parameters:parameters
+    [manager POST:@"http://youni.huyi.so/rest/v1/register" parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
              NSLog(@"JSON: %@", responseObject);
+             NSString *string = [responseObject objectForKey:@"result"];
+             if ([string isEqualToString:@"false"]) {
+                 self.infoLabel.text = @"您输入的号码错误!";
+                 self.infoLabel.hidden = NO;
+             } else{
+                 self.infoLabel.hidden = YES;
+             }
+             //[self.navigationController popViewControllerAnimated:YES];
+             
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              

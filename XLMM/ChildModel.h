@@ -14,6 +14,10 @@
 @property (nonatomic, copy)NSString *price;
 @property (nonatomic, copy)NSString *oldPrice;
 @property (nonatomic, copy)NSString *name;
+@property (nonatomic, copy)NSString *productModel;
+@property (nonatomic, copy)NSDictionary *productName;
+@property (nonatomic, copy)NSArray *headImageURLArray;
+@property (nonatomic, copy)NSArray *contentImageURLArray;
 
 
 

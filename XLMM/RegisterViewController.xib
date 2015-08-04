@@ -22,9 +22,22 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="此手机号码已注册，您可尝试修改密码~" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caN-TF-ldi">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="WXI-KI-bRW"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="WXI-KI-bRW"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="WXI-KI-bRW"/>
+                        </mask>
+                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bv5-wg-zEK">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -55,9 +68,22 @@
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次密码输入不一致，请重新输入～" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjw-mg-Zjh">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="uSL-hl-eYK"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="uSL-hl-eYK"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="uSL-hl-eYK"/>
+                        </mask>
+                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置密码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BF3-YQ-0Da">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -103,7 +129,7 @@
                 <constraint firstItem="5db-gs-ILT" firstAttribute="bottom" secondItem="1zI-ty-f4U" secondAttribute="bottom" id="ABI-ox-2Ai"/>
                 <constraint firstAttribute="trailing" secondItem="yhV-af-hK7" secondAttribute="trailing" constant="30" id="Ah5-By-dVj"/>
                 <constraint firstItem="ACE-Jx-PTo" firstAttribute="bottom" secondItem="bv5-wg-zEK" secondAttribute="bottom" id="B6B-yF-eWA"/>
-                <constraint firstItem="caN-TF-ldi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="BZn-29-5vw"/>
+                <constraint firstItem="caN-TF-ldi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="BZn-29-5vw"/>
                 <constraint firstItem="1xd-EC-sFi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="CYR-Ge-K1g"/>
                 <constraint firstItem="2gw-5t-Pwm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="CpR-Cy-4cx"/>
                 <constraint firstAttribute="trailing" secondItem="mm7-3F-530" secondAttribute="trailing" constant="30" id="Csr-uD-ySk"/>
