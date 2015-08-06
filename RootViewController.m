@@ -11,7 +11,6 @@
 #import "PosterView.h"
 #import "GoodsView.h"
 #import "LadyView.h"
-#import "PreviousViewController.h"
 #import "PosterModel.h"
 #import "ChildModel.h"
 #import "LadyModel.h"

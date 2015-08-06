@@ -52,7 +52,7 @@
 }
 
 - (void)setInfo{
-    self.title = @"时尚女装";
+
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
     navLabel.text = @"时尚女装";
     navLabel.textColor = [UIColor orangeColor];

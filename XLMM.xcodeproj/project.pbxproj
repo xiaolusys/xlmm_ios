@@ -51,7 +51,6 @@
 		325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9491B69BD9D00351ACA /* GoodsView.xib */; };
 		325DF94D1B69D94400351ACA /* LadyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF94C1B69D94400351ACA /* LadyView.m */; };
 		325DF94F1B69D96800351ACA /* LadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF94E1B69D96800351ACA /* LadyView.xib */; };
-		325DF9521B69F79400351ACA /* PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9511B69F79400351ACA /* PreviousViewController.m */; };
 		325DF9551B69FD8600351ACA /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
 		325DF9581B6A2B6F00351ACA /* ChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9571B6A2B6F00351ACA /* ChildModel.m */; };
 		325DF95B1B6A2B8100351ACA /* LadyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF95A1B6A2B8100351ACA /* LadyModel.m */; };
@@ -184,8 +183,6 @@
 		325DF94B1B69D94400351ACA /* LadyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyView.h; sourceTree = "<group>"; };
 		325DF94C1B69D94400351ACA /* LadyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyView.m; sourceTree = "<group>"; };
 		325DF94E1B69D96800351ACA /* LadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyView.xib; sourceTree = "<group>"; };
-		325DF9501B69F79400351ACA /* PreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviousViewController.h; sourceTree = "<group>"; };
-		325DF9511B69F79400351ACA /* PreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviousViewController.m; sourceTree = "<group>"; };
 		325DF9531B69FD8600351ACA /* PosterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterModel.h; sourceTree = "<group>"; };
 		325DF9541B69FD8600351ACA /* PosterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterModel.m; sourceTree = "<group>"; };
 		325DF9561B6A2B6F00351ACA /* ChildModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildModel.h; sourceTree = "<group>"; };
@@ -390,8 +387,6 @@
 				325BA1001B68B18A006D64BD /* LaunchScreen.xib */,
 				325DF9451B69BCE200351ACA /* views */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
-				325DF9501B69F79400351ACA /* PreviousViewController.h */,
-				325DF9511B69F79400351ACA /* PreviousViewController.m */,
 			);
 			path = XLMM;
 			sourceTree = "<group>";
@@ -678,7 +673,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				325DF9521B69F79400351ACA /* PreviousViewController.m in Sources */,
 				325DF95B1B6A2B8100351ACA /* LadyModel.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,

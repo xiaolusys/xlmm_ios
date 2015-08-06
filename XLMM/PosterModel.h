@@ -13,6 +13,7 @@
 @property (nonatomic, copy)NSString *imageURL;
 @property (nonatomic, copy)NSString *firstName;
 @property (nonatomic, copy)NSString *secondName;
+@property (nonatomic, copy)NSString *activiteTime;
 
 
 @end
