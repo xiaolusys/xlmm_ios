@@ -12,6 +12,8 @@
 #import "PeopleCollectionCell.h"
 #import "PeopleModel.h"
 #import "UIImageView+WebCache.h"
+#import "DetailViewController.h"
+#import "PurchaseViewController.h"
 
 #define kSampleCell @"sampleCell"
 
@@ -51,6 +53,13 @@
 
 - (void)setInfo{
     self.title = @"时尚女装";
+    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
+    navLabel.text = @"时尚女装";
+    navLabel.textColor = [UIColor orangeColor];
+    navLabel.font = [UIFont boldSystemFontOfSize:24];
+    navLabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = navLabel;
+    
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 30, 30);
@@ -84,6 +93,18 @@
         model.name = [dic objectForKey:@"name"];
         model.price = [dic objectForKey:@"agent_price"];
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
+        if ([dic2 class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            model.productModel = dic2;
+            model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        }
+        
+        
+        
         [self.dataArray addObject:model];
     }
     [self.womanCollectionView reloadData];
@@ -111,7 +132,25 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"selected");
+    
+    
+    
+    if (_dataArray.count == 0) {
+        return;
+    }
+    PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
+    if (model.productModel == nil) {
+        NSLog(@"没有集合页面");
+        PurchaseViewController *purchaseVC = [[PurchaseViewController alloc] init];
+        [self.navigationController pushViewController:purchaseVC animated:YES];
+        
+    } else{
+        DetailViewController *detailVC = [[DetailViewController alloc] init];
+        detailVC.headImageUrlArray = model.headImageURLArray;
+        detailVC.contentImageUrlArray = model.contentImageURLArray;
+        [self.navigationController pushViewController:detailVC animated:YES];
+        
+    }
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;

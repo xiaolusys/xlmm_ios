@@ -22,6 +22,7 @@
 #import "WomanViewController.h"
 #import "PersonCenterViewController.h"
 #import "DetailViewController.h"
+#import "PurchaseViewController.h"
 
 
 
@@ -45,6 +46,9 @@
     PosterView *posterViewOwner;
     GoodsView *ownerGoodsView;
     LadyView *ownerLadyView;
+    
+    UILabel *childTimeLabel;
+    UILabel *ladyTimeLabel;
 
 }
 
@@ -58,10 +62,7 @@
   //  NSLog(@"appear");
     [super viewWillAppear:animated];
     
-    NSArray *buttonArray = [self.buttonView subviews];
-    for (UIButton *button in buttonArray) {
-        button.backgroundColor = [UIColor clearColor];
-    }
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,7 +72,7 @@
     ownerGoodsView = [GoodsView new];
     ownerLadyView = [LadyView new];
     isToday = YES;
-//    isLogin = NO;
+
     //self.title = @"小鹿美美";
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -80,16 +81,18 @@
     
     
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
+    
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
+    
     [self setInfo];
+    
     [self setTitleImage];
+    
     [self downloadData];
  
-    [self createDefaultLadyView];
-    [self createDefaultChildView];
-    [self createDefaultPosterView];
+
     
     
 }
@@ -116,6 +119,9 @@
         
     });//下载今日推荐
     
+}
+
+- (void)downloadPreData{
     dispatch_async(kBgQueue, ^(){
         NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_POSTERS_URL)];
         if (data == nil) {
@@ -132,6 +138,7 @@
         }
         [self performSelectorOnMainThread:@selector(fetchedPreviouspromoteData:) withObject:data waitUntilDone:YES];
     });//下载昨日推荐
+
 }
 
 #pragma mark ---JSON 解析 ------
@@ -153,11 +160,31 @@
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic = [child objectForKey:@"product_model"];
+        
+       // NSLog(@"%@", [dic class]);
+       // NSLog(@"%@", [NSNull null]);
+        
+        if ([dic class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            
+            model.productModel = dic;
+            model.headImageURLArray = [dic objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic objectForKey:@"content_imgs"];
+            
+        }
+        
+        
         [_prePromoteChildArray addObject:model];
     }
     [self createChildViewWithArray:_prePromoteChildArray];
     
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
+    if (ladyArray.count == 0) {
+        return;
+    }
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [ladyArray objectAtIndex:i];
         LadyModel *model = [[LadyModel alloc] init];
@@ -165,6 +192,17 @@
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic2 = [child objectForKey:@"product_model"];
+        if ([dic2 class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            model.productModel = dic2;
+            model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        }
+        
+        
         [_prePromoteLadyArray addObject:model];
     }
     [self createLadyViewWithArray:_prePromoteLadyArray];
@@ -180,8 +218,8 @@
    // NSLog(@"today dic = %@", dic);
     if ([childArray count] == 0) {
         
-        [self createChildViewWithArray:_todayPromoteChildArray];
-        [self createLadyViewWithArray:_todayPromoteLadyArray];
+        [self createDefaultChildView];
+        [self createDefaultLadyView];
         
         return;
     }
@@ -200,8 +238,6 @@
             model.productModel = dic;
             model.headImageURLArray = [dic objectForKey:@"head_imgs"];
             model.contentImageURLArray = [dic objectForKey:@"content_imgs"];
-           // NSLog(@"%@\n%@", model.headImageURLArray, model.contentImageURLArray);
-            
         }
        
         
@@ -209,6 +245,10 @@
     }
     [self createChildViewWithArray:_todayPromoteChildArray];
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
+    if (ladyArray.count == 0) {
+        [self createDefaultLadyView];
+        return;
+    }
     for (int i = 0; i<4; i++) {
         
         NSDictionary *child = [ladyArray objectAtIndex:i];
@@ -276,8 +316,7 @@
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
   //  NSLog(@"%@", wemArray);
     if (wemArray.count == 0) {
-        [self createPosterViewWithArray:_todayPosterArray];
-        
+        [self createDefaultPosterView];
         return;
     }
     
@@ -310,7 +349,7 @@
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
     navLabel.text = KTITLENAME;
     navLabel.textColor = [UIColor orangeColor];
-    navLabel.font = [UIFont systemFontOfSize:30];
+    navLabel.font = [UIFont boldSystemFontOfSize:30];
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
  //   NSLog(@"%f", self.widthView.constant);
@@ -614,36 +653,39 @@
 
 - (IBAction)btnClicked:(UIButton *)sender {
     
-    for (int i = 101; i<= 102; i++) {
-        if (sender.tag == i) {
-            sender.backgroundColor = [UIColor orangeColor];
-        } else {
-            UIButton *btn = (UIButton *)[self.view viewWithTag:i];
-            btn.backgroundColor = [UIColor whiteColor];
-        }
-    }
+//    for (int i = 101; i<= 102; i++) {
+//        if (sender.tag == i) {
+//            sender.backgroundColor = [UIColor orangeColor];
+//        } else {
+//            UIButton *btn = (UIButton *)[self.view viewWithTag:i];
+//            btn.backgroundColor = [UIColor whiteColor];
+//        }
+//    }
+   
     if (sender.tag == 101) {
-        
+        [self downloadData];
+        sender.backgroundColor = [UIColor orangeColor];
+        UIButton *btn = (UIButton *)[self.view viewWithTag:102];
+        btn.backgroundColor = [UIColor whiteColor];
         if (!isToday) {
-            
-
             isToday = YES;
-            [self createPosterViewWithArray:_todayPosterArray];
-            [self createChildViewWithArray:_todayPromoteChildArray];
-            [self createLadyViewWithArray:_todayPromoteLadyArray];
             self.headViewHeight.constant = 40;
+           
 
         }
+        
+        
     } else if (sender.tag == 102){
-       
+        [self downloadPreData];
+        sender.backgroundColor = [UIColor orangeColor];
+        UIButton *btn = (UIButton *)[self.view viewWithTag:101];
+        btn.backgroundColor = [UIColor whiteColor];
         if (isToday) {
-
             isToday = NO;
-            [self createPosterViewWithArray:_prePosterArray];
-            [self createChildViewWithArray:_prePromoteChildArray];
-            [self createLadyViewWithArray:_prePromoteLadyArray];
             self.headViewHeight.constant = 0;
+          
         }
+        
         
     } else if (sender.tag == 103){
         ChildViewController *childVC = [[ChildViewController alloc] init];
@@ -658,9 +700,17 @@
 
 - (void)imageClicked:(UIButton *)button{
     if (button.tag == 200) {
-        NSLog(@"200");
+        WomanViewController *womanVC = [[WomanViewController alloc] init];
+        [self.navigationController pushViewController:womanVC animated:YES];
+    
+    
+    
     } else if (button.tag == 201){
-        NSLog(@"201");
+        ChildViewController *childVC = [[ChildViewController alloc] init];
+        [self.navigationController pushViewController:childVC animated:YES];
+    
+    
+    
     }
 }
 
@@ -669,143 +719,240 @@
         if (_todayPromoteChildArray.count == 0) {
             return;
         }
-        ChildModel *model = [_todayPromoteChildArray objectAtIndex:0];
-        if (model.productModel != nil) {
-            
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
-            
-            
-            
-            
-        } else{
-            NSLog(@"单品");
+        if (isToday) {
+            ChildModel *model = [_todayPromoteChildArray objectAtIndex:0];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
+        } else {
+            ChildModel *model = [_prePromoteChildArray objectAtIndex:0];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
         }
     } else if (button.tag == 301){
         if (_todayPromoteChildArray.count == 0) {
             return;
         }
-        ChildModel *model = [_todayPromoteChildArray objectAtIndex:1];
-        if (model.productModel != nil) {
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
-            
-            
-        }else{
-            NSLog(@"单品");
+        if (isToday) {
+            ChildModel *model = [_todayPromoteChildArray objectAtIndex:1];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
+        } else {
+            ChildModel *model = [_prePromoteChildArray objectAtIndex:1];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
         }
+        
         
     } else if (button.tag == 302){
         if (_todayPromoteChildArray.count == 0) {
             return;
         }
-        ChildModel *model = [_todayPromoteChildArray objectAtIndex:2];
-        if (model.productModel != nil) {
-            
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
-            
-            
-        }else{
-            NSLog(@"单品");
+        if (isToday) {
+            ChildModel *model = [_todayPromoteChildArray objectAtIndex:2];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
+        } else {
+            ChildModel *model = [_prePromoteChildArray objectAtIndex:2];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
         }
         
     } else if (button.tag == 303){
         if (_todayPromoteChildArray.count == 0) {
             return;
         }
-        ChildModel *model = [_todayPromoteChildArray objectAtIndex:3];
-        if (model.productModel != nil) {
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
-            
-            
-            
-        }else{
-            NSLog(@"单品");
+        if (isToday) {
+            ChildModel *model = [_todayPromoteChildArray objectAtIndex:3];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
+        } else {
+            ChildModel *model = [_prePromoteChildArray objectAtIndex:3];
+            if (model.productModel != nil) {
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }
         }
         
     } else if (button.tag == 400){
         if (_todayPromoteLadyArray.count == 0) {
             return;
         }
-        LadyModel *model = _todayPromoteLadyArray[0];
-        if (model.productModel == nil) {
-            NSLog(@"单品");
-            
-     
-            
-            
-            
-        }else{
-            
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
+        if (isToday) {
+            LadyModel *model = _todayPromoteLadyArray[0];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        } else {
+            LadyModel *model = _prePromoteLadyArray[0];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
         }
-        
     } else if (button.tag == 401){
         if (_todayPromoteLadyArray.count == 0) {
             return;
         }
-        LadyModel *model = _todayPromoteLadyArray[1];
-        if (model.productModel == nil) {
-            NSLog(@"单品");
-        }else{
-            
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
+        if (isToday) {
+            LadyModel *model = _todayPromoteLadyArray[1];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        } else {
+            LadyModel *model = _prePromoteLadyArray[1];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
         }
 
     } else if (button.tag == 402){
         if (_todayPromoteLadyArray.count == 0) {
             return;
         }
-        LadyModel *model = _todayPromoteLadyArray[2];
-        if (model.productModel == nil) {
-            NSLog(@"单品");
-        }else{
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            
-            
-            [self.navigationController pushViewController:detailVC animated:YES];
+        if (isToday) {
+            LadyModel *model = _todayPromoteLadyArray[2];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        } else {
+            LadyModel *model = _prePromoteLadyArray[2];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
         }
 
     } else if (button.tag == 403){
         if (_todayPromoteLadyArray.count == 0) {
             return;
         }
-        LadyModel *model = _todayPromoteLadyArray[3];
-        if (model.productModel == nil) {
-            NSLog(@"单品");
-        }else{
-            
-            DetailViewController *detailVC = [[DetailViewController alloc] init];
-            detailVC.headImageUrlArray = model.headImageURLArray;
-            detailVC.contentImageUrlArray = model.contentImageURLArray;
-            [self.navigationController pushViewController:detailVC animated:YES];
+        if (isToday) {
+            LadyModel *model = _todayPromoteLadyArray[3];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+        } else {
+            LadyModel *model = _prePromoteLadyArray[3];
+            if (model.productModel == nil) {
+                NSLog(@"单品");
+                PurchaseViewController *purVC = [[PurchaseViewController alloc] init];
+                [self.navigationController pushViewController:purVC animated:YES];
+            }else{
+                DetailViewController *detailVC = [[DetailViewController alloc] init];
+                detailVC.headImageUrlArray = model.headImageURLArray;
+                detailVC.contentImageUrlArray = model.contentImageURLArray;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
         }
-
     }
 }
 

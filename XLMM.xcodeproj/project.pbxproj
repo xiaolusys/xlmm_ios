@@ -66,6 +66,9 @@
 		3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */; };
 		3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */; };
 		3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA321B6C850100F36A8D /* PeopleModel.m */; };
+		326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E888F1B71FDD800D15973 /* PurchaseViewController.m */; };
+		326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 326E88901B71FDD800D15973 /* PurchaseViewController.xib */; };
+		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -206,6 +209,11 @@
 		3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleCollectionCell.xib; sourceTree = "<group>"; };
 		3264EA311B6C850100F36A8D /* PeopleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleModel.h; sourceTree = "<group>"; };
 		3264EA321B6C850100F36A8D /* PeopleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleModel.m; sourceTree = "<group>"; };
+		326E888E1B71FDD800D15973 /* PurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController.h; sourceTree = "<group>"; };
+		326E888F1B71FDD800D15973 /* PurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController.m; sourceTree = "<group>"; };
+		326E88901B71FDD800D15973 /* PurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController.xib; sourceTree = "<group>"; };
+		326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithUrl.h"; sourceTree = "<group>"; };
+		326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithUrl.m"; sourceTree = "<group>"; };
 		3282F25E1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3282F2601B6B5B1300E73EB9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -341,6 +349,8 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
+				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
 				32E329621B708A4000A6F0BC /* Foundation.framework */,
 				32E329601B708A3600A6F0BC /* UIKit.framework */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
@@ -465,6 +475,9 @@
 				32E329961B70C70000A6F0BC /* DetailViewController.h */,
 				32E329971B70C70000A6F0BC /* DetailViewController.m */,
 				32E329981B70C70000A6F0BC /* DetailViewController.xib */,
+				326E888E1B71FDD800D15973 /* PurchaseViewController.h */,
+				326E888F1B71FDD800D15973 /* PurchaseViewController.m */,
+				326E88901B71FDD800D15973 /* PurchaseViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -631,6 +644,7 @@
 				3249B9AE1B6F38C20086D030 /* PersonCenterViewController9.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
+				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				3249B9A41B6F38A20086D030 /* PersonCenterViewController7.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
@@ -667,6 +681,7 @@
 				325DF9521B69F79400351ACA /* PreviousViewController.m in Sources */,
 				325DF95B1B6A2B8100351ACA /* LadyModel.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
+				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
 				3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */,
 				3249B9B21B6F38D80086D030 /* PersonCenterViewController10.m in Sources */,
 				3249B9AD1B6F38C20086D030 /* PersonCenterViewController9.m in Sources */,
@@ -705,6 +720,7 @@
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
+				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
