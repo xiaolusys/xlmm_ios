@@ -129,13 +129,8 @@
     if (model.productModel == nil) {
         NSLog(@"没有集合页面");
         
-        PurchaseViewController *purchaseVC = [[PurchaseViewController alloc] init];
-        [self.navigationController pushViewController:purchaseVC animated:YES];
-    } else{
-        DetailViewController *detailVC = [[DetailViewController alloc] init];
-        detailVC.headImageUrlArray = model.headImageURLArray;
-        detailVC.contentImageUrlArray = model.contentImageURLArray;
-        [self.navigationController pushViewController:detailVC animated:YES];
+        } else{
+     
 
     }
    
