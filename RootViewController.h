@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RootViewController : UIViewController <NSURLConnectionDataDelegate>
+@interface RootViewController : UIViewController <NSURLConnectionDataDelegate>{
+    
+}
 
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 

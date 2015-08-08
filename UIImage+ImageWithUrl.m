@@ -11,11 +11,7 @@
 @implementation UIImage (ImageWithUrl)
 
 +(UIImage *)imagewithURLString:(NSString *)urlString{
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *image = [UIImage imageWithData:data];
-    return image;
+    return [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
 }
 
 @end

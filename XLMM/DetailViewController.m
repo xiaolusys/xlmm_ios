@@ -27,26 +27,23 @@
 - (void)viewDidDisappear:(BOOL)animated{
 
 
+    
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
+}
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
-    navLabel.text = @"商品详情";
-    navLabel.textColor = [UIColor orangeColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:24];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 30, 30);
-    [rightButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
+//    self.headImageUrlArray = [[NSMutableArray alloc] init];
+//    self.contentImageUrlArray = [[NSMutableArray alloc] init];
+
+#if 1
     
     imageArray = [[NSMutableArray alloc] init];
     
@@ -139,7 +136,7 @@
         self.view4Height.constant = 0;
     }
  
-    
+#endif
     
     // Do any additional setup after loading the view from its nib.
     
@@ -159,7 +156,7 @@
     CGSize viewSize=_scrollView.frame.size;
     [_scrollView setContentOffset:CGPointMake((pageNum+1)*viewSize.width, 0)];
     NSLog(@"myscrollView.contentOffSet.x==%f",_scrollView.contentOffset.x);
-    NSLog(@"pageControl currentPage==%ld",_pageControl.currentPage);
+    NSLog(@"pageControl currentPage==%ld",(long)_pageControl.currentPage);
     [myTimer invalidate];
     
 }
@@ -212,18 +209,18 @@
     if (currentPage==0) {
         [_scrollView scrollRectToVisible:CGRectMake(pageWidth*imageArray.count, 0, pageWidth, pageHeigth) animated:NO];
         _pageControl.currentPage=imageArray.count-1;
-        NSLog(@"pageControl currentPage==%ld",_pageControl.currentPage);
+        NSLog(@"pageControl currentPage==%ld",(long)_pageControl.currentPage);
         NSLog(@"the last image");
         return;
     }else  if(currentPage==[imageArray count]+1){
         [_scrollView scrollRectToVisible:CGRectMake(pageWidth, 0, pageWidth, pageHeigth) animated:NO];
         _pageControl.currentPage=0;
-        NSLog(@"pageControl currentPage==%ld",_pageControl.currentPage);
+        NSLog(@"pageControl currentPage==%ld",(long)_pageControl.currentPage);
         NSLog(@"the first image");
         return;
     }
     _pageControl.currentPage=currentPage-1;
-    NSLog(@"pageControl currentPage==%ld",_pageControl.currentPage);
+    NSLog(@"pageControl currentPage==%ld",(long)_pageControl.currentPage);
     
 }
 

@@ -24,6 +24,9 @@
 
 - (IBAction)btnClicked:(UIButton *)sender;
 
+
+
+
 @property (nonatomic, copy)NSArray *headImageUrlArray;
 @property (nonatomic, copy)NSArray *contentImageUrlArray;
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface GoodsView : UIView
+
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

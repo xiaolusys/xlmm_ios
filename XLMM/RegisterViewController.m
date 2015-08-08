@@ -67,7 +67,7 @@
               int result = [[responseObject objectForKey:@"result"] intValue];
             
               NSLog(@"result = %d", result);
-              if (YES) {
+              if (result == 7) {
                   self.passwordLabel.text = @"恭喜你，注册成功!";
                   self.passwordLabel.hidden = NO;
                   NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];

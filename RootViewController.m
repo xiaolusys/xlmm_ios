@@ -8,23 +8,6 @@
 
 #import "RootViewController.h"
 #import "MMClass.h"
-#import "PosterView.h"
-#import "GoodsView.h"
-#import "LadyView.h"
-#import "PosterModel.h"
-#import "ChildModel.h"
-#import "LadyModel.h"
-#import "LogInViewController.h"
-#import "RegisterViewController.h"
-#import "UIImageView+WebCache.h"
-#import "ChildViewController.h"
-#import "WomanViewController.h"
-#import "PersonCenterViewController.h"
-#import "DetailViewController.h"
-#import "PurchaseViewController.h"
-
-
-
 
 @interface RootViewController (){
     BOOL isToday;//
@@ -38,16 +21,22 @@
     NSMutableArray *_prePromoteChildArray;//昨日推荐
     NSMutableArray *_prePromoteLadyArray;
     
+    NSMutableArray *_ModelListArray;
+    
     //保存下载的数据
     NSMutableData *_data;
     
-    //
+    //视图
     PosterView *posterViewOwner;
     GoodsView *ownerGoodsView;
     LadyView *ownerLadyView;
     
+    //显示剩余时间
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
+    
+    UILabel *poster1TimeLabel;
+    UILabel *poster2TimeLabel;
 
 }
 
@@ -70,30 +59,75 @@
     posterViewOwner = [PosterView new];
     ownerGoodsView = [GoodsView new];
     ownerLadyView = [LadyView new];
+    _ModelListArray = [[NSMutableArray alloc] init];
     isToday = YES;
-
-    //self.title = @"小鹿美美";
+    self.widthView.constant = SCREENWIDTH;//设置视图的大小
+    self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
+    self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
+    self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
     [userDefaults synchronize];
     
-    
-    self.widthView.constant = SCREENWIDTH;//设置视图的大小
-    
-    self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
-    self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
-    self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
-    
     [self setInfo];
-    
     [self setTitleImage];
-    
     [self downloadData];
- 
+ }
 
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
     
     
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    NSDate *date = [NSDate date];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitWeekday |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    //int week=0;
+    comps = [calendar components:unitFlags fromDate:date];
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+ 
+    //NSLog(@"第%d周, %d-%d-%d  %d:%d:%d",week, year, month, day, hour, min, sec);
+   
+    int nextday = day + 1;
+    NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:nextday];
+    [endTime setHour:14];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+
+    NSDate *todate = [cal dateFromComponents:endTime]; //把目标时间装载入date
+    
+    //用来得到具体的时差
+
+    NSDateComponents *d = [cal components:unitFlags fromDate:date toDate:todate options:0];
+    NSString *str = nil;
+    if ([d day] == 0 ) {
+        str = [NSString stringWithFormat:@"%ld时%ld分%ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+    }else{
+    str = [NSString stringWithFormat:@"%ld天%ld时%ld分%ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+    }
+    
+    poster1TimeLabel.text = str;
+    poster2TimeLabel.text = str;
+    childTimeLabel.text = str;
+    ladyTimeLabel.text = str;
+
 }
 
 
@@ -154,11 +188,12 @@
     }
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [childArray objectAtIndex:i];
-        ChildModel *model = [[ChildModel alloc] init];
+        PeopleModel *model = [[PeopleModel alloc] init];
         model.imageURL = [child objectForKey:@"pic_path"];
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        model.url = [child objectForKey:@"url"];
         
         NSDictionary *dic = [child objectForKey:@"product_model"];
         
@@ -185,14 +220,15 @@
         return;
     }
     for (int i = 0; i<4; i++) {
-        NSDictionary *child = [ladyArray objectAtIndex:i];
-        LadyModel *model = [[LadyModel alloc] init];
-        model.imageURL = [child objectForKey:@"pic_path"];
-        model.name = [child objectForKey:@"name"];
-        model.price = [child objectForKey:@"agent_price"];
-        model.oldPrice = [child objectForKey:@"std_sale_price"];
+        NSDictionary *lady = [ladyArray objectAtIndex:i];
+        PeopleModel *model = [[PeopleModel alloc] init];
+        model.imageURL = [lady objectForKey:@"pic_path"];
+        model.name = [lady objectForKey:@"name"];
+        model.price = [lady objectForKey:@"agent_price"];
+        model.oldPrice = [lady objectForKey:@"std_sale_price"];
+        model.url = [lady objectForKey:@"url"];
         
-        NSDictionary *dic2 = [child objectForKey:@"product_model"];
+        NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;
         } else{
@@ -224,11 +260,12 @@
     }
     for (int i = 0; i<4; i++) {
         NSDictionary *child = [childArray objectAtIndex:i];
-        ChildModel *model = [[ChildModel alloc] init];
+        PeopleModel *model = [[PeopleModel alloc] init];
         model.imageURL = [child objectForKey:@"pic_path"];
         model.name = [child objectForKey:@"name"];
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
+        model.url = [child objectForKey:@"url"];
 
         NSDictionary *dic = [child objectForKey:@"product_model"];
         if ([dic class] == [NSNull class]) {
@@ -250,14 +287,15 @@
     }
     for (int i = 0; i<4; i++) {
         
-        NSDictionary *child = [ladyArray objectAtIndex:i];
-        LadyModel *model = [[LadyModel alloc] init];
-        model.imageURL = [child objectForKey:@"pic_path"];
-        model.name = [child objectForKey:@"name"];
-        model.price = [child objectForKey:@"agent_price"];
-        model.oldPrice = [child objectForKey:@"std_sale_price"];
+        NSDictionary *lady = [ladyArray objectAtIndex:i];
+        PeopleModel *model = [[PeopleModel alloc] init];
+        model.imageURL = [lady objectForKey:@"pic_path"];
+        model.name = [lady objectForKey:@"name"];
+        model.price = [lady objectForKey:@"agent_price"];
+        model.oldPrice = [lady objectForKey:@"std_sale_price"];
+        model.url = [lady objectForKey:@"url"];
         
-        NSDictionary *dic2 = [child objectForKey:@"product_model"];
+        NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;
         } else{
@@ -275,9 +313,7 @@
     NSError *error;
     _prePosterArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-   // NSLog(@"previous poster = %@", dic);
     NSArray *wemArray = [dic objectForKey:@"wem_posters"];
-   // NSLog(@"poster Array = %ld", (long)wemArray.count);
     if ([wemArray count] == 0) {
         return;
     }
@@ -345,41 +381,47 @@
 
 - (void)setInfo{
     //导航栏标题
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
-    navLabel.text = KTITLENAME;
-    navLabel.textColor = [UIColor orangeColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:30];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
+ 
+    
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 147, 40)];
+    UIImage *image = [UIImage imageNamed:@"font-logo.png"];
+    imageView.image = image;
+    self.navigationItem.titleView = imageView;
  //   NSLog(@"%f", self.widthView.constant);
     //左边返回按钮
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0, 0, 40 , 40);
-    [backButton setBackgroundImage:LOADIMAGE(@"") forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    UIImageView *leftImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-xiaolu.png"]];
+    leftImage.frame = CGRectMake(0, 0, 64, 40);
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftImage];
     self.navigationItem.leftBarButtonItem = leftItem;
     //右边登陆按钮
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 30, 30);
-    [rightButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 44, 44);
+    
+    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:LOADIMAGE(@"icon-gerenzhongxin.png")];
+    rightImageView.frame = CGRectMake(14, 5, 29, 33);
+    [rightButton addSubview:rightImageView];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 2, 1, 40)];
+    view.backgroundColor = [UIColor darkGrayColor];
+    [rightButton addSubview:view];
     [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setTitleImage{
-    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 240, 30)];
-    imageView.backgroundColor = [UIColor redColor];
-    imageView.layer.cornerRadius = 14;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 240, 30)];
-    label.text = @"每天10:00  新品上线";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
-    label.textAlignment = NSTextAlignmentCenter;
-    [imageView addSubview:label];
-    self.headView.backgroundColor = [UIColor whiteColor];
+    
+   
+    
+    
+    
+    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 271, 35)];
+    imageView.image = [UIImage imageNamed:@"font-xinpin.png"];
+
+   
     [self.headView addSubview:imageView];
 }
 
@@ -402,14 +444,45 @@
         posterViewOwner.rightLabel.text = model.secondName;
         [posterViewOwner.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
         [_posterView addSubview:posterViewOwner.posterView];
-        UIButton *btn = [[UIButton alloc] initWithFrame:rect];
+        CGRect btnframe = CGRectMake(0, 0+185*i, SCREENWIDTH-80, 185);
+        UIButton *btn = [[UIButton alloc] initWithFrame:btnframe];
         btn.tag = 200 + i;
         btn.backgroundColor = [UIColor clearColor];
         [btn addTarget:self action:@selector(imageClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_posterView addSubview:btn];
+        
+        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 170, 100, 240, 36)];
+        timeView.tag = 888;
+        timeView.backgroundColor = [UIColor blackColor];
+        timeView.layer.cornerRadius = 18;
+        timeView.alpha = 0.7f;
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-shengyu2.png"]];
+        imageView.frame = CGRectMake(6, 6, 24, 24);
+        imageView.userInteractionEnabled = NO;
+        [timeView addSubview:imageView];
+   
+
+        if (i == 0) {
+            poster1TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 160, 36)];
+            poster1TimeLabel.textColor = [UIColor whiteColor];
+            [timeView addSubview:poster1TimeLabel];
+        }
+        
+        if (i == 1) {
+            poster2TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 160, 36)];
+            poster2TimeLabel.textColor = [UIColor whiteColor];
+            [timeView addSubview:poster2TimeLabel];
+            
+        }
+        [posterViewOwner.posterView addSubview:timeView];
+        
+        
+       
     }
     
 }
+
+
 
 - (void)createDefaultPosterView{
     
@@ -438,26 +511,12 @@
         return;
     }
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
-    imageView.backgroundColor = [UIColor orangeColor];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
-    view.layer.cornerRadius = 4;
-    view.backgroundColor = [UIColor whiteColor];
-    [imageView addSubview:view];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.text = @"潮童专区";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
-    [imageView addSubview:label];
-    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
-    timaLabel.textAlignment = NSTextAlignmentLeft;
-    timaLabel.text = @"剩余2天1小时";
-    timaLabel.font = [UIFont systemFontOfSize:16];
-    timaLabel.textColor = [UIColor whiteColor];
-    [imageView addSubview:timaLabel];
-    [self.childView addSubview:imageView];
-    
+    [self.childView addSubview:[self createHeadViewWithTitle:@"潮童专区"]];
+
+    childTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH-140, 5, 160, 30)];
+    childTimeLabel.font = [UIFont boldSystemFontOfSize:18];
+    childTimeLabel.textColor = [UIColor whiteColor];
+    [self.childView addSubview:childTimeLabel];
     
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
@@ -467,7 +526,7 @@
             [[NSBundle mainBundle] loadNibNamed:@"GoodsView" owner:ownerGoodsView options:nil];
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
             ownerGoodsView.view.frame = rect;
-            ChildModel *model = (ChildModel *)[array objectAtIndex:(i*2 + j)];
+            PeopleModel *model = (PeopleModel *)[array objectAtIndex:(i*2 + j)];
             [ownerGoodsView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerGoodsView.nameLabel.text = model.name;
             ownerGoodsView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
@@ -486,25 +545,7 @@
 
 - (void)createDefaultChildView{
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
-    imageView.backgroundColor = [UIColor orangeColor];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
-    view.layer.cornerRadius = 4;
-    view.backgroundColor = [UIColor whiteColor];
-    [imageView addSubview:view];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.text = @"潮童专区";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
-    [imageView addSubview:label];
-    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
-    timaLabel.textAlignment = NSTextAlignmentLeft;
-    timaLabel.text = @"剩余2天1小时";
-    timaLabel.font = [UIFont systemFontOfSize:16];
-    timaLabel.textColor = [UIColor whiteColor];
-    [imageView addSubview:timaLabel];
-    [self.childView addSubview:imageView];
+    [self.childView addSubview:[self createHeadViewWithTitle:@"潮童专区"]];
     
     
     NSInteger margin = 5;
@@ -537,25 +578,13 @@
         return;
     }
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
-    imageView.backgroundColor = [UIColor orangeColor];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
-    view.layer.cornerRadius = 4;
-    view.backgroundColor = [UIColor whiteColor];
-    [imageView addSubview:view];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.text = @"时尚女装";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
-    [imageView addSubview:label];
-    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
-    timaLabel.textAlignment = NSTextAlignmentLeft;
-    timaLabel.text = @"剩余2天1小时";
-    timaLabel.font = [UIFont systemFontOfSize:16];
-    timaLabel.textColor = [UIColor whiteColor];
-    [imageView addSubview:timaLabel];
-    [self.ladyView addSubview:imageView];
+    [self.ladyView addSubview:[self createHeadViewWithTitle:@"时尚女装"]];
+    
+    ladyTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH-140, 5, 160, 30)];
+    ladyTimeLabel.font = [UIFont boldSystemFontOfSize:18];
+    ladyTimeLabel.textColor = [UIColor whiteColor];
+    [self.ladyView addSubview:ladyTimeLabel];
+    
     NSInteger margin = 5;
     NSInteger width = (SCREENWIDTH - 3 * margin)/2;
     NSInteger height = 230;
@@ -565,7 +594,7 @@
             [[NSBundle mainBundle] loadNibNamed:@"LadyView" owner:ownerLadyView options:nil];
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
             ownerLadyView.view.frame = rect;
-            LadyModel *model = (LadyModel *)[array objectAtIndex:i*2 + j];
+            PeopleModel *model = (PeopleModel *)[array objectAtIndex:i*2 + j];
             [ownerLadyView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerLadyView.nameLabel.text = model.name;
             ownerLadyView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
@@ -581,27 +610,30 @@
     
 }
 
-- (void)createDefaultLadyView{
-    
+- (UIImageView *)createHeadViewWithTitle:(NSString *)name {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
-    imageView.backgroundColor = [UIColor orangeColor];
+    imageView.backgroundColor = [UIColor colorWithR:84 G:199 B:189 alpha:1];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(8, 12, 16, 16)];
     view.layer.cornerRadius = 4;
     view.backgroundColor = [UIColor whiteColor];
     [imageView addSubview:view];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, 160, 30)];
     label.textAlignment = NSTextAlignmentLeft;
-    label.text = @"时尚女装";
+    label.text = name;
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:22];
     [imageView addSubview:label];
-    UILabel *timaLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH/2, 5, 140, 30)];
-    timaLabel.textAlignment = NSTextAlignmentLeft;
-    timaLabel.text = @"剩余2天1小时";
-    timaLabel.font = [UIFont systemFontOfSize:16];
-    timaLabel.textColor = [UIColor whiteColor];
-    [imageView addSubview:timaLabel];
-    [self.ladyView addSubview:imageView];
+    UIImageView *timeview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-shengyu2.png"]];
+    timeview.frame = CGRectMake(SCREENWIDTH - 170, 8, 24, 24);
+    [imageView addSubview:timeview];
+   
+    
+    return imageView;
+}
+
+- (void)createDefaultLadyView{
+    
+    [self.ladyView addSubview:[self createHeadViewWithTitle:@"时尚女装"]];
     
     
     NSInteger margin = 5;
@@ -648,6 +680,7 @@
 
 - (void)backButtonClicked:(UIButton *)button{
     NSLog(@"back");
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)btnClicked:(UIButton *)sender {
@@ -663,9 +696,9 @@
    
     if (sender.tag == 101) {
         [self downloadData];
-        sender.backgroundColor = [UIColor orangeColor];
+        sender.backgroundColor = [UIColor colorWithR:84 G:199 B:189 alpha:1];
         UIButton *btn = (UIButton *)[self.view viewWithTag:102];
-        btn.backgroundColor = [UIColor whiteColor];
+        btn.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
         if (!isToday) {
             isToday = YES;
             self.headViewHeight.constant = 40;
@@ -676,9 +709,9 @@
         
     } else if (sender.tag == 102){
         [self downloadPreData];
-        sender.backgroundColor = [UIColor orangeColor];
+        sender.backgroundColor = [UIColor colorWithR:84 G:199 B:189 alpha:1];
         UIButton *btn = (UIButton *)[self.view viewWithTag:101];
-        btn.backgroundColor = [UIColor whiteColor];
+        btn.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
         if (isToday) {
             isToday = NO;
             self.headViewHeight.constant = 0;
@@ -713,22 +746,148 @@
     }
 }
 
+- (void)fetchedDetailsData:(NSData *)responseData{
+    NSError *error = nil;
+    NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    MMLOG(detailsInfo);
+    DetailsModel *model = [[DetailsModel alloc] init];
+    model.name = [detailsInfo objectForKey:@"name"];
+    model.productID = [detailsInfo objectForKey:@"outer_id"];
+    model.isSaleOpen = [[detailsInfo objectForKey:@"is_saleopen"] boolValue];
+    model.isSaleOut = [[detailsInfo objectForKey:@"is_saleout"] boolValue];
+    model.isNewGood = [[detailsInfo objectForKey:@"is_newgood"] boolValue];
+    model.remainNumber = [[detailsInfo objectForKey:@"remain_num"] integerValue];
+    model.price = [NSString stringWithFormat:@"￥%@",[detailsInfo objectForKey:@"agent_price"]];
+    model.oldPrice= [NSString stringWithFormat:@"￥%@", [detailsInfo objectForKey:@"std_sale_price"]];
+    NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
+    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in goodsArray) {
+        NSString *size = [dic objectForKey:@"name"];
+        [arrayData addObject:size];
+    }
+    model.sizeArray = arrayData;
+    MMLOG(model.sizeArray);
+   
+    NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
+    
+    
+    
+    model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+    model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+    
+    
+    DetailViewController *detailsVC = [[DetailViewController alloc] init];
+    detailsVC.headImageUrlArray = model.headImageURLArray;
+    detailsVC.contentImageUrlArray = model.contentImageURLArray;
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+    
+    
+}
+
+- (void)fetchedModelListData:(NSData *)responseDate{
+    
+    NSError *error = nil;
+    NSArray *modelListArray = [NSJSONSerialization JSONObjectWithData:responseDate options:kNilOptions error:&error];
+   // MMLOG(modelListArray);
+    [_ModelListArray removeAllObjects];
+    for (NSDictionary *dic in modelListArray) {
+        CollectionModel *model = [[CollectionModel alloc] init];
+        model.productID = [dic objectForKey:@"id"];
+        model.urlStirng = [dic objectForKey:@"url"];
+        model.outerID = [dic objectForKey:@"outer_id"];
+        model.imageURL = [dic objectForKey:@"pic_path"];
+        model.name = [dic objectForKey:@"name"];
+        model.price = [dic objectForKey:@"agent_price"];
+        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
+        model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+        model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        
+        [_ModelListArray addObject:model];
+    }
+    CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
+    collectionVC.collectionArray = _ModelListArray;
+    
+    MMLOG(collectionVC.collectionArray);
+    [self.navigationController pushViewController:collectionVC animated:YES];
+    
+}
+
+
+
+- (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
+    NSString *modelID = [productModel objectForKey:@"id"];
+    NSString *modelListUrlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", modelID];
+    
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(modelListUrlString)];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedModelListData:) withObject:data waitUntilDone:YES];
+        
+    });
+}
+- (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    MMLOG(urlString);
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
+        
+    });
+    
+}
+- (void)downloadDetailsDataWithLadyModel:(PeopleModel *)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    MMLOG(urlString);
+    
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
+        
+    });
+    
+}
+
+
 - (void)goodsClicked:(UIButton *)button{
     if (button.tag == 300) {
         if (_todayPromoteChildArray.count == 0) {
             return;
         }
         if (isToday) {
-            ChildModel *model = [_todayPromoteChildArray objectAtIndex:0];
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:0];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+                
+                
+                
                           } else {
                 NSLog(@"单品");
+                              [self downloadDetailsDataWithChildModel:model];          ;
+                              
+                              
+                              
                          }
         } else {
-            ChildModel *model = [_prePromoteChildArray objectAtIndex:0];
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:0];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
                            } else {
                 NSLog(@"单品");
+                               [self downloadDetailsDataWithChildModel:model];
                          }
         }
     } else if (button.tag == 301){
@@ -736,17 +895,25 @@
             return;
         }
         if (isToday) {
-            ChildModel *model = [_todayPromoteChildArray objectAtIndex:1];
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:1];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
               
             } else {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithChildModel:model];
                           }
         } else {
-            ChildModel *model = [_prePromoteChildArray objectAtIndex:1];
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:1];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
                           } else {
                 NSLog(@"单品");
+                              [self downloadDetailsDataWithChildModel:model];
                
             }
         }
@@ -757,19 +924,27 @@
             return;
         }
         if (isToday) {
-            ChildModel *model = [_todayPromoteChildArray objectAtIndex:2];
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:2];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
               
             } else {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithChildModel:model];
               
             }
         } else {
-            ChildModel *model = [_prePromoteChildArray objectAtIndex:2];
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:2];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
              
             } else {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithChildModel:model];
                         }
         }
         
@@ -778,18 +953,28 @@
             return;
         }
         if (isToday) {
-            ChildModel *model = [_todayPromoteChildArray objectAtIndex:3];
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:3];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
                          } else {
+                             
+                             [self downloadDetailsDataWithChildModel:model];
                 NSLog(@"单品");
              
             }
         } else {
-            ChildModel *model = [_prePromoteChildArray objectAtIndex:3];
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:3];
             if (model.productModel != nil) {
+                
+                [self downloadModelListDataWithProductModel:model.productModel];
+
                
             } else {
                 NSLog(@"单品");
+                
+                [self downloadDetailsDataWithChildModel:model];
                           }
         }
         
@@ -798,17 +983,27 @@
             return;
         }
         if (isToday) {
-            LadyModel *model = _todayPromoteLadyArray[0];
+            PeopleModel *model = _todayPromoteLadyArray[0];
             if (model.productModel == nil) {
+                
+
                 NSLog(@"单品");
+                
+                [self downloadDetailsDataWithLadyModel:model];
                       }else{
+                          
+                          [self downloadModelListDataWithProductModel:model.productModel];
+
                           }
         } else {
-            LadyModel *model = _prePromoteLadyArray[0];
+            PeopleModel *model = _prePromoteLadyArray[0];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
                          }else{
          
+                             [self downloadModelListDataWithProductModel:model.productModel];
+
             }
         }
     } else if (button.tag == 401){
@@ -816,21 +1011,27 @@
             return;
         }
         if (isToday) {
-            LadyModel *model = _todayPromoteLadyArray[1];
+            PeopleModel *model = _todayPromoteLadyArray[1];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
               
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
 
             }
         } else {
-            LadyModel *model = _prePromoteLadyArray[1];
+            PeopleModel *model = _prePromoteLadyArray[1];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
                
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
 
             }
         }
@@ -840,21 +1041,27 @@
             return;
         }
         if (isToday) {
-            LadyModel *model = _todayPromoteLadyArray[2];
+            PeopleModel *model = _todayPromoteLadyArray[2];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
                
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
 
             }
         } else {
-            LadyModel *model = _prePromoteLadyArray[2];
+            PeopleModel *model = _prePromoteLadyArray[2];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
              
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
 
             }
         }
@@ -864,21 +1071,27 @@
             return;
         }
         if (isToday) {
-            LadyModel *model = _todayPromoteLadyArray[3];
+            PeopleModel *model = _todayPromoteLadyArray[3];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
                
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
 
             }
         } else {
-            LadyModel *model = _prePromoteLadyArray[3];
+            PeopleModel *model = _prePromoteLadyArray[3];
             if (model.productModel == nil) {
                 NSLog(@"单品");
+                [self downloadDetailsDataWithLadyModel:model];
              
             }else{
                 NSLog(@"modleList");
+                [self downloadModelListDataWithProductModel:model.productModel];
+
             }
         }
     }

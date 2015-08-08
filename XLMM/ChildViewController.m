@@ -12,14 +12,21 @@
 #import "PeopleModel.h"
 #import "DetailViewController.h"
 #import "PurchaseViewController.h"
+#import "CollectionModel.h"
+#import "CollectionViewController.h"
+#import "DetailsModel.h"
 
 #import "MMClass.h"
 
 #define ksampleCell @"sampleCell"
 
-@interface ChildViewController ()
+@interface ChildViewController (){
+    NSMutableArray *_ModelListArray;
+
+}
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
+
 
 @end
 
@@ -28,6 +35,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    _ModelListArray = [[NSMutableArray alloc] init];
+
 
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
     navLabel.text = @"潮童专区";
@@ -85,6 +95,7 @@
         model.name = [dic objectForKey:@"name"];
         model.price = [dic objectForKey:@"agent_price"];
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
+          model.url = [dic objectForKey:@"url"];
           
           NSDictionary *dic2 = [dic objectForKey:@"product_model"];
           if ([dic2 class] == [NSNull class]) {
@@ -129,14 +140,105 @@
     if (model.productModel == nil) {
         NSLog(@"没有集合页面");
         
+        
+        [self downloadDetailsDataWithModel:model];
+        
         } else{
      
-
+            [self downloadCollectionDataWithProductModel:model.productModel];
     }
-   
+}
+- (void)fetchedModelListData:(NSData *)responseDate{
+    
+    NSError *error = nil;
+    NSArray *modelListArray = [NSJSONSerialization JSONObjectWithData:responseDate options:kNilOptions error:&error];
+    // MMLOG(modelListArray);
+    [_ModelListArray removeAllObjects];
+    for (NSDictionary *dic in modelListArray) {
+        CollectionModel *model = [[CollectionModel alloc] init];
+        model.productID = [dic objectForKey:@"id"];
+        model.urlStirng = [dic objectForKey:@"url"];
+        model.outerID = [dic objectForKey:@"outer_id"];
+        model.imageURL = [dic objectForKey:@"pic_path"];
+        model.name = [dic objectForKey:@"name"];
+        model.price = [dic objectForKey:@"agent_price"];
+        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+        
+        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
+        model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+        model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        
+        
+        [_ModelListArray addObject:model];
+    }
+    CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
+    collectionVC.collectionArray = _ModelListArray;
+    
+    MMLOG(collectionVC.collectionArray);
+    [self.navigationController pushViewController:collectionVC animated:YES];
+    
+}
+
+
+- (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
+    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
+    
+    MMLOG(urlString);
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedModelListData:) withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)downloadDetailsDataWithModel:(PeopleModel *)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    
+    MMLOG(urlString);
+    
+    dispatch_async(kBgQueue, ^(){
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)fetchedDetailsData:(NSData *)responseData{
+    NSError *error = nil;
+    NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    MMLOG(detailsInfo);
+    DetailsModel *model = [[DetailsModel alloc] init];
+    model.name = [detailsInfo objectForKey:@"name"];
+    model.productID = [detailsInfo objectForKey:@"outer_id"];
+    model.isSaleOpen = [[detailsInfo objectForKey:@"is_saleopen"] boolValue];
+    model.isSaleOut = [[detailsInfo objectForKey:@"is_saleout"] boolValue];
+    model.isNewGood = [[detailsInfo objectForKey:@"is_newgood"] boolValue];
+    model.remainNumber = [[detailsInfo objectForKey:@"remain_num"] integerValue];
+    model.price = [NSString stringWithFormat:@"￥%@",[detailsInfo objectForKey:@"agent_price"]];
+    model.oldPrice= [NSString stringWithFormat:@"￥%@", [detailsInfo objectForKey:@"std_sale_price"]];
+    NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
+    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in goodsArray) {
+        NSString *size = [dic objectForKey:@"name"];
+        [arrayData addObject:size];
+    }
+    model.sizeArray = arrayData;
+    MMLOG(model.sizeArray);
+    NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
+    model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+    model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
     
     
-    
+    DetailViewController *detailsVC = [[DetailViewController alloc] init];
+    detailsVC.headImageUrlArray = model.headImageURLArray;
+    detailsVC.contentImageUrlArray = model.contentImageURLArray;
+    [self.navigationController pushViewController:detailsVC animated:YES];
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;

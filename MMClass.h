@@ -5,6 +5,24 @@
 //  Created by younishijie on 15/7/29.
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
+#import "PosterView.h"
+#import "GoodsView.h"
+#import "LadyView.h"
+#import "PosterModel.h"
+
+#import "LogInViewController.h"
+#import "RegisterViewController.h"
+#import "UIImageView+WebCache.h"
+#import "ChildViewController.h"
+#import "WomanViewController.h"
+#import "PersonCenterViewController.h"
+#import "DetailViewController.h"
+#import "PurchaseViewController.h"
+#import "CollectionModel.h"
+#import "CollectionViewController.h"
+#import "DetailsModel.h"
+#import "PeopleModel.h"
+#import "UIColor+RGBColor.h"
 
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
