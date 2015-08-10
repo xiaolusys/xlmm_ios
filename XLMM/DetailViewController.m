@@ -26,37 +26,36 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
 
-
+    
     
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleDefault;
+- (void)setviewInfo{
+    self.nameLabel.text = _detailsModel.name;
+    self.priceLabel.text = _detailsModel.price;
+    self.oldPriceLabel.text = _detailsModel.oldPrice;
+    self.productNameLabel.text = _detailsModel.name;
+    self.productName.text = _detailsModel.productID;
 }
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.headImageUrlArray = [[NSMutableArray alloc] init];
-//    self.contentImageUrlArray = [[NSMutableArray alloc] init];
-
-#if 1
+    self.title = @"商品详情";
     
+    [self setviewInfo];
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 18, 31);
+    
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui2.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+
+    self.headImageUrlArray = self.detailsModel.headImageURLArray;
+    self.contentImageUrlArray = self.detailsModel.contentImageURLArray;
     imageArray = [[NSMutableArray alloc] init];
     
     for (NSString *headImageUrl in self.headImageUrlArray) {
-        
-//        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:headImageUrl] options:SDWebImageContinueInBackground progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-//            [imageArray addObject:image];
-//            
-//        }];
-        
-        
-        
-        
         UIImage *image = [UIImage imagewithURLString:headImageUrl];
         [imageArray addObject:image];
     }
@@ -135,20 +134,11 @@
     } else{
         self.view4Height.constant = 0;
     }
- 
-#endif
-    
-    // Do any additional setup after loading the view from its nib.
-    
-    
-    
-//    self.navigationController.navigationBarHidden = NO;
-//    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:1]]]];
-//    self.imageWidth.constant = SCREENWIDTH;
-//    self.imageHeight.constant = image.size.height *SCREENWIDTH/600;
-//    [self.imageView sd_setImageWithURL:[self.contentImageUrlArray objectAtIndex:1]];
-    
-   // NSLog(@"%@\n, %@", self.headImageUrlArray, self.contentImageUrlArray);
+
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)pageTurn:(UIPageControl *)sender{

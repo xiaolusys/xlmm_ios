@@ -7,8 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DetailsModel;
 
 @interface DetailViewController : UIViewController
+
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *productName;
+
+
 
 @property (weak, nonatomic) IBOutlet UIView *headView;
 
@@ -29,6 +44,6 @@
 
 @property (nonatomic, copy)NSArray *headImageUrlArray;
 @property (nonatomic, copy)NSArray *contentImageUrlArray;
-
+@property (nonatomic, strong)DetailsModel *detailsModel;
 
 @end

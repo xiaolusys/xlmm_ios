@@ -24,6 +24,27 @@
     [super viewDidLoad];
     
     self.title = @"剩余2天1小时18分";
+    
+
+  
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 18, 31);
+    
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui2.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 0, 29, 33);
+    [rightButton setBackgroundImage:LOADIMAGE(@"icon-gerenzhongxin.png") forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    
     // Do any additional setup after loading the view from its nib.
     //self.collectionArray = [[NSArray alloc] init];
     [self.collectionView registerClass:[ClothesCollectionCell class] forCellWithReuseIdentifier:@"SimpleCell"];
@@ -36,6 +57,9 @@
     
 }
 
+- (void)login:(UIButton *)button{
+    NSLog(@"登录");
+}
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -54,23 +78,55 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-
-    
-    MMLOG(self.collectionArray);
     CollectionModel *model = (CollectionModel *)[self.collectionArray objectAtIndex:indexPath.row];
-    MMLOG(model);
-    MMLOG(model.headImageURLArray);
-    MMLOG(model.contentImageURLArray);
+    NSString *urlstring = [NSString stringWithFormat:@"%@/details", model.urlStirng];
+    MMLOG(urlstring);
     
-    DetailViewController *detailVC = [[DetailViewController alloc] init];
     
-    detailVC.headImageUrlArray = model.headImageURLArray;
-    detailVC.contentImageUrlArray = model.contentImageURLArray;
-    [self.navigationController pushViewController:detailVC animated:YES];
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
+        
+    });
 }
 
+- (void)fetchedDetailsData:(NSData *)responseData{
+    NSError *error = nil;
+    NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    // MMLOG(detailsInfo);
+    //商品详情 json 数据解析
+    DetailsModel *model = [[DetailsModel alloc] init];
+    model.name = [detailsInfo objectForKey:@"name"];
+    model.productID = [detailsInfo objectForKey:@"outer_id"];
+    model.isSaleOpen = [[detailsInfo objectForKey:@"is_saleopen"] boolValue];
+    model.isSaleOut = [[detailsInfo objectForKey:@"is_saleout"] boolValue];
+    model.isNewGood = [[detailsInfo objectForKey:@"is_newgood"] boolValue];
+    model.remainNumber = [[detailsInfo objectForKey:@"remain_num"] integerValue];
+    model.price = [NSString stringWithFormat:@"￥%@",[detailsInfo objectForKey:@"agent_price"]];
+    model.oldPrice= [NSString stringWithFormat:@"￥%@", [detailsInfo objectForKey:@"std_sale_price"]];
+    NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
+    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in goodsArray) {
+        NSString *size = [dic objectForKey:@"name"];
+        [arrayData addObject:size];
+    }
+    model.sizeArray = arrayData;
+    MMLOG(model.sizeArray);
+    NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
+    model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+    model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+    
+    DetailViewController *detailsVC = [[DetailViewController alloc] init];
+    detailsVC.detailsModel = model;
+    [self.navigationController pushViewController:detailsVC animated:YES];
+}
 
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

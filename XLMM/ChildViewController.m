@@ -18,14 +18,15 @@
 
 #import "MMClass.h"
 
-#define ksampleCell @"simpleCell"
+#define ksimpleCell @"simpleCell"
 
 @interface ChildViewController (){
     NSMutableArray *_ModelListArray;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
-
+@property (nonatomic, strong) UIView *bgView;
 
 @end
 
@@ -34,28 +35,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
     _ModelListArray = [[NSMutableArray alloc] init];
     [self setInfo];
-
-   
-    NSLog(@"child");
-  [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksampleCell];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.backgroundColor = [UIColor clearColor];
+    [activityIndicator startAnimating];
+    activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
+    [self.childCollectionView addSubview:activityIndicator];
+    
+    [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
-    static BOOL isFirst = YES;
-    if (isFirst) {
-        NSLog(@"downloasdata");
-        isFirst = NO;
-        [self downloadData];
-
-    }
     [self downloadData];
     
+ 
 }
 
 - (void)setInfo{
@@ -76,6 +74,7 @@
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 42, 39);
+    
     [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-shouye2.png"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
@@ -98,24 +97,14 @@
 }
 
 - (void)downloadData{
-    //[self downLoadWithURLString:kCHILD_LIST_URL andSelector:@selector(childParseData:)];
-    dispatch_async(kBgQueue, ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCHILD_LIST_URL]];
-        
-        
-        if (data == nil) {
-            return ;
-        }
-        
-        [self performSelectorOnMainThread:@selector(childParseData:) withObject:data waitUntilDone:YES];
-    });
+    [self downLoadWithURLString:kCHILD_LIST_URL andSelector:@selector(fatchedChildListData:)];
 }
 
-- (void)childParseData:(NSData *)responseData{
+- (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
-    _dataArray = [[NSMutableArray alloc] init];
+    self.dataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-
+   // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     
       for (NSDictionary *dic in array) {
@@ -134,44 +123,43 @@
               model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
               model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
           }
-    [_dataArray addObject:model];
+          [_dataArray addObject:model];
     }
+    [activityIndicator removeFromSuperview];
+    [self.childCollectionView reloadData];
 }
 
 #pragma mark  -----CollectionViewDelete----
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
-
 }
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-   
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksampleCell forIndexPath:indexPath];
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
    [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    if (_dataArray.count == 0) {
+  if (_dataArray.count == 0) {
         return;
     }
     PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
     if (model.productModel == nil) {
         NSLog(@"没有集合页面");
-        
-        
         [self downloadDetailsDataWithModel:model];
-        
-        } else{
-     
-            [self downloadCollectionDataWithProductModel:model.productModel];
+    } else {
+        [self downloadCollectionDataWithProductModel:model.productModel];
     }
+}
+
+- (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
+    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedModelListData:)];
 }
 - (void)fetchedModelListData:(NSData *)responseDate{
     
@@ -198,40 +186,13 @@
     }
     CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
     collectionVC.collectionArray = _ModelListArray;
-    
-    MMLOG(collectionVC.collectionArray);
     [self.navigationController pushViewController:collectionVC animated:YES];
     
 }
 
-
-- (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
-    
-    MMLOG(urlString);
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedModelListData:) withObject:data waitUntilDone:YES];
-        
-    });
-}
-
 - (void)downloadDetailsDataWithModel:(PeopleModel *)model{
     NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
-    
-    MMLOG(urlString);
-    
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
-        
-    });
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
 }
 
 - (void)fetchedDetailsData:(NSData *)responseData{
@@ -254,17 +215,17 @@
         [arrayData addObject:size];
     }
     model.sizeArray = arrayData;
-    MMLOG(model.sizeArray);
     NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
     model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
     
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
-    detailsVC.headImageUrlArray = model.headImageURLArray;
-    detailsVC.contentImageUrlArray = model.contentImageURLArray;
+    detailsVC.detailsModel = model;
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
+
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
 }

@@ -17,7 +17,7 @@
 #import "CollectionModel.h"
 #import "CollectionViewController.h"
 #import "DetailsModel.h"
-#define kSampleCell @"sampleCell"
+#define kSimpleCell @"simpleCell"
 
 @interface WomanViewController (){
     NSMutableArray *_ModelListArray;
@@ -40,14 +40,23 @@
     
     
     [self setInfo];
-    [self setLayout];
+    
+    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"小鹿美美logo.jpg"]];
+    bgImageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH);
+    bgImageView.tag = 123;
+    UIView *bgView = [[UIView alloc] initWithFrame:bgImageView.frame];
+    bgImageView.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2+30);
+    bgView.layer.cornerRadius = SCREENWIDTH/2;
+    bgView.backgroundColor = [UIColor orangeColor];
+    bgView.alpha = 0.7f;
+    
+    [bgImageView addSubview:bgView];
+    [self.womanCollectionView addSubview:bgImageView];
+    
    //注册信息。。。
-    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSampleCell];
-    
-    
-    
-    
-   [self downloadData];
+    [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSimpleCell];
+    [self setLayout];
+    [self downloadData];
     
 }
 
@@ -87,18 +96,21 @@
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void)downloadData{
-    dispatch_sync(kBgQueue, ^{
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kLADY_LIST_URL)];
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         if (data == nil) {
             return ;
         }
-        [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
     });
 }
 
-- (void)mmParseData:(NSData *)responseData{
+- (void)downloadData{
+    [self downLoadWithURLString:kLADY_LIST_URL andSelector:@selector(fatchedLadyListData:)];
+}
+
+- (void)fatchedLadyListData:(NSData *)responseData{
     NSError *error;
     self.dataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
@@ -121,11 +133,10 @@
             model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
             model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
         }
-        
-        
-        
         [self.dataArray addObject:model];
     }
+    UIImageView *bgImageView = (UIImageView *)[self.womanCollectionView viewWithTag:123];
+    [bgImageView removeFromSuperview];
     [self.womanCollectionView reloadData];
 }
 
@@ -141,19 +152,12 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString *cellIdentifier = kSampleCell;
-  
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
-
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCell forIndexPath:indexPath];
+        [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
     if (_dataArray.count == 0) {
         return;
     }
@@ -254,8 +258,7 @@
     
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
-    detailsVC.headImageUrlArray = model.headImageURLArray;
-    detailsVC.contentImageUrlArray = model.contentImageURLArray;
+    detailsVC.detailsModel = model;
     [self.navigationController pushViewController:detailsVC animated:YES];
     
     

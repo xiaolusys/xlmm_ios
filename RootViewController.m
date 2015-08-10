@@ -873,7 +873,8 @@
 }
 - (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
     NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    MMLOG(urlString);
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData1:)];
 }
 
 - (void)downloadDetailsDataWithLadyModel:(PeopleModel *)model{
@@ -882,10 +883,10 @@
 
 #pragma mark ----商品详情数据解析，商品集合数据解析
 
-- (void)fetchedDetailsData:(NSData *)responseData{
+- (void)fetchedDetailsData1:(NSData *)responseData{
     NSError *error = nil;
     NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-//    MMLOG(detailsInfo);
+  // MMLOG(detailsInfo);
     //商品详情 json 数据解析
     DetailsModel *model = [[DetailsModel alloc] init];
     model.name = [detailsInfo objectForKey:@"name"];
@@ -909,8 +910,8 @@
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
-    detailsVC.headImageUrlArray = model.headImageURLArray;
-    detailsVC.contentImageUrlArray = model.contentImageURLArray;
+    detailsVC.detailsModel = model;
+ //   NSLog(@"hello");
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
