@@ -62,20 +62,30 @@
 
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
     navLabel.text = @"时尚女装";
-    navLabel.textColor = [UIColor orangeColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:24];
+    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
+    navLabel.font = [UIFont boldSystemFontOfSize:30];
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
     
-    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 30, 30);
-    [rightButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 29, 33);
+    [rightButton setBackgroundImage:LOADIMAGE(@"icon-gerenzhongxin.png") forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 42, 39);
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-shouye2.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downloadData{

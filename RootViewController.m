@@ -11,6 +11,7 @@
 
 @interface RootViewController (){
     BOOL isToday;//
+    BOOL isFirst;
 
     NSMutableArray *_prePosterArray;//保存昨日海报数据
     NSMutableArray *_todayPosterArray;//存储今日海报数据
@@ -37,6 +38,8 @@
     
     UILabel *poster1TimeLabel;
     UILabel *poster2TimeLabel;
+    
+    NSTimer *theTimer;
 
 }
 
@@ -61,12 +64,13 @@
     ownerLadyView = [LadyView new];
     _ModelListArray = [[NSMutableArray alloc] init];
     isToday = YES;
+    isFirst = YES;
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
     self.ladyView.frame = CGRectMake(0, 954, SCREENWIDTH, 500);
     
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
@@ -77,32 +81,30 @@
     [self downloadData];
  }
 
+//设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
     
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
-    NSDate *date = [NSDate date];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
+
+    NSDate *date = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     NSInteger unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
-    NSCalendarUnitWeekday |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-    //int week=0;
     comps = [calendar components:unitFlags fromDate:date];
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];
- 
-    //NSLog(@"第%d周, %d-%d-%d  %d:%d:%d",week, year, month, day, hour, min, sec);
-   
     int nextday = day + 1;
-    NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    
+   // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
     NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
     [endTime setYear:year];
     [endTime setMonth:month];
@@ -111,13 +113,13 @@
     [endTime setMinute:0];
     [endTime setSecond:0];
 
-    NSDate *todate = [cal dateFromComponents:endTime]; //把目标时间装载入date
+    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
 
-    NSDateComponents *d = [cal components:unitFlags fromDate:date toDate:todate options:0];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *str = nil;
-    if ([d day] == 0 ) {
+    if (  !isToday ) {
         str = [NSString stringWithFormat:@"%ld时%ld分%ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
     }else{
     str = [NSString stringWithFormat:@"%ld天%ld时%ld分%ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
@@ -132,48 +134,33 @@
 
 
 
-- (void)downloadData{
 
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_POSTERS_URL)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedTodayPosterData:) withObject:data waitUntilDone:YES];
-        
-    });//下载今日海报
-    
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kTODAY_PROMOTE_URL)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedTodaypromoteData:) withObject:data waitUntilDone:YES];
-        
-    });//下载今日推荐
+- (void)downloadData{
+    //下载今日海报
+    [self downLoadWithURLString:kTODAY_POSTERS_URL andSelector:@selector(fetchedTodayPosterData:)];
+    //下载今日推荐
+    [self downLoadWithURLString:kTODAY_PROMOTE_URL andSelector:@selector(fetchedTodaypromoteData:)];
     
 }
 
 - (void)downloadPreData{
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_POSTERS_URL)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedPreviousPosterData:) withObject:data waitUntilDone:YES];
-        
-    });//下载昨日海报
-    
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(kPREVIOUS_PROMOTE_URL)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedPreviouspromoteData:) withObject:data waitUntilDone:YES];
-    });//下载昨日推荐
+    //下载昨日海报
+    [self downLoadWithURLString:kPREVIOUS_POSTERS_URL andSelector:@selector(fetchedPreviousPosterData:)];
+    //下载昨日推荐
+    [self downLoadWithURLString:kPREVIOUS_PROMOTE_URL andSelector:@selector(fetchedPreviouspromoteData:)];
 
 }
-
+//下载数据
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
+}
 #pragma mark ---JSON 解析 ------
 //昨日推荐 JSON 数据解析
 - (void) fetchedPreviouspromoteData:(NSData *)responseData{
@@ -182,7 +169,6 @@
     _prePromoteLadyArray = [[NSMutableArray alloc] init];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray *childArray = [dic objectForKey:@"child_list"];
-   // NSLog(@"previous promote = %@", dic);
     if ([childArray count] == 0) {
         return;
     }
@@ -194,23 +180,14 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         model.url = [child objectForKey:@"url"];
-        
         NSDictionary *dic = [child objectForKey:@"product_model"];
-        
-       // NSLog(@"%@", [dic class]);
-       // NSLog(@"%@", [NSNull null]);
-        
         if ([dic class] == [NSNull class]) {
             model.productModel = nil;
         } else{
-            
             model.productModel = dic;
             model.headImageURLArray = [dic objectForKey:@"head_imgs"];
             model.contentImageURLArray = [dic objectForKey:@"content_imgs"];
-            
         }
-        
-        
         [_prePromoteChildArray addObject:model];
     }
     [self createChildViewWithArray:_prePromoteChildArray];
@@ -227,7 +204,6 @@
         model.price = [lady objectForKey:@"agent_price"];
         model.oldPrice = [lady objectForKey:@"std_sale_price"];
         model.url = [lady objectForKey:@"url"];
-        
         NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;
@@ -236,8 +212,6 @@
             model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
             model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
         }
-        
-        
         [_prePromoteLadyArray addObject:model];
     }
     [self createLadyViewWithArray:_prePromoteLadyArray];
@@ -308,6 +282,8 @@
     }
     [self createLadyViewWithArray:_todayPromoteLadyArray];
 }
+
+
 //昨日海报 JSON 数据解析
 - (void) fetchedPreviousPosterData:(NSData *)responseData{
     NSError *error;
@@ -413,15 +389,8 @@
 }
 
 - (void)setTitleImage{
-    
-   
-    
-    
-    
     UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 271, 35)];
     imageView.image = [UIImage imageNamed:@"font-xinpin.png"];
-
-   
     [self.headView addSubview:imageView];
 }
 
@@ -430,7 +399,6 @@
     {
         [view removeFromSuperview];
     }
-    
     if ([array count] == 0) {
         [self createDefaultPosterView];
         return;
@@ -444,14 +412,19 @@
         posterViewOwner.rightLabel.text = model.secondName;
         [posterViewOwner.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
         [_posterView addSubview:posterViewOwner.posterView];
-        CGRect btnframe = CGRectMake(0, 0+185*i, SCREENWIDTH-80, 185);
+        CGRect btnframe = CGRectMake(0, 0+185*i, SCREENWIDTH, 185);
         UIButton *btn = [[UIButton alloc] initWithFrame:btnframe];
         btn.tag = 200 + i;
         btn.backgroundColor = [UIColor clearColor];
         [btn addTarget:self action:@selector(imageClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_posterView addSubview:btn];
-        
-        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 170, 100, 240, 36)];
+        NSInteger margin;
+        if (isToday) {
+            margin = 0;
+        } else{
+            margin = 30;
+        }
+        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 170 +margin, 100, 240, 36)];
         timeView.tag = 888;
         timeView.backgroundColor = [UIColor blackColor];
         timeView.layer.cornerRadius = 18;
@@ -501,11 +474,9 @@
 }
 
 - (void) createChildViewWithArray:(NSMutableArray *)array{
-    
     for (UIView *view in [_childView subviews]) {
         [view removeFromSuperview];
     }
-    
     if ([array count] == 0) {
         [self createDefaultChildView];
         return;
@@ -568,7 +539,6 @@
 }
 
 - (void)createLadyViewWithArray:(NSMutableArray *)array{
-    
     for (UIView *view in [_ladyView subviews]) {
         [view removeFromSuperview];
     }
@@ -678,52 +648,42 @@
   
 }
 
-- (void)backButtonClicked:(UIButton *)button{
-    NSLog(@"back");
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
 - (IBAction)btnClicked:(UIButton *)sender {
-    
-//    for (int i = 101; i<= 102; i++) {
-//        if (sender.tag == i) {
-//            sender.backgroundColor = [UIColor orangeColor];
-//        } else {
-//            UIButton *btn = (UIButton *)[self.view viewWithTag:i];
-//            btn.backgroundColor = [UIColor whiteColor];
-//        }
-//    }
-   
     if (sender.tag == 101) {
-        [self downloadData];
         sender.backgroundColor = [UIColor colorWithR:84 G:199 B:189 alpha:1];
         UIButton *btn = (UIButton *)[self.view viewWithTag:102];
         btn.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
         if (!isToday) {
             isToday = YES;
             self.headViewHeight.constant = 40;
-           
 
+            [self createPosterViewWithArray:_todayPosterArray];
+            [self createChildViewWithArray:_todayPromoteChildArray];
+            [self createLadyViewWithArray:_todayPromoteLadyArray];
         }
-        
-        
     } else if (sender.tag == 102){
-        [self downloadPreData];
+        if (isFirst) {
+            isFirst = NO;
+            [self downloadPreData];
+        }
         sender.backgroundColor = [UIColor colorWithR:84 G:199 B:189 alpha:1];
         UIButton *btn = (UIButton *)[self.view viewWithTag:101];
         btn.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
         if (isToday) {
             isToday = NO;
             self.headViewHeight.constant = 0;
-          
+
+            [self createPosterViewWithArray:_prePosterArray];
+            [self createChildViewWithArray:_prePromoteChildArray];
+            [self createLadyViewWithArray:_prePromoteLadyArray];
         }
-        
-        
     } else if (sender.tag == 103){
+        
         ChildViewController *childVC = [[ChildViewController alloc] init];
         [self.navigationController pushViewController:childVC animated:YES];
         
     } else if (sender.tag == 104){
+        
         WomanViewController *womanVC = [[WomanViewController alloc] init];
         [self.navigationController pushViewController:womanVC animated:YES];
     
@@ -732,6 +692,7 @@
 
 - (void)imageClicked:(UIButton *)button{
     if (button.tag == 200) {
+        
         WomanViewController *womanVC = [[WomanViewController alloc] init];
         [self.navigationController pushViewController:womanVC animated:YES];
     
@@ -746,10 +707,186 @@
     }
 }
 
+- (void)goodsClicked:(UIButton *)button{
+    if (button.tag == 300) {
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:0];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];          ;
+            }
+        } else {
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:0];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        }
+    } else if (button.tag == 301){
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:1];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        } else {
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:1];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        }
+    } else if (button.tag == 302){
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:2];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        } else {
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:2];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        }
+        
+    } else if (button.tag == 303){
+        if (_todayPromoteChildArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:3];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        } else {
+            PeopleModel *model = [_prePromoteChildArray objectAtIndex:3];
+            if (model.productModel != nil) {
+                [self downloadModelListDataWithProductModel:model.productModel];
+            } else {
+                [self downloadDetailsDataWithChildModel:model];
+            }
+        }
+    } else if (button.tag == 400){
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = _todayPromoteLadyArray[0];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        } else {
+            PeopleModel *model = _prePromoteLadyArray[0];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        }
+    } else if (button.tag == 401){
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = _todayPromoteLadyArray[1];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        } else {
+            PeopleModel *model = _prePromoteLadyArray[1];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        }
+    } else if (button.tag == 402){
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = _todayPromoteLadyArray[2];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        } else {
+            PeopleModel *model = _prePromoteLadyArray[2];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        }
+    } else if (button.tag == 403){
+        if (_todayPromoteLadyArray.count == 0) {
+            return;
+        }
+        if (isToday) {
+            PeopleModel *model = _todayPromoteLadyArray[3];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        } else {
+            PeopleModel *model = _prePromoteLadyArray[3];
+            if (model.productModel == nil) {
+                [self downloadDetailsDataWithLadyModel:model];
+            }else{
+                [self downloadModelListDataWithProductModel:model.productModel];
+            }
+        }
+    }
+}
+
+#pragma mark ---下载集合商品页面 和 商品详情页
+
+- (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
+    NSString *modelID = [productModel objectForKey:@"id"];
+    NSString *modelListUrlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", modelID];
+    [self downLoadWithURLString:modelListUrlString andSelector:@selector(fetchedModelListData:)];
+}
+- (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+}
+
+- (void)downloadDetailsDataWithLadyModel:(PeopleModel *)model{
+    [self downloadDetailsDataWithChildModel:model];
+}
+
+#pragma mark ----商品详情数据解析，商品集合数据解析
+
 - (void)fetchedDetailsData:(NSData *)responseData{
     NSError *error = nil;
     NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    MMLOG(detailsInfo);
+//    MMLOG(detailsInfo);
+    //商品详情 json 数据解析
     DetailsModel *model = [[DetailsModel alloc] init];
     model.name = [detailsInfo objectForKey:@"name"];
     model.productID = [detailsInfo objectForKey:@"outer_id"];
@@ -767,29 +904,21 @@
     }
     model.sizeArray = arrayData;
     MMLOG(model.sizeArray);
-   
     NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
-    
-    
-    
     model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
-    
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
     detailsVC.headImageUrlArray = model.headImageURLArray;
     detailsVC.contentImageUrlArray = model.contentImageURLArray;
     [self.navigationController pushViewController:detailsVC animated:YES];
-    
-    
-    
 }
 
 - (void)fetchedModelListData:(NSData *)responseDate{
     
     NSError *error = nil;
     NSArray *modelListArray = [NSJSONSerialization JSONObjectWithData:responseDate options:kNilOptions error:&error];
-   // MMLOG(modelListArray);
+    // MMLOG(modelListArray);
     [_ModelListArray removeAllObjects];
     for (NSDictionary *dic in modelListArray) {
         CollectionModel *model = [[CollectionModel alloc] init];
@@ -807,294 +936,12 @@
         
         [_ModelListArray addObject:model];
     }
+    
     CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
     collectionVC.collectionArray = _ModelListArray;
     
     MMLOG(collectionVC.collectionArray);
     [self.navigationController pushViewController:collectionVC animated:YES];
-    
-}
-
-
-
-- (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
-    NSString *modelID = [productModel objectForKey:@"id"];
-    NSString *modelListUrlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", modelID];
-    
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(modelListUrlString)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedModelListData:) withObject:data waitUntilDone:YES];
-        
-    });
-}
-- (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
-    MMLOG(urlString);
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
-        
-    });
-    
-}
-- (void)downloadDetailsDataWithLadyModel:(PeopleModel *)model{
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
-    MMLOG(urlString);
-    
-    dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedDetailsData:) withObject:data waitUntilDone:YES];
-        
-    });
-    
-}
-
-
-- (void)goodsClicked:(UIButton *)button{
-    if (button.tag == 300) {
-        if (_todayPromoteChildArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:0];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-                
-                
-                
-                          } else {
-                NSLog(@"单品");
-                              [self downloadDetailsDataWithChildModel:model];          ;
-                              
-                              
-                              
-                         }
-        } else {
-            PeopleModel *model = [_prePromoteChildArray objectAtIndex:0];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-                           } else {
-                NSLog(@"单品");
-                               [self downloadDetailsDataWithChildModel:model];
-                         }
-        }
-    } else if (button.tag == 301){
-        if (_todayPromoteChildArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:1];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-              
-            } else {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithChildModel:model];
-                          }
-        } else {
-            PeopleModel *model = [_prePromoteChildArray objectAtIndex:1];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-                          } else {
-                NSLog(@"单品");
-                              [self downloadDetailsDataWithChildModel:model];
-               
-            }
-        }
-        
-        
-    } else if (button.tag == 302){
-        if (_todayPromoteChildArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:2];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-              
-            } else {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithChildModel:model];
-              
-            }
-        } else {
-            PeopleModel *model = [_prePromoteChildArray objectAtIndex:2];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-             
-            } else {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithChildModel:model];
-                        }
-        }
-        
-    } else if (button.tag == 303){
-        if (_todayPromoteChildArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = [_todayPromoteChildArray objectAtIndex:3];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-                         } else {
-                             
-                             [self downloadDetailsDataWithChildModel:model];
-                NSLog(@"单品");
-             
-            }
-        } else {
-            PeopleModel *model = [_prePromoteChildArray objectAtIndex:3];
-            if (model.productModel != nil) {
-                
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-               
-            } else {
-                NSLog(@"单品");
-                
-                [self downloadDetailsDataWithChildModel:model];
-                          }
-        }
-        
-    } else if (button.tag == 400){
-        if (_todayPromoteLadyArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = _todayPromoteLadyArray[0];
-            if (model.productModel == nil) {
-                
-
-                NSLog(@"单品");
-                
-                [self downloadDetailsDataWithLadyModel:model];
-                      }else{
-                          
-                          [self downloadModelListDataWithProductModel:model.productModel];
-
-                          }
-        } else {
-            PeopleModel *model = _prePromoteLadyArray[0];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-                         }else{
-         
-                             [self downloadModelListDataWithProductModel:model.productModel];
-
-            }
-        }
-    } else if (button.tag == 401){
-        if (_todayPromoteLadyArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = _todayPromoteLadyArray[1];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-              
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-
-            }
-        } else {
-            PeopleModel *model = _prePromoteLadyArray[1];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-               
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-
-            }
-        }
-
-    } else if (button.tag == 402){
-        if (_todayPromoteLadyArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = _todayPromoteLadyArray[2];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-               
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-
-            }
-        } else {
-            PeopleModel *model = _prePromoteLadyArray[2];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-             
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-
-            }
-        }
-
-    } else if (button.tag == 403){
-        if (_todayPromoteLadyArray.count == 0) {
-            return;
-        }
-        if (isToday) {
-            PeopleModel *model = _todayPromoteLadyArray[3];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-               
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-
-            }
-        } else {
-            PeopleModel *model = _prePromoteLadyArray[3];
-            if (model.productModel == nil) {
-                NSLog(@"单品");
-                [self downloadDetailsDataWithLadyModel:model];
-             
-            }else{
-                NSLog(@"modleList");
-                [self downloadModelListDataWithProductModel:model.productModel];
-
-            }
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning {

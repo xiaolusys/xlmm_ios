@@ -18,11 +18,10 @@
 
 #import "MMClass.h"
 
-#define ksampleCell @"sampleCell"
+#define ksampleCell @"simpleCell"
 
 @interface ChildViewController (){
     NSMutableArray *_ModelListArray;
-
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -37,24 +36,10 @@
     // Do any additional setup after loading the view from its nib.
     
     _ModelListArray = [[NSMutableArray alloc] init];
+    [self setInfo];
 
-
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
-    navLabel.text = @"潮童专区";
-    navLabel.textColor = [UIColor orangeColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:24];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 30, 30);
-    [rightButton setBackgroundImage:LOADIMAGE(@"goodsthumb.png") forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
-        
+   
+    NSLog(@"child");
   [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksampleCell];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -62,14 +47,59 @@
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
-    
+    static BOOL isFirst = YES;
+    if (isFirst) {
+        NSLog(@"downloasdata");
+        isFirst = NO;
+        [self downloadData];
+
+    }
     [self downloadData];
     
 }
 
-- (void)downloadData{
+- (void)setInfo{
+    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
+    navLabel.text = @"潮男童装";
+    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
+    navLabel.font = [UIFont boldSystemFontOfSize:30];
+    navLabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = navLabel;
     
-    dispatch_sync(kBgQueue, ^{
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 0, 29, 33);
+    [rightButton setBackgroundImage:LOADIMAGE(@"icon-gerenzhongxin.png") forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 42, 39);
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-shouye2.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)downloadData{
+    //[self downLoadWithURLString:kCHILD_LIST_URL andSelector:@selector(childParseData:)];
+    dispatch_async(kBgQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCHILD_LIST_URL]];
         
         
@@ -77,24 +107,23 @@
             return ;
         }
         
-        [self performSelectorOnMainThread:@selector(mmParseData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(childParseData:) withObject:data waitUntilDone:YES];
     });
 }
 
-- (void)mmParseData:(NSData *)responseData{
+- (void)childParseData:(NSData *)responseData{
     NSError *error;
-    
     _dataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 
     NSArray *array = [json objectForKey:@"results"];
     
       for (NSDictionary *dic in array) {
-        PeopleModel *model = [[PeopleModel alloc] init];
-        model.imageURL = [dic objectForKey:@"pic_path"];
-        model.name = [dic objectForKey:@"name"];
-        model.price = [dic objectForKey:@"agent_price"];
-        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+          PeopleModel *model = [[PeopleModel alloc] init];
+          model.imageURL = [dic objectForKey:@"pic_path"];
+          model.name = [dic objectForKey:@"name"];
+          model.price = [dic objectForKey:@"agent_price"];
+          model.oldPrice = [dic objectForKey:@"std_sale_price"];
           model.url = [dic objectForKey:@"url"];
           
           NSDictionary *dic2 = [dic objectForKey:@"product_model"];
@@ -105,11 +134,7 @@
               model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
               model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
           }
-          
-          
-          
-          
-        [_dataArray addObject:model];
+    [_dataArray addObject:model];
     }
 }
 
