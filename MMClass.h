@@ -35,6 +35,7 @@
 #define kLoansRRL(a) [NSURL URLWithString:a]
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
+
 #define kIsLogin @"isLogin"
 #define kUserName @"userName"
 #define kPassWord @"password"
@@ -48,6 +49,8 @@
 #define kCHILD_LIST_URL @"http://youni.huyi.so/rest/v1/products/childlist"
 #define kLADY_LIST_URL @"http://youni.huyi.so/rest/v1/products/ladylist"
 
+
+#define kLOGIN_URL @"http://youni.huyi.so/rest/v1/register/customer_login"
 #define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
 
 #endif
