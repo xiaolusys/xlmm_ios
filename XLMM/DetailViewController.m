@@ -11,6 +11,7 @@
 #import "UIImage+ImageWithUrl.h"
 #import "MMClass.h"
 #import "PurchaseViewController.h"
+#import "EnterViewController.h"
 
 @interface DetailViewController ()<UIScrollViewDelegate>{
     NSMutableArray *imageArray;
@@ -232,13 +233,23 @@
 
 - (void)login:(UIButton *)button
 {
+    NSLog(@"登录");
+}
+
+
+
+
+- (IBAction)addCart:(id)sender {
+    NSLog(@"加入购物车");
+    EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+    [self.navigationController pushViewController:enterVC animated:YES];
     
 }
 
-- (IBAction)btnClicked:(UIButton *)sender {
-    PurchaseViewController *purchase = [[PurchaseViewController alloc] init];
-    [self.navigationController pushViewController:purchase animated:YES];
+- (IBAction)purchase:(id)sender {
+    NSLog(@"立即购买");
     
-    
+    EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+    [self.navigationController pushViewController:enterVC animated:YES];
 }
 @end

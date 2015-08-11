@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EnterViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pyJ-wo-v4Q">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.97647058823529409" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="wMH-nw-KXH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <state key="normal" title="小鹿美美账号登录">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="wMH-nw-KXH"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="wMH-nw-KXH"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="mmLogin:" destination="-1" eventType="touchUpInside" id="gaL-b5-ElR"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wde-Ry-2t2">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Wde-Ry-2t2" secondAttribute="height" multiplier="164:191" id="tSi-9J-vQa"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="tSi-9J-vQa"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="tSi-9J-vQa"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80d-WO-ZNf">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.098039215686274508" green="0.75294117647058822" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <state key="normal" title="微信一键登录">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="weixinLogin:" destination="-1" eventType="touchUpInside" id="VsP-6X-T6T"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.91764705882352937" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="Wde-Ry-2t2" secondAttribute="centerX" id="5Fy-Fh-Xfx"/>
+                <constraint firstAttribute="bottom" secondItem="80d-WO-ZNf" secondAttribute="bottom" constant="8" id="CSF-gh-hJe"/>
+                <constraint firstItem="80d-WO-ZNf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="I7a-Ns-MdZ"/>
+                <constraint firstItem="pyJ-wo-v4Q" firstAttribute="leading" secondItem="80d-WO-ZNf" secondAttribute="leading" id="IZA-t1-iVK"/>
+                <constraint firstItem="Wde-Ry-2t2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="JzD-Uu-Vt0"/>
+                <constraint firstItem="pyJ-wo-v4Q" firstAttribute="height" secondItem="80d-WO-ZNf" secondAttribute="height" id="LoF-UM-ceq"/>
+                <constraint firstItem="Wde-Ry-2t2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="YSF-Lb-0mN"/>
+                <constraint firstItem="pyJ-wo-v4Q" firstAttribute="width" secondItem="80d-WO-ZNf" secondAttribute="width" id="a8J-vQ-uAz"/>
+                <constraint firstItem="80d-WO-ZNf" firstAttribute="top" secondItem="pyJ-wo-v4Q" secondAttribute="bottom" constant="8" id="pLA-4C-x4t"/>
+                <constraint firstAttribute="trailing" secondItem="80d-WO-ZNf" secondAttribute="trailing" constant="8" id="qxv-WK-nxf"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="pyJ-wo-v4Q"/>
+                    <exclude reference="Wde-Ry-2t2"/>
+                    <exclude reference="80d-WO-ZNf"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="5Fy-Fh-Xfx"/>
+                    <exclude reference="JzD-Uu-Vt0"/>
+                    <exclude reference="YSF-Lb-0mN"/>
+                    <exclude reference="IZA-t1-iVK"/>
+                    <exclude reference="LoF-UM-ceq"/>
+                    <exclude reference="a8J-vQ-uAz"/>
+                    <exclude reference="CSF-gh-hJe"/>
+                    <exclude reference="I7a-Ns-MdZ"/>
+                    <exclude reference="pLA-4C-x4t"/>
+                    <exclude reference="qxv-WK-nxf"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="pyJ-wo-v4Q"/>
+                    <include reference="Wde-Ry-2t2"/>
+                    <include reference="80d-WO-ZNf"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="5Fy-Fh-Xfx"/>
+                    <include reference="JzD-Uu-Vt0"/>
+                    <include reference="YSF-Lb-0mN"/>
+                    <include reference="IZA-t1-iVK"/>
+                    <include reference="LoF-UM-ceq"/>
+                    <include reference="a8J-vQ-uAz"/>
+                    <include reference="CSF-gh-hJe"/>
+                    <include reference="I7a-Ns-MdZ"/>
+                    <include reference="pLA-4C-x4t"/>
+                    <include reference="qxv-WK-nxf"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo.png" width="328" height="382"/>
+    </resources>
+</document>

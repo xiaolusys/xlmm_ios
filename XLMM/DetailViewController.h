@@ -37,9 +37,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 
-- (IBAction)btnClicked:(UIButton *)sender;
 
+- (IBAction)addCart:(id)sender;
 
+- (IBAction)purchase:(id)sender;
 
 
 @property (nonatomic, copy)NSArray *headImageUrlArray;
