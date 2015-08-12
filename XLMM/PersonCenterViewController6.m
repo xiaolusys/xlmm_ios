@@ -8,7 +8,8 @@
 
 #import "PersonCenterViewController6.h"
 
-@interface PersonCenterViewController6 ()
+@interface PersonCenterViewController6 ()<UITabBarControllerDelegate, UITableViewDataSource>
+
 
 @end
 
@@ -17,7 +18,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-        self.title = @"地址管理";
+        self.title = @"收货地址";
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 14, 11, 20)];
+    backBtn.backgroundColor = [UIColor clearColor];
+    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    imageView.image = [UIImage imageNamed:@"icon-fanhui.png"];
+    [backBtn addSubview:imageView];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+                            
+}
+
+
+#pragma mark   --UITableViewDelegate--
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 12;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return nil;
+}
+
+- (void)back{
+    NSLog(@"11");
 }
 
 - (void)didReceiveMemoryWarning {

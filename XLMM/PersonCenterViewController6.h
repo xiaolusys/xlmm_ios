@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonCenterViewController6 : UIViewController
+@interface PersonCenterViewController6 : UITableViewController
+
+
+@property (weak, nonatomic) IBOutlet UITableView *addressTableView;
 
 @end

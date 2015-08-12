@@ -9,6 +9,8 @@
 #import "RootViewController.h"
 #import "MMClass.h"
 
+#import "PersonCenterViewController6.h"
+
 @interface RootViewController (){
     BOOL isToday;//
     BOOL isFirst;
@@ -75,6 +77,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
     [userDefaults synchronize];
+
+    
     
     [self setInfo];
     [self setTitleImage];
@@ -634,7 +638,7 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [userDefault boolForKey:kIsLogin];
     
-    if (!isLogin) {
+    if (isLogin) {
         
         LogInViewController *login = [[LogInViewController alloc] init];
         [self.navigationController pushViewController:login animated:YES];

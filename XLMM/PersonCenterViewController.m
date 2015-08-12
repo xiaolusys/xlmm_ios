@@ -18,6 +18,8 @@
 #import "PersonCenterViewController9.h"
 #import "PersonCenterViewController10.h"
 
+
+
 #import "MMClass.h"
 
 @interface PersonCenterViewController ()
@@ -28,11 +30,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"个人中心";
     
+    _screenWidth.constant = SCREENWIDTH;
+    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
+    navLabel.text = @"个人中心";
+    navLabel.textColor = [UIColor colorWithR:60 G:60 B:60 alpha:1];
+    navLabel.font = [UIFont boldSystemFontOfSize:30];
+    navLabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = navLabel;
+    
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 0, 42, 39);
+    [rightButton setBackgroundImage:LOADIMAGE(@"icon-shouye.png") forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 42, 39);
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    self.virticalSpace.constant = 0;
+
+}
+
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,58 +82,62 @@
 
 
 
-- (IBAction)button1:(id)sender {
-    //PersonCenterViewController1 *PCVC1 = [[PersonCenterViewController1 alloc] init];
-    PERSONCENTER(PersonCenterViewController1);
-    NSLog(@"1");
+
+- (IBAction)button1Clicked:(id)sender {
+    NSLog(@"heoo");
+    PersonCenterViewController1 *person1VC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
+    [self.navigationController pushViewController:person1VC animated:YES];
 }
 
-- (IBAction)button2:(id)sender {
-    PERSONCENTER(PersonCenterViewController2);
-    NSLog(@"2");
+- (IBAction)button2Clicked:(id)sender {
+    NSLog(@"222");
+    PersonCenterViewController2 *person1VC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+    [self.navigationController pushViewController:person1VC animated:YES];
+
 }
 
-- (IBAction)button3:(id)sender {
-    PERSONCENTER(PersonCenterViewController3);
-    NSLog(@"3");
+- (IBAction)button3Clicked:(id)sender {
+    NSLog(@"333");
 }
 
-- (IBAction)button4:(id)sender {
-    PERSONCENTER(PersonCenterViewController4);
-    NSLog(@"4");
+- (IBAction)btn1Clicked:(id)sender {
+    MMLOG(@"btn1");
 }
 
-- (IBAction)button5:(id)sender {
-    PERSONCENTER(PersonCenterViewController5);
-    NSLog(@"5");
+- (IBAction)btn2Clicked:(id)sender {
+    MMLOG(@"btn2");
+
 }
 
-- (IBAction)button6:(id)sender {
-    PERSONCENTER(PersonCenterViewController6);
-    NSLog(@"6");
+- (IBAction)btn3Clicked:(id)sender {
+    MMLOG(@"btn3");
+
 }
 
-- (IBAction)button7:(id)sender {
-    PERSONCENTER(PersonCenterViewController7);
-    NSLog(@"7");
+- (IBAction)btn4Clicked:(id)sender {
+    MMLOG(@"btn4");
+
 }
 
-- (IBAction)button8:(id)sender {
-    PERSONCENTER(PersonCenterViewController8);
-    NSLog(@"8");
+- (IBAction)btn5Clicked:(id)sender {
+    MMLOG(@"btn5");
+
 }
 
-- (IBAction)button9:(id)sender {
-    PERSONCENTER(PersonCenterViewController9);
-    NSLog(@"9");
+- (IBAction)btn6Clicked:(id)sender {
+    MMLOG(@"btn6");
+
+}
+- (IBAction)btn7Clicked:(id)sender {
+    MMLOG(@"btn7");
+
 }
 
-- (IBAction)button10:(id)sender {
-    PERSONCENTER(PersonCenterViewController10);
-    NSLog(@"10");
+- (IBAction)gobackClicked:(id)sender{
+    NSLog(@"退出");
 }
 
-- (IBAction)buttonExit:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
+
+
 @end

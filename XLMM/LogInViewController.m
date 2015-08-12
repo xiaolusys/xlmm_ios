@@ -103,7 +103,11 @@
               MMLOG(operation);
               NSLog(@"JSON: %@", responseObject);
               // [self.navigationController popViewControllerAnimated:YES];
-              
+              if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
+                  NSLog(@"succeed");
+                  PersonCenterViewController *peopleCenter = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
+                  [self.navigationController pushViewController:peopleCenter animated:YES];
+              }
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -9,23 +9,30 @@
 #import <UIKit/UIKit.h>
 
 @interface PersonCenterViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet UIView *headView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *virticalSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-- (IBAction)button1:(id)sender;
-- (IBAction)button2:(id)sender;
-- (IBAction)button3:(id)sender;
 
-- (IBAction)button4:(id)sender;
-- (IBAction)button5:(id)sender;
-- (IBAction)button6:(id)sender;
-- (IBAction)button7:(id)sender;
-- (IBAction)button8:(id)sender;
-- (IBAction)button9:(id)sender;
-- (IBAction)button10:(id)sender;
+- (IBAction)button1Clicked:(id)sender;
+
+- (IBAction)button2Clicked:(id)sender;
+
+- (IBAction)button3Clicked:(id)sender;
 
 
-- (IBAction)buttonExit:(id)sender;
+- (IBAction)btn1Clicked:(id)sender;
+
+- (IBAction)btn2Clicked:(id)sender;
+- (IBAction)btn3Clicked:(id)sender;
+
+- (IBAction)btn4Clicked:(id)sender;
+
+- (IBAction)btn5Clicked:(id)sender;
+- (IBAction)btn6Clicked:(id)sender;
+- (IBAction)btn7Clicked:(id)sender;
+
+- (IBAction)gobackClicked:(id)sender;
+
 
 @end

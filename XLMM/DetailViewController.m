@@ -44,6 +44,8 @@
     
     [self setviewInfo];
     
+    self.headWidth.constant = SCREENWIDTH;
+    
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 18, 31);
     
