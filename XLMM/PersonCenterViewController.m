@@ -10,13 +10,8 @@
 #import "PersonCenterViewController1.h"
 #import "PersonCenterViewController2.h"
 #import "PersonCenterViewController3.h"
-#import "PersonCenterViewController4.h"
-#import "PersonCenterViewController5.h"
-#import "PersonCenterViewController6.h"
-#import "PersonCenterViewController7.h"
-#import "PersonCenterViewController8.h"
-#import "PersonCenterViewController9.h"
-#import "PersonCenterViewController10.h"
+
+#import "AddressViewController.h"
 
 
 
@@ -110,6 +105,9 @@
 }
 
 - (IBAction)btn3Clicked:(id)sender {
+    AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+    [self.navigationController pushViewController:addressVC animated:YES];
+    
     MMLOG(@"btn3");
 
 }

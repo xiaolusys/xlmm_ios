@@ -17,20 +17,6 @@
 		3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9891B6F38410086D030 /* PersonCenterViewController2.xib */; };
 		3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B98D1B6F38500086D030 /* PersonCenterViewController3.m */; };
 		3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B98E1B6F38500086D030 /* PersonCenterViewController3.xib */; };
-		3249B9941B6F38660086D030 /* PersonCenterViewController4.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9921B6F38660086D030 /* PersonCenterViewController4.m */; };
-		3249B9951B6F38660086D030 /* PersonCenterViewController4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9931B6F38660086D030 /* PersonCenterViewController4.xib */; };
-		3249B9991B6F38770086D030 /* PersonCenterViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9971B6F38770086D030 /* PersonCenterViewController5.m */; };
-		3249B99A1B6F38770086D030 /* PersonCenterViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9981B6F38770086D030 /* PersonCenterViewController5.xib */; };
-		3249B99E1B6F38920086D030 /* PersonCenterViewController6.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B99C1B6F38920086D030 /* PersonCenterViewController6.m */; };
-		3249B99F1B6F38920086D030 /* PersonCenterViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B99D1B6F38920086D030 /* PersonCenterViewController6.xib */; };
-		3249B9A31B6F38A20086D030 /* PersonCenterViewController7.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9A11B6F38A20086D030 /* PersonCenterViewController7.m */; };
-		3249B9A41B6F38A20086D030 /* PersonCenterViewController7.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9A21B6F38A20086D030 /* PersonCenterViewController7.xib */; };
-		3249B9A81B6F38B20086D030 /* PersonCenterViewController8.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9A61B6F38B20086D030 /* PersonCenterViewController8.m */; };
-		3249B9A91B6F38B20086D030 /* PersonCenterViewController8.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9A71B6F38B20086D030 /* PersonCenterViewController8.xib */; };
-		3249B9AD1B6F38C20086D030 /* PersonCenterViewController9.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9AB1B6F38C20086D030 /* PersonCenterViewController9.m */; };
-		3249B9AE1B6F38C20086D030 /* PersonCenterViewController9.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9AC1B6F38C20086D030 /* PersonCenterViewController9.xib */; };
-		3249B9B21B6F38D80086D030 /* PersonCenterViewController10.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */; };
-		3249B9B31B6F38D80086D030 /* PersonCenterViewController10.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */; };
 		3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */; };
 		3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */; };
 		3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */; };
@@ -144,6 +130,13 @@
 		3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27A1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m */; };
 		3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */; };
 		3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */; };
+		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
+		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
+		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
+		32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
+		32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
+		32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C31B7C491E00CA67C3 /* AddressModel.m */; };
+		32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E329971B70C70000A6F0BC /* DetailViewController.m */; };
@@ -190,27 +183,6 @@
 		3249B98C1B6F38500086D030 /* PersonCenterViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController3.h; sourceTree = "<group>"; };
 		3249B98D1B6F38500086D030 /* PersonCenterViewController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController3.m; sourceTree = "<group>"; };
 		3249B98E1B6F38500086D030 /* PersonCenterViewController3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController3.xib; sourceTree = "<group>"; };
-		3249B9911B6F38660086D030 /* PersonCenterViewController4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController4.h; sourceTree = "<group>"; };
-		3249B9921B6F38660086D030 /* PersonCenterViewController4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController4.m; sourceTree = "<group>"; };
-		3249B9931B6F38660086D030 /* PersonCenterViewController4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController4.xib; sourceTree = "<group>"; };
-		3249B9961B6F38770086D030 /* PersonCenterViewController5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController5.h; sourceTree = "<group>"; };
-		3249B9971B6F38770086D030 /* PersonCenterViewController5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController5.m; sourceTree = "<group>"; };
-		3249B9981B6F38770086D030 /* PersonCenterViewController5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController5.xib; sourceTree = "<group>"; };
-		3249B99B1B6F38920086D030 /* PersonCenterViewController6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController6.h; sourceTree = "<group>"; };
-		3249B99C1B6F38920086D030 /* PersonCenterViewController6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController6.m; sourceTree = "<group>"; };
-		3249B99D1B6F38920086D030 /* PersonCenterViewController6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController6.xib; sourceTree = "<group>"; };
-		3249B9A01B6F38A20086D030 /* PersonCenterViewController7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController7.h; sourceTree = "<group>"; };
-		3249B9A11B6F38A20086D030 /* PersonCenterViewController7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController7.m; sourceTree = "<group>"; };
-		3249B9A21B6F38A20086D030 /* PersonCenterViewController7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController7.xib; sourceTree = "<group>"; };
-		3249B9A51B6F38B20086D030 /* PersonCenterViewController8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController8.h; sourceTree = "<group>"; };
-		3249B9A61B6F38B20086D030 /* PersonCenterViewController8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController8.m; sourceTree = "<group>"; };
-		3249B9A71B6F38B20086D030 /* PersonCenterViewController8.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController8.xib; sourceTree = "<group>"; };
-		3249B9AA1B6F38C20086D030 /* PersonCenterViewController9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController9.h; sourceTree = "<group>"; };
-		3249B9AB1B6F38C20086D030 /* PersonCenterViewController9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController9.m; sourceTree = "<group>"; };
-		3249B9AC1B6F38C20086D030 /* PersonCenterViewController9.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController9.xib; sourceTree = "<group>"; };
-		3249B9AF1B6F38D80086D030 /* PersonCenterViewController10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController10.h; sourceTree = "<group>"; };
-		3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController10.m; sourceTree = "<group>"; };
-		3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController10.xib; sourceTree = "<group>"; };
 		3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiFuCollectionCell.h; sourceTree = "<group>"; };
 		3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiFuCollectionCell.m; sourceTree = "<group>"; };
 		3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZhiFuCollectionCell.xib; sourceTree = "<group>"; };
@@ -368,6 +340,17 @@
 		3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		3282F27D1B6B5B1300E73EB9 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
+		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
+		32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressViewController.xib; sourceTree = "<group>"; };
+		32CE91BD1B7C37D100CA67C3 /* AddAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAdressViewController.h; sourceTree = "<group>"; };
+		32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAdressViewController.m; sourceTree = "<group>"; };
+		32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAdressViewController.xib; sourceTree = "<group>"; };
+		32CE91C21B7C491E00CA67C3 /* AddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
+		32CE91C31B7C491E00CA67C3 /* AddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
+		32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressPickerView.h; sourceTree = "<group>"; };
+		32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressPickerView.m; sourceTree = "<group>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32E329621B708A4000A6F0BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		32E329961B70C70000A6F0BC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -427,6 +410,9 @@
 		3249B9811B6F37A20086D030 /* PersonCenter */ = {
 			isa = PBXGroup;
 			children = (
+				3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */,
+				3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */,
+				3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */,
 				3249B9821B6F381F0086D030 /* PersonCenterViewController1.h */,
 				3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */,
 				3249B9841B6F381F0086D030 /* PersonCenterViewController1.xib */,
@@ -436,33 +422,18 @@
 				3249B98C1B6F38500086D030 /* PersonCenterViewController3.h */,
 				3249B98D1B6F38500086D030 /* PersonCenterViewController3.m */,
 				3249B98E1B6F38500086D030 /* PersonCenterViewController3.xib */,
-				3249B9911B6F38660086D030 /* PersonCenterViewController4.h */,
-				3249B9921B6F38660086D030 /* PersonCenterViewController4.m */,
-				3249B9931B6F38660086D030 /* PersonCenterViewController4.xib */,
-				3249B9961B6F38770086D030 /* PersonCenterViewController5.h */,
-				3249B9971B6F38770086D030 /* PersonCenterViewController5.m */,
-				3249B9981B6F38770086D030 /* PersonCenterViewController5.xib */,
-				3249B99B1B6F38920086D030 /* PersonCenterViewController6.h */,
-				3249B99C1B6F38920086D030 /* PersonCenterViewController6.m */,
-				3249B99D1B6F38920086D030 /* PersonCenterViewController6.xib */,
-				3249B9A01B6F38A20086D030 /* PersonCenterViewController7.h */,
-				3249B9A11B6F38A20086D030 /* PersonCenterViewController7.m */,
-				3249B9A21B6F38A20086D030 /* PersonCenterViewController7.xib */,
-				3249B9A51B6F38B20086D030 /* PersonCenterViewController8.h */,
-				3249B9A61B6F38B20086D030 /* PersonCenterViewController8.m */,
-				3249B9A71B6F38B20086D030 /* PersonCenterViewController8.xib */,
-				3249B9AA1B6F38C20086D030 /* PersonCenterViewController9.h */,
-				3249B9AB1B6F38C20086D030 /* PersonCenterViewController9.m */,
-				3249B9AC1B6F38C20086D030 /* PersonCenterViewController9.xib */,
-				3249B9AF1B6F38D80086D030 /* PersonCenterViewController10.h */,
-				3249B9B01B6F38D80086D030 /* PersonCenterViewController10.m */,
-				3249B9B11B6F38D80086D030 /* PersonCenterViewController10.xib */,
 				3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */,
 				3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */,
 				3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */,
 				3249B9B91B6F49A20086D030 /* ShouHuoCollectionViewCell.h */,
 				3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */,
 				3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */,
+				32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */,
+				32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */,
+				32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */,
+				32CE91BD1B7C37D100CA67C3 /* AddAdressViewController.h */,
+				32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */,
+				32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -470,6 +441,9 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
+				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
+				32CE91B61B7C21D000CA67C3 /* area.plist */,
 				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
 				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
 				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
@@ -581,9 +555,6 @@
 				3264EA271B6C5D8700F36A8D /* WomanViewController.h */,
 				3264EA281B6C5D8700F36A8D /* WomanViewController.m */,
 				3264EA291B6C5D8700F36A8D /* WomanViewController.xib */,
-				3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */,
-				3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */,
-				3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */,
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
@@ -677,6 +648,8 @@
 				32746DCA1B7438FC00816208 /* CollectionModel.m */,
 				32746DD11B74884B00816208 /* DetailsModel.h */,
 				32746DD21B74884B00816208 /* DetailsModel.m */,
+				32CE91C21B7C491E00CA67C3 /* AddressModel.h */,
+				32CE91C31B7C491E00CA67C3 /* AddressModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -839,7 +812,6 @@
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
 				32746DC81B7432BD00816208 /* CollectionViewController.xib in Resources */,
-				3249B99F1B6F38920086D030 /* PersonCenterViewController6.xib in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
@@ -847,11 +819,11 @@
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
-				3249B99A1B6F38770086D030 /* PersonCenterViewController5.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
 				32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */,
@@ -868,7 +840,6 @@
 				32746E321B74A22000816208 /* logo.png in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
-				3249B9AE1B6F38C20086D030 /* PersonCenterViewController9.xib in Resources */,
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
@@ -882,7 +853,6 @@
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
-				3249B9A41B6F38A20086D030 /* PersonCenterViewController7.xib in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
@@ -892,9 +862,11 @@
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
 				3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */,
+				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
 				3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
+				32CE91B71B7C21D000CA67C3 /* area.plist in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
@@ -902,8 +874,6 @@
 				32746E331B74A22000816208 /* pro1.jpg in Resources */,
 				3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
-				3249B9A91B6F38B20086D030 /* PersonCenterViewController8.xib in Resources */,
-				3249B9B31B6F38D80086D030 /* PersonCenterViewController10.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */,
@@ -915,7 +885,6 @@
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
-				3249B9951B6F38660086D030 /* PersonCenterViewController4.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,11 +906,7 @@
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
 				3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */,
-				3249B9B21B6F38D80086D030 /* PersonCenterViewController10.m in Sources */,
-				3249B9AD1B6F38C20086D030 /* PersonCenterViewController9.m in Sources */,
-				3249B9991B6F38770086D030 /* PersonCenterViewController5.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
-				3249B9A31B6F38A20086D030 /* PersonCenterViewController7.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
@@ -952,13 +917,13 @@
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
+				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32746DC71B7432BD00816208 /* CollectionViewController.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
 				3249B98A1B6F38410086D030 /* PersonCenterViewController2.m in Sources */,
 				3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */,
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
-				3249B9941B6F38660086D030 /* PersonCenterViewController4.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
@@ -972,10 +937,11 @@
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */,
 				32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */,
-				3249B9A81B6F38B20086D030 /* PersonCenterViewController8.m in Sources */,
 				3282F2821B6B5B1300E73EB9 /* SDWebImageCompat.m in Sources */,
+				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
 				32746DCF1B743DB100816208 /* ClothesCollectionCell.m in Sources */,
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
@@ -992,8 +958,8 @@
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
+				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
-				3249B99E1B6F38920086D030 /* PersonCenterViewController6.m in Sources */,
 				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

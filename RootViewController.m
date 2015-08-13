@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "MMClass.h"
 
-#import "PersonCenterViewController6.h"
 
 @interface RootViewController (){
     BOOL isToday;//

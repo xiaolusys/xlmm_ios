@@ -682,7 +682,9 @@
                                         </constraint>
                                         <constraint firstAttribute="centerY" secondItem="5Ds-Qm-T9a" secondAttribute="centerY" id="LRO-pt-ayo"/>
                                         <constraint firstItem="W2a-Bt-Hq0" firstAttribute="leading" secondItem="Lbw-g7-0vV" secondAttribute="leading" constant="10" id="M71-Hk-R5t"/>
-                                        <constraint firstItem="z9H-93-bWy" firstAttribute="leading" secondItem="Lbw-g7-0vV" secondAttribute="leading" constant="180" id="W9G-17-JxM"/>
+                                        <constraint firstItem="z9H-93-bWy" firstAttribute="leading" secondItem="Lbw-g7-0vV" secondAttribute="leading" constant="180" id="W9G-17-JxM">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="170"/>
+                                        </constraint>
                                         <constraint firstAttribute="trailing" secondItem="Tfo-HB-kuo" secondAttribute="trailing" constant="77" id="X6n-eV-H0h">
                                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                         </constraint>
