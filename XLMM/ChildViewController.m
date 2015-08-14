@@ -23,9 +23,12 @@
 @interface ChildViewController (){
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
+    BOOL isOrder;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *orderDataArray;
+
 @property (nonatomic, strong) UIView *bgView;
 
 @end
@@ -35,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
+    isOrder = NO;
     _ModelListArray = [[NSMutableArray alloc] init];
     [self setInfo];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -182,12 +185,25 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.dataArray.count;
+    if (isOrder) {
+        return self.orderDataArray.count;
+        
+    }else{
+        return self.dataArray.count;
+        
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
-   [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
+    
+    if (isOrder) {
+        [cell fillData:[_orderDataArray objectAtIndex:indexPath.row]];
+        
+    }else{
+        [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
+        
+    }
     return cell;
 }
 
@@ -195,13 +211,24 @@
   if (_dataArray.count == 0) {
         return;
     }
-    PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
-    if (model.productModel == nil) {
-        NSLog(@"没有集合页面");
-        [self downloadDetailsDataWithModel:model];
+    if (isOrder) {
+        PeopleModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
+            NSLog(@"没有集合页面");
+            [self downloadDetailsDataWithModel:model];
+        } else {
+            [self downloadCollectionDataWithProductModel:model.productModel];
+        }
     } else {
-        [self downloadCollectionDataWithProductModel:model.productModel];
+        PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
+            NSLog(@"没有集合页面");
+            [self downloadDetailsDataWithModel:model];
+        } else {
+            [self downloadCollectionDataWithProductModel:model.productModel];
+        }
     }
+    
 }
 
 - (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
@@ -297,10 +324,56 @@
 - (IBAction)btnClicked:(UIButton *)sender {
     if (sender.tag == 1) {
         NSLog(@"推荐排序");
+        isOrder = NO;
+        [self.childCollectionView reloadData];
     } else if (sender.tag == 2){
         NSLog(@"价格排序");
+        isOrder = YES;
+        
+        [self downloadOrderData];
+        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityIndicator.backgroundColor = [UIColor clearColor];
+        [activityIndicator startAnimating];
+        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
+        [self.childCollectionView addSubview:activityIndicator];
+        
+        [self.childCollectionView reloadData];
     }
 
+}
+
+- (void)fatchedOrderLadyListData:(NSData *)responseData{
+    NSError *error;
+    self.orderDataArray = [[NSMutableArray alloc] init];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    MMLOG(json);
+    NSArray *array = [json objectForKey:@"results"];
+    for (NSDictionary *dic in array) {
+        PeopleModel *model = [[PeopleModel alloc] init];
+        model.imageURL = [dic objectForKey:@"pic_path"];
+        model.name = [dic objectForKey:@"name"];
+        model.price = [dic objectForKey:@"agent_price"];
+        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+        
+        model.url = [dic objectForKey:@"url"];
+        
+        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
+        if ([dic2 class] == [NSNull class]) {
+            model.productModel = nil;
+        } else{
+            model.productModel = dic2;
+            model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
+            model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+        }
+        [self.orderDataArray addObject:model];
+    }
+     [activityIndicator removeFromSuperview];
+    [self.childCollectionView reloadData];
+}
+
+
+- (void)downloadOrderData{
+    [self downLoadWithURLString:@"http://youni.huyi.so/rest/v1/products/childlist?order_by=price" andSelector:@selector(fatchedOrderLadyListData:)];
 }
 
 - (void)didReceiveMemoryWarning {
