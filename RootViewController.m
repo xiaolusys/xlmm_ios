@@ -633,22 +633,8 @@
 #pragma mark ------btnclicked--------
 
 - (void)login:(UIButton *)button{
-    
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    BOOL isLogin = [userDefault boolForKey:kIsLogin];
-    
-    if (isLogin) {
-        
-        LogInViewController *login = [[LogInViewController alloc] init];
-        [self.navigationController pushViewController:login animated:YES];
-    
-    }else{
-        
-        PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
-        [self.navigationController pushViewController:personCenter animated:YES];
-        
-    }
-  
+    PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
+    [self.navigationController pushViewController:personCenter animated:YES];
 }
 
 - (IBAction)btnClicked:(UIButton *)sender {

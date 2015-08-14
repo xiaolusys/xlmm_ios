@@ -10,6 +10,7 @@
 
 @interface CollectionViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headHeight;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, copy)NSArray *collectionArray;
 

@@ -26,10 +26,11 @@
 @implementation DetailViewController
 
 - (void)viewDidDisappear:(BOOL)animated{
-
-    
+    [super viewDidDisappear:animated];
+    self.headHeight.constant = 0;
     
 }
+
 
 - (void)setviewInfo{
     self.nameLabel.text = _detailsModel.name;

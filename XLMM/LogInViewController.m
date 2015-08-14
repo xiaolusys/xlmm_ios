@@ -85,28 +85,42 @@
                                  @"password":password
                                  };
     MMLOG(parameters);
-//    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];//加上这句话
-//     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]];//加上这句话
-//    AFJSONRequestOperation *jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        DMLog(@"str %@",JSON);
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DMLog(@"数据请求失败%@",error);
-//        
-//    }];
+
     
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
               MMLOG(operation);
               NSLog(@"JSON: %@", responseObject);
-              // [self.navigationController popViewControllerAnimated:YES];
+              
+              if ([[responseObject objectForKey:@"result"] isEqualToString:@"null"]) {
+                  NSLog(@"用户名和密码不能为空");
+                  self.infoLabel.text = @"用户名和密码不能为空!";
+                  self.infoLabel.hidden = NO;
+              }
+             // result = null;
+
+            //  result = "u_error";
+            //  result = "p_error";
+
+              if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
+                  NSLog(@"用户名错误");
+                  self.infoLabel.text = @"用户名错误!";
+                  self.infoLabel.hidden = NO;
+              }
+              if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
+                  NSLog(@"密码错误");
+                  self.infoLabel.text = @"密码错误!";
+                  self.infoLabel.hidden = NO;
+              }
+              
+              
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
                   NSLog(@"succeed");
-                  PersonCenterViewController *peopleCenter = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
-                  [self.navigationController pushViewController:peopleCenter animated:YES];
+                  self.infoLabel.text = @"登录成功!";
+                  self.infoLabel.hidden = NO;
+                  [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
+                  [self.navigationController popToRootViewControllerAnimated:YES];
               }
               
           }

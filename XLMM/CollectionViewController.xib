@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CollectionViewController">
             <connections>
                 <outlet property="collectionView" destination="m7b-zL-IJw" id="vfW-lG-isV"/>
+                <outlet property="headHeight" destination="WrX-DB-RWz" id="OzN-Dm-b8a"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

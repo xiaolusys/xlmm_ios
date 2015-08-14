@@ -11,7 +11,11 @@
 #import "MMClass.h"
 
 @interface RegisterViewController ()
-
+{
+    NSTimer *countDownTimer;
+    
+    int secondsCountDown;
+}
 @end
 
 @implementation RegisterViewController
@@ -22,8 +26,9 @@
     self.title = @"注册";
     self.infoLabel.hidden = YES;
     self.passwordLabel.hidden = YES;
+    secondsCountDown = 60;
     _numberTextField.keyboardType = UIKeyboardTypeNumberPad;
-    _passwordTextField.keyboardType = UIKeyboardTypeASCIICapable;
+    _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
     _setPasswordTextField.keyboardType = UIKeyboardTypeASCIICapable;
     _resetPasswordTextField.keyboardType = UIKeyboardTypeASCIICapable;
     _passwordTextField.delegate = self;
@@ -64,6 +69,11 @@
               NSLog(@"JSON: %@", responseObject);
                           // [self.navigationController popViewControllerAnimated:YES];
          
+              if (![self.setPasswordTextField.text isEqualToString:self.resetPasswordTextField.text]) {
+                  self.passwordLabel.text = @"两次密码输入不一样，请重新输入!";
+                  self.passwordLabel.hidden = NO;
+                  return ;
+              }
               int result = [[responseObject objectForKey:@"result"] intValue];
             
               NSLog(@"result = %d", result);
@@ -110,12 +120,33 @@
 
 }
 
+- (BOOL)isAllNum:(NSString *)string{
+    unichar c;
+    for (int i=0; i<string.length; i++) {
+        c=[string characterAtIndex:i];
+        if (!isdigit(c)) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (IBAction)getPasswordButtonClicked:(UIButton *)sender {
     NSLog(@"获得验证码");
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *phoneNumber = _numberTextField.text;
+    if (phoneNumber.length != 11) {
+        self.infoLabel.text = @"请输入正确的手机号码!";
+        self.infoLabel.hidden = NO;
+        return;
+    }
+    if (![self isAllNum:phoneNumber]) {
+        self.infoLabel.text = @"请输入正确的手机号码!";
+        self.infoLabel.hidden = NO;
+        return;
+    }
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
     NSDictionary *parameters = @{@"vmobile": phoneNumber};
     
@@ -125,11 +156,19 @@
              NSLog(@"JSON: %@", responseObject);
              NSString *string = [responseObject objectForKey:@"result"];
              if ([string isEqualToString:@"false"]) {
-                 self.infoLabel.text = @"您输入的号码错误!";
+                 self.infoLabel.text = @"请输入正确的手机号码!";
                  self.infoLabel.hidden = NO;
+             } else if([string isEqualToString:@"0"]){
+                 self.infoLabel.hidden = NO;
+                 self.infoLabel.text = @"该手机号码已经注册过了!";
              } else{
                  self.infoLabel.hidden = YES;
              }
+            countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+             _getCodeBtn.userInteractionEnabled = NO;
+             [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//             [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
+             
              //[self.navigationController popViewControllerAnimated:YES];
              
          }
@@ -139,6 +178,23 @@
              
          }];
 
+}
+- (void)timeFireMethod
+{
+    secondsCountDown--;
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
+    
+    if (secondsCountDown == 55)
+    {
+        secondsCountDown=60;
+        [countDownTimer invalidate];
+        
+        _getCodeBtn.userInteractionEnabled = YES;
+        [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码"] forState:UIControlStateNormal];
+        [_getCodeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        
+    }
+    
 }
 
 #pragma mark ----UITextFieldDelegate-----
@@ -172,6 +228,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.passwordTextField resignFirstResponder];
+    [self.setPasswordTextField resignFirstResponder];
+    [self.resetPasswordTextField resignFirstResponder];
+    [self.numberTextField resignFirstResponder];
 }
 
 /*

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController">
             <connections>
+                <outlet property="headHeight" destination="68K-QI-O6Y" id="CKx-aK-AXx"/>
                 <outlet property="headView" destination="6Yr-qp-JJc" id="NeL-Yu-m5i"/>
                 <outlet property="headWidth" destination="z5v-wf-9ee" id="tTl-Bb-s88"/>
                 <outlet property="imageView1" destination="iJh-gs-sZ2" id="CoH-aL-oSP"/>
@@ -1236,7 +1237,7 @@
                     <include reference="p9m-5W-lWF"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="349.5" y="896"/>
+            <point key="canvasLocation" x="349.5" y="1115.5"/>
         </view>
     </objects>
 </document>

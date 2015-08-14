@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
             <connections>
+                <outlet property="getCodeBtn" destination="1zI-ty-f4U" id="8Dn-Gq-K2O"/>
                 <outlet property="infoLabel" destination="caN-TF-ldi" id="JI6-V5-AtH"/>
                 <outlet property="numberTextField" destination="ACE-Jx-PTo" id="PjD-MG-Nw0"/>
                 <outlet property="passwordLabel" destination="Tjw-mg-Zjh" id="0mI-Uq-CWv"/>
@@ -52,13 +53,26 @@
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5db-gs-ILT" userLabel="Password Text Field">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="3UD-me-Jvb"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <textInputTraits key="textInputTraits"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="3UD-me-Jvb"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="3UD-me-Jvb"/>
+                        </mask>
+                    </variation>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zI-ty-f4U">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zI-ty-f4U">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="获取验证码">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -126,6 +140,7 @@
                 <constraint firstItem="BF3-YQ-0Da" firstAttribute="top" secondItem="Tjw-mg-Zjh" secondAttribute="bottom" constant="10" id="2hA-t2-BBa"/>
                 <constraint firstAttribute="trailing" secondItem="caN-TF-ldi" secondAttribute="trailing" constant="20" id="49B-XM-w7S"/>
                 <constraint firstItem="ACE-Jx-PTo" firstAttribute="leading" secondItem="bv5-wg-zEK" secondAttribute="trailing" constant="8" id="4T1-T7-pWW"/>
+                <constraint firstItem="1zI-ty-f4U" firstAttribute="leading" secondItem="5db-gs-ILT" secondAttribute="trailing" constant="10" id="7Ft-h6-DmF"/>
                 <constraint firstItem="5db-gs-ILT" firstAttribute="bottom" secondItem="1zI-ty-f4U" secondAttribute="bottom" id="ABI-ox-2Ai"/>
                 <constraint firstAttribute="trailing" secondItem="yhV-af-hK7" secondAttribute="trailing" constant="30" id="Ah5-By-dVj"/>
                 <constraint firstItem="ACE-Jx-PTo" firstAttribute="bottom" secondItem="bv5-wg-zEK" secondAttribute="bottom" id="B6B-yF-eWA"/>
@@ -143,7 +158,6 @@
                 <constraint firstAttribute="trailing" secondItem="1xd-EC-sFi" secondAttribute="trailing" constant="30" id="Nh5-Oj-6Gg"/>
                 <constraint firstItem="1zI-ty-f4U" firstAttribute="top" secondItem="ACE-Jx-PTo" secondAttribute="bottom" constant="20" id="PIH-Ac-PSU"/>
                 <constraint firstItem="BF3-YQ-0Da" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="WM5-jb-OBO"/>
-                <constraint firstItem="5db-gs-ILT" firstAttribute="width" secondItem="ACE-Jx-PTo" secondAttribute="width" id="X18-mq-WNU"/>
                 <constraint firstAttribute="trailing" secondItem="ACE-Jx-PTo" secondAttribute="trailing" constant="30" id="aWW-CQ-iyU"/>
                 <constraint firstItem="yhV-af-hK7" firstAttribute="bottom" secondItem="2gw-5t-Pwm" secondAttribute="bottom" id="cjN-ZS-1tO"/>
                 <constraint firstItem="bv5-wg-zEK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="jgx-WB-5jU"/>
@@ -171,7 +185,6 @@
                     <exclude reference="saK-NC-qI9"/>
                     <exclude reference="ABI-ox-2Ai"/>
                     <exclude reference="JV0-rA-FUd"/>
-                    <exclude reference="X18-mq-WNU"/>
                     <exclude reference="4T1-T7-pWW"/>
                     <exclude reference="B6B-yF-eWA"/>
                     <exclude reference="aWW-CQ-iyU"/>
@@ -194,6 +207,7 @@
                     <exclude reference="CYR-Ge-K1g"/>
                     <exclude reference="MiO-2T-YbL"/>
                     <exclude reference="Nh5-Oj-6Gg"/>
+                    <exclude reference="7Ft-h6-DmF"/>
                     <exclude reference="JVE-kL-H2S"/>
                     <exclude reference="PIH-Ac-PSU"/>
                 </mask>
@@ -217,7 +231,6 @@
                     <include reference="saK-NC-qI9"/>
                     <include reference="ABI-ox-2Ai"/>
                     <include reference="JV0-rA-FUd"/>
-                    <include reference="X18-mq-WNU"/>
                     <include reference="4T1-T7-pWW"/>
                     <include reference="B6B-yF-eWA"/>
                     <include reference="aWW-CQ-iyU"/>
@@ -240,6 +253,7 @@
                     <include reference="CYR-Ge-K1g"/>
                     <include reference="MiO-2T-YbL"/>
                     <include reference="Nh5-Oj-6Gg"/>
+                    <include reference="7Ft-h6-DmF"/>
                     <include reference="JVE-kL-H2S"/>
                     <include reference="PIH-Ac-PSU"/>
                 </mask>

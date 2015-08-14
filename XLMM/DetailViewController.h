@@ -11,6 +11,7 @@
 
 @interface DetailViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headHeight;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 

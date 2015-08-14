@@ -21,7 +21,7 @@
 
 @interface WomanViewController (){
     NSMutableArray *_ModelListArray;
-
+    UIActivityIndicatorView *activityIndicator;
 }
 
 
@@ -41,17 +41,11 @@
     
     [self setInfo];
     
-    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"小鹿美美logo.jpg"]];
-    bgImageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH);
-    bgImageView.tag = 123;
-    UIView *bgView = [[UIView alloc] initWithFrame:bgImageView.frame];
-    bgImageView.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2+30);
-    bgView.layer.cornerRadius = SCREENWIDTH/2;
-    bgView.backgroundColor = [UIColor orangeColor];
-    bgView.alpha = 0.7f;
-    
-    [bgImageView addSubview:bgView];
-    [self.womanCollectionView addSubview:bgImageView];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.backgroundColor = [UIColor clearColor];
+    [activityIndicator startAnimating];
+    activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
+    [self.womanCollectionView addSubview:activityIndicator];
     
    //注册信息。。。
     [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSimpleCell];
@@ -135,8 +129,7 @@
         }
         [self.dataArray addObject:model];
     }
-    UIImageView *bgImageView = (UIImageView *)[self.womanCollectionView viewWithTag:123];
-    [bgImageView removeFromSuperview];
+    [activityIndicator removeFromSuperview];
     [self.womanCollectionView reloadData];
 }
 

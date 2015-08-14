@@ -20,6 +20,12 @@
 
 @implementation CollectionViewController
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    self.headHeight.constant = 0;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

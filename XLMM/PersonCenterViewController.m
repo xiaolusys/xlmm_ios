@@ -13,11 +13,16 @@
 
 #import "AddressViewController.h"
 
+#import "EnterViewController.h"
+
 
 
 #import "MMClass.h"
 
 @interface PersonCenterViewController ()
+{
+    BOOL islogin;
+}
 
 @end
 
@@ -25,6 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    
     
     _screenWidth.constant = SCREENWIDTH;
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
@@ -80,14 +89,25 @@
 
 - (IBAction)button1Clicked:(id)sender {
     NSLog(@"heoo");
+    if (islogin) {
     PersonCenterViewController1 *person1VC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
     [self.navigationController pushViewController:person1VC animated:YES];
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+
+    }
 }
 
 - (IBAction)button2Clicked:(id)sender {
+    if (islogin) {
     NSLog(@"222");
     PersonCenterViewController2 *person1VC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
     [self.navigationController pushViewController:person1VC animated:YES];
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
 
 }
 
@@ -133,6 +153,8 @@
 
 - (IBAction)gobackClicked:(id)sender{
     NSLog(@"退出");
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
