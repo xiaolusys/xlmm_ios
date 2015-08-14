@@ -12,6 +12,7 @@
                 <outlet property="headViewHeight" destination="Gsg-AZ-uBt" id="qAQ-Uw-QZB"/>
                 <outlet property="ladyView" destination="iOj-cY-yHN" id="VX6-ze-F9G"/>
                 <outlet property="posterView" destination="GqI-W6-0dx" id="9i9-a2-Khm"/>
+                <outlet property="scrollView" destination="hfL-1t-VaI" id="cR7-vU-I56"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="widthView" destination="a9w-Si-yW6" id="nNb-ZD-D5x"/>
             </connections>
@@ -259,7 +260,7 @@
                                 <constraint firstItem="SVl-iD-07m" firstAttribute="leading" secondItem="MAo-8g-aPp" secondAttribute="leading" id="Dbe-67-Kmw"/>
                                 <constraint firstAttribute="trailing" secondItem="iOj-cY-yHN" secondAttribute="trailing" id="IiX-x8-T9M"/>
                                 <constraint firstAttribute="bottom" secondItem="iOj-cY-yHN" secondAttribute="bottom" id="RtP-n0-1a1">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="50"/>
                                 </constraint>
                                 <constraint firstItem="rwa-jB-kw2" firstAttribute="top" secondItem="GqI-W6-0dx" secondAttribute="bottom" id="VDJ-ID-aSm"/>
                                 <constraint firstAttribute="trailing" secondItem="Z0h-gi-RSF" secondAttribute="trailing" id="ZrU-R9-lV4"/>
@@ -387,7 +388,7 @@
                     <include reference="vd6-XD-6ta"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-52" y="246"/>
+            <point key="canvasLocation" x="-105" y="364"/>
         </view>
     </objects>
 </document>

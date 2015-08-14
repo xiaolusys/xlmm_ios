@@ -11,6 +11,7 @@
 @interface RootViewController : UIViewController <NSURLConnectionDataDelegate>{
     
 }
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 

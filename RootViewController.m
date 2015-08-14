@@ -82,7 +82,57 @@
     [self setInfo];
     [self setTitleImage];
     [self downloadData];
+    
+    
+    
  }
+
+- (void)createShoppingCart{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 60 - 8, 60, 60)];
+    button.layer.cornerRadius = 30;
+    [self.view addSubview:button];
+    [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view bringSubviewToFront:button];
+    button.alpha = 0.5;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, 8, 22, 22)];
+    view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
+    view.layer.cornerRadius = 10;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    label.layer.cornerRadius = 10;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"55";
+    label.font = [UIFont systemFontOfSize:14];
+    [view addSubview:label];
+    [button addSubview:view];
+}
+- (void)cartClicked:(UIButton *)btn{
+    NSLog(@"gouguche ");
+}
+
+- (void)createGotoTopView{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 68, SCREENHEIGHT - 60 - 8, 60, 60)];
+    button.layer.cornerRadius = 30;
+    [self.view addSubview:button];
+    [button setBackgroundImage:[UIImage imageNamed:@"icon-fanhuidingbu.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(gotoTopClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view bringSubviewToFront:button];
+    button.alpha = 0.5;
+   
+}
+- (void)gotoTopClicked:(UIButton *)btn{
+    NSLog(@"gouguche ");
+    [UIView animateWithDuration:0.3 animations:^{
+        self.scrollView.contentOffset = CGPointMake(0, -64);
+    }];
+    
+}
+
+
+
+
+
 
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer
@@ -454,6 +504,12 @@
         
         
        
+    }
+    
+    static int i = 0;
+    if (i++ == 0) {
+        [self createShoppingCart];
+        [self createGotoTopView];
     }
     
 }
