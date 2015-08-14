@@ -12,8 +12,9 @@
 #import "MMClass.h"
 #import "PurchaseViewController.h"
 #import "EnterViewController.h"
+#import "AFNetworking.h"
 
-@interface DetailViewController ()<UIScrollViewDelegate>{
+@interface DetailViewController ()<UIScrollViewDelegate,NSURLConnectionDataDelegate>{
     NSMutableArray *imageArray;
     UIScrollView *_scrollView;
     UIPageControl *_pageControl;
@@ -334,12 +335,79 @@
                 NSLog(@"item_id = %@", _detailsModel.itemID);
                 NSLog(@"sku_id = %@", selectskuID);
                 
+                
+//                //第一步，创建url
+//                
+//                NSURL *url = [NSURL URLWithString:@"http://youni.huyi.so/rest/v1/carts"];
+//                
+//                //第二步，创建请求
+//                
+//                NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+//                
+//                [request setHTTPMethod:@"POST"];
+//                
+//                NSString *str = [NSString stringWithFormat:@"item_id=%@&sku_id=%@", _detailsModel.itemID, selectskuID];
+//                
+//                NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+//                
+//               [request setHTTPBody:data];
+//                
+//                //第三步，连接服务器
+//                
+//                NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+//                NSLog(@"%@", connection);
+                
+                
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                
+               
+                NSDictionary *parameters = @{@"item_id": _detailsModel.itemID,
+                                             @"sku_id":selectskuID};
+                
+                [manager POST:@"http://youni.huyi.so/rest/v1/carts" parameters:parameters
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          
+                          NSLog(@"JSON: %@", responseObject);
+                          //NSLog(@"operation: %@", operation);
+
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          //NSLog(@"operation: %@", operation);
+
+                          NSLog(@"Error: %@", error);
+                          
+                      }];
+                
+                
+                
             }
     }else{
         EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
     }
     
+}
+
+#pragma mark --NSURLConnectionDataDelegate--
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSLog(@"response");
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+   // NSLog(@"data");
+   // NSLog(@"%@", data);
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"string = %@", str);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    NSLog(@"finished");
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    NSLog(@"%@", error);
 }
 
 - (IBAction)purchase:(id)sender {
