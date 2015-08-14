@@ -29,6 +29,14 @@
     
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:_userIDTextField.text forKey:kUserName];
+    [userDefaults setObject:_passwordTextField.text forKey:kPassWord];
+    [userDefaults synchronize];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -37,7 +45,11 @@
     _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTextField.secureTextEntry = YES;
     
-    
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    NSString *username = [userfaults objectForKey:kUserName];
+    NSString *password = [userfaults objectForKey:kPassWord];
+    _userIDTextField.text = username;
+    _passwordTextField.text = password;
     
 }
 

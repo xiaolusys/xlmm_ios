@@ -295,7 +295,7 @@
     NSLog(@"加入购物车");
 
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (!islogin) {
+    if (islogin) {
         if ([selectSize isEqualToString:@""]) {
             [UIView animateWithDuration:.5f animations:^{
                 self.scrollerView.contentOffset = CGPointMake(0, 0);

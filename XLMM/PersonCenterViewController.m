@@ -31,8 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
-    islogin = [userfaults boolForKey:kIsLogin];
+   
     
     
     _screenWidth.constant = SCREENWIDTH;
@@ -89,6 +88,8 @@
 
 - (IBAction)button1Clicked:(id)sender {
     NSLog(@"heoo");
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
     if (islogin) {
     PersonCenterViewController1 *person1VC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
     [self.navigationController pushViewController:person1VC animated:YES];
@@ -100,6 +101,8 @@
 }
 
 - (IBAction)button2Clicked:(id)sender {
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
     if (islogin) {
     NSLog(@"222");
     PersonCenterViewController2 *person1VC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
