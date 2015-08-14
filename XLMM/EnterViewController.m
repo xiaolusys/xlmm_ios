@@ -8,13 +8,20 @@
 
 #import "EnterViewController.h"
 #import "LogInViewController.h"
-
+#import "MMClass.h"
 @interface EnterViewController ()
 
 @end
 
 @implementation EnterViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
+    if (islogin) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

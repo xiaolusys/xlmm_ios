@@ -120,7 +120,7 @@
                   self.infoLabel.text = @"登录成功!";
                   self.infoLabel.hidden = NO;
                   [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
-                  [self.navigationController popToRootViewControllerAnimated:YES];
+                  [self.navigationController popViewControllerAnimated:NO];
               }
               
           }

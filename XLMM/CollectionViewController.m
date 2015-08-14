@@ -115,15 +115,23 @@
     model.oldPrice= [NSString stringWithFormat:@"￥%@", [detailsInfo objectForKey:@"std_sale_price"]];
     NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
     NSMutableArray *arrayData = [[NSMutableArray alloc] init];
+    NSMutableArray *skuIdArray = [[NSMutableArray alloc] init];
     for (NSDictionary *dic in goodsArray) {
         NSString *size = [dic objectForKey:@"name"];
         [arrayData addObject:size];
+        NSString *skuID = [dic objectForKey:@"id"];
+        NSLog(@"sku_id = %@", skuID);
+        [skuIdArray addObject:skuID];
     }
     model.sizeArray = arrayData;
+    model.skuIDArray = skuIdArray;
     MMLOG(model.sizeArray);
+    MMLOG(model.skuIDArray);
     NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
     model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
+    model.itemID = [detailsInfo objectForKey:@"id"];
+
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
     detailsVC.detailsModel = model;

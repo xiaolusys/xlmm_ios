@@ -10,6 +10,7 @@
 @class DetailsModel;
 
 @interface DetailViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headHeight;
 
@@ -37,6 +38,24 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
+
+@property (weak, nonatomic) IBOutlet UIButton *sizebtn1;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn3;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn4;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn5;
+
+
+
+
+
+
+
+
+- (IBAction)selectSize:(id)sender;
+
+
+
 
 
 - (IBAction)addCart:(id)sender;

@@ -18,7 +18,8 @@
     UIScrollView *_scrollView;
     UIPageControl *_pageControl;
     NSTimer *myTimer;
-    
+    NSString *selectSize;
+    NSString *selectskuID;
 }
 
 @end
@@ -38,6 +39,24 @@
     self.oldPriceLabel.text = _detailsModel.oldPrice;
     self.productNameLabel.text = _detailsModel.name;
     self.productName.text = _detailsModel.productID;
+    
+    selectSize = @"";
+    
+    NSArray *sizeArray = _detailsModel.sizeArray;
+    NSArray *buttonArray = @[self.sizebtn1, self.sizeBtn2, self.sizeBtn3, self.sizeBtn4, self.sizeBtn5];
+    NSLog(@"sizeArray = %@", sizeArray);
+    NSLog(@"sku array = %@", _detailsModel.skuIDArray);
+    int i = 0;
+    for (NSString *sizeName in sizeArray) {
+        if (i == 5) {
+            return;
+        }
+        UIButton *btn = [buttonArray objectAtIndex:i++];
+        [btn setTitle:sizeName forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    }
+    
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -242,17 +261,127 @@
 
 
 
+- (IBAction)selectSize:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    int length = (int)self.detailsModel.sizeArray.count;
+    for (int i = 601; i< 601 + length; i++) {
+        if (button.tag == i) {
+            [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor lightGrayColor];
+            selectSize = [self.detailsModel.sizeArray objectAtIndex:i-601];
+            NSLog(@"selectSize = %@", selectSize);
+            selectskuID = [self.detailsModel.skuIDArray objectAtIndex:i-601];
+            NSLog(@"sku_id = %@", selectskuID);
+        }
+        else{
+            UIButton *btn = (UIButton *)[self.view viewWithTag:i];
+            
+            [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            btn.backgroundColor = [UIColor clearColor];
+          //  NSLog(@"2222");
+        }
+    }
+  //  NSLog(@"btn.tag = %d", (int)button.tag);
+    
+    
+    
+    
+    
+    
+}
+
 - (IBAction)addCart:(id)sender {
     NSLog(@"加入购物车");
-    EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-    [self.navigationController pushViewController:enterVC animated:YES];
+
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (!islogin) {
+        if ([selectSize isEqualToString:@""]) {
+            [UIView animateWithDuration:.5f animations:^{
+                self.scrollerView.contentOffset = CGPointMake(0, 0);
+                
+            } completion:^(BOOL finished) {
+                NSLog(@"top");
+            }];
+            
+            __block UIView *view;
+            
+            view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+            view.center = self.view.center;
+            [UIView animateWithDuration:3.0 animations:^{
+                
+                view.backgroundColor = [UIColor blackColor];
+                view.alpha = 0;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 280, 30)];
+                label.text = @"请选择正确的商品尺寸";
+                label.textColor = [UIColor whiteColor];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.font = [UIFont systemFontOfSize:24];
+                [view addSubview:label];
+                view.layer.cornerRadius = 6;
+                [self.view addSubview:view];
+                NSLog(@"tips");
+            } completion:^(BOOL finished) {
+                [view removeFromSuperview];
+                NSLog(@"finish");
+            }];
+
+            } else{
+                NSLog(@"加入购物车");
+                
+//                sku_id;
+//                item_id;
+//                http://youni.huyi.so/rest/v1/carts
+                NSLog(@"item_id = %@", _detailsModel.itemID);
+                NSLog(@"sku_id = %@", selectskuID);
+                
+            }
+    }else{
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
     
 }
 
 - (IBAction)purchase:(id)sender {
     NSLog(@"立即购买");
-    
-    EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-    [self.navigationController pushViewController:enterVC animated:YES];
+   BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
+    if (islogin) {
+        if ([selectSize isEqualToString:@""]) {
+            [UIView animateWithDuration:.5f animations:^{
+                self.scrollerView.contentOffset = CGPointMake(0, 0);
+                
+            } completion:^(BOOL finished) {
+                NSLog(@"top");
+            }];
+            __block UIView *view;
+            view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+            
+            view.center = self.view.center;
+            
+            [UIView animateWithDuration:3.0 animations:^{
+                view.backgroundColor = [UIColor blackColor];
+                view.alpha = 0;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 280, 30)];
+                label.text = @"请选择正确的商品尺寸";
+                label.textColor = [UIColor whiteColor];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.font = [UIFont systemFontOfSize:24];
+                [view addSubview:label];
+                view.layer.cornerRadius = 6;
+                [self.view addSubview:view];
+                NSLog(@"tips");
+            } completion:^(BOOL finished) {
+                [view removeFromSuperview];
+                NSLog(@"finish");
+            }];
+        } else {
+            NSLog(@"可以购买");
+        }
+
+    } else{
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+
 }
 @end

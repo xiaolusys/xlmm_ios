@@ -32,4 +32,9 @@
 @property (nonatomic, copy)NSArray *contentImageURLArray;
 @property (nonatomic, copy)NSArray *sizeArray;
 
+
+@property (nonatomic, copy)NSArray *skuIDArray;
+@property (nonatomic, copy)NSString *itemID;
+
+
 @end
