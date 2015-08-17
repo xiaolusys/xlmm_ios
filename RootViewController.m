@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "MMClass.h"
 #import "EmptyCartViewController.h"
+#import "CartViewController.h"
 
 @interface RootViewController (){
     BOOL isToday;//
@@ -94,7 +95,6 @@
     [self downloadData];
     
     
-    
  }
 
 - (void)createShoppingCart{
@@ -112,8 +112,20 @@
     label.layer.cornerRadius = 10;
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    NSString *number = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart]];
-    label.text = number;
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *dic = (NSDictionary *)json;
+        NSLog(@"%@", dic);
+        
+        NSInteger count = [[dic objectForKey:@"result"] integerValue];
+        NSLog(@"%ld", (long)count);
+        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)count];
+        // NSString *number = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart]];
+        label.text = strNum;
+    }
+  
     label.font = [UIFont systemFontOfSize:14];
     label.userInteractionEnabled = NO;
     view.userInteractionEnabled = NO;
@@ -123,8 +135,9 @@
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
     NSInteger number = [[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart];
-    if (number > 0) {
-
+    if (number >= 0) {
+        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+        [self.navigationController pushViewController:cartVC animated:YES];
     } else{
         NSLog(@"购物车为空");
         EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
