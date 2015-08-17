@@ -40,6 +40,12 @@
     UILabel *poster1TimeLabel;
     UILabel *poster2TimeLabel;
     
+    UILabel *childPreTimeLabel;
+    UILabel *ladyPreTimeLabel;
+    
+    UILabel *poster1PreTimeLabel;
+    UILabel *poster2PreTimeLabel;
+    
     NSTimer *theTimer;
 
 }
@@ -63,9 +69,11 @@
     posterViewOwner = [PosterView new];
     ownerGoodsView = [GoodsView new];
     ownerLadyView = [LadyView new];
+    
     _ModelListArray = [[NSMutableArray alloc] init];
     isToday = YES;
     isFirst = YES;
+    
     self.widthView.constant = SCREENWIDTH;//设置视图的大小
     self.posterView.frame = CGRectMake(0, 84, SCREENWIDTH, 370);
     self.childView.frame = CGRectMake(0, 454, SCREENWIDTH, 500);
@@ -75,6 +83,8 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
+    
+    [userDefaults setInteger:0 forKey:@"NumberOfCart"];
     [userDefaults synchronize];
 
     
@@ -109,6 +119,8 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
 }
 
 - (void)createGotoTopView{
@@ -126,7 +138,6 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.scrollView.contentOffset = CGPointMake(0, -64);
     }];
-    
 }
 
 
@@ -233,6 +244,14 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         model.url = [child objectForKey:@"url"];
+        model.isSaleOpen = [[child objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[child objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[child objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[child objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+        
+        
         NSDictionary *dic = [child objectForKey:@"product_model"];
         if ([dic class] == [NSNull class]) {
             model.productModel = nil;
@@ -257,6 +276,14 @@
         model.price = [lady objectForKey:@"agent_price"];
         model.oldPrice = [lady objectForKey:@"std_sale_price"];
         model.url = [lady objectForKey:@"url"];
+        model.isSaleOpen = [[lady objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[lady objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[lady objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+        
+        
         NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;
@@ -293,6 +320,13 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         model.url = [child objectForKey:@"url"];
+        
+        model.isSaleOpen = [[child objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[child objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[child objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[child objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
 
         NSDictionary *dic = [child objectForKey:@"product_model"];
         if ([dic class] == [NSNull class]) {
@@ -308,6 +342,8 @@
     }
     [self createChildViewWithArray:_todayPromoteChildArray];
     NSArray *ladyArray = [dic objectForKey:@"female_list"];
+    
+   // NSLog(@"%@", ladyArray);
     if (ladyArray.count == 0) {
         [self createDefaultLadyView];
         return;
@@ -322,6 +358,12 @@
         model.oldPrice = [lady objectForKey:@"std_sale_price"];
         model.url = [lady objectForKey:@"url"];
         
+        model.isSaleOpen = [[lady objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[lady objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[lady objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;
@@ -564,9 +606,37 @@
         
             
             [_childView addSubview:ownerGoodsView.view];
+            
+            
             UIButton *btn = [[UIButton alloc] initWithFrame:rect];
             btn.tag = i*2 +j + 300;
-            btn.backgroundColor = [UIColor clearColor];
+            if (model.isSaleOut) {
+        
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(width/2-40, 50, 80, 80)];
+                view.backgroundColor = [UIColor darkGrayColor];
+                view.layer.cornerRadius = 40;
+                view.alpha = 1;
+                view.userInteractionEnabled = NO;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 80, 40)];
+                label.text = @"抢光了";
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor whiteColor];
+                view.alpha = 0.7;
+                label.font = [UIFont boldSystemFontOfSize:24];
+                label.userInteractionEnabled = NO;
+                [view addSubview:label];
+                UIView *frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 220)];
+                frontView.backgroundColor = [UIColor blackColor];
+                frontView.alpha = 0.3;
+                frontView.userInteractionEnabled = NO;
+                [btn addSubview:frontView];
+                [btn addSubview:view];
+            } else{
+                btn.backgroundColor = [UIColor clearColor];
+
+            }
+            
+            
             [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_childView addSubview:btn];
         }
@@ -631,7 +701,35 @@
             [_ladyView addSubview:ownerLadyView.view];
             UIButton *btn = [[UIButton alloc] initWithFrame:rect];
             btn.tag = i*2 +j + 400;
-            btn.backgroundColor = [UIColor clearColor];
+            if (model.isSaleOut) {
+                
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(width/2-40, 50, 80, 80)];
+                view.backgroundColor = [UIColor darkGrayColor];
+                view.layer.cornerRadius = 40;
+                view.alpha = 1;
+                view.userInteractionEnabled = NO;
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 80, 40)];
+                label.text = @"抢光了";
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor whiteColor];
+                view.alpha = 0.7;
+                label.font = [UIFont boldSystemFontOfSize:24];
+                label.userInteractionEnabled = NO;
+                [view addSubview:label];
+                UIView *frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 220)];
+                frontView.backgroundColor = [UIColor blackColor];
+                frontView.alpha = 0.3;
+                frontView.userInteractionEnabled = NO;
+                [btn addSubview:frontView];
+                [btn addSubview:view];
+            } else{
+                btn.backgroundColor = [UIColor clearColor];
+
+            }
+            
+            
+            
+            
             [btn addTarget:self action:@selector(goodsClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_ladyView addSubview:btn];
         }
@@ -913,7 +1011,7 @@
 
 - (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
     NSString *modelID = [productModel objectForKey:@"id"];
-    NSString *modelListUrlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", modelID];
+    NSString *modelListUrlString = [NSString stringWithFormat:kModel_List_URL, modelID];
     [self downLoadWithURLString:modelListUrlString andSelector:@selector(fetchedModelListData:)];
 }
 - (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{

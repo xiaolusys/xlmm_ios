@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
+		3217B45D1B7F1F9300C74FED /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3217B45B1B7F1F9300C74FED /* CartViewController.m */; };
+		3217B45E1B7F1F9300C74FED /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3217B45C1B7F1F9300C74FED /* CartViewController.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -171,6 +173,9 @@
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
+		3217B45A1B7F1F9300C74FED /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		3217B45B1B7F1F9300C74FED /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		3217B45C1B7F1F9300C74FED /* CartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewController.xib; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -570,6 +575,9 @@
 				326091C91B79ABFC00A763BA /* EnterViewController.h */,
 				326091CA1B79ABFC00A763BA /* EnterViewController.m */,
 				326091CB1B79ABFC00A763BA /* EnterViewController.xib */,
+				3217B45A1B7F1F9300C74FED /* CartViewController.h */,
+				3217B45B1B7F1F9300C74FED /* CartViewController.m */,
+				3217B45C1B7F1F9300C74FED /* CartViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -877,6 +885,7 @@
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */,
+				3217B45E1B7F1F9300C74FED /* CartViewController.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
@@ -918,6 +927,7 @@
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
+				3217B45D1B7F1F9300C74FED /* CartViewController.m in Sources */,
 				32746DC71B7432BD00816208 /* CollectionViewController.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,

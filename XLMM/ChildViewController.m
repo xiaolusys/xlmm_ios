@@ -40,6 +40,8 @@
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _ModelListArray = [[NSMutableArray alloc] init];
+    self.dataArray = [[NSMutableArray alloc] init];
+
     [self setInfo];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.backgroundColor = [UIColor clearColor];
@@ -62,10 +64,8 @@
 - (void)createShoppingCart{
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 60 - 8, 60, 60)];
     button.layer.cornerRadius = 30;
-    [self.view addSubview:button];
     [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view bringSubviewToFront:button];
     button.alpha = 0.5;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, 8, 22, 22)];
     view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
@@ -76,27 +76,32 @@
     label.userInteractionEnabled = NO;
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.text = @"55";
+    label.text = [NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"NumberOfCart"]];
     label.font = [UIFont systemFontOfSize:14];
     [view addSubview:label];
     [button addSubview:view];
+    [self.view addSubview:button];
+    [self.view bringSubviewToFront:button];
+
 }
 - (void)cartClicked:(UIButton *)btn{
-    NSLog(@"gouguche ");
+    NSLog(@"进入购物车");
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
 }
 
 - (void)createGotoTopView{
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 68, SCREENHEIGHT - 60 - 8, 60, 60)];
+    button.alpha = 0.5;
     button.layer.cornerRadius = 30;
     [self.view addSubview:button];
     [button setBackgroundImage:[UIImage imageNamed:@"icon-fanhuidingbu.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(gotoTopClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view bringSubviewToFront:button];
-    button.alpha = 0.5;
     
 }
 - (void)gotoTopClicked:(UIButton *)btn{
-    NSLog(@"gouguche ");
+    NSLog(@"返回页面首部");
     [UIView animateWithDuration:0 animations:^{
         self.childCollectionView.contentOffset = CGPointMake(0, 0);
         
@@ -121,7 +126,6 @@
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 42, 39);
-    
     [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-shouye2.png"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
@@ -149,11 +153,20 @@
 
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
-    self.dataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-   // MMLOG(json);
+    NSLog(@"ChildList Data-->%@", json);
+    if (json == nil) {
+        NSLog(@"数据解析失败");
+        return;
+    }
     NSArray *array = [json objectForKey:@"results"];
+    if (array.count == 0) {
+        NSLog(@"数据解析失败");
+        return;
+    }
+    NSLog(@"childList Array = %@", array);
     
+    [self.dataArray removeAllObjects];
       for (NSDictionary *dic in array) {
           PeopleModel *model = [[PeopleModel alloc] init];
           model.imageURL = [dic objectForKey:@"pic_path"];
@@ -162,7 +175,16 @@
           model.oldPrice = [dic objectForKey:@"std_sale_price"];
           model.url = [dic objectForKey:@"url"];
           
+          model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
+          model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
+          model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
+          model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
+          
+          NSLog(@"is_saleOpen = %d, is_saleOUt = %d, is_newGood = %d, remainNumber = %ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+          
           NSDictionary *dic2 = [dic objectForKey:@"product_model"];
+          NSLog(@"procust_model = %@", dic);
+          
           if ([dic2 class] == [NSNull class]) {
               model.productModel = nil;
           } else{
@@ -172,8 +194,12 @@
           }
           [_dataArray addObject:model];
     }
+    NSLog(@"dataArray = %@\n\n\n", _dataArray);
+    [activityIndicator stopAnimating];
     [activityIndicator removeFromSuperview];
+    
     [self.childCollectionView reloadData];
+    [self.view sendSubviewToBack:self.childCollectionView];
     
     [self createGotoTopView];
     [self createShoppingCart];
@@ -198,11 +224,26 @@
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
-        [cell fillData:[_orderDataArray objectAtIndex:indexPath.row]];
+        PeopleModel *orderModel = [_orderDataArray objectAtIndex:indexPath.row];
+        [cell fillData:orderModel];
+        if (!orderModel.isSaleOut) {
+            NSLog(@"抢光了");
+           // cell.backView.layer.cornerRadius = 40;
+          
+        } else{
+            
+        }
+       
         
     }else{
-        [cell fillData:[_dataArray objectAtIndex:indexPath.row]];
-        
+        PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
+        [cell fillData:model];
+        if (!model.isSaleOut) {
+            NSLog(@"抢光了");
+            
+        }else{
+            
+        }
     }
     return cell;
 }
@@ -346,7 +387,7 @@
     NSError *error;
     self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    MMLOG(json);
+   // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
         PeopleModel *model = [[PeopleModel alloc] init];
@@ -356,6 +397,13 @@
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
         
         model.url = [dic objectForKey:@"url"];
+        
+        model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         NSDictionary *dic2 = [dic objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
@@ -373,7 +421,7 @@
 
 
 - (void)downloadOrderData{
-    [self downLoadWithURLString:@"http://youni.huyi.so/rest/v1/products/childlist?order_by=price" andSelector:@selector(fatchedOrderLadyListData:)];
+    [self downLoadWithURLString:kCHILD_LIST_ORDER_URL andSelector:@selector(fatchedOrderLadyListData:)];
 }
 
 - (void)didReceiveMemoryWarning {

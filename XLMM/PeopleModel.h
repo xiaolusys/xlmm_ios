@@ -16,6 +16,12 @@
 @property (nonatomic, copy)NSString *oldPrice;
 @property (nonatomic, copy)NSString *name;
 
+@property (nonatomic, assign)BOOL isSaleOut;
+@property (nonatomic, assign)BOOL isSaleOpen;
+@property (nonatomic, assign)BOOL isNewGood;
+@property (nonatomic, assign)NSInteger remainNumber;
+
+
 @property (nonatomic, copy)NSDictionary *productModel;
 @property (nonatomic, copy)NSString *productName;
 @property (nonatomic, copy)NSArray *headImageURLArray;

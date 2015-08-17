@@ -23,6 +23,7 @@
 #import "DetailsModel.h"
 #import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
+#import "CartViewController.h"
 
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
@@ -40,17 +41,39 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
+#if 1
 #define kTODAY_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/today"
 #define kPREVIOUS_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/previous"
 #define kTODAY_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_today"
 #define kPREVIOUS_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_previous"
-
-
 #define kCHILD_LIST_URL @"http://youni.huyi.so/rest/v1/products/childlist"
 #define kLADY_LIST_URL @"http://youni.huyi.so/rest/v1/products/ladylist"
-
-
 #define kLOGIN_URL @"http://youni.huyi.so/rest/v1/register/customer_login"
+#define kModel_List_URL @"http://youni.huyi.so/rest/v1/products/modellist/%@"
+#define kCart_URL @"http://youni.huyi.so/rest/v1/carts"
+#define kCHILD_LIST_ORDER_URL @"http://youni.huyi.so/rest/v1/products/childlist?order_by=price"
+
+#endif 
+
+
+#if 0
+
+#define kTODAY_POSTERS_URL @"http://192.168.1.131:8000/rest/v1/posters/today"
+#define kPREVIOUS_POSTERS_URL @"http://192.168.1.131:8000/rest/v1/posters/previous"
+#define kTODAY_PROMOTE_URL @"http://192.168.1.131:8000/rest/v1/products/promote_today"
+#define kPREVIOUS_PROMOTE_URL @"http://192.168.1.131:8000/rest/v1/products/promote_previous"
+#define kCHILD_LIST_URL @"http://192.168.1.131:8000/rest/v1/products/childlist"
+#define kLADY_LIST_URL @"http://192.168.1.131:8000/rest/v1/products/ladylist"
+#define kLOGIN_URL @"http://192.168.1.131:8000/rest/v1/register/customer_login"
+#define kModel_List_URL @"http://192.168.1.131:8000/rest/v1/products/modellist/%@"
+#define kCart_URL @"http://192.168.1.131:8000/rest/v1/carts"
+#define kCHILD_LIST_ORDER_URL @"http://192.168.1.131:8000/rest/v1/products/childlist?order_by=price"
+
+
+#endif
+
+
+
 #define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
 
 #endif

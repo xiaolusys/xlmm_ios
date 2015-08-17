@@ -85,6 +85,8 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
 }
 
 - (void)createGotoTopView{
@@ -169,6 +171,14 @@
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
         
         model.url = [dic objectForKey:@"url"];
+        
+        
+        model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         NSDictionary *dic2 = [dic objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
@@ -383,7 +393,7 @@
     NSError *error;
     self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    MMLOG(json);
+ //   MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
         PeopleModel *model = [[PeopleModel alloc] init];
@@ -393,6 +403,13 @@
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
         
         model.url = [dic objectForKey:@"url"];
+        
+        model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
+        model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
+        model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
+        model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
+        
+        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         NSDictionary *dic2 = [dic objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {

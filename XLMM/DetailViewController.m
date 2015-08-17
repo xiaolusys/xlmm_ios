@@ -198,6 +198,8 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
 }
 
 - (void)createGotoTopView{
@@ -421,7 +423,7 @@
                 NSDictionary *parameters = @{@"item_id": _detailsModel.itemID,
                                              @"sku_id":selectskuID};
                 
-                [manager POST:@"http://youni.huyi.so/rest/v1/carts" parameters:parameters
+                [manager POST:kCart_URL parameters:parameters
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           
                           NSLog(@"JSON: %@", responseObject);

@@ -37,6 +37,17 @@
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.oldPrice];
+    self.backView.layer.cornerRadius = 40;
+    if (!model.isSaleOut) {
+        NSLog(@"%d", model.isSaleOut);
+        self.backView.hidden = YES;
+        self.frontView.hidden = YES;
+    } else{
+        NSLog(@"%d", model.isSaleOut);
+        self.backView.hidden = NO;
+        self.frontView.hidden = NO;
+ 
+    }
 }
 
 @end

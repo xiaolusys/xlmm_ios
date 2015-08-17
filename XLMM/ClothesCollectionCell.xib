@@ -19,7 +19,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="170" height="220"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o6J-hH-Vtd">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="o6J-hH-Vtd">
                         <rect key="frame" x="0.0" y="0.0" width="170" height="175"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fu-6d-eEE">
@@ -73,4 +73,7 @@
             </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="goodsthumb.png" width="288" height="292"/>
+    </resources>
 </document>
