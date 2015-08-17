@@ -23,7 +23,6 @@
 #import "DetailsModel.h"
 #import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
-#import "CartViewController.h"
 
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
@@ -36,6 +35,7 @@
 #define kLoansRRL(a) [NSURL URLWithString:a]
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
+#define NumberOfCart @"NumberOfCart"
 
 #define kIsLogin @"isLogin"
 #define kUserName @"userName"

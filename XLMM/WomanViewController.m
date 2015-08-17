@@ -85,8 +85,7 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
-    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-    [self.navigationController pushViewController:cartVC animated:YES];
+
 }
 
 - (void)createGotoTopView{

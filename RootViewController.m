@@ -8,7 +8,7 @@
 
 #import "RootViewController.h"
 #import "MMClass.h"
-
+#import "EmptyCartViewController.h"
 
 @interface RootViewController (){
     BOOL isToday;//
@@ -84,7 +84,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
     
-    [userDefaults setInteger:0 forKey:@"NumberOfCart"];
+    [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
 
     
@@ -112,15 +112,26 @@
     label.layer.cornerRadius = 10;
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.text = @"55";
+    NSString *number = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart]];
+    label.text = number;
     label.font = [UIFont systemFontOfSize:14];
+    label.userInteractionEnabled = NO;
+    view.userInteractionEnabled = NO;
     [view addSubview:label];
     [button addSubview:view];
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
-    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-    [self.navigationController pushViewController:cartVC animated:YES];
+    NSInteger number = [[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart];
+    if (number > 0) {
+
+    } else{
+        NSLog(@"购物车为空");
+        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+        [self.navigationController pushViewController:emptyVC animated:YES];
+        
+    }
+   
 }
 
 - (void)createGotoTopView{

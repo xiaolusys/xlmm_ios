@@ -86,8 +86,7 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"进入购物车");
-    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-    [self.navigationController pushViewController:cartVC animated:YES];
+
 }
 
 - (void)createGotoTopView{
