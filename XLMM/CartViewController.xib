@@ -7,6 +7,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CartViewController">
             <connections>
                 <outlet property="cartTableView" destination="u7N-le-ZFh" id="Zj1-ZD-KGq"/>
+                <outlet property="discountLabel" destination="HcG-2g-KjK" id="Kny-Tz-SzW"/>
+                <outlet property="frontView" destination="5xa-h8-S1m" id="lNC-gw-ehS"/>
+                <outlet property="totalPricelabel" destination="brX-H3-cws" id="W4b-bG-oMn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -109,7 +112,14 @@
                             <include reference="yX5-W1-Mf7"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="purchaseClicked:" destination="-1" eventType="touchUpInside" id="3CO-V5-Npo"/>
+                    </connections>
                 </button>
+                <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5xa-h8-S1m" userLabel="Front View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -117,7 +127,13 @@
                 <constraint firstItem="brX-H3-cws" firstAttribute="height" secondItem="HcG-2g-KjK" secondAttribute="height" id="4BK-Vp-q1C"/>
                 <constraint firstItem="OGk-Hb-y6V" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="7Uu-Ua-r33"/>
                 <constraint firstAttribute="trailing" secondItem="brX-H3-cws" secondAttribute="trailing" constant="8" id="8Za-wg-uc1"/>
+                <constraint firstAttribute="trailing" secondItem="5xa-h8-S1m" secondAttribute="trailing" constant="99" id="8mn-JR-fbU">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="brX-H3-cws" firstAttribute="bottom" secondItem="HcG-2g-KjK" secondAttribute="bottom" id="ARP-wZ-azO"/>
+                <constraint firstAttribute="bottom" secondItem="5xa-h8-S1m" secondAttribute="bottom" constant="229" id="Cqy-f0-c4k">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="u7N-le-ZFh" secondAttribute="bottom" id="EhV-KL-BBk">
                     <variation key="heightClass=regular-widthClass=compact" constant="90"/>
                 </constraint>
@@ -129,10 +145,16 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="64"/>
                 </constraint>
                 <constraint firstItem="u7N-le-ZFh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dWF-Vk-WeF"/>
+                <constraint firstItem="5xa-h8-S1m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="104" id="efy-Bo-PaG">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="tws-zf-Qgq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="ema-qN-JS3"/>
                 <constraint firstItem="tws-zf-Qgq" firstAttribute="top" secondItem="OGk-Hb-y6V" secondAttribute="bottom" id="fvp-BC-3Po"/>
                 <constraint firstItem="brX-H3-cws" firstAttribute="bottom" secondItem="OGk-Hb-y6V" secondAttribute="bottom" id="hzT-wh-8GF"/>
                 <constraint firstAttribute="trailing" secondItem="u7N-le-ZFh" secondAttribute="trailing" id="k2j-GX-hUI"/>
+                <constraint firstItem="5xa-h8-S1m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="88" id="o84-zE-w8X">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="tws-zf-Qgq" secondAttribute="trailing" constant="8" id="qQA-XZ-CWb"/>
                 <constraint firstItem="brX-H3-cws" firstAttribute="height" secondItem="0SI-Gn-QG3" secondAttribute="height" id="qlM-jF-FNS"/>
                 <constraint firstItem="brX-H3-cws" firstAttribute="leading" secondItem="0SI-Gn-QG3" secondAttribute="trailing" id="z2V-I5-aSd"/>
@@ -146,6 +168,7 @@
                     <exclude reference="0SI-Gn-QG3"/>
                     <exclude reference="brX-H3-cws"/>
                     <exclude reference="tws-zf-Qgq"/>
+                    <exclude reference="5xa-h8-S1m"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="XHq-Yi-Mtl"/>
@@ -163,6 +186,10 @@
                     <exclude reference="ema-qN-JS3"/>
                     <exclude reference="fvp-BC-3Po"/>
                     <exclude reference="qQA-XZ-CWb"/>
+                    <exclude reference="8mn-JR-fbU"/>
+                    <exclude reference="Cqy-f0-c4k"/>
+                    <exclude reference="efy-Bo-PaG"/>
+                    <exclude reference="o84-zE-w8X"/>
                     <exclude reference="EhV-KL-BBk"/>
                     <exclude reference="dIN-3k-mJM"/>
                     <exclude reference="dWF-Vk-WeF"/>
@@ -177,6 +204,7 @@
                     <include reference="0SI-Gn-QG3"/>
                     <include reference="brX-H3-cws"/>
                     <include reference="tws-zf-Qgq"/>
+                    <include reference="5xa-h8-S1m"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="XHq-Yi-Mtl"/>
@@ -194,6 +222,10 @@
                     <include reference="ema-qN-JS3"/>
                     <include reference="fvp-BC-3Po"/>
                     <include reference="qQA-XZ-CWb"/>
+                    <include reference="8mn-JR-fbU"/>
+                    <include reference="Cqy-f0-c4k"/>
+                    <include reference="efy-Bo-PaG"/>
+                    <include reference="o84-zE-w8X"/>
                     <include reference="EhV-KL-BBk"/>
                     <include reference="dIN-3k-mJM"/>
                     <include reference="dWF-Vk-WeF"/>

@@ -7,8 +7,10 @@
 //
 
 #import "ModifyPasswordViewController.h"
+#import "MMClass.h"
+#import "AFNetworking.h"
 
-@interface ModifyPasswordViewController ()
+@interface ModifyPasswordViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -19,11 +21,49 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"修改密码";
     
+    self.infoLabel.hidden = YES;
+    self.passwordLabel.hidden = YES;
+    self.phoneNumberTextField.text = [[NSUserDefaults standardUserDefaults]objectForKey:kUserName];
+    self.phoneNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.phoneNumberTextField.delegate = self;
+    self.passCodeTextField.delegate = self;
+    self.setPasswordTextField.delegate = self;
+    self.confirmPasswordTextField.delegate = self;
+   // http://youni.huyi.so/rest/v1/register/change_pwd_code
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark --UITextFieldDelegate--
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.phoneNumberTextField resignFirstResponder];
+    [self.passCodeTextField resignFirstResponder];
+    [self.setPasswordTextField resignFirstResponder];
+    [self.confirmPasswordTextField resignFirstResponder];
 }
 
 /*
@@ -36,4 +76,71 @@
 }
 */
 
+- (IBAction)confirmClicked:(id)sender {
+    NSLog(@"确认");
+    if (![self.setPasswordTextField.text isEqualToString:self.confirmPasswordTextField.text])
+    {
+        self.passwordLabel.hidden = NO;
+        return;
+    } else{
+        self.passwordLabel.hidden = YES;
+        
+        NSLog(@"注册");
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSString *phoneNumber = _phoneNumberTextField.text;
+        NSString *validCode = _passCodeTextField.text;
+        NSString *password1 = _setPasswordTextField.text;
+        NSString *password2 = _confirmPasswordTextField.text;
+        
+        NSLog(@"username:%@, validcode:%@, password1:%@, password2:%@", phoneNumber, validCode, password1, password2);
+        
+        
+        NSDictionary *parameters = @{@"username": phoneNumber,
+                                     @"valid_code":validCode,
+                                     @"password1":password1,
+                                     @"password2":password2,
+                                     };
+        
+        [manager POST:@"http://youni.huyi.so/rest/v1/register/change_user_pwd" parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  //  NSError *error;
+                  NSLog(@"JSON: %@", responseObject);
+                  // [self.navigationController popViewControllerAnimated:YES];
+                  
+                 
+             
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+                  NSLog(@"Error: %@", error);
+                  
+                  
+              }];
+
+        
+    }
+}
+
+- (IBAction)getCode:(id)sender {
+    NSLog(@"获取验证码");
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSLog(@"phoneNumber = %@\n", self.phoneNumberTextField.text);
+    NSDictionary *parameters = @{@"vmobile": self.phoneNumberTextField.text};
+    
+    [manager POST:@"http://youni.huyi.so/rest/v1/register/change_pwd_code" parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+
+    
+}
 @end

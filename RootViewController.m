@@ -10,10 +10,13 @@
 #import "MMClass.h"
 #import "EmptyCartViewController.h"
 #import "CartViewController.h"
+#import "EnterViewController.h"
 
 @interface RootViewController (){
     BOOL isToday;//
     BOOL isFirst;
+    NSInteger goodsCount;
+    UILabel *countLabel;
 
     NSMutableArray *_prePosterArray;//保存昨日海报数据
     NSMutableArray *_todayPosterArray;//存储今日海报数据
@@ -60,11 +63,25 @@
 - (void)viewWillAppear:(BOOL)animated{
   //  NSLog(@"appear");
     [super viewWillAppear:animated];
-    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        
+        goodsCount = [[dic objectForKey:@"result"] integerValue];
+        NSLog(@"%ld", (long)goodsCount);
+        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+        countLabel.text = strNum;
+    }
+
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.hidden = NO;
+
     // Do any additional setup after loading the view from its nib.
     //自定义导航栏信息
     posterViewOwner = [PosterView new];
@@ -83,7 +100,7 @@
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kIsLogin];
+    [userDefaults setBool:YES forKey:kIsLogin];
     
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
@@ -108,34 +125,33 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, 8, 22, 22)];
     view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
     view.layer.cornerRadius = 10;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    label.layer.cornerRadius = 10;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textAlignment = NSTextAlignmentCenter;
+    countLabel.textColor = [UIColor whiteColor];
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     if (data != nil) {
-        NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSDictionary *dic = (NSDictionary *)json;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
         NSLog(@"%@", dic);
         
-        NSInteger count = [[dic objectForKey:@"result"] integerValue];
-        NSLog(@"%ld", (long)count);
-        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)count];
-        // NSString *number = [NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart]];
-        label.text = strNum;
+        goodsCount = [[dic objectForKey:@"result"] integerValue];
+        NSLog(@"%ld", (long)goodsCount);
+        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+        countLabel.text = strNum;
     }
   
-    label.font = [UIFont systemFontOfSize:14];
-    label.userInteractionEnabled = NO;
+    countLabel.font = [UIFont systemFontOfSize:14];
+    countLabel.userInteractionEnabled = NO;
     view.userInteractionEnabled = NO;
-    [view addSubview:label];
+    [view addSubview:countLabel];
     [button addSubview:view];
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
-    NSInteger number = [[NSUserDefaults standardUserDefaults] integerForKey:NumberOfCart];
-    if (number >= 0) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+    if (goodsCount > 0) {
         CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
         [self.navigationController pushViewController:cartVC animated:YES];
     } else{
@@ -143,6 +159,12 @@
         EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
         [self.navigationController pushViewController:emptyVC animated:YES];
         
+    }
+        
+    } else{
+        NSLog(@"请您先登录");
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
     }
    
 }

@@ -14,9 +14,14 @@
 
 @implementation EmptyCartViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    item.title = @"";
+    
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)didReceiveMemoryWarning {

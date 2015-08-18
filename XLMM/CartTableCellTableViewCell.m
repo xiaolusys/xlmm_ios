@@ -7,6 +7,7 @@
 //
 
 #import "CartTableCellTableViewCell.h"
+#import "MMClass.h"
 
 @implementation CartTableCellTableViewCell
 
@@ -31,15 +32,47 @@
 
 - (IBAction)reduceBtn:(id)sender {
     NSLog(@"reduce");
+    NSInteger number = [self.numberLabel.text integerValue];
+    number --;
+    if (number == 0) {
+        NSLog(@"买一个吧");
+        if (self.delegate && [self.delegate respondsToSelector:@selector(buyOneGood)]) {
+            [self.delegate buyOneGood];
+        }
+       
+        return;
+    }
+
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(reduceNumber:)]) {
+        [self.delegate reduceNumber:_cartModel];
+    }
 }
 
 - (IBAction)addBtn:(id)sender {
     NSLog(@"add");
     
+   
+
+    
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addNumber:)]) {
+        [self.delegate addNumber:_cartModel];
+    }
+    
 }
 
 - (IBAction)deleteBtn:(id)sender {
     NSLog(@"delete");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deleteCartView:)]) {
+        [self.delegate deleteCartView:_cartModel];
+    }
+    
+
     
 }
+
+
+
+
 @end

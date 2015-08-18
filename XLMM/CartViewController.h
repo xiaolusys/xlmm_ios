@@ -10,7 +10,17 @@
 
 @interface CartViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *myView;
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UIButton *retainBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *frontView;
 @property (strong, nonatomic)NSMutableArray *dataArray;
 
+@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *cartTableView;
+@property (weak, nonatomic) IBOutlet UILabel *totalPricelabel;
+
+- (IBAction)purchaseClicked:(id)sender;
 @end
