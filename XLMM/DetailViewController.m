@@ -13,6 +13,8 @@
 #import "PurchaseViewController.h"
 #import "EnterViewController.h"
 #import "AFNetworking.h"
+#import "CartViewController.h"
+#import "EmptyCartViewController.h"
 
 @interface DetailViewController ()<UIScrollViewDelegate,NSURLConnectionDataDelegate>{
     NSMutableArray *imageArray;
@@ -21,6 +23,8 @@
     NSTimer *myTimer;
     NSString *selectSize;
     NSString *selectskuID;
+    NSInteger goodsCount;
+    UILabel *countLabel;
 }
 
 @end
@@ -31,6 +35,30 @@
     [super viewDidDisappear:animated];
     self.headHeight.constant = 0;
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    //  NSLog(@"appear");
+    [super viewWillAppear:animated];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+        if (data != nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            
+            NSLog(@"%@", dic);
+            
+            
+            if ([dic objectForKey:@"result"] != nil) {
+                goodsCount = [[dic objectForKey:@"result"] integerValue];
+                NSLog(@"%ld", (long)goodsCount);
+                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                countLabel.text = strNum;
+            }
+            
+        }
+    }else{
+        countLabel.text = @"0";
+    }
 }
 
 
@@ -81,8 +109,7 @@
     
     NSLog(@"商品详情");
     [self setviewInfo];
-    [self createGotoTopView];
-    [self createShoppingCart];
+  
     self.headWidth.constant = SCREENWIDTH;
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -192,6 +219,10 @@
             self.view1Height.constant = 0;
         }
     }
+    
+    [self.view addSubview:_scrollerView];
+    [self createGotoTopView];
+    [self createShoppingCart];
 }
 
 
@@ -207,18 +238,51 @@
     view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
     view.userInteractionEnabled = NO;
     view.layer.cornerRadius = 10;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    label.layer.cornerRadius = 10;
-    label.userInteractionEnabled = NO;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.text = @"55";
-    label.font = [UIFont systemFontOfSize:14];
-    [view addSubview:label];
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    countLabel.layer.cornerRadius = 10;
+    countLabel.userInteractionEnabled = NO;
+    countLabel.textAlignment = NSTextAlignmentCenter;
+    countLabel.textColor = [UIColor whiteColor];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        if ([dic objectForKey:@"result"] != nil) {
+            
+            
+            goodsCount = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"%ld", (long)goodsCount);
+            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+            countLabel.text = strNum;
+        }
+    }
+    countLabel.font = [UIFont systemFontOfSize:14];
+    [view addSubview:countLabel];
     [button addSubview:view];
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    
+    NSLog(@"gouguche ");
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if (goodsCount > 0) {
+            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+            [self.navigationController pushViewController:cartVC animated:YES];
+        } else{
+            NSLog(@"购物车为空");
+            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+            [self.navigationController pushViewController:emptyVC animated:YES];
+            
+        }
+        
+    } else{
+        NSLog(@"请您先登录");
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+    
+
 
 }
 
@@ -456,6 +520,24 @@
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           
                           NSLog(@"JSON: %@", responseObject);
+                          
+                          
+                          
+                          
+                          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+                          if (data != nil) {
+                              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                              
+                              NSLog(@"%@", dic);
+                              if ([dic objectForKey:@"result"] != nil) {
+                                  
+                                  
+                                  goodsCount = [[dic objectForKey:@"result"] integerValue];
+                                  NSLog(@"%ld", (long)goodsCount);
+                                  NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                                  countLabel.text = strNum;
+                              }
+                          }
                           //NSLog(@"operation: %@", operation);
 
                       }
