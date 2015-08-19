@@ -10,6 +10,7 @@
 @class DetailsModel;
 
 @interface DetailViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headHeight;
@@ -34,17 +35,28 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *view2Height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *view3Height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *view4Height;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *view5Height;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *view6Height;
+
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageView1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView5;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView6;
+
+
+
 
 @property (weak, nonatomic) IBOutlet UIButton *sizebtn1;
 @property (weak, nonatomic) IBOutlet UIButton *sizeBtn2;
 @property (weak, nonatomic) IBOutlet UIButton *sizeBtn3;
 @property (weak, nonatomic) IBOutlet UIButton *sizeBtn4;
 @property (weak, nonatomic) IBOutlet UIButton *sizeBtn5;
-
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn6;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn7;
+@property (weak, nonatomic) IBOutlet UIButton *sizeBtn8;
 
 
 

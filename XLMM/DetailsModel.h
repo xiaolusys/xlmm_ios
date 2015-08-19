@@ -34,6 +34,9 @@
 
 
 @property (nonatomic, copy)NSArray *skuIDArray;
+
+@property (nonatomic, copy)NSArray *skuIsSaleOutArray;
+
 @property (nonatomic, copy)NSString *itemID;
 
 

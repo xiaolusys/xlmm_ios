@@ -44,25 +44,42 @@
     selectSize = @"";
     
     NSArray *sizeArray = _detailsModel.sizeArray;
-    NSArray *buttonArray = @[self.sizebtn1, self.sizeBtn2, self.sizeBtn3, self.sizeBtn4, self.sizeBtn5];
+    NSArray *isSaleoutArray = _detailsModel.skuIsSaleOutArray;
+    NSLog(@"saleArray = %@", isSaleoutArray);
+    NSArray *buttonArray = @[self.sizebtn1, self.sizeBtn2, self.sizeBtn3, self.sizeBtn4, self.sizeBtn5, self.sizeBtn6, self.sizeBtn7, self.sizeBtn8];
     NSLog(@"sizeArray = %@", sizeArray);
     NSLog(@"sku array = %@", _detailsModel.skuIDArray);
     int i = 0;
     for (NSString *sizeName in sizeArray) {
-        if (i == 5) {
-            return;
+        BOOL isSaleout = [[isSaleoutArray objectAtIndex:i] boolValue];
+        NSLog(@"%d", isSaleout);
+        if (isSaleout) {
+             NSLog(@"抢光了");
+             UIButton *btn = [buttonArray objectAtIndex:i++];
+             [btn setTitle:sizeName forState:UIControlStateNormal];
+             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            btn.userInteractionEnabled = NO;
+        }else{
+            UIButton *btn = [buttonArray objectAtIndex:i++];
+            [btn setTitle:sizeName forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         }
-        UIButton *btn = [buttonArray objectAtIndex:i++];
-        [btn setTitle:sizeName forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        
+      
     }
     
   
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"商品详情";
+    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
+    navLabel.text = @"商品详情";
+    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
+    navLabel.font = [UIFont boldSystemFontOfSize:24];
+    navLabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = navLabel;
     
+    NSLog(@"商品详情");
     [self setviewInfo];
     [self createGotoTopView];
     [self createShoppingCart];
@@ -133,44 +150,48 @@
     myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
     
     
+    long contentNumber =(long) self.contentImageUrlArray.count;
     
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:0]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-          self.view1Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-        self.imageView1.image = image;
-        [self.view sendSubviewToBack:self.scrollerView];
+    for (long i = 0; i<contentNumber; i++) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:i]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (i == 0) {
+                self.view1Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView1.image = image;
+            } else if(i == 1){
+                self.view2Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView2.image = image;
+            }else if(i == 2 ){
+                self.view3Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView3.image = image;
+            }else if(i == 3){
+                self.view4Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView4.image = image;
+            }else if(i == 4){
+                self.view5Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView5.image = image;
+            }else if(i == 5){
+                self.view6Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+                self.imageView6.image = image;
+            }
+            
 
-    }];
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:1]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        self.view2Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-        self.imageView2.image = image;
-        [self.view sendSubviewToBack:self.scrollerView];
-
-    }];
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:2]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        self.view3Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-        self.imageView3.image = image;
-        
-      
-        [self.view sendSubviewToBack:self.scrollerView];
-
-    }];
-
-    if (self.contentImageUrlArray.count == 4) {
-        
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:3]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            self.view4Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-            self.imageView4.image = image;
         }];
-        
-        [self.view sendSubviewToBack:self.scrollerView];
-
-
-    } else{
-        self.view4Height.constant = 0;
     }
-    
-    
-
+    for (long i = 6; i > contentNumber; i--) {
+        if (i == 6) {
+            self.view6Height.constant = 0;
+        } else if(i == 5){
+            self.view5Height.constant = 0;
+        }else if(i == 4 ){
+            self.view4Height.constant = 0;
+        }else if(i == 3){
+            self.view3Height.constant = 0;
+        }else if(i == 2){
+            self.view2Height.constant = 0;
+        }else if(i == 1){
+            self.view1Height.constant = 0;
+        }
+    }
 }
 
 
@@ -334,13 +355,22 @@
         }
         else{
             UIButton *btn = (UIButton *)[self.view viewWithTag:i];
-            
+            if (btn.userInteractionEnabled) {
             [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            }else{
+                    [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
+        
             btn.backgroundColor = [UIColor clearColor];
           //  NSLog(@"2222");
         }
     }
   //  NSLog(@"btn.tag = %d", (int)button.tag);
+    for (int i = 608; i> 601+length-1; i--) {
+        UIButton *btn = (UIButton *)[self.view viewWithTag:i];
+        btn.userInteractionEnabled = NO;
+       // btn.backgroundColor = [UIColor redColor];
+    }
     
     
     

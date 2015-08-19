@@ -116,17 +116,25 @@
     NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
     NSMutableArray *arrayData = [[NSMutableArray alloc] init];
     NSMutableArray *skuIdArray = [[NSMutableArray alloc] init];
+    NSMutableArray *isSaleOutArray = [[NSMutableArray alloc] init];
+    
     for (NSDictionary *dic in goodsArray) {
         NSString *size = [dic objectForKey:@"name"];
         [arrayData addObject:size];
         NSString *skuID = [dic objectForKey:@"id"];
         NSLog(@"sku_id = %@", skuID);
         [skuIdArray addObject:skuID];
+        NSString *str = [dic objectForKey:@"is_saleout"];
+        [isSaleOutArray addObject:str];
     }
     model.sizeArray = arrayData;
     model.skuIDArray = skuIdArray;
+    model.skuIsSaleOutArray = isSaleOutArray;
+    
     MMLOG(model.sizeArray);
     MMLOG(model.skuIDArray);
+    MMLOG(model.skuIsSaleOutArray);
+    
     NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
     model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];

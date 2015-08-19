@@ -63,19 +63,25 @@
 - (void)viewWillAppear:(BOOL)animated{
   //  NSLog(@"appear");
     [super viewWillAppear:animated];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        NSLog(@"%@", dic);
-        
-        goodsCount = [[dic objectForKey:@"result"] integerValue];
-        NSLog(@"%ld", (long)goodsCount);
-        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-        countLabel.text = strNum;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+        if (data != nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            
+            NSLog(@"%@", dic);
+            
+           
+            if ([dic objectForKey:@"result"] != nil) {
+                goodsCount = [[dic objectForKey:@"result"] integerValue];
+                NSLog(@"%ld", (long)goodsCount);
+                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                countLabel.text = strNum;
+            }
+          
+        }
+    }else{
+        countLabel.text = @"0";
     }
-
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,7 +106,7 @@
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kIsLogin];
+    [userDefaults setBool:YES forKey:kIsLogin];
     
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
@@ -1089,17 +1095,30 @@
     NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
     NSMutableArray *arrayData = [[NSMutableArray alloc] init];
     NSMutableArray *skuArray = [[NSMutableArray alloc] init];
+    NSMutableArray *isSaleOutArray = [[NSMutableArray alloc] init];
+
     for (NSDictionary *dic in goodsArray) {
         NSString *size = [dic objectForKey:@"name"];
         NSString *sku = [dic objectForKey:@"id"];
         [arrayData addObject:size];
         [skuArray addObject:sku];
+        NSString *str = [dic objectForKey:@"is_saleout"];
+        [isSaleOutArray addObject:str];
     }
     model.sizeArray = arrayData;
     model.skuIDArray = skuArray;
     model.itemID = [detailsInfo objectForKey:@"id"];
+      model.skuIsSaleOutArray = isSaleOutArray;
     MMLOG(model.sizeArray);
     MMLOG(model.skuIDArray);
+    MMLOG(model.skuIsSaleOutArray);
+  
+    
+
+ 
+    
+    
+    
     NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
     model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
     model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
