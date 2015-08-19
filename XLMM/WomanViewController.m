@@ -361,8 +361,18 @@
 
 - (void)login:(UIButton *)button{
     NSLog(@"登录");
-    LogInViewController *loginVC = [[LogInViewController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:YES];
+    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
+    if (islogin) {
+        PersonCenterViewController *personVC = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:personVC animated:YES];
+        NSLog(@"您已经登录，可以购买");
+    } else{
+        PersonCenterViewController *personVC = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:personVC animated:YES];
+        NSLog(@"您现在是游客身份，请先登录");
+    }
+
+   
 }
 
 - (IBAction)btnClicked:(UIButton *)sender {

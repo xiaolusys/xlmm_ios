@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WomanViewController.h"
 
-@interface ChildViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
+@interface ChildViewController : UIViewController<
+                                    UICollectionViewDataSource,
+                                    UICollectionViewDelegateFlowLayout,
+                                    UICollectionViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;

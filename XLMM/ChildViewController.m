@@ -15,25 +15,32 @@
 #import "CollectionModel.h"
 #import "CollectionViewController.h"
 #import "DetailsModel.h"
+#import "PersonCenterViewController.h"
 
 #import "MMClass.h"
 
 #define ksimpleCell @"simpleCell"
 
 @interface ChildViewController (){
+    
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
     BOOL isOrder;
+    NSInteger goodsCount;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
 
-@property (nonatomic, strong) UIView *bgView;
-
 @end
 
 @implementation ChildViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //self.childCollectionView.contentOffset = CGPointMake(0, 64);
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,6 +50,7 @@
     self.dataArray = [[NSMutableArray alloc] init];
 
     [self setInfo];
+    [self setLayout];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.backgroundColor = [UIColor clearColor];
     [activityIndicator startAnimating];
@@ -51,14 +59,17 @@
     
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 50, 10);
-    [self.childCollectionView setCollectionViewLayout:flowLayout];
+   
     [self downloadData];
    
  
+}
+
+- (void)setLayout{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 50, 10);
+    [self.childCollectionView setCollectionViewLayout:flowLayout];
 }
 
 - (void)createShoppingCart{
@@ -76,7 +87,18 @@
     label.userInteractionEnabled = NO;
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.text = [NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"NumberOfCart"]];
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        
+        goodsCount = [[dic objectForKey:@"result"] integerValue];
+        NSLog(@"%ld", (long)goodsCount);
+        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+        label.text = strNum;
+    }
     label.font = [UIFont systemFontOfSize:14];
     [view addSubview:label];
     [button addSubview:view];
@@ -153,7 +175,7 @@
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    NSLog(@"ChildList Data-->%@", json);
+   // NSLog(@"ChildList Data-->%@", json);
     if (json == nil) {
         NSLog(@"数据解析失败");
         return;
@@ -163,7 +185,7 @@
         NSLog(@"数据解析失败");
         return;
     }
-    NSLog(@"childList Array = %@", array);
+  //  NSLog(@"childList Array = %@", array);
     
     [self.dataArray removeAllObjects];
       for (NSDictionary *dic in array) {
@@ -193,7 +215,7 @@
           }
           [_dataArray addObject:model];
     }
-    NSLog(@"dataArray = %@\n\n\n", _dataArray);
+   // NSLog(@"dataArray = %@\n\n\n", _dataArray);
     [activityIndicator stopAnimating];
     [activityIndicator removeFromSuperview];
     
@@ -225,24 +247,10 @@
     if (isOrder) {
         PeopleModel *orderModel = [_orderDataArray objectAtIndex:indexPath.row];
         [cell fillData:orderModel];
-        if (!orderModel.isSaleOut) {
-            NSLog(@"抢光了");
-           // cell.backView.layer.cornerRadius = 40;
-          
-        } else{
-            
-        }
        
-        
     }else{
         PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
         [cell fillData:model];
-        if (!model.isSaleOut) {
-            NSLog(@"抢光了");
-            
-        }else{
-            
-        }
     }
     return cell;
 }
@@ -356,8 +364,17 @@
 
 - (void)login:(UIButton *)button{
     NSLog(@"登录");
-    LogInViewController *loginVC = [[LogInViewController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:YES];
+    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
+    if (islogin) {
+        PersonCenterViewController *personVC = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:personVC animated:YES];
+        NSLog(@"您已经登录，可以购买");
+    } else{
+        PersonCenterViewController *personVC = [[PersonCenterViewController alloc] initWithNibName:@"PersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:personVC animated:YES];
+        NSLog(@"您现在是游客身份，请先登录");
+    }
+
     
 }
 
