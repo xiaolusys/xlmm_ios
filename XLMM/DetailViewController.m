@@ -521,23 +521,23 @@
                           
                           NSLog(@"JSON: %@", responseObject);
                           
+                          [self myAnimation];
                           
-                          
-                          
-                          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-                          if (data != nil) {
-                              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                              
-                              NSLog(@"%@", dic);
-                              if ([dic objectForKey:@"result"] != nil) {
-                                  
-                                  
-                                  goodsCount = [[dic objectForKey:@"result"] integerValue];
-                                  NSLog(@"%ld", (long)goodsCount);
-                                  NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                                  countLabel.text = strNum;
-                              }
-                          }
+//                          
+//                          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+//                          if (data != nil) {
+//                              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//                              
+//                              NSLog(@"%@", dic);
+//                              if ([dic objectForKey:@"result"] != nil) {
+//                                  
+//                                  
+//                                  goodsCount = [[dic objectForKey:@"result"] integerValue];
+//                                  NSLog(@"%ld", (long)goodsCount);
+//                                  NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+//                                  countLabel.text = strNum;
+//                              }
+//                          }
                           //NSLog(@"operation: %@", operation);
 
                       }
@@ -545,6 +545,25 @@
                           //NSLog(@"operation: %@", operation);
 
                           NSLog(@"Error: %@", error);
+                          UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
+                          view.backgroundColor = [UIColor blackColor];
+                          view.layer.cornerRadius = 8;
+                          UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+                          label.text = @"商品库存不足";
+                          label.textAlignment = NSTextAlignmentCenter;
+                          label.textColor = [UIColor whiteColor];
+                          label.font = [UIFont systemFontOfSize:24];
+                          [view addSubview:label];
+                          [self.view addSubview:view];
+                          
+                          
+                          [UIView animateWithDuration:1.0 animations:^{
+                              view.alpha = 0;
+                          } completion:^(BOOL finished) {
+                              [view removeFromSuperview];
+                          }];
+
+                          
                           
                       }];
                 
@@ -556,6 +575,39 @@
         [self.navigationController pushViewController:enterVC animated:YES];
     }
     
+}
+
+- (void)myAnimation{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 25, SCREENHEIGHT - 60, 50, 50)];
+    view.backgroundColor = [UIColor redColor];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 3, 44, 44)];
+    UIImage *image = [UIImage imagewithURLString:[_detailsModel.headImageURLArray objectAtIndex:0]];
+    imageView.image = image;
+    [view addSubview:imageView];
+    [self.view addSubview:view];
+    [UIView animateWithDuration:0.8
+                     animations:^{
+                         view.frame = CGRectMake(10, SCREENHEIGHT- 108, 14, 14);
+                         imageView.frame = CGRectMake(2,2 , 10, 10);
+            
+                         view.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         [view removeFromSuperview];
+                         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+                         if (data != nil) {
+                             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                             
+                             NSLog(@"%@", dic);
+                             if ([dic objectForKey:@"result"] != nil) {
+                                 
+                                 
+                                 goodsCount = [[dic objectForKey:@"result"] integerValue];
+                                 NSLog(@"%ld", (long)goodsCount);
+                                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                                 countLabel.text = strNum;
+                             }
+                         }
+                     }];
 }
 
 #pragma mark --NSURLConnectionDataDelegate--
