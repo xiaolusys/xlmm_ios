@@ -9,6 +9,7 @@
 #import "ChildViewController.h"
 #import "LogInViewController.h"
 #import "PeopleCollectionCell.h"
+#import "MMClass.h"
 #import "PeopleModel.h"
 #import "DetailViewController.h"
 #import "PurchaseViewController.h"
@@ -16,9 +17,6 @@
 #import "CollectionViewController.h"
 #import "DetailsModel.h"
 #import "PersonCenterViewController.h"
-
-#import "MMClass.h"
-
 #define ksimpleCell @"simpleCell"
 
 @interface ChildViewController (){
@@ -216,11 +214,11 @@
           [_dataArray addObject:model];
     }
    // NSLog(@"dataArray = %@\n\n\n", _dataArray);
-    [activityIndicator stopAnimating];
+    //[activityIndicator stopAnimating];
     [activityIndicator removeFromSuperview];
     
     [self.childCollectionView reloadData];
-    [self.view sendSubviewToBack:self.childCollectionView];
+    //[self.view sendSubviewToBack:self.childCollectionView];
     
     [self createGotoTopView];
     [self createShoppingCart];
