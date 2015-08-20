@@ -33,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property (strong, nonatomic) AddressPickerView *addressPicker;
+@property (assign, nonatomic)BOOL isAdd;
+@property (strong, nonatomic) AddressModel *addressModel;
 
 - (IBAction)saveBtnClicked:(id)sender;
 

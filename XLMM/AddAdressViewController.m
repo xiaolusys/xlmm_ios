@@ -31,6 +31,12 @@
     self.title = @"新增收货地址";
     
     [self setInfo];
+    if (_isAdd == NO) {
+        NSLog(@"修改地址");
+        self.streetTextView.text = _addressModel.streetName;
+        self.nameTextField.text = _addressModel.buyerName;
+        self.numberTextField.text = _addressModel.phoneNumber;
+    }
     
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;
     
@@ -38,7 +44,13 @@
 
 - (void)setInfo{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"新增收货地址";
+    if (_isAdd == YES) {
+        label.text = @"新增收货地址";
+        
+    }else{
+        label.text = @"修改收货地址";
+
+    }
     label.textColor = [UIColor blackColor];
     label.font = [UIFont systemFontOfSize:26];
     label.textAlignment = NSTextAlignmentCenter;
@@ -164,29 +176,64 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    NSDictionary *parameters = @{
-    @"receiver_state": _provinceTextField.text,
-    @"receiver_city": _cityTextField.text,
-    @"receiver_district": _countyTextField.text,
-    @"receiver_address": _streetTextView.text,
-    @"receiver_name": _nameTextField.text,
-    @"receiver_mobile": _numberTextField.text,
-    };
-    NSLog(@"parameters = %@", parameters);
-    
-    [manager POST:@"http://youni.huyi.so/rest/v1/address/create_address?format=json" parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-           
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
   
+    if (_isAdd == YES) {
+        NSDictionary *parameters = @{
+                                     @"receiver_state": _provinceTextField.text,
+                                     @"receiver_city": _cityTextField.text,
+                                     @"receiver_district": _countyTextField.text,
+                                     @"receiver_address": _streetTextView.text,
+                                     @"receiver_name": _nameTextField.text,
+                                     @"receiver_mobile": _numberTextField.text,
+                                     };
+        NSLog(@"parameters = %@", parameters);
+    
+        [manager POST:@"http://youni.huyi.so/rest/v1/address/create_address?format=json" parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  
+                  NSLog(@"JSON: %@", responseObject);
+               
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+                  NSLog(@"Error: %@", error);
+                  
+              }];
+    }
+    else{
+        NSLog(@"修改地址");
+        NSDictionary *parameters = @{
+                                     @"id":_addressModel.addressID,
+                                     @"receiver_state": _provinceTextField.text,
+                                     @"receiver_city": _cityTextField.text,
+                                     @"receiver_district": _countyTextField.text,
+                                     @"receiver_address": _streetTextView.text,
+                                     @"receiver_name": _nameTextField.text,
+                                     @"receiver_mobile": _numberTextField.text,
+                                     };
+        NSLog(@"parameters = %@", parameters);
+        
+        NSString *modifyUrlStr = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/address/%@/update", self.addressModel.addressID];
+        
+        NSLog(@"modifyUrlStr = %@", modifyUrlStr);
+        
+        [manager POST:modifyUrlStr parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  
+                  NSLog(@"JSON: %@", responseObject);
+                  
+                  NSLog(@"修改成功");
+                  
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+                  NSLog(@"Error: %@", error);
+                  
+              }];
+
+    }
     
     //[self.navigationController popViewControllerAnimated:YES];
 }

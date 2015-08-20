@@ -7,7 +7,7 @@
 //
 
 #import "AddressTableCell.h"
-
+#import "AddAdressViewController.h"
 
 @implementation AddressTableCell
 
@@ -23,7 +23,7 @@
 
 - (IBAction)deleteAddress:(id)sender {
     NSLog(@"删除地址");
-    [self.delegate deleteAddress];
+    [self.delegate deleteAddress:self.addressModel];
 
 
 }
@@ -33,6 +33,8 @@
 
 - (IBAction)modifyAddress:(id)sender {
     NSLog(@"修改地址");
-    [self.delegate modifyAddress];
+    
+
+    [self.delegate modifyAddress:self.addressModel];
 }
 @end

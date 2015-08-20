@@ -11,6 +11,7 @@
 #import "AddressModel.h"
 #import "MMClass.h"
 #import "AddressTableCell.h"
+#import "AFNetworking.h"
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define MAINSCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -97,6 +98,7 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
+        [self.addressTableView reloadData];
         return;
     }
     for (NSDictionary *dic in addressArray) {
@@ -119,7 +121,7 @@
     
 }
 
-
+//   13816404857
 #pragma mark --AddAddressDelegate--
 
 - (void)updateAddressList:(AddressModel *)model{
@@ -176,6 +178,7 @@
 - (void)addAdress:(UIButton *)button{
     NSLog(@"新增地址");
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+    addAdVC.isAdd = YES;
     [self.navigationController pushViewController:addAdVC animated:YES];
     
     
@@ -203,6 +206,8 @@
     cell.secondLabel.text = address;
     NSLog(@"%@", address);
     cell.delegate = self;
+    cell.addressModel = model;
+    
     NSString *buyerInfo = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
     cell.firstLabel.text = buyerInfo;
     cell.firstLabel.userInteractionEnabled = NO;
@@ -245,6 +250,7 @@
     
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
 //        UITableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
@@ -257,6 +263,8 @@
     cell.firstLabel.textColor = [UIColor redColor];
     cell.modifyBtn.userInteractionEnabled = YES;
     cell.deleteBtn.userInteractionEnabled = YES;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -267,11 +275,44 @@
 
 #pragma mark --AddressDelegate--
 
-- (void)deleteAddress{
+- (void)deleteAddress:(AddressModel*)model{
     NSLog(@"删除地址-----");
+    
+    NSLog(@"address id = %@", model.addressID);
+    NSString *deleteurlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/address/%@/delete_address", model.addressID];
+    NSLog(@"deleteURL = %@", deleteurlString);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    [manager POST:deleteurlString parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              [dataArray removeAllObjects];
+              [self downloadAddressData];
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+    
+    
 }
-- (void)modifyAddress{
+- (void)modifyAddress:(AddressModel*)model{
     NSLog(@"修改地址-----");
+    
+    
+    NSLog(@"address id = %@", model.addressID);
+
+    AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+    addAdVC.isAdd = NO;
+    addAdVC.addressModel = model;
+    [self.navigationController pushViewController:addAdVC animated:YES];
+    
 }
 
 /*

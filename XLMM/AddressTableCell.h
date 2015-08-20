@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class AddressModel;
 
 @protocol AddressDelegate <NSObject>
 
-- (void)deleteAddress;
-- (void)modifyAddress;
+- (void)deleteAddress:(AddressModel*)model;
+- (void)modifyAddress:(AddressModel*)medel;
 
 
 @end
 
-@class AddressModel;
+
 
 @interface AddressTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *bgView;
@@ -30,7 +30,7 @@
 - (IBAction)deleteAddress:(id)sender;
 - (IBAction)modifyAddress:(id)sender;
 
-
+@property (strong, nonatomic)AddressModel *addressModel;
 @property (assign, nonatomic)id<AddressDelegate>delegate;
 
 @end

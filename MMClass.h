@@ -95,22 +95,7 @@ NSDictionary *parameters = @{@"vmobile": phoneNumber};
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           
           NSLog(@"JSON: %@", responseObject);
-          NSString *string = [responseObject objectForKey:@"result"];
-          if ([string isEqualToString:@"false"]) {
-              self.infoLabel.text = @"请输入正确的手机号码!";
-              self.infoLabel.hidden = NO;
-          } else if([string isEqualToString:@"0"]){
-              self.infoLabel.hidden = NO;
-              self.infoLabel.text = @"该手机号码已经注册过了!";
-          } else{
-              self.infoLabel.hidden = YES;
-          }
-          countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-          _getCodeBtn.userInteractionEnabled = NO;
-          [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-          //             [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
-          
-          //[self.navigationController popViewControllerAnimated:YES];
+     
           
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
