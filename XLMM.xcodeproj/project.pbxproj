@@ -154,6 +154,10 @@
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
+		32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
+		32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4871B85AA9D00FBEC25 /* YouHuiQuanViewController.xib */; };
+		32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */; };
+		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
 		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
@@ -395,6 +399,12 @@
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
+		32BDE4851B85AA9D00FBEC25 /* YouHuiQuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouHuiQuanViewController.h; sourceTree = "<group>"; };
+		32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouHuiQuanViewController.m; sourceTree = "<group>"; };
+		32BDE4871B85AA9D00FBEC25 /* YouHuiQuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YouHuiQuanViewController.xib; sourceTree = "<group>"; };
+		32BDE48A1B85B12D00FBEC25 /* AddYouhuiquanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddYouhuiquanViewController.h; sourceTree = "<group>"; };
+		32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddYouhuiquanViewController.m; sourceTree = "<group>"; };
+		32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddYouhuiquanViewController.xib; sourceTree = "<group>"; };
 		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
@@ -500,6 +510,12 @@
 				32CE91BD1B7C37D100CA67C3 /* AddAdressViewController.h */,
 				32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */,
 				32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */,
+				32BDE4851B85AA9D00FBEC25 /* YouHuiQuanViewController.h */,
+				32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */,
+				32BDE4871B85AA9D00FBEC25 /* YouHuiQuanViewController.xib */,
+				32BDE48A1B85B12D00FBEC25 /* AddYouhuiquanViewController.h */,
+				32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */,
+				32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1023,6 +1039,7 @@
 				32746DC81B7432BD00816208 /* CollectionViewController.xib in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
+				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
@@ -1072,6 +1089,7 @@
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
+				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
@@ -1148,6 +1166,7 @@
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */,
 				326091CC1B79ABFC00A763BA /* EnterViewController.m in Sources */,
+				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1173,6 +1192,7 @@
 				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
+				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,

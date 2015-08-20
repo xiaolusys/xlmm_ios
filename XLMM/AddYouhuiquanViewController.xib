@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddYouhuiquanViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="youhuiTextField" destination="eBj-sq-fQC" id="b6O-5T-KLa"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youhuiquan-kv.png" translatesAutoresizingMaskIntoConstraints="NO" id="jSf-yh-QA7">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="25O-XF-Mkh"/>
+                        <constraint firstAttribute="height" constant="200" id="amf-0t-fTA"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="25O-XF-Mkh"/>
+                            <exclude reference="amf-0t-fTA"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="25O-XF-Mkh"/>
+                            <include reference="amf-0t-fTA"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有优惠券,赶紧索取吧!~" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WZ-E6-eW4">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="263" id="hOd-Xv-N7n"/>
+                        <constraint firstAttribute="height" constant="24" id="q2T-Oo-Lgx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="hOd-Xv-N7n"/>
+                            <exclude reference="q2T-Oo-Lgx"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="hOd-Xv-N7n"/>
+                            <include reference="q2T-Oo-Lgx"/>
+                        </mask>
+                    </variation>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入优惠券号码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eBj-sq-fQC">
+                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTZ-Z2-GDz">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.97647058823529409" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="UhM-Ob-mrA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <state key="normal" title="提交">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="UhM-Ob-mrA"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="UhM-Ob-mrA"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="submitClickded:" destination="-1" eventType="touchUpInside" id="5xi-0n-XpZ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="eBj-sq-fQC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="1bY-VY-GAe"/>
+                <constraint firstItem="8WZ-E6-eW4" firstAttribute="top" secondItem="jSf-yh-QA7" secondAttribute="bottom" constant="20" id="6Bt-MO-51V"/>
+                <constraint firstAttribute="centerX" secondItem="jSf-yh-QA7" secondAttribute="centerX" id="8eW-tA-A1S"/>
+                <constraint firstAttribute="centerX" secondItem="eBj-sq-fQC" secondAttribute="centerX" id="C3t-lc-HBa"/>
+                <constraint firstItem="jSf-yh-QA7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="YpF-pa-KD2"/>
+                <constraint firstItem="xTZ-Z2-GDz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="eDy-JE-A4R"/>
+                <constraint firstItem="eBj-sq-fQC" firstAttribute="top" secondItem="8WZ-E6-eW4" secondAttribute="bottom" constant="30" id="lhh-ss-Acn"/>
+                <constraint firstAttribute="centerX" secondItem="xTZ-Z2-GDz" secondAttribute="centerX" id="nik-vR-VGm"/>
+                <constraint firstItem="xTZ-Z2-GDz" firstAttribute="top" secondItem="eBj-sq-fQC" secondAttribute="bottom" constant="40" id="o5q-1y-QBg"/>
+                <constraint firstAttribute="centerX" secondItem="8WZ-E6-eW4" secondAttribute="centerX" id="rA3-CD-qQX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="jSf-yh-QA7"/>
+                    <exclude reference="8WZ-E6-eW4"/>
+                    <exclude reference="eBj-sq-fQC"/>
+                    <exclude reference="xTZ-Z2-GDz"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="8eW-tA-A1S"/>
+                    <exclude reference="YpF-pa-KD2"/>
+                    <exclude reference="6Bt-MO-51V"/>
+                    <exclude reference="rA3-CD-qQX"/>
+                    <exclude reference="1bY-VY-GAe"/>
+                    <exclude reference="C3t-lc-HBa"/>
+                    <exclude reference="lhh-ss-Acn"/>
+                    <exclude reference="eDy-JE-A4R"/>
+                    <exclude reference="nik-vR-VGm"/>
+                    <exclude reference="o5q-1y-QBg"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="jSf-yh-QA7"/>
+                    <include reference="8WZ-E6-eW4"/>
+                    <include reference="eBj-sq-fQC"/>
+                    <include reference="xTZ-Z2-GDz"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="8eW-tA-A1S"/>
+                    <include reference="YpF-pa-KD2"/>
+                    <include reference="6Bt-MO-51V"/>
+                    <include reference="rA3-CD-qQX"/>
+                    <include reference="1bY-VY-GAe"/>
+                    <include reference="C3t-lc-HBa"/>
+                    <include reference="lhh-ss-Acn"/>
+                    <include reference="eDy-JE-A4R"/>
+                    <include reference="nik-vR-VGm"/>
+                    <include reference="o5q-1y-QBg"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="youhuiquan-kv.png" width="200" height="200"/>
+    </resources>
+</document>

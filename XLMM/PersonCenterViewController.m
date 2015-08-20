@@ -10,7 +10,7 @@
 #import "PersonCenterViewController1.h"
 #import "PersonCenterViewController2.h"
 #import "PersonCenterViewController3.h"
-
+#import "YouHuiQuanViewController.h"
 #import "AddressViewController.h"
 
 #import "EnterViewController.h"
@@ -120,6 +120,9 @@
 
 - (IBAction)btn1Clicked:(id)sender {
     MMLOG(@"btn1");
+    YouHuiQuanViewController *youHuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+    [self.navigationController pushViewController:youHuiVC animated:YES];
+    
 }
 
 - (IBAction)btn2Clicked:(id)sender {

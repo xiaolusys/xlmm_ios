@@ -65,6 +65,9 @@
 
 - (void)login:(UIButton *)button{
     NSLog(@"登录");
+    PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
+    [self.navigationController pushViewController:personCenter animated:YES];
+    
 }
 
 
