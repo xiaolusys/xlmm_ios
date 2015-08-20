@@ -350,5 +350,6 @@
 }
 
 - (IBAction)purchaseClicked:(id)sender {
+    NSLog(@"购买商品");
 }
 @end

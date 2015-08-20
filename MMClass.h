@@ -54,7 +54,7 @@
 #define kCHILD_LIST_ORDER_URL @"http://youni.huyi.so/rest/v1/products/childlist?order_by=price"
 
 #define kCart_Number_URL @"http://youni.huyi.so/rest/v1/carts/show_carts_num"
-
+#define kAddress_List_URL @"http://youni.huyi.so/rest/v1/address"
 
 #endif 
 
@@ -73,6 +73,8 @@
 #define kCHILD_LIST_ORDER_URL @"http://192.168.1.131:8000/rest/v1/products/childlist?order_by=price"
 
 #define kCart_Number_URL @"http://192.168.1.131:8000/rest/v1/carts/show_carts_num"
+#define kAddress_List_URL @"http://192.168.1.131:8000/rest/v1/address"
+
 
 
 #endif

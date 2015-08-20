@@ -17,4 +17,9 @@
 @property (nonatomic, copy)NSString *buyerName;
 @property (nonatomic, copy)NSString *phoneNumber;
 
+@property (nonatomic, copy)NSString *addressURL;
+@property (nonatomic, copy)NSString *buyerID;
+@property (nonatomic, assign)BOOL isDefault;
+@property (nonatomic, copy)NSString *addressID;
+
 @end

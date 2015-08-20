@@ -9,12 +9,14 @@
 #import "AddressViewController.h"
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
+#import "MMClass.h"
+#import "AddressTableCell.h"
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define MAINSCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
-@interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddAddressDelegate>
+@interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate>
 {
     NSMutableArray *dataArray;
     
@@ -26,17 +28,94 @@
 
 @implementation AddressViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (dataArray.count != 0) {
+        [dataArray removeAllObjects];
+    }
+    [self downloadAddressData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"收货地址";
+    [self setInfo];
+    
+    
     dataArray = [[NSMutableArray alloc] init];
+    
     self.addressTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) style:UITableViewStylePlain];
     self.addressTableView.delegate = self;
     self.addressTableView.dataSource = self;
     [self.view addSubview:_addressTableView];
+   
+}
+
+- (void)setInfo{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.text = @"收货地址";
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:26];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
+    imageView.frame = CGRectMake(8, 8, 18, 31);
+    [button addSubview:imageView];
+    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    NSLog(@"fanhui");
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//下载数据
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)downloadAddressData{
+    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
     
     
+}
+- (void)fatchedAddressData:(NSData *)responsedata{
+    NSError *error = nil;
+    NSArray *addressArray = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    NSLog(@"addArray = %@", addressArray);
+    if (addressArray.count == 0) {
+        NSLog(@"数据下载错误");
+        return;
+    }
+    for (NSDictionary *dic in addressArray) {
+        AddressModel *model = [[AddressModel alloc] init];
+        model.addressID = [dic objectForKey:@"id"];
+        model.addressURL = [dic objectForKey:@"url"];
+        model.buyerID = [dic objectForKey:@"cus_uid"];
+        model.buyerName = [dic objectForKey:@"receiver_name"];
+        model.cityName = [dic objectForKey:@"receiver_city"];;
+        model.provinceName = [dic objectForKey:@"receiver_state"];
+        model.countyName = [dic objectForKey:@"receiver_district"];
+        model.streetName = [dic objectForKey:@"receiver_address"];
+        model.phoneNumber = [dic objectForKey:@"receiver_mobile"];
+        model.isDefault = [[dic objectForKey:@"default"]boolValue];
+        [dataArray addObject:model];
+    }
+    MMLOG(dataArray);
+    
+    [self.addressTableView reloadData];
     
 }
 
@@ -44,11 +123,11 @@
 #pragma mark --AddAddressDelegate--
 
 - (void)updateAddressList:(AddressModel *)model{
-    NSLog(@"up data");
-    [dataArray addObject:model];
-    NSLog(@"dataArray = %@", dataArray);
-    [self.addressTableView reloadData];
-    
+//    NSLog(@"up data");
+//    [dataArray addObject:model];
+//    NSLog(@"dataArray = %@", dataArray);
+//    [self.addressTableView reloadData];
+//    
 }
 
 
@@ -67,7 +146,7 @@
     }
     else
     {
-        return 60;
+        return 96;
     }
 }
 
@@ -97,7 +176,6 @@
 - (void)addAdress:(UIButton *)button{
     NSLog(@"新增地址");
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
-    addAdVC.delegate = self;
     [self.navigationController pushViewController:addAdVC animated:YES];
     
     
@@ -105,43 +183,95 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"CellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        
-        
-    }
     if (indexPath.row == 0) {
         
+        UITableViewCell *cell =(UITableViewCell *) [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
         [cell.contentView addSubview:[self createHeadView]];
-        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
         return cell;
+    }
+     AddressTableCell *cell = (AddressTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
+        cell = [array objectAtIndex:0];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     AddressModel *model = [dataArray objectAtIndex:indexPath.row -1];
     NSString *address = [NSString stringWithFormat:@"%@-%@-%@-%@", model.provinceName, model.cityName, model.countyName, model.streetName];
     
-    cell.detailTextLabel.text = address;
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:18];
+    cell.secondLabel.text = address;
     NSLog(@"%@", address);
-    
+    cell.delegate = self;
     NSString *buyerInfo = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
-    cell.textLabel.text = buyerInfo;
-    cell.textLabel.font= [UIFont systemFontOfSize:24];
-    
+    cell.firstLabel.text = buyerInfo;
+    cell.firstLabel.userInteractionEnabled = NO;
+    cell.secondLabel.userInteractionEnabled = NO;
+    cell.frontImageView.userInteractionEnabled = NO;
+    [cell.modifyBtn setBackgroundImage:[UIImage imageNamed:@"icon-xiugai.png"] forState:UIControlStateNormal];
+    cell.modifyBtn.userInteractionEnabled = NO;
+    [cell.deleteBtn setBackgroundImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
+    cell.deleteBtn.userInteractionEnabled = NO;
     return cell;
+
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+//        
+//        
+//    }
+//    if (indexPath.row == 0) {
+//        
+//        [cell.contentView addSubview:[self createHeadView]];
+//        
+//        return cell;
+//    }
+
+}
+
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+//        UITableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return;
+    }
+    AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.frontImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+    cell.bgView.backgroundColor = [UIColor whiteColor];
+    cell.firstLabel.textColor = [UIColor blackColor];
+    cell.modifyBtn.userInteractionEnabled = NO;
+    cell.deleteBtn.userInteractionEnabled = NO;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        UITableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return;
     }
-    
+    AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    cell.bgView.backgroundColor = [UIColor redColor];
+    cell.firstLabel.textColor = [UIColor redColor];
+    cell.modifyBtn.userInteractionEnabled = YES;
+    cell.deleteBtn.userInteractionEnabled = YES;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark --AddressDelegate--
+
+- (void)deleteAddress{
+    NSLog(@"删除地址-----");
+}
+- (void)modifyAddress{
+    NSLog(@"修改地址-----");
 }
 
 /*

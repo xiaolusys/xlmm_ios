@@ -8,6 +8,7 @@
 
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
+#import "AFNetworking.h"
 
 
 
@@ -18,14 +19,43 @@
 
 @implementation AddAdressViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
   
     self.title = @"新增收货地址";
     
+    [self setInfo];
+    
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;
     
+}
+
+- (void)setInfo{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.text = @"新增收货地址";
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:26];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
+    imageView.frame = CGRectMake(8, 8, 18, 31);
+    [button addSubview:imageView];
+    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    NSLog(@"fanhui");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -103,7 +133,7 @@
 */
 
 - (IBAction)saveBtnClicked:(id)sender {
-#if 0
+
     if ([self.provinceTextField.text isEqualToString: @""]) {
         self.infoLabel.text = @"请选择省";
         return;
@@ -129,19 +159,35 @@
         self.infoLabel.text = @"请填写正确的收货人手机号码";
         return;
     }
-#endif
+
     NSLog(@"save succeed!");
-    AddressModel *model = [[AddressModel alloc] init];
-    model.provinceName = _provinceTextField.text;
-    model.cityName = _cityTextField.text;
-    model.countyName = _countyTextField.text;
-    model.streetName = _streetTextView.text;
-    model.buyerName = _nameTextField.text;
-    model.phoneNumber = _numberTextField.text;
-    if ([_delegate respondsToSelector:@selector(updateAddressList:)] && _delegate != nil) {
-        [self.delegate updateAddressList:model];
-    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{
+    @"receiver_state": _provinceTextField.text,
+    @"receiver_city": _cityTextField.text,
+    @"receiver_district": _countyTextField.text,
+    @"receiver_address": _streetTextView.text,
+    @"receiver_name": _nameTextField.text,
+    @"receiver_mobile": _numberTextField.text,
+    };
+    NSLog(@"parameters = %@", parameters);
+    
+    [manager POST:@"http://youni.huyi.so/rest/v1/address/create_address?format=json" parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+           
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+  
+    
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 @end
