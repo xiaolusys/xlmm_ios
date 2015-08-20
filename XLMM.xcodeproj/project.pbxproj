@@ -158,6 +158,8 @@
 		32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4871B85AA9D00FBEC25 /* YouHuiQuanViewController.xib */; };
 		32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */; };
 		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
+		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
+		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
 		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
@@ -405,6 +407,9 @@
 		32BDE48A1B85B12D00FBEC25 /* AddYouhuiquanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddYouhuiquanViewController.h; sourceTree = "<group>"; };
 		32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddYouhuiquanViewController.m; sourceTree = "<group>"; };
 		32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddYouhuiquanViewController.xib; sourceTree = "<group>"; };
+		32BDE48F1B85CD1100FBEC25 /* TousuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TousuViewController.h; sourceTree = "<group>"; };
+		32BDE4901B85CD1100FBEC25 /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
+		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
 		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
@@ -516,6 +521,9 @@
 				32BDE48A1B85B12D00FBEC25 /* AddYouhuiquanViewController.h */,
 				32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */,
 				32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */,
+				32BDE48F1B85CD1100FBEC25 /* TousuViewController.h */,
+				32BDE4901B85CD1100FBEC25 /* TousuViewController.m */,
+				32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1087,6 +1095,7 @@
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
+				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
@@ -1171,6 +1180,7 @@
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */,
+				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
 				325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */,

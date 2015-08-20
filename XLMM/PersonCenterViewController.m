@@ -12,8 +12,9 @@
 #import "PersonCenterViewController3.h"
 #import "YouHuiQuanViewController.h"
 #import "AddressViewController.h"
-
+#import "TousuViewController.h"
 #import "EnterViewController.h"
+#import "ModifyPasswordViewController.h"
 
 
 
@@ -27,6 +28,17 @@
 @end
 
 @implementation PersonCenterViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL islogIn = [userDefaults boolForKey:kIsLogin];
+    if (islogIn) {
+        self.nameLabel.text = [userDefaults objectForKey:kUserName];
+        self.scoreLabel.text = @"";
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -119,9 +131,18 @@
 }
 
 - (IBAction)btn1Clicked:(id)sender {
-    MMLOG(@"btn1");
-    YouHuiQuanViewController *youHuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-    [self.navigationController pushViewController:youHuiVC animated:YES];
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        MMLOG(@"btn1");
+        YouHuiQuanViewController *youHuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        [self.navigationController pushViewController:youHuiVC animated:YES];
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+
+
     
 }
 
@@ -131,10 +152,20 @@
 }
 
 - (IBAction)btn3Clicked:(id)sender {
-    AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-    [self.navigationController pushViewController:addressVC animated:YES];
     
-    MMLOG(@"btn3");
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        [self.navigationController pushViewController:addressVC animated:YES];
+        
+        MMLOG(@"btn3");
+        
+           } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+
 
 }
 
@@ -145,11 +176,38 @@
 
 - (IBAction)btn5Clicked:(id)sender {
     MMLOG(@"btn5");
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        ModifyPasswordViewController *modifyVC = [[ModifyPasswordViewController alloc] initWithNibName:@"ModifyPasswordViewController" bundle:nil];
+        [self.navigationController pushViewController:modifyVC animated:YES];
+        
+        
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+    
+ 
 
 }
 
 - (IBAction)btn6Clicked:(id)sender {
     MMLOG(@"btn6");
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        TousuViewController *tousuVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
+        [self.navigationController pushViewController:tousuVC animated:YES];
+
+        
+        
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+    
+   
 
 }
 - (IBAction)btn7Clicked:(id)sender {

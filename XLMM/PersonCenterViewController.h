@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PersonCenterViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *virticalSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
