@@ -156,6 +156,10 @@
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		32A88E121B86BD8C003501EF /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
 		32A88E151B86C840003501EF /* DingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E141B86C840003501EF /* DingdanModel.m */; };
+		32A88E181B8718F9003501EF /* XiangQingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E171B8718F9003501EF /* XiangQingView.m */; };
+		32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
+		32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
+		32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1F1B872CB5003501EF /* PerDingdanModel.m */; };
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
@@ -410,6 +414,13 @@
 		32A88E101B86BD8C003501EF /* XiangQingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangQingViewController.xib; sourceTree = "<group>"; };
 		32A88E131B86C840003501EF /* DingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DingdanModel.h; sourceTree = "<group>"; };
 		32A88E141B86C840003501EF /* DingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DingdanModel.m; sourceTree = "<group>"; };
+		32A88E161B8718F9003501EF /* XiangQingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangQingView.h; sourceTree = "<group>"; };
+		32A88E171B8718F9003501EF /* XiangQingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangQingView.m; sourceTree = "<group>"; };
+		32A88E191B87191A003501EF /* XiangQingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangQingView.xib; sourceTree = "<group>"; };
+		32A88E1B1B8729F8003501EF /* DingDanXiangQingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DingDanXiangQingModel.h; sourceTree = "<group>"; };
+		32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DingDanXiangQingModel.m; sourceTree = "<group>"; };
+		32A88E1E1B872CB5003501EF /* PerDingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerDingdanModel.h; sourceTree = "<group>"; };
+		32A88E1F1B872CB5003501EF /* PerDingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerDingdanModel.m; sourceTree = "<group>"; };
 		32A957851B82BC5600C23B34 /* ConfirmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmView.xib; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
@@ -648,6 +659,9 @@
 				32BDE4801B85620F00FBEC25 /* AddressTableCell.h */,
 				32BDE4811B85620F00FBEC25 /* AddressTableCell.m */,
 				32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */,
+				32A88E161B8718F9003501EF /* XiangQingView.h */,
+				32A88E171B8718F9003501EF /* XiangQingView.m */,
+				32A88E191B87191A003501EF /* XiangQingView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -774,6 +788,10 @@
 				32891B631B81EA96007E562A /* ShoppingCartModel.m */,
 				32A88E131B86C840003501EF /* DingdanModel.h */,
 				32A88E141B86C840003501EF /* DingdanModel.m */,
+				32A88E1B1B8729F8003501EF /* DingDanXiangQingModel.h */,
+				32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */,
+				32A88E1E1B872CB5003501EF /* PerDingdanModel.h */,
+				32A88E1F1B872CB5003501EF /* PerDingdanModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1078,6 +1096,7 @@
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
+				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
 				328422A71B841B1700C4EA76 /* AlipaySDK.bundle in Resources */,
@@ -1195,11 +1214,13 @@
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
+				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
 				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */,
+				32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */,
 				326091CC1B79ABFC00A763BA /* EnterViewController.m in Sources */,
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
@@ -1231,6 +1252,7 @@
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
+				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,

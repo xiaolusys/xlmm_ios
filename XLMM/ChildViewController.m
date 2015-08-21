@@ -244,7 +244,7 @@
           model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
           model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
           
-          NSLog(@"is_saleOpen = %d, is_saleOUt = %d, is_newGood = %d, remainNumber = %ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+    //      NSLog(@"is_saleOpen = %d, is_saleOUt = %d, is_newGood = %d, remainNumber = %ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
           
           NSDictionary *dic2 = [dic objectForKey:@"product_model"];
           NSLog(@"procust_model = %@", dic);
@@ -467,7 +467,7 @@
         model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
         
-        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+//        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         NSDictionary *dic2 = [dic objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {

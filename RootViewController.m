@@ -301,7 +301,7 @@
         model.isNewGood = [[child objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[child objectForKey:@"remain_num"]integerValue];
         
-        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+    //    NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         
         NSDictionary *dic = [child objectForKey:@"product_model"];
@@ -333,7 +333,7 @@
         model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[lady objectForKey:@"remain_num"]integerValue];
         
-        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+    //    NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         
         NSDictionary *dic2 = [lady objectForKey:@"product_model"];
@@ -378,7 +378,7 @@
         model.isNewGood = [[child objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[child objectForKey:@"remain_num"]integerValue];
         
-        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+    //    NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
 
         NSDictionary *dic = [child objectForKey:@"product_model"];
         if ([dic class] == [NSNull class]) {
@@ -415,7 +415,7 @@
         model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[lady objectForKey:@"remain_num"]integerValue];
         
-        NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
+   //     NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         NSDictionary *dic2 = [lady objectForKey:@"product_model"];
         if ([dic2 class] == [NSNull class]) {
             model.productModel = nil;

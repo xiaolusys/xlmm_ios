@@ -157,6 +157,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%@", indexPath);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+    xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    
     [self.navigationController pushViewController:xiangqingVC animated:YES];
     
 }
