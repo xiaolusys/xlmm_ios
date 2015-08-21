@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="323" height="214"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="323" height="214"/>
+                <rect key="frame" x="0.0" y="0.0" width="397" height="214"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下单时间:2015-05-15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jao-qa-Ymb">
                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -149,7 +149,7 @@
                 <constraint firstItem="hM3-11-77t" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="v1J-1o-xqa"/>
                 <constraint firstItem="Okl-0G-Hjw" firstAttribute="leading" secondItem="WM4-o6-Jj4" secondAttribute="leading" id="zQe-St-xfF"/>
             </constraints>
-            <size key="customSize" width="414" height="214"/>
+            <size key="customSize" width="488" height="214"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="jao-qa-Ymb"/>
@@ -228,7 +228,7 @@
                     <include reference="C82-pJ-LVg"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="512" y="379"/>
+            <point key="canvasLocation" x="548.5" y="379"/>
         </collectionViewCell>
     </objects>
     <resources>

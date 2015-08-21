@@ -14,7 +14,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="        请写下您的意见和建议，以便我们更好的服务于您~" translatesAutoresizingMaskIntoConstraints="NO" id="CU2-v5-ZIO">
@@ -137,18 +137,18 @@
                     <exclude reference="ZeA-2l-cRA"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="JmQ-DV-RSw"/>
-                    <exclude reference="PzJ-QA-iqa"/>
-                    <exclude reference="bOU-1U-q1n"/>
-                    <exclude reference="N2S-tp-cun"/>
-                    <exclude reference="S54-R7-ar2"/>
-                    <exclude reference="o4P-Wf-XgY"/>
                     <exclude reference="TjE-y6-ilK"/>
                     <exclude reference="VND-O6-ZTx"/>
                     <exclude reference="miZ-Tj-lXP"/>
+                    <exclude reference="N2S-tp-cun"/>
+                    <exclude reference="S54-R7-ar2"/>
+                    <exclude reference="o4P-Wf-XgY"/>
                     <exclude reference="NS6-o8-SGf"/>
                     <exclude reference="ULU-KG-x9o"/>
                     <exclude reference="q5F-sP-vX2"/>
+                    <exclude reference="JmQ-DV-RSw"/>
+                    <exclude reference="PzJ-QA-iqa"/>
+                    <exclude reference="bOU-1U-q1n"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -159,18 +159,18 @@
                     <include reference="ZeA-2l-cRA"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="JmQ-DV-RSw"/>
-                    <include reference="PzJ-QA-iqa"/>
-                    <include reference="bOU-1U-q1n"/>
-                    <include reference="N2S-tp-cun"/>
-                    <include reference="S54-R7-ar2"/>
-                    <include reference="o4P-Wf-XgY"/>
                     <include reference="TjE-y6-ilK"/>
                     <include reference="VND-O6-ZTx"/>
                     <include reference="miZ-Tj-lXP"/>
+                    <include reference="N2S-tp-cun"/>
+                    <include reference="S54-R7-ar2"/>
+                    <include reference="o4P-Wf-XgY"/>
                     <include reference="NS6-o8-SGf"/>
                     <include reference="ULU-KG-x9o"/>
                     <include reference="q5F-sP-vX2"/>
+                    <include reference="JmQ-DV-RSw"/>
+                    <include reference="PzJ-QA-iqa"/>
+                    <include reference="bOU-1U-q1n"/>
                 </mask>
             </variation>
         </view>

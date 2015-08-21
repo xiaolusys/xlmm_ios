@@ -151,6 +151,11 @@
 		32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */; };
 		32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */; };
 		32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B631B81EA96007E562A /* ShoppingCartModel.m */; };
+		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
+		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
+		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
+		32A88E121B86BD8C003501EF /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
+		32A88E151B86C840003501EF /* DingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E141B86C840003501EF /* DingdanModel.m */; };
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
@@ -397,6 +402,14 @@
 		32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableCellTableViewCell.xib; sourceTree = "<group>"; };
 		32891B621B81EA96007E562A /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
 		32891B631B81EA96007E562A /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
+		32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuanbuCollectionCell.h; sourceTree = "<group>"; };
+		32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuanbuCollectionCell.m; sourceTree = "<group>"; };
+		32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuanbuCollectionCell.xib; sourceTree = "<group>"; };
+		32A88E0E1B86BD8C003501EF /* XiangQingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangQingViewController.h; sourceTree = "<group>"; };
+		32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangQingViewController.m; sourceTree = "<group>"; };
+		32A88E101B86BD8C003501EF /* XiangQingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangQingViewController.xib; sourceTree = "<group>"; };
+		32A88E131B86C840003501EF /* DingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DingdanModel.h; sourceTree = "<group>"; };
+		32A88E141B86C840003501EF /* DingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DingdanModel.m; sourceTree = "<group>"; };
 		32A957851B82BC5600C23B34 /* ConfirmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmView.xib; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
@@ -509,6 +522,12 @@
 				3249B9B91B6F49A20086D030 /* ShouHuoCollectionViewCell.h */,
 				3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */,
 				3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */,
+				32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */,
+				32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */,
+				32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */,
+				32A88E0E1B86BD8C003501EF /* XiangQingViewController.h */,
+				32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */,
+				32A88E101B86BD8C003501EF /* XiangQingViewController.xib */,
 				32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */,
 				32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */,
 				32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */,
@@ -753,6 +772,8 @@
 				32CE91C31B7C491E00CA67C3 /* AddressModel.m */,
 				32891B621B81EA96007E562A /* ShoppingCartModel.h */,
 				32891B631B81EA96007E562A /* ShoppingCartModel.m */,
+				32A88E131B86C840003501EF /* DingdanModel.h */,
+				32A88E141B86C840003501EF /* DingdanModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1049,6 +1070,7 @@
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
+				32A88E121B86BD8C003501EF /* XiangQingViewController.xib in Resources */,
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
@@ -1087,6 +1109,7 @@
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
+				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
@@ -1148,6 +1171,7 @@
 				32746DD31B74884B00816208 /* DetailsModel.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
+				32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */,
 				3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
@@ -1157,6 +1181,7 @@
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
+				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
@@ -1172,6 +1197,7 @@
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
+				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */,
 				326091CC1B79ABFC00A763BA /* EnterViewController.m in Sources */,

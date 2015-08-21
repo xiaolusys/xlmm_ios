@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface PersonCenterViewController3 : UIViewController
+#import "QuanbuCollectionCell.h"
+@interface PersonCenterViewController3 : UIViewController <UICollectionViewDataSource,
+    UIBarPositioningDelegate,
+    UICollectionViewDelegateFlowLayout>
+@property (weak, nonatomic) IBOutlet UICollectionView *quanbuCollectionView;
 
 @end

@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonCenterViewController3">
             <connections>
+                <outlet property="quanbuCollectionView" destination="8Mf-BP-tDH" id="JFL-b2-sGG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +14,53 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8Mf-BP-tDH">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yx3-r1-TfT">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="crE-x1-kP0"/>
+                        <outlet property="delegate" destination="-1" id="KZB-HM-Mq0"/>
+                    </connections>
+                </collectionView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="8Mf-BP-tDH" secondAttribute="trailing" id="4sC-Mu-Uw7"/>
+                <constraint firstItem="8Mf-BP-tDH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HRc-Tb-NZJ">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="8Mf-BP-tDH" secondAttribute="bottom" id="QSG-aC-2OL"/>
+                <constraint firstItem="8Mf-BP-tDH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bcj-s3-XiZ"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="8Mf-BP-tDH"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="4sC-Mu-Uw7"/>
+                    <exclude reference="HRc-Tb-NZJ"/>
+                    <exclude reference="QSG-aC-2OL"/>
+                    <exclude reference="bcj-s3-XiZ"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="8Mf-BP-tDH"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="4sC-Mu-Uw7"/>
+                    <include reference="HRc-Tb-NZJ"/>
+                    <include reference="QSG-aC-2OL"/>
+                    <include reference="bcj-s3-XiZ"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

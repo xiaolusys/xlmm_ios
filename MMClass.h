@@ -55,6 +55,8 @@
 
 #define kCart_Number_URL @"http://youni.huyi.so/rest/v1/carts/show_carts_num"
 #define kAddress_List_URL @"http://youni.huyi.so/rest/v1/address"
+#define kQuanbuDingdan_URL @"http://youni.huyi.so/rest/v1/trades"
+
 
 #endif 
 
@@ -74,6 +76,7 @@
 
 #define kCart_Number_URL @"http://192.168.1.131:8000/rest/v1/carts/show_carts_num"
 #define kAddress_List_URL @"http://192.168.1.131:8000/rest/v1/address"
+#define kQuanbuDingdan_URL @"http://192.168.1.131:8000/rest/v1/trades"
 
 
 

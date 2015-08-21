@@ -117,8 +117,8 @@
     islogin = [userfaults boolForKey:kIsLogin];
     if (islogin) {
     NSLog(@"222");
-    PersonCenterViewController2 *person1VC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
-    [self.navigationController pushViewController:person1VC animated:YES];
+    PersonCenterViewController2 *person2VC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+    [self.navigationController pushViewController:person2VC animated:YES];
     } else {
         EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
@@ -128,6 +128,17 @@
 
 - (IBAction)button3Clicked:(id)sender {
     NSLog(@"333");
+    
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        NSLog(@"222");
+        PersonCenterViewController3 *person3VC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+        [self.navigationController pushViewController:person3VC animated:YES];
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
 }
 
 - (IBAction)btn1Clicked:(id)sender {
