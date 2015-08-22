@@ -151,6 +151,10 @@
 		32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */; };
 		32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */; };
 		32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B631B81EA96007E562A /* ShoppingCartModel.m */; };
+		3290C8861B88232F00CFAFA0 /* LiJiGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */; };
+		3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */; };
+		3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8891B886B0C00CFAFA0 /* AddressView.m */; };
+		3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88B1B886B2600CFAFA0 /* AddressView.xib */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
 		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
@@ -406,6 +410,12 @@
 		32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableCellTableViewCell.xib; sourceTree = "<group>"; };
 		32891B621B81EA96007E562A /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
 		32891B631B81EA96007E562A /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
+		3290C8831B88232F00CFAFA0 /* LiJiGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiGMViewController.h; sourceTree = "<group>"; };
+		3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiGMViewController.m; sourceTree = "<group>"; };
+		3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiJiGMViewController.xib; sourceTree = "<group>"; };
+		3290C8881B886B0C00CFAFA0 /* AddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
+		3290C8891B886B0C00CFAFA0 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
+		3290C88B1B886B2600CFAFA0 /* AddressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressView.xib; sourceTree = "<group>"; };
 		32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuanbuCollectionCell.h; sourceTree = "<group>"; };
 		32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuanbuCollectionCell.m; sourceTree = "<group>"; };
 		32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuanbuCollectionCell.xib; sourceTree = "<group>"; };
@@ -662,6 +672,9 @@
 				32A88E161B8718F9003501EF /* XiangQingView.h */,
 				32A88E171B8718F9003501EF /* XiangQingView.m */,
 				32A88E191B87191A003501EF /* XiangQingView.xib */,
+				3290C8881B886B0C00CFAFA0 /* AddressView.h */,
+				3290C8891B886B0C00CFAFA0 /* AddressView.m */,
+				3290C88B1B886B2600CFAFA0 /* AddressView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -704,6 +717,9 @@
 				32891B591B81C9E0007E562A /* CartViewController.m */,
 				32A957851B82BC5600C23B34 /* ConfirmView.xib */,
 				32891B5A1B81C9E0007E562A /* CartViewController.xib */,
+				3290C8831B88232F00CFAFA0 /* LiJiGMViewController.h */,
+				3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */,
+				3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1118,6 +1134,7 @@
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
+				3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
@@ -1143,6 +1160,7 @@
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
+				3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */,
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
 				3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */,
 				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
@@ -1188,6 +1206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32746DD31B74884B00816208 /* DetailsModel.m in Sources */,
+				3290C8861B88232F00CFAFA0 /* LiJiGMViewController.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
 				32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */,
@@ -1215,6 +1234,7 @@
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
 				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
@@ -1311,7 +1331,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1328,9 +1349,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1352,7 +1374,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1363,8 +1386,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1374,11 +1398,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1388,6 +1414,7 @@
 					"$(PROJECT_DIR)/XLMM/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
 			};
 			name = Debug;
 		};
@@ -1395,11 +1422,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1409,6 +1438,7 @@
 					"$(PROJECT_DIR)/XLMM/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
 			};
 			name = Release;
 		};

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -118,16 +119,34 @@
                         </mask>
                     </variation>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xr-ic-pe9">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="gotoHomePage:" destination="-1" eventType="touchUpInside" id="cZM-4m-gyO"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="8Xr-ic-pe9" secondAttribute="trailing" constant="8" id="ID9-Dq-IqZ"/>
+                <constraint firstItem="8Xr-ic-pe9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="JKa-5d-h8Y"/>
                 <constraint firstItem="1OF-zn-bMh" firstAttribute="top" secondItem="LK6-Sm-2Ow" secondAttribute="bottom" constant="35" id="PRw-zG-ClA">
                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                 </constraint>
                 <constraint firstItem="LK6-Sm-2Ow" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="X4s-KV-9xl"/>
                 <constraint firstAttribute="centerX" secondItem="LK6-Sm-2Ow" secondAttribute="centerX" id="haS-Eu-vRF"/>
+                <constraint firstAttribute="bottom" secondItem="8Xr-ic-pe9" secondAttribute="bottom" constant="481" id="kXa-i1-AmV">
+                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                </constraint>
                 <constraint firstItem="nwF-v1-ejO" firstAttribute="top" secondItem="1OF-zn-bMh" secondAttribute="bottom" constant="10" id="og9-HC-nLX"/>
                 <constraint firstAttribute="centerX" secondItem="nwF-v1-ejO" secondAttribute="centerX" id="pl2-z8-alt"/>
+                <constraint firstItem="8Xr-ic-pe9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="116" id="vLF-od-Bcf">
+                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                </constraint>
                 <constraint firstAttribute="centerX" secondItem="1OF-zn-bMh" secondAttribute="centerX" id="wcK-h2-rSg"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -136,12 +155,17 @@
                     <exclude reference="LK6-Sm-2Ow"/>
                     <exclude reference="1OF-zn-bMh"/>
                     <exclude reference="nwF-v1-ejO"/>
+                    <exclude reference="8Xr-ic-pe9"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="PRw-zG-ClA"/>
-                    <exclude reference="wcK-h2-rSg"/>
                     <exclude reference="X4s-KV-9xl"/>
                     <exclude reference="haS-Eu-vRF"/>
+                    <exclude reference="ID9-Dq-IqZ"/>
+                    <exclude reference="JKa-5d-h8Y"/>
+                    <exclude reference="kXa-i1-AmV"/>
+                    <exclude reference="vLF-od-Bcf"/>
+                    <exclude reference="PRw-zG-ClA"/>
+                    <exclude reference="wcK-h2-rSg"/>
                     <exclude reference="og9-HC-nLX"/>
                     <exclude reference="pl2-z8-alt"/>
                 </mask>
@@ -151,12 +175,17 @@
                     <include reference="LK6-Sm-2Ow"/>
                     <include reference="1OF-zn-bMh"/>
                     <include reference="nwF-v1-ejO"/>
+                    <include reference="8Xr-ic-pe9"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="PRw-zG-ClA"/>
-                    <include reference="wcK-h2-rSg"/>
                     <include reference="X4s-KV-9xl"/>
                     <include reference="haS-Eu-vRF"/>
+                    <include reference="ID9-Dq-IqZ"/>
+                    <include reference="JKa-5d-h8Y"/>
+                    <include reference="kXa-i1-AmV"/>
+                    <include reference="vLF-od-Bcf"/>
+                    <include reference="PRw-zG-ClA"/>
+                    <include reference="wcK-h2-rSg"/>
                     <include reference="og9-HC-nLX"/>
                     <include reference="pl2-z8-alt"/>
                 </mask>

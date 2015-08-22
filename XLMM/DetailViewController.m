@@ -15,6 +15,7 @@
 #import "AFNetworking.h"
 #import "CartViewController.h"
 #import "EmptyCartViewController.h"
+#import "LiJiGMViewController.h"
 
 @interface DetailViewController ()<UIScrollViewDelegate,NSURLConnectionDataDelegate>{
     NSMutableArray *imageArray;
@@ -666,6 +667,15 @@
             }];
         } else {
             NSLog(@"可以购买");
+            // 立即购买
+            LiJiGMViewController *lijiVC = [[LiJiGMViewController alloc] initWithNibName:@"LiJiGMViewController" bundle:nil];
+            [self.navigationController pushViewController:lijiVC animated:YES];
+            
+            
+            
+            
+            
+            
         }
 
     } else{
