@@ -14,6 +14,8 @@
 
 @interface LiJiGMViewController (){
     NSMutableArray *addressArray;
+    AddressView *owner[8];
+    
 }
 
 @end
@@ -22,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.addressViewWidth.constant = SCREENWIDTH;
     // Do any additional setup after loading the view from its nib.
     addressArray = [[NSMutableArray alloc] initWithCapacity:0];
     
@@ -88,7 +91,7 @@
     NSLog(@"创建地址列表");
     
     
-    NSLog(@"count = %ld", addressArray.count);
+    NSLog(@"count = %ld", (unsigned long)addressArray.count);
     
     
     self.addressViewHeight.constant = 100 * addressArray.count + 50;
@@ -96,21 +99,22 @@
     NSUInteger number = addressArray.count;
     for (int i = 0; i<number; i++) {
         NSLog(@"i = %d", i);
-        AddressView *owner = [AddressView new];
-
-        [[NSBundle mainBundle] loadNibNamed:@"AddressView" owner:owner options:nil];
-        owner.view.frame = CGRectMake(0, i*100 + 44, SCREENWIDTH, 100);
-        NSLog(@"%@", owner);
+       owner[i] = [AddressView new];
+        AddressView *myowner = owner[i];
+        NSLog(@"%@", owner[i]);
+        [[NSBundle mainBundle]loadNibNamed:@"AddressView" owner:myowner options:nil];
+        myowner.view.frame = CGRectMake(0, i*100 + 50, SCREENWIDTH, 100);
+        NSLog(@"%@", myowner.view);
         AddressModel *model = [addressArray objectAtIndex:i];
-        
+//        myowner.view.backgroundColor = [UIColor redColor];
         NSString *nameStr = [NSString stringWithFormat:@"%@  %@", model.buyerName, model.phoneNumber];
         NSString *addStr = [NSString stringWithFormat:@"%@-%@-%@", model.provinceName, model.cityName, model.countyName];
-        owner.nameLabel.text = nameStr;
+        myowner.nameLabel.text = nameStr;
         
-        owner.addressLabel.text = addStr;
+        myowner.addressLabel.text = addStr;
      
 
-        [self.addressViewContaint addSubview:owner.view];
+        [self.addressViewContaint addSubview:myowner.view];
         
         
     }
@@ -121,7 +125,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = @"确认订单";
     label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
+    label.font = [UIFont fontWithName:@"LiHei Pro" size:28];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     

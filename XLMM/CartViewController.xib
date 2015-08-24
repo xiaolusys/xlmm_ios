@@ -3,6 +3,15 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="LiHeiPro.ttf">
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CartViewController">
             <connections>
@@ -31,7 +40,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="Tev-xT-hKZ"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
                     <color key="textColor" red="0.8784313725490196" green="0.18823529411764706" blue="0.45490196078431372" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -50,7 +59,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="Ofd-cj-Sr2"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -66,7 +75,7 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总金额:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SI-Gn-QG3">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -77,7 +86,7 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="100"/>
                         </constraint>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -97,7 +106,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="yX5-W1-Mf7"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="24"/>
                     <state key="normal" title="购  买">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

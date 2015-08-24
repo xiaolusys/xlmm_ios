@@ -14,6 +14,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
+@property (strong, nonatomic) IBOutlet UIButton *modifyBtn;
+
+@property (strong, nonatomic) IBOutlet UIButton *selectBtn;
+
+
+- (IBAction)selectClicked:(id)sender;
+- (IBAction)modifyClicked:(id)sender;
 
 
 @end

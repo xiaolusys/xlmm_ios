@@ -3,6 +3,13 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="LiHeiPro.ttf">
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoodsView">
             <connections>
@@ -23,44 +30,96 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6E-9x-nA9">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="QKJ-wl-Bly"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="QKJ-wl-Bly"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="QKJ-wl-Bly"/>
+                        </mask>
+                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥68" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9g-wg-Arm">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="6ne-qQ-Ot2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6ne-qQ-Ot2"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="6ne-qQ-Ot2"/>
+                        </mask>
+                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-tf-xMc">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="FUq-kv-hQR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="FUq-kv-hQR"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="FUq-kv-hQR"/>
+                        </mask>
+                    </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="——" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfL-zY-dpI">
-                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Qz-pD-SQp">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="0Er-Qf-kVU"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="0Er-Qf-kVU"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="0Er-Qf-kVU"/>
+                        </mask>
+                    </variation>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="o1D-tf-xMc" firstAttribute="leading" secondItem="9Qz-pD-SQp" secondAttribute="leading" id="1bB-CM-Kd5"/>
                 <constraint firstItem="o1D-tf-xMc" firstAttribute="top" secondItem="N6E-9x-nA9" secondAttribute="bottom" constant="4" id="FHK-as-zPA"/>
                 <constraint firstItem="u9g-wg-Arm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="GDc-qy-mPk"/>
                 <constraint firstItem="GQK-Ui-JWh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KIz-82-w1P"/>
                 <constraint firstItem="o1D-tf-xMc" firstAttribute="leading" secondItem="u9g-wg-Arm" secondAttribute="trailing" constant="30" id="KSC-aq-RGG"/>
                 <constraint firstAttribute="trailing" secondItem="GQK-Ui-JWh" secondAttribute="trailing" id="KrD-MW-njc"/>
                 <constraint firstItem="N6E-9x-nA9" firstAttribute="top" secondItem="GQK-Ui-JWh" secondAttribute="bottom" id="PsJ-eY-Pw5"/>
+                <constraint firstItem="o1D-tf-xMc" firstAttribute="centerY" secondItem="9Qz-pD-SQp" secondAttribute="centerY" id="Zmg-vS-c3U"/>
                 <constraint firstItem="u9g-wg-Arm" firstAttribute="top" secondItem="N6E-9x-nA9" secondAttribute="bottom" constant="2" id="bej-YS-udT"/>
-                <constraint firstItem="o1D-tf-xMc" firstAttribute="leading" secondItem="vfL-zY-dpI" secondAttribute="leading" id="gy8-Wy-opm"/>
                 <constraint firstItem="N6E-9x-nA9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="jwD-6e-QhS">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="GQK-Ui-JWh" secondAttribute="bottom" constant="50" id="lD7-Lz-pyw"/>
-                <constraint firstItem="vfL-zY-dpI" firstAttribute="top" secondItem="N6E-9x-nA9" secondAttribute="bottom" constant="4" id="vTc-D3-RlX"/>
+                <constraint firstItem="o1D-tf-xMc" firstAttribute="width" secondItem="9Qz-pD-SQp" secondAttribute="width" id="r2o-q1-gKB"/>
+                <constraint firstAttribute="trailing" secondItem="N6E-9x-nA9" secondAttribute="trailing" constant="8" id="v70-OM-hoP"/>
                 <constraint firstItem="GQK-Ui-JWh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xR2-Lw-qdA"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -71,21 +130,23 @@
                     <exclude reference="N6E-9x-nA9"/>
                     <exclude reference="u9g-wg-Arm"/>
                     <exclude reference="o1D-tf-xMc"/>
-                    <exclude reference="vfL-zY-dpI"/>
+                    <exclude reference="9Qz-pD-SQp"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="PsJ-eY-Pw5"/>
-                    <exclude reference="jwD-6e-QhS"/>
-                    <exclude reference="FHK-as-zPA"/>
-                    <exclude reference="KSC-aq-RGG"/>
-                    <exclude reference="gy8-Wy-opm"/>
-                    <exclude reference="GDc-qy-mPk"/>
-                    <exclude reference="bej-YS-udT"/>
-                    <exclude reference="vTc-D3-RlX"/>
                     <exclude reference="KIz-82-w1P"/>
                     <exclude reference="KrD-MW-njc"/>
                     <exclude reference="lD7-Lz-pyw"/>
                     <exclude reference="xR2-Lw-qdA"/>
+                    <exclude reference="PsJ-eY-Pw5"/>
+                    <exclude reference="jwD-6e-QhS"/>
+                    <exclude reference="v70-OM-hoP"/>
+                    <exclude reference="GDc-qy-mPk"/>
+                    <exclude reference="bej-YS-udT"/>
+                    <exclude reference="1bB-CM-Kd5"/>
+                    <exclude reference="FHK-as-zPA"/>
+                    <exclude reference="KSC-aq-RGG"/>
+                    <exclude reference="Zmg-vS-c3U"/>
+                    <exclude reference="r2o-q1-gKB"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -94,21 +155,23 @@
                     <include reference="N6E-9x-nA9"/>
                     <include reference="u9g-wg-Arm"/>
                     <include reference="o1D-tf-xMc"/>
-                    <include reference="vfL-zY-dpI"/>
+                    <include reference="9Qz-pD-SQp"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="PsJ-eY-Pw5"/>
-                    <include reference="jwD-6e-QhS"/>
-                    <include reference="FHK-as-zPA"/>
-                    <include reference="KSC-aq-RGG"/>
-                    <include reference="gy8-Wy-opm"/>
-                    <include reference="GDc-qy-mPk"/>
-                    <include reference="bej-YS-udT"/>
-                    <include reference="vTc-D3-RlX"/>
                     <include reference="KIz-82-w1P"/>
                     <include reference="KrD-MW-njc"/>
                     <include reference="lD7-Lz-pyw"/>
                     <include reference="xR2-Lw-qdA"/>
+                    <include reference="PsJ-eY-Pw5"/>
+                    <include reference="jwD-6e-QhS"/>
+                    <include reference="v70-OM-hoP"/>
+                    <include reference="GDc-qy-mPk"/>
+                    <include reference="bej-YS-udT"/>
+                    <include reference="1bB-CM-Kd5"/>
+                    <include reference="FHK-as-zPA"/>
+                    <include reference="KSC-aq-RGG"/>
+                    <include reference="Zmg-vS-c3U"/>
+                    <include reference="r2o-q1-gKB"/>
                 </mask>
             </variation>
         </view>

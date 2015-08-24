@@ -4,6 +4,27 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="LiHeiPro.ttf">
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController">
             <connections>
@@ -50,7 +71,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-zC-m0k">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                             <color key="backgroundColor" red="0.62352941176470589" green="0.62352941176470589" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -60,7 +81,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="bL2-W0-aZI"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
                             <state key="normal" title="加入购物车">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -82,7 +103,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xm2-UO-Ev4">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <color key="backgroundColor" red="0.85490196078431369" green="0.29411764705882354" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
                             <state key="normal" title="立即购买">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,7 +117,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="odi-Sv-Vr7"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                             <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
@@ -408,60 +429,86 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版糖果色元素外套－粉红色" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Dy-TN-vne">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="SVi-Je-Uj4"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="SVi-Je-Uj4"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="SVi-Je-Uj4"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥78" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTj-WW-PfN">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                                             <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥395" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcM-zz-mPl">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="——" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKe-JP-vId">
-                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="22"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAu-hw-Gsh">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="S2Q-ta-9KH"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="S2Q-ta-9KH"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="S2Q-ta-9KH"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="1Hc-bd-0oF"/>
-                                        <constraint firstItem="fcM-zz-mPl" firstAttribute="leading" secondItem="nKe-JP-vId" secondAttribute="leading" id="Bri-rH-K0v"/>
+                                        <constraint firstAttribute="trailing" secondItem="7Dy-TN-vne" secondAttribute="trailing" constant="8" id="7s0-nO-Ie7"/>
+                                        <constraint firstItem="fcM-zz-mPl" firstAttribute="leading" secondItem="MAu-hw-Gsh" secondAttribute="leading" id="BB6-Fw-oep"/>
                                         <constraint firstAttribute="bottom" secondItem="YTj-WW-PfN" secondAttribute="bottom" constant="8" id="Kqh-FZ-jkj"/>
                                         <constraint firstItem="7Dy-TN-vne" firstAttribute="leading" secondItem="lfK-8Q-fHf" secondAttribute="leading" constant="8" id="Kzp-aM-Hak"/>
                                         <constraint firstAttribute="bottom" secondItem="fcM-zz-mPl" secondAttribute="bottom" constant="8" id="Nbz-jr-KC7"/>
                                         <constraint firstItem="fcM-zz-mPl" firstAttribute="leading" secondItem="YTj-WW-PfN" secondAttribute="trailing" constant="40" id="Pvg-vY-2mk"/>
                                         <constraint firstItem="YTj-WW-PfN" firstAttribute="leading" secondItem="lfK-8Q-fHf" secondAttribute="leading" constant="8" id="S5B-SJ-g36"/>
                                         <constraint firstItem="7Dy-TN-vne" firstAttribute="top" secondItem="lfK-8Q-fHf" secondAttribute="top" constant="8" id="Vq8-rc-A0H"/>
-                                        <constraint firstItem="nKe-JP-vId" firstAttribute="top" secondItem="7Dy-TN-vne" secondAttribute="bottom" id="cdn-pp-Jd0">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
-                                        </constraint>
+                                        <constraint firstItem="fcM-zz-mPl" firstAttribute="width" secondItem="MAu-hw-Gsh" secondAttribute="width" id="qYU-y8-pUz"/>
+                                        <constraint firstItem="fcM-zz-mPl" firstAttribute="centerY" secondItem="MAu-hw-Gsh" secondAttribute="centerY" id="vBd-7z-l9U"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="7Dy-TN-vne"/>
                                             <exclude reference="YTj-WW-PfN"/>
                                             <exclude reference="fcM-zz-mPl"/>
-                                            <exclude reference="nKe-JP-vId"/>
+                                            <exclude reference="MAu-hw-Gsh"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="1Hc-bd-0oF"/>
+                                            <exclude reference="7s0-nO-Ie7"/>
                                             <exclude reference="Kzp-aM-Hak"/>
                                             <exclude reference="Vq8-rc-A0H"/>
                                             <exclude reference="Kqh-FZ-jkj"/>
                                             <exclude reference="S5B-SJ-g36"/>
-                                            <exclude reference="Bri-rH-K0v"/>
+                                            <exclude reference="BB6-Fw-oep"/>
                                             <exclude reference="Nbz-jr-KC7"/>
                                             <exclude reference="Pvg-vY-2mk"/>
-                                            <exclude reference="cdn-pp-Jd0"/>
+                                            <exclude reference="qYU-y8-pUz"/>
+                                            <exclude reference="vBd-7z-l9U"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -469,18 +516,20 @@
                                             <include reference="7Dy-TN-vne"/>
                                             <include reference="YTj-WW-PfN"/>
                                             <include reference="fcM-zz-mPl"/>
-                                            <include reference="nKe-JP-vId"/>
+                                            <include reference="MAu-hw-Gsh"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="1Hc-bd-0oF"/>
+                                            <include reference="7s0-nO-Ie7"/>
                                             <include reference="Kzp-aM-Hak"/>
                                             <include reference="Vq8-rc-A0H"/>
                                             <include reference="Kqh-FZ-jkj"/>
                                             <include reference="S5B-SJ-g36"/>
-                                            <include reference="Bri-rH-K0v"/>
+                                            <include reference="BB6-Fw-oep"/>
                                             <include reference="Nbz-jr-KC7"/>
                                             <include reference="Pvg-vY-2mk"/>
-                                            <include reference="cdn-pp-Jd0"/>
+                                            <include reference="qYU-y8-pUz"/>
+                                            <include reference="vBd-7z-l9U"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -489,7 +538,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尺寸" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzf-9r-ViI">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -807,7 +856,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品参数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOY-0l-wP9">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -917,49 +966,62 @@
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="NG9-Yi-iBX">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="5BB-jg-pvg"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5BB-jg-pvg"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="5BB-jg-pvg"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="洗涤说明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="hdq-GO-o3w">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备注" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mS-x3-Gos">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="货品编号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="Thf-Nc-F9B">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30度以下熟悉；阴凉处悬挂晾干" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="HBy-eK-F0K">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="mzz-wf-no0">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80202522302" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="u2e-NV-2hX">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版糖果色元素外套－粉红色" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="R1r-Rx-wdd">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -969,12 +1031,13 @@
                                         <constraint firstAttribute="trailing" secondItem="QjE-DB-54z" secondAttribute="trailing" constant="158" id="0iu-G2-Ad1">
                                             <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                                         </constraint>
-                                        <constraint firstItem="HBy-eK-F0K" firstAttribute="top" secondItem="R1r-Rx-wdd" secondAttribute="bottom" constant="20" id="2PO-co-iUB"/>
+                                        <constraint firstItem="HBy-eK-F0K" firstAttribute="top" secondItem="R1r-Rx-wdd" secondAttribute="bottom" constant="16" id="2PO-co-iUB"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="mzz-wf-no0" secondAttribute="height" id="2Wo-FC-Zhc"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="leading" secondItem="J54-6G-Uum" secondAttribute="leading" id="4QE-aH-hmP"/>
                                         <constraint firstItem="YGG-NE-oRT" firstAttribute="top" secondItem="J54-6G-Uum" secondAttribute="bottom" constant="26" id="5tB-0i-JXe">
                                             <variation key="heightClass=regular-widthClass=compact" constant="36"/>
                                         </constraint>
-                                        <constraint firstItem="mzz-wf-no0" firstAttribute="top" secondItem="HBy-eK-F0K" secondAttribute="bottom" constant="20" id="5wV-7H-4NW"/>
+                                        <constraint firstItem="mzz-wf-no0" firstAttribute="top" secondItem="HBy-eK-F0K" secondAttribute="bottom" constant="16" id="5wV-7H-4NW"/>
                                         <constraint firstItem="UKx-MR-lsf" firstAttribute="leading" secondItem="5dI-Qp-myW" secondAttribute="leading" constant="12" id="61v-OQ-e4K">
                                             <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                                         </constraint>
@@ -998,6 +1061,7 @@
                                         <constraint firstItem="bRn-ZG-s3S" firstAttribute="top" secondItem="5dI-Qp-myW" secondAttribute="top" constant="36" id="OX8-Pu-5cI"/>
                                         <constraint firstItem="Thf-Nc-F9B" firstAttribute="top" secondItem="7mS-x3-Gos" secondAttribute="bottom" constant="16" id="PQB-dB-Ys4"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="width" secondItem="YGG-NE-oRT" secondAttribute="width" id="PUK-Yu-Ctm"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="R1r-Rx-wdd" secondAttribute="height" id="Pvf-AL-wpJ"/>
                                         <constraint firstAttribute="trailing" secondItem="bRn-ZG-s3S" secondAttribute="trailing" constant="20" id="RRc-p0-s0k"/>
                                         <constraint firstItem="N1G-E4-lnn" firstAttribute="top" secondItem="QjE-DB-54z" secondAttribute="bottom" constant="30" id="S40-67-YaO">
                                             <variation key="heightClass=regular-widthClass=compact" constant="36"/>
@@ -1015,12 +1079,14 @@
                                             <variation key="heightClass=regular-widthClass=compact" constant="36"/>
                                         </constraint>
                                         <constraint firstItem="NG9-Yi-iBX" firstAttribute="leading" secondItem="5dI-Qp-myW" secondAttribute="leading" constant="15" id="Zoe-VL-gcQ"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="u2e-NV-2hX" secondAttribute="height" id="aYk-vu-o6S"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="hdq-GO-o3w" secondAttribute="height" id="b2I-cP-Mll"/>
                                         <constraint firstItem="hdq-GO-o3w" firstAttribute="top" secondItem="NG9-Yi-iBX" secondAttribute="bottom" constant="16" id="c8U-DQ-jUA"/>
                                         <constraint firstItem="UKx-MR-lsf" firstAttribute="top" secondItem="7YJ-uK-PUE" secondAttribute="top" id="dJC-Ki-Ngt"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="width" secondItem="qCr-gi-t4p" secondAttribute="width" id="dUp-jZ-Yqe"/>
                                         <constraint firstItem="UKx-MR-lsf" firstAttribute="top" secondItem="x19-7P-a67" secondAttribute="top" id="daZ-ae-pG0"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="leading" secondItem="YGG-NE-oRT" secondAttribute="leading" id="ea5-42-cWc"/>
-                                        <constraint firstItem="u2e-NV-2hX" firstAttribute="top" secondItem="mzz-wf-no0" secondAttribute="bottom" constant="20" id="fGK-e8-nQH"/>
+                                        <constraint firstItem="u2e-NV-2hX" firstAttribute="top" secondItem="mzz-wf-no0" secondAttribute="bottom" constant="16" id="fGK-e8-nQH"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="width" secondItem="J54-6G-Uum" secondAttribute="width" id="gGD-g1-cfS"/>
                                         <constraint firstItem="R1r-Rx-wdd" firstAttribute="top" secondItem="5dI-Qp-myW" secondAttribute="top" constant="51" id="hJw-h3-l0e"/>
                                         <constraint firstItem="hdq-GO-o3w" firstAttribute="leading" secondItem="7mS-x3-Gos" secondAttribute="leading" id="iMK-ts-lHS"/>
@@ -1030,9 +1096,12 @@
                                         <constraint firstAttribute="trailing" secondItem="x19-7P-a67" secondAttribute="trailing" constant="30" id="kA3-Io-gcC">
                                             <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                                         </constraint>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="NG9-Yi-iBX" secondAttribute="height" id="kFe-Uj-dHl"/>
                                         <constraint firstItem="7mS-x3-Gos" firstAttribute="top" secondItem="hdq-GO-o3w" secondAttribute="bottom" constant="16" id="n4x-I6-wKh"/>
                                         <constraint firstItem="R1r-Rx-wdd" firstAttribute="leading" secondItem="mzz-wf-no0" secondAttribute="leading" id="pGa-zF-62k"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="7mS-x3-Gos" secondAttribute="height" id="pIK-kW-Lqb"/>
                                         <constraint firstItem="QjE-DB-54z" firstAttribute="width" secondItem="N1G-E4-lnn" secondAttribute="width" id="qpk-l5-uD0"/>
+                                        <constraint firstItem="Thf-Nc-F9B" firstAttribute="height" secondItem="HBy-eK-F0K" secondAttribute="height" id="sv1-3S-iXj"/>
                                         <constraint firstItem="UKx-MR-lsf" firstAttribute="height" secondItem="x19-7P-a67" secondAttribute="height" id="vG9-Em-qEJ"/>
                                         <constraint firstItem="bRn-ZG-s3S" firstAttribute="leading" secondItem="5dI-Qp-myW" secondAttribute="leading" constant="20" id="yCK-yj-vpW"/>
                                     </constraints>
@@ -1068,7 +1137,14 @@
                                             <exclude reference="VW9-FG-qsN"/>
                                             <exclude reference="hJw-h3-l0e"/>
                                             <exclude reference="pGa-zF-62k"/>
+                                            <exclude reference="2Wo-FC-Zhc"/>
                                             <exclude reference="PQB-dB-Ys4"/>
+                                            <exclude reference="Pvf-AL-wpJ"/>
+                                            <exclude reference="aYk-vu-o6S"/>
+                                            <exclude reference="b2I-cP-Mll"/>
+                                            <exclude reference="kFe-Uj-dHl"/>
+                                            <exclude reference="pIK-kW-Lqb"/>
+                                            <exclude reference="sv1-3S-iXj"/>
                                             <exclude reference="SY1-Zf-bA8"/>
                                             <exclude reference="YuD-fb-jC7"/>
                                             <exclude reference="IgT-5h-TVt"/>
@@ -1141,7 +1217,14 @@
                                             <include reference="VW9-FG-qsN"/>
                                             <include reference="hJw-h3-l0e"/>
                                             <include reference="pGa-zF-62k"/>
+                                            <include reference="2Wo-FC-Zhc"/>
                                             <include reference="PQB-dB-Ys4"/>
+                                            <include reference="Pvf-AL-wpJ"/>
+                                            <include reference="aYk-vu-o6S"/>
+                                            <include reference="b2I-cP-Mll"/>
+                                            <include reference="kFe-Uj-dHl"/>
+                                            <include reference="pIK-kW-Lqb"/>
+                                            <include reference="sv1-3S-iXj"/>
                                             <include reference="SY1-Zf-bA8"/>
                                             <include reference="YuD-fb-jC7"/>
                                             <include reference="IgT-5h-TVt"/>
@@ -1462,7 +1545,7 @@
                     <include reference="wOf-e4-iNM"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="349.5" y="1632.5"/>
+            <point key="canvasLocation" x="349.5" y="1838.5"/>
         </view>
     </objects>
 </document>

@@ -127,7 +127,10 @@
     
     for (NSString *headImageUrl in self.headImageUrlArray) {
         UIImage *image = [UIImage imagewithURLString:headImageUrl];
-        [imageArray addObject:image];
+        if (image != nil) {
+            [imageArray addObject:image];
+            
+        }
     }
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
     _scrollView.backgroundColor = [UIColor orangeColor];

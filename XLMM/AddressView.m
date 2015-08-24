@@ -20,4 +20,14 @@
 
 
 
+- (IBAction)selectClicked:(id)sender {
+    
+    NSLog(@"选择了改地址");
+}
+
+- (IBAction)modifyClicked:(id)sender {
+    
+    NSLog(@"修改地址");
+    
+}
 @end

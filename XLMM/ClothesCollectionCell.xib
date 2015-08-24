@@ -3,6 +3,13 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="LiHeiPro.ttf">
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+            <string>LiHeiPro</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClothesCollectionCell">
             <connections>
@@ -19,52 +26,126 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="170" height="220"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="o6J-hH-Vtd">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="o6J-hH-Vtd">
                         <rect key="frame" x="0.0" y="0.0" width="170" height="175"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fu-6d-eEE">
                         <rect key="frame" x="8" y="175" width="43" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="9oh-VE-JQ9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9oh-VE-JQ9"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="9oh-VE-JQ9"/>
+                            </mask>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="¥68" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgi-I1-Nsj">
                         <rect key="frame" x="30" y="196" width="37" height="27"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="EAi-Ax-yc1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                         <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="EAi-Ax-yc1"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="EAi-Ax-yc1"/>
+                            </mask>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="¥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AN4-2l-dZn">
                         <rect key="frame" x="107" y="202" width="39" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="6cH-6E-a0g"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6cH-6E-a0g"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="6cH-6E-a0g"/>
+                            </mask>
+                        </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="——" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjg-Zr-xZx">
-                        <rect key="frame" x="102" y="204" width="51" height="19"/>
-                        <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
-                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRu-4Z-Zhl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="uji-4D-oie"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="uji-4D-oie"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="uji-4D-oie"/>
+                            </mask>
+                        </variation>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="AN4-2l-dZn" firstAttribute="leading" secondItem="Lgi-I1-Nsj" secondAttribute="trailing" constant="30" id="77E-8O-wRM"/>
+                <constraint firstItem="BRu-4Z-Zhl" firstAttribute="width" secondItem="AN4-2l-dZn" secondAttribute="width" id="7W8-6Z-M1h"/>
                 <constraint firstItem="9fu-6d-eEE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="COF-Tk-fmG">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                 </constraint>
-                <constraint firstItem="qjg-Zr-xZx" firstAttribute="bottom" secondItem="Lgi-I1-Nsj" secondAttribute="bottom" id="Ggn-Lu-8uJ"/>
+                <constraint firstItem="BRu-4Z-Zhl" firstAttribute="centerY" secondItem="AN4-2l-dZn" secondAttribute="centerY" id="G0i-CN-YJJ"/>
                 <constraint firstAttribute="trailing" secondItem="o6J-hH-Vtd" secondAttribute="trailing" id="JqD-4J-bfz"/>
                 <constraint firstItem="AN4-2l-dZn" firstAttribute="bottom" secondItem="Lgi-I1-Nsj" secondAttribute="bottom" id="NVk-SJ-wcG"/>
+                <constraint firstAttribute="trailing" secondItem="9fu-6d-eEE" secondAttribute="trailing" constant="8" id="Sd9-EO-W3X"/>
                 <constraint firstItem="9fu-6d-eEE" firstAttribute="top" secondItem="o6J-hH-Vtd" secondAttribute="bottom" id="Wki-5Q-1MO"/>
-                <constraint firstItem="qjg-Zr-xZx" firstAttribute="leading" secondItem="Lgi-I1-Nsj" secondAttribute="trailing" constant="30" id="ZQH-YL-PaX"/>
-                <constraint firstAttribute="bottom" secondItem="o6J-hH-Vtd" secondAttribute="bottom" constant="45" id="b7n-ei-AlB"/>
+                <constraint firstAttribute="bottom" secondItem="o6J-hH-Vtd" secondAttribute="bottom" constant="50" id="b7n-ei-AlB"/>
                 <constraint firstItem="Lgi-I1-Nsj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="e6J-eI-29f"/>
+                <constraint firstItem="BRu-4Z-Zhl" firstAttribute="leading" secondItem="AN4-2l-dZn" secondAttribute="leading" id="h98-gw-RAq"/>
                 <constraint firstItem="Lgi-I1-Nsj" firstAttribute="top" secondItem="9fu-6d-eEE" secondAttribute="bottom" id="h9s-GU-zjU"/>
                 <constraint firstItem="o6J-hH-Vtd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="k6A-7c-D0Y"/>
                 <constraint firstItem="o6J-hH-Vtd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ySr-kB-2aM"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="BRu-4Z-Zhl"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="Sd9-EO-W3X"/>
+                    <exclude reference="7W8-6Z-M1h"/>
+                    <exclude reference="G0i-CN-YJJ"/>
+                    <exclude reference="h98-gw-RAq"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="BRu-4Z-Zhl"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="Sd9-EO-W3X"/>
+                    <include reference="7W8-6Z-M1h"/>
+                    <include reference="G0i-CN-YJJ"/>
+                    <include reference="h98-gw-RAq"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="imageView" destination="o6J-hH-Vtd" id="5MO-oc-Mch"/>
                 <outlet property="nameLabel" destination="9fu-6d-eEE" id="iVG-nk-ryL"/>

@@ -176,7 +176,7 @@
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
     navLabel.text = @"潮男童装";
     navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
-    navLabel.font = [UIFont boldSystemFontOfSize:30];
+    navLabel.font = [UIFont fontWithName:@"LiHei Pro" size:28];
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
     

@@ -155,6 +155,7 @@
 		3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */; };
 		3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8891B886B0C00CFAFA0 /* AddressView.m */; };
 		3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88B1B886B2600CFAFA0 /* AddressView.xib */; };
+		3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
 		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
@@ -416,6 +417,7 @@
 		3290C8881B886B0C00CFAFA0 /* AddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
 		3290C8891B886B0C00CFAFA0 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		3290C88B1B886B2600CFAFA0 /* AddressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressView.xib; sourceTree = "<group>"; };
+		3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LiHeiPro.ttf; sourceTree = "<group>"; };
 		32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuanbuCollectionCell.h; sourceTree = "<group>"; };
 		32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuanbuCollectionCell.m; sourceTree = "<group>"; };
 		32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuanbuCollectionCell.xib; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				3290C88E1B88A6D000CFAFA0 /* resources */,
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
 				32CE91B61B7C21D000CA67C3 /* area.plist */,
@@ -982,6 +985,14 @@
 			name = framework;
 			sourceTree = "<group>";
 		};
+		3290C88E1B88A6D000CFAFA0 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1091,6 +1102,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,

@@ -106,7 +106,7 @@
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:YES forKey:kIsLogin];
+    [userDefaults setBool:NO forKey:kIsLogin];
     
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
@@ -245,6 +245,10 @@
     poster2TimeLabel.text = str;
     childTimeLabel.text = str;
     ladyTimeLabel.text = str;
+    poster1TimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
+    poster2TimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
+    childTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:17];
+    ladyTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:17];
 
 }
 
@@ -571,25 +575,25 @@
         } else{
             margin = 30;
         }
-        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 170 +margin, 100, 240, 36)];
+        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 135 +margin, 120, 180, 24)];
         timeView.tag = 888;
         timeView.backgroundColor = [UIColor blackColor];
-        timeView.layer.cornerRadius = 18;
+        timeView.layer.cornerRadius = 12;
         timeView.alpha = 0.7f;
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-shengyu2.png"]];
-        imageView.frame = CGRectMake(6, 6, 24, 24);
+        imageView.frame = CGRectMake(4, 2, 16, 16);
         imageView.userInteractionEnabled = NO;
         [timeView addSubview:imageView];
    
 
         if (i == 0) {
-            poster1TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 160, 36)];
+            poster1TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(24, 2, 160, 20)];
             poster1TimeLabel.textColor = [UIColor whiteColor];
             [timeView addSubview:poster1TimeLabel];
         }
         
         if (i == 1) {
-            poster2TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 160, 36)];
+            poster2TimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(24, 2, 160, 20)];
             poster2TimeLabel.textColor = [UIColor whiteColor];
             [timeView addSubview:poster2TimeLabel];
             
@@ -748,6 +752,7 @@
             PeopleModel *model = (PeopleModel *)[array objectAtIndex:i*2 + j];
             [ownerLadyView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerLadyView.nameLabel.text = model.name;
+            ownerLadyView.nameLabel.font = [UIFont fontWithName:@"LiHei Pro" size:15];
             ownerLadyView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
             ownerLadyView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
             [_ladyView addSubview:ownerLadyView.view];
@@ -800,7 +805,7 @@
     label.textAlignment = NSTextAlignmentLeft;
     label.text = name;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
+    label.font =[UIFont fontWithName:@"LiHei Pro" size:24];
     [imageView addSubview:label];
     UIImageView *timeview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-shengyu2.png"]];
     timeview.frame = CGRectMake(SCREENWIDTH - 170, 8, 24, 24);
