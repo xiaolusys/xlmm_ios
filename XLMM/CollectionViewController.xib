@@ -38,7 +38,7 @@
                 </constraint>
                 <constraint firstItem="m7b-zL-IJw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="SVQ-KE-78I"/>
                 <constraint firstItem="m7b-zL-IJw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="210" id="WrX-DB-RWz">
-                    <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstAttribute="trailing" secondItem="m7b-zL-IJw" secondAttribute="trailing" constant="-57" id="YFn-3o-wYo">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>

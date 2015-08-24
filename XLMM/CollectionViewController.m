@@ -30,10 +30,27 @@
     [super viewDidLoad];
     
     self.title = @"剩余2天1小时18分";
-    
+    [self createInfo];
 
-  
+    [self.view addSubview:self.collectionView];
     
+    
+    
+    // Do any additional setup after loading the view from its nib.
+    //self.collectionArray = [[NSArray alloc] init];
+    [self.collectionView registerClass:[ClothesCollectionCell class] forCellWithReuseIdentifier:@"SimpleCell"];
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 70)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
+    [self.collectionView setCollectionViewLayout:flowLayout];
+    
+    
+}
+
+
+- (void)createInfo{
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 18, 31);
     
@@ -49,22 +66,13 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
-    
-    // Do any additional setup after loading the view from its nib.
-    //self.collectionArray = [[NSArray alloc] init];
-    [self.collectionView registerClass:[ClothesCollectionCell class] forCellWithReuseIdentifier:@"SimpleCell"];
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 10, 10);
-    [self.collectionView setCollectionViewLayout:flowLayout];
-    
-    
+
 }
 
 - (void)login:(UIButton *)button{
     NSLog(@"登录");
+    
+    
     PersonCenterViewController *personCenter = [[PersonCenterViewController alloc] init];
     [self.navigationController pushViewController:personCenter animated:YES];
     
@@ -79,6 +87,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
     static NSString *cellIdentifier = @"SimpleCell";
     ClothesCollectionCell *cell = (ClothesCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [cell fillData:[self.collectionArray objectAtIndex:indexPath.row]];
