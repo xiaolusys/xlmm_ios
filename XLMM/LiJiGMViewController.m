@@ -94,7 +94,7 @@
     NSLog(@"count = %ld", (unsigned long)addressArray.count);
     
     
-    self.addressViewHeight.constant = 100 * addressArray.count + 50;
+    self.addressViewHeight.constant = 100 * addressArray.count + 60;
     NSLog(@"height = %d",(int) self.addressViewHeight.constant);
     NSUInteger number = addressArray.count;
     for (int i = 0; i<number; i++) {
@@ -103,7 +103,7 @@
         AddressView *myowner = owner[i];
         NSLog(@"%@", owner[i]);
         [[NSBundle mainBundle]loadNibNamed:@"AddressView" owner:myowner options:nil];
-        myowner.view.frame = CGRectMake(0, i*100 + 50, SCREENWIDTH, 100);
+        myowner.view.frame = CGRectMake(0, i*100 + 60, SCREENWIDTH, 100);
         NSLog(@"%@", myowner.view);
         AddressModel *model = [addressArray objectAtIndex:i];
 //        myowner.view.backgroundColor = [UIColor redColor];
@@ -158,4 +158,12 @@
 }
 */
 
+- (IBAction)addAddress:(id)sender {
+    
+    NSLog(@"增加收货地址");
+    
+    
+    
+    
+}
 @end

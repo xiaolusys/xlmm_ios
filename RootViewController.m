@@ -752,7 +752,6 @@
             PeopleModel *model = (PeopleModel *)[array objectAtIndex:i*2 + j];
             [ownerLadyView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerLadyView.nameLabel.text = model.name;
-            ownerLadyView.nameLabel.font = [UIFont fontWithName:@"LiHei Pro" size:15];
             ownerLadyView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
             ownerLadyView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
             [_ladyView addSubview:ownerLadyView.view];

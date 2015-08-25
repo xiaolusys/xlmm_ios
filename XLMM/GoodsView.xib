@@ -3,13 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="LiHeiPro.ttf">
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoodsView">
             <connections>
@@ -33,7 +26,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="QKJ-wl-Bly"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -52,7 +45,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="6ne-qQ-Ot2"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -71,7 +64,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="FUq-kv-hQR"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -133,20 +126,20 @@
                     <exclude reference="9Qz-pD-SQp"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="KIz-82-w1P"/>
-                    <exclude reference="KrD-MW-njc"/>
-                    <exclude reference="lD7-Lz-pyw"/>
-                    <exclude reference="xR2-Lw-qdA"/>
                     <exclude reference="PsJ-eY-Pw5"/>
                     <exclude reference="jwD-6e-QhS"/>
                     <exclude reference="v70-OM-hoP"/>
-                    <exclude reference="GDc-qy-mPk"/>
-                    <exclude reference="bej-YS-udT"/>
                     <exclude reference="1bB-CM-Kd5"/>
                     <exclude reference="FHK-as-zPA"/>
                     <exclude reference="KSC-aq-RGG"/>
                     <exclude reference="Zmg-vS-c3U"/>
                     <exclude reference="r2o-q1-gKB"/>
+                    <exclude reference="GDc-qy-mPk"/>
+                    <exclude reference="bej-YS-udT"/>
+                    <exclude reference="KIz-82-w1P"/>
+                    <exclude reference="KrD-MW-njc"/>
+                    <exclude reference="lD7-Lz-pyw"/>
+                    <exclude reference="xR2-Lw-qdA"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -158,20 +151,20 @@
                     <include reference="9Qz-pD-SQp"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="KIz-82-w1P"/>
-                    <include reference="KrD-MW-njc"/>
-                    <include reference="lD7-Lz-pyw"/>
-                    <include reference="xR2-Lw-qdA"/>
                     <include reference="PsJ-eY-Pw5"/>
                     <include reference="jwD-6e-QhS"/>
                     <include reference="v70-OM-hoP"/>
-                    <include reference="GDc-qy-mPk"/>
-                    <include reference="bej-YS-udT"/>
                     <include reference="1bB-CM-Kd5"/>
                     <include reference="FHK-as-zPA"/>
                     <include reference="KSC-aq-RGG"/>
                     <include reference="Zmg-vS-c3U"/>
                     <include reference="r2o-q1-gKB"/>
+                    <include reference="GDc-qy-mPk"/>
+                    <include reference="bej-YS-udT"/>
+                    <include reference="KIz-82-w1P"/>
+                    <include reference="KrD-MW-njc"/>
+                    <include reference="lD7-Lz-pyw"/>
+                    <include reference="xR2-Lw-qdA"/>
                 </mask>
             </variation>
         </view>
