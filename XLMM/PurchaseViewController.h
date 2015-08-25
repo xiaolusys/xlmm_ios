@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PurchaseViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
 
 @end

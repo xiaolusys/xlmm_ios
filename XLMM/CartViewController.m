@@ -12,6 +12,8 @@
 #import "ShoppingCartModel.h"
 #import "AFNetworking.h"
 #import "EmptyCartViewController.h"
+#import "PurchaseViewController.h"
+
 
 @interface CartViewController ()<CartViewDelegate>{
     int allPrice;
@@ -29,6 +31,7 @@
     //self.title = @"购物车";
     self.dataArray = [[NSMutableArray alloc] init];
     allPrice= 0;
+    [self.view addSubview:self.myTableView];
     [self createInfo];
     [self downloadData];
     
@@ -351,5 +354,10 @@
 
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");
+    PurchaseViewController *purchaseVC = [[PurchaseViewController alloc] initWithNibName:@"PurchaseViewController" bundle:nil];
+    [self.navigationController pushViewController:purchaseVC animated:YES];
 }
+
+
+
 @end

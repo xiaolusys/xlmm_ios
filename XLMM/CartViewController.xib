@@ -18,6 +18,7 @@
                 <outlet property="cartTableView" destination="u7N-le-ZFh" id="Zj1-ZD-KGq"/>
                 <outlet property="discountLabel" destination="HcG-2g-KjK" id="Kny-Tz-SzW"/>
                 <outlet property="frontView" destination="5xa-h8-S1m" id="lNC-gw-ehS"/>
+                <outlet property="myTableView" destination="u7N-le-ZFh" id="7XI-yw-U0g"/>
                 <outlet property="totalPricelabel" destination="brX-H3-cws" id="W4b-bG-oMn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -48,8 +49,7 @@
                             <exclude reference="Tev-xT-hKZ"/>
                         </mask>
                     </variation>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="8" y="577" width="66" height="38"/>
+                    <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
                             <include reference="Tev-xT-hKZ"/>
                         </mask>
@@ -68,8 +68,7 @@
                             <exclude reference="Ofd-cj-Sr2"/>
                         </mask>
                     </variation>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="74" y="577" width="80" height="38"/>
+                    <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
                             <include reference="Ofd-cj-Sr2"/>
                         </mask>
@@ -80,9 +79,6 @@
                     <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="194" y="577" width="73" height="38"/>
-                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brX-H3-cws">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -156,7 +152,7 @@
                 <constraint firstItem="HcG-2g-KjK" firstAttribute="leading" secondItem="OGk-Hb-y6V" secondAttribute="trailing" id="XHq-Yi-Mtl"/>
                 <constraint firstAttribute="centerX" secondItem="tws-zf-Qgq" secondAttribute="centerX" id="ZZp-dK-xbv"/>
                 <constraint firstItem="u7N-le-ZFh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dIN-3k-mJM">
-                    <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="u7N-le-ZFh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dWF-Vk-WeF"/>
                 <constraint firstItem="5xa-h8-S1m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="104" id="efy-Bo-PaG">

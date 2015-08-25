@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CartViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (strong, nonatomic) IBOutlet UIView *myView;
 

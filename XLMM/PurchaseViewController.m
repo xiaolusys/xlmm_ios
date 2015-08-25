@@ -7,7 +7,7 @@
 //
 
 #import "PurchaseViewController.h"
-
+#import "MMClass.h"
 @interface PurchaseViewController ()
 
 @end
@@ -17,6 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"确认订单";
+    [self.view addSubview:self.myScrollView];
+    
+    self.screenWidth.constant = SCREENWIDTH;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
