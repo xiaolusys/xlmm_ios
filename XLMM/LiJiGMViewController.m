@@ -358,7 +358,7 @@
         }];
 
         
-        
+        return;
         
     }
     NSLog(@"应付金额：%i", allpay);
