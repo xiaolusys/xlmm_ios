@@ -561,7 +561,7 @@
         PosterModel *model = (PosterModel *)[array objectAtIndex:i];
         posterViewOwner.leftLabel.text = model.firstName;
         posterViewOwner.rightLabel.text = model.secondName;
-        [posterViewOwner.imageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+        [posterViewOwner.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
         [_posterView addSubview:posterViewOwner.posterView];
         CGRect btnframe = CGRectMake(0, 0+185*i, SCREENWIDTH, 185);
         UIButton *btn = [[UIButton alloc] initWithFrame:btnframe];
@@ -655,7 +655,7 @@
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
             ownerGoodsView.view.frame = rect;
             PeopleModel *model = (PeopleModel *)[array objectAtIndex:(i*2 + j)];
-            [ownerGoodsView.imageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            [ownerGoodsView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerGoodsView.nameLabel.text = model.name;
             ownerGoodsView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
             ownerGoodsView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
@@ -750,7 +750,7 @@
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
             ownerLadyView.view.frame = rect;
             PeopleModel *model = (PeopleModel *)[array objectAtIndex:i*2 + j];
-            [ownerLadyView.imageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            [ownerLadyView.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             ownerLadyView.nameLabel.text = model.name;
             ownerLadyView.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
             ownerLadyView.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];

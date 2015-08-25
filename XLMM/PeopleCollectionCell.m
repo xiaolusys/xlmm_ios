@@ -33,7 +33,7 @@
 }
 
 - (void)fillData:(PeopleModel *)model{
-    [self.imageView setImageWithURL:kLoansRRL(model.imageURL)];
+    [self.imageView sd_setImageWithURL:kLoansRRL(model.imageURL)];
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.oldPrice];

@@ -22,7 +22,7 @@
 
 - (IBAction)selectClicked:(id)sender {
     UIButton *button = (UIButton *)sender;
-    NSLog(@"selectbutton.tag = %ld", button.tag);
+    NSLog(@"selectbutton.tag = %ld", (long)button.tag);
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectAddress:)]) {
       //  NSLog(@"选择了改地址");
         [self.delegate selectAddress:self];
@@ -38,7 +38,7 @@
         [self.delegate modifyAddress:self];
 
     }
-    NSLog(@"modifybutton.tag = %ld", button.tag);
+    NSLog(@"modifybutton.tag = %ld", (long)button.tag);
     
     
     
