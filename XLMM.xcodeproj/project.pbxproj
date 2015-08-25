@@ -156,6 +156,7 @@
 		3299D84A1B8C4DC2000AA744 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8401B8C4DC2000AA744 /* libWeChatSDK.a */; };
 		3299D84B1B8C4DC2000AA744 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8411B8C4DC2000AA744 /* libpingpp.a */; };
 		3299D84C1B8C4DC2000AA744 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8421B8C4DC2000AA744 /* Pingpp.bundle */; };
+		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
 		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
@@ -418,6 +419,8 @@
 		3299D8411B8C4DC2000AA744 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
 		3299D8421B8C4DC2000AA744 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
 		3299D8431B8C4DC2000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
+		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
 		32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuanbuCollectionCell.h; sourceTree = "<group>"; };
 		32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuanbuCollectionCell.m; sourceTree = "<group>"; };
 		32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuanbuCollectionCell.xib; sourceTree = "<group>"; };
@@ -811,6 +814,8 @@
 				32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */,
 				32A88E1E1B872CB5003501EF /* PerDingdanModel.h */,
 				32A88E1F1B872CB5003501EF /* PerDingdanModel.m */,
+				3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */,
+				3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1225,6 +1230,7 @@
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
 				32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */,
 				3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */,
+				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,

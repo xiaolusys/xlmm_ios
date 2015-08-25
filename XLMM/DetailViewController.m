@@ -674,8 +674,9 @@
             LiJiGMViewController *lijiVC = [[LiJiGMViewController alloc] initWithNibName:@"LiJiGMViewController" bundle:nil];
             NSLog(@"skuid = %@", selectskuID);
             lijiVC.skuID = selectskuID;
+            lijiVC.itemID = self.detailsModel.itemID;
             NSLog(@"lijiVC.skuID = %@", lijiVC.skuID);
-            
+            NSLog(@"lijiVC.itemID = %@", lijiVC.itemID);
             [self.navigationController pushViewController:lijiVC animated:YES];
             
             

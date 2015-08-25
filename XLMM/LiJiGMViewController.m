@@ -14,6 +14,8 @@
 #import "AddYouhuiquanViewController.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
+#import "Pingpp.h"
+#import "LiJiBuyModel.h"
 
 
 
@@ -22,6 +24,7 @@
     AddressView *owner[8];
     AddressModel *selectedAddModel;
     NSNumber *buyNumber;
+    LiJiBuyModel *buyModel;
 }
 
 @end
@@ -50,7 +53,7 @@
     addressArray = [[NSMutableArray alloc] initWithCapacity:0];
     buyNumber = @1;
     self.numberLabel.text = [buyNumber stringValue];
-    
+    buyModel = [LiJiBuyModel new];
     [self setInfo];
 //    self.addressViewHeight.constant = 500;
 //    self.couponViewHeight.constant = 200;
@@ -63,7 +66,9 @@
     [self.addButton setBackgroundImage:[UIImage imageNamed:@"btn-plus.png"] forState:UIControlStateNormal];
     [self.reduceButton setBackgroundImage:[UIImage imageNamed:@"btn-reduce.png"] forState:UIControlStateNormal];
     
-    
+    buyModel.skuID = self.skuID;
+    buyModel.itemID = self.itemID;
+    NSLog(@"%@", buyModel);
     NSLog(@"sku_id = %@, ",self.skuID);
     
     NSLog(@"urlString = %@", urlString);
@@ -100,7 +105,8 @@
     allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_payment"]];
     
-    
+    buyModel.uuID = [dic objectForKey:@"uuid"];
+    NSLog(@"%@", buyModel);
     
 }
 
@@ -199,6 +205,7 @@
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
     addVC.isAdd = YES;
     [self.navigationController pushViewController:addVC animated:YES];
+    
     
     
     
@@ -309,9 +316,6 @@
 
     NSLog(@"+++++++");
 }
-- (void)fetchedNumberData:(NSData *)responseData{
-    NSLog(@"解析数据");
-}
 
 
 - (IBAction)youhuiClicked:(id)sender {
@@ -327,10 +331,98 @@
 
 - (IBAction)buyClicked:(id)sender {
     NSLog(@"addressID = %@", selectedAddModel.addressID);
+    
+    if (selectedAddModel.addressID == nil) {
+        NSLog(@"请选择收货地址");
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 150, 240, 300, 40)];
+        view.backgroundColor = [UIColor blackColor];
+        view.layer.cornerRadius = 8;
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+        label.text = @"请填写收货信息";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:24];
+        [view addSubview:label];
+        [self.view addSubview:view];
+        
+        self.myScrollView.contentOffset = CGPointMake(0, 0);
+
+        [UIView animateWithDuration:2 animations:^{
+            view.alpha = 0;
+
+        } completion:^(BOOL finished) {
+            [view removeFromSuperview];
+            
+        }];
+
+        
+        
+        
+    }
     NSLog(@"应付金额：%i", allpay);
     NSLog(@"购买");
     
     
+    
+    NSURL *url = [NSURL URLWithString:@"http://youni.huyi.so/rest/v1/trades/buynow_create"];
+    
+    
+
+   NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+
+    NSDictionary* dict = @{@"addr_id":selectedAddModel.addressID,
+                           @"channel":@"alipay",
+                           @"payment":[NSNumber numberWithInt:allprice],
+                           @"post_fee":[NSNumber numberWithInt:yunfeifee],
+                           @"discount_fee":[NSNumber numberWithInt:youhuifee],
+                           @"total_fee":[NSNumber numberWithInt:allpay],
+                           @"uuid":buyModel.uuID,
+                           @"item_id":buyModel.itemID,
+                           @"sku_id":buyModel.itemID,
+                           @"num":buyNumber
+                        };
+    NSLog(@"dic = %@", dict);
+//    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+//    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//    
+//    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+//    [postRequest setHTTPMethod:@"POST"];
+//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+//    
+//    ViewController * __weak weakSelf = self;
+//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//    [self showAlertWait];
+//    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+//        
+//        [weakSelf hideAlert];
+//        
+//        if (httpResponse.statusCode != 200) {
+//            [weakSelf showAlertMessage:kErrorNet];
+//            return;
+//        }
+//        if (connectionError != nil) {
+//            NSLog(@"error = %@", connectionError);
+//            [weakSelf showAlertMessage:kErrorNet];
+//            return;
+//        }
+//        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"charge = %@", charge);
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                NSLog(@"completion block: %@", result);
+//                if (error == nil) {
+//                    NSLog(@"PingppError is nil");
+//                } else {
+//                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+//                }
+//                [weakSelf showAlertMessage:result];
+//            }];
+//        });
+//    }];
+//
     
     
     

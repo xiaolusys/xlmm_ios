@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *addressViewContaint;
 
 @property (nonatomic, strong)NSString *skuID;
+@property (nonatomic, strong)NSString *itemID;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *myimageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
