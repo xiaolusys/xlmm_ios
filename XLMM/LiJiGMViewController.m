@@ -17,6 +17,7 @@
 #import "Pingpp.h"
 #import "LiJiBuyModel.h"
 
+#define kUrlScheme      @"m.xiaolu.so" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 
 @interface LiJiGMViewController ()<BuyAddressDelegate>{
@@ -379,50 +380,57 @@
                            @"total_fee":[NSNumber numberWithInt:allpay],
                            @"uuid":buyModel.uuID,
                            @"item_id":buyModel.itemID,
-                           @"sku_id":buyModel.itemID,
+                           @"sku_id":buyModel.skuID,
                            @"num":buyNumber
                         };
     NSLog(@"dic = %@", dict);
-//    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-//    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    
-//    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
-//    [postRequest setHTTPMethod:@"POST"];
-//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-//    
-//    ViewController * __weak weakSelf = self;
-//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//    [self showAlertWait];
-//    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        
-//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-//        
-//        [weakSelf hideAlert];
-//        
-//        if (httpResponse.statusCode != 200) {
-//            [weakSelf showAlertMessage:kErrorNet];
-//            return;
-//        }
-//        if (connectionError != nil) {
-//            NSLog(@"error = %@", connectionError);
-//            [weakSelf showAlertMessage:kErrorNet];
-//            return;
-//        }
-//        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"charge = %@", charge);
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-//                NSLog(@"completion block: %@", result);
-//                if (error == nil) {
-//                    NSLog(@"PingppError is nil");
-//                } else {
-//                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-//                }
-//                [weakSelf showAlertMessage:result];
-//            }];
-//        });
-//    }];
-//
+   NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+   
+    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    LiJiGMViewController * __weak weakSelf = self;
+   NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+  //  [self showAlertWait];
+  [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+      
+       NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+      
+      NSLog(@"response = %@", httpResponse);
+      
+      NSLog(@"data = %@", data);
+      NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+      NSLog(@"dataString = %@", str);
+       if (httpResponse.statusCode != 200) {
+           NSLog(@"出错了");
+          //  return;
+       }
+      
+        if (connectionError != nil) {
+            NSLog(@"error = %@", connectionError);
+            return;
+        }
+        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"charge = %@", charge);
+      
+      
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                
+                NSLog(@"completion block: %@", result);
+                
+                if (error == nil) {
+                    NSLog(@"PingppError is nil");
+                } else {
+                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                }
+                //[weakSelf showAlertMessage:result];
+            }];
+        });
+    }];
+
     
     
     

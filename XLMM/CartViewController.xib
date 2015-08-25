@@ -48,7 +48,8 @@
                             <exclude reference="Tev-xT-hKZ"/>
                         </mask>
                     </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="8" y="577" width="66" height="38"/>
                         <mask key="constraints">
                             <include reference="Tev-xT-hKZ"/>
                         </mask>
@@ -67,7 +68,8 @@
                             <exclude reference="Ofd-cj-Sr2"/>
                         </mask>
                     </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="74" y="577" width="80" height="38"/>
                         <mask key="constraints">
                             <include reference="Ofd-cj-Sr2"/>
                         </mask>
@@ -78,6 +80,9 @@
                     <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="194" y="577" width="73" height="38"/>
+                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brX-H3-cws">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "Pingpp.h"
 
 @interface AppDelegate ()
 
@@ -52,4 +53,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    [Pingpp handleOpenURL:url
+           withCompletion:^(NSString *result, PingppError *error) {
+               if ([result isEqualToString:@"success"]) {
+                   // 支付成功
+               } else {
+                   // 支付失败或取消
+                   NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
+               }
+           }];
+    return  YES;
+}
 @end
