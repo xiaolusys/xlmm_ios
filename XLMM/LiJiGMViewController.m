@@ -10,17 +10,26 @@
 #import "MMClass.h"
 #import "AddressModel.h"
 #import "AddressView.h"
+#import "AddAdressViewController.h"
 
 
-@interface LiJiGMViewController (){
+@interface LiJiGMViewController ()<BuyAddressDelegate>{
     NSMutableArray *addressArray;
     AddressView *owner[8];
+    AddressModel *selectedAddModel;
     
 }
 
 @end
 
 @implementation LiJiGMViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self downLoadData];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,7 +43,7 @@
 //    self.payViewHeight.constant = 300;
     [self.view addSubview:self.myScrollView];
     
-    [self downLoadData];
+   // [self downLoadData];
     
     
     
@@ -66,7 +75,7 @@
         NSLog(@"地址列表为空");
         return;
     }
-    
+    [addressArray removeAllObjects];
     NSLog(@"arrayList = %@", array);
     for (NSDictionary *dic in array) {
         AddressModel *model = [AddressModel new];
@@ -77,6 +86,7 @@
         model.countyName = [dic objectForKey:@"receiver_district"];
         model.streetName = [dic objectForKey:@"receiver_address"];
         model.isDefault = [[dic objectForKey:@"default"] boolValue];
+        model.addressID = [dic objectForKey:@"id"];
         [addressArray addObject:model];
     
     }
@@ -105,19 +115,85 @@
         [[NSBundle mainBundle]loadNibNamed:@"AddressView" owner:myowner options:nil];
         myowner.view.frame = CGRectMake(0, i*100 + 60, SCREENWIDTH, 100);
         NSLog(@"%@", myowner.view);
+        
         AddressModel *model = [addressArray objectAtIndex:i];
 //        myowner.view.backgroundColor = [UIColor redColor];
         NSString *nameStr = [NSString stringWithFormat:@"%@  %@", model.buyerName, model.phoneNumber];
         NSString *addStr = [NSString stringWithFormat:@"%@-%@-%@", model.provinceName, model.cityName, model.countyName];
+        myowner.delegate = self;
         myowner.nameLabel.text = nameStr;
         
         myowner.addressLabel.text = addStr;
-     
+        myowner.selectBtn.tag = 600 + i;
+        myowner.modifyBtn.tag = 800 + i;
+        
 
         [self.addressViewContaint addSubview:myowner.view];
         
         
     }
+}
+
+
+
+- (IBAction)addAddress:(id)sender {
+    
+    NSLog(@"增加收货地址");
+    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
+    addVC.isAdd = YES;
+    [self.navigationController pushViewController:addVC animated:YES];
+    
+    
+    
+}
+
+- (void)selectAddress:(AddressView *)view{
+    NSLog(@"我选择这个地址");
+    view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    NSUInteger number = addressArray.count;
+    for (int i = 0; i<number; i++) {
+        if(owner[i] == view)
+        {
+            view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            
+            selectedAddModel = [addressArray objectAtIndex:i];
+            NSLog(@"选择的地址ID为：%@", selectedAddModel.addressID);
+        }
+        else
+        {
+            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+        }
+    }
+    
+}
+- (void)modifyAddress:(AddressView *)view{
+    
+    NSLog(@"我要修改此地址");
+    NSUInteger number = addressArray.count;
+    for (int i = 0; i<number; i++) {
+        if(owner[i] == view)
+        {
+            view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            
+            selectedAddModel = [addressArray objectAtIndex:i];
+            NSLog(@"修改的地址ID为：%@", selectedAddModel.addressID);
+            
+            [self modifyaddressWithModel:(AddressModel *)selectedAddModel];
+        }
+        else
+        {
+            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+        }
+    }
+}
+
+- (void)modifyaddressWithModel:(AddressModel *)model{
+    AddAdressViewController *modifyVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+    modifyVC.isAdd = NO;
+    modifyVC.addressModel = model;
+    [self.navigationController pushViewController:modifyVC animated:YES];
+    
+    NSLog(@"进入修改地址");
 }
 
 - (void)setInfo{
@@ -149,21 +225,12 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (IBAction)addAddress:(id)sender {
-    
-    NSLog(@"增加收货地址");
-    
-    
-    
-    
-}
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 @end

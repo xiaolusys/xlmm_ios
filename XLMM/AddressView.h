@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class AddressView;
+
+@protocol BuyAddressDelegate <NSObject>
+
+- (void)selectAddress:(AddressView *)addView;
+- (void)modifyAddress:(AddressView *)addView;
+
+
+@end
+
 @interface AddressView : UIView
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIImageView *headImage;
@@ -17,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *modifyBtn;
 
 @property (strong, nonatomic) IBOutlet UIButton *selectBtn;
+
+@property (weak, nonatomic)id<BuyAddressDelegate>delegate;
 
 
 - (IBAction)selectClicked:(id)sender;

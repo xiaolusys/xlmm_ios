@@ -21,13 +21,26 @@
 
 
 - (IBAction)selectClicked:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSLog(@"selectbutton.tag = %ld", button.tag);
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectAddress:)]) {
+      //  NSLog(@"选择了改地址");
+        [self.delegate selectAddress:self];
+        
+    }
     
-    NSLog(@"选择了改地址");
 }
 
 - (IBAction)modifyClicked:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(modifyAddress:)]) {
+       // NSLog(@"修改地址");
+        [self.delegate modifyAddress:self];
+
+    }
+    NSLog(@"modifybutton.tag = %ld", button.tag);
     
-    NSLog(@"修改地址");
+    
     
 }
 @end

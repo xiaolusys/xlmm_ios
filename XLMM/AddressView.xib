@@ -54,7 +54,7 @@
                         <constraint firstAttribute="height" constant="1" id="HiA-Dw-V0d"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVq-4k-LD8">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVq-4k-LD8" userLabel="Modify Button">
                     <rect key="frame" x="321" y="8" width="46" height="84"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="46" id="HEf-0i-u6o"/>
@@ -64,16 +64,14 @@
                     </state>
                     <connections>
                         <action selector="modifyClicked:" destination="-1" eventType="touchUpInside" id="6H6-6Y-LR4"/>
-                        <action selector="selectClicked:" destination="-1" eventType="touchUpInside" id="iy4-PY-J9g"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxE-BX-jH1">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxE-BX-jH1" userLabel="Select Button">
                     <rect key="frame" x="8" y="8" width="305" height="84"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="modifyClicked:" destination="-1" eventType="touchUpInside" id="jfs-2z-v8O"/>
                         <action selector="selectClicked:" destination="-1" eventType="touchUpInside" id="9Md-wr-hSw"/>
                     </connections>
                 </button>
