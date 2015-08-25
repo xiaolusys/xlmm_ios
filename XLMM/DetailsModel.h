@@ -38,6 +38,7 @@
 @property (nonatomic, copy)NSArray *skuIsSaleOutArray;
 
 @property (nonatomic, copy)NSString *itemID;
+@property (nonatomic, copy)NSString *skuID;
 
 
 @end

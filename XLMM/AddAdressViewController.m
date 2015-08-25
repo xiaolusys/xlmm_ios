@@ -36,6 +36,9 @@
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
         self.numberTextField.text = _addressModel.phoneNumber;
+        self.provinceTextField.text = _addressModel.provinceName;
+        self.cityTextField.text = _addressModel.cityName;
+        self.countyTextField.text = _addressModel.countyName;
     }
     
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;

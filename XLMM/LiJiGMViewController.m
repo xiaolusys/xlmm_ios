@@ -11,23 +11,35 @@
 #import "AddressModel.h"
 #import "AddressView.h"
 #import "AddAdressViewController.h"
+#import "AddYouhuiquanViewController.h"
+#import "AFNetworking.h"
+#import "UIImageView+WebCache.h"
+
 
 
 @interface LiJiGMViewController ()<BuyAddressDelegate>{
     NSMutableArray *addressArray;
     AddressView *owner[8];
     AddressModel *selectedAddModel;
-    
+    NSNumber *buyNumber;
 }
 
 @end
 
-@implementation LiJiGMViewController
+@implementation LiJiGMViewController{
+    int price;
+    int allprice;
+    int yunfeifee;
+    int youhuifee;
+    int allpay;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self downLoadData];
+    NSLog(@"selectAddressModel = %@", selectedAddModel.addressID);
+    
     
 }
 
@@ -36,6 +48,8 @@
     self.addressViewWidth.constant = SCREENWIDTH;
     // Do any additional setup after loading the view from its nib.
     addressArray = [[NSMutableArray alloc] initWithCapacity:0];
+    buyNumber = @1;
+    self.numberLabel.text = [buyNumber stringValue];
     
     [self setInfo];
 //    self.addressViewHeight.constant = 500;
@@ -44,6 +58,47 @@
     [self.view addSubview:self.myScrollView];
     
    // [self downLoadData];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/now_payinfo?sku_id=%@", self.skuID];
+    [self.addButton setBackgroundImage:[UIImage imageNamed:@"btn-plus.png"] forState:UIControlStateNormal];
+    [self.reduceButton setBackgroundImage:[UIImage imageNamed:@"btn-reduce.png"] forState:UIControlStateNormal];
+    
+    
+    NSLog(@"sku_id = %@, ",self.skuID);
+    
+    NSLog(@"urlString = %@", urlString);
+    
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    
+}
+
+- (void)setDetailsInfo{
+    
+}
+
+- (void)fetchedDetailsData:(NSData *)responseData{
+    
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    NSDictionary *dic2 = [dic objectForKey:@"sku"];
+    NSDictionary *dic3 = [dic2 objectForKey:@"product"];
+    self.myimageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic3 objectForKey:@"pic_path"]]]];
+   // self.myimageView.image = [UIimage im dic3 objectForKey:@"pic_path"]]];
+    self.sizeLabel.text = [dic2 objectForKey:@"name"];
+    self.nameLabel.text = [dic3 objectForKey:@"name"];
+    price = (int)[[dic2 objectForKey:@"agent_price"] integerValue];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"agent_price"]];
+    
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"std_sale_price"]];
+    allprice = (int)[[dic objectForKey:@"total_fee"]integerValue];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_fee"]];
+    yunfeifee = (int)[[dic objectForKey:@"post_fee"]integerValue];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"post_fee"]];
+    youhuifee = (int)[[dic objectForKey:@"discount_fee"] integerValue];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"discount_fee"]];
+    allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_payment"]];
     
     
     
@@ -127,7 +182,9 @@
         myowner.selectBtn.tag = 600 + i;
         myowner.modifyBtn.tag = 800 + i;
         
-
+        if (model.addressID == selectedAddModel.addressID) {
+            myowner.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
+        }
         [self.addressViewContaint addSubview:myowner.view];
         
         
@@ -142,6 +199,139 @@
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
     addVC.isAdd = YES;
     [self.navigationController pushViewController:addVC animated:YES];
+    
+    
+    
+}
+
+- (IBAction)reduceClicked:(id)sender {
+    int i = [buyNumber intValue];
+    i--;
+    if (i == 0) {
+        i = 1;
+    }
+    
+    allprice = price * i;
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    allpay = allprice + yunfeifee -youhuifee;
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    buyNumber = [NSNumber numberWithInt:i];
+    self.numberLabel.text = [buyNumber stringValue];
+    
+    NSLog(@"-------");
+}
+
+- (IBAction)addClicked:(id)sender {
+    int i = [buyNumber intValue];
+    i++;
+   
+    NSURL *url = [NSURL URLWithString:@"http://youni.huyi.so/rest/v1/carts/sku_num_enough"];
+  
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+ 
+    NSString *str = [NSString stringWithFormat:@"sku_id=%@&sku_num=%i", self.skuID, i];//设置参数
+
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+
+    [request setHTTPBody:data];
+
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSError *error = nil;
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    if ([[dic objectForKey:@"sku_id"]integerValue] == [self.skuID integerValue]) {
+        NSLog(@"ok");
+    } else{
+        i--;
+     
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 150, 240, 300, 40)];
+        view.backgroundColor = [UIColor blackColor];
+        view.layer.cornerRadius = 8;
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+        label.text = @"库存不足赶快下单";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:24];
+        [view addSubview:label];
+        [self.view addSubview:view];
+        
+        
+        [UIView animateWithDuration:2 animations:^{
+            view.alpha = 0;
+        } completion:^(BOOL finished) {
+            [view removeFromSuperview];
+        }];
+
+        
+   
+    }
+  
+    
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//  //  NSLog(@"phoneNumber = %@\n", _numberTextField.text);
+//    NSDictionary *parameters = @{@"sku_id": self.skuID,
+//                                 @"sku_num":[NSNumber numberWithInt:i]};
+//    NSLog(@"paraneters = %@", parameters);
+//    __block BOOL flag = YES;
+//    [manager POST:@"http://youni.huyi.so/rest/v1/carts/sku_num_enough" parameters:parameters
+//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//              
+//              NSLog(@"JSON: %@", responseObject);
+//              
+//              
+//          }
+//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//              NSLog(@"i = %d", i);
+////NSLog(@"Error: %@", error);
+//              flag = NO;
+//              NSDictionary *dic = error.userInfo;
+//              NSData *data =  [dic objectForKey:@"com.alamofire.serialization.response.error.data"];
+//              NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//              NSLog(@"dic = %@", str);
+//              
+//          }];
+//    if (flag == NO) {
+//        i--;
+//    }
+//    
+//    [self downLoadWithURLString:urlString andSelector:@selector(fetchedNumberData:)];
+    allprice = price * i;
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    allpay = allprice + yunfeifee -youhuifee;
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    
+    buyNumber = [NSNumber numberWithInt:i];
+    self.numberLabel.text = [buyNumber stringValue];
+
+    NSLog(@"+++++++");
+}
+- (void)fetchedNumberData:(NSData *)responseData{
+    NSLog(@"解析数据");
+}
+
+
+- (IBAction)youhuiClicked:(id)sender {
+    
+    NSLog(@"我要获得优惠券");
+    AddYouhuiquanViewController *youhuiVC = [[AddYouhuiquanViewController alloc] initWithNibName:@"AddYouhuiquanViewController" bundle:nil];
+    
+    
+    [self.navigationController pushViewController:youhuiVC animated:YES];
+    
+
+}
+
+- (IBAction)buyClicked:(id)sender {
+    NSLog(@"addressID = %@", selectedAddModel.addressID);
+    NSLog(@"应付金额：%i", allpay);
+    NSLog(@"购买");
+    
+    
+    
     
     
     

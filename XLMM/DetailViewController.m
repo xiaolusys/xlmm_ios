@@ -180,10 +180,10 @@
     [_pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
     myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
     
-    
     long contentNumber =(long) self.contentImageUrlArray.count;
     
     for (long i = 0; i<contentNumber; i++) {
+        
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:i]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (i == 0) {
                 self.view1Height.constant = image.size.height/image.size.width*SCREENWIDTH;
@@ -519,7 +519,7 @@
                
                 NSDictionary *parameters = @{@"item_id": _detailsModel.itemID,
                                              @"sku_id":selectskuID};
-                
+                self.detailsModel.skuID = selectskuID;
                 [manager POST:kCart_URL parameters:parameters
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           
@@ -672,6 +672,10 @@
             NSLog(@"可以购买");
             // 立即购买
             LiJiGMViewController *lijiVC = [[LiJiGMViewController alloc] initWithNibName:@"LiJiGMViewController" bundle:nil];
+            NSLog(@"skuid = %@", selectskuID);
+            lijiVC.skuID = selectskuID;
+            NSLog(@"lijiVC.skuID = %@", lijiVC.skuID);
+            
             [self.navigationController pushViewController:lijiVC animated:YES];
             
             

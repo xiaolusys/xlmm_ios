@@ -130,15 +130,6 @@
 		3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27A1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m */; };
 		3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */; };
 		3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */; };
-		328422A71B841B1700C4EA76 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 328422931B841B1700C4EA76 /* AlipaySDK.bundle */; };
-		328422A81B841B1700C4EA76 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422941B841B1700C4EA76 /* AlipaySDK.framework */; };
-		328422A91B841B1700C4EA76 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422951B841B1700C4EA76 /* libpingpp+alipay.a */; };
-		328422AA1B841B1700C4EA76 /* libpingpp+up.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3284229F1B841B1700C4EA76 /* libpingpp+up.a */; };
-		328422AB1B841B1700C4EA76 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422A01B841B1700C4EA76 /* libUPPayPlugin.a */; };
-		328422AC1B841B1700C4EA76 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422A21B841B1700C4EA76 /* libpingpp+wx.a */; };
-		328422AD1B841B1700C4EA76 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422A31B841B1700C4EA76 /* libWeChatSDK.a */; };
-		328422AE1B841B1700C4EA76 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422A41B841B1700C4EA76 /* libpingpp.a */; };
-		328422AF1B841B1700C4EA76 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 328422A51B841B1700C4EA76 /* Pingpp.bundle */; };
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
 		328422B31B841B9A00C4EA76 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B21B841B9A00C4EA76 /* libz.dylib */; };
 		328422B51B841BA900C4EA76 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B41B841BA900C4EA76 /* libc++.dylib */; };
@@ -384,16 +375,6 @@
 		3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		3282F27D1B6B5B1300E73EB9 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		328422931B841B1700C4EA76 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		328422941B841B1700C4EA76 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		328422951B841B1700C4EA76 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
-		3284229F1B841B1700C4EA76 /* libpingpp+up.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+up.a"; sourceTree = "<group>"; };
-		328422A01B841B1700C4EA76 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
-		328422A21B841B1700C4EA76 /* libpingpp+wx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+wx.a"; sourceTree = "<group>"; };
-		328422A31B841B1700C4EA76 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		328422A41B841B1700C4EA76 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
-		328422A51B841B1700C4EA76 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
-		328422A61B841B1700C4EA76 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		328422B21B841B9A00C4EA76 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		328422B41B841BA900C4EA76 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -498,13 +479,6 @@
 				328422B51B841BA900C4EA76 /* libc++.dylib in Frameworks */,
 				328422B31B841B9A00C4EA76 /* libz.dylib in Frameworks */,
 				328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */,
-				328422A81B841B1700C4EA76 /* AlipaySDK.framework in Frameworks */,
-				328422AC1B841B1700C4EA76 /* libpingpp+wx.a in Frameworks */,
-				328422AD1B841B1700C4EA76 /* libWeChatSDK.a in Frameworks */,
-				328422A91B841B1700C4EA76 /* libpingpp+alipay.a in Frameworks */,
-				328422AE1B841B1700C4EA76 /* libpingpp.a in Frameworks */,
-				328422AB1B841B1700C4EA76 /* libUPPayPlugin.a in Frameworks */,
-				328422AA1B841B1700C4EA76 /* libpingpp+up.a in Frameworks */,
 				32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */,
 				32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */,
 				32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */,
@@ -601,7 +575,6 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
-				328422901B841B1700C4EA76 /* lib */,
 				32F3D94F1B6CCA41008530BA /* AFNetworking */,
 				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
@@ -855,119 +828,6 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
-		328422901B841B1700C4EA76 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				328422911B841B1700C4EA76 /* Channels */,
-				328422A41B841B1700C4EA76 /* libpingpp.a */,
-				328422A51B841B1700C4EA76 /* Pingpp.bundle */,
-				328422A61B841B1700C4EA76 /* Pingpp.h */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		328422911B841B1700C4EA76 /* Channels */ = {
-			isa = PBXGroup;
-			children = (
-				328422921B841B1700C4EA76 /* Alipay */,
-				328422961B841B1700C4EA76 /* ApplePay */,
-				328422971B841B1700C4EA76 /* Bfb */,
-				3284229E1B841B1700C4EA76 /* UnionPay */,
-				328422A11B841B1700C4EA76 /* Wx */,
-			);
-			path = Channels;
-			sourceTree = "<group>";
-		};
-		328422921B841B1700C4EA76 /* Alipay */ = {
-			isa = PBXGroup;
-			children = (
-				328422931B841B1700C4EA76 /* AlipaySDK.bundle */,
-				328422941B841B1700C4EA76 /* AlipaySDK.framework */,
-				328422951B841B1700C4EA76 /* libpingpp+alipay.a */,
-			);
-			path = Alipay;
-			sourceTree = "<group>";
-		};
-		328422961B841B1700C4EA76 /* ApplePay */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ApplePay;
-			sourceTree = "<group>";
-		};
-		328422971B841B1700C4EA76 /* Bfb */ = {
-			isa = PBXGroup;
-			children = (
-				328422981B841B1700C4EA76 /* Dependencies */,
-			);
-			path = Bfb;
-			sourceTree = "<group>";
-		};
-		328422981B841B1700C4EA76 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				328422991B841B1700C4EA76 /* ASIHttpRequest */,
-				3284229A1B841B1700C4EA76 /* BaiduMobStat */,
-				3284229C1B841B1700C4EA76 /* JSONKit */,
-				3284229D1B841B1700C4EA76 /* SDWebImage */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		328422991B841B1700C4EA76 /* ASIHttpRequest */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ASIHttpRequest;
-			sourceTree = "<group>";
-		};
-		3284229A1B841B1700C4EA76 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-				3284229B1B841B1700C4EA76 /* BaiduMobStat */,
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3284229B1B841B1700C4EA76 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3284229C1B841B1700C4EA76 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		3284229D1B841B1700C4EA76 /* SDWebImage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SDWebImage;
-			sourceTree = "<group>";
-		};
-		3284229E1B841B1700C4EA76 /* UnionPay */ = {
-			isa = PBXGroup;
-			children = (
-				3284229F1B841B1700C4EA76 /* libpingpp+up.a */,
-				328422A01B841B1700C4EA76 /* libUPPayPlugin.a */,
-			);
-			path = UnionPay;
-			sourceTree = "<group>";
-		};
-		328422A11B841B1700C4EA76 /* Wx */ = {
-			isa = PBXGroup;
-			children = (
-				328422A21B841B1700C4EA76 /* libpingpp+wx.a */,
-				328422A31B841B1700C4EA76 /* libWeChatSDK.a */,
-			);
-			path = Wx;
-			sourceTree = "<group>";
-		};
 		328422B81B84217100C4EA76 /* framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1129,13 +989,11 @@
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
-				328422A71B841B1700C4EA76 /* AlipaySDK.bundle in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
 				32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
-				328422AF1B841B1700C4EA76 /* Pingpp.bundle in Resources */,
 				3264EA2B1B6C5D8700F36A8D /* WomanViewController.xib in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
@@ -1417,6 +1275,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1427,6 +1286,16 @@
 					"$(PROJECT_DIR)/XLMM/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
 					"$(PROJECT_DIR)/XLMM/lib",
+					"$(PROJECT_DIR)/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/lib/Channels/ApplePay",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat/BaiduMobStat",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/JSONKit",
+					"$(PROJECT_DIR)/lib/Channels/Bfb",
+					"$(PROJECT_DIR)/lib/Channels/UnionPay",
+					"$(PROJECT_DIR)/lib/Channels/Wx",
+					"$(PROJECT_DIR)/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1442,6 +1311,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1452,6 +1322,16 @@
 					"$(PROJECT_DIR)/XLMM/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
 					"$(PROJECT_DIR)/XLMM/lib",
+					"$(PROJECT_DIR)/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/lib/Channels/ApplePay",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat/BaiduMobStat",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat",
+					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/JSONKit",
+					"$(PROJECT_DIR)/lib/Channels/Bfb",
+					"$(PROJECT_DIR)/lib/Channels/UnionPay",
+					"$(PROJECT_DIR)/lib/Channels/Wx",
+					"$(PROJECT_DIR)/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

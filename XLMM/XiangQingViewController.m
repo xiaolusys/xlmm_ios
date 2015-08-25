@@ -127,7 +127,7 @@
         owner.myView.frame = CGRectMake(0, 0 + 120 * i, SCREENWIDTH, 120);
         
         model = [dataArray objectAtIndex:i];
-        [owner.frontView sd_setImageWithURL:[NSURL URLWithString:model.urlString]];
+        [owner.frontView setImageWithURL:[NSURL URLWithString:model.urlString]];
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
         owner.numberLabel.text = [NSString stringWithFormat:@"%@", model.numberString];
