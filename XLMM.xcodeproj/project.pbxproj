@@ -157,6 +157,9 @@
 		3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */; };
 		3299D88E1B8C7FAA000AA744 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8841B8C7FAA000AA744 /* libpingpp.a */; };
 		3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8851B8C7FAA000AA744 /* Pingpp.bundle */; };
+		32A81F911B8D963C009972B3 /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F901B8D963C009972B3 /* BuyModel.m */; };
+		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
+		32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A81F951B8D9C08009972B3 /* BuyCartsView.xib */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
 		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
@@ -421,6 +424,11 @@
 		3299D8841B8C7FAA000AA744 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
 		3299D8851B8C7FAA000AA744 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
 		3299D8861B8C7FAA000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		32A81F8F1B8D963C009972B3 /* BuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyModel.h; sourceTree = "<group>"; };
+		32A81F901B8D963C009972B3 /* BuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyModel.m; sourceTree = "<group>"; };
+		32A81F921B8D9BF6009972B3 /* BuyCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCartsView.h; sourceTree = "<group>"; };
+		32A81F931B8D9BF6009972B3 /* BuyCartsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCartsView.m; sourceTree = "<group>"; };
+		32A81F951B8D9C08009972B3 /* BuyCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BuyCartsView.xib; sourceTree = "<group>"; };
 		32A88E091B86B2D8003501EF /* QuanbuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuanbuCollectionCell.h; sourceTree = "<group>"; };
 		32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuanbuCollectionCell.m; sourceTree = "<group>"; };
 		32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuanbuCollectionCell.xib; sourceTree = "<group>"; };
@@ -681,6 +689,9 @@
 				3290C8881B886B0C00CFAFA0 /* AddressView.h */,
 				3290C8891B886B0C00CFAFA0 /* AddressView.m */,
 				3290C88B1B886B2600CFAFA0 /* AddressView.xib */,
+				32A81F921B8D9BF6009972B3 /* BuyCartsView.h */,
+				32A81F931B8D9BF6009972B3 /* BuyCartsView.m */,
+				32A81F951B8D9C08009972B3 /* BuyCartsView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -816,6 +827,8 @@
 				32A88E1F1B872CB5003501EF /* PerDingdanModel.m */,
 				3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */,
 				3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */,
+				32A81F8F1B8D963C009972B3 /* BuyModel.h */,
+				32A81F901B8D963C009972B3 /* BuyModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1156,6 +1169,7 @@
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
+				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
@@ -1242,6 +1256,7 @@
 				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
+				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
@@ -1295,6 +1310,7 @@
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
+				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,

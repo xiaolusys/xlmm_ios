@@ -1093,8 +1093,21 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="LiX-DS-PQD"/>
+                                    <exclude reference="1W0-nc-1FH"/>
+                                    <exclude reference="1cc-SF-dva"/>
+                                    <exclude reference="4hF-Ac-ANz"/>
+                                    <exclude reference="4hz-xM-eAg"/>
+                                    <exclude reference="76D-nf-O1L"/>
+                                    <exclude reference="Chi-KP-37f"/>
+                                    <exclude reference="HOy-wR-vzm"/>
+                                    <exclude reference="ofQ-jx-Lfa"/>
                                     <exclude reference="U1d-tx-ICb"/>
                                     <exclude reference="hT4-Oi-X3Y"/>
+                                    <exclude reference="0fa-E6-jk2"/>
+                                    <exclude reference="4QC-3J-zEq"/>
+                                    <exclude reference="4ZL-E6-4qJ"/>
+                                    <exclude reference="Fu5-4p-OiA"/>
+                                    <exclude reference="trZ-75-5hP"/>
                                     <exclude reference="EsO-mq-uFg"/>
                                     <exclude reference="iSy-Eb-4WI"/>
                                     <exclude reference="AmD-Wb-5qW"/>
@@ -1106,20 +1119,7 @@
                                     <exclude reference="fmg-73-Qy7"/>
                                     <exclude reference="gap-sU-JP3"/>
                                     <exclude reference="lHx-PA-Vw9"/>
-                                    <exclude reference="Fu5-4p-OiA"/>
-                                    <exclude reference="trZ-75-5hP"/>
-                                    <exclude reference="1W0-nc-1FH"/>
-                                    <exclude reference="1cc-SF-dva"/>
-                                    <exclude reference="4hF-Ac-ANz"/>
-                                    <exclude reference="4hz-xM-eAg"/>
-                                    <exclude reference="76D-nf-O1L"/>
-                                    <exclude reference="Chi-KP-37f"/>
-                                    <exclude reference="HOy-wR-vzm"/>
-                                    <exclude reference="ofQ-jx-Lfa"/>
                                     <exclude reference="Iz5-Ky-lcN"/>
-                                    <exclude reference="0fa-E6-jk2"/>
-                                    <exclude reference="4QC-3J-zEq"/>
-                                    <exclude reference="4ZL-E6-4qJ"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -1136,8 +1136,21 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="LiX-DS-PQD"/>
+                                    <include reference="1W0-nc-1FH"/>
+                                    <include reference="1cc-SF-dva"/>
+                                    <include reference="4hF-Ac-ANz"/>
+                                    <include reference="4hz-xM-eAg"/>
+                                    <include reference="76D-nf-O1L"/>
+                                    <include reference="Chi-KP-37f"/>
+                                    <include reference="HOy-wR-vzm"/>
+                                    <include reference="ofQ-jx-Lfa"/>
                                     <include reference="U1d-tx-ICb"/>
                                     <include reference="hT4-Oi-X3Y"/>
+                                    <include reference="0fa-E6-jk2"/>
+                                    <include reference="4QC-3J-zEq"/>
+                                    <include reference="4ZL-E6-4qJ"/>
+                                    <include reference="Fu5-4p-OiA"/>
+                                    <include reference="trZ-75-5hP"/>
                                     <include reference="EsO-mq-uFg"/>
                                     <include reference="iSy-Eb-4WI"/>
                                     <include reference="AmD-Wb-5qW"/>
@@ -1149,20 +1162,7 @@
                                     <include reference="fmg-73-Qy7"/>
                                     <include reference="gap-sU-JP3"/>
                                     <include reference="lHx-PA-Vw9"/>
-                                    <include reference="Fu5-4p-OiA"/>
-                                    <include reference="trZ-75-5hP"/>
-                                    <include reference="1W0-nc-1FH"/>
-                                    <include reference="1cc-SF-dva"/>
-                                    <include reference="4hF-Ac-ANz"/>
-                                    <include reference="4hz-xM-eAg"/>
-                                    <include reference="76D-nf-O1L"/>
-                                    <include reference="Chi-KP-37f"/>
-                                    <include reference="HOy-wR-vzm"/>
-                                    <include reference="ofQ-jx-Lfa"/>
                                     <include reference="Iz5-Ky-lcN"/>
-                                    <include reference="0fa-E6-jk2"/>
-                                    <include reference="4QC-3J-zEq"/>
-                                    <include reference="4ZL-E6-4qJ"/>
                                 </mask>
                             </variation>
                         </view>

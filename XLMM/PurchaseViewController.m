@@ -11,17 +11,25 @@
 #import "AddressView.h"
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
+#import "ShoppingCartModel.h"
+#import "BuyModel.h"
+#import "BuyCartsView.h"
 
 
-@interface PurchaseViewController ()<BuyAddressDelegate>
+
+@interface PurchaseViewController ()<BuyAddressDelegate>{
+
+}
 
 @end
 
 @implementation PurchaseViewController{
     NSMutableArray *dataArray;
+    NSMutableArray *cartsDataArray;
     AddressView *owner[10];
     AddressModel *selectedAddModel;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -31,17 +39,119 @@
     
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"确认订单";
     dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    cartsDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self.view addSubview:self.myScrollView];
     self.screenWidth.constant = SCREENWIDTH;
     
+    NSLog(@"%@", self.cartsArray);
+    [self downloadCartsData];
+
     
     
+}
+
+- (void)downloadCartsData{
     
+    
+    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
+    for (ShoppingCartModel *model in self.cartsArray) {
+        NSString *str = [NSString stringWithFormat:@"%@,",model.cartID];
+        [paramstring appendString:str];
+    }
+    NSRange rang =  {paramstring.length -1, 1};
+    [paramstring deleteCharactersInRange:rang];
+    NSLog(@"paramString = %@", paramstring);
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/carts_payinfo?cart_ids=%@", paramstring];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
+        
+        
+    });
+    
+}
+
+- (void)fetchedCartsData:(NSData *)responseData{
+    NSError *error;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    NSLog(@"****************");
+    NSLog(@"dic = %@", dic);
+    
+    NSArray *array = [dic objectForKey:@"cart_list"];
+    for (NSDictionary *dicInfo in array) {
+        BuyModel *model = [BuyModel new];
+        model.addressID = [dicInfo objectForKey:@"id"];
+        model.payment = [dic objectForKey:@"total_payment"];
+         model.postFee = [dic objectForKey:@"post_fee"];
+         model.discountFee = [dic objectForKey:@"discount_fee"];
+         model.totalFee = [dic objectForKey:@"total_fee"];
+         model.uuID = [dic objectForKey:@"uuid"];
+         model.itemID = [dicInfo objectForKey:@"item_id"];
+         model.skuID = [dicInfo objectForKey:@"sku_id"];
+         model.buyNumber = [[dicInfo objectForKey:@"num"]integerValue];
+        model.imageURL = [dicInfo objectForKey:@"pic_path"];
+        model.name = [dicInfo objectForKey:@"title"];
+        model.sizeName = [dicInfo objectForKey:@"sku_name"];
+        model.price = [dicInfo objectForKey:@"price"];
+        model.oldPrice = [dicInfo objectForKey:@"std_sale_price"];
+        
+        
+        [cartsDataArray addObject:model];
+    }
+    
+    NSLog(@"cartsDataArray = %@", cartsDataArray);
+    
+    [self createCartsView];
+    
+    NSLog(@"****************");
+}
+- (void)createCartsView{
+    self.cartsViewHeight.constant = cartsDataArray.count * 140 + 160;
+    self.myCartsView.backgroundColor = [UIColor orangeColor];
+    
+    [self createCartsHeaderView];
+    [self createCartsListView];
+    [self createCartsFooterView];
+    
+}
+
+- (void)createCartsHeaderView{
+    UILabel *headLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 8, 200, 40)];
+    headLabel.text = @"商品支付详情";
+    headLabel.font = [UIFont systemFontOfSize:24];
+    headLabel.textAlignment = NSTextAlignmentLeft;
+    [self.myCartsView addSubview:headLabel];
+}
+
+- (void)createCartsListView{
+    BuyCartsView *cartOwner = [BuyCartsView new];
+    
+    for (int i = 0; i < cartsDataArray.count; i++) {
+        BuyModel *model = [cartsDataArray objectAtIndex:i];
+        
+        [[NSBundle mainBundle] loadNibNamed:@"BuyCartsView" owner:cartOwner options:nil];
+        cartOwner.view.frame = CGRectMake(0, 60 +i*160, SCREENWIDTH, 100);
+        cartOwner.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.imageURL]]];
+        cartOwner.nameLabel.text = model.name;
+        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+        cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
+        cartOwner.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)model.buyNumber];
+        cartOwner.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sizeName];
+        [self.myCartsView addSubview:cartOwner.view];
+    }
+    
+}
+
+- (void)createCartsFooterView{
     
 }
 
@@ -145,7 +255,6 @@
 
 
 - (void)addClicked:(UIButton *)button{
-    NSLog(@"增加新地址");
     NSLog(@"增加收货地址");
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
     addVC.isAdd = YES;

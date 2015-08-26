@@ -8,6 +8,8 @@
             <connections>
                 <outlet property="addressView" destination="SGj-kv-v1E" id="eSk-bj-Frb"/>
                 <outlet property="addressViewHeight" destination="xcf-Qp-Cx6" id="YCI-L3-P83"/>
+                <outlet property="cartsViewHeight" destination="cOH-TH-B7U" id="cc1-0x-ceN"/>
+                <outlet property="myCartsView" destination="K3f-LH-LPm" id="Fog-pt-1wn"/>
                 <outlet property="myScrollView" destination="7g6-if-htW" id="fno-I7-Djt"/>
                 <outlet property="screenWidth" destination="fYV-Zi-brX" id="INH-xo-m3m"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

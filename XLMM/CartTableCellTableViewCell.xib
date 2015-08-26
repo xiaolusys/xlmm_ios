@@ -8,9 +8,6 @@
             <string>LiHeiPro</string>
             <string>LiHeiPro</string>
             <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -80,12 +77,12 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥46" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7M-xL-E1O">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="¥46" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7M-xL-E1O">
                         <rect key="frame" x="327" y="8" width="40" height="29"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="kRZ-FH-pxe"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="22"/>
                         <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
@@ -99,12 +96,12 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥239" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dq3-fI-vCE">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="¥239" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dq3-fI-vCE">
                         <rect key="frame" x="327" y="45" width="32" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="hAb-mT-3hZ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
@@ -157,7 +154,7 @@
                             <action selector="deleteBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CAk-h6-T1e"/>
                         </connections>
                     </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLJ-2w-5qx">
+                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sLJ-2w-5qx">
                         <rect key="frame" x="327" y="53" width="34" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -180,7 +177,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="DHb-Pa-yHd"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">

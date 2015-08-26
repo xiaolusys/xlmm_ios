@@ -355,6 +355,11 @@
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");
     PurchaseViewController *purchaseVC = [[PurchaseViewController alloc] initWithNibName:@"PurchaseViewController" bundle:nil];
+    
+    purchaseVC.cartsArray = self.dataArray;
+    
+    NSLog(@"purchase.array = %@", purchaseVC.cartsArray);
+    
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 
