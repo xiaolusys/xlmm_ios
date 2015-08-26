@@ -15,7 +15,7 @@
 #import "BuyModel.h"
 #import "BuyCartsView.h"
 
-
+#import "UIImage+ImageWithUrl.h"
 
 @interface PurchaseViewController ()<BuyAddressDelegate>{
 
@@ -28,6 +28,7 @@
     NSMutableArray *cartsDataArray;
     AddressView *owner[10];
     AddressModel *selectedAddModel;
+    BuyCartsView *cartOwner;
 }
 
 
@@ -133,22 +134,39 @@
 }
 
 - (void)createCartsListView{
-    BuyCartsView *cartOwner = [BuyCartsView new];
+   cartOwner = [BuyCartsView new];
     
-    for (int i = 0; i < cartsDataArray.count; i++) {
-        BuyModel *model = [cartsDataArray objectAtIndex:i];
+
+    for (int i = 0; i<cartsDataArray.count; i++) {
         
+        BuyModel *model = [cartsDataArray objectAtIndex:i];
         [[NSBundle mainBundle] loadNibNamed:@"BuyCartsView" owner:cartOwner options:nil];
-        cartOwner.view.frame = CGRectMake(0, 60 +i*160, SCREENWIDTH, 100);
-        cartOwner.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.imageURL]]];
+    
+    cartOwner.view.frame = CGRectMake(0, 60 + i*140, SCREENWIDTH, 140);
+   // cartOwner.view.backgroundColor = [UIColor redColor];
+        
         cartOwner.nameLabel.text = model.name;
+        cartOwner.sizeLabel.text = model.sizeName;
+        cartOwner.numberLabel.text = [[NSNumber numberWithInteger:model.buyNumber ]stringValue ];
         cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
         cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
-        cartOwner.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)model.buyNumber];
-        cartOwner.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sizeName];
-        [self.myCartsView addSubview:cartOwner.view];
-    }
+        cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+                                       
+        
+//        [upmpButton.layer setMasksToBounds:YES];
+//        [upmpButton.layer setCornerRadius:8.0];
+//        [upmpButton.layer setBorderWidth:1.0];
+//        [upmpButton.layer setBorderColor:[UIColor grayColor].CGColor];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 85, 36, 36)];
+        view.backgroundColor = [UIColor whiteColor];
+        [view.layer setMasksToBounds:YES];
+        [view.layer setBorderWidth:1];
+        [view.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cartOwner.view addSubview:view];
+        
+    [self.myCartsView addSubview:cartOwner.view];
     
+    }
 }
 
 - (void)createCartsFooterView{

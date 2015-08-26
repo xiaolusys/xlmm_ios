@@ -9,16 +9,17 @@
 #import <UIKit/UIKit.h>
 
 @interface BuyCartsView : UIView
+
+
 @property (strong, nonatomic) IBOutlet UIView *view;
+
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
+
 
 
 @end
