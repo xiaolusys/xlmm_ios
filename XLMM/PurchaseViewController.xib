@@ -9,9 +9,11 @@
                 <outlet property="addressView" destination="SGj-kv-v1E" id="eSk-bj-Frb"/>
                 <outlet property="addressViewHeight" destination="xcf-Qp-Cx6" id="YCI-L3-P83"/>
                 <outlet property="cartsViewHeight" destination="cOH-TH-B7U" id="cc1-0x-ceN"/>
+                <outlet property="discountfeeLabel" destination="xcD-mh-1WU" id="PHM-UB-Z3u"/>
                 <outlet property="myCartsView" destination="K3f-LH-LPm" id="Fog-pt-1wn"/>
                 <outlet property="myScrollView" destination="7g6-if-htW" id="fno-I7-Djt"/>
                 <outlet property="screenWidth" destination="fYV-Zi-brX" id="INH-xo-m3m"/>
+                <outlet property="totalPayLabel" destination="Vai-7U-Nww" id="V0p-DS-b8g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -62,18 +64,94 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3Y-SA-c2Y" userLabel="Youhui View">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMK-33-iiT">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可用优惠券（0）" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIS-Ss-aq7">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.97647058819999999" green="0.67450980390000004" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="MIS-Ss-aq7" firstAttribute="top" secondItem="mMK-33-iiT" secondAttribute="top" constant="11" id="8hW-jj-vZw">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                        </constraint>
+                                        <constraint firstItem="MIS-Ss-aq7" firstAttribute="leading" secondItem="mMK-33-iiT" secondAttribute="leading" constant="79" id="FfO-VM-UJG">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                        </constraint>
+                                        <constraint firstAttribute="height" constant="80" id="NGm-5F-0kd">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                        </constraint>
+                                        <constraint firstAttribute="width" constant="375" id="Sh6-Ll-IOB">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="200"/>
+                                        </constraint>
+                                        <constraint firstAttribute="bottom" secondItem="MIS-Ss-aq7" secondAttribute="bottom" constant="8" id="XRt-YE-1gq">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                        </constraint>
+                                        <constraint firstAttribute="trailing" secondItem="MIS-Ss-aq7" secondAttribute="trailing" constant="79" id="l0Z-b5-caM">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                        </constraint>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="MIS-Ss-aq7"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="NGm-5F-0kd"/>
+                                            <exclude reference="Sh6-Ll-IOB"/>
+                                            <exclude reference="8hW-jj-vZw"/>
+                                            <exclude reference="FfO-VM-UJG"/>
+                                            <exclude reference="XRt-YE-1gq"/>
+                                            <exclude reference="l0Z-b5-caM"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="MIS-Ss-aq7"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="NGm-5F-0kd"/>
+                                            <include reference="Sh6-Ll-IOB"/>
+                                            <include reference="8hW-jj-vZw"/>
+                                            <include reference="FfO-VM-UJG"/>
+                                            <include reference="XRt-YE-1gq"/>
+                                            <include reference="l0Z-b5-caM"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="IUt-GP-2sI"/>
+                                <constraint firstItem="mMK-33-iiT" firstAttribute="leading" secondItem="b3Y-SA-c2Y" secondAttribute="leading" id="Q88-kP-V49">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                </constraint>
+                                <constraint firstItem="mMK-33-iiT" firstAttribute="top" secondItem="b3Y-SA-c2Y" secondAttribute="top" id="rP1-TW-DnY">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                </constraint>
                             </constraints>
                             <variation key="default">
+                                <mask key="subviews">
+                                    <exclude reference="mMK-33-iiT"/>
+                                </mask>
                                 <mask key="constraints">
                                     <exclude reference="IUt-GP-2sI"/>
+                                    <exclude reference="Q88-kP-V49"/>
+                                    <exclude reference="rP1-TW-DnY"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="subviews">
+                                    <include reference="mMK-33-iiT"/>
+                                </mask>
                                 <mask key="constraints">
                                     <include reference="IUt-GP-2sI"/>
+                                    <include reference="Q88-kP-V49"/>
+                                    <include reference="rP1-TW-DnY"/>
                                 </mask>
                             </variation>
                         </view>

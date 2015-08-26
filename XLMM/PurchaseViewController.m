@@ -29,6 +29,11 @@
     AddressView *owner[10];
     AddressModel *selectedAddModel;
     BuyCartsView *cartOwner;
+    
+    NSInteger totalfee;
+    NSInteger postfee;
+    NSInteger discountfee;
+    NSInteger totalpayment;
 }
 
 
@@ -88,6 +93,13 @@
     NSLog(@"dic = %@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
+    
+    totalfee = [[dic objectForKey:@"total_fee"] integerValue];
+    postfee = [[dic objectForKey:@"post_fee"] integerValue];
+    discountfee = [[dic objectForKey:@"discount_fee"] integerValue];
+    totalpayment = [[dic objectForKey:@"total_payment"] integerValue];
+    
+    
     for (NSDictionary *dicInfo in array) {
         BuyModel *model = [BuyModel new];
         model.addressID = [dicInfo objectForKey:@"id"];
@@ -112,12 +124,18 @@
     NSLog(@"cartsDataArray = %@", cartsDataArray);
     
     [self createCartsView];
+    [self createBuyView];
     
     NSLog(@"****************");
 }
+
+- (void)createBuyView{
+    self.discountfeeLabel.text = [NSString stringWithFormat:@"￥%ld",(long)discountfee];
+    self.totalPayLabel.text = [NSString stringWithFormat:@"￥%ld", (long)totalpayment];
+}
 - (void)createCartsView{
     self.cartsViewHeight.constant = cartsDataArray.count * 140 + 160;
-    self.myCartsView.backgroundColor = [UIColor orangeColor];
+ //   self.myCartsView.backgroundColor = [UIColor orangeColor];
     
     [self createCartsHeaderView];
     [self createCartsListView];
@@ -151,12 +169,7 @@
         cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
         cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
         cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
-                                       
-        
-//        [upmpButton.layer setMasksToBounds:YES];
-//        [upmpButton.layer setCornerRadius:8.0];
-//        [upmpButton.layer setBorderWidth:1.0];
-//        [upmpButton.layer setBorderColor:[UIColor grayColor].CGColor];
+
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 85, 36, 36)];
         view.backgroundColor = [UIColor whiteColor];
         [view.layer setMasksToBounds:YES];
@@ -170,6 +183,37 @@
 }
 
 - (void)createCartsFooterView{
+    NSInteger height = self.cartsViewHeight.constant;
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(8, height - 90, 200, 30)];
+    label1.text = @"商品总金额";
+    label1.font = [UIFont systemFontOfSize:22];
+    label1.textAlignment = NSTextAlignmentLeft;
+    [self.myCartsView addSubview:label1];
+    
+    
+    UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, height - 90, 80, 30)];
+    label3.text = [NSString stringWithFormat:@"￥%ld", (long)totalfee];
+    label3.textColor = [UIColor colorWithR:224 G:48 B:116 alpha:1];
+    label3.font = [UIFont systemFontOfSize:22];
+    label3.textAlignment = NSTextAlignmentLeft;
+    [self.myCartsView addSubview:label3];
+    
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(8, height - 50, 200, 30)];
+    label2.text = @"小鹿美美运费";
+    label2.font = [UIFont systemFontOfSize:22];
+    label2.textAlignment = NSTextAlignmentLeft;
+    [self.myCartsView addSubview:label2];
+    
+    UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 60, height - 50, 60, 30)];
+    label4.text = [NSString stringWithFormat:@"￥%ld", (long)postfee];
+     label4.textColor = [UIColor colorWithR:224 G:48 B:116 alpha:1];
+    label4.font = [UIFont systemFontOfSize:22];
+    label4.textAlignment = NSTextAlignmentLeft;
+    [self.myCartsView addSubview:label4];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height - 10, SCREENWIDTH, 1)];
+    view.backgroundColor = [UIColor lightGrayColor];
+    [self.myCartsView addSubview:view];
     
 }
 

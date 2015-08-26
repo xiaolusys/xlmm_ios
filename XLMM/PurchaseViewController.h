@@ -20,7 +20,9 @@
 @property (weak, nonatomic) IBOutlet UIView *addressView;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *totalPayLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *discountfeeLabel;
 
 
 @end
