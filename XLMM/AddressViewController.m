@@ -27,14 +27,26 @@
 
 @end
 
-@implementation AddressViewController
+@implementation AddressViewController{
+    AddressTableCell *selectCell;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (dataArray.count != 0) {
         [dataArray removeAllObjects];
     }
+    
+
     [self downloadAddressData];
+
+
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+//    [self.addressTableView reloadData];
+    selectCell.backgroundView.backgroundColor = [UIColor whiteColor];
+    selectCell.firstLabel.textColor = [UIColor blackColor];
 }
 
 - (void)viewDidLoad {
@@ -132,26 +144,6 @@
 //    
 }
 
-
-
-#pragma mark --UITableViewDelegate--
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return dataArray.count + 1;
-    
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return 80;
-        
-    }
-    else
-    {
-        return 96;
-    }
-}
-
 - (UIView *)createHeadView{
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAINSCREENWIDTH, 80)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 140, 40)];
@@ -184,8 +176,28 @@
     
 }
 
+#pragma mark --UITableViewDelegate--
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return dataArray.count + 1;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 80;
+        
+    }
+    else
+    {
+        return 96;
+    }
+}
+
+
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"CellIdentifier";
+  //  static NSString *CellIdentifier = @"CellIdentifier";
     if (indexPath.row == 0) {
         
         UITableViewCell *cell =(UITableViewCell *) [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
@@ -194,12 +206,12 @@
 
         return cell;
     }
-     AddressTableCell *cell = (AddressTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+   //  AddressTableCell *cell = (AddressTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+   // if (cell == nil) {
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
-        cell = [array objectAtIndex:0];
+      AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
+  //  }
     AddressModel *model = [dataArray objectAtIndex:indexPath.row -1];
     NSString *address = [NSString stringWithFormat:@"%@-%@-%@-%@", model.provinceName, model.cityName, model.countyName, model.streetName];
     
@@ -217,6 +229,10 @@
     cell.modifyBtn.userInteractionEnabled = NO;
     [cell.deleteBtn setBackgroundImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
     cell.deleteBtn.userInteractionEnabled = NO;
+    cell.firstLabel.textColor = [UIColor blackColor];
+    cell.backgroundView.backgroundColor = [UIColor whiteColor];
+
+    
     return cell;
 
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -237,8 +253,7 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-//        UITableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return;
     }
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -253,14 +268,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-//        UITableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return;
     }
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
     cell.bgView.backgroundColor = [UIColor redColor];
     cell.firstLabel.textColor = [UIColor redColor];
+    selectCell = cell;
     cell.modifyBtn.userInteractionEnabled = YES;
     cell.deleteBtn.userInteractionEnabled = YES;
     

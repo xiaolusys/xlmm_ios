@@ -11,5 +11,12 @@
 @interface PurchaseViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewHeight;
+
+@property (weak, nonatomic) IBOutlet UIView *addressView;
+
+
+
+
 
 @end

@@ -31,11 +31,16 @@
     self.title = @"新增收货地址";
     
     [self setInfo];
+    
+    self.nameTextField.tag = 100;
+    self.numberTextField.tag = 101;
     if (_isAdd == NO) {
         NSLog(@"修改地址");
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
         self.numberTextField.text = _addressModel.phoneNumber;
+       
+        
         self.provinceTextField.text = _addressModel.provinceName;
         self.cityTextField.text = _addressModel.cityName;
         self.countyTextField.text = _addressModel.countyName;
@@ -112,11 +117,54 @@
         self.addressPicker = [[AddressPickerView alloc] initWithdelegate:self];
         [self.addressPicker showInView:self.view];
     
+        
+        [self.nameTextField resignFirstResponder];
+        [self.numberTextField resignFirstResponder];
+        [self.streetTextView resignFirstResponder];
     return NO;
     }
     else{
+        [self cancelLocatePicker];
         return YES;
     }
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    [textView resignFirstResponder];
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    [textView resignFirstResponder];
+}
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    CGRect rect = self.view.frame;
+    rect.origin.y = -[UIScreen mainScreen].bounds.size.height + 400;
+    if ([UIScreen mainScreen].bounds.size.width == 320) {
+        
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = rect;
+
+    } completion:^(BOOL finished) {
+        
+    }];
+    }
+    
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    [UIView animateWithDuration:0.3 animations:^{
+            self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    } completion:^(BOOL finished) {
+        
+    }];
+
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

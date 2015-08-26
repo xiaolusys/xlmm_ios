@@ -19,10 +19,6 @@
             <string>LiHeiPro</string>
             <string>LiHeiPro</string>
             <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -432,7 +428,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="SVi-Je-Uj4"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
@@ -452,7 +448,7 @@
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="26" id="G1g-37-ay6"/>
                                                 <constraint firstAttribute="height" constant="26" id="aLr-Hk-LaG"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
+                                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="22"/>
                                             <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
@@ -470,9 +466,22 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥395" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcM-zz-mPl">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="18" id="f5m-Xx-zgY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="f5m-Xx-zgY"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="f5m-Xx-zgY"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAu-hw-Gsh">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -885,9 +894,22 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品参数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOY-0l-wP9">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="sqR-ex-DwJ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="sqR-ex-DwJ"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="sqR-ex-DwJ"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRn-ZG-s3S">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
