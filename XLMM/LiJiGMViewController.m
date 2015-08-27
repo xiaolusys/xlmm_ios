@@ -321,12 +321,12 @@
 
 - (IBAction)youhuiClicked:(id)sender {
     
-    NSLog(@"我要获得优惠券");
-    AddYouhuiquanViewController *youhuiVC = [[AddYouhuiquanViewController alloc] initWithNibName:@"AddYouhuiquanViewController" bundle:nil];
-    
-    
-    [self.navigationController pushViewController:youhuiVC animated:YES];
-    
+ NSLog(@"我要获得优惠券");
+//    AddYouhuiquanViewController *youhuiVC = [[AddYouhuiquanViewController alloc] initWithNibName:@"AddYouhuiquanViewController" bundle:nil];
+//    
+//    
+//    [self.navigationController pushViewController:youhuiVC animated:YES];
+//    
 
 }
 
@@ -523,4 +523,74 @@
  // Pass the selected object to the new view controller.
  }
  */
+- (IBAction)zhifuSelected:(id)sender {
+    
+    
+    UIButton *button = (UIButton *)sender;
+    
+    
+    if (button.tag == 80) {
+        NSLog(@"weixin");
+        
+        
+        
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+        
+        
+        
+        
+    }else if (button.tag == 81){
+        NSLog(@"zhifubao");
+        
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+    }else if (button.tag == 82){
+        NSLog(@"yinglian");
+        
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+    }else if (button.tag == 83){
+        NSLog(@"baidu");
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+        
+    }
+}
 @end

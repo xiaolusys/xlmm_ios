@@ -57,4 +57,10 @@
 
 - (IBAction)buyClicked:(id)sender;
 
+
+@property (weak, nonatomic) IBOutlet UIView *myZhifuView;
+- (IBAction)zhifuSelected:(id)sender;
+
+
+
 @end

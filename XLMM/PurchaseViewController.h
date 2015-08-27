@@ -24,5 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *discountfeeLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *zhifuView;
+- (IBAction)zhifuSelected:(id)sender;
 
 @end
