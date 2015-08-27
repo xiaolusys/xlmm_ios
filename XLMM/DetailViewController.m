@@ -582,19 +582,47 @@
 }
 
 - (void)myAnimation{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 25, SCREENHEIGHT - 60, 50, 50)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 25, SCREENHEIGHT - 60, 20, 20)];
     view.backgroundColor = [UIColor redColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 3, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    view.layer.cornerRadius = 10;
+    imageView.layer.cornerRadius = 9;
+    imageView.center = view.center;
     UIImage *image = [UIImage imagewithURLString:[_detailsModel.headImageURLArray objectAtIndex:0]];
     imageView.image = image;
+    imageView.backgroundColor = [UIColor greenColor];
     [view addSubview:imageView];
     [self.view addSubview:view];
-    [UIView animateWithDuration:0.8
+    CGFloat width = SCREENWIDTH;
+    CGFloat height = SCREENHEIGHT;
+    
+    CAKeyframeAnimation *ani=[CAKeyframeAnimation animation];
+    //初始化路径
+    CGMutablePathRef aPath=CGPathCreateMutable();
+    //动画起始点
+    CGPathMoveToPoint(aPath, nil, width/2, height - 50);
+    CGPathAddCurveToPoint(aPath, nil,
+                          width/2 - 50 , height - 120,//控制点
+                          width/2  - 100, height - 150,//控制点
+                          50, height - 100
+                          );//控制点
+    
+    ani.path=aPath;
+    ani.rotationMode = @"autoReverse";
+    ani.duration=0.5;
+    //设置为渐出
+    ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    //自动旋转方向
+   // ani.rotationMode=@"auto";
+   // ani.repeatCount = 10;
+   [view.layer addAnimation:ani forKey:@"position"];
+    
+    [UIView animateWithDuration:0.49
                      animations:^{
-                         view.frame = CGRectMake(10, SCREENHEIGHT- 108, 14, 14);
-                         imageView.frame = CGRectMake(2,2 , 10, 10);
+//                         view.frame = CGRectMake(10, SCREENHEIGHT- 108, 14, 14);
+//                         imageView.frame = CGRectMake(2,2 , 10, 10);
             
-                         view.alpha = 0;
+                         view.alpha = 0.9;
                      } completion:^(BOOL finished) {
                          [view removeFromSuperview];
                          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
