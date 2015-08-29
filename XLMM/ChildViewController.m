@@ -324,6 +324,7 @@
 
 - (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
     NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
+    MMLOG(urlString);
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedModelListData:)];
 }
 - (void)fetchedModelListData:(NSData *)responseDate{
@@ -357,6 +358,8 @@
 
 - (void)downloadDetailsDataWithModel:(PeopleModel *)model{
     NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    
+    MMLOG(urlString);
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
 }
 

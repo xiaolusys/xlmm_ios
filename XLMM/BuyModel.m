@@ -21,7 +21,7 @@
                      ,self.uuID
                      ,self.itemID
                      ,self.skuID
-                     ,self.buyNumber
+                     ,(long)self.buyNumber
                      ];
     return str;
 }

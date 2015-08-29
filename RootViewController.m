@@ -300,6 +300,8 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         model.url = [child objectForKey:@"url"];
+        model.uid = [child objectForKey:@"id"];
+        MMLOG(model.url);
         model.isSaleOpen = [[child objectForKey:@"is_saleopen"] boolValue];
         model.isSaleOut = [[child objectForKey:@"is_saleout"]boolValue];
         model.isNewGood = [[child objectForKey:@"is_newgood"]boolValue];
@@ -336,7 +338,7 @@
         model.isSaleOut = [[lady objectForKey:@"is_saleout"]boolValue];
         model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
         model.remainNumber = [[lady objectForKey:@"remain_num"]integerValue];
-        
+        model.uid = [lady objectForKey:@"id"];
     //    NSLog(@"%d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
         
         
@@ -376,6 +378,9 @@
         model.price = [child objectForKey:@"agent_price"];
         model.oldPrice = [child objectForKey:@"std_sale_price"];
         model.url = [child objectForKey:@"url"];
+        model.uid = [child objectForKey:@"id"];
+        MMLOG(model.url);
+        
         
         model.isSaleOpen = [[child objectForKey:@"is_saleopen"] boolValue];
         model.isSaleOut = [[child objectForKey:@"is_saleout"]boolValue];
@@ -413,7 +418,8 @@
         model.price = [lady objectForKey:@"agent_price"];
         model.oldPrice = [lady objectForKey:@"std_sale_price"];
         model.url = [lady objectForKey:@"url"];
-        
+        model.uid = [lady objectForKey:@"id"];
+        MMLOG(model.url);
         model.isSaleOpen = [[lady objectForKey:@"is_saleopen"] boolValue];
         model.isSaleOut = [[lady objectForKey:@"is_saleout"]boolValue];
         model.isNewGood = [[lady objectForKey:@"is_newgood"]boolValue];
@@ -490,6 +496,7 @@
     model.imageURL = [wonmendic objectForKey:@"pic_link"];
     model.firstName = [nameArr objectAtIndex:0];
     model.secondName = [nameArr objectAtIndex:1];
+
     [_todayPosterArray addObject:model];
     
    
@@ -1068,10 +1075,17 @@
 - (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
     NSString *modelID = [productModel objectForKey:@"id"];
     NSString *modelListUrlString = [NSString stringWithFormat:kModel_List_URL, modelID];
+    
+    
+    MMLOG(modelListUrlString);
+    
+    
     [self downLoadWithURLString:modelListUrlString andSelector:@selector(fetchedModelListData:)];
 }
 - (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    
+    MMLOG(model.url);
+    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/%@/details", model.uid];
     MMLOG(urlString);
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData1:)];
 }
@@ -1137,8 +1151,10 @@
     
     NSError *error = nil;
     NSArray *modelListArray = [NSJSONSerialization JSONObjectWithData:responseDate options:kNilOptions error:&error];
-    // MMLOG(modelListArray);
+     MMLOG(modelListArray);
     [_ModelListArray removeAllObjects];
+    
+    
     for (NSDictionary *dic in modelListArray) {
         CollectionModel *model = [[CollectionModel alloc] init];
         model.productID = [dic objectForKey:@"id"];
@@ -1153,6 +1169,8 @@
         model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
         model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
         
+        NSLog(@"%@", model.imageURL);
+        
         [_ModelListArray addObject:model];
     }
     
@@ -1160,6 +1178,8 @@
     collectionVC.collectionArray = _ModelListArray;
     
     MMLOG(collectionVC.collectionArray);
+  
+    
     [self.navigationController pushViewController:collectionVC animated:YES];
 }
 

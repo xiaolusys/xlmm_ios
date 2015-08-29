@@ -10,6 +10,7 @@
 
 @interface PeopleModel : NSObject
 
+@property (nonatomic, copy)NSString *uid;
 @property (nonatomic, copy)NSString *url;
 @property (nonatomic, copy)NSString *imageURL;
 @property (nonatomic, copy)NSString *price;

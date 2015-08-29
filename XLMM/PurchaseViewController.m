@@ -290,7 +290,7 @@
     
     NSLog(@"addArray = %@", dataArray);
     NSUInteger addNumber = dataArray.count;
-    NSLog(@"addNumber = %lu", addNumber);
+    NSLog(@"addNumber = %lu", (unsigned long)addNumber);
 
   //  self.addressView.backgroundColor = [UIColor orangeColor];
     self.addressViewHeight.constant = addNumber * 100 + 60;
