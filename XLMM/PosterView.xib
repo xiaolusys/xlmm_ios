@@ -25,7 +25,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="JAF-K9-p7D"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -44,7 +44,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="XWR-W0-soK"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -69,18 +69,18 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="NJ3-fs-WiI" secondAttribute="trailing" constant="8" id="0CX-T6-y8P"/>
                 <constraint firstItem="mEq-d0-Of8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Ne-ns-6mx">
-                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="PPs-QV-pMN" secondAttribute="bottom" constant="4" id="CKV-zE-LIk"/>
                 <constraint firstItem="NJ3-fs-WiI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="GVc-v8-2hj"/>
                 <constraint firstAttribute="trailing" secondItem="mEq-d0-Of8" secondAttribute="trailing" id="QrQ-Sa-TTI">
-                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="kCy-Qr-C10" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="140" id="T3r-oJ-fLo"/>
                 <constraint firstItem="PPs-QV-pMN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="WR0-cL-Lh6"/>
                 <constraint firstAttribute="bottom" secondItem="kCy-Qr-C10" secondAttribute="bottom" constant="4" id="egr-2q-9If"/>
                 <constraint firstItem="mEq-d0-Of8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rq3-7x-1Hp">
-                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="mEq-d0-Of8" secondAttribute="bottom" constant="30" id="sei-Dg-8Qv">
                     <variation key="heightClass=regular-widthClass=compact" constant="30"/>
@@ -128,7 +128,7 @@
                     <include reference="sei-Dg-8Qv"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="325" y="191"/>
+            <point key="canvasLocation" x="521" y="140"/>
         </view>
     </objects>
     <resources>

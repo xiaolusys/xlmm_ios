@@ -366,28 +366,19 @@
     
     
     
-    NSURL *url = [NSURL URLWithString:@"http://youni.huyi.so/rest/v1/trades/buynow_create"];
+    NSURL *url = [NSURL URLWithString:@"http://192.168.1.11:9000/rest/v1/trades/buynow_create"];
     
     
 
    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
 
-    NSDictionary* dict = @{@"addr_id":selectedAddModel.addressID,
-                           @"channel":@"alipay",
-                           @"payment":[NSNumber numberWithInt:allprice],
-                           @"post_fee":[NSNumber numberWithInt:yunfeifee],
-                           @"discount_fee":[NSNumber numberWithInt:youhuifee],
-                           @"total_fee":[NSNumber numberWithInt:allpay],
-                           @"uuid":buyModel.uuID,
-                           @"item_id":buyModel.itemID,
-                           @"sku_id":buyModel.skuID,
-                           @"num":buyNumber
-                        };
-    NSLog(@"dic = %@", dict);
-   NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-   
-    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+    NSString* dict = [NSString stringWithFormat:@"channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@", @"alipay", [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
+    
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@", dict);
+   // NSLog(@"string ------>>>%@", bodyData);
+    NSLog(@"data = ---->>>>%@", data);
+    [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     

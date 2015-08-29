@@ -247,8 +247,8 @@
     ladyTimeLabel.text = str;
     poster1TimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
     poster2TimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
-    childTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:17];
-    ladyTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:17];
+    childTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
+    ladyTimeLabel.font = [UIFont fontWithName:@"LiHei Pro" size:14];
 
 }
 
@@ -547,7 +547,7 @@
 }
 
 - (void)setTitleImage{
-    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 271, 35)];
+    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 200, 26)];
     imageView.image = [UIImage imageNamed:@"font-xinpin.png"];
     [self.headView addSubview:imageView];
 }
@@ -753,7 +753,7 @@
   
     for (int i = 0; i<2; i++) {
         for (int j = 0; j<2; j++) {
-            [[NSBundle mainBundle] loadNibNamed:@"LadyView" owner:ownerLadyView options:nil];
+            [[NSBundle mainBundle] loadNibNamed:@"GoodsView" owner:ownerLadyView options:nil];
             CGRect rect = CGRectMake(margin + (margin + width) * j,40 + margin + height * i, width, height);
             ownerLadyView.view.frame = rect;
             PeopleModel *model = (PeopleModel *)[array objectAtIndex:i*2 + j];
@@ -811,7 +811,7 @@
     label.textAlignment = NSTextAlignmentLeft;
     label.text = name;
     label.textColor = [UIColor whiteColor];
-    label.font =[UIFont fontWithName:@"LiHei Pro" size:24];
+    label.font =[UIFont fontWithName:@"LiHei Pro" size:18];
     [imageView addSubview:label];
     UIImageView *timeview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-shengyu2.png"]];
     timeview.frame = CGRectMake(SCREENWIDTH - 170, 8, 24, 24);
@@ -861,7 +861,7 @@
         btn.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
         if (!isToday) {
             isToday = YES;
-            self.headViewHeight.constant = 40;
+            self.headViewHeight.constant = 30;
 
             [self createPosterViewWithArray:_todayPosterArray];
             [self createChildViewWithArray:_todayPromoteChildArray];
@@ -1074,18 +1074,19 @@
 
 - (void)downloadModelListDataWithProductModel:(NSDictionary *)productModel{
     NSString *modelID = [productModel objectForKey:@"id"];
-    NSString *modelListUrlString = [NSString stringWithFormat:kModel_List_URL, modelID];
+    NSMutableString *stringUrl = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/",Root_URL];
+   [stringUrl appendString:[NSString stringWithFormat:@"%@", modelID]];
     
     
-    MMLOG(modelListUrlString);
+    MMLOG(stringUrl);
     
     
-    [self downLoadWithURLString:modelListUrlString andSelector:@selector(fetchedModelListData:)];
+    [self downLoadWithURLString:stringUrl andSelector:@selector(fetchedModelListData:)];
 }
 - (void)downloadDetailsDataWithChildModel:(PeopleModel *)model{
     
     MMLOG(model.url);
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/%@/details", model.uid];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL ,model.uid];
     MMLOG(urlString);
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData1:)];
 }

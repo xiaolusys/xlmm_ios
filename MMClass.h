@@ -41,48 +41,67 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
+//#define Root_URL @"http://192.168.1.11:9000"
+//#define Root_URL @"http://youni.huyi.so"
+#define Root_URL @"http://m.xiaolu.so"
+
+
 #if 1
+
+#define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today",Root_URL]
+#define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous",Root_URL]
+#define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today",Root_URL]
+#define kPREVIOUS_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous",Root_URL]
+#define kCHILD_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist",Root_URL]
+#define kLADY_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist",Root_URL]
+#define kLOGIN_URL [NSString stringWithFormat:@"%@/rest/v1/register/customer_login",Root_URL]
+#define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@",Root_URL]
+#define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts",Root_URL]
+#define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
+#define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num",Root_URL]
+#define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address",Root_URL]
+#define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades",Root_URL]
+
+#endif
+
+#if 0
 #define kTODAY_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/today"
 #define kPREVIOUS_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/previous"
 #define kTODAY_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_today"
 #define kPREVIOUS_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_previous"
 #define kCHILD_LIST_URL @"http://youni.huyi.so/rest/v1/products/childlist"
 #define kLADY_LIST_URL @"http://youni.huyi.so/rest/v1/products/ladylist"
-#define kLOGIN_URL @"http://youni.huyi.so/rest/v1/register/customer_login"
+#define kLOGIN_URL @"http://192.168.1.11:9000/rest/v1/register/customer_login"
 #define kModel_List_URL @"http://youni.huyi.so/rest/v1/products/modellist/%@"
 #define kCart_URL @"http://youni.huyi.so/rest/v1/carts"
 #define kCHILD_LIST_ORDER_URL @"http://youni.huyi.so/rest/v1/products/childlist?order_by=price"
-
 #define kCart_Number_URL @"http://youni.huyi.so/rest/v1/carts/show_carts_num"
 #define kAddress_List_URL @"http://youni.huyi.so/rest/v1/address"
 #define kQuanbuDingdan_URL @"http://youni.huyi.so/rest/v1/trades"
 
-
-#endif 
-
-
-#if 0
-
-#define kTODAY_POSTERS_URL @"http://192.168.1.131:8000/rest/v1/posters/today"
-#define kPREVIOUS_POSTERS_URL @"http://192.168.1.131:8000/rest/v1/posters/previous"
-#define kTODAY_PROMOTE_URL @"http://192.168.1.131:8000/rest/v1/products/promote_today"
-#define kPREVIOUS_PROMOTE_URL @"http://192.168.1.131:8000/rest/v1/products/promote_previous"
-#define kCHILD_LIST_URL @"http://192.168.1.131:8000/rest/v1/products/childlist"
-#define kLADY_LIST_URL @"http://192.168.1.131:8000/rest/v1/products/ladylist"
-#define kLOGIN_URL @"http://192.168.1.131:8000/rest/v1/register/customer_login"
-#define kModel_List_URL @"http://192.168.1.131:8000/rest/v1/products/modellist/%@"
-#define kCart_URL @"http://192.168.1.131:8000/rest/v1/carts"
-#define kCHILD_LIST_ORDER_URL @"http://192.168.1.131:8000/rest/v1/products/childlist?order_by=price"
-
-#define kCart_Number_URL @"http://192.168.1.131:8000/rest/v1/carts/show_carts_num"
-#define kAddress_List_URL @"http://192.168.1.131:8000/rest/v1/address"
-#define kQuanbuDingdan_URL @"http://192.168.1.131:8000/rest/v1/trades"
 
 
 
 #endif
 
 
+#if 0
+
+#define kTODAY_POSTERS_URL @"http://192.168.1.11:9000/rest/v1/posters/today"
+#define kPREVIOUS_POSTERS_URL @"http://192.168.1.11:9000/rest/v1/posters/previous"
+#define kTODAY_PROMOTE_URL @"http://192.168.1.11:9000/rest/v1/products/promote_today"
+#define kPREVIOUS_PROMOTE_URL @"http://192.168.1.11:9000/rest/v1/products/promote_previous"
+#define kCHILD_LIST_URL @"http://192.168.1.11:9000/rest/v1/products/childlist"
+#define kLADY_LIST_URL @"http://192.168.1.11:9000/rest/v1/products/ladylist"
+#define kLOGIN_URL @"http://192.168.1.11:9000/rest/v1/register/customer_login"
+#define kModel_List_URL @"http://192.168.1.11:9000/rest/v1/products/modellist/%@"
+#define kCart_URL @"http://192.168.1.11:9000/rest/v1/carts"
+#define kCHILD_LIST_ORDER_URL @"http://192.168.1.11:9000/rest/v1/products/childlist?order_by=price"
+#define kCart_Number_URL @"http://192.168.1.11:9000/rest/v1/carts/show_carts_num"
+#define kAddress_List_URL @"http://192.168.1.11:9000/rest/v1/address"
+#define kQuanbuDingdan_URL @"http://192.168.1.11:9000/rest/v1/trades"
+
+#endif
 
 #define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
 

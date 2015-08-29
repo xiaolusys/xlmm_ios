@@ -26,7 +26,9 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
     _passwordTextField.text = [userDefault objectForKey:kPassWord];
+ 
     
+    //[NSString stringWithFormat:@"%@/",Root_URL]
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
