@@ -294,7 +294,7 @@
     NSLog(@"删除地址-----");
     
     NSLog(@"address id = %@", model.addressID);
-    NSString *deleteurlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/address/%@/delete_address", model.addressID];
+    NSString *deleteurlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL,model.addressID];
     NSLog(@"deleteURL = %@", deleteurlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

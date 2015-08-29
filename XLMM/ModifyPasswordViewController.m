@@ -122,8 +122,10 @@
                                      @"password1":password1,
                                      @"password2":password2,
                                      };
-        
-        [manager POST:@"http://youni.huyi.so/rest/v1/register/change_user_pwd" parameters:parameters
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
+        NSLog(@"修改密码");
+        MMLOG(string);
+        [manager POST:string parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   //  NSError *error;
                   NSLog(@"JSON: %@", responseObject);
@@ -151,7 +153,9 @@
     NSLog(@"phoneNumber = %@\n", self.phoneNumberTextField.text);
     NSDictionary *parameters = @{@"vmobile": self.phoneNumberTextField.text};
     
-    [manager POST:@"http://youni.huyi.so/rest/v1/register/change_pwd_code" parameters:parameters
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_pwd_code", Root_URL];
+    NSLog(@"stringUrl = %@", string);
+    [manager POST:string parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               NSLog(@"JSON: %@", responseObject);

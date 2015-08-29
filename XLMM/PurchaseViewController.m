@@ -77,7 +77,7 @@
     NSLog(@"paramString = %@", paramstring);
     
     
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/carts_payinfo?cart_ids=%@", paramstring];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];

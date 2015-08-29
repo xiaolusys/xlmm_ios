@@ -63,7 +63,9 @@
                                 @"password2":password2,
                                 };
     
-    [manager POST:@"http://youni.huyi.so/rest/v1/register/check_code_user" parameters:parameters
+    NSString *stringUrl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
+    NSLog(@"url = %@", stringUrl);
+    [manager POST:stringUrl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
@@ -150,7 +152,11 @@
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
     NSDictionary *parameters = @{@"vmobile": phoneNumber};
     
-    [manager POST:@"http://youni.huyi.so/rest/v1/register" parameters:parameters
+    
+    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
+    NSLog(@"url = %@", stringurl);
+    
+    [manager POST:stringurl parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
              NSLog(@"JSON: %@", responseObject);

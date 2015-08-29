@@ -547,7 +547,7 @@
 }
 
 - (void)setTitleImage{
-    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 200, 26)];
+    UIImageView *imageView= [[UIImageView alloc] initWithFrame:CGRectMake(8, 1, 200, 26)];
     imageView.image = [UIImage imageNamed:@"font-xinpin.png"];
     [self.headView addSubview:imageView];
 }

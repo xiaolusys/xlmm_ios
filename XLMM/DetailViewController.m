@@ -156,7 +156,7 @@
     }
     
     //set the first as the last
-    
+    NSLog(@"imageView = %@", imageArray);
     UIImageView *lastView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:0]];
     lastView.frame = CGRectMake(width * (imageArray.count + 1), 0, width, height);
     [_scrollView addSubview:lastView];
@@ -582,17 +582,10 @@
 }
 
 - (void)myAnimation{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 25, SCREENHEIGHT - 60, 20, 20)];
-    view.backgroundColor = [UIColor redColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 , SCREENHEIGHT - 50, 20, 20)];
+    view.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
     view.layer.cornerRadius = 10;
-    imageView.layer.cornerRadius = 9;
-    imageView.center = view.center;
-    UIImage *image = [UIImage imagewithURLString:[_detailsModel.headImageURLArray objectAtIndex:0]];
-    imageView.image = image;
-    imageView.backgroundColor = [UIColor greenColor];
-    [view addSubview:imageView];
-    [self.view addSubview:view];
+       [self.view addSubview:view];
     CGFloat width = SCREENWIDTH;
     CGFloat height = SCREENHEIGHT;
     
@@ -608,20 +601,16 @@
                           );//控制点
     
     ani.path=aPath;
-    ani.rotationMode = @"autoReverse";
+    ani.rotationMode = @"auto";
     ani.duration=0.5;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    //自动旋转方向
-   // ani.rotationMode=@"auto";
-   // ani.repeatCount = 10;
+
    [view.layer addAnimation:ani forKey:@"position"];
     
-    [UIView animateWithDuration:0.49
+    [UIView animateWithDuration:0.5
                      animations:^{
-//                         view.frame = CGRectMake(10, SCREENHEIGHT- 108, 14, 14);
-//                         imageView.frame = CGRectMake(2,2 , 10, 10);
-            
+
                          view.alpha = 0.9;
                      } completion:^(BOOL finished) {
                          [view removeFromSuperview];
@@ -706,12 +695,6 @@
             NSLog(@"lijiVC.skuID = %@", lijiVC.skuID);
             NSLog(@"lijiVC.itemID = %@", lijiVC.itemID);
             [self.navigationController pushViewController:lijiVC animated:YES];
-            
-            
-            
-            
-            
-            
         }
 
     } else{

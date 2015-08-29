@@ -171,9 +171,10 @@
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 50, 10);
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 10)/2 + 50)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 50, 0);
     [self.womanCollectionView setCollectionViewLayout:flowLayout];
+    self.womanCollectionView.showsVerticalScrollIndicator = NO;
 }
 
 - (void)setInfo{
@@ -231,7 +232,7 @@
         model.name = [dic objectForKey:@"name"];
         model.price = [dic objectForKey:@"agent_price"];
         model.oldPrice = [dic objectForKey:@"std_sale_price"];
-        
+        model.uid = [dic objectForKey:@"id"];
         model.url = [dic objectForKey:@"url"];
         
         
@@ -273,6 +274,13 @@
         
     }
     
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 0;
+}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -344,7 +352,8 @@
 
 
 - (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL,[productModel objectForKey:@"id"]];
     
     MMLOG(urlString);
     dispatch_async(kBgQueue, ^(){
@@ -358,12 +367,15 @@
 }
 
 - (void)downloadDetailsDataWithModel:(PeopleModel *)model{
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
     
-    MMLOG(urlString);
+    NSMutableString *urlstring = [NSMutableString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, model.uid];
+    [urlstring appendString:@"/details"];
+   // NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    
+    MMLOG(urlstring);
     
     dispatch_async(kBgQueue, ^(){
-        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlString)];
+        NSData *data = [NSData dataWithContentsOfURL:kLoansRRL(urlstring)];
         if (data == nil) {
             return ;
         }
@@ -504,7 +516,10 @@
 
 
 - (void)downloadOrderData{
-    [self downLoadWithURLString:@"http://youni.huyi.so/rest/v1/products/ladylist?order_by=price" andSelector:@selector(fatchedOrderLadyListData:)];
+    
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price", Root_URL];
+    NSLog(@"url = %@", urlstring);
+    [self downLoadWithURLString:urlstring andSelector:@selector(fatchedOrderLadyListData:)];
 }
 
 

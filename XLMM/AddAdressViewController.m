@@ -9,6 +9,7 @@
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
 #import "AFNetworking.h"
+#import "MMClass.h"
 
 
 
@@ -239,7 +240,10 @@
                                      };
         NSLog(@"parameters = %@", parameters);
     
-        [manager POST:@"http://youni.huyi.so/rest/v1/address/create_address?format=json" parameters:parameters
+        
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/create_address?format=json", Root_URL];
+        NSLog(@"url = %@", string);
+        [manager POST:string parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
@@ -265,7 +269,7 @@
                                      };
         NSLog(@"parameters = %@", parameters);
         
-        NSString *modifyUrlStr = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/address/%@/update", self.addressModel.addressID];
+        NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,self.addressModel.addressID];
         
         NSLog(@"modifyUrlStr = %@", modifyUrlStr);
         

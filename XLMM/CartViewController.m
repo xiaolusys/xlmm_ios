@@ -197,7 +197,7 @@
 }
 - (void)reduceNumber:(ShoppingCartModel *)cartModel{
   
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/%@/minus_product_carts", cartModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/minus_product_carts", Root_URL, cartModel.cartID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -220,7 +220,7 @@
 }
 - (void)addNumber:(ShoppingCartModel *)cartModel{
    
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/%@/plus_product_carts", cartModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -302,7 +302,7 @@
     NSLog(@"确认删除");
         [self.myView removeFromSuperview];
         self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/%@/delete_carts", deleteModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
     NSLog(@"url = %@", urlString);
     
     //第一步，创建URL

@@ -63,7 +63,8 @@
     
    // [self downLoadData];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/carts/now_payinfo?sku_id=%@", self.skuID];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/now_payinfo?sku_id=%@", Root_URL,self.skuID];
     [self.addButton setBackgroundImage:[UIImage imageNamed:@"btn-plus.png"] forState:UIControlStateNormal];
     [self.reduceButton setBackgroundImage:[UIImage imageNamed:@"btn-reduce.png"] forState:UIControlStateNormal];
     
@@ -233,7 +234,10 @@
     int i = [buyNumber intValue];
     i++;
    
-    NSURL *url = [NSURL URLWithString:@"http://youni.huyi.so/rest/v1/carts/sku_num_enough"];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/carts/sku_num_enough", Root_URL];
+    NSLog(@"url = %@", string);
+    NSURL *url = [NSURL URLWithString:string];
+    
   
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
 

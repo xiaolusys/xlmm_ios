@@ -88,9 +88,10 @@
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 30)/2, (SCREENWIDTH - 30)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(8, 10, 50, 10);
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 10)/2 + 50)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 50, 0);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
+    self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
 
 - (void)createShoppingCart{
@@ -238,7 +239,7 @@
           model.price = [dic objectForKey:@"agent_price"];
           model.oldPrice = [dic objectForKey:@"std_sale_price"];
           model.url = [dic objectForKey:@"url"];
-          
+          model.uid = [dic objectForKey:@"id"];
           model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
           model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
           model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
@@ -284,6 +285,14 @@
     }
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 0;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
@@ -323,7 +332,7 @@
 }
 
 - (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
-    NSString *urlString = [NSString stringWithFormat:@"http://youni.huyi.so/rest/v1/products/modellist/%@", [productModel objectForKey:@"id"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL,[productModel objectForKey:@"id"]];
     MMLOG(urlString);
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedModelListData:)];
 }
@@ -357,10 +366,12 @@
 }
 
 - (void)downloadDetailsDataWithModel:(PeopleModel *)model{
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
+    NSMutableString *urlstring = [NSMutableString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, model.uid];
+    [urlstring appendString:@"/details"];
+ //   NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
     
-    MMLOG(urlString);
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    MMLOG(urlstring);
+    [self downLoadWithURLString:urlstring andSelector:@selector(fetchedDetailsData:)];
 }
 
 - (void)fetchedDetailsData:(NSData *)responseData{
