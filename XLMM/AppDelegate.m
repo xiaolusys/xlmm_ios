@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "Pingpp.h"
+#import "MMRootViewController.h"
+#import "LeftMenuViewController.h"
+#import "RightMenuViewController.h"
 
 @interface AppDelegate ()
 
@@ -23,12 +26,27 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     //创建导航控制器，添加根视图控制器
-#if 1
+#if 0
     RootViewController *root = [[RootViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = nav;
 #else
+    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
+    RightMenuViewController *rightMenu = [[RightMenuViewController alloc] initWithNibName:@"RightMenuViewController" bundle:nil];
     
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:rightMenu];
+    
+    menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
+    menuVC.menuPreferredStatusBarStyle = 1;
+    menuVC.delegate = self;
+    menuVC.contentViewShadowColor = [UIColor blackColor];
+    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
+    menuVC.contentViewShadowOpacity = 0.6;
+    menuVC.contentViewShadowRadius = 12;
+    menuVC.contentViewShadowEnabled = YES;
+    self.window.rootViewController = menuVC;
     
 #endif
     [self.window makeKeyAndVisible];
@@ -68,5 +86,27 @@
                }
            }];
     return  YES;
+}
+#pragma mark -
+#pragma mark RESideMenu Delegate
+
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
+{
+    NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
+{
+    NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
+{
+    NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
+{
+    NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 @end

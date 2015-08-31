@@ -10,4 +10,8 @@
 
 @interface MMRootViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *btnView;
+
+- (IBAction)btnClicked:(id)sender;
+
 @end

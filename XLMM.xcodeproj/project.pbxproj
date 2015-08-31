@@ -167,6 +167,10 @@
 		32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A2883B1B93E20F006DC949 /* RightMenuViewController.xib */; };
 		32A288411B93E230006DC949 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
 		32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
+		32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288451B93E2AC006DC949 /* RECommonFunctions.m */; };
+		32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288471B93E2AC006DC949 /* RESideMenu.m */; };
+		32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */; };
+		32A2884E1B93E790006DC949 /* backImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A2884D1B93E790006DC949 /* backImage.jpg */; };
 		32A81F911B8D963C009972B3 /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F901B8D963C009972B3 /* BuyModel.m */; };
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
 		32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A81F951B8D9C08009972B3 /* BuyCartsView.xib */; };
@@ -449,6 +453,13 @@
 		32A2883E1B93E230006DC949 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
 		32A2883F1B93E230006DC949 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
 		32A288401B93E230006DC949 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
+		32A288441B93E2AC006DC949 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		32A288451B93E2AC006DC949 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		32A288461B93E2AC006DC949 /* RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESideMenu.h; sourceTree = "<group>"; };
+		32A288471B93E2AC006DC949 /* RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESideMenu.m; sourceTree = "<group>"; };
+		32A288481B93E2AC006DC949 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
+		32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
+		32A2884D1B93E790006DC949 /* backImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backImage.jpg; sourceTree = "<group>"; };
 		32A81F8F1B8D963C009972B3 /* BuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyModel.h; sourceTree = "<group>"; };
 		32A81F901B8D963C009972B3 /* BuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyModel.m; sourceTree = "<group>"; };
 		32A81F921B8D9BF6009972B3 /* BuyCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCartsView.h; sourceTree = "<group>"; };
@@ -609,6 +620,8 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32A2884D1B93E790006DC949 /* backImage.jpg */,
+				32A288431B93E2AC006DC949 /* RESideMenu */,
 				3299D8701B8C7FAA000AA744 /* lib */,
 				3290C88E1B88A6D000CFAFA0 /* resources */,
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
@@ -1059,6 +1072,19 @@
 			name = "New Group";
 			sourceTree = "<group>";
 		};
+		32A288431B93E2AC006DC949 /* RESideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				32A288441B93E2AC006DC949 /* RECommonFunctions.h */,
+				32A288451B93E2AC006DC949 /* RECommonFunctions.m */,
+				32A288461B93E2AC006DC949 /* RESideMenu.h */,
+				32A288471B93E2AC006DC949 /* RESideMenu.m */,
+				32A288481B93E2AC006DC949 /* UIViewController+RESideMenu.h */,
+				32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */,
+			);
+			path = RESideMenu;
+			sourceTree = "<group>";
+		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1227,6 +1253,7 @@
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
+				32A2884E1B93E790006DC949 /* backImage.jpg in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
@@ -1347,6 +1374,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
 				32746DCF1B743DB100816208 /* ClothesCollectionCell.m in Sources */,
@@ -1365,8 +1393,10 @@
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
+				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
+				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
