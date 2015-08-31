@@ -21,6 +21,8 @@
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     imageView.image = [UIImage imageNamed:@"backImage.jpg"];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+
     [self.view addSubview:imageView];
 }
 

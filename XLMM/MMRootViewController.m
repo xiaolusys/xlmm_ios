@@ -55,7 +55,7 @@
 
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT);
+    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 45);
     _pageVC.view.userInteractionEnabled = YES;
     
     _pageVC.dataSource = self;
@@ -116,7 +116,7 @@
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
     if (currentIndex < _pageContentVC.count - 1) {
         
-        pageViewController.view.userInteractionEnabled = YES;
+     //   pageViewController.view.userInteractionEnabled = YES;
         NSLog(@"1111");
         _pageCurrentIndex = currentIndex + 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
@@ -124,10 +124,9 @@
 
     } else{
         NSLog(@"2222");
-       // pageViewController.view.userInteractionEnabled = NO;
 
     }
-    
+    // pageViewController.view.userInteractionEnabled = NO;
     
     return nil;
 }
@@ -145,7 +144,58 @@
         NSLog(@"4444");
    //pageViewController.view.userInteractionEnabled = NO;
     }
+    
+    //pageViewController.view.userInteractionEnabled = NO;
+
     return nil;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    NSInteger currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
+    
+    if (completed)
+    {
+        NSInteger btnTag = currentIndex + 100;
+        for (int i = 100; i<104; i++) {
+            if (btnTag == i) {
+                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+                
+            }
+            else{
+                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+
+            }
+        }
+        
+       // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
+        
+    }else
+    {
+        if (finished)
+        {
+            
+            NSInteger btnTag = currentIndex + 100;
+            for (int i = 100; i<104; i++) {
+                if (btnTag == i) {
+                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                    button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+                    
+                }
+                else{
+                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                    button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+                    
+                }
+            }
+
+            
+            //[self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
+        }
+    }
+    
 }
 
 - (IBAction)btnClicked:(id)sender {

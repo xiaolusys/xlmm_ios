@@ -20,7 +20,7 @@
                     <subviews>
                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txg-z2-8ry">
                             <rect key="frame" x="2" y="2" width="78" height="42"/>
-                            <color key="backgroundColor" red="0.98039215686274506" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.3294117647" green="0.78039215689999997" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="Cvx-bQ-7Xd"/>
                             </constraints>

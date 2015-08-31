@@ -16,10 +16,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+   //  Do any additional setup after loading the view from its nib.
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.backgroundColor = [UIColor redColor];
     imageView.image = [UIImage imageNamed:@"backImage.jpg"];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+
     [self.view addSubview:imageView];
+    self.view.backgroundColor = [UIColor whiteColor];
     
 }
 
