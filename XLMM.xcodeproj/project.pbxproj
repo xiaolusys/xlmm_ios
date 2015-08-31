@@ -157,6 +157,16 @@
 		3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */; };
 		3299D88E1B8C7FAA000AA744 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8841B8C7FAA000AA744 /* libpingpp.a */; };
 		3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8851B8C7FAA000AA744 /* Pingpp.bundle */; };
+		32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2882B1B93E1C6006DC949 /* TodayViewController.m */; };
+		32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A2882C1B93E1C6006DC949 /* TodayViewController.xib */; };
+		32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288301B93E1E5006DC949 /* PreviousViewController.m */; };
+		32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288311B93E1E5006DC949 /* PreviousViewController.xib */; };
+		32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288351B93E1FC006DC949 /* LeftMenuViewController.m */; };
+		32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288361B93E1FC006DC949 /* LeftMenuViewController.xib */; };
+		32A2883C1B93E20F006DC949 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883A1B93E20F006DC949 /* RightMenuViewController.m */; };
+		32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A2883B1B93E20F006DC949 /* RightMenuViewController.xib */; };
+		32A288411B93E230006DC949 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
+		32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		32A81F911B8D963C009972B3 /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F901B8D963C009972B3 /* BuyModel.m */; };
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
 		32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A81F951B8D9C08009972B3 /* BuyCartsView.xib */; };
@@ -424,6 +434,21 @@
 		3299D8841B8C7FAA000AA744 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
 		3299D8851B8C7FAA000AA744 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
 		3299D8861B8C7FAA000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		32A2882A1B93E1C6006DC949 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		32A2882B1B93E1C6006DC949 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		32A2882C1B93E1C6006DC949 /* TodayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayViewController.xib; sourceTree = "<group>"; };
+		32A2882F1B93E1E5006DC949 /* PreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviousViewController.h; sourceTree = "<group>"; };
+		32A288301B93E1E5006DC949 /* PreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviousViewController.m; sourceTree = "<group>"; };
+		32A288311B93E1E5006DC949 /* PreviousViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviousViewController.xib; sourceTree = "<group>"; };
+		32A288341B93E1FC006DC949 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
+		32A288351B93E1FC006DC949 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
+		32A288361B93E1FC006DC949 /* LeftMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftMenuViewController.xib; sourceTree = "<group>"; };
+		32A288391B93E20F006DC949 /* RightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightMenuViewController.h; sourceTree = "<group>"; };
+		32A2883A1B93E20F006DC949 /* RightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightMenuViewController.m; sourceTree = "<group>"; };
+		32A2883B1B93E20F006DC949 /* RightMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightMenuViewController.xib; sourceTree = "<group>"; };
+		32A2883E1B93E230006DC949 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
+		32A2883F1B93E230006DC949 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
+		32A288401B93E230006DC949 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
 		32A81F8F1B8D963C009972B3 /* BuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyModel.h; sourceTree = "<group>"; };
 		32A81F901B8D963C009972B3 /* BuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyModel.m; sourceTree = "<group>"; };
 		32A81F921B8D9BF6009972B3 /* BuyCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCartsView.h; sourceTree = "<group>"; };
@@ -613,6 +638,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				32A288291B93E198006DC949 /* New Group */,
 				32F3D94F1B6CCA41008530BA /* AFNetworking */,
 				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
@@ -1011,6 +1037,28 @@
 			path = Wx;
 			sourceTree = "<group>";
 		};
+		32A288291B93E198006DC949 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				32A2882A1B93E1C6006DC949 /* TodayViewController.h */,
+				32A2882B1B93E1C6006DC949 /* TodayViewController.m */,
+				32A2882C1B93E1C6006DC949 /* TodayViewController.xib */,
+				32A2882F1B93E1E5006DC949 /* PreviousViewController.h */,
+				32A288301B93E1E5006DC949 /* PreviousViewController.m */,
+				32A288311B93E1E5006DC949 /* PreviousViewController.xib */,
+				32A288341B93E1FC006DC949 /* LeftMenuViewController.h */,
+				32A288351B93E1FC006DC949 /* LeftMenuViewController.m */,
+				32A288361B93E1FC006DC949 /* LeftMenuViewController.xib */,
+				32A288391B93E20F006DC949 /* RightMenuViewController.h */,
+				32A2883A1B93E20F006DC949 /* RightMenuViewController.m */,
+				32A2883B1B93E20F006DC949 /* RightMenuViewController.xib */,
+				32A2883E1B93E230006DC949 /* MMRootViewController.h */,
+				32A2883F1B93E230006DC949 /* MMRootViewController.m */,
+				32A288401B93E230006DC949 /* MMRootViewController.xib */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1140,6 +1188,7 @@
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
+				32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
@@ -1147,6 +1196,7 @@
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
+				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
 				32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */,
@@ -1183,6 +1233,7 @@
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
+				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
@@ -1202,8 +1253,10 @@
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
+				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
 				32746E331B74A22000816208 /* pro1.jpg in Resources */,
+				32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */,
 				3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
@@ -1248,6 +1301,7 @@
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
+				32A288411B93E230006DC949 /* MMRootViewController.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
@@ -1256,6 +1310,7 @@
 				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
+				32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
@@ -1271,6 +1326,7 @@
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
+				32A2883C1B93E20F006DC949 /* RightMenuViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
 				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
@@ -1302,9 +1358,11 @@
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
 				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
+				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
+				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
