@@ -76,9 +76,12 @@
     NSLog(@"is root = %d", self.isRoot);
     
     if (self.isRoot) {
-        self.topdistance.constant = 64;
         
-        NSLog(@"11%f", self.topdistance.constant);
+        CGRect rect = self.view.frame;
+        rect.origin.y +=64;
+        self.view.frame = rect;
+        
+        NSLog(@"frame = %@", NSStringFromCGRect(self.view.frame));
     }else{
         self.topdistance.constant = 0;
         NSLog(@"22%f", self.topdistance.constant);

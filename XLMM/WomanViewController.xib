@@ -16,17 +16,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUx-JQ-Uis">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
-                    <state key="normal" title="价格排序">
-                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="eSG-2V-Z0G"/>
-                    </connections>
-                </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="SsR-el-kFs">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -41,6 +30,17 @@
                         <outlet property="delegate" destination="-1" id="5Lg-HA-dLT"/>
                     </connections>
                 </collectionView>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUx-JQ-Uis">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
+                    <state key="normal" title="价格排序">
+                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="eSG-2V-Z0G"/>
+                    </connections>
+                </button>
                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkF-hX-ZLt">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <constraints>
@@ -86,8 +86,8 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="dUx-JQ-Uis"/>
                     <exclude reference="SsR-el-kFs"/>
+                    <exclude reference="dUx-JQ-Uis"/>
                     <exclude reference="AkF-hX-ZLt"/>
                 </mask>
                 <mask key="constraints">
@@ -106,8 +106,8 @@
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="dUx-JQ-Uis"/>
                     <include reference="SsR-el-kFs"/>
+                    <include reference="dUx-JQ-Uis"/>
                     <include reference="AkF-hX-ZLt"/>
                 </mask>
                 <mask key="constraints">

@@ -69,16 +69,7 @@
     [super viewDidLoad];
     NSLog(@"is root = %d", self.isRoot);
     
-    if (self.isRoot) {
-        self.topdistance.constant = 64;
-        
-        NSLog(@"11%f", self.topdistance.constant);
-    }else{
-        self.topdistance.constant = 0;
-        NSLog(@"22%f", self.topdistance.constant);
-        
-        
-    }
+
     
     
     // Do any additional setup after loading the view from its nib.
