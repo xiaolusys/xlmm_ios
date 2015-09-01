@@ -87,9 +87,9 @@
     
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
   
-    childVC.isRoot = NO;
     WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
-    womanVC.isRoot = NO;
+    
+    
     
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];
     

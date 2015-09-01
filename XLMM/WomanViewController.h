@@ -14,8 +14,10 @@
 @property (assign, nonatomic) BOOL isRoot;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *womanCollectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistance;
+@property (weak, nonatomic) IBOutlet UIView *myView;
+
 
 - (IBAction)btnClicked:(UIButton *)sender;
 

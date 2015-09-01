@@ -71,25 +71,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    NSLog(@"is root = %d", self.isRoot);
-    
-    if (self.isRoot) {
-        
-        CGRect rect = self.view.frame;
-        rect.origin.y +=64;
-        self.view.frame = rect;
-        
-        NSLog(@"frame = %@", NSStringFromCGRect(self.view.frame));
-    }else{
-        self.topdistance.constant = 0;
-        NSLog(@"22%f", self.topdistance.constant);
-        
-        
-    }
-    // Do any additional setup after loading the view from its nib.
+    [self.myView addSubview:[[UIView alloc] init]];
     _ModelListArray = [[NSMutableArray alloc] init];
+    
+    
+    self.topHeight.constant = 0;
+    
     
     
     [self setInfo];
