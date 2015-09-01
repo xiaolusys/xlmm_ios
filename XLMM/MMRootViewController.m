@@ -33,24 +33,48 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"小鹿美美";
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Left"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Right"
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(presentRightMenuViewController:)];
-    
-   [ self.view addSubview:[[UIView alloc] init]];
     
     
     _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+40, WIDTH, HEIGHT - 64 - 5 - 40)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
+    [self createInfo];
+    
     [self creatPageData];
+}
+
+- (void)createInfo{
+    self.title = @"小鹿美美";
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"font-logo.png"]];
+    imageView.frame = CGRectMake(0, 0, 147, 40);
+    self.navigationItem.titleView = imageView;
+    
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
+    leftImageview.frame = CGRectMake(8, 5, 29, 33);
+    [leftButton addSubview:leftImageview];
+    
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(2, 4, 1, 36)];
+    
+    leftView.backgroundColor = [UIColor colorWithRed:100/255.0 green:60/255.0 blue:32/255.0 alpha:1];
+    leftView.alpha = 0.5;
+    [leftButton addSubview:leftView];
+    
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Left"
+//                                                                             style:UIBarButtonItemStylePlain
+//                                                                            target:self
+//                                                                            action:@selector(presentLeftMenuViewController:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Right"
+//                                                                              style:UIBarButtonItemStylePlain
+//                                                                             target:self
+//                                                                             action:@selector(presentRightMenuViewController:)];
+    
+    [ self.view addSubview:[[UIView alloc] init]];
 }
 
 - (void)creatPageData{

@@ -26,6 +26,7 @@
     AddressModel *selectedAddModel;
     NSNumber *buyNumber;
     LiJiBuyModel *buyModel;
+    NSString *zhifufangshi;
 }
 
 @end
@@ -369,14 +370,16 @@
     NSLog(@"购买");
     
     
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/buynow_create", Root_URL];
+    NSLog(@"urlstring = %@", urlString);
     
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.11:9000/rest/v1/trades/buynow_create"];
+    NSURL *url = [NSURL URLWithString:urlString];
     
     
 
    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
 
-    NSString* dict = [NSString stringWithFormat:@"channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@", @"alipay", [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
+    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",selectedAddModel.addressID ,zhifufangshi, [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);
@@ -424,6 +427,9 @@
                 //[weakSelf showAlertMessage:result];
             }];
         });
+      
+      
+     
     }];
 
     
@@ -486,7 +492,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = @"确认订单";
     label.textColor = [UIColor blackColor];
-    label.font = [UIFont fontWithName:@"LiHei Pro" size:28];
+    label.font = [UIFont systemFontOfSize:20];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -525,10 +531,10 @@
     
     
     if (button.tag == 80) {
-        NSLog(@"weixin");
         
         
-        
+        zhifufangshi = @"wx";
+        NSLog(@"zhifufangshi = %@", zhifufangshi);
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
             if (i == button.tag - 20) {
@@ -545,8 +551,10 @@
         
         
     }else if (button.tag == 81){
-        NSLog(@"zhifubao");
-        
+       // NSLog(@"zhifubao");
+        zhifufangshi = @"alipay";
+        NSLog(@"zhifufangshi = %@", zhifufangshi);
+
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
             if (i == button.tag - 20) {
@@ -559,7 +567,7 @@
         }
         
     }else if (button.tag == 82){
-        NSLog(@"yinglian");
+      //  NSLog(@"yinglian");
         
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
@@ -573,7 +581,7 @@
         }
         
     }else if (button.tag == 83){
-        NSLog(@"baidu");
+     //   NSLog(@"baidu");
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
             if (i == button.tag - 20) {

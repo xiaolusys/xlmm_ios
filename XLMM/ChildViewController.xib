@@ -15,31 +15,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFE-0Y-vvi">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="36" id="zXR-k9-dKI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
-                    <state key="normal" title="推荐排序">
-                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="zXR-k9-dKI"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="zXR-k9-dKI"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Ebl-es-9Xi"/>
-                    </connections>
-                </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9QH-ZB-iCK">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,6 +41,31 @@
                         <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="MjW-yM-OTG"/>
                     </connections>
                 </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFE-0Y-vvi">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="zXR-k9-dKI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
+                    <state key="normal" title="推荐排序">
+                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="zXR-k9-dKI"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="zXR-k9-dKI"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Ebl-es-9Xi"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -74,7 +74,9 @@
                 <constraint firstItem="9QH-ZB-iCK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="93j-lP-eXX"/>
                 <constraint firstItem="DOa-nV-73Q" firstAttribute="leading" secondItem="uFE-0Y-vvi" secondAttribute="trailing" constant="8" id="9x5-wS-i7O"/>
                 <constraint firstItem="uFE-0Y-vvi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="LU7-o3-PCl"/>
-                <constraint firstItem="uFE-0Y-vvi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RnG-8X-fWu"/>
+                <constraint firstItem="uFE-0Y-vvi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RnG-8X-fWu">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="DOa-nV-73Q" secondAttribute="trailing" constant="8" id="WSC-3w-WCX"/>
                 <constraint firstAttribute="trailing" secondItem="9QH-ZB-iCK" secondAttribute="trailing" id="ZH6-eF-zvr"/>
                 <constraint firstItem="DOa-nV-73Q" firstAttribute="width" secondItem="uFE-0Y-vvi" secondAttribute="width" id="vqP-0l-sPy"/>
@@ -87,9 +89,9 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="uFE-0Y-vvi"/>
                     <exclude reference="9QH-ZB-iCK"/>
                     <exclude reference="DOa-nV-73Q"/>
+                    <exclude reference="uFE-0Y-vvi"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="0j2-un-xjj"/>
@@ -107,9 +109,9 @@
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="uFE-0Y-vvi"/>
                     <include reference="9QH-ZB-iCK"/>
                     <include reference="DOa-nV-73Q"/>
+                    <include reference="uFE-0Y-vvi"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="0j2-un-xjj"/>

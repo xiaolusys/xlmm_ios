@@ -120,10 +120,12 @@
     [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-
+    MMLOG(self.detailsModel.contentImageURLArray);
     self.headImageUrlArray = self.detailsModel.headImageURLArray;
     self.contentImageUrlArray = self.detailsModel.contentImageURLArray;
     imageArray = [[NSMutableArray alloc] init];
+    
+    NSLog(@"headImageUlr = %@", self.headImageUrlArray);
     
     for (NSString *headImageUrl in self.headImageUrlArray) {
         UIImage *image = [UIImage imagewithURLString:headImageUrl];
@@ -157,10 +159,11 @@
     
     //set the first as the last
     NSLog(@"imageView = %@", imageArray);
+    
     UIImageView *lastView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:0]];
     lastView.frame = CGRectMake(width * (imageArray.count + 1), 0, width, height);
     [_scrollView addSubview:lastView];
-    
+//
     [_scrollView setContentSize:CGSizeMake(width * (imageArray.count + 2), height)];
     [self.headView addSubview:_scrollView];
     [_scrollView scrollRectToVisible:CGRectMake(width, 0, width, height) animated:NO];
@@ -549,6 +552,15 @@
                           //NSLog(@"operation: %@", operation);
 
                           NSLog(@"Error: %@", error);
+                          NSLog(@"error:, --.>>>%@", error.description);
+                          NSDictionary *dic = [error userInfo];
+                          NSLog(@"dic = %@", dic);
+                          
+                          
+                          NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+                          
+                          NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+                          NSLog(@"%@",str);
                           UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
                           view.backgroundColor = [UIColor blackColor];
                           view.layer.cornerRadius = 8;

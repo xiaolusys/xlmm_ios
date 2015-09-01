@@ -15,30 +15,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkF-hX-ZLt">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="36" id="HTW-Du-kLQ"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
-                    <state key="normal" title="推荐排序">
-                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="HTW-Du-kLQ"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="HTW-Du-kLQ"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="txN-35-gLa"/>
-                    </connections>
-                </button>
                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUx-JQ-Uis">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
@@ -64,6 +40,30 @@
                         <outlet property="delegate" destination="-1" id="5Lg-HA-dLT"/>
                     </connections>
                 </collectionView>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkF-hX-ZLt">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="HTW-Du-kLQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
+                    <state key="normal" title="推荐排序">
+                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="HTW-Du-kLQ"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="HTW-Du-kLQ"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="txN-35-gLa"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -75,7 +75,9 @@
                 <constraint firstItem="dUx-JQ-Uis" firstAttribute="bottom" secondItem="AkF-hX-ZLt" secondAttribute="bottom" id="Vp5-Li-F8h"/>
                 <constraint firstItem="SsR-el-kFs" firstAttribute="top" secondItem="dUx-JQ-Uis" secondAttribute="bottom" constant="4" id="eAE-HS-Pt8"/>
                 <constraint firstItem="dUx-JQ-Uis" firstAttribute="leading" secondItem="AkF-hX-ZLt" secondAttribute="trailing" constant="8" id="ghQ-rL-67x"/>
-                <constraint firstItem="AkF-hX-ZLt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="i5w-OO-mF2"/>
+                <constraint firstItem="AkF-hX-ZLt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="i5w-OO-mF2">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="SsR-el-kFs" secondAttribute="bottom" id="jxu-Mo-OQs"/>
                 <constraint firstItem="AkF-hX-ZLt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="yey-6w-AwQ"/>
             </constraints>
@@ -83,9 +85,9 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="AkF-hX-ZLt"/>
                     <exclude reference="dUx-JQ-Uis"/>
                     <exclude reference="SsR-el-kFs"/>
+                    <exclude reference="AkF-hX-ZLt"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="i5w-OO-mF2"/>
@@ -103,9 +105,9 @@
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="AkF-hX-ZLt"/>
                     <include reference="dUx-JQ-Uis"/>
                     <include reference="SsR-el-kFs"/>
+                    <include reference="AkF-hX-ZLt"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="i5w-OO-mF2"/>

@@ -19,11 +19,11 @@
     // Do any additional setup after loading the view from its nib.
     
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    imageView.image = [UIImage imageNamed:@"backImage.jpg"];
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//    imageView.image = [UIImage imageNamed:@"backImage.jpg"];
+//    imageView.contentMode = UIViewContentModeScaleAspectFill;
 
-    [self.view addSubview:imageView];
+//    [self.view addSubview:imageView];
 }
 
 - (void)didReceiveMemoryWarning {

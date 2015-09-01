@@ -70,6 +70,7 @@
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
 
+    [self.view addSubview:[[UIView alloc] init]];
     [self setInfo];
     [self setLayout];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

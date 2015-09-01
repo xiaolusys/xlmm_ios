@@ -180,6 +180,7 @@
 }
 
 #pragma mark View life cycle
+#pragma mark －－设置背景图片－－
 
 - (void)viewDidLoad
 {
@@ -188,7 +189,7 @@
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.backgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        imageView.image = self.backgroundImage;
+        imageView.image = nil;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         imageView;

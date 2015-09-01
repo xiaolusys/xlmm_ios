@@ -163,6 +163,8 @@
     
     DetailViewController *detailsVC = [[DetailViewController alloc] init];
     detailsVC.detailsModel = model;
+    
+    NSLog(@"%@",model);
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 

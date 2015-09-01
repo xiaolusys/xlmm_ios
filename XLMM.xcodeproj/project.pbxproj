@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
+		32121B401B9461BF00742E53 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32121B3F1B9461BF00742E53 /* icon.png */; };
+		32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32121B421B9481B900742E53 /* PosterCollectionCell.m */; };
+		32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32121B431B9481B900742E53 /* PosterCollectionCell.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -114,6 +117,8 @@
 		32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E071B74A22000816208 /* youhuiquan3.png */; };
 		32746E3C1B74A22000816208 /* youhuiquan4.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E081B74A22000816208 /* youhuiquan4.png */; };
 		32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746E711B74B5C600816208 /* UIColor+RGBColor.m */; };
+		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
+		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -175,10 +180,6 @@
 		32A288BF1B942F53006DC949 /* Head1View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288BD1B942F53006DC949 /* Head1View.xib */; };
 		32A288C31B942F6B006DC949 /* Head2View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288C11B942F6B006DC949 /* Head2View.m */; };
 		32A288C41B942F6B006DC949 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
-		32A288C81B942F8C006DC949 /* PosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288C61B942F8C006DC949 /* PosterCell.m */; };
-		32A288C91B942F8C006DC949 /* PosterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C71B942F8C006DC949 /* PosterCell.xib */; };
-		32A288CD1B942FB2006DC949 /* GoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288CB1B942FB2006DC949 /* GoodsCell.m */; };
-		32A288CE1B942FB2006DC949 /* GoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288CC1B942FB2006DC949 /* GoodsCell.xib */; };
 		32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288D01B943EB4006DC949 /* PromoteModel.m */; };
 		32A81F911B8D963C009972B3 /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F901B8D963C009972B3 /* BuyModel.m */; };
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
@@ -242,6 +243,10 @@
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
+		32121B3F1B9461BF00742E53 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		32121B411B9481B900742E53 /* PosterCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell.h; sourceTree = "<group>"; };
+		32121B421B9481B900742E53 /* PosterCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell.m; sourceTree = "<group>"; };
+		32121B431B9481B900742E53 /* PosterCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell.xib; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -378,6 +383,9 @@
 		32746E081B74A22000816208 /* youhuiquan4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquan4.png; sourceTree = "<group>"; };
 		32746E701B74B5C600816208 /* UIColor+RGBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RGBColor.h"; sourceTree = "<group>"; };
 		32746E711B74B5C600816208 /* UIColor+RGBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RGBColor.m"; sourceTree = "<group>"; };
+		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
+		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
+		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
 		3282F25E1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3282F2601B6B5B1300E73EB9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -475,12 +483,6 @@
 		32A288C01B942F6B006DC949 /* Head2View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Head2View.h; sourceTree = "<group>"; };
 		32A288C11B942F6B006DC949 /* Head2View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Head2View.m; sourceTree = "<group>"; };
 		32A288C21B942F6B006DC949 /* Head2View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Head2View.xib; sourceTree = "<group>"; };
-		32A288C51B942F8C006DC949 /* PosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCell.h; sourceTree = "<group>"; };
-		32A288C61B942F8C006DC949 /* PosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCell.m; sourceTree = "<group>"; };
-		32A288C71B942F8C006DC949 /* PosterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCell.xib; sourceTree = "<group>"; };
-		32A288CA1B942FB2006DC949 /* GoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCell.h; sourceTree = "<group>"; };
-		32A288CB1B942FB2006DC949 /* GoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsCell.m; sourceTree = "<group>"; };
-		32A288CC1B942FB2006DC949 /* GoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsCell.xib; sourceTree = "<group>"; };
 		32A288CF1B943EB4006DC949 /* PromoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromoteModel.h; sourceTree = "<group>"; };
 		32A288D01B943EB4006DC949 /* PromoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromoteModel.m; sourceTree = "<group>"; };
 		32A81F8F1B8D963C009972B3 /* BuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyModel.h; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				32A2884D1B93E790006DC949 /* backImage.jpg */,
+				32121B3F1B9461BF00742E53 /* icon.png */,
 				32A288431B93E2AC006DC949 /* RESideMenu */,
 				3299D8701B8C7FAA000AA744 /* lib */,
 				3290C88E1B88A6D000CFAFA0 /* resources */,
@@ -1088,12 +1091,9 @@
 				32A288C01B942F6B006DC949 /* Head2View.h */,
 				32A288C11B942F6B006DC949 /* Head2View.m */,
 				32A288C21B942F6B006DC949 /* Head2View.xib */,
-				32A288C51B942F8C006DC949 /* PosterCell.h */,
-				32A288C61B942F8C006DC949 /* PosterCell.m */,
-				32A288C71B942F8C006DC949 /* PosterCell.xib */,
-				32A288CA1B942FB2006DC949 /* GoodsCell.h */,
-				32A288CB1B942FB2006DC949 /* GoodsCell.m */,
-				32A288CC1B942FB2006DC949 /* GoodsCell.xib */,
+				32121B411B9481B900742E53 /* PosterCollectionCell.h */,
+				32121B421B9481B900742E53 /* PosterCollectionCell.m */,
+				32121B431B9481B900742E53 /* PosterCollectionCell.xib */,
 				32A288341B93E1FC006DC949 /* LeftMenuViewController.h */,
 				32A288351B93E1FC006DC949 /* LeftMenuViewController.m */,
 				32A288361B93E1FC006DC949 /* LeftMenuViewController.xib */,
@@ -1105,6 +1105,9 @@
 				32A288401B93E230006DC949 /* MMRootViewController.xib */,
 				32A288CF1B943EB4006DC949 /* PromoteModel.h */,
 				32A288D01B943EB4006DC949 /* PromoteModel.m */,
+				327F80BC1B9559F600EDDF5B /* PersonTableCell.h */,
+				327F80BD1B9559F600EDDF5B /* PersonTableCell.m */,
+				327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1233,12 +1236,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32A288CE1B942FB2006DC949 /* GoodsCell.xib in Resources */,
 				3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,
-				32A288C91B942F8C006DC949 /* PosterCell.xib in Resources */,
+				32121B401B9461BF00742E53 /* icon.png in Resources */,
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
@@ -1299,11 +1301,13 @@
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
+				32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
+				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
@@ -1377,6 +1381,7 @@
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
+				32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */,
 				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
@@ -1433,7 +1438,7 @@
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
-				32A288CD1B942FB2006DC949 /* GoodsCell.m in Sources */,
+				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1441,7 +1446,6 @@
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
-				32A288C81B942F8C006DC949 /* PosterCell.m in Sources */,
 				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
