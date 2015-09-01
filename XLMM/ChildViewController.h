@@ -20,7 +20,6 @@ UICollectionViewDelegate>{
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistance;
 
 - (IBAction)btnClicked:(UIButton *)sender;
 

@@ -85,7 +85,7 @@
     [activityIndicator startAnimating];
     activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
     [self.childCollectionView addSubview:activityIndicator];
-    
+  //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    

@@ -87,7 +87,7 @@
     [activityIndicator startAnimating];
     activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
     [self.womanCollectionView addSubview:activityIndicator];
-    
+    //self.womanCollectionView.bounces = NO;
    //注册信息。。。
     [self.womanCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:kSimpleCell];
     [self setLayout];

@@ -555,14 +555,14 @@
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
-     
-            [self.navigationController pushViewController:womanVC animated:YES];
+//            WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
+//     
+//            [self.navigationController pushViewController:womanVC animated:YES];
             
         } else{
-            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
- 
-            [self.navigationController pushViewController:childVC animated:YES];
+//            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+// 
+//            [self.navigationController pushViewController:childVC animated:YES];
             
         }
         
