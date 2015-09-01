@@ -34,9 +34,9 @@
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
-    RightMenuViewController *rightMenu = [[RightMenuViewController alloc] initWithNibName:@"RightMenuViewController" bundle:nil];
+//    RightMenuViewController *rightMenu = [[RightMenuViewController alloc] initWithNibName:@"RightMenuViewController" bundle:nil];
     
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:rightMenu];
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     
     menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.menuPreferredStatusBarStyle = 1;

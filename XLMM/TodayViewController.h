@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^getCollectionView)(UICollectionView *collectionView);
+
 @interface TodayViewController : UIViewController
 
 @end

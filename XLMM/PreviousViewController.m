@@ -15,6 +15,8 @@
 #import "PromoteModel.h"
 #import "PosterModel.h"
 
+#import "MJRefresh.h"
+
 @interface PreviousViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
     
@@ -35,7 +37,7 @@
     BOOL step1;
     BOOL step2;
     
-    
+    BOOL _isFirst;
     
 }
 
@@ -46,6 +48,73 @@
 
 @implementation PreviousViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_isFirst) {
+        //集成刷新控件
+        
+        [self setupRefresh];
+        self.myCollectionView.footerHidden=NO;
+        self.myCollectionView.headerHidden=NO;
+        [self.myCollectionView headerBeginRefreshing];
+        _isFirst = NO;
+    }
+    
+}
+
+
+- (void)setupRefresh{
+    
+    
+    
+    [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
+    _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
+    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
+    
+    _myCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
+    _myCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
+    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    
+}
+
+- (void)headerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self reload];
+        sleep(1.5);
+        [_myCollectionView headerEndRefreshing];
+        
+    });
+}
+
+
+- (void)footerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self loadMore];
+        sleep(1.5);
+        [_myCollectionView footerEndRefreshing];
+        
+    });
+}
+
+- (void)reload
+{
+    NSLog(@"reload");
+    [self downloadData];
+    
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -54,6 +123,19 @@
     posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     step1 = NO;
     step2 = NO;
+    _isFirst = YES;
+    
+   
+    [self createCollectionView];
+    
+    [self downloadData];
+    
+    
+
+    
+}
+
+- (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     
@@ -72,12 +154,6 @@
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View"];
     self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.myCollectionView];
-    
-    
-    [self downloadData];
-    
-    
-
     
 }
 
@@ -113,6 +189,7 @@
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
     NSLog(@"data = %@", data);
+    [posterDataArray removeAllObjects];
     if (data == nil) {
         [frontView removeFromSuperview];
         
@@ -151,6 +228,8 @@
 }
 - (void)fetchedPromoteData:(NSData *)data{
     NSError *error;
+    [childDataArray removeAllObjects];
+    [ladyDataArray removeAllObjects];
     // NSLog(@"data = %@", data);
     if (data == nil) {
         [frontView removeFromSuperview];

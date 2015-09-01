@@ -16,6 +16,7 @@
 #import "PosterModel.h"
 #import "ChildViewController.h"
 #import "WomanViewController.h"
+#import "MJRefresh.h"
 
 
 @interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -45,6 +46,8 @@
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
     
+     BOOL _isFirst;
+    
     
 }
 
@@ -55,6 +58,73 @@
 
 @implementation TodayViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_isFirst) {
+        //集成刷新控件
+        
+        [self setupRefresh];
+        self.myCollectionView.footerHidden=NO;
+        self.myCollectionView.headerHidden=NO;
+        [self.myCollectionView headerBeginRefreshing];
+        _isFirst = NO;
+    }
+    
+}
+
+- (void)setupRefresh{
+    
+    
+    
+    [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
+    _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
+    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
+    
+    _myCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
+    _myCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
+    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    
+}
+
+- (void)headerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self reload];
+        sleep(1.5);
+        [_myCollectionView headerEndRefreshing];
+        
+    });
+}
+
+
+- (void)footerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self loadMore];
+        sleep(1.5);
+        [_myCollectionView footerEndRefreshing];
+        
+    });
+}
+
+- (void)reload
+{
+    NSLog(@"reload");
+    [self downloadData];
+    
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -63,7 +133,7 @@
     posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     step1 = NO;
     step2 = NO;
-  
+    _isFirst = YES;
     
   //  myTimeLabelString = @"剩余1天23小时23分59秒";
     
@@ -179,6 +249,7 @@
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
     NSLog(@"data = %@", data);
+    [posterDataArray removeAllObjects];
     if (data == nil) {
         [frontView removeFromSuperview];
         
@@ -217,6 +288,8 @@
 - (void)fetchedPromoteData:(NSData *)data{
     NSError *error;
     // NSLog(@"data = %@", data);
+    [childDataArray removeAllObjects];
+    [ladyDataArray removeAllObjects];
     if (data == nil) {
         [frontView removeFromSuperview];
         return;
@@ -483,14 +556,12 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
-          //  womanVC.
-           // womanVC.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
-            womanVC.isRoot = YES;
+     
             [self.navigationController pushViewController:womanVC animated:YES];
             
         } else{
             ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
-            childVC.isRoot = YES;
+ 
             [self.navigationController pushViewController:childVC animated:YES];
             
         }
