@@ -41,6 +41,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
+    
+ 
     [super viewWillAppear:animated];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
@@ -65,6 +67,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"is root = %d", self.isRoot);
+    
+    if (self.isRoot) {
+        self.topdistance.constant = 64;
+        
+        NSLog(@"11%f", self.topdistance.constant);
+    }else{
+        self.topdistance.constant = 0;
+        NSLog(@"22%f", self.topdistance.constant);
+        
+        
+    }
+    
+    
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _ModelListArray = [[NSMutableArray alloc] init];

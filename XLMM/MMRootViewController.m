@@ -53,14 +53,10 @@
     UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
-    leftImageview.frame = CGRectMake(8, 5, 29, 33);
+    leftImageview.frame = CGRectMake(8, 8, 26, 30);
     [leftButton addSubview:leftImageview];
     
-    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(2, 4, 1, 36)];
-    
-    leftView.backgroundColor = [UIColor colorWithRed:100/255.0 green:60/255.0 blue:32/255.0 alpha:1];
-    leftView.alpha = 0.5;
-    [leftButton addSubview:leftView];
+   
     
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
@@ -90,8 +86,10 @@
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
     
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
-    
+  
+    childVC.isRoot = NO;
     WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
+    womanVC.isRoot = NO;
     
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];
     

@@ -14,6 +14,9 @@
 #import "PeopleCollectionCell.h"
 #import "PromoteModel.h"
 #import "PosterModel.h"
+#import "ChildViewController.h"
+#import "WomanViewController.h"
+
 
 @interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
@@ -28,13 +31,19 @@
     UIView *frontView;
     NSInteger childListNumber;
     NSInteger ladyListNumber;
-    UILabel *childTimeLabel;
-    UILabel *ladyTimeLabel;
+ 
     NSDictionary *jsonDic;
+    
+    NSString *myTimeLabelString;
     
     BOOL step1;
     BOOL step2;
     
+    
+    NSTimer *theTimer;
+
+    UILabel *childTimeLabel;
+    UILabel *ladyTimeLabel;
     
     
 }
@@ -54,30 +63,92 @@
     posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     step1 = NO;
     step2 = NO;
+  
+    
+  //  myTimeLabelString = @"剩余1天23小时23分59秒";
+    
+    [self createCollectionView];
+    
+    [self downloadData];
+    
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:kIsLogin];
+    
+    [userDefaults setInteger:0 forKey:NumberOfCart];
+    [userDefaults synchronize];
+
+    
+    
+    
+}
+
+
+//设计倒计时方法。。。。
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    comps = [calendar components:unitFlags fromDate:date];
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+    int nextday = day + 1;
+    
+    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:nextday];
+    [endTime setHour:14];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+    
+    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+    
+    //用来得到具体的时差
+    
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ((long)[d day] == 0) {
+        myTimeLabelString = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+    }
+    else{
+        myTimeLabelString = [NSString stringWithFormat:@"剩余%02ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+    
+    }
+    childTimeLabel.text = myTimeLabelString;
+    ladyTimeLabel.text = myTimeLabelString;
+}
+- (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
-  
+    
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) collectionViewLayout:flowLayout];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
-    
+    self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:@"posterView"];
-
+    
     
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head1View"];
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View"];
     self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.myCollectionView];
-    
-    
-    [self downloadData];
-    
-    
-    
 }
 
 
@@ -122,7 +193,6 @@
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-    [posterDataArray addObject:childModel];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
     NSLog(@"%@", ladyDic);
@@ -131,7 +201,8 @@
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
     ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
     [posterDataArray addObject:ladyModel];
-    
+    [posterDataArray addObject:childModel];
+
     NSLog(@"%@", posterDataArray);
     step1 = YES;
     if (step1 && step2) {
@@ -382,15 +453,53 @@
     if (indexPath.section == 0) {
            headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head1View" forIndexPath:indexPath];
         return headerView;
+    } else if (indexPath.section == 1){
+        
+        Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+        headerView.nameLabel.text = @"潮童专区";
+        headerView.headView.layer.cornerRadius = 4;
+        headerView.timeLabel.text = myTimeLabelString;
+        childTimeLabel = headerView.timeLabel;
+        
+        return headerView;
+    } else if (indexPath.section == 2){
+        Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+        headerView.nameLabel.text = @"时尚女装";
+        headerView.headView.layer.cornerRadius = 4;
+        headerView.timeLabel.text = myTimeLabelString;
+        childTimeLabel = headerView.timeLabel;
+
+        return headerView;
     }
     
+    
     headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+   
     return headerView;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
-    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
+          //  womanVC.
+           // womanVC.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
+            womanVC.isRoot = YES;
+            [self.navigationController pushViewController:womanVC animated:YES];
+            
+        } else{
+            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+            childVC.isRoot = YES;
+            [self.navigationController pushViewController:childVC animated:YES];
+            
+        }
+        
+    } else if (indexPath.section == 1){
+        
+    } else if (indexPath.section == 2){
+        
+    }
 }
 
 

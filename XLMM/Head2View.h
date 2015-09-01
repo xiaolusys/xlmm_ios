@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface Head2View : UICollectionReusableView
+@property (weak, nonatomic) IBOutlet UIView *headView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end

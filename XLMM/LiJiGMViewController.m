@@ -379,7 +379,7 @@
 
    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
 
-    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",selectedAddModel.addressID ,zhifufangshi, [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
+    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",selectedAddModel.addressID ,@"alipay", [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);

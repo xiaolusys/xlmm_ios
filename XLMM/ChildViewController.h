@@ -12,11 +12,18 @@
 @interface ChildViewController : UIViewController<
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegateFlowLayout,
-                                    UICollectionViewDelegate>
+UICollectionViewDelegate>{
+}
+
+@property (assign, nonatomic) BOOL isRoot;
+
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistance;
 
 - (IBAction)btnClicked:(UIButton *)sender;
+
+
 
 @end

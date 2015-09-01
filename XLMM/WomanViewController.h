@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WomanViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface WomanViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>{
+}
+
+@property (assign, nonatomic) BOOL isRoot;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *womanCollectionView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistance;
 
 - (IBAction)btnClicked:(UIButton *)sender;
 

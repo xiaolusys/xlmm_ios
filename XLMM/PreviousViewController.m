@@ -77,8 +77,13 @@
     [self downloadData];
     
     
+
     
 }
+
+
+
+
 
 
 
@@ -122,7 +127,6 @@
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-    [posterDataArray addObject:childModel];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
     NSLog(@"%@", ladyDic);
@@ -131,6 +135,8 @@
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
     ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
     [posterDataArray addObject:ladyModel];
+    [posterDataArray addObject:childModel];
+
     
     NSLog(@"%@", posterDataArray);
     step1 = YES;
@@ -302,7 +308,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return CGSizeMake(SCREENWIDTH, 30);
+        return CGSizeMake(SCREENWIDTH, 0);
         
     } else if (section == 1){
         return CGSizeMake(SCREENWIDTH, 40);

@@ -200,7 +200,7 @@
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
-    
+    NSLog(@"***********");
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];

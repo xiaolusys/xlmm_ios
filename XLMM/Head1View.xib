@@ -11,7 +11,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="font-xinpin.png" translatesAutoresizingMaskIntoConstraints="NO" id="KiE-lR-A7h">
-                    <rect key="frame" x="8" y="2" width="210" height="26"/>
+                    <rect key="frame" x="8" y="1" width="210" height="26"/>
                 </imageView>
             </subviews>
         </collectionReusableView>
