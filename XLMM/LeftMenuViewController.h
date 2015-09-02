@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol RootVCPushOtherVCDelegate <NSObject>
+
+- (void) rootVCPushOtherVC:(UIViewController *)vc;
+
+@end
 
 @interface LeftMenuViewController : UIViewController
+
+@property (nonatomic, assign)id<RootVCPushOtherVCDelegate>pushVCDelegate;
 
 @end

@@ -34,6 +34,7 @@
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
+    leftMenu.pushVCDelegate = root;
 //    RightMenuViewController *rightMenu = [[RightMenuViewController alloc] initWithNibName:@"RightMenuViewController" bundle:nil];
     
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];

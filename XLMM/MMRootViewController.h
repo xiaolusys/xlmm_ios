@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeftMenuViewController.h"
 
-@interface MMRootViewController : UIViewController
+@interface MMRootViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *btnView;
 

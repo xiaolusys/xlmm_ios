@@ -51,7 +51,14 @@
 
 
 - (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.menuDelegate && [self.menuDelegate respondsToSelector:@selector(menuVCPushSide)] ){
+        
+        [self.menuDelegate menuVCPushSide];
+    }
+    
+    
+    
 }
 
 

@@ -11,6 +11,11 @@
 #import "MMClass.h"
 #import "PersonTableCell.h"
 
+#import "PersonCenterViewController1.h"
+#import "PersonCenterViewController2.h"
+#import "PersonCenterViewController3.h"
+
+
 
 
 @interface LeftMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -56,58 +61,112 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
+        {
             
+            [self.sideMenuViewController hideMenuViewController];
+
+            NSLog(@"待支付");
+           PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
+           // zhifuVC.menuDelegate = ;
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+            }
+
+//
+        }
             
-           // [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[DEMOFirstViewController alloc] init]]
-                    //                                     animated:YES];
-           // [self.sideMenuViewController hideMenuViewController];
+           // break;
+//            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[DEMOFirstViewController alloc] init]]
+//                                                         animated:YES];
+//            [self.sideMenuViewController hideMenuViewController];
             break;
         case 1:
-           // [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[DEMOSecondViewController alloc] init]]
-                  //                                       animated:YES];
-           // [self.sideMenuViewController hideMenuViewController];
+        {
+            PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:shouhuoVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
+            
+        }
+//            PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+//            //            [self.navigationController pushViewController:zhifuVC animated:YES];
+//            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:zhifuVC] animated:YES];
+//            [self.sideMenuViewController hideMenuViewController];
+//           // [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[DEMOSecondViewController alloc] init]]
+//                  //                                       animated:YES];
+//           // [self.sideMenuViewController hideMenuViewController];
             break;
-        case 2:
+        case 2:{
             
+            PersonCenterViewController3 *quanbuVC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:quanbuVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
-            break;
-        case 3:
-            
-            
-            break;
-        case 4:
-            
-            
-            break;
-        case 5:
-            
-            
-            break;
-        case 6:
-            
-            
-            break;
-        case 7:
-            
-            
-            break;
-           case 8:
+        }
             
             
             break;
-        case 9:
+        case 3:{
+            
+        }
             
             
             break;
-        case 10:
+        case 4:{
+            
+        }
             
             
             break;
-        case 11:
+        case 5:{
+            
+        }
             
             
             break;
-        default:
+        case 6:{
+            
+        }
+            
+            
+            break;
+        case 7:{
+            
+        }
+            
+            
+            break;
+        case 8:{
+            
+        }
+            
+            
+            break;
+        case 9:{
+            
+        }
+            
+            
+            break;
+        case 10:{
+           
+            
+            [self.sideMenuViewController hideMenuViewController];
+            
+            
+            
+            
+
+        }
+            
+            
+            break;
+        default:{
+            
+        }
             break;
     }
 }

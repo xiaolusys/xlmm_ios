@@ -12,12 +12,13 @@
 #import "PreviousViewController.h"
 #import "WomanViewController.h"
 #import "ChildViewController.h"
-
+#import "LeftMenuViewController.h"
+#import "MMClass.h"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
 
-@interface MMRootViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface MMRootViewController ()
 {
     UIView *_view;
     UIPageViewController *_pageVC;
@@ -259,6 +260,16 @@
     
     
 }
+
+
+
+
+- (void)rootVCPushOtherVC:(UIViewController *)vc{
+    [self.navigationController pushViewController:vc animated:NO];
+    
+}
+
+
 @end
 
 //

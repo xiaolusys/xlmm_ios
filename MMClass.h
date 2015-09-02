@@ -45,6 +45,12 @@
 //#define Root_URL @"http://youni.huyi.so"
 #define Root_URL @"http://m.xiaolu.so"
 
+@protocol MenuVCPushSideDelegate <NSObject>
+
+- (void)menuVCPushSide;
+
+@end
+
 
 #if 1
 
