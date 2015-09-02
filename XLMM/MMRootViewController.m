@@ -24,6 +24,8 @@
     UIPageViewController *_pageVC;
     NSArray *_pageContentVC;
     NSInteger _pageCurrentIndex;
+    UIButton *leftButton;
+    BOOL _isFirst;
     
 }
 
@@ -35,7 +37,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    _isFirst = YES;
     
     _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+40, WIDTH, HEIGHT - 64 - 5 - 40)];
     [self.view addSubview:_view];
@@ -51,7 +53,7 @@
     imageView.frame = CGRectMake(0, 0, 147, 40);
     self.navigationItem.titleView = imageView;
     
-    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
     leftImageview.frame = CGRectMake(8, 8, 26, 30);
@@ -107,12 +109,27 @@
 {
     [super viewWillAppear:animated];
     NSLog(@"DEMOFirstViewController will appear");
+    if (_isFirst) {
+        
+        NSLog(@"111");
+        
+    }else{
+        NSLog(@"222");
+        
+        [self presentLeftMenuViewController:leftButton];
+
+    }
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    _isFirst = NO;
     [super viewWillDisappear:animated];
     NSLog(@"DEMOFirstViewController will disappear");
+   
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -265,7 +282,7 @@
 
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc{
-    [self.navigationController pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
