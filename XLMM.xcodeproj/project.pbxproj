@@ -12,6 +12,10 @@
 		32121B401B9461BF00742E53 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32121B3F1B9461BF00742E53 /* icon.png */; };
 		32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32121B421B9481B900742E53 /* PosterCollectionCell.m */; };
 		32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32121B431B9481B900742E53 /* PosterCollectionCell.xib */; };
+		32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32151BF21B96CFBF003569D7 /* MMCollectionController.m */; };
+		32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32151BF31B96CFBF003569D7 /* MMCollectionController.xib */; };
+		32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */; };
+		32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -255,6 +259,12 @@
 		32121B411B9481B900742E53 /* PosterCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell.h; sourceTree = "<group>"; };
 		32121B421B9481B900742E53 /* PosterCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell.m; sourceTree = "<group>"; };
 		32121B431B9481B900742E53 /* PosterCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell.xib; sourceTree = "<group>"; };
+		32151BF11B96CFBF003569D7 /* MMCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCollectionController.h; sourceTree = "<group>"; };
+		32151BF21B96CFBF003569D7 /* MMCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCollectionController.m; sourceTree = "<group>"; };
+		32151BF31B96CFBF003569D7 /* MMCollectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCollectionController.xib; sourceTree = "<group>"; };
+		32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDetailsViewController.h; sourceTree = "<group>"; };
+		32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsViewController.m; sourceTree = "<group>"; };
+		32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMDetailsViewController.xib; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -1156,6 +1166,12 @@
 				327F80BC1B9559F600EDDF5B /* PersonTableCell.h */,
 				327F80BD1B9559F600EDDF5B /* PersonTableCell.m */,
 				327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */,
+				32151BF11B96CFBF003569D7 /* MMCollectionController.h */,
+				32151BF21B96CFBF003569D7 /* MMCollectionController.m */,
+				32151BF31B96CFBF003569D7 /* MMCollectionController.xib */,
+				32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */,
+				32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */,
+				32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1337,6 +1353,7 @@
 				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
+				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
@@ -1358,6 +1375,7 @@
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
+				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
@@ -1433,6 +1451,7 @@
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
 				327F80D41B95A60900EDDF5B /* MJRefreshBaseView.m in Sources */,
 				327F80D81B95A60900EDDF5B /* UIScrollView+MJExtension.m in Sources */,
+				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,
 				32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */,
 				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1503,6 +1522,7 @@
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
+				32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				327F80D71B95A60900EDDF5B /* MJRefreshHeaderView.m in Sources */,

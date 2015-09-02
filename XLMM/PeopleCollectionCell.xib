@@ -6,14 +6,12 @@
     <customFonts key="customFonts">
         <mutableArray key="LiHeiPro.ttf">
             <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PeopleCollectionCell">
             <connections>
                 <outlet property="backView" destination="WUt-wu-bjn" id="yfe-bP-ZRa"/>
-                <outlet property="frontView" destination="CVQ-Xn-f8i" id="Qr6-Ct-m9Q"/>
                 <outlet property="imageView" destination="uhQ-WN-ROj" id="gGm-fs-m3Y"/>
                 <outlet property="nameLabel" destination="Rif-Ul-A9W" id="VDu-GZ-QIm"/>
                 <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="zC8-5Y-3L0"/>
@@ -28,7 +26,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="180" height="230"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
-                        <rect key="frame" x="2" y="202" width="170" height="30"/>
+                        <rect key="frame" x="2" y="205" width="170" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="4d9-LB-dll"/>
                         </constraints>
@@ -37,19 +35,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" tag="23" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥68" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQ1-Th-Bsz">
-                        <rect key="frame" x="8" y="190" width="29" height="14"/>
-                        <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="14"/>
+                        <rect key="frame" x="8" y="190" width="30" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" tag="24" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAl-eb-VKY">
-                        <rect key="frame" x="60" y="192" width="31" height="12"/>
+                        <rect key="frame" x="60" y="195" width="31" height="12"/>
                         <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="12"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="paa-sZ-unt">
-                        <rect key="frame" x="60" y="198" width="31" height="1"/>
+                        <rect key="frame" x="60" y="201" width="31" height="1"/>
                         <color key="backgroundColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="jGC-yX-dlF"/>
@@ -58,21 +56,21 @@
                     <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="190"/>
                     </imageView>
-                    <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
+                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
                         <rect key="frame" x="50" y="75" width="80" height="80"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="抢光了" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
-                                <rect key="frame" x="0.0" y="20" width="80" height="40"/>
+                                <rect key="frame" x="4" y="26" width="72" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <view alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CVQ-Xn-f8i" userLabel="Front View">
-                        <rect key="frame" x="0.0" y="0.0" width="180" height="230"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="eCB-rQ-CuX"/>
+                            <constraint firstAttribute="height" constant="80" id="ic6-Le-qsz"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -88,6 +86,8 @@
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ezo-I2-VRO"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Hzm-cL-LqI"/>
                 <constraint firstItem="paa-sZ-unt" firstAttribute="width" secondItem="CAl-eb-VKY" secondAttribute="width" id="Lg7-Kv-OeZ"/>
+                <constraint firstAttribute="centerY" secondItem="WUt-wu-bjn" secondAttribute="centerY" id="RGa-Jx-Xea"/>
+                <constraint firstAttribute="centerX" secondItem="WUt-wu-bjn" secondAttribute="centerX" id="TPE-TU-oBJ"/>
                 <constraint firstItem="paa-sZ-unt" firstAttribute="centerY" secondItem="CAl-eb-VKY" secondAttribute="centerY" id="Xr5-wN-lrE"/>
                 <constraint firstItem="CAl-eb-VKY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="60" id="d9Z-Ht-253"/>
                 <constraint firstAttribute="trailing" secondItem="uhQ-WN-ROj" secondAttribute="trailing" id="pAn-iA-8Mu"/>
@@ -95,7 +95,6 @@
             </constraints>
             <connections>
                 <outlet property="backView" destination="WUt-wu-bjn" id="y0q-PD-AKU"/>
-                <outlet property="frontView" destination="CVQ-Xn-f8i" id="vR5-NK-gcF"/>
                 <outlet property="imageView" destination="uhQ-WN-ROj" id="ofb-oQ-Aaa"/>
                 <outlet property="nameLabel" destination="Rif-Ul-A9W" id="Ndw-xA-ZIx"/>
                 <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="HlJ-TV-C1E"/>

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PeopleModel.h"
-
+#import "CollectionModel.h"
 @interface PeopleCollectionCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UIView *backView;
-@property (weak, nonatomic) IBOutlet UIView *frontView;
 
+- (void)fillDataWithCollectionModel:(CollectionModel *)model;
 - (void)fillData:(PeopleModel *)model;
 
 @end

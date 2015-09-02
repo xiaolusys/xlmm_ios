@@ -41,7 +41,7 @@
     [self.collectionView registerClass:[ClothesCollectionCell class] forCellWithReuseIdentifier:@"SimpleCell"];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 10)/2 + 70)];
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2 + 70)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     flowLayout.sectionInset = UIEdgeInsetsMake(8, 0, 0, 0);
     [self.collectionView setCollectionViewLayout:flowLayout];
@@ -98,7 +98,7 @@
     
     static NSString *cellIdentifier = @"SimpleCell";
     ClothesCollectionCell *cell = (ClothesCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    [cell fillData:[self.collectionArray objectAtIndex:indexPath.row]];
+   // [cell fillData:[self.collectionArray objectAtIndex:indexPath.row]];
     
     return cell;
 }

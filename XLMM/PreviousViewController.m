@@ -431,7 +431,7 @@
             
         }else{
             cell.backView.hidden = YES;
-            cell.frontView.hidden = YES;
+//            cell.frontView.hidden = YES;
         }
         
         return cell;
@@ -453,7 +453,7 @@
             
         }else{
             cell.backView.hidden = YES;
-            cell.frontView.hidden = YES;
+//            cell.frontView.hidden = YES;
         }
         return cell;
         

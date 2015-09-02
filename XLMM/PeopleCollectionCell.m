@@ -9,6 +9,7 @@
 #import "PeopleCollectionCell.h"
 #import "UIImageView+WebCache.h"
 #import "MMClass.h"
+#import "CollectionModel.h"
 
 @implementation PeopleCollectionCell
 
@@ -32,6 +33,22 @@
     return self;
 }
 
+- (void)fillDataWithCollectionModel:(CollectionModel *)model{
+    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+    self.nameLabel.text = model.name;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
+    self.backView.layer.cornerRadius = 40;
+    if (!model.isSaleout) {
+        NSLog(@"isSaleOut : %@", model.isSaleout);
+        self.backView.hidden = YES;
+    } else{
+        NSLog(@"isSaleOut : %@", model.isSaleout);
+        self.backView.hidden = NO;
+        
+    }
+}
+
 - (void)fillData:(PeopleModel *)model{
     [self.imageView sd_setImageWithURL:kLoansRRL(model.imageURL)];
     self.nameLabel.text = model.name;
@@ -41,11 +58,9 @@
     if (!model.isSaleOut) {
         NSLog(@"%d", model.isSaleOut);
         self.backView.hidden = YES;
-        self.frontView.hidden = YES;
     } else{
         NSLog(@"%d", model.isSaleOut);
         self.backView.hidden = NO;
-        self.frontView.hidden = NO;
  
     }
 }

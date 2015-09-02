@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, copy)NSArray *collectionArray;
 
+@property (nonatomic, copy)NSString *url;
+
 @end

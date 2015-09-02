@@ -101,135 +101,135 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
-    navLabel.text = @"商品详情";
-    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
-    navLabel.font = [UIFont boldSystemFontOfSize:24];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
-    
-    NSLog(@"商品详情");
-    [self setviewInfo];
-  
-    self.headWidth.constant = SCREENWIDTH;
-    
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 18, 31);
-    
-    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui2.png"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    MMLOG(self.detailsModel.contentImageURLArray);
-    self.headImageUrlArray = self.detailsModel.headImageURLArray;
-    self.contentImageUrlArray = self.detailsModel.contentImageURLArray;
-    imageArray = [[NSMutableArray alloc] init];
-    
-    NSLog(@"headImageUlr = %@", self.headImageUrlArray);
-    
-    for (NSString *headImageUrl in self.headImageUrlArray) {
-        UIImage *image = [UIImage imagewithURLString:headImageUrl];
-        if (image != nil) {
-            [imageArray addObject:image];
-            
-        }
-    }
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
-    _scrollView.backgroundColor = [UIColor orangeColor];
-    _scrollView.pagingEnabled = YES;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    
-    _scrollView.delegate = self;
-    
-    UIImageView *firstView = [[UIImageView alloc] initWithImage:[imageArray lastObject]];
-    CGFloat width = _scrollView.frame.size.width;
-    CGFloat height = _scrollView.frame.size.height;
-    firstView.frame = CGRectMake(0, 0, width, height);
-    [_scrollView addSubview:firstView];
-    
-    //set last as the first
-    
-    
-    for (int i = 0; i<[imageArray count]; i++) {
-        UIImageView *subViews = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:i]];
-        subViews.frame = CGRectMake(width*(i+1), 0, width, height);
-        [_scrollView addSubview:subViews];
-    }
-    
-    //set the first as the last
-    NSLog(@"imageView = %@", imageArray);
-    
-    UIImageView *lastView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:0]];
-    lastView.frame = CGRectMake(width * (imageArray.count + 1), 0, width, height);
-    [_scrollView addSubview:lastView];
+//    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
+//    navLabel.text = @"商品详情";
+//    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
+//    navLabel.font = [UIFont boldSystemFontOfSize:24];
+//    navLabel.textAlignment = NSTextAlignmentCenter;
+//    self.navigationItem.titleView = navLabel;
+//    
+//    NSLog(@"商品详情");
+//    [self setviewInfo];
+//  
+//    self.headWidth.constant = SCREENWIDTH;
+//    
+//    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    leftButton.frame = CGRectMake(0, 0, 18, 31);
+//    
+//    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui2.png"] forState:UIControlStateNormal];
+//    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+//    self.navigationItem.leftBarButtonItem = leftItem;
+//    MMLOG(self.detailsModel.contentImageURLArray);
+//    self.headImageUrlArray = self.detailsModel.headImageURLArray;
+//    self.contentImageUrlArray = self.detailsModel.contentImageURLArray;
+//    imageArray = [[NSMutableArray alloc] init];
+//    
+//    NSLog(@"headImageUlr = %@", self.headImageUrlArray);
+//    
+//    for (NSString *headImageUrl in self.headImageUrlArray) {
+//        UIImage *image = [UIImage imagewithURLString:headImageUrl];
+//        if (image != nil) {
+//            [imageArray addObject:image];
+//            
+//        }
+//    }
+//    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
+//    _scrollView.backgroundColor = [UIColor orangeColor];
+//    _scrollView.pagingEnabled = YES;
+//    _scrollView.showsHorizontalScrollIndicator = NO;
+//    _scrollView.showsVerticalScrollIndicator = NO;
+//    
+//    _scrollView.delegate = self;
+//    
+//    UIImageView *firstView = [[UIImageView alloc] initWithImage:[imageArray lastObject]];
+//    CGFloat width = _scrollView.frame.size.width;
+//    CGFloat height = _scrollView.frame.size.height;
+//    firstView.frame = CGRectMake(0, 0, width, height);
+//    [_scrollView addSubview:firstView];
+//    
+//    //set last as the first
+//    
+//    
+//    for (int i = 0; i<[imageArray count]; i++) {
+//        UIImageView *subViews = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:i]];
+//        subViews.frame = CGRectMake(width*(i+1), 0, width, height);
+//        [_scrollView addSubview:subViews];
+//    }
+//    
+//    //set the first as the last
+//    NSLog(@"imageView = %@", imageArray);
+//    
+//    UIImageView *lastView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:0]];
+//    lastView.frame = CGRectMake(width * (imageArray.count + 1), 0, width, height);
+//    [_scrollView addSubview:lastView];
+////
+//    [_scrollView setContentSize:CGSizeMake(width * (imageArray.count + 2), height)];
+//    [self.headView addSubview:_scrollView];
+//    [_scrollView scrollRectToVisible:CGRectMake(width, 0, width, height) animated:NO];
+//    //设置pageController的位置以及相关属性
+//    
+//    CGRect pageControlFrame = CGRectMake(100, height - 30, 78, 36);
+//    
+//    _pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
+//    _pageControl.bounds = CGRectMake(0, 0, 16*(_pageControl.numberOfPages - 1), 16);
+//    [_pageControl.layer setCornerRadius:8];
+//    _pageControl.numberOfPages = imageArray.count;
+//    _pageControl.backgroundColor = [UIColor clearColor];
+//    _pageControl.currentPage = 0;
+//    _pageControl.enabled = YES;
+//    [self.headView addSubview:_pageControl];
+//    
+//    [_pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
+//    myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+//    
+//    long contentNumber =(long) self.contentImageUrlArray.count;
+//    
+//    for (long i = 0; i<contentNumber; i++) {
+//        
+//        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:i]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//            if (i == 0) {
+//                self.view1Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView1.image = image;
+//            } else if(i == 1){
+//                self.view2Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView2.image = image;
+//            }else if(i == 2 ){
+//                self.view3Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView3.image = image;
+//            }else if(i == 3){
+//                self.view4Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView4.image = image;
+//            }else if(i == 4){
+//                self.view5Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView5.image = image;
+//            }else if(i == 5){
+//                self.view6Height.constant = image.size.height/image.size.width*SCREENWIDTH;
+//                self.imageView6.image = image;
+//            }
+//            
 //
-    [_scrollView setContentSize:CGSizeMake(width * (imageArray.count + 2), height)];
-    [self.headView addSubview:_scrollView];
-    [_scrollView scrollRectToVisible:CGRectMake(width, 0, width, height) animated:NO];
-    //设置pageController的位置以及相关属性
-    
-    CGRect pageControlFrame = CGRectMake(100, height - 30, 78, 36);
-    
-    _pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
-    _pageControl.bounds = CGRectMake(0, 0, 16*(_pageControl.numberOfPages - 1), 16);
-    [_pageControl.layer setCornerRadius:8];
-    _pageControl.numberOfPages = imageArray.count;
-    _pageControl.backgroundColor = [UIColor clearColor];
-    _pageControl.currentPage = 0;
-    _pageControl.enabled = YES;
-    [self.headView addSubview:_pageControl];
-    
-    [_pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
-    myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
-    
-    long contentNumber =(long) self.contentImageUrlArray.count;
-    
-    for (long i = 0; i<contentNumber; i++) {
-        
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[self.contentImageUrlArray objectAtIndex:i]] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (i == 0) {
-                self.view1Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView1.image = image;
-            } else if(i == 1){
-                self.view2Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView2.image = image;
-            }else if(i == 2 ){
-                self.view3Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView3.image = image;
-            }else if(i == 3){
-                self.view4Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView4.image = image;
-            }else if(i == 4){
-                self.view5Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView5.image = image;
-            }else if(i == 5){
-                self.view6Height.constant = image.size.height/image.size.width*SCREENWIDTH;
-                self.imageView6.image = image;
-            }
-            
-
-        }];
-    }
-    for (long i = 6; i > contentNumber; i--) {
-        if (i == 6) {
-            self.view6Height.constant = 0;
-        } else if(i == 5){
-            self.view5Height.constant = 0;
-        }else if(i == 4 ){
-            self.view4Height.constant = 0;
-        }else if(i == 3){
-            self.view3Height.constant = 0;
-        }else if(i == 2){
-            self.view2Height.constant = 0;
-        }else if(i == 1){
-            self.view1Height.constant = 0;
-        }
-    }
-    
-    [self.view addSubview:_scrollerView];
-    [self createGotoTopView];
-    [self createShoppingCart];
+//        }];
+//    }
+//    for (long i = 6; i > contentNumber; i--) {
+//        if (i == 6) {
+//            self.view6Height.constant = 0;
+//        } else if(i == 5){
+//            self.view5Height.constant = 0;
+//        }else if(i == 4 ){
+//            self.view4Height.constant = 0;
+//        }else if(i == 3){
+//            self.view3Height.constant = 0;
+//        }else if(i == 2){
+//            self.view2Height.constant = 0;
+//        }else if(i == 1){
+//            self.view1Height.constant = 0;
+//        }
+//    }
+//    
+//    [self.view addSubview:_scrollerView];
+//    [self createGotoTopView];
+//    [self createShoppingCart];
 }
 
 

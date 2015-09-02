@@ -116,7 +116,7 @@
     }else{
         NSLog(@"222");
         
-        [self presentLeftMenuViewController:leftButton];
+       // [self presentLeftMenuViewController:leftButton];
 
     }
     

@@ -15,6 +15,14 @@
 #import "PersonCenterViewController2.h"
 #import "PersonCenterViewController3.h"
 
+#import "YouHuiQuanViewController.h"
+#import "AddressViewController.h"
+#import "ModifyPasswordViewController.h"
+#import "TousuViewController.h"
+#import "LogInViewController.h"
+
+
+
 
 
 
@@ -110,6 +118,11 @@
             
             break;
         case 3:{
+            YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             
@@ -122,6 +135,11 @@
             
             break;
         case 5:{
+            AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:addressVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             
@@ -134,18 +152,33 @@
             
             break;
         case 7:{
+            ModifyPasswordViewController *modifyVC = [[ModifyPasswordViewController alloc] initWithNibName:@"ModifyPasswordViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:modifyVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             
             
             break;
         case 8:{
+            TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             
             
             break;
         case 9:{
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:loginVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             
