@@ -16,6 +16,8 @@
 		32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32151BF31B96CFBF003569D7 /* MMCollectionController.xib */; };
 		32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */; };
 		32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */; };
+		32151C001B96EA4A003569D7 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */; };
+		32151C011B96EA4A003569D7 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32151BFD1B96EA4A003569D7 /* read_me.txt */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -265,6 +267,10 @@
 		32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDetailsViewController.h; sourceTree = "<group>"; };
 		32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsViewController.m; sourceTree = "<group>"; };
 		32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMDetailsViewController.xib; sourceTree = "<group>"; };
+		32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		32151BFD1B96EA4A003569D7 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		32151BFE1B96EA4A003569D7 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		32151BFF1B96EA4A003569D7 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -600,10 +606,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				328422B51B841BA900C4EA76 /* libc++.dylib in Frameworks */,
 				328422B71B841BBB00C4EA76 /* libsqlite3.0.dylib in Frameworks */,
 				3299D8891B8C7FAA000AA744 /* libpingpp+alipay.a in Frameworks */,
+				32151C001B96EA4A003569D7 /* libWeChatSDK.a in Frameworks */,
 				3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */,
-				328422B51B841BA900C4EA76 /* libc++.dylib in Frameworks */,
 				328422B31B841B9A00C4EA76 /* libz.dylib in Frameworks */,
 				3299D88A1B8C7FAA000AA744 /* libpingpp+up.a in Frameworks */,
 				328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */,
@@ -630,6 +637,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */ = {
+			isa = PBXGroup;
+			children = (
+				32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */,
+				32151BFD1B96EA4A003569D7 /* read_me.txt */,
+				32151BFE1B96EA4A003569D7 /* WXApi.h */,
+				32151BFF1B96EA4A003569D7 /* WXApiObject.h */,
+			);
+			path = WeChatSDK_1.5_OnlyIphone;
+			sourceTree = "<group>";
+		};
 		3249B9811B6F37A20086D030 /* PersonCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -679,6 +697,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
 				327F80C21B95A60900EDDF5B /* MJRefresh */,
 				32A2884D1B93E790006DC949 /* backImage.jpg */,
 				32121B3F1B9461BF00742E53 /* icon.png */,
@@ -1334,6 +1353,7 @@
 				32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
+				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
 				3264EA2B1B6C5D8700F36A8D /* WomanViewController.xib in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
@@ -1674,6 +1694,7 @@
 					"$(PROJECT_DIR)/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/lib/Channels/Wx",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/WeChatSDK_1.5_OnlyIphone",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1711,6 +1732,7 @@
 					"$(PROJECT_DIR)/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/lib/Channels/Wx",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/WeChatSDK_1.5_OnlyIphone",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

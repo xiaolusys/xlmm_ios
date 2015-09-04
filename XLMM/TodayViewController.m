@@ -232,11 +232,13 @@
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_PROMOTE_URL]];
+        NSLog(@"%@", kTODAY_PROMOTE_URL);
         [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
         
     });
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_POSTERS_URL]];
+        NSLog(@"%@", kTODAY_POSTERS_URL);
         [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
         
     });
@@ -308,7 +310,7 @@
    // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
         PromoteModel *model = [PromoteModel new];
-        model.picPath = [ladyInfo objectForKey:@"pic_path"];
+       
         model.name = [ladyInfo objectForKey:@"name"];
         model.Url = [ladyInfo objectForKey:@"url"];
         model.agentPrice = [ladyInfo objectForKey:@"agent_price"];
@@ -325,8 +327,11 @@
         if ([[ladyInfo objectForKey:@"product_model"] class] == [NSNull class]) {
           //  NSLog(@"没有集合页");
             model.productModel = nil;
+             model.picPath = [ladyInfo objectForKey:@"pic_path"];
         } else{
             model.productModel = [ladyInfo objectForKey:@"product_model"];
+             model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+            model.name = [model.productModel objectForKey:@"name"];
           //  NSLog(@"----集合页----");
         }
         
@@ -346,8 +351,9 @@
     
     for (NSDictionary *childInfo in childArray) {
         PromoteModel *model = [PromoteModel new];
-        model.picPath = [childInfo objectForKey:@"pic_path"];
         model.name = [childInfo objectForKey:@"name"];
+        
+       // model.picPath = [childInfo objectForKey:@"pic_path"];
         model.Url = [childInfo objectForKey:@"url"];
         model.agentPrice = [childInfo objectForKey:@"agent_price"];
         model.stdSalePrice = [childInfo objectForKey:@"std_sale_price"];
@@ -363,8 +369,12 @@
         if ([[childInfo objectForKey:@"product_model"] class] == [NSNull class]) {
            // NSLog(@"没有集合页");
             model.productModel = nil;
+            model.picPath = [childInfo objectForKey:@"pic_path"];
+
         } else{
             model.productModel = [childInfo objectForKey:@"product_model"];
+            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+            model.name = [model.productModel objectForKey:@"name"];
            // NSLog(@"*************");
         }
         
@@ -439,12 +449,12 @@
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618+24);
         
     }
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 40);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 44);
     
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+    return 4;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     return 4;

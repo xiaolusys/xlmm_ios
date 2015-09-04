@@ -12,6 +12,10 @@
     
 }
 
+
+
+
+
 @property (nonatomic, copy) NSString * urlString;
 
 

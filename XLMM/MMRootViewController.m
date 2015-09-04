@@ -14,6 +14,8 @@
 #import "ChildViewController.h"
 #import "LeftMenuViewController.h"
 #import "MMClass.h"
+#import "LogInViewController.h"
+#include "EnterViewController.h"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -58,12 +60,18 @@
     UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
     leftImageview.frame = CGRectMake(8, 8, 26, 30);
     [leftButton addSubview:leftImageview];
-    
-   
-    
-    
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    
+    [rightBtn addTarget:self action:@selector(loginBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *loginImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
+    loginImageView.frame = CGRectMake(8, 8, 26, 30);
+    [rightBtn addSubview:loginImageView];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Left"
 //                                                                             style:UIBarButtonItemStylePlain
 //                                                                            target:self
@@ -74,6 +82,13 @@
 //                                                                             action:@selector(presentRightMenuViewController:)];
     
     [ self.view addSubview:[[UIView alloc] init]];
+}
+
+- (void)loginBtnClicked:(UIButton *)button{
+    NSLog(@"login");
+    
+    EnterViewController *loginVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+    [self.navigationController pushViewController:loginVC animated:YES];
 }
 
 - (void)creatPageData{
