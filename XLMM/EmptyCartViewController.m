@@ -73,8 +73,18 @@
     });
 }
 
+- (void)createDefaultView{
+    
+}
+
 - (void)fetchedHistoryData:(NSData *)data{
    
+    if (data == nil) {
+        NSLog(@"历史购物车为空");
+        
+        [self createDefaultView];
+        return;
+    }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
      NSLog(@"data = %@", array);
     for (NSDictionary *dic in array) {
@@ -113,7 +123,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(SCREENWIDTH, 100);
+    return CGSizeMake(SCREENWIDTH, 108);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
@@ -127,7 +137,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CartCollectionCell *cell = (CartCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cartCell" forIndexPath:indexPath];
    // cell.backgroundColor = [UIColor redColor];
-   
+    CartModel *model = [dataArray objectAtIndex:indexPath.row];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+    cell.nameLabel.text = model.title;
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    cell.allPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.std_sale_price];
+    cell.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sku_name];
     return cell;
 }
               

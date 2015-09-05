@@ -23,7 +23,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="此手机号码已注册，您可尝试修改密码~" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caN-TF-ldi">
@@ -267,35 +267,35 @@
                     <exclude reference="1xd-EC-sFi"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="1ii-dQ-nUX"/>
-                    <exclude reference="BJa-9F-lj6"/>
-                    <exclude reference="EJx-Oo-Axz"/>
-                    <exclude reference="0rX-n3-fHn"/>
-                    <exclude reference="qVB-um-n92"/>
+                    <exclude reference="RJD-6V-0mO"/>
+                    <exclude reference="tdf-fg-xjj"/>
                     <exclude reference="ewn-3q-0UA"/>
                     <exclude reference="jkd-ZF-GDK"/>
                     <exclude reference="3EA-AS-yBr"/>
                     <exclude reference="Qwk-LI-W0K"/>
                     <exclude reference="bem-8t-BgZ"/>
+                    <exclude reference="7Wk-mE-tUB"/>
+                    <exclude reference="Dte-Pm-ct0"/>
                     <exclude reference="FIm-yh-cAe"/>
                     <exclude reference="PX2-QN-rvw"/>
                     <exclude reference="bL9-Xs-Hnh"/>
-                    <exclude reference="J3D-Bg-Suc"/>
-                    <exclude reference="dlo-9e-Etz"/>
-                    <exclude reference="rC2-Do-ShM"/>
-                    <exclude reference="7Wk-mE-tUB"/>
-                    <exclude reference="Dte-Pm-ct0"/>
+                    <exclude reference="0rX-n3-fHn"/>
+                    <exclude reference="qVB-um-n92"/>
+                    <exclude reference="1ii-dQ-nUX"/>
+                    <exclude reference="BJa-9F-lj6"/>
+                    <exclude reference="EJx-Oo-Axz"/>
                     <exclude reference="Ve9-J0-lpQ"/>
                     <exclude reference="bGn-QJ-3fC"/>
                     <exclude reference="nLz-U7-CIK"/>
-                    <exclude reference="RJD-6V-0mO"/>
-                    <exclude reference="tdf-fg-xjj"/>
                     <exclude reference="QfE-da-kHg"/>
                     <exclude reference="Uni-ro-0hR"/>
                     <exclude reference="bco-7u-wdX"/>
                     <exclude reference="J9p-SZ-fif"/>
                     <exclude reference="Ujn-XN-pCT"/>
                     <exclude reference="avQ-SJ-s8L"/>
+                    <exclude reference="J3D-Bg-Suc"/>
+                    <exclude reference="dlo-9e-Etz"/>
+                    <exclude reference="rC2-Do-ShM"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -313,35 +313,35 @@
                     <include reference="1xd-EC-sFi"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="1ii-dQ-nUX"/>
-                    <include reference="BJa-9F-lj6"/>
-                    <include reference="EJx-Oo-Axz"/>
-                    <include reference="0rX-n3-fHn"/>
-                    <include reference="qVB-um-n92"/>
+                    <include reference="RJD-6V-0mO"/>
+                    <include reference="tdf-fg-xjj"/>
                     <include reference="ewn-3q-0UA"/>
                     <include reference="jkd-ZF-GDK"/>
                     <include reference="3EA-AS-yBr"/>
                     <include reference="Qwk-LI-W0K"/>
                     <include reference="bem-8t-BgZ"/>
+                    <include reference="7Wk-mE-tUB"/>
+                    <include reference="Dte-Pm-ct0"/>
                     <include reference="FIm-yh-cAe"/>
                     <include reference="PX2-QN-rvw"/>
                     <include reference="bL9-Xs-Hnh"/>
-                    <include reference="J3D-Bg-Suc"/>
-                    <include reference="dlo-9e-Etz"/>
-                    <include reference="rC2-Do-ShM"/>
-                    <include reference="7Wk-mE-tUB"/>
-                    <include reference="Dte-Pm-ct0"/>
+                    <include reference="0rX-n3-fHn"/>
+                    <include reference="qVB-um-n92"/>
+                    <include reference="1ii-dQ-nUX"/>
+                    <include reference="BJa-9F-lj6"/>
+                    <include reference="EJx-Oo-Axz"/>
                     <include reference="Ve9-J0-lpQ"/>
                     <include reference="bGn-QJ-3fC"/>
                     <include reference="nLz-U7-CIK"/>
-                    <include reference="RJD-6V-0mO"/>
-                    <include reference="tdf-fg-xjj"/>
                     <include reference="QfE-da-kHg"/>
                     <include reference="Uni-ro-0hR"/>
                     <include reference="bco-7u-wdX"/>
                     <include reference="J9p-SZ-fif"/>
                     <include reference="Ujn-XN-pCT"/>
                     <include reference="avQ-SJ-s8L"/>
+                    <include reference="J3D-Bg-Suc"/>
+                    <include reference="dlo-9e-Etz"/>
+                    <include reference="rC2-Do-ShM"/>
                 </mask>
             </variation>
         </view>
