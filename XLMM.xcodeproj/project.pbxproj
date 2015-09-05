@@ -135,6 +135,8 @@
 		327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */; };
 		327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */; };
 		327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
+		327FC2631B9AF1CD00F111B3 /* CartCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */; };
+		327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -432,6 +434,9 @@
 		327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsModel.m; sourceTree = "<group>"; };
 		327FC25D1B9AEC2F00F111B3 /* CartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartModel.h; sourceTree = "<group>"; };
 		327FC25E1B9AEC2F00F111B3 /* CartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartModel.m; sourceTree = "<group>"; };
+		327FC2601B9AF1CD00F111B3 /* CartCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartCollectionCell.h; sourceTree = "<group>"; };
+		327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartCollectionCell.m; sourceTree = "<group>"; };
+		327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartCollectionCell.xib; sourceTree = "<group>"; };
 		3282F25E1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3282F2601B6B5B1300E73EB9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -817,6 +822,9 @@
 				32A81F921B8D9BF6009972B3 /* BuyCartsView.h */,
 				32A81F931B8D9BF6009972B3 /* BuyCartsView.m */,
 				32A81F951B8D9C08009972B3 /* BuyCartsView.xib */,
+				327FC2601B9AF1CD00F111B3 /* CartCollectionCell.h */,
+				327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */,
+				327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -1431,6 +1439,7 @@
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
+				327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */,
 				32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */,
 				325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,
@@ -1529,6 +1538,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				327FC2631B9AF1CD00F111B3 /* CartCollectionCell.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,

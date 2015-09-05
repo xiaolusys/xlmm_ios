@@ -72,7 +72,7 @@
                         </mask>
                     </variation>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的购物车空空如也，以下宝贝可重新加入哦~~ " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-9e-U4M">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的购物车空空如也，以下宝贝可重新加入哦~~" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-9e-U4M">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="sU7-C2-l5s">
@@ -109,7 +109,7 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                 </constraint>
                 <constraint firstItem="xb5-9e-U4M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="kXV-FH-Ssz">
-                    <variation key="heightClass=regular-widthClass=compact" constant="72"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                 </constraint>
                 <constraint firstItem="nwF-v1-ejO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="78" id="q5t-xe-9im">
                     <variation key="heightClass=regular-widthClass=compact" constant="8"/>

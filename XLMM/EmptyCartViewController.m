@@ -9,6 +9,7 @@
 #import "EmptyCartViewController.h"
 #import "MMClass.h"
 #import "CartModel.h"
+#import "CartCollectionCell.h"
 
 @interface EmptyCartViewController (){
     NSMutableArray *dataArray;
@@ -17,6 +18,17 @@
 @end
 
 @implementation EmptyCartViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [UIApplication sharedApplication].statusBarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 
 
 - (void)viewDidLoad {
@@ -27,7 +39,10 @@
     item.title = @"";
     //  您的购物车空空如也，以下宝贝可重新加入哦~ ~ ~
     self.navigationItem.leftBarButtonItem = item;
+    
+    
     [self downloadData];
+    [self createCollectionView];
     
 }
 
@@ -35,15 +50,19 @@
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     
-    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) collectionViewLayout:flowLayout];
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 56, SCREENWIDTH, SCREENHEIGHT - 120) collectionViewLayout:flowLayout];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
+    [self.myCollectionView registerClass:[CartCollectionCell class] forCellWithReuseIdentifier:@"cartCell"];
+    
+    
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
-    self.myCollectionView.showsVerticalScrollIndicator = NO;
+    self.myCollectionView.showsVerticalScrollIndicator = YES;
    
-    self.view.backgroundColor = [UIColor yellowColor];
+    //self.view.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:[[UIView alloc] init]];
     [self.view addSubview:self.myCollectionView];
 }
 - (void)downloadData{
@@ -55,8 +74,9 @@
 }
 
 - (void)fetchedHistoryData:(NSData *)data{
-    NSLog(@"data = %@", data);
+   
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+     NSLog(@"data = %@", array);
     for (NSDictionary *dic in array) {
         CartModel *model = [CartModel new];
         model.status = [dic objectForKey:@"status"];
@@ -81,6 +101,7 @@
 }
 
 
+#pragma mark --CollectionViewDelegate--
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -91,19 +112,23 @@
     return dataArray.count;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(SCREENWIDTH, 100);
+}
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+    return 4;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+    return 4;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-//    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
-    
+    CartCollectionCell *cell = (CartCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cartCell" forIndexPath:indexPath];
+   // cell.backgroundColor = [UIColor redColor];
    
-    return nil;
+    return cell;
 }
               
 

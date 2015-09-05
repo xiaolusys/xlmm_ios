@@ -35,6 +35,13 @@
 
 @implementation MMRootViewController
 
+//- (void)viewWillAppear:(BOOL)animated{
+//    [super viewWillAppear:animated];
+//
+//        self.navigationController.navigationBarHidden = NO;
+//   
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -126,6 +133,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     NSLog(@"DEMOFirstViewController will appear");
     if (_isFirst) {
         
