@@ -182,6 +182,9 @@
                                             <include reference="MS3-XP-SFO"/>
                                         </mask>
                                     </variation>
+                                    <connections>
+                                        <action selector="goumaiClicked:" destination="-1" eventType="touchUpInside" id="6iB-XA-PuK"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="优惠金额:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0px-8c-paq">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>

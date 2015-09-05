@@ -290,13 +290,13 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCell forIndexPath:indexPath];
-    if (isOrder) {
-        [cell fillData:[self.orderDataArray objectAtIndex:indexPath.row]];
-
-    } else {
-        [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
-
-    }
+//    if (isOrder) {
+//        [cell fillData:[self.orderDataArray objectAtIndex:indexPath.row]];
+//
+//    } else {
+//        [cell fillData:[self.dataArray objectAtIndex:indexPath.row]];
+//
+//    }
     
     return cell;
 }

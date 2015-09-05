@@ -11,6 +11,8 @@
 #import "MMClass.h"
 #import "CollectionModel.h"
 
+
+
 @implementation PeopleCollectionCell
 
 - (void)awakeFromNib {
@@ -39,28 +41,24 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-    if (!model.isSaleout) {
-        NSLog(@"isSaleOut : %@", model.isSaleout);
-        self.backView.hidden = YES;
+    if ([model.isSaleout boolValue]) {
+       
     } else{
-        NSLog(@"isSaleOut : %@", model.isSaleout);
-        self.backView.hidden = NO;
+        self.backView.hidden = YES;
         
     }
 }
 
-- (void)fillData:(PeopleModel *)model{
-    [self.imageView sd_setImageWithURL:kLoansRRL(model.imageURL)];
+- (void)fillData:( PromoteModel*)model{
+    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
     self.nameLabel.text = model.name;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.oldPrice];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-    if (!model.isSaleOut) {
-        NSLog(@"%d", model.isSaleOut);
-        self.backView.hidden = YES;
+    if ([model.isSaleout boolValue]) {
+        
     } else{
-        NSLog(@"%d", model.isSaleOut);
-        self.backView.hidden = NO;
+        self.backView.hidden = YES;
  
     }
 }

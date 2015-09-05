@@ -16,10 +16,13 @@ UICollectionViewDelegate>{
 }
 
 @property (assign, nonatomic) BOOL isRoot;
+@property (copy, nonatomic) NSString *urlString;
+@property (copy, nonatomic) NSString *orderUrlString;
 
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
+
 
 - (IBAction)btnClicked:(UIButton *)sender;
 

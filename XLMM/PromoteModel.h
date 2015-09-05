@@ -14,7 +14,7 @@
 @property (nonatomic, copy)NSString *Url;
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, copy)NSString *outerID;
-@property (nonatomic, copy)NSDictionary *category;
+@property (nonatomic, strong)NSDictionary *category;
 @property (nonatomic, copy)NSString *picPath;
 @property (nonatomic, copy)NSString *remainNum;
 @property (nonatomic, copy)NSString *isSaleout;
@@ -23,7 +23,7 @@
 @property (nonatomic, copy)NSString *stdSalePrice;
 @property (nonatomic, copy)NSString *agentPrice;
 @property (nonatomic, copy)NSString *wareBy;
-@property (nonatomic, copy)NSDictionary *productModel;
+@property (nonatomic, strong)NSDictionary *productModel;
 @property (nonatomic, copy)NSString *saleTime;
 @property (nonatomic, copy)NSString *memo;
 

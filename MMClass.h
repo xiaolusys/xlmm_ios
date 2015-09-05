@@ -64,6 +64,9 @@
 #define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@",Root_URL]
 #define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts",Root_URL]
 #define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
+#define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price",Root_URL]
+//    http://m.xiaolu.so/rest/v1/carts/show_carts_history
+#define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history",Root_URL]
 #define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num",Root_URL]
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address",Root_URL]
 #define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades",Root_URL]

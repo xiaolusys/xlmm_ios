@@ -10,6 +10,7 @@
 #import "CollectionModel.h"
 #import "MMClass.h"
 #import "PeopleCollectionCell.h"
+#import "MMDetailsViewController.h"
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -134,6 +135,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
+    
+    
+    //   http://m.xiaolu.so/rest/v1/products/15809
+    
+    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSString *ID = model.ID;
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details", Root_URL, ID];
+    NSLog(@"urlString = %@", string);
+    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+    detailsVC.urlString = string;
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+    
+    //NSString *urlString = [];
 
 }
 

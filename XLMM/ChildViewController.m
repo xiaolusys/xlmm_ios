@@ -7,19 +7,19 @@
 //
 
 #import "ChildViewController.h"
-#import "LogInViewController.h"
 #import "PeopleCollectionCell.h"
 #import "MMClass.h"
-#import "PeopleModel.h"
-#import "DetailViewController.h"
 #import "PurchaseViewController.h"
 #import "CollectionModel.h"
-#import "CollectionViewController.h"
 #import "DetailsModel.h"
 #import "PersonCenterViewController.h"
 #import "EmptyCartViewController.h"
 #import "EnterViewController.h"
 #import "CartViewController.h"
+#import "PromoteModel.h"
+
+#import "MMDetailsViewController.h"
+#import "MMCollectionController.h"
 
 #define ksimpleCell @"simpleCell"
 
@@ -44,30 +44,11 @@
     
  
     [super viewWillAppear:animated];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-        if (data != nil) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            
-            NSLog(@"%@", dic);
-            
-            
-            if ([dic objectForKey:@"result"] != nil) {
-                goodsCount = [[dic objectForKey:@"result"] integerValue];
-                NSLog(@"%ld", (long)goodsCount);
-                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                countLabel.text = strNum;
-            }
-            
-        }
-    }else{
-        countLabel.text = @"0";
-    }
+  
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"is root = %d", self.isRoot);
     
 
     
@@ -78,7 +59,6 @@
     self.dataArray = [[NSMutableArray alloc] init];
 
     [self.view addSubview:[[UIView alloc] init]];
-    [self setInfo];
     [self setLayout];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.backgroundColor = [UIColor clearColor];
@@ -102,112 +82,6 @@
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
 
-- (void)createShoppingCart{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 60 - 8, 60, 60)];
-    button.layer.cornerRadius = 30;
-    [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
-    button.alpha = 0.5;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, 8, 22, 22)];
-    view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
-    view.userInteractionEnabled = NO;
-    view.layer.cornerRadius = 10;
-   countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    countLabel.layer.cornerRadius = 10;
-    countLabel.userInteractionEnabled = NO;
-    countLabel.textAlignment = NSTextAlignmentCenter;
-    countLabel.textColor = [UIColor whiteColor];
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        NSLog(@"%@", dic);
-        if ([dic objectForKey:@"result"] != nil) {
-            
-       
-        goodsCount = [[dic objectForKey:@"result"] integerValue];
-        NSLog(@"%ld", (long)goodsCount);
-        NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-        countLabel.text = strNum;
-        }
-    }
-    countLabel.font = [UIFont systemFontOfSize:14];
-    [view addSubview:countLabel];
-    [button addSubview:view];
-    [self.view addSubview:button];
-    [self.view bringSubviewToFront:button];
-
-}
-- (void)cartClicked:(UIButton *)btn{
-    NSLog(@"进入购物车");
-    
-    NSLog(@"gouguche ");
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        if (goodsCount > 0) {
-            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-            [self.navigationController pushViewController:cartVC animated:YES];
-        } else{
-            NSLog(@"购物车为空");
-            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-            [self.navigationController pushViewController:emptyVC animated:YES];
-            
-        }
-        
-    } else{
-        NSLog(@"请您先登录");
-        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        [self.navigationController pushViewController:enterVC animated:YES];
-    }
-
-
-}
-
-- (void)createGotoTopView{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 68, SCREENHEIGHT - 60 - 8, 60, 60)];
-    button.alpha = 0.5;
-    button.layer.cornerRadius = 30;
-    [self.view addSubview:button];
-    [button setBackgroundImage:[UIImage imageNamed:@"icon-fanhuidingbu.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(gotoTopClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view bringSubviewToFront:button];
-    
-}
-- (void)gotoTopClicked:(UIButton *)btn{
-    NSLog(@"返回页面首部");
-    [UIView animateWithDuration:0 animations:^{
-        self.childCollectionView.contentOffset = CGPointMake(0, 0);
-        
-    }];
-}
-
-- (void)setInfo{
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 44)];
-    navLabel.text = @"潮男童装";
-    navLabel.textColor = [UIColor colorWithR:105 G:59 B:29 alpha:1];
-    navLabel.font = [UIFont fontWithName:@"LiHei Pro" size:20];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 29, 33);
-    [rightButton setBackgroundImage:LOADIMAGE(@"icon-gerenzhongxin.png") forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 42, 39);
-    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-shouye2.png"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-}
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
@@ -221,13 +95,12 @@
 }
 
 - (void)downloadData{
-    [self downLoadWithURLString:kCHILD_LIST_URL andSelector:@selector(fatchedChildListData:)];
+    [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
 }
 
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-   // NSLog(@"ChildList Data-->%@", json);
     if (json == nil) {
         NSLog(@"数据解析失败");
         return;
@@ -237,45 +110,22 @@
         NSLog(@"数据解析失败");
         return;
     }
-  //  NSLog(@"childList Array = %@", array);
     
     [self.dataArray removeAllObjects];
-      for (NSDictionary *dic in array) {
-          PeopleModel *model = [[PeopleModel alloc] init];
-          model.imageURL = [dic objectForKey:@"pic_path"];
-          model.name = [dic objectForKey:@"name"];
-          model.price = [dic objectForKey:@"agent_price"];
-          model.oldPrice = [dic objectForKey:@"std_sale_price"];
-          model.url = [dic objectForKey:@"url"];
-          model.uid = [dic objectForKey:@"id"];
-          model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
-          model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
-          model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
-          model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
-          
-    //      NSLog(@"is_saleOpen = %d, is_saleOUt = %d, is_newGood = %d, remainNumber = %ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
-          
-          NSDictionary *dic2 = [dic objectForKey:@"product_model"];
-          NSLog(@"procust_model = %@", dic);
-          
-          if ([dic2 class] == [NSNull class]) {
-              model.productModel = nil;
-          } else{
-              model.productModel = dic2;
-              model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
-              model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
-          }
-          [_dataArray addObject:model];
+    
+    
+    for (NSDictionary *ladyInfo in array) {
+        PromoteModel *model = [self fillModel:ladyInfo];
+        
+        [_dataArray addObject:model];
+        
     }
-   // NSLog(@"dataArray = %@\n\n\n", _dataArray);
-    //[activityIndicator stopAnimating];
+
     [activityIndicator removeFromSuperview];
     
     [self.childCollectionView reloadData];
-    //[self.view sendSubviewToBack:self.childCollectionView];
     
-    [self createGotoTopView];
-    [self createShoppingCart];
+
 }
 
 #pragma mark  -----CollectionViewDelete----
@@ -305,11 +155,13 @@
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
-        PeopleModel *orderModel = [_orderDataArray objectAtIndex:indexPath.row];
-        [cell fillData:orderModel];
+        PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+      
+        [cell fillData:model];
        
     }else{
-        PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
+        PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
+        
         [cell fillData:model];
     }
     return cell;
@@ -320,109 +172,48 @@
         return;
     }
     if (isOrder) {
-        PeopleModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+        PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSLog(@"没有集合页面");
-            [self downloadDetailsDataWithModel:model];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
+            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+            detailsVC.urlString = string;
+            [self.navigationController pushViewController:detailsVC animated:YES];
+            
         } else {
-            [self downloadCollectionDataWithProductModel:model.productModel];
+            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL, [model.productModel objectForKey:@"id"]];
+            NSLog(@"stringURL -> = %@", string);
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+            collectionVC.urlString = string;
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+            
         }
     } else {
-        PeopleModel *model = [_dataArray objectAtIndex:indexPath.row];
+        PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSLog(@"没有集合页面");
-            [self downloadDetailsDataWithModel:model];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
+            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+            detailsVC.urlString = string;
+            [self.navigationController pushViewController:detailsVC animated:YES];
+            
+            
         } else {
-            [self downloadCollectionDataWithProductModel:model.productModel];
+            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL, [model.productModel objectForKey:@"id"]];
+            NSLog(@"stringURL -> = %@", string);
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+            collectionVC.urlString = string;
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+            
+            
         }
     }
     
 }
 
-- (void)downloadCollectionDataWithProductModel:(NSDictionary *)productModel{
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL,[productModel objectForKey:@"id"]];
-    MMLOG(urlString);
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedModelListData:)];
-}
-- (void)fetchedModelListData:(NSData *)responseDate{
-    
-    NSError *error = nil;
-    NSArray *modelListArray = [NSJSONSerialization JSONObjectWithData:responseDate options:kNilOptions error:&error];
-    // MMLOG(modelListArray);
-    [_ModelListArray removeAllObjects];
-    for (NSDictionary *dic in modelListArray) {
-        CollectionModel *model = [[CollectionModel alloc] init];
-        model.productID = [dic objectForKey:@"id"];
-        model.urlStirng = [dic objectForKey:@"url"];
-        model.outerID = [dic objectForKey:@"outer_id"];
-        model.imageURL = [dic objectForKey:@"pic_path"];
-        model.name = [dic objectForKey:@"name"];
-        model.price = [dic objectForKey:@"agent_price"];
-        model.oldPrice = [dic objectForKey:@"std_sale_price"];
-        
-        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
-        model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
-        model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
-        
-        
-        [_ModelListArray addObject:model];
-    }
-    CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
-    collectionVC.collectionArray = _ModelListArray;
-    [self.navigationController pushViewController:collectionVC animated:YES];
-    
-}
 
-- (void)downloadDetailsDataWithModel:(PeopleModel *)model{
-    NSMutableString *urlstring = [NSMutableString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, model.uid];
-    [urlstring appendString:@"/details"];
- //   NSString *urlString = [NSString stringWithFormat:@"%@/details", model.url];
-    
-    MMLOG(urlstring);
-    [self downLoadWithURLString:urlstring andSelector:@selector(fetchedDetailsData:)];
-}
-
-- (void)fetchedDetailsData:(NSData *)responseData{
-    NSError *error = nil;
-    NSDictionary *detailsInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    MMLOG(detailsInfo);
-    DetailsModel *model = [[DetailsModel alloc] init];
-    model.name = [detailsInfo objectForKey:@"name"];
-    model.productID = [detailsInfo objectForKey:@"outer_id"];
-    model.isSaleOpen = [[detailsInfo objectForKey:@"is_saleopen"] boolValue];
-    model.isSaleOut = [[detailsInfo objectForKey:@"is_saleout"] boolValue];
-    model.isNewGood = [[detailsInfo objectForKey:@"is_newgood"] boolValue];
-    model.remainNumber = [[detailsInfo objectForKey:@"remain_num"] integerValue];
-    model.price = [NSString stringWithFormat:@"￥%@",[detailsInfo objectForKey:@"agent_price"]];
-    model.oldPrice= [NSString stringWithFormat:@"￥%@", [detailsInfo objectForKey:@"std_sale_price"]];
-    NSArray *goodsArray = [detailsInfo objectForKey:@"normal_skus"];
-    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
-    NSMutableArray *skuArray = [[NSMutableArray alloc] init];
-    NSMutableArray *saleOutArray = [[NSMutableArray alloc] init];
-    for (NSDictionary *dic in goodsArray) {
-        NSString *size = [dic objectForKey:@"name"];
-        [arrayData addObject:size];
-        NSString *sku = [dic objectForKey:@"id"];
-        [skuArray addObject:sku];
-        NSString *sale = [dic objectForKey:@"is_saleout"];
-        [saleOutArray addObject:sale];
-    }
-    model.sizeArray = arrayData;
-    model.skuIDArray = skuArray;
-    model.skuIsSaleOutArray = saleOutArray;
-    model.itemID = [detailsInfo objectForKey:@"id"];
-    MMLOG(model.sizeArray);
-    MMLOG(model.skuIDArray);
-    MMLOG(model.skuIsSaleOutArray);
-    NSDictionary *dic2 = [detailsInfo objectForKey:@"details"];
-    model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
-    model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
-    
-    
-    DetailViewController *detailsVC = [[DetailViewController alloc] init];
-    detailsVC.detailsModel = model;
-    [self.navigationController pushViewController:detailsVC animated:YES];
-}
 
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -461,7 +252,7 @@
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.backgroundColor = [UIColor clearColor];
         [activityIndicator startAnimating];
-        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
+        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2 - 80);
         [self.childCollectionView addSubview:activityIndicator];
         
         [self.childCollectionView reloadData];
@@ -469,46 +260,57 @@
 
 }
 
+- (void)downloadOrderData{
+    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderLadyListData:)];
+}
+ 
 - (void)fatchedOrderLadyListData:(NSData *)responseData{
     NSError *error;
     self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
    // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
-    for (NSDictionary *dic in array) {
-        PeopleModel *model = [[PeopleModel alloc] init];
-        model.imageURL = [dic objectForKey:@"pic_path"];
-        model.name = [dic objectForKey:@"name"];
-        model.price = [dic objectForKey:@"agent_price"];
-        model.oldPrice = [dic objectForKey:@"std_sale_price"];
+    for (NSDictionary *ladyInfo in array) {
+        PromoteModel *model = [self fillModel:ladyInfo];
         
-        model.url = [dic objectForKey:@"url"];
         
-        model.isSaleOpen = [[dic objectForKey:@"is_saleopen"] boolValue];
-        model.isSaleOut = [[dic objectForKey:@"is_saleout"]boolValue];
-        model.isNewGood = [[dic objectForKey:@"is_newgood"]boolValue];
-        model.remainNumber = [[dic objectForKey:@"remain_num"]integerValue];
-        
-//        NSLog(@"childlist = %d,%d,%d,%ld,", model.isSaleOpen, model.isSaleOut, model.isNewGood, model.remainNumber);
-        
-        NSDictionary *dic2 = [dic objectForKey:@"product_model"];
-        if ([dic2 class] == [NSNull class]) {
-            model.productModel = nil;
-        } else{
-            model.productModel = dic2;
-            model.headImageURLArray = [dic2 objectForKey:@"head_imgs"];
-            model.contentImageURLArray = [dic2 objectForKey:@"content_imgs"];
-        }
         [self.orderDataArray addObject:model];
+
     }
      [activityIndicator removeFromSuperview];
     [self.childCollectionView reloadData];
 }
 
-
-- (void)downloadOrderData{
-    [self downLoadWithURLString:kCHILD_LIST_ORDER_URL andSelector:@selector(fatchedOrderLadyListData:)];
+- (PromoteModel *)fillModel:(NSDictionary *)dic{
+    PromoteModel *model = [PromoteModel new];
+    model.ID = [dic objectForKey:@"id"];
+    
+    model.name = [dic objectForKey:@"name"];
+    model.Url = [dic objectForKey:@"url"];
+    model.agentPrice = [dic objectForKey:@"agent_price"];
+    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
+    model.outerID = [dic objectForKey:@"outer_id"];
+   model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+    model.isSaleout = [dic objectForKey:@"is_saleout"];
+    model.category = [dic objectForKey:@"category"];
+    model.remainNum = [dic objectForKey:@"remain_num"];
+    model.saleTime = [dic objectForKey:@"sale_time"];
+    model.wareBy = [dic objectForKey:@"ware_by"];
+    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+        //  NSLog(@"没有集合页");
+        model.productModel = nil;
+        model.picPath = [dic objectForKey:@"pic_path"];
+    } else{
+        model.productModel = [dic objectForKey:@"product_model"];
+        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+        model.name = [model.productModel objectForKey:@"name"];
+        //  NSLog(@"----集合页----");
+    }
+    return model;
 }
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

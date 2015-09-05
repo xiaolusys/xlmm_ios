@@ -11,12 +11,35 @@
 @interface MMDetailsViewController : UIViewController{
     
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewwidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewHeitht;
 
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *sizeView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeViewHeight;
 
+@property (weak, nonatomic) IBOutlet UILabel *mingcheng;
+@property (weak, nonatomic) IBOutlet UILabel *bianhao;
+@property (weak, nonatomic) IBOutlet UILabel *caizhi;
+@property (weak, nonatomic) IBOutlet UILabel *yanse;
+@property (weak, nonatomic) IBOutlet UILabel *beizhu;
+@property (weak, nonatomic) IBOutlet UILabel *shuoming;
+
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
 @property (nonatomic, copy) NSString * urlString;
 
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+- (IBAction)addCartBtnClicked:(id)sender;
+- (IBAction)buyBtnClicked:(id)sender;
 
 @end

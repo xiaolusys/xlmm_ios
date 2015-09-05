@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PeopleModel.h"
+#import "PromoteModel.h"
 #import "CollectionModel.h"
 @interface PeopleCollectionCell : UICollectionViewCell
 
@@ -18,6 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *backView;
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model;
-- (void)fillData:(PeopleModel *)model;
+- (void)fillData:(PromoteModel *)model;
 
 @end

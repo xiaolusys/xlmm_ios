@@ -104,9 +104,12 @@
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
     
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+    childVC.urlString = kCHILD_LIST_URL;
+    childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
   
-    WomanViewController *womanVC = [[WomanViewController alloc] initWithNibName:@"WomanViewController" bundle:nil];
-    
+    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+    womanVC.urlString = kLADY_LIST_URL;
+    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
     
     
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];

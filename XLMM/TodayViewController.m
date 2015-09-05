@@ -147,7 +147,7 @@
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kIsLogin];
+    [userDefaults setBool:YES forKey:kIsLogin];
     
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
@@ -309,31 +309,7 @@
     ladyListNumber = ladyArray.count;
    // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
-        PromoteModel *model = [PromoteModel new];
-       
-        model.name = [ladyInfo objectForKey:@"name"];
-        model.Url = [ladyInfo objectForKey:@"url"];
-        model.agentPrice = [ladyInfo objectForKey:@"agent_price"];
-        model.stdSalePrice = [ladyInfo objectForKey:@"std_sale_price"];
-        model.outerID = [ladyInfo objectForKey:@"outer_id"];
-        model.isNewgood = [ladyInfo objectForKey:@"is_newgood"];
-        model.isSaleopen = [ladyInfo objectForKey:@"is_saleopen"];
-        model.isSaleout = [ladyInfo objectForKey:@"is_saleout"];
-        model.ID = [ladyInfo objectForKey:@"id"];
-        model.category = [ladyInfo objectForKey:@"category"];
-        model.remainNum = [ladyInfo objectForKey:@"remain_num"];
-        model.saleTime = [ladyInfo objectForKey:@"sale_time"];
-        model.wareBy = [ladyInfo objectForKey:@"ware_by"];
-        if ([[ladyInfo objectForKey:@"product_model"] class] == [NSNull class]) {
-          //  NSLog(@"没有集合页");
-            model.productModel = nil;
-             model.picPath = [ladyInfo objectForKey:@"pic_path"];
-        } else{
-            model.productModel = [ladyInfo objectForKey:@"product_model"];
-             model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-            model.name = [model.productModel objectForKey:@"name"];
-          //  NSLog(@"----集合页----");
-        }
+        PromoteModel *model = [self fillModel:ladyInfo];
         
         
         [ladyDataArray addObject:model];
@@ -350,33 +326,7 @@
   //  NSLog(@"%ld", (long)childArray.count);
     
     for (NSDictionary *childInfo in childArray) {
-        PromoteModel *model = [PromoteModel new];
-        model.name = [childInfo objectForKey:@"name"];
-        
-       // model.picPath = [childInfo objectForKey:@"pic_path"];
-        model.Url = [childInfo objectForKey:@"url"];
-        model.agentPrice = [childInfo objectForKey:@"agent_price"];
-        model.stdSalePrice = [childInfo objectForKey:@"std_sale_price"];
-        model.outerID = [childInfo objectForKey:@"outer_id"];
-        model.isNewgood = [childInfo objectForKey:@"is_newgood"];
-        model.isSaleopen = [childInfo objectForKey:@"is_saleopen"];
-        model.isSaleout = [childInfo objectForKey:@"is_saleout"];
-        model.ID = [childInfo objectForKey:@"id"];
-        model.category = [childInfo objectForKey:@"category"];
-        model.remainNum = [childInfo objectForKey:@"remain_num"];
-        model.saleTime = [childInfo objectForKey:@"sale_time"];
-        model.wareBy = [childInfo objectForKey:@"ware_by"];
-        if ([[childInfo objectForKey:@"product_model"] class] == [NSNull class]) {
-           // NSLog(@"没有集合页");
-            model.productModel = nil;
-            model.picPath = [childInfo objectForKey:@"pic_path"];
-
-        } else{
-            model.productModel = [childInfo objectForKey:@"product_model"];
-            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-            model.name = [model.productModel objectForKey:@"name"];
-           // NSLog(@"*************");
-        }
+        PromoteModel *model = [self fillModel:childInfo];
         
         
         [childDataArray addObject:model];
@@ -399,7 +349,38 @@
 
 
 
+- (PromoteModel *)fillModel:(NSDictionary *)dic{
+    PromoteModel *model = [PromoteModel new];
+    model.name = [dic objectForKey:@"name"];
+    
+    // model.picPath = [childInfo objectForKey:@"pic_path"];
+    model.Url = [dic objectForKey:@"url"];
+    model.agentPrice = [dic objectForKey:@"agent_price"];
+    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
+    model.outerID = [dic objectForKey:@"outer_id"];
+    model.isNewgood = [dic objectForKey:@"is_newgood"];
+    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+    model.isSaleout = [dic objectForKey:@"is_saleout"];
+    model.ID = [dic objectForKey:@"id"];
+    model.category = [dic objectForKey:@"category"];
+    model.remainNum = [dic objectForKey:@"remain_num"];
+    model.saleTime = [dic objectForKey:@"sale_time"];
+    model.wareBy = [dic objectForKey:@"ware_by"];
+    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+        // NSLog(@"没有集合页");
+        model.productModel = nil;
+        model.picPath = [dic objectForKey:@"pic_path"];
+        
+    } else{
+        model.productModel = [dic objectForKey:@"product_model"];
+        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+        model.name = [model.productModel objectForKey:@"name"];
+        // NSLog(@"*************");
+    }
+    return model;
 
+    
+}
 
 
 
@@ -478,6 +459,9 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
+    
     if (indexPath.section == 0) {
        
       
@@ -491,52 +475,30 @@
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
         }
-            return cell;
        
-       
+        return cell;
+
         
     }
     else if (indexPath.section == 1)
     {
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
+    
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.picPath]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@", model.name];
-        cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.stdSalePrice];
-        BOOL issaleOut = [model.isSaleout boolValue];
-        if (issaleOut) {
-            
-        }else{
-            cell.backView.hidden = YES;
-//            cell.frontView.hidden = YES;
-        }
+        [cell fillData:model];
         
-        return cell;
-        
+
         
     }
     
-    else{
+    else {
     
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
         
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.picPath]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@", model.name];
-        cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.stdSalePrice];
-        BOOL issaleOut = [model.isSaleout boolValue];
-        if (issaleOut) {
-            
-        }else{
-            cell.backView.hidden = YES;
-//            cell.frontView.hidden = YES;
-        }
-        return cell;
+        [cell fillData:model];
         
     
     }
+    return cell;
    
 }
 

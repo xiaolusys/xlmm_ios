@@ -14,6 +14,7 @@
 #import "ShoppingCartModel.h"
 #import "BuyModel.h"
 #import "BuyCartsView.h"
+#import "Pingpp.h"
 
 #import "UIImage+ImageWithUrl.h"
 
@@ -480,5 +481,110 @@
         
         
     }
+}
+
+- (IBAction)goumaiClicked:(id)sender {
+    
+    NSLog(@"购买商品");
+    
+//    NSLog(@"addressID = %@", selectedAddModel.addressID);
+//    
+//    if (selectedAddModel.addressID == nil) {
+//        NSLog(@"请选择收货地址");
+//        
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 150, 240, 300, 40)];
+//        view.backgroundColor = [UIColor blackColor];
+//        view.layer.cornerRadius = 8;
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+//        label.text = @"请填写收货信息";
+//        label.textAlignment = NSTextAlignmentCenter;
+//        label.textColor = [UIColor whiteColor];
+//        label.font = [UIFont systemFontOfSize:24];
+//        [view addSubview:label];
+//        [self.view addSubview:view];
+//        
+//        self.myScrollView.contentOffset = CGPointMake(0, 0);
+//        
+//        [UIView animateWithDuration:2 animations:^{
+//            view.alpha = 0;
+//            
+//        } completion:^(BOOL finished) {
+//            [view removeFromSuperview];
+//            
+//        }];
+//        
+//        
+//        return;
+//        
+//    }
+//    NSLog(@"应付金额：%i", allpay);
+//    NSLog(@"购买");
+//    
+//    
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/buynow_create", Root_URL];
+//    NSLog(@"urlstring = %@", urlString);
+//    
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    
+//    
+//    
+//    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+//    
+//    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",selectedAddModel.addressID ,@"alipay", [NSNumber numberWithInt:totalpayment],[NSNumber numberWithInt:postfee],[NSNumber numberWithInt:postfee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
+//    
+//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+//    NSLog(@"%@", dict);
+//    // NSLog(@"string ------>>>%@", bodyData);
+//    NSLog(@"data = ---->>>>%@", data);
+//    [postRequest setHTTPBody:data];
+//    [postRequest setHTTPMethod:@"POST"];
+//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+//    
+//  //  LiJiGMViewController * __weak weakSelf = self;
+//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//    //  [self showAlertWait];
+//    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+//        
+//        NSLog(@"response = %@", httpResponse);
+//        
+//        NSLog(@"data = %@", data);
+//        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"dataString = %@", str);
+//        if (httpResponse.statusCode != 200) {
+//            NSLog(@"出错了");
+//            //  return;
+//        }
+//        
+//        if (connectionError != nil) {
+//            NSLog(@"error = %@", connectionError);
+//            return;
+//        }
+//        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"charge = %@", charge);
+//        
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [Pingpp createPayment:charge viewController:self appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                
+//                NSLog(@"completion block: %@", result);
+//                
+//                if (error == nil) {
+//                    NSLog(@"PingppError is nil");
+//                } else {
+//                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+//                }
+//                //[weakSelf showAlertMessage:result];
+//            }];
+//        });
+//        
+//        
+//        
+//    }];
+    
+
+    
+    
 }
 @end

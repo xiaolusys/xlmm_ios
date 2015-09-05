@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EmptyCartViewController : UIViewController
+@interface EmptyCartViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
+@property (strong, nonatomic) UICollectionView *myCollectionView;
 - (IBAction)gotoHomePage:(id)sender;
 @end

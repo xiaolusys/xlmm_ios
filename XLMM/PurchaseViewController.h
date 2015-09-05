@@ -26,5 +26,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *zhifuView;
 - (IBAction)zhifuSelected:(id)sender;
+- (IBAction)goumaiClicked:(id)sender;
 
 @end

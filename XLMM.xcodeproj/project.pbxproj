@@ -133,6 +133,8 @@
 		327F80D81B95A60900EDDF5B /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CE1B95A60900EDDF5B /* UIScrollView+MJExtension.m */; };
 		327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */; };
 		327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */; };
+		327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */; };
+		327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -426,6 +428,10 @@
 		327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		327F80D11B95A60900EDDF5B /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDetailsModel.h; sourceTree = "<group>"; };
+		327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsModel.m; sourceTree = "<group>"; };
+		327FC25D1B9AEC2F00F111B3 /* CartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartModel.h; sourceTree = "<group>"; };
+		327FC25E1B9AEC2F00F111B3 /* CartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartModel.m; sourceTree = "<group>"; };
 		3282F25E1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3282F2601B6B5B1300E73EB9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -948,6 +954,8 @@
 				3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */,
 				32A81F8F1B8D963C009972B3 /* BuyModel.h */,
 				32A81F901B8D963C009972B3 /* BuyModel.m */,
+				327FC25D1B9AEC2F00F111B3 /* CartModel.h */,
+				327FC25E1B9AEC2F00F111B3 /* CartModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1191,6 +1199,8 @@
 				32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */,
 				32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */,
 				32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */,
+				327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */,
+				327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1492,9 +1502,11 @@
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
+				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
 				32A2883C1B93E20F006DC949 /* RightMenuViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,
+				327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */,
 				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
 				327F80D61B95A60900EDDF5B /* MJRefreshFooterView.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
