@@ -156,7 +156,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = @"订单详情";
     label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
+    label.font = [UIFont systemFontOfSize:20];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
