@@ -12,12 +12,30 @@
 
 #define kSimpleCellIdentifier @"simpleCell"
 
-@interface PersonCenterViewController1 ()
+@interface PersonCenterViewController1 (){
+    NSTimer *theTimer;
+    NSString *shengyushijian;
+    UILabel *shengyuTimeLabel[10];
+}
+
+@property (nonatomic ,strong)NSArray *dataArray;
 
 @end
 
 @implementation PersonCenterViewController1
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+  
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"待支付订单";
@@ -25,6 +43,41 @@
     [self createInfo];
     // Do any additional setup after loading the view from its nib.
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
+    //self.dataArray = [[NSMutableArray alloc] init];
+    [self downlaodData];
+    
+}
+
+- (void)downlaodData{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitpay_List_URL]];
+        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+        
+        
+    });
+    
+}
+
+- (void)fetchedWaipayData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    if ([[json objectForKey:@"count"] integerValue] == 0) {
+        NSLog(@"无待支付列表");
+        return;
+    }
+    
+    self.dataArray = [json objectForKey:@"results"];
+    NSLog(@"dataArray = %@", self.dataArray);
+    self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120*self.dataArray.count);
+    [self.collectionView reloadData];
+    
+    
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:self.dataArray repeats:YES];
+    
     
 }
 - (void)createInfo{
@@ -78,14 +131,92 @@
     return CGSizeMake(SCREENWIDTH, 120);
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 2;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ZhiFuCollectionCell *cell = (ZhiFuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
+    NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
+    NSRange range = [string rangeOfString:@"T"];
+//    [string deleteCharactersInRange:range];
+//    [string insertString:@" " atIndex:range.location];
+    [string replaceCharactersInRange:range withString:@" "];
+    range = [string rangeOfString:@"-"];
+    [string replaceCharactersInRange:range withString:@"/"];
+    range = [string rangeOfString:@"-"];
+    [string replaceCharactersInRange:range withString:@"/"];
+    cell.createLabel.text = string;
+    
+    int i = indexPath.row;
+    shengyuTimeLabel[i] = [[UILabel alloc]initWithFrame:CGRectMake(256, 8, 60, 15)];
+    shengyuTimeLabel[i].textAlignment = NSTextAlignmentLeft;
+    shengyuTimeLabel[i].font = [UIFont systemFontOfSize:12];
+    shengyuTimeLabel[i].textColor = [UIColor colorWithR:229 G:49 B:120 alpha:1];
+    
+    [cell.contentView addSubview:shengyuTimeLabel[i]];
+    
+    cell.timeLabel.text = shengyushijian;
+    
+    cell.statusLabel.text = [dic objectForKey:@"status_display"];
+    cell.paymentLable.text = [NSString stringWithFormat:@"¥%@",[dic objectForKey:@"payment"]];
+    cell.idLabel.text = [dic objectForKey:@"tid"];
+    
     return cell;
     
 }
+
+//设计倒计时方法。。。。
+- (void)timerFireMethod:(NSTimer*)thetimer
+{
+    NSArray  *array = thetimer.userInfo;
+    
+   // NSLog(@"array = %@", array);
+    for (int i = 0; i<array.count; i++) {
+        
+        NSMutableString *string = [[NSMutableString alloc]initWithString:[[array objectAtIndex:i] objectForKey:@"created"]];
+        NSRange range = [string rangeOfString:@"T"];
+      
+        [string replaceCharactersInRange:range withString:@" "];
+        range = [string rangeOfString:@"-"];
+        [string replaceCharactersInRange:range withString:@"/"];
+        range = [string rangeOfString:@"-"];
+        [string replaceCharactersInRange:range withString:@"/"];
+        
+      
+        
+      //  NSLog(@"string  = %@", string);
+        NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+
+        //  2015-09-06T16:35:25
+        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
+        NSDate *date = [formatter dateFromString:string];
+        
+       // NSLog(@"%@", date);
+        
+        NSDate *endDate = [NSDate dateWithTimeInterval:20*60 sinceDate:date ];
+      //  NSLog(@"endDate = %@",endDate);
+        
+      
+        NSInteger unitFlags = NSCalendarUnitYear |
+        NSCalendarUnitMonth |
+        NSCalendarUnitDay |
+        NSCalendarUnitHour |
+        NSCalendarUnitMinute |
+        NSCalendarUnitSecond;
+          NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:endDate options:0];
+
+        shengyushijian = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+        NSLog(@"shengyu shijian = %@" , shengyushijian);
+        if ([shengyushijian isEqualToString:@"00:00"]) {
+            shengyushijian = @"00:00";
+        }
+        shengyuTimeLabel[i].text = shengyushijian;
+    }
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

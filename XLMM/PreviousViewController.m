@@ -51,6 +51,8 @@
     
     BOOL _isFirst;
     
+    BOOL isqiangGuang;
+    
     
 }
 
@@ -137,6 +139,7 @@
     step1 = NO;
     step2 = NO;
     _isFirst = YES;
+    isqiangGuang = NO;
     
     //  myTimeLabelString = @"剩余1天23小时23分59秒";
     
@@ -172,13 +175,13 @@
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];
-    int nextday = day;
-    
+    //int hour = (int)[comps hour];
+   
     // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
     NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
     [endTime setYear:year];
     [endTime setMonth:month];
-    [endTime setDay:nextday];
+    [endTime setDay:day];
     [endTime setHour:14];
     [endTime setMinute:0];
     [endTime setSecond:0];
@@ -198,6 +201,12 @@
     }
     childTimeLabel.text = string;
     ladyTimeLabel.text = string;
+    
+    if ([date compare:todate ] == NSOrderedDescending) {
+        childTimeLabel.text = @"敬请期待明日上新";
+        ladyTimeLabel.text = @"敬请期待明日上新";
+        isqiangGuang = YES;
+    }
 }
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -480,7 +489,11 @@
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
-            return cell;
+//            if (isqiangGuang) {
+//                cell.backView.hidden = NO;
+//                
+//            }
+//            return cell;
             
         }
         
@@ -494,6 +507,11 @@
         if (ladyDataArray.count != 0) {
             PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
+            
+//            if (isqiangGuang) {
+//                cell.backView.hidden = NO;
+//                
+//            }
             return cell;
         }
      

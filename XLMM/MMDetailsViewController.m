@@ -41,6 +41,12 @@
     UILabel *countLabel;
     NSInteger goodsCount;
     
+    NSDictionary *json;
+    UIButton *cartsButton;
+    
+    NSString *last_created;
+    NSTimer *theTimer;
+    UILabel *shengyutimeLabel;
     
 }
 
@@ -77,6 +83,12 @@
         }
     }else{
         countLabel.text = @"0";
+    }
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
     }
 }
 
@@ -129,6 +141,7 @@
     NSError *error;
    // [self.dataArray removeAllObjects];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    json = dic;
     
     NSLog(@"details data = %@", dic);
     
@@ -166,20 +179,36 @@
 }
 
 - (void)createCartView{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 90, 44, 44)];
-    button.layer.cornerRadius = 22;
-    [self.view addSubview:button];
-    [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view bringSubviewToFront:button];
-    button.alpha = 0.5;
+    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 90, 44, 44)];
+    cartsButton.layer.cornerRadius = 22;
+    [self.view addSubview:cartsButton];
+    //[cartsButton setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
+    cartsButton.backgroundColor = [UIColor blackColor];
+    
+    shengyutimeLabel  = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 44, 44)];
+    shengyutimeLabel.text = @"20:00";
+    shengyutimeLabel.textColor = [UIColor whiteColor];
+    shengyutimeLabel.textAlignment = NSTextAlignmentCenter;
+    shengyutimeLabel.font = [UIFont systemFontOfSize:14];
+    NSLog(@"shijian = %@", last_created);
+    shengyutimeLabel.hidden = YES;
+    [cartsButton addSubview:shengyutimeLabel];
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gouwuche.png"]];
+    imageview.frame = CGRectMake(0, 0, 44, 44);
+    [cartsButton addSubview:imageview];
+    
+    [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view bringSubviewToFront:cartsButton];
+    cartsButton.alpha = 0.5;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20, 6, 18, 18)];
     view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
     view.userInteractionEnabled = NO;
     view.layer.cornerRadius = 10;
     countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    countLabel.layer.cornerRadius = 10;
+    countLabel.layer.cornerRadius = 9;
     countLabel.userInteractionEnabled = NO;
+    countLabel.font = [UIFont systemFontOfSize:10];
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
@@ -198,7 +227,7 @@
     }
     countLabel.font = [UIFont systemFontOfSize:14];
     [view addSubview:countLabel];
-    [button addSubview:view];
+    [cartsButton addSubview:view];
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
@@ -348,6 +377,12 @@
         NSLog(@"%d", (int)button.tag);
         [button setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
         if ([[dic objectForKey:@"is_saleout"]boolValue]) {
+            [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
+            button.userInteractionEnabled = NO;
+        }
+        
+        
+        if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
             button.userInteractionEnabled = NO;
         }
@@ -508,10 +543,13 @@
 }
 
 - (void)myAnimation{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 , SCREENHEIGHT - 50, 20, 20)];
-    view.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
-    view.layer.cornerRadius = 10;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 , SCREENHEIGHT - 44, 16, 16)];
+    //view.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
+    
+    view.backgroundColor = [UIColor redColor];
+    view.layer.cornerRadius = 8;
     [self.view addSubview:view];
+   // [self.view sendSubviewToBack:view];
     CGFloat width = SCREENWIDTH;
     CGFloat height = SCREENHEIGHT;
     
@@ -523,39 +561,102 @@
     CGPathAddCurveToPoint(aPath, nil,
                           width/2 - 50 , height - 120,//控制点
                           width/2  - 100, height - 150,//控制点
-                          50, height - 100
+                          20, height - 60
                           );//控制点
     
     ani.path=aPath;
     ani.rotationMode = @"auto";
-    ani.duration=0.5;
+    ani.duration=0.6;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     
     [view.layer addAnimation:ani forKey:@"position"];
     
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         
-                         view.alpha = 0.9;
-                     } completion:^(BOOL finished) {
-                         [view removeFromSuperview];
-                         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-                         if (data != nil) {
-                             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                             
-                             NSLog(@"%@", dic);
-                             if ([dic objectForKey:@"result"] != nil) {
-                                 
-                                 
-                                 goodsCount = [[dic objectForKey:@"result"] integerValue];
-                                 NSLog(@"%ld", (long)goodsCount);
-                                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                                 countLabel.text = strNum;
-                             }
-                         }
-                     }];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        view.bounds = CGRectMake(0, 0, 12, 12);
+         view.alpha = 0.9;
+         //view.frame = CGRectMake(30, height-80, 16, 16);
+     } completion:^(BOOL finished) {
+        
+         [view removeFromSuperview];
+         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+         if (data != nil) {
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+             
+             NSLog(@"%@", dic);
+             if ([dic objectForKey:@"result"] != nil) {
+                 
+                 last_created = [dic objectForKey:@"last_created"];
+                 goodsCount = [[dic objectForKey:@"result"] integerValue];
+                 NSLog(@"%ld", (long)goodsCount);
+                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                 countLabel.text = strNum;
+             }
+         }
+         
+         [self createTimeCartView];
+         
+         
+     }];
 }
+
+- (void)createTimeCartView{
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        if ([dic objectForKey:@"result"] != nil) {
+            
+            last_created = [dic objectForKey:@"last_created"];
+            goodsCount = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"%ld", (long)goodsCount);
+            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+            countLabel.text = strNum;
+        }
+    }
+
+    [UIView animateWithDuration:0.5 animations:^{
+        cartsButton.frame = CGRectMake(2, SCREENHEIGHT - 90, 100, 44);
+    } completion:^(BOOL finished) {
+        NSLog(@"显示剩余时间");
+        [self createTimeLabel];
+        
+    }];
+}
+
+- (void)createTimeLabel{
+    shengyutimeLabel.hidden = NO;
+    
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+}
+- (void)timerFireMethod:(NSTimer*)thetimer
+{
+    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[last_created doubleValue]];
+   // NSLog(@"%@", lastDate);
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+
+    
+    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
+  
+     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+    NSLog(@"string = %@", string);
+    if ([string isEqualToString:@"00:00"]) {
+        string = @"00:00";
+        [theTimer invalidate];
+    }
+    shengyutimeLabel.text = string;
+    
+}
+
+
+
 
 - (IBAction)buyBtnClicked:(id)sender {
     NSLog(@"立即购买");

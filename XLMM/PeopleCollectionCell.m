@@ -47,6 +47,11 @@
         self.backView.hidden = YES;
         
     }
+    if ([model.isSaleopen boolValue]) {
+        self.backView.hidden = YES;
+    } else{
+        self.backView.hidden = NO;
+    }
 }
 
 - (void)fillData:( PromoteModel*)model{
@@ -55,7 +60,12 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-   self.backView.hidden = YES;
+    if (![model.isSaleopen boolValue] || [model.isSaleout boolValue]) {
+        
+    } else{
+        self.backView.hidden = YES;
+        
+    }
  
     
 }

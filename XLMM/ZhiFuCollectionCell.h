@@ -10,4 +10,13 @@
 
 @interface ZhiFuCollectionCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *createLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *idLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *paymentLable;
+
+@property (weak, nonatomic) IBOutlet UIImageView *myimageView;
+
 @end

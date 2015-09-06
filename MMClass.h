@@ -71,6 +71,9 @@
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address",Root_URL]
 #define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades",Root_URL]
 
+//  http://m.xiaolu.so/rest/v1/trades/waitpay
+#define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay",Root_URL]
+
 #endif
 
 #if 0

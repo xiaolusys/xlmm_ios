@@ -57,11 +57,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="180" height="186"/>
                     </imageView>
                     <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
-                        <rect key="frame" x="50" y="75" width="80" height="80"/>
+                        <rect key="frame" x="50" y="50" width="80" height="80"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="抢光了" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已抢光" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
                                 <rect key="frame" x="4" y="26" width="72" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -87,7 +87,7 @@
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ezo-I2-VRO"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Hzm-cL-LqI"/>
                 <constraint firstItem="paa-sZ-unt" firstAttribute="width" secondItem="CAl-eb-VKY" secondAttribute="width" id="Lg7-Kv-OeZ"/>
-                <constraint firstAttribute="centerY" secondItem="WUt-wu-bjn" secondAttribute="centerY" id="RGa-Jx-Xea"/>
+                <constraint firstItem="WUt-wu-bjn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="50" id="NYI-bg-tOT"/>
                 <constraint firstAttribute="centerX" secondItem="WUt-wu-bjn" secondAttribute="centerX" id="TPE-TU-oBJ"/>
                 <constraint firstItem="paa-sZ-unt" firstAttribute="centerY" secondItem="CAl-eb-VKY" secondAttribute="centerY" id="Xr5-wN-lrE"/>
                 <constraint firstItem="CAl-eb-VKY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="60" id="d9Z-Ht-253"/>
