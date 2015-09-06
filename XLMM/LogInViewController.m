@@ -26,7 +26,8 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
     _passwordTextField.text = [userDefault objectForKey:kPassWord];
- 
+
+    
     
     //[NSString stringWithFormat:@"%@/",Root_URL]
 }
@@ -36,6 +37,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:_userIDTextField.text forKey:kUserName];
     [userDefaults setObject:_passwordTextField.text forKey:kPassWord];
+    
     [userDefaults synchronize];
 }
 
@@ -47,9 +49,26 @@
     _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTextField.secureTextEntry = YES;
     
+    _userIDTextField.borderStyle = UITextBorderStyleNone;
+    _passwordTextField.borderStyle = UITextBorderStyleNone;
+    CGRect rect = CGRectMake(0, 0, 220, 44);
+    
+    _userIDTextField.frame = rect;
+    _passwordTextField.frame = rect;
+    _userIDTextField.backgroundColor = [UIColor whiteColor];
+    _passwordTextField.backgroundColor = [UIColor whiteColor];
+    _userIDTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [userfaults objectForKey:kUserName];
     NSString *password = [userfaults objectForKey:kPassWord];
+    [self.zhuceBtn.layer setMasksToBounds:YES];
+    self.zhuceBtn.backgroundColor = [UIColor clearColor];
+    [self.zhuceBtn.layer setBorderWidth:1];
+   // [self.zhuceBtn setTitleColor:[UIColor colorWithRed:83 green:198 blue:206 alpha:1] forState:UIControlStateNormal];
+    [self.zhuceBtn.layer setBorderColor:[UIColor redColor].CGColor];
+    self.zhuceBtn.layer.cornerRadius = 4;
+    
     _userIDTextField.text = username;
     _passwordTextField.text = password;
     
@@ -83,6 +102,12 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.passwordTextField resignFirstResponder];
+    [self.userIDTextField resignFirstResponder];
+  
 }
 
 - (IBAction)loginClicked:(UIButton *)sender {

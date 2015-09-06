@@ -4,12 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="LiHeiPro.ttf">
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EnterViewController">
             <connections>
@@ -27,7 +21,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="wMH-nw-KXH"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="24"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
                     <state key="normal" title="小鹿美美账号登录">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -65,7 +59,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80d-WO-ZNf">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <color key="backgroundColor" red="0.098039215686274508" green="0.75294117647058822" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="24"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
                     <state key="normal" title="微信一键登录">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,9 +75,13 @@
                 <constraint firstAttribute="bottom" secondItem="80d-WO-ZNf" secondAttribute="bottom" constant="8" id="CSF-gh-hJe"/>
                 <constraint firstItem="80d-WO-ZNf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="I7a-Ns-MdZ"/>
                 <constraint firstItem="pyJ-wo-v4Q" firstAttribute="leading" secondItem="80d-WO-ZNf" secondAttribute="leading" id="IZA-t1-iVK"/>
-                <constraint firstItem="Wde-Ry-2t2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="JzD-Uu-Vt0"/>
+                <constraint firstItem="Wde-Ry-2t2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="JzD-Uu-Vt0">
+                    <variation key="heightClass=regular-widthClass=compact" constant="80"/>
+                </constraint>
                 <constraint firstItem="pyJ-wo-v4Q" firstAttribute="height" secondItem="80d-WO-ZNf" secondAttribute="height" id="LoF-UM-ceq"/>
-                <constraint firstItem="Wde-Ry-2t2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="YSF-Lb-0mN"/>
+                <constraint firstItem="Wde-Ry-2t2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="YSF-Lb-0mN">
+                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                </constraint>
                 <constraint firstItem="pyJ-wo-v4Q" firstAttribute="width" secondItem="80d-WO-ZNf" secondAttribute="width" id="a8J-vQ-uAz"/>
                 <constraint firstItem="80d-WO-ZNf" firstAttribute="top" secondItem="pyJ-wo-v4Q" secondAttribute="bottom" constant="8" id="pLA-4C-x4t"/>
                 <constraint firstAttribute="trailing" secondItem="80d-WO-ZNf" secondAttribute="trailing" constant="8" id="qxv-WK-nxf"/>

@@ -162,7 +162,7 @@
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
+    imageView.frame = CGRectMake(8, 12, 12, 22);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];

@@ -31,13 +31,16 @@
     _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
     _setPasswordTextField.keyboardType = UIKeyboardTypeASCIICapable;
     _resetPasswordTextField.keyboardType = UIKeyboardTypeASCIICapable;
-    _numberTextField.borderStyle = UITextBorderStyleLine;
-    _passwordTextField.borderStyle = UITextBorderStyleLine;
-    _setPasswordTextField.borderStyle = UITextBorderStyleLine;
-    _resetPasswordTextField.borderStyle = UITextBorderStyleLine;
+    _numberTextField.borderStyle = UITextBorderStyleNone;
+    _passwordTextField.borderStyle = UITextBorderStyleNone;
+    _setPasswordTextField.borderStyle = UITextBorderStyleNone;
+    _resetPasswordTextField.borderStyle = UITextBorderStyleNone;
     
     
-    
+    _numberTextField.backgroundColor = [UIColor whiteColor];
+    _passwordTextField.backgroundColor = [UIColor whiteColor];
+    _setPasswordTextField.backgroundColor = [UIColor whiteColor];
+    _resetPasswordTextField.backgroundColor = [UIColor whiteColor];
     _passwordTextField.delegate = self;
     _numberTextField.delegate = self;
     _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;

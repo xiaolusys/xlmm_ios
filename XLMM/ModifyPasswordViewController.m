@@ -31,6 +31,21 @@
     self.passCodeTextField.delegate = self;
     self.setPasswordTextField.delegate = self;
     self.confirmPasswordTextField.delegate = self;
+    
+    self.phoneNumberTextField.borderStyle = UITextBorderStyleNone;
+     self.passCodeTextField.borderStyle = UITextBorderStyleNone;
+     self.setPasswordTextField.borderStyle = UITextBorderStyleNone;
+     self.confirmPasswordTextField.borderStyle = UITextBorderStyleNone;
+    self.phoneNumberTextField.backgroundColor = [UIColor whiteColor];
+     self.passCodeTextField.backgroundColor = [UIColor whiteColor];
+     self.setPasswordTextField.backgroundColor = [UIColor whiteColor];
+     self.confirmPasswordTextField.backgroundColor = [UIColor whiteColor];
+    self.phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.passCodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.setPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.confirmPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
    // http://youni.huyi.so/rest/v1/register/change_pwd_code
     
     

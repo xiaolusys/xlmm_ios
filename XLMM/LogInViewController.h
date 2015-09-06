@@ -17,5 +17,6 @@
 - (IBAction)loginClicked:(UIButton *)sender;
 - (IBAction)forgetPasswordClicked:(UIButton *)sender;
 - (IBAction)registerClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *zhuceBtn;
 
 @end
