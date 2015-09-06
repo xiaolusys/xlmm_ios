@@ -26,6 +26,7 @@
 
 
 
+
 @interface LeftMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 
@@ -185,6 +186,12 @@
             
             break;
         case 10:{
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setBool:NO forKey:kIsLogin];
+            
+            [userDefaults synchronize];
+
            
             
             [self.sideMenuViewController hideMenuViewController];

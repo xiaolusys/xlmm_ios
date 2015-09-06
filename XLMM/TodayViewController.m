@@ -413,12 +413,12 @@
         return 2;
     } else if (section == 1){
         return childDataArray.count;
-        
+        //return 4;
        // return childDataArray.count;
     } else if (section == 2){
         return ladyDataArray.count;
         
-        
+       // return 4;
         //return ladyDataArray.count;
     }
     return 0;
@@ -474,31 +474,38 @@
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
+           
         }
-       
         return cell;
+       
 
         
     }
     else if (indexPath.section == 1)
     {
-    
-        PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        [cell fillData:model];
+        if (childDataArray.count != 0) {
+            PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
+            return cell;
+        }
+        
         
 
         
     }
     
     else {
-    
+        if (ladyDataArray.count != 0) {
+            PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
+            return cell;
+        }
         
-        PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        [cell fillData:model];
+     
         
     
     }
-    return cell;
+    return cell;;
    
 }
 

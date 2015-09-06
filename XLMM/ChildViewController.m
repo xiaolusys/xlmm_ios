@@ -21,6 +21,8 @@
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 
+#import "MJRefresh.h"
+
 #define ksimpleCell @"simpleCell"
 
 @interface ChildViewController (){
@@ -30,6 +32,7 @@
     BOOL isOrder;
     NSInteger goodsCount;
     UILabel *countLabel;
+    BOOL _isFirst;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -38,6 +41,73 @@
 @end
 
 @implementation ChildViewController
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_isFirst) {
+        //集成刷新控件
+        
+        [self setupRefresh];
+        self.childCollectionView.footerHidden=NO;
+        self.childCollectionView.headerHidden=NO;
+        [self.childCollectionView headerBeginRefreshing];
+        _isFirst = NO;
+    }
+    
+}
+
+- (void)setupRefresh{
+    
+    
+    
+    [self.childCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_childCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    _childCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
+    _childCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
+    _childCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
+    
+    _childCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
+    _childCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
+    _childCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    
+}
+
+- (void)headerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self reload];
+        sleep(1.5);
+        [_childCollectionView headerEndRefreshing];
+        
+    });
+}
+
+
+- (void)footerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self loadMore];
+        sleep(1.5);
+        [_childCollectionView footerEndRefreshing];
+        
+    });
+}
+
+- (void)reload
+{
+    NSLog(@"reload");
+    [self downloadData];
+    
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
@@ -55,21 +125,18 @@
     
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
+    _isFirst = YES;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
 
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.backgroundColor = [UIColor clearColor];
-    [activityIndicator startAnimating];
-    activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2);
-    [self.childCollectionView addSubview:activityIndicator];
+   
   //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
-    [self downloadData];
+   // [self downloadData];
    
  
 }
@@ -121,7 +188,6 @@
         
     }
 
-    [activityIndicator removeFromSuperview];
     
     [self.childCollectionView reloadData];
     

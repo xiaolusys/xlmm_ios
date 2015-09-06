@@ -55,12 +55,9 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-    if ([model.isSaleout boolValue]) {
-        
-    } else{
-        self.backView.hidden = YES;
+   self.backView.hidden = YES;
  
-    }
+    
 }
 
 @end

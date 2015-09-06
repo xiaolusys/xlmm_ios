@@ -12,10 +12,17 @@
 #import "Head2View.h"
 #import "PosterCollectionCell.h"
 #import "PeopleCollectionCell.h"
+
 #import "PromoteModel.h"
 #import "PosterModel.h"
-
+#import "ChildViewController.h"
+#import "WomanViewController.h"
 #import "MJRefresh.h"
+#import "MMDetailsViewController.h"
+#import "MMCollectionController.h"
+
+
+
 
 @interface PreviousViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
@@ -30,14 +37,20 @@
     UIView *frontView;
     NSInteger childListNumber;
     NSInteger ladyListNumber;
-    UILabel *childTimeLabel;
-    UILabel *ladyTimeLabel;
-    NSDictionary *jsonDic;
+    
+    
     
     BOOL step1;
     BOOL step2;
     
+    
+    NSTimer *theTimer;
+    
+    UILabel *childTimeLabel;
+    UILabel *ladyTimeLabel;
+    
     BOOL _isFirst;
+    
     
 }
 
@@ -62,7 +75,6 @@
     }
     
 }
-
 
 - (void)setupRefresh{
     
@@ -115,6 +127,7 @@
     NSLog(@"loadmore");
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -125,16 +138,67 @@
     step2 = NO;
     _isFirst = YES;
     
-   
+    //  myTimeLabelString = @"剩余1天23小时23分59秒";
+    
     [self createCollectionView];
     
-    [self downloadData];
+    // [self downloadData];
     
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
 
+    
+    
     
 }
 
+
+//设计倒计时方法。。。。
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    comps = [calendar components:unitFlags fromDate:date];
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+    int nextday = day;
+    
+    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:nextday];
+    [endTime setHour:14];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+    
+    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+    
+    //用来得到具体的时差
+    
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    NSString *string = nil;
+    if ((long)[d day] == 0) {
+        string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+    }
+    else{
+        string = [NSString stringWithFormat:@"剩余%02ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+        
+    }
+    childTimeLabel.text = string;
+    ladyTimeLabel.text = string;
+}
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
@@ -145,7 +209,7 @@
     
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
-    
+    self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:@"posterView"];
     
@@ -154,12 +218,7 @@
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View"];
     self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.myCollectionView];
-    
 }
-
-
-
-
 
 
 
@@ -168,11 +227,13 @@
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_PROMOTE_URL]];
+        NSLog(@"%@", kTODAY_PROMOTE_URL);
         [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
         
     });
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_POSTERS_URL]];
+        NSLog(@"%@", kTODAY_POSTERS_URL);
         [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
         
     });
@@ -188,39 +249,41 @@
 
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
-    NSLog(@"data = %@", data);
+    //   NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
     if (data == nil) {
-        [frontView removeFromSuperview];
+        //[frontView removeFromSuperview];
         
         return;
     }
-    jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"poster data : %@", jsonDic);
+    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    //  NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
-    NSLog(@"%@", childDic);
+    // NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
-    NSLog(@"%@", ladyDic);
+    //  NSLog(@"%@", ladyDic);
     PosterModel *ladyModel = [PosterModel new];
     ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
     ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
     [posterDataArray addObject:ladyModel];
     [posterDataArray addObject:childModel];
-
     
-    NSLog(@"%@", posterDataArray);
+    //  NSLog(@"%@", posterDataArray);
     step1 = YES;
     if (step1 && step2) {
         
-        
+        step1 = NO;
+        step2 = NO;
         [self.myCollectionView reloadData];
+        
+        NSLog(@"poster finish");
         
     }
     
@@ -228,47 +291,26 @@
 }
 - (void)fetchedPromoteData:(NSData *)data{
     NSError *error;
+    // NSLog(@"data = %@", data);
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
-    // NSLog(@"data = %@", data);
     if (data == nil) {
-        [frontView removeFromSuperview];
+        // [frontView removeFromSuperview];
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     //  NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
     ladyListNumber = ladyArray.count;
-    NSLog(@"%ld", (long)ladyArray.count);
+    // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
-        PromoteModel *model = [PromoteModel new];
-        model.picPath = [ladyInfo objectForKey:@"pic_path"];
-        model.name = [ladyInfo objectForKey:@"name"];
-        model.Url = [ladyInfo objectForKey:@"url"];
-        model.agentPrice = [ladyInfo objectForKey:@"agent_price"];
-        model.stdSalePrice = [ladyInfo objectForKey:@"std_sale_price"];
-        model.outerID = [ladyInfo objectForKey:@"outer_id"];
-        model.isNewgood = [ladyInfo objectForKey:@"is_newgood"];
-        model.isSaleopen = [ladyInfo objectForKey:@"is_saleopen"];
-        model.isSaleout = [ladyInfo objectForKey:@"is_saleout"];
-        model.ID = [ladyInfo objectForKey:@"id"];
-        model.category = [ladyInfo objectForKey:@"category"];
-        model.remainNum = [ladyInfo objectForKey:@"remain_num"];
-        model.saleTime = [ladyInfo objectForKey:@"sale_time"];
-        model.wareBy = [ladyInfo objectForKey:@"ware_by"];
-        if ([[ladyInfo objectForKey:@"product_model"] class] == [NSNull class]) {
-            NSLog(@"没有集合页");
-            model.productModel = nil;
-        } else{
-            model.productModel = [ladyInfo objectForKey:@"product_model"];
-            NSLog(@"*************");
-        }
+        PromoteModel *model = [self fillModel:ladyInfo];
         
         
         [ladyDataArray addObject:model];
         
     }
-    NSLog(@"ladyDataArray = %@", ladyDataArray);
+    //  NSLog(@"ladyDataArray = %@", ladyDataArray);
     
     
     
@@ -276,43 +318,24 @@
     
     NSArray *childArray = [promoteDic objectForKey:@"child_list"];
     childListNumber = childArray.count;
-    NSLog(@"%ld", (long)childArray.count);
+    //  NSLog(@"%ld", (long)childArray.count);
     
     for (NSDictionary *childInfo in childArray) {
-        PromoteModel *model = [PromoteModel new];
-        model.picPath = [childInfo objectForKey:@"pic_path"];
-        model.name = [childInfo objectForKey:@"name"];
-        model.Url = [childInfo objectForKey:@"url"];
-        model.agentPrice = [childInfo objectForKey:@"agent_price"];
-        model.stdSalePrice = [childInfo objectForKey:@"std_sale_price"];
-        model.outerID = [childInfo objectForKey:@"outer_id"];
-        model.isNewgood = [childInfo objectForKey:@"is_newgood"];
-        model.isSaleopen = [childInfo objectForKey:@"is_saleopen"];
-        model.isSaleout = [childInfo objectForKey:@"is_saleout"];
-        model.ID = [childInfo objectForKey:@"id"];
-        model.category = [childInfo objectForKey:@"category"];
-        model.remainNum = [childInfo objectForKey:@"remain_num"];
-        model.saleTime = [childInfo objectForKey:@"sale_time"];
-        model.wareBy = [childInfo objectForKey:@"ware_by"];
-        if ([[childInfo objectForKey:@"product_model"] class] == [NSNull class]) {
-            NSLog(@"没有集合页");
-            model.productModel = nil;
-        } else{
-            model.productModel = [childInfo objectForKey:@"product_model"];
-            NSLog(@"*************");
-        }
+        PromoteModel *model = [self fillModel:childInfo];
         
         
         [childDataArray addObject:model];
         
     }
-    NSLog(@"childDataArray = %@", childDataArray);
+    //  NSLog(@"childDataArray = %@", childDataArray);
     
     step2 = YES;
     
     if (step1 && step2) {
-        
+        step1 = NO;
+        step2 = NO;
         [self.myCollectionView reloadData];
+        NSLog(@"promote finish");
         
     }
     
@@ -321,7 +344,38 @@
 
 
 
-
+- (PromoteModel *)fillModel:(NSDictionary *)dic{
+    PromoteModel *model = [PromoteModel new];
+    model.name = [dic objectForKey:@"name"];
+    
+    // model.picPath = [childInfo objectForKey:@"pic_path"];
+    model.Url = [dic objectForKey:@"url"];
+    model.agentPrice = [dic objectForKey:@"agent_price"];
+    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
+    model.outerID = [dic objectForKey:@"outer_id"];
+    model.isNewgood = [dic objectForKey:@"is_newgood"];
+    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+    model.isSaleout = [dic objectForKey:@"is_saleout"];
+    model.ID = [dic objectForKey:@"id"];
+    model.category = [dic objectForKey:@"category"];
+    model.remainNum = [dic objectForKey:@"remain_num"];
+    model.saleTime = [dic objectForKey:@"sale_time"];
+    model.wareBy = [dic objectForKey:@"ware_by"];
+    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+        // NSLog(@"没有集合页");
+        model.productModel = nil;
+        model.picPath = [dic objectForKey:@"pic_path"];
+        
+    } else{
+        model.productModel = [dic objectForKey:@"product_model"];
+        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+        model.name = [model.productModel objectForKey:@"name"];
+        // NSLog(@"*************");
+    }
+    return model;
+    
+    
+}
 
 
 
@@ -354,12 +408,12 @@
         return 2;
     } else if (section == 1){
         return childDataArray.count;
-        
+        //return 4;
         // return childDataArray.count;
     } else if (section == 2){
         return ladyDataArray.count;
         
-        
+        //return 4;
         //return ladyDataArray.count;
     }
     return 0;
@@ -371,12 +425,12 @@
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618+24);
         
     }
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 40);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 44);
     
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+    return 4;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     return 4;
@@ -400,6 +454,9 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
+    
     if (indexPath.section == 0) {
         
         
@@ -413,52 +470,37 @@
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
         }
-        return cell;
         
+        return cell;
         
         
     }
     else if (indexPath.section == 1)
     {
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
-        PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.picPath]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@", model.name];
-        cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.stdSalePrice];
-        BOOL issaleOut = [model.isSaleout boolValue];
-        if (issaleOut) {
+        if (childDataArray.count != 0) {
+            PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
+            return cell;
             
-        }else{
-            cell.backView.hidden = YES;
-//            cell.frontView.hidden = YES;
         }
         
-        return cell;
+        
         
         
     }
     
-    else{
+    else {
         
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
-        
-        PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.picPath]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@", model.name];
-        cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.stdSalePrice];
-        BOOL issaleOut = [model.isSaleout boolValue];
-        if (issaleOut) {
-            
-        }else{
-            cell.backView.hidden = YES;
-//            cell.frontView.hidden = YES;
+        if (ladyDataArray.count != 0) {
+            PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
+            return cell;
         }
-        return cell;
+     
         
         
     }
+    return cell;
     
 }
 
@@ -467,15 +509,80 @@
     if (indexPath.section == 0) {
         headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head1View" forIndexPath:indexPath];
         return headerView;
+    } else if (indexPath.section == 1){
+        
+        Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+        headerView.nameLabel.text = @"潮童专区";
+        headerView.headView.layer.cornerRadius = 4;
+        childTimeLabel = headerView.timeLabel;
+        
+        return headerView;
+    } else if (indexPath.section == 2){
+        Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+        headerView.nameLabel.text = @"时尚女装";
+        headerView.headView.layer.cornerRadius = 4;
+        childTimeLabel = headerView.timeLabel;
+        
+        return headerView;
     }
     
+    
     headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
+    
     return headerView;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
-    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+            
+        } else{
+            
+            
+        }
+        
+    } else if (indexPath.section == 1){
+        PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
+            NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+            [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+            [urlString appendString:@"/details"];
+            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+            detailVC.urlString = urlString;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }else{
+            NSString *modelID = [model.productModel objectForKey:@"id"];
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+            [urlString appendString:[NSString stringWithFormat:@"%@", modelID]];
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+            collectionVC.urlString = urlString;
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+        }
+        
+        
+    } else if (indexPath.section == 2){
+        PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
+            NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+            [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+            [urlString appendString:@"/details"];
+            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+            detailVC.urlString = urlString;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+        }else{
+            NSString *modelID = [model.productModel objectForKey:@"id"];
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+            [urlString appendString:[NSString stringWithFormat:@"%@", modelID]];
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+            collectionVC.urlString = urlString;
+            [self.navigationController pushViewController:collectionVC animated:YES];
+        }
+        
+    }
 }
 
 

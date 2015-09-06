@@ -148,11 +148,11 @@
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAINSCREENWIDTH, 80)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 140, 40)];
     label.text = @"收货地址";
-    label.font = [UIFont systemFontOfSize:24];
+    label.font = [UIFont systemFontOfSize:16];
     [headView addSubview:label];
     UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(8, 40, 180, 40)];
     label2.text = @"新增收货地址";
-    label2.font = [UIFont systemFontOfSize:24];
+    label2.font = [UIFont systemFontOfSize:16];
     [headView addSubview:label2];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
