@@ -10,4 +10,16 @@
 
 @interface ShouHuoCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *xiadanshijianLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *myimageView;
+@property (weak, nonatomic) IBOutlet UIButton *querenButton;
+@property (weak, nonatomic) IBOutlet UILabel *biaohaoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jineLabel;
+
+- (IBAction)querenClicked:(id)sender;
+
+
+
+
 @end

@@ -37,4 +37,6 @@
     return self;
 }
 
+- (IBAction)querenClicked:(id)sender {
+}
 @end

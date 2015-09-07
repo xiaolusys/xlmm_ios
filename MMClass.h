@@ -74,6 +74,10 @@
 //  http://m.xiaolu.so/rest/v1/trades/waitpay
 #define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay",Root_URL]
 
+//  http://m.xiaolu.so/rest/v1/trades/waitsend
+
+#define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
+
 #endif
 
 #if 0

@@ -13,6 +13,8 @@
 
 @interface PersonCenterViewController2 ()
 
+@property (nonatomic, strong)NSArray *dataArray;
+
 @end
 
 @implementation PersonCenterViewController2
@@ -24,7 +26,48 @@
      [self.collectionView registerClass:[ShouHuoCollectionViewCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     [self createInfo];
     
+    [self downlaodData];
+   // [self.view addSubview:[[UIView alloc] init]];
+    
+    
 }
+
+- (void)downlaodData{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
+        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+        
+        
+    });
+    
+}
+
+- (void)fetchedWaipayData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    if ([[json objectForKey:@"count"] integerValue] == 0) {
+        NSLog(@"无待支付列表");
+        return;
+    }
+    
+    self.dataArray = [json objectForKey:@"results"];
+    NSLog(@"dataArray = %@", self.dataArray);
+    //self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120*self.dataArray.count);
+    [self.collectionView reloadData];
+    
+    
+    
+}
+
+
+
+
+
+
 - (void)createInfo{
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -60,15 +103,36 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 160);
+    return CGSizeMake(SCREENWIDTH, 140);
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 5;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ShouHuoCollectionViewCell *cell = (ShouHuoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
+    
+    NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
+    NSRange range = [string rangeOfString:@"T"];
+    //    [string deleteCharactersInRange:range];
+    //    [string insertString:@" " atIndex:range.location];
+    [string replaceCharactersInRange:range withString:@" "];
+    range = [string rangeOfString:@"-"];
+    [string replaceCharactersInRange:range withString:@"/"];
+    range = [string rangeOfString:@"-"];
+    [string replaceCharactersInRange:range withString:@"/"];
+    cell.xiadanshijianLabel.text = string;
+    cell.zhuangtaiLabel.text = [dic objectForKey:@"status_display"];
+    cell.jineLabel.text = [NSString stringWithFormat:@"¥%@",[dic objectForKey:@"payment"]];
+    cell.biaohaoLabel.text = [dic objectForKey:@"tid"];
+    
+    
+    
     return cell;
+
+ 
     
 }
 
