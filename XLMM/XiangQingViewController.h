@@ -36,11 +36,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *youhuiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yingfuLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *quxiaoBtn;
+@property (weak, nonatomic) IBOutlet UIButton *buyBtn;
 
+- (IBAction)quxiaodingdan:(id)sender;
+
+- (IBAction)goumai:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *lastStatusLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *finishedLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *yuanqiuView;
 
 @property (nonatomic, copy) NSString *urlString;
 
 @property (nonatomic, strong)DingdanModel *dingdanModel;
+
+
 
 
 

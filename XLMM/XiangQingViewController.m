@@ -14,7 +14,7 @@
 #import "DingDanXiangQingModel.h"
 #import "UIImageView+WebCache.h"
 
-@interface XiangQingViewController ()
+@interface XiangQingViewController ()<NSURLConnectionDataDelegate>
 
 
 
@@ -24,6 +24,7 @@
 @implementation XiangQingViewController{
     NSMutableArray *dataArray;
     UIActivityIndicatorView *activityView;
+    UIView *frontView;
     
 }
 
@@ -37,14 +38,15 @@
     self.myViewHeight.constant = 0;
     
     
+    frontView = [[UIView alloc] initWithFrame:self.view.frame];
+    frontView.backgroundColor = [UIColor whiteColor];
     
-    
-    dataArray = [[NSMutableArray alloc] initWithCapacity:5];
+    dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityView.center = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2-80);
     [activityView startAnimating];
-    [self.view addSubview:activityView];
-    
+    [frontView addSubview:activityView];
+    [self.view addSubview:frontView];
     
     [self downloadData];
 }
@@ -67,31 +69,44 @@
     NSLog(@"JSON = %@", dicJson);
     
     [activityView removeFromSuperview];
-
+    NSString *statusname = [dicJson objectForKey:@"status_display"];
+    
+    if ([statusname isEqualToString:@"交易关闭"]) {
+        NSLog(@"交易订单已经关闭");
+        self.quxiaoBtn.hidden = YES;
+        self.buyBtn.hidden = YES;
+    }
 
     self.zhuangtaiLabel.text = [dicJson objectForKey:@"status_display"];
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];
+    
+    
     
     NSMutableString *string = [NSMutableString stringWithString:[dicJson objectForKey:@"created"]];
     NSRange range = [string rangeOfString:@"T"];
     [string deleteCharactersInRange:range];
     [string insertString:@"  " atIndex:range.location];
-    
+    self.finishedLabel.text = string;
+    self.lastStatusLabel.text = [dicJson objectForKey:@"status_display"];
+    self.yuanqiuView.layer.cornerRadius = 6;
     self.timeLabel.text = string;
     self.jineLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"payment"]];
     
     self.nameLabel.text = [dicJson objectForKey:@"receiver_name"];
     self.phoneLabel.text = [dicJson objectForKey:@"receiver_mobile"];
-    NSString *addressStr = [NSString stringWithFormat:@"%@-%@-%@",
+    NSString *addressStr = [NSString stringWithFormat:@"%@-%@-%@-%@",
                            [dicJson objectForKey:@"receiver_state"],
                            [dicJson objectForKey:@"receiver_city"],
-                           [dicJson objectForKey:@"receiver_district"]];
+                           [dicJson objectForKey:@"receiver_district"],
+                            [dicJson objectForKey:@"receiver_address"]];
     self.addressLabel.text = addressStr;
     
     self.allPriceLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"total_fee"]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"post_fee"]];
     self.youhuiLabel.text = [NSString stringWithFormat:@"￥-%@", [dicJson objectForKey:@"discount_fee"]];
     self.yingfuLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"payment"]];
+    
+    
     
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
     for (NSDictionary *dic in orderArray) {
@@ -137,6 +152,9 @@
         [self.myXiangQingView addSubview:owner.myView];
         
     }
+    
+    [frontView removeFromSuperview];
+    
 
 }
 
@@ -194,4 +212,59 @@
 }
 */
 
+- (IBAction)quxiaodingdan:(id)sender {
+    NSLog(@"取消订单");
+    
+    NSLog(@"stringURL = %@", self.urlString);
+    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
+   NSRange range =  [string rangeOfString:@"/details"];
+    [string deleteCharactersInRange:range];
+    NSLog(@"newstring = %@", string);
+    
+    NSURL *url = [NSURL URLWithString:string];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"DELETE"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+}
+
+- (IBAction)goumai:(id)sender {
+    NSLog(@"重新购买");
+    NSLog(@"stringURL = %@", self.urlString);
+    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
+    NSRange range =  [string rangeOfString:@"/details"];
+    [string deleteCharactersInRange:range];
+    [string appendString:@"/charge"];
+    NSLog(@"newstring = %@", string);
+    
+    NSURL *url = [NSURL URLWithString:string];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+    
+    
+}
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSLog(@"111 : %@", response);
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"222 : %@", dic);
+    
+    NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    NSLog(@"3333 : %@", connection);
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"error");
+    
+}
 @end
