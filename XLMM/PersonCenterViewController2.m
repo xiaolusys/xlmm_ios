@@ -8,6 +8,7 @@
 
 #import "PersonCenterViewController2.h"
 #import "MMClass.h"
+#import "XiangQingViewController.h"
 
 #define kSimpleCellIdentifier @"simpleCell"
 
@@ -27,7 +28,7 @@
     [self createInfo];
     
     [self downlaodData];
-   // [self.view addSubview:[[UIView alloc] init]];
+    [self.view addSubview:[[UIView alloc] init]];
     
     
 }
@@ -113,7 +114,7 @@
     ShouHuoCollectionViewCell *cell = (ShouHuoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
-    
+    NSString *status = [dic objectForKey:@"status_display"];
     NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
     NSRange range = [string rangeOfString:@"T"];
     //    [string deleteCharactersInRange:range];
@@ -128,11 +129,41 @@
     cell.jineLabel.text = [NSString stringWithFormat:@"¥%@",[dic objectForKey:@"payment"]];
     cell.biaohaoLabel.text = [dic objectForKey:@"tid"];
     
-    
-    
-    return cell;
+    if ([status isEqualToString:@"已发货"]) {
+        NSLog(@"已经发货");
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 66, 6, 60, 32)];
+        button.tag = indexPath.row +100;
+        
+        [button setTitle:@"确认签收" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
+        button.layer.cornerRadius = 6;
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
+        [cell.contentView addSubview:button];
+    }
+ return cell;
+}
 
- 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
+    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *ID = [dic objectForKey:@"id"];
+    NSLog(@"id = %@", ID);
+    
+    //      http://m.xiaolu.so/rest/v1/trades/86412/details
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    NSLog(@"urlString = %@", urlString);
+    xiangqingVC.urlString = urlString;
+    [self.navigationController pushViewController:xiangqingVC animated:YES];
+    
+    
+    
+}
+
+- (void)querenQianshou:(UIButton *)button{
+    NSLog(@"tag = %ld", (long)button.tag);
     
 }
 

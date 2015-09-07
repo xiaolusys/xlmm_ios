@@ -13,6 +13,7 @@
 #import "PerDingdanModel.h"
 #import "DingDanXiangQingModel.h"
 #import "UIImageView+WebCache.h"
+#import "TuihuoController.h"
 
 @interface XiangQingViewController ()<NSURLConnectionDataDelegate>
 
@@ -25,7 +26,7 @@
     NSMutableArray *dataArray;
     UIActivityIndicatorView *activityView;
     UIView *frontView;
-    
+    NSString *status;
 }
 
 - (void)viewDidLoad {
@@ -70,7 +71,7 @@
     
     [activityView removeFromSuperview];
     NSString *statusname = [dicJson objectForKey:@"status_display"];
-    
+    status = [dicJson objectForKey:@"status_display"];
     if ([statusname isEqualToString:@"交易关闭"]) {
         NSLog(@"交易订单已经关闭");
         self.quxiaoBtn.hidden = YES;
@@ -148,6 +149,25 @@
         owner.numberLabel.text = [NSString stringWithFormat:@"%@", model.numberString];
         owner.priceLabel.text =[NSString stringWithFormat:@"¥%@", model.priceString];
         
+        if ([status isEqualToString:@"已发货"]||[status isEqualToString:@"已付款"]) {
+            
+            self.quxiaoBtn.hidden = YES;
+            self.buyBtn.hidden = YES;
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];
+        [button addTarget:self action:@selector(tuihuo:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        button.backgroundColor = [UIColor whiteColor];
+        [button setTitle:@"我要退" forState:UIControlStateNormal];
+        [button.layer setMasksToBounds:YES];
+        [button.layer setBorderWidth:1];
+        button.tag = 200+i;
+        button.layer.cornerRadius = 6;
+        [button.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+        [owner.myView addSubview:button];
+        
+        }
+        
+        
         
         [self.myXiangQingView addSubview:owner.myView];
         
@@ -156,6 +176,22 @@
     [frontView removeFromSuperview];
     
 
+}
+
+#pragma mark -- 退货--
+
+- (void)tuihuo:(UIButton *)button{
+    NSLog(@"tag = %ld", (long)button.tag);
+    //进入退货界面；
+    
+    TuihuoController *tuiHuoVC = [[TuihuoController alloc] initWithNibName:@"TuihuoController" bundle:nil];
+    
+    
+    //
+    [self.navigationController pushViewController:tuiHuoVC animated:YES];
+    
+    
+    
 }
 
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
