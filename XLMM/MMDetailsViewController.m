@@ -90,6 +90,8 @@
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
+    [theTimer invalidate];
+    
 }
 
 
@@ -566,7 +568,7 @@
     
     ani.path=aPath;
     ani.rotationMode = @"auto";
-    ani.duration=0.6;
+    ani.duration=0.7;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     

@@ -231,7 +231,7 @@
 
 - (IBAction)goumai:(id)sender {
     NSLog(@"重新购买");
-    NSLog(@"stringURL = %@", self.urlString);
+   // NSLog(@"stringURL = %@", self.urlString);
     NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
     NSRange range =  [string rangeOfString:@"/details"];
     [string deleteCharactersInRange:range];

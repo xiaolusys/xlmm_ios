@@ -18,6 +18,8 @@
 
 #import "UIImage+ImageWithUrl.h"
 
+#define kUrlScheme @"m.xiaolu.so" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
 @interface PurchaseViewController ()<BuyAddressDelegate>{
 
 }
@@ -36,6 +38,16 @@
     NSInteger postfee;
     NSInteger discountfee;
     NSInteger totalpayment;
+    
+    NSString *channel;
+    NSString *addressID;
+    NSString *cartsIDs;
+    NSString *payment;
+    NSString *post_fee;
+    NSString *discount_fee;
+    NSString *total_fee;
+    NSString *uuid;
+    BOOL paySucceed;
 }
 
 
@@ -79,6 +91,10 @@
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
+    
+    NSLog(@"urlstring = %@", urlString);
+    NSLog(@"--------");
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
@@ -101,6 +117,12 @@
     discountfee = [[dic objectForKey:@"discount_fee"] integerValue];
     totalpayment = [[dic objectForKey:@"total_payment"] integerValue];
     
+    uuid = [dic objectForKey:@"uuid"];
+    discount_fee = [dic objectForKey:@"discount_fee"];
+    post_fee = [dic objectForKey:@"post_fee"];
+    cartsIDs = [dic objectForKey:@"cart_ids"];
+    total_fee = [dic objectForKey:@"total_fee"];
+    payment = [dic objectForKey:@"total_payment"];
     
     for (NSDictionary *dicInfo in array) {
         BuyModel *model = [BuyModel new];
@@ -137,7 +159,7 @@
     self.totalPayLabel.text = [NSString stringWithFormat:@"￥%ld", (long)totalpayment];
 }
 - (void)createCartsView{
-    self.cartsViewHeight.constant = cartsDataArray.count * 140 + 160;
+    self.cartsViewHeight.constant = cartsDataArray.count * 120 + 125;
  //   self.myCartsView.backgroundColor = [UIColor orangeColor];
     
     [self createCartsHeaderView];
@@ -149,7 +171,7 @@
 - (void)createCartsHeaderView{
     UILabel *headLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 8, 200, 40)];
     headLabel.text = @"商品支付详情";
-    headLabel.font = [UIFont systemFontOfSize:24];
+    headLabel.font = [UIFont systemFontOfSize:18];
     headLabel.textAlignment = NSTextAlignmentLeft;
     [self.myCartsView addSubview:headLabel];
 }
@@ -163,7 +185,7 @@
         BuyModel *model = [cartsDataArray objectAtIndex:i];
         [[NSBundle mainBundle] loadNibNamed:@"BuyCartsView" owner:cartOwner options:nil];
     
-    cartOwner.view.frame = CGRectMake(0, 60 + i*140, SCREENWIDTH, 140);
+    cartOwner.view.frame = CGRectMake(0, 40 + i*120, SCREENWIDTH, 120);
    // cartOwner.view.backgroundColor = [UIColor redColor];
         
         cartOwner.nameLabel.text = model.name;
@@ -173,7 +195,7 @@
         cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
         cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
 
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 85, 36, 36)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 75, 36, 36)];
         view.backgroundColor = [UIColor whiteColor];
         [view.layer setMasksToBounds:YES];
         [view.layer setBorderWidth:1];
@@ -189,7 +211,7 @@
     NSInteger height = self.cartsViewHeight.constant;
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(8, height - 90, 200, 30)];
     label1.text = @"商品总金额";
-    label1.font = [UIFont systemFontOfSize:22];
+    label1.font = [UIFont systemFontOfSize:16];
     label1.textAlignment = NSTextAlignmentLeft;
     [self.myCartsView addSubview:label1];
     
@@ -197,20 +219,20 @@
     UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, height - 90, 80, 30)];
     label3.text = [NSString stringWithFormat:@"￥%ld", (long)totalfee];
     label3.textColor = [UIColor colorWithR:224 G:48 B:116 alpha:1];
-    label3.font = [UIFont systemFontOfSize:22];
+    label3.font = [UIFont systemFontOfSize:16];
     label3.textAlignment = NSTextAlignmentLeft;
     [self.myCartsView addSubview:label3];
     
     UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(8, height - 50, 200, 30)];
     label2.text = @"小鹿美美运费";
-    label2.font = [UIFont systemFontOfSize:22];
+    label2.font = [UIFont systemFontOfSize:16];
     label2.textAlignment = NSTextAlignmentLeft;
     [self.myCartsView addSubview:label2];
     
     UILabel *label4 = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 60, height - 50, 60, 30)];
     label4.text = [NSString stringWithFormat:@"￥%ld", (long)postfee];
      label4.textColor = [UIColor colorWithR:224 G:48 B:116 alpha:1];
-    label4.font = [UIFont systemFontOfSize:22];
+    label4.font = [UIFont systemFontOfSize:16];
     label4.textAlignment = NSTextAlignmentLeft;
     [self.myCartsView addSubview:label4];
     
@@ -248,36 +270,10 @@
         model.isDefault = [[dic objectForKey:@"default"] boolValue];
         model.addressID = [dic objectForKey:@"id"];
         [dataArray addObject:model];
-        
-//        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
-//        [dic setObject:[dicInfo objectForKey:@"id"] forKey:@"id"];
-//        [dic setObject:[dicInfo objectForKey:@"url"] forKey:@"url"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_name"] forKey:@"receiver_name"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_state"] forKey:@"receiver_state"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_city"] forKey:@"receiver_city"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_district"] forKey:@"receiver_district"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_address"] forKey:@"receiver_address"];
-//        [dic setObject:[dicInfo objectForKey:@"receiver_mobile"] forKey:@"receiver_mobile"];
-////        [dic setObject:[dicInfo objectForKey:@""] forKey:@""];
-////        [dic setObject:[dicInfo objectForKey:@""] forKey:@""];
-////        [dic setObject:[dicInfo objectForKey:@""] forKey:@""];
-////        [dic setObject:[dicInfo objectForKey:@""] forKey:@""];
-//
-//        
-//        
-//        NSLog(@"addressInfo = %@", dic);
-//        [dataArray addObject:dic];
+
     }
     NSLog(@"addressData = %@", dataArray);
-    
-//    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-//    NSString *addressPath = [documentDirectory stringByAppendingPathComponent:@"address.plist"];
-//    NSLog(@"path = %@", documentDirectory);
-//    if ([dataArray writeToFile:addressPath atomically:YES]) {
-//        NSLog(@"写入文件成功");
-//    }else{
-//        NSLog(@"写入文件失败");
-//    }
+
     [self createAddressView];
     
     
@@ -304,11 +300,11 @@
 - (void)createAddressHeightView{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 16, 200, 30)];
     label.text = @"新增收货地址";
-    label.font = [UIFont systemFontOfSize:24];
+    label.font = [UIFont systemFontOfSize:18];
     label.textAlignment = NSTextAlignmentLeft;
     [self.addressView addSubview:label];
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia2.png"]];
-    imageview.frame = CGRectMake(SCREENWIDTH - 30, 24, 23, 23);
+    imageview.frame = CGRectMake(SCREENWIDTH - 30, 24, 18, 18);
     [self.addressView addSubview:imageview];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 8, SCREENWIDTH - 16, 50)];
     [button addTarget:self action:@selector(addClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -365,6 +361,8 @@
             
             selectedAddModel = [dataArray objectAtIndex:i];
             NSLog(@"选择的地址ID为：%@", selectedAddModel.addressID);
+            addressID = selectedAddModel.addressID;
+            NSLog(@"addr_id = %@", addressID);
         }
         else
         {
@@ -419,9 +417,9 @@
     
     
     if (button.tag == 80) {
-        NSLog(@"weixin");
+        //NSLog(@"weixin");
         
-        
+        channel = @"wx";
         
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
@@ -439,8 +437,8 @@
         
         
     }else if (button.tag == 81){
-        NSLog(@"zhifubao");
-        
+        //NSLog(@"zhifubao");
+        channel = @"alipay";
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
             if (i == button.tag - 20) {
@@ -453,7 +451,7 @@
         }
         
     }else if (button.tag == 82){
-        NSLog(@"yinglian");
+      //  NSLog(@"yinglian");
         
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
@@ -467,7 +465,7 @@
         }
         
     }else if (button.tag == 83){
-        NSLog(@"baidu");
+      //  NSLog(@"baidu");
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
             if (i == button.tag - 20) {
@@ -481,107 +479,110 @@
         
         
     }
+    
+    NSLog(@"channel = %@", channel);
 }
 
 - (IBAction)goumaiClicked:(id)sender {
     
     NSLog(@"购买商品");
     
-//    NSLog(@"addressID = %@", selectedAddModel.addressID);
-//    
-//    if (selectedAddModel.addressID == nil) {
-//        NSLog(@"请选择收货地址");
-//        
-//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 150, 240, 300, 40)];
-//        view.backgroundColor = [UIColor blackColor];
-//        view.layer.cornerRadius = 8;
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-//        label.text = @"请填写收货信息";
-//        label.textAlignment = NSTextAlignmentCenter;
-//        label.textColor = [UIColor whiteColor];
-//        label.font = [UIFont systemFontOfSize:24];
-//        [view addSubview:label];
-//        [self.view addSubview:view];
-//        
-//        self.myScrollView.contentOffset = CGPointMake(0, 0);
-//        
-//        [UIView animateWithDuration:2 animations:^{
-//            view.alpha = 0;
-//            
-//        } completion:^(BOOL finished) {
-//            [view removeFromSuperview];
-//            
-//        }];
-//        
-//        
-//        return;
-//        
-//    }
-//    NSLog(@"应付金额：%i", allpay);
-//    NSLog(@"购买");
-//    
-//    
-//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/buynow_create", Root_URL];
-//    NSLog(@"urlstring = %@", urlString);
-//    
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    
-//    
-//    
-//    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-//    
-//    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",selectedAddModel.addressID ,@"alipay", [NSNumber numberWithInt:totalpayment],[NSNumber numberWithInt:postfee],[NSNumber numberWithInt:postfee],[NSNumber numberWithInt:allpay],buyModel.uuID, buyModel.itemID, buyModel.skuID, buyNumber];
-//    
-//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-//    NSLog(@"%@", dict);
-//    // NSLog(@"string ------>>>%@", bodyData);
-//    NSLog(@"data = ---->>>>%@", data);
-//    [postRequest setHTTPBody:data];
-//    [postRequest setHTTPMethod:@"POST"];
-//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-//    
-//  //  LiJiGMViewController * __weak weakSelf = self;
-//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//    //  [self showAlertWait];
-//    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        
-//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-//        
-//        NSLog(@"response = %@", httpResponse);
-//        
-//        NSLog(@"data = %@", data);
-//        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"dataString = %@", str);
-//        if (httpResponse.statusCode != 200) {
-//            NSLog(@"出错了");
-//            //  return;
-//        }
-//        
-//        if (connectionError != nil) {
-//            NSLog(@"error = %@", connectionError);
-//            return;
-//        }
-//        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"charge = %@", charge);
-//        
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [Pingpp createPayment:charge viewController:self appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-//                
-//                NSLog(@"completion block: %@", result);
-//                
-//                if (error == nil) {
-//                    NSLog(@"PingppError is nil");
-//                } else {
-//                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-//                }
-//                //[weakSelf showAlertMessage:result];
-//            }];
-//        });
-//        
-//        
-//        
-//    }];
+    
+    if (addressID == nil) {
+        NSLog(@"请选择收货地址");
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 150, 240, 300, 40)];
+        view.backgroundColor = [UIColor blackColor];
+        view.layer.cornerRadius = 8;
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+        label.text = @"请填写收货信息";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:24];
+        [view addSubview:label];
+        [self.view addSubview:view];
+        
+        self.myScrollView.contentOffset = CGPointMake(0, 0);
+        
+        [UIView animateWithDuration:2 animations:^{
+            view.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            [view removeFromSuperview];
+            
+        }];
+        
+        
+        return;
+        
+    }
+   
+    //   http://m.xiaolu.so/rest/v1/trades/shoppingcart_create
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/shoppingcart_create", Root_URL];
+    NSLog(@"urlstring = %@", urlString);
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartsIDs,addressID ,channel, payment,post_fee,discount_fee,total_fee,uuid];
+    NSLog(@"%@", dict);
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+ 
+
+    [postRequest setHTTPBody:data];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    PurchaseViewController * __weak weakSelf = self;
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //  [self showAlertWait];
+    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        
+        NSLog(@"response = %@", httpResponse);
+        
+        NSLog(@"data = %@", data);
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"dataString = %@", str);
+        if (httpResponse.statusCode != 200) {
+            NSLog(@"出错了");
+            //  return;
+        }
+        
+        if (connectionError != nil) {
+            NSLog(@"error = %@", connectionError);
+            return;
+        }
+        
+        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"charge = %@", charge);
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                
+                NSLog(@"completion block: %@", result);
+                
+                if (error == nil) {
+                    NSLog(@"PingppError is nil");
+                    paySucceed = YES;
+                } else {
+                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    paySucceed = NO;
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                //[weakSelf showAlertMessage:result];
+            }];
+        });
+        
+        
+        
+    }];
     
 
     

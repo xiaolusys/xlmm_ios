@@ -61,7 +61,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Z3h-ia-Ywu"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -80,7 +80,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="JOO-y8-arF"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -99,7 +99,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="QUC-Mj-6pj"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -118,7 +118,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="xvP-1V-2f6"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -137,7 +137,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ppt-lD-AlU"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -159,7 +159,7 @@
                         </constraint>
                         <constraint firstAttribute="height" constant="36" id="xRl-d1-1cI"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -210,13 +210,17 @@
                 <constraint firstItem="y96-vf-cRA" firstAttribute="leading" secondItem="uY8-eD-N6j" secondAttribute="leading" id="RGl-SE-ggw"/>
                 <constraint firstItem="z30-ch-s6W" firstAttribute="top" secondItem="IuQ-QZ-8oF" secondAttribute="bottom" constant="8" id="T3e-Ik-eev"/>
                 <constraint firstItem="z30-ch-s6W" firstAttribute="width" secondItem="FmT-65-jhw" secondAttribute="width" id="UDi-Xm-qYa"/>
-                <constraint firstItem="nE6-B9-OK0" firstAttribute="top" secondItem="UT1-tj-8UP" secondAttribute="top" constant="90" id="WYw-3L-ALW">
-                    <variation key="heightClass=regular-widthClass=compact" constant="85"/>
+                <constraint firstItem="nE6-B9-OK0" firstAttribute="top" secondItem="UT1-tj-8UP" secondAttribute="top" constant="80" id="WYw-3L-ALW">
+                    <variation key="heightClass=regular-widthClass=compact" constant="75"/>
                 </constraint>
-                <constraint firstItem="u5Z-bX-bfP" firstAttribute="top" secondItem="UT1-tj-8UP" secondAttribute="top" id="Wag-5s-acW"/>
+                <constraint firstItem="u5Z-bX-bfP" firstAttribute="top" secondItem="UT1-tj-8UP" secondAttribute="top" id="Wag-5s-acW">
+                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="z30-ch-s6W" secondAttribute="trailing" constant="8" id="aAb-QL-lES"/>
-                <constraint firstItem="y96-vf-cRA" firstAttribute="leading" secondItem="u5Z-bX-bfP" secondAttribute="trailing" constant="5" id="dJG-61-a37"/>
-                <constraint firstItem="uY8-eD-N6j" firstAttribute="top" secondItem="y96-vf-cRA" secondAttribute="bottom" constant="13" id="gZS-Nj-kgP"/>
+                <constraint firstItem="y96-vf-cRA" firstAttribute="leading" secondItem="u5Z-bX-bfP" secondAttribute="trailing" constant="5" id="dJG-61-a37">
+                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                </constraint>
+                <constraint firstItem="uY8-eD-N6j" firstAttribute="top" secondItem="y96-vf-cRA" secondAttribute="bottom" constant="8" id="gZS-Nj-kgP"/>
                 <constraint firstItem="u5Z-bX-bfP" firstAttribute="leading" secondItem="UT1-tj-8UP" secondAttribute="leading" constant="8" id="jqD-J5-IKi"/>
                 <constraint firstItem="nE6-B9-OK0" firstAttribute="leading" secondItem="UT1-tj-8UP" secondAttribute="leading" constant="160" id="ovy-oa-aOc">
                     <variation key="heightClass=regular-widthClass=compact" constant="150"/>
@@ -301,7 +305,7 @@
                     <include reference="uUU-SN-pET"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="69.5" y="260"/>
+            <point key="canvasLocation" x="69" y="263"/>
         </view>
     </objects>
     <resources>
