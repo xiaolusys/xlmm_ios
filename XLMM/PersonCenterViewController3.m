@@ -157,7 +157,12 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%@", indexPath);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-    xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    //http://m.xiaolu.so/rest/v1/trades/86412/details
+    
+       xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, xiangqingVC.dingdanModel.dingdanID];
+    NSLog(@"url = %@", xiangqingVC.urlString);
+
     
     [self.navigationController pushViewController:xiangqingVC animated:YES];
     

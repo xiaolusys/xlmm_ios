@@ -53,11 +53,11 @@
     
     NSLog(@"下载数据");
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/details", _dingdanModel.dingdanURL];
-    NSLog(@"detailsURL = %@", urlString);
+//    NSString *urlString = [NSString stringWithFormat:@"%@/details", _dingdanModel.dingdanURL];
+//    NSLog(@"detailsURL = %@", urlString);
     
     
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDingdanData:)];
+    [self downLoadWithURLString:self.urlString andSelector:@selector(fetchedDingdanData:)];
     
 }
 

@@ -9,8 +9,10 @@
 #import "PersonCenterViewController1.h"
 #import "ZhiFuCollectionCell.h"
 #import "MMClass.h"
+#import "XiangQingViewController.h"
 
 #define kSimpleCellIdentifier @"simpleCell"
+
 
 @interface PersonCenterViewController1 (){
     NSTimer *theTimer;
@@ -45,6 +47,7 @@
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     //self.dataArray = [[NSMutableArray alloc] init];
     [self downlaodData];
+    [self.view addSubview:[[UIView alloc] init]];
     
 }
 
@@ -164,6 +167,23 @@
     cell.idLabel.text = [dic objectForKey:@"tid"];
     
     return cell;
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
+    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *ID = [dic objectForKey:@"id"];
+    NSLog(@"id = %@", ID);
+    
+       //      http://m.xiaolu.so/rest/v1/trades/86412/details
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    NSLog(@"urlString = %@", urlString);
+    xiangqingVC.urlString = urlString;
+    [self.navigationController pushViewController:xiangqingVC animated:YES];
+    
+    
     
 }
 

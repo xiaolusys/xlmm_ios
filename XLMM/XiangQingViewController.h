@@ -38,6 +38,7 @@
 
 
 
+@property (nonatomic, copy) NSString *urlString;
 
 @property (nonatomic, strong)DingdanModel *dingdanModel;
 
