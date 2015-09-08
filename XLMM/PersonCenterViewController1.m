@@ -152,7 +152,7 @@
     [string replaceCharactersInRange:range withString:@"/"];
     cell.createLabel.text = string;
     
-    int i = indexPath.row;
+    int i = (int)indexPath.row;
     shengyuTimeLabel[i] = [[UILabel alloc]initWithFrame:CGRectMake(256, 8, 60, 15)];
     shengyuTimeLabel[i].textAlignment = NSTextAlignmentLeft;
     shengyuTimeLabel[i].font = [UIFont systemFontOfSize:12];

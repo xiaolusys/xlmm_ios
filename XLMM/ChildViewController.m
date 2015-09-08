@@ -23,7 +23,7 @@
 
 #import "MJRefresh.h"
 
-#define ksimpleCell @"simpleCell"
+static NSString * ksimpleCell = @"simpleCell";
 
 @interface ChildViewController (){
     

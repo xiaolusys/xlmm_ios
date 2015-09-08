@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class PerDingdanModel;
+
 @interface TuihuoController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *myTextField1;
 @property (weak, nonatomic) IBOutlet UITextField *myTextField2;
 
 - (IBAction)commit:(id)sender;
 
+@property (nonatomic, strong) PerDingdanModel *dingdanModel;
 
 - (IBAction)selectClicked:(id)sender;
 

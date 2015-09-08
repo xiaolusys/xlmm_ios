@@ -27,6 +27,7 @@
     UIActivityIndicatorView *activityView;
     UIView *frontView;
     NSString *status;
+    PerDingdanModel *tuihuoModel;
 }
 
 - (void)viewDidLoad {
@@ -183,10 +184,12 @@
 - (void)tuihuo:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);
     //进入退货界面；
+    tuihuoModel = [dataArray objectAtIndex:(button.tag-200)];
     
     TuihuoController *tuiHuoVC = [[TuihuoController alloc] initWithNibName:@"TuihuoController" bundle:nil];
     
-    
+    tuiHuoVC.dingdanModel = tuihuoModel;
+  //  NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.d)
     //
     [self.navigationController pushViewController:tuiHuoVC animated:YES];
     
