@@ -189,7 +189,21 @@
     TuihuoController *tuiHuoVC = [[TuihuoController alloc] initWithNibName:@"TuihuoController" bundle:nil];
     
     tuiHuoVC.dingdanModel = tuihuoModel;
-  //  NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.d)
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.urlString);
+//    @property (nonatomic, copy)NSString *nameString;
+//    @property (nonatomic, copy)NSString *sizeString;
+//    @property (nonatomic, copy)NSString *numberString;
+//    @property (nonatomic, copy)NSString *priceString;
+//    @property (nonatomic, copy)NSString *urlString;
+    
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.priceString);
+
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.numberString);
+
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.sizeString);
+
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.nameString);
+
     //
     [self.navigationController pushViewController:tuiHuoVC animated:YES];
     

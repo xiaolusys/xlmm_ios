@@ -8,6 +8,9 @@
 
 #import "TuihuoController.h"
 #import "MMClass.h"
+#import "PerDingdanModel.h"
+#import "AFNetworking.h"
+
 
 @interface TuihuoController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate>
 
@@ -16,10 +19,17 @@
 
 @property (nonatomic, copy) NSArray *dataArray;
 
+@property (nonatomic, assign)NSInteger maxNumber;
+@property (nonatomic, assign)NSInteger maxPrice;
+
+
+
 
 @end
 
-@implementation TuihuoController
+@implementation TuihuoController{
+    NSInteger tuihuoNumber;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +39,9 @@
     self.myTextView.delegate = self;
     self.myTextField1.delegate = self;
     self.myTextField2.delegate = self;
+    
+    self.myTextField1.borderStyle = UITextBorderStyleNone;
+    self.myTextField2.borderStyle = UITextBorderStyleNone;
     self.myTextField2.keyboardType = UIKeyboardTypeNumberPad;
     self.dataArray = @[@"其他",
                        @"错拍",
@@ -42,8 +55,33 @@
                        @"发票问题",
                        @"七天无理由退换货"
                        ];
+    [self.jiabutton setBackgroundImage:[UIImage imageNamed:@"btn-plus.png"] forState:UIControlStateNormal];
+    [self.jianbutton setBackgroundImage:[UIImage imageNamed:@"btn-reduce.png"] forState:UIControlStateNormal];
+
     
+    self.maxNumber = [self.dingdanModel.numberString integerValue];
+    self.maxNumber = 10;
+    tuihuoNumber = self.maxNumber;
+
     
+    self.maxPrice = [self.dingdanModel.priceString integerValue] *[self.dingdanModel.numberString integerValue];
+    if (self.maxNumber == 1) {
+        NSLog(@"只有一件商品");
+        self.jianbutton.userInteractionEnabled = NO;
+        self.jiabutton.userInteractionEnabled = NO;
+    }
+    
+
+    self.myImageView.image = [UIImage imagewithURLString:self.dingdanModel.urlString];
+    
+    self.dingdanjine.text = [NSString stringWithFormat:@"￥%d",  self.maxPrice];
+    self.danjia.text = [NSString stringWithFormat:@"￥%@", self.dingdanModel.priceString];
+    self.name.text = self.dingdanModel.nameString;
+    self.number.text = [NSString stringWithFormat:@"%@", self.dingdanModel.numberString];
+    
+    self.number.text = @"10";
+    self.sizename.text = [NSString stringWithFormat:@"%@", self.dingdanModel.sizeString];
+   
 }
 
 - (void)createPickerView{
@@ -87,6 +125,51 @@
     return YES;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    
+    NSLog(@"wancheng");
+    
+    if (textField == self.myTextField2) {
+        
+        
+        NSString *string = textField.text;
+        if ([self isAllNum:string]) {
+            NSLog(@"输入的都是数字");
+        }else{
+            NSLog(@"请输入退款金额");
+            //self.myTextField2.text = @"";
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"亲，\n~只能输入数字哦~"
+                                                               delegate:nil
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"确定"
+                                      ,nil];
+            [alterView show];
+            
+            return;
+        }
+        NSInteger price = [string integerValue];
+        
+        if (price > self.maxPrice) {
+            NSLog(@"亲，您输入的金额超过最大退款金额");
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"亲，\n~您输入的金额超过最大退款金额~"
+                                                               delegate:nil
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"确定"
+                                      ,nil];
+            [alterView show];
+            //self.myTextField2.text = @"";
+            return;
+        }
+        
+        
+        NSLog(@"输入金额满足条件");
+    }
+    //判断字数是否满足要求；
+}
+
 
 
 #pragma mark --UITextViewDelegate--
@@ -105,10 +188,20 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
-    NSLog(@"wancheng");
-    
-    
-    //判断字数是否满足要求；
+    NSLog(@"");
+}
+
+
+
+- (BOOL)isAllNum:(NSString *)string{
+    unichar c;
+    for (int i=0; i<string.length; i++) {
+        c=[string characterAtIndex:i];
+        if (!isdigit(c)) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -164,23 +257,90 @@
 - (IBAction)commit:(id)sender {
     NSLog(@"commit !");
     
+    if ([self.myTextField1.text isEqual:@""]) {
+        NSLog(@"请选择原因");
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"请选择原因"
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"确定"
+                                  ,nil];
+        [alterView show];
+
+        return;
+    }
+    if ([self.myTextField2.text isEqual:@""]) {
+        NSLog(@"亲，您还没有填写退款金额");
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"亲，您还没有填写退款金额"
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"确定"
+                                  ,nil];
+        [alterView show];
+        return;
+    }
+    if ([self.myTextView.text  isEqual: @"请写下您的审核意见，以便我们更好的为您服务～"] || [self.myTextView.text isEqual:@""]) {
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"请写下您的审核意见，以便我们更好的为您服务～"
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"确定"
+                                  ,nil];
+        [alterView show];
+        return;
+    }
     
     //申请退款 post上传。。。
+    
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSLog(@"urlstring = %@", urlString);
+    
+    // NSDictionary *parameters = @{@"vmobile": phoneNumber};
+    
+    [manager POST:urlString parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+    
+    
 }
 
-- (IBAction)selectClicked:(id)sender {
+
+
+
+- (IBAction)jianclicked:(id)sender {
+   
+    tuihuoNumber--;
+    if (tuihuoNumber == 0) {
+        tuihuoNumber ++;
+    }
+    self.number.text = [NSString stringWithFormat:@"%d", tuihuoNumber];
     
-    NSLog(@"queding");
-    [self.myPickerView removeFromSuperview];
-    self.myTextField1.userInteractionEnabled = YES;
-    
-    
+   
+    NSLog(@"--");
 }
 
-- (IBAction)querenClicked:(id)sender {
-    
-    //判断金额是否满足要求。。。
-    
-    [self.myTextField2 resignFirstResponder];
+- (IBAction)jiaClicked:(id)sender {
+    NSLog(@"++");
+    tuihuoNumber ++;
+    if (tuihuoNumber == self.maxNumber + 1) {
+        tuihuoNumber --;
+    }
+    self.number.text = [NSString stringWithFormat:@"%d", tuihuoNumber];
+
+
 }
 @end

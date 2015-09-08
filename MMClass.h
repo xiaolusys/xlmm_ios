@@ -23,6 +23,7 @@
 #import "DetailsModel.h"
 #import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
+#import "UIImage+ImageWithUrl.h"
 
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
