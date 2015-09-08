@@ -42,9 +42,11 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
-//#define Root_URL @"http://192.168.1.11:9000"
+#define Root_URL @"http://192.168.1.79:8000"
 //#define Root_URL @"http://youni.huyi.so"
-#define Root_URL @"http://m.xiaolu.so"
+
+
+//#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 

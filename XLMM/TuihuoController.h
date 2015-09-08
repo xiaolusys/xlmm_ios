@@ -14,15 +14,17 @@
 
 @property (copy, nonatomic) NSString *dingdanID;
 @property (copy, nonatomic) NSString *jiaoyiID;
-@property (copy, nonatomic) NSString *refund_or_pro;
+@property (assign, nonatomic) NSInteger refund_or_pro;
 
-@property (copy, nonatomic) NSString *reason;
+@property (assign, nonatomic) NSInteger reasonnumber;
 @property (copy, nonatomic) NSString *modify;
 @property (copy, nonatomic) NSString *company;
 @property (copy, nonatomic) NSString *sid;
 //@property (copy, nonatomic) NSString *
 
-
+@property (copy, nonatomic) NSString *tid;
+@property (copy, nonatomic) NSString *oid;
+@property (copy, nonatomic) NSString *status;
 
 
 

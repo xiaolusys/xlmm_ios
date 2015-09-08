@@ -15,7 +15,12 @@
 #import "UIImageView+WebCache.h"
 #import "TuihuoController.h"
 
-@interface XiangQingViewController ()<NSURLConnectionDataDelegate>
+@interface XiangQingViewController ()<NSURLConnectionDataDelegate>{
+    NSString *tid;
+    NSArray *oidArray;
+    NSMutableArray *refund_status_displayArray;
+    
+}
 
 
 
@@ -34,6 +39,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createInfo];
+    
+    refund_status_displayArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self.view addSubview:self.xiangqingScrollView];
     self.screenWidth.constant = SCREENWIDTH;
@@ -82,6 +89,7 @@
     self.zhuangtaiLabel.text = [dicJson objectForKey:@"status_display"];
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];
     
+    tid = [dicJson objectForKey:@"id"];
     
     
     NSMutableString *string = [NSMutableString stringWithString:[dicJson objectForKey:@"created"]];
@@ -111,6 +119,7 @@
     
     
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
     for (NSDictionary *dic in orderArray) {
         PerDingdanModel *model = [PerDingdanModel new];
         model.urlString = [dic objectForKey:@"pic_path"];
@@ -120,9 +129,19 @@
         model.nameString = [dic objectForKey:@"title"];
         [dataArray addObject:model];
         
+        [refund_status_displayArray addObject:[dic objectForKey:@"refund_status_display"]];
+        
+        
+        
+        NSString *oid = [dic objectForKey:@"id"];
+        [mutableArray addObject:oid];
     }
        NSLog(@"dataArray = %@", dataArray);
+    NSLog(@"refund_status_display = %@", refund_status_displayArray);
     
+    oidArray = [[NSArray alloc] initWithArray:mutableArray];
+    NSLog(@"oids = %@", oidArray);
+    NSLog(@"tid = %@", tid);
     [self createXiangQing];
     
     
@@ -184,7 +203,8 @@
 - (void)tuihuo:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);
     //进入退货界面；
-    tuihuoModel = [dataArray objectAtIndex:(button.tag-200)];
+    NSInteger i = button.tag - 200;
+    tuihuoModel = [dataArray objectAtIndex:i];
     
     TuihuoController *tuiHuoVC = [[TuihuoController alloc] initWithNibName:@"TuihuoController" bundle:nil];
     
@@ -203,7 +223,12 @@
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.sizeString);
 
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.nameString);
-
+    tuiHuoVC.tid = tid;
+    tuiHuoVC.oid = [oidArray objectAtIndex:i];
+    tuiHuoVC.status = self.zhuangtaiLabel.text;
+    
+    NSLog(@"tid = %@, \noid = %@", tuiHuoVC.tid, tuiHuoVC.oid);
+    
     //
     [self.navigationController pushViewController:tuiHuoVC animated:YES];
     

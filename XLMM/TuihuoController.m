@@ -12,7 +12,9 @@
 #import "AFNetworking.h"
 
 
-@interface TuihuoController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate>
+@interface TuihuoController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UIAlertViewDelegate>{
+    UIAlertView *myAlterView;
+}
 
 @property (nonatomic, strong) UIPickerView *myPickerView;
 @property (nonatomic, strong) UIButton *selectButton;
@@ -60,7 +62,6 @@
 
     
     self.maxNumber = [self.dingdanModel.numberString integerValue];
-    self.maxNumber = 10;
     tuihuoNumber = self.maxNumber;
 
     
@@ -79,13 +80,12 @@
     self.name.text = self.dingdanModel.nameString;
     self.number.text = [NSString stringWithFormat:@"%@", self.dingdanModel.numberString];
     
-    self.number.text = @"10";
     self.sizename.text = [NSString stringWithFormat:@"%@", self.dingdanModel.sizeString];
    
 }
 
 - (void)createPickerView{
-    self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 240, 0, 0)];
+    self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 260, 0, 0)];
     self.myPickerView.dataSource = self;
     self.myPickerView.delegate = self;
     
@@ -232,6 +232,8 @@
           forComponent:(NSInteger)component reusingView:(UIView *)view{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 30)];
     label.text = [self.dataArray objectAtIndex:row];
+    self.reasonnumber = row;
+    
     label.textColor = [UIColor blackColor];
     label.backgroundColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:14];
@@ -294,28 +296,77 @@
     //申请退款 post上传。。。
     
     
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-    NSLog(@"urlstring = %@", urlString);
-    
-    // NSDictionary *parameters = @{@"vmobile": phoneNumber};
-    
-    [manager POST:urlString parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
+  myAlterView = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"确定要退货吗？"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定"
+                              ,nil];
+    myAlterView.tag = 88;
+    myAlterView.delegate = self;
     
     
+    [myAlterView show];
+
+  
+    
+    
+    
+    
+    
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 88) {
+        NSLog(@"88888");
+        if (buttonIndex == 0) {
+            NSLog(@"0000");
+        } else if (buttonIndex == 1)
+        {
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+            NSLog(@"urlstring = %@", urlString);
+            
+            
+            if ([self.status isEqual:@"已付款"]) {
+                self.refund_or_pro = 0;
+                
+            } else if ([self.status isEqual:@"已发货"]){
+                self.refund_or_pro = 1;
+            }
+            NSLog(@"1111");
+            
+            NSDictionary *parameters = @{@"id":self.oid,
+                                         @"tid":self.tid,
+                                         @"refund_or_pro":[NSNumber numberWithInt:self.refund_or_pro],
+                                         @"num":self.number.text,
+                                         @"sum_price":self.myTextField2.text,
+                                         @"feedback":self.myTextView.text,
+                                         @"reason":[NSNumber numberWithInt:self.reasonnumber],
+                                         @"modify":@0};
+            
+            NSLog(@"parameters = %@", parameters);
+            
+            [manager POST:urlString parameters:parameters
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      
+                      NSLog(@"JSON: %@", responseObject);
+                      NSLog(@"perration = %@", operation);
+                      
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      
+                      NSLog(@"Error: %@", error);
+                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
+                      NSLog(@"perration = %@", operation);
+                      
+                      
+                  }];
+            
+        }
+    }
 }
 
 
