@@ -6,6 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuihuoController">
             <connections>
+                <outlet property="myTextField1" destination="Y7V-sS-kI8" id="AIc-sz-O1I"/>
+                <outlet property="myTextField2" destination="FgY-BO-U1c" id="fWw-kH-DDe"/>
+                <outlet property="myTextView" destination="mjC-2r-Eoy" id="IpC-b6-wRH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -149,6 +152,9 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="commit:" destination="-1" eventType="touchUpInside" id="B5w-0w-z17"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -176,15 +182,12 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请填写退款金额" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FgY-BO-U1c">
-                            <rect key="frame" x="86" y="39" width="200" height="30"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="200" id="lsi-Xy-N3w"/>
-                            </constraints>
+                            <rect key="frame" x="78" y="39" width="192" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请选择退款原因" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y7V-sS-kI8">
-                            <rect key="frame" x="77" y="2" width="239" height="30"/>
+                            <rect key="frame" x="78" y="2" width="192" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
@@ -194,30 +197,67 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                         </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjr-25-8wA">
+                            <rect key="frame" x="274" y="2" width="40" height="30"/>
+                            <color key="backgroundColor" red="0.98039215690000003" green="0.67450980390000004" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="3bl-Ej-VgK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="确定">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="selectClicked:" destination="-1" eventType="touchUpInside" id="Wua-I6-T63"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ef-29-3ON">
+                            <rect key="frame" x="274" y="39" width="40" height="30"/>
+                            <color key="backgroundColor" red="0.98039215690000003" green="0.67450980390000004" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="okN-nn-1gC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="确定">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="querenClicked:" destination="-1" eventType="touchUpInside" id="tDw-am-LHa"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="FgY-BO-U1c" firstAttribute="leading" secondItem="dDa-JM-2W6" secondAttribute="trailing" constant="8" id="19X-iH-nMP"/>
+                        <constraint firstAttribute="trailing" secondItem="FgY-BO-U1c" secondAttribute="trailing" constant="50" id="14l-XI-g5m"/>
+                        <constraint firstItem="FgY-BO-U1c" firstAttribute="leading" secondItem="dDa-JM-2W6" secondAttribute="trailing" id="19X-iH-nMP"/>
                         <constraint firstItem="dTt-YO-3ff" firstAttribute="leading" secondItem="rGw-Xq-a4C" secondAttribute="leading" constant="8" id="1qR-Kr-dNG"/>
-                        <constraint firstAttribute="trailing" secondItem="Y7V-sS-kI8" secondAttribute="trailing" constant="4" id="2D5-j2-shL"/>
+                        <constraint firstAttribute="trailing" secondItem="Y7V-sS-kI8" secondAttribute="trailing" constant="50" id="2D5-j2-shL"/>
                         <constraint firstItem="dDa-JM-2W6" firstAttribute="top" secondItem="dTt-YO-3ff" secondAttribute="bottom" constant="20" id="3lD-1g-9AP"/>
+                        <constraint firstItem="1ef-29-3ON" firstAttribute="leading" secondItem="FgY-BO-U1c" secondAttribute="trailing" constant="4" id="5te-Kr-gh2"/>
                         <constraint firstItem="mjC-2r-Eoy" firstAttribute="top" secondItem="rGw-Xq-a4C" secondAttribute="top" constant="80" id="6xP-9N-kC0"/>
                         <constraint firstItem="Y7V-sS-kI8" firstAttribute="centerY" secondItem="dTt-YO-3ff" secondAttribute="centerY" id="BXx-CE-C3M"/>
                         <constraint firstItem="mjC-2r-Eoy" firstAttribute="leading" secondItem="rGw-Xq-a4C" secondAttribute="leading" constant="8" id="Cck-RH-WSY"/>
+                        <constraint firstAttribute="trailing" secondItem="Rjr-25-8wA" secondAttribute="trailing" constant="6" id="FvZ-WX-VLa"/>
                         <constraint firstAttribute="trailing" secondItem="mjC-2r-Eoy" secondAttribute="trailing" constant="8" id="GaL-QL-4Gj"/>
                         <constraint firstItem="dDa-JM-2W6" firstAttribute="leading" secondItem="rGw-Xq-a4C" secondAttribute="leading" constant="8" id="MPN-M3-lRL"/>
                         <constraint firstAttribute="bottom" secondItem="mjC-2r-Eoy" secondAttribute="bottom" constant="8" id="S0c-Fi-bti"/>
                         <constraint firstItem="FgY-BO-U1c" firstAttribute="centerY" secondItem="dDa-JM-2W6" secondAttribute="centerY" id="SIq-Ss-ibE"/>
+                        <constraint firstItem="Rjr-25-8wA" firstAttribute="leading" secondItem="Y7V-sS-kI8" secondAttribute="trailing" constant="4" id="UCh-VD-Eu4"/>
+                        <constraint firstItem="1ef-29-3ON" firstAttribute="top" secondItem="Rjr-25-8wA" secondAttribute="bottom" constant="7" id="VZC-GF-way"/>
                         <constraint firstAttribute="width" constant="320" id="cjw-Ku-dcz"/>
                         <constraint firstAttribute="height" constant="340" id="dkI-8m-bPN"/>
                         <constraint firstItem="dTt-YO-3ff" firstAttribute="top" secondItem="rGw-Xq-a4C" secondAttribute="top" constant="8" id="fHm-F8-shW"/>
-                        <constraint firstItem="Y7V-sS-kI8" firstAttribute="leading" secondItem="dTt-YO-3ff" secondAttribute="trailing" constant="-1" id="ikh-4H-o2I"/>
+                        <constraint firstItem="Y7V-sS-kI8" firstAttribute="leading" secondItem="dTt-YO-3ff" secondAttribute="trailing" id="ikh-4H-o2I"/>
+                        <constraint firstAttribute="trailing" secondItem="1ef-29-3ON" secondAttribute="trailing" constant="6" id="q4b-rt-x7K"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Dw4-22-gg2" firstAttribute="top" secondItem="rGw-Xq-a4C" secondAttribute="bottom" id="2wd-QM-Mg6"/>
+                <constraint firstItem="Rjr-25-8wA" firstAttribute="top" secondItem="WXr-Iq-THE" secondAttribute="bottom" constant="2" id="3w5-F8-Sn6"/>
                 <constraint firstItem="rGw-Xq-a4C" firstAttribute="top" secondItem="WXr-Iq-THE" secondAttribute="bottom" id="78j-MB-ADM"/>
                 <constraint firstItem="WXr-Iq-THE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="B03-CA-xAH"/>
                 <constraint firstItem="Dw4-22-gg2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DU7-nO-EiP"/>

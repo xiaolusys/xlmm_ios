@@ -9,5 +9,17 @@
 #import <UIKit/UIKit.h>
 
 @interface TuihuoController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *myTextField1;
+@property (weak, nonatomic) IBOutlet UITextField *myTextField2;
+
+- (IBAction)commit:(id)sender;
+
+
+- (IBAction)selectClicked:(id)sender;
+
+- (IBAction)querenClicked:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UITextView *myTextView;
 
 @end
