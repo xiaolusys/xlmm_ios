@@ -167,6 +167,8 @@
 		32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */; };
 		32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */; };
 		32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B631B81EA96007E562A /* ShoppingCartModel.m */; };
+		328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 328CE5D41B9F0B28000469DF /* JifenViewController.m */; };
+		328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 328CE5D51B9F0B28000469DF /* JifenViewController.xib */; };
 		3290C8861B88232F00CFAFA0 /* LiJiGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */; };
 		3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */; };
 		3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8891B886B0C00CFAFA0 /* AddressView.m */; };
@@ -492,6 +494,9 @@
 		32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableCellTableViewCell.xib; sourceTree = "<group>"; };
 		32891B621B81EA96007E562A /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
 		32891B631B81EA96007E562A /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
+		328CE5D31B9F0B28000469DF /* JifenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JifenViewController.h; sourceTree = "<group>"; };
+		328CE5D41B9F0B28000469DF /* JifenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JifenViewController.m; sourceTree = "<group>"; };
+		328CE5D51B9F0B28000469DF /* JifenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JifenViewController.xib; sourceTree = "<group>"; };
 		3290C8831B88232F00CFAFA0 /* LiJiGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiGMViewController.h; sourceTree = "<group>"; };
 		3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiGMViewController.m; sourceTree = "<group>"; };
 		3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiJiGMViewController.xib; sourceTree = "<group>"; };
@@ -709,6 +714,9 @@
 				3220A2191B9D70010019443F /* TuihuoController.h */,
 				3220A21A1B9D70010019443F /* TuihuoController.m */,
 				3220A21B1B9D70010019443F /* TuihuoController.xib */,
+				328CE5D31B9F0B28000469DF /* JifenViewController.h */,
+				328CE5D41B9F0B28000469DF /* JifenViewController.m */,
+				328CE5D51B9F0B28000469DF /* JifenViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1394,6 +1402,7 @@
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
+				328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */,
 				3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
@@ -1581,6 +1590,7 @@
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
 				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
+				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
 				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,
 			);

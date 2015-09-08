@@ -18,6 +18,7 @@
 @interface XiangQingViewController ()<NSURLConnectionDataDelegate>{
     NSString *tid;
     NSArray *oidArray;
+    NSMutableArray *refund_statusArray;
     NSMutableArray *refund_status_displayArray;
     
 }
@@ -42,6 +43,8 @@
     
     refund_status_displayArray = [[NSMutableArray alloc] initWithCapacity:0];
     
+    
+    refund_statusArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self.view addSubview:self.xiangqingScrollView];
     self.screenWidth.constant = SCREENWIDTH;
     self.myViewHeight.constant = 0;
@@ -130,6 +133,7 @@
         [dataArray addObject:model];
         
         [refund_status_displayArray addObject:[dic objectForKey:@"refund_status_display"]];
+        [refund_statusArray addObject:[dic objectForKey:@"refund_status"]];
         
         
         
@@ -138,6 +142,7 @@
     }
        NSLog(@"dataArray = %@", dataArray);
     NSLog(@"refund_status_display = %@", refund_status_displayArray);
+    NSLog(@"refund_status = %@", refund_statusArray);
     
     oidArray = [[NSArray alloc] initWithArray:mutableArray];
     NSLog(@"oids = %@", oidArray);
@@ -173,18 +178,31 @@
             
             self.quxiaoBtn.hidden = YES;
             self.buyBtn.hidden = YES;
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];
-        [button addTarget:self action:@selector(tuihuo:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor whiteColor];
-        [button setTitle:@"我要退" forState:UIControlStateNormal];
-        [button.layer setMasksToBounds:YES];
-        [button.layer setBorderWidth:1];
-        button.tag = 200+i;
-        button.layer.cornerRadius = 6;
-        [button.layer setBorderColor:[UIColor darkGrayColor].CGColor];
-        [owner.myView addSubview:button];
+        }
+        if ([[refund_statusArray objectAtIndex:i] integerValue] == 0) {
+            
         
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];
+            [button addTarget:self action:@selector(tuihuo:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"我要退" forState:UIControlStateNormal];
+            [button.layer setMasksToBounds:YES];
+            [button.layer setBorderWidth:1];
+            button.tag = 200+i;
+            button.layer.cornerRadius = 6;
+            [button.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+            [owner.myView addSubview:button];
+        
+        } else{
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(220, 75, 130, 32)];
+            label.text = [refund_status_displayArray objectAtIndex:i];
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentLeft;
+            label.textColor = [UIColor darkGrayColor];
+            [owner.myView addSubview:label];
+            
+            
         }
         
         

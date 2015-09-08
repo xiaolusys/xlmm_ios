@@ -81,6 +81,9 @@
 
 #define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
 
+//  http://192.168.1.79:8000/rest/v1/integrallog
+
+#define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
 #endif
 
 #if 0

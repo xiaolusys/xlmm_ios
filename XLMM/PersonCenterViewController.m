@@ -15,6 +15,8 @@
 #import "TousuViewController.h"
 #import "EnterViewController.h"
 #import "ModifyPasswordViewController.h"
+#import "JifenViewController.h"
+
 
 
 
@@ -159,6 +161,17 @@
 
 - (IBAction)btn2Clicked:(id)sender {
     MMLOG(@"btn2");
+    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
+    islogin = [userfaults boolForKey:kIsLogin];
+    if (islogin) {
+        MMLOG(@"btn1");
+        JifenViewController *jiFenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
+        [self.navigationController pushViewController:jiFenVC animated:YES];
+    } else {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+
 
 }
 

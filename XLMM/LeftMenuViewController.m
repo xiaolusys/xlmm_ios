@@ -20,6 +20,7 @@
 #import "ModifyPasswordViewController.h"
 #import "TousuViewController.h"
 #import "LogInViewController.h"
+#import "JifenViewController.h"
 
 
 
@@ -130,6 +131,13 @@
             
             break;
         case 4:{
+            
+            JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:jifenVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
+            
             
         }
             
