@@ -226,6 +226,14 @@
 		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
 		32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C841B9FFF2F00475E2E /* OrderModel.m */; };
 		32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */; };
+		32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */; };
+		32CC7C981BA0185A00475E2E /* TuihuoXQ2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C971BA0185A00475E2E /* TuihuoXQ2.xib */; };
+		32CC7C9A1BA0186700475E2E /* TuihuoXQ3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C991BA0186700475E2E /* TuihuoXQ3.xib */; };
+		32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C9B1BA0186C00475E2E /* TuihuoXQ4.xib */; };
+		32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C9D1BA0187300475E2E /* TuihuoXQ5.xib */; };
+		32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */; };
+		32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */; };
+		32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */; };
 		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
@@ -592,6 +600,14 @@
 		32CC7C841B9FFF2F00475E2E /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoXiangqingViewController.h; sourceTree = "<group>"; };
 		32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoXiangqingViewController.m; sourceTree = "<group>"; };
+		32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ1.xib; sourceTree = "<group>"; };
+		32CC7C971BA0185A00475E2E /* TuihuoXQ2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ2.xib; sourceTree = "<group>"; };
+		32CC7C991BA0186700475E2E /* TuihuoXQ3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ3.xib; sourceTree = "<group>"; };
+		32CC7C9B1BA0186C00475E2E /* TuihuoXQ4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ4.xib; sourceTree = "<group>"; };
+		32CC7C9D1BA0187300475E2E /* TuihuoXQ5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ5.xib; sourceTree = "<group>"; };
+		32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ6.xib; sourceTree = "<group>"; };
+		32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ7.xib; sourceTree = "<group>"; };
+		32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ8.xib; sourceTree = "<group>"; };
 		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
@@ -752,6 +768,14 @@
 				32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */,
 				32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */,
 				32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */,
+				32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */,
+				32CC7C971BA0185A00475E2E /* TuihuoXQ2.xib */,
+				32CC7C991BA0186700475E2E /* TuihuoXQ3.xib */,
+				32CC7C9B1BA0186C00475E2E /* TuihuoXQ4.xib */,
+				32CC7C9D1BA0187300475E2E /* TuihuoXQ5.xib */,
+				32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */,
+				32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */,
+				32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1413,6 +1437,7 @@
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
@@ -1460,6 +1485,7 @@
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
 				32A2884E1B93E790006DC949 /* backImage.jpg in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
+				32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
@@ -1474,6 +1500,8 @@
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
+				32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */,
+				32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */,
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
@@ -1481,6 +1509,7 @@
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
 				3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */,
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
+				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */,
 				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
 				3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */,
@@ -1506,7 +1535,10 @@
 				32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */,
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
+				32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */,
+				32CC7C981BA0185A00475E2E /* TuihuoXQ2.xib in Resources */,
 				32746E3C1B74A22000816208 /* youhuiquan4.png in Resources */,
+				32CC7C9A1BA0186700475E2E /* TuihuoXQ3.xib in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
 				3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */,
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
