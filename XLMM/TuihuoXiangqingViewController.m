@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"退货(款)详情";
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSLog(@"xiangqing = %ld",(long) self.status);
 }

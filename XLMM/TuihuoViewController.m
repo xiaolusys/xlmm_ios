@@ -19,7 +19,10 @@
 
 @end
 
-@implementation TuihuoViewController
+@implementation TuihuoViewController{
+    NSInteger downloadCount;
+    NSInteger count;
+}
 
 static NSString * const reuseIdentifier = @"tuihuoCell";
 
@@ -31,7 +34,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [super viewDidLoad];
    // self.title = @"我的退货(款)";
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    
+    downloadCount = 0;
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -71,15 +74,15 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         NSLog(@"您的积分列表为空");
         return;
     }
-    
-    NSLog(@"count = %@", [json objectForKey:@"count"]);
+    count = [[json objectForKey:@"count"] integerValue];
+    //NSLog(@"count = %@", [json objectForKey:@"count"]);
     
         NSArray *array = [json objectForKey:@"results"];
     
     
         NSLog(@"array = %@", array);
     
-    for (int i = 0; i<[[json objectForKey:@"count"] integerValue]; i++) {
+    for (int i = 0; i<count; i++) {
         
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
           //  NSLog(@"url = %@", kQuanbuDingdan_URL);
@@ -113,6 +116,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
+        
         if ([[dic objectForKey:@"refund_status"] integerValue] != 0) {
             NSLog(@"加入退货列表");
             OrderModel *model = [OrderModel new];
@@ -140,7 +144,13 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     }
     NSLog(@"data = %@", self.dataArray);
 
-    [self.collectionView reloadData];
+    downloadCount ++;
+    NSLog(@"%ld,   %ld", (long)downloadCount, (long)count);
+    if (downloadCount == count) {
+        [self.collectionView reloadData];
+
+        NSLog(@"刷新数据");
+    }
     
 }
 
