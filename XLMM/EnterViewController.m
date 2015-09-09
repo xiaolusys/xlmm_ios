@@ -30,6 +30,9 @@
     if (islogin) {
         [self.navigationController popViewControllerAnimated:NO];
     }
+    
+    NSArray *array = [self.navigationController viewControllers];
+    NSLog(@"array = %@", array);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -12,7 +12,9 @@
 
 @end
 
-@implementation TuihuoXiangqingViewController
+@implementation TuihuoXiangqingViewController{
+    NSString *nibName;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,6 +23,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     NSLog(@"xiangqing = %ld",(long) self.status);
+    nibName = [NSString stringWithFormat:@"TuihuoXQ%ld",(long) self.status];
+    
+    NSLog(@"nibName = %@", nibName);
+  
 }
 
 - (void)didReceiveMemoryWarning {

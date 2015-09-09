@@ -126,6 +126,7 @@
                 self.access_token = [dic objectForKey:@"access_token"];
                 self.openid = [dic objectForKey:@"openid"];
                 [self getUserInfo];
+                
             }
             
         });
@@ -166,6 +167,8 @@
                 //                self.nickname.text = [dic objectForKey:@"nickname"];
                 //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
                 NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                
+                
             }
         });
         
