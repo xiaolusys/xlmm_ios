@@ -84,6 +84,11 @@
 //  http://192.168.1.79:8000/rest/v1/integrallog
 
 #define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
+
+//  http://192.168.1.79:8000/rest/v1/refunds
+
+#define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds",Root_URL]
+
 #endif
 
 #if 0

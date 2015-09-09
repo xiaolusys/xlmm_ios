@@ -22,6 +22,8 @@
 #import "LogInViewController.h"
 #import "JifenViewController.h"
 
+#import "TuihuoViewController.h"
+
 
 
 
@@ -155,6 +157,11 @@
             
             break;
         case 6:{
+            TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+            if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+                [self.pushVCDelegate rootVCPushOtherVC:tuihuoVC];
+            }
+            [self.sideMenuViewController hideMenuViewController];
             
         }
             

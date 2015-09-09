@@ -224,6 +224,8 @@
 		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
 		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
 		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
+		32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C841B9FFF2F00475E2E /* OrderModel.m */; };
+		32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */; };
 		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
@@ -586,6 +588,10 @@
 		32BDE48F1B85CD1100FBEC25 /* TousuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TousuViewController.h; sourceTree = "<group>"; };
 		32BDE4901B85CD1100FBEC25 /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
 		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
+		32CC7C831B9FFF2F00475E2E /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
+		32CC7C841B9FFF2F00475E2E /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
+		32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoXiangqingViewController.h; sourceTree = "<group>"; };
+		32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoXiangqingViewController.m; sourceTree = "<group>"; };
 		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
@@ -744,6 +750,8 @@
 				32FF9A281B9FDBEC0001F314 /* TuihuoCollectionCell.h */,
 				32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */,
 				32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */,
+				32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */,
+				32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1009,6 +1017,8 @@
 				327FC25E1B9AEC2F00F111B3 /* CartModel.m */,
 				32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */,
 				32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */,
+				32CC7C831B9FFF2F00475E2E /* OrderModel.h */,
+				32CC7C841B9FFF2F00475E2E /* OrderModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1548,6 +1558,7 @@
 				32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
+				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
@@ -1608,6 +1619,7 @@
 				3220A21C1B9D70010019443F /* TuihuoController.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
+				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
