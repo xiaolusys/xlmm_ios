@@ -8,8 +8,11 @@
 
 #import "JifenViewController.h"
 #import "MMClass.h"
+#import "JiFenModel.m"
 
 @interface JifenViewController ()
+
+@property (nonatomic, copy) NSArray *dataArray;
 
 @end
 
@@ -36,6 +39,7 @@ static NSString * const reuseIdentifier = @"Cell";
     // Do any additional setup after loading the view.
 }
 
+//   http://192.168.1.79:8000/rest/v1/integrallog
 
 - (void)downlaodData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -55,15 +59,46 @@ static NSString * const reuseIdentifier = @"Cell";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
-        NSLog(@"无待支付列表");
+        NSLog(@"您的积分列表为空");
         return;
     }
+    NSArray *array = [json objectForKey:@"results"];
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
     
-//    self.dataArray = [json objectForKey:@"results"];
-//    NSLog(@"dataArray = %@", self.dataArray);
-//    self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120*self.dataArray.count);
-//    [self.collectionView reloadData];
-    
+    NSLog(@"array = %@", array);
+    for (NSDictionary *dic in array) {
+        
+        JiFenModel *model = [JiFenModel new];
+        model.ID = [dic objectForKey:@"id"];
+        model.integral_user = [dic objectForKey:@"integral_user"];
+        model.mobile = [dic objectForKey:@"mobile"];
+        model.log_status = [dic objectForKey:@"log_status"];
+        model.log_type = [dic objectForKey:@"log_type"];
+        model.log_value = [dic objectForKey:@"log_value"];
+        model.in_out = [dic objectForKey:@"in_out"];
+        model.created = [dic objectForKey:@"created"];
+        model.modified = [dic objectForKey:@"modified"];
+        
+        NSString *order = [dic objectForKey:@"order"];
+        NSData *data = [order dataUsingEncoding:NSUTF8StringEncoding];
+        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *orderDic = [array objectAtIndex:0];
+        NSLog(@"orders = %@", orderDic);
+        model.order = orderDic;
+        
+        [mutableArray addObject:model];
+    }
+    self.dataArray = [[NSArray alloc] initWithArray:mutableArray];
+    NSLog(@"array = %@", self.dataArray);
+
+//    array = (
+//             {
+//                 "order_id" = 149;
+//                 "order_status" = 2;
+//                 "pic_link" = "http://i00.c.aliimg.com/img/ibank/2014/153/943/1449349351_72023587.310x310.jpg";
+//                 "trade_id" = 234;
+//             }
+//             )
     
  
     
