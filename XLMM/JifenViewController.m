@@ -9,6 +9,7 @@
 #import "JifenViewController.h"
 #import "MMClass.h"
 #import "JiFenModel.m"
+#import "JiFenCollectionCell.h"
 
 @interface JifenViewController ()
 
@@ -18,7 +19,7 @@
 
 @implementation JifenViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+static NSString * const reuseIdentifier = @"jifenCell";
 
 - (void)viewDidLoad {
     
@@ -28,13 +29,13 @@ static NSString * const reuseIdentifier = @"Cell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[JiFenCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     self.title = @"我的积分";
-    
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     [self downlaodData];
-    [self.view addSubview:[[UIView alloc] init]];
+   // [self.view addSubview:[[UIView alloc] init]];
     
     // Do any additional setup after loading the view.
 }
@@ -90,6 +91,8 @@ static NSString * const reuseIdentifier = @"Cell";
     }
     self.dataArray = [[NSArray alloc] initWithArray:mutableArray];
     NSLog(@"array = %@", self.dataArray);
+    
+    [self.collectionView reloadData];
 
 //    array = (
 //             {
@@ -158,16 +161,40 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return 10;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    JiFenCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
+    //cell.backgroundColor = [UIColor redColor];
+    JiFenModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    cell.myImageView.image = [UIImage imagewithURLString:[model.order objectForKey:@"pic_link"]];
+    cell.bianhao.text = [model.order objectForKey:@"order_id"];
+    cell.jine.text = [NSString stringWithFormat:@"¥%@", model.log_value];
+    cell.jinfen.text = [NSString stringWithFormat:@"%@", model.log_value];
+    NSMutableString *string = [[NSMutableString alloc] initWithString:model.modified];
+     NSRange range = [string rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    cell.modifyTime.text = string;
+    NSLog(@"string = %@", string);
+    
     
     return cell;
 }
+
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(0, 0, 10, 0);
+    
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(SCREENWIDTH, 120);
+}
+
 
 #pragma mark <UICollectionViewDelegate>
 

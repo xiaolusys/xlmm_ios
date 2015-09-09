@@ -75,7 +75,7 @@
 
     self.myImageView.image = [UIImage imagewithURLString:self.dingdanModel.urlString];
     
-    self.dingdanjine.text = [NSString stringWithFormat:@"￥%d",  self.maxPrice];
+    self.dingdanjine.text = [NSString stringWithFormat:@"￥%ld",  (long)self.maxPrice];
     self.danjia.text = [NSString stringWithFormat:@"￥%@", self.dingdanModel.priceString];
     self.name.text = self.dingdanModel.nameString;
     self.number.text = [NSString stringWithFormat:@"%@", self.dingdanModel.numberString];
@@ -340,11 +340,11 @@
             
             NSDictionary *parameters = @{@"id":self.oid,
                                          @"tid":self.tid,
-                                         @"refund_or_pro":[NSNumber numberWithInt:self.refund_or_pro],
+                                         @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
                                          @"num":self.number.text,
                                          @"sum_price":self.myTextField2.text,
                                          @"feedback":self.myTextView.text,
-                                         @"reason":[NSNumber numberWithInt:self.reasonnumber],
+                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
                                          @"modify":@0};
             
             NSLog(@"parameters = %@", parameters);
@@ -378,7 +378,7 @@
     if (tuihuoNumber == 0) {
         tuihuoNumber ++;
     }
-    self.number.text = [NSString stringWithFormat:@"%d", tuihuoNumber];
+    self.number.text = [NSString stringWithFormat:@"%ld", (long)tuihuoNumber];
     
    
     NSLog(@"--");
@@ -390,7 +390,7 @@
     if (tuihuoNumber == self.maxNumber + 1) {
         tuihuoNumber --;
     }
-    self.number.text = [NSString stringWithFormat:@"%d", tuihuoNumber];
+    self.number.text = [NSString stringWithFormat:@"%ld", (long)tuihuoNumber];
 
 
 }

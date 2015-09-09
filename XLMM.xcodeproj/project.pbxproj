@@ -235,6 +235,8 @@
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E329971B70C70000A6F0BC /* DetailViewController.m */; };
 		32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E329981B70C70000A6F0BC /* DetailViewController.xib */; };
+		32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
+		32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -595,6 +597,9 @@
 		32E329961B70C70000A6F0BC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		32E329971B70C70000A6F0BC /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		32E329981B70C70000A6F0BC /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		32E4D5321B9FCFB1001230F4 /* JiFenCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenCollectionCell.h; sourceTree = "<group>"; };
+		32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenCollectionCell.m; sourceTree = "<group>"; };
+		32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JiFenCollectionCell.xib; sourceTree = "<group>"; };
 		32F3D9501B6CCA41008530BA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		32F3D9521B6CCA41008530BA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -717,6 +722,9 @@
 				328CE5D31B9F0B28000469DF /* JifenViewController.h */,
 				328CE5D41B9F0B28000469DF /* JifenViewController.m */,
 				328CE5D51B9F0B28000469DF /* JifenViewController.xib */,
+				32E4D5321B9FCFB1001230F4 /* JiFenCollectionCell.h */,
+				32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */,
+				32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1433,6 +1441,7 @@
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
+				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
@@ -1518,6 +1527,7 @@
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
+				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				32746DC71B7432BD00816208 /* CollectionViewController.m in Sources */,
 				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
