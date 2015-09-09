@@ -251,6 +251,11 @@
 		32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
 		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
+		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
+		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
+		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
+		32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */; };
+		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -625,6 +630,14 @@
 		32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		32FF9A231B9FDB870001F314 /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
+		32FF9A241B9FDB870001F314 /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
+		32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
+		32FF9A281B9FDBEC0001F314 /* TuihuoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoCollectionCell.h; sourceTree = "<group>"; };
+		32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoCollectionCell.m; sourceTree = "<group>"; };
+		32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoCollectionCell.xib; sourceTree = "<group>"; };
+		32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoModel.h; sourceTree = "<group>"; };
+		32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -725,6 +738,12 @@
 				32E4D5321B9FCFB1001230F4 /* JiFenCollectionCell.h */,
 				32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */,
 				32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */,
+				32FF9A231B9FDB870001F314 /* TuihuoViewController.h */,
+				32FF9A241B9FDB870001F314 /* TuihuoViewController.m */,
+				32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */,
+				32FF9A281B9FDBEC0001F314 /* TuihuoCollectionCell.h */,
+				32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */,
+				32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -988,6 +1007,8 @@
 				32A81F901B8D963C009972B3 /* BuyModel.m */,
 				327FC25D1B9AEC2F00F111B3 /* CartModel.h */,
 				327FC25E1B9AEC2F00F111B3 /* CartModel.m */,
+				32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */,
+				32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1420,6 +1441,7 @@
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
+				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
@@ -1428,6 +1450,7 @@
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
 				32A2884E1B93E790006DC949 /* backImage.jpg in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
+				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
@@ -1575,12 +1598,15 @@
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
+				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
+				32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */,
 				325DF94D1B69D94400351ACA /* LadyView.m in Sources */,
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				3220A21C1B9D70010019443F /* TuihuoController.m in Sources */,
+				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
