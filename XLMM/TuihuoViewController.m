@@ -86,6 +86,8 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
           //  NSLog(@"url = %@", kQuanbuDingdan_URL);
+            
+            
             NSString * string = [[array objectAtIndex:i] objectForKey:@"orders"];
             
             

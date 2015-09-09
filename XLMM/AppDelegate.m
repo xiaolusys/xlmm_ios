@@ -12,7 +12,7 @@
 #import "MMRootViewController.h"
 #import "LeftMenuViewController.h"
 #import "RightMenuViewController.h"
-
+#import "MMClass.h"
 @interface AppDelegate ()
 
 @property (nonatomic ,copy) NSString *wxCode;
@@ -125,8 +125,10 @@
                 
                 self.access_token = [dic objectForKey:@"access_token"];
                 self.openid = [dic objectForKey:@"openid"];
-                [self getUserInfo];
                 
+                //
+                [self getUserInfo];
+                //传入openID and
             }
             
         });
@@ -167,6 +169,17 @@
                 //                self.nickname.text = [dic objectForKey:@"nickname"];
                 //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
                 NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                
+                NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object: self ];
+                NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+                [notificationCenter postNotification: broadcastMessage];
+                
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                NSLog(@"登录成功");
+                
+                //传递参数：
+                
                 
                 
             }

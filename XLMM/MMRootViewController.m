@@ -79,23 +79,19 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Left"
-//                                                                             style:UIBarButtonItemStylePlain
-//                                                                            target:self
-//                                                                            action:@selector(presentLeftMenuViewController:)];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Right"
-//                                                                              style:UIBarButtonItemStylePlain
-//                                                                             target:self
-//                                                                             action:@selector(presentRightMenuViewController:)];
+
     
     [ self.view addSubview:[[UIView alloc] init]];
 }
 
 - (void)loginBtnClicked:(UIButton *)button{
-    NSLog(@"login");
-    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kIsLogin]) {
+        NSLog(@"login");
+
+    }else{
     EnterViewController *loginVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
     [self.navigationController pushViewController:loginVC animated:YES];
+    }
 }
 
 - (void)creatPageData{

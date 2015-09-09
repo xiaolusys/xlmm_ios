@@ -12,6 +12,7 @@
 #import "WXApi.h"
 
 @interface EnterViewController ()<WXApiDelegate>{
+    NSTimer *theTimer;
     
 }
 
@@ -38,8 +39,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setInfo];
+    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
 }
 
+
+- (void)update:(NSNotificationCenter *)notification{
+    NSLog(@"微信一键登录成功， 请您绑定手机号");
+    [self.navigationController popViewControllerAnimated:YES];
+    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+    //[notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    [notificationCenter removeObserver:self name:@"login" object:nil];
+}
 - (void)setInfo{
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
