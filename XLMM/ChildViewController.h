@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WomanViewController.h"
 
 @interface ChildViewController : UIViewController<
                                     UICollectionViewDataSource,

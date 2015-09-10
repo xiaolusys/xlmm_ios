@@ -11,6 +11,8 @@
 @interface TuihuoXiangqingViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger status;
+@property (nonatomic, assign) NSInteger orderID;
+
 
 
 @end

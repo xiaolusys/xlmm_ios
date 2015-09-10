@@ -16,7 +16,6 @@
 #import "PromoteModel.h"
 #import "PosterModel.h"
 #import "ChildViewController.h"
-#import "WomanViewController.h"
 #import "MJRefresh.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"

@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "RootViewController.h"
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "LeftMenuViewController.h"

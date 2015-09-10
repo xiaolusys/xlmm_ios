@@ -14,12 +14,10 @@
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
-#import "WomanViewController.h"
 #import "PersonCenterViewController.h"
 #import "DetailViewController.h"
 #import "PurchaseViewController.h"
 #import "CollectionModel.h"
-#import "CollectionViewController.h"
 #import "DetailsModel.h"
 #import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
@@ -42,11 +40,11 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
-//#define Root_URL @"http://192.168.1.79:8000"
+#define Root_URL @"http://192.168.1.63:8000"
 //#define Root_URL @"http://youni.huyi.so"
 
 
-#define Root_URL @"http://m.xiaolu.so"
+//#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 

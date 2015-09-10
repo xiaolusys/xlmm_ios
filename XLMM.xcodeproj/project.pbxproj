@@ -38,8 +38,6 @@
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
-		325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA1181B68B22E006D64BD /* RootViewController.m */; };
-		325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1191B68B22E006D64BD /* RootViewController.xib */; };
 		325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 325BA11C1B68BA1B006D64BD /* goodsthumb.png */; };
 		325DF93E1B69B16000351ACA /* PosterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF93D1B69B16000351ACA /* PosterView.m */; };
 		325DF9401B69B17F00351ACA /* PosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF93F1B69B17F00351ACA /* PosterView.xib */; };
@@ -58,19 +56,13 @@
 		32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C701B6AFD56006E806A /* RegisterViewController.xib */; };
 		3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA191B6C59B700F36A8D /* ChildViewController.m */; };
 		3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
-		3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA281B6C5D8700F36A8D /* WomanViewController.m */; };
-		3264EA2B1B6C5D8700F36A8D /* WomanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA291B6C5D8700F36A8D /* WomanViewController.xib */; };
 		3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */; };
 		3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */; };
 		3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA321B6C850100F36A8D /* PeopleModel.m */; };
 		326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E888F1B71FDD800D15973 /* PurchaseViewController.m */; };
 		326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 326E88901B71FDD800D15973 /* PurchaseViewController.xib */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
-		32746DC71B7432BD00816208 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DC51B7432BD00816208 /* CollectionViewController.m */; };
-		32746DC81B7432BD00816208 /* CollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32746DC61B7432BD00816208 /* CollectionViewController.xib */; };
 		32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
-		32746DCF1B743DB100816208 /* ClothesCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCD1B743DB100816208 /* ClothesCollectionCell.m */; };
-		32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32746DCE1B743DB100816208 /* ClothesCollectionCell.xib */; };
 		32746DD31B74884B00816208 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		32746E091B74A22000816208 /* btn-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD51B74A22000816208 /* btn-plus.png */; };
 		32746E0A1B74A22000816208 /* btn-reduce.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD61B74A22000816208 /* btn-reduce.png */; };
@@ -174,6 +166,9 @@
 		3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8891B886B0C00CFAFA0 /* AddressView.m */; };
 		3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88B1B886B2600CFAFA0 /* AddressView.xib */; };
 		3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */; };
+		32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7E1BA117AE0045ADB9 /* icon-ok.png */; };
+		32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */; };
+		32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B801BA117AE0045ADB9 /* tuihuo-warning.png */; };
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
 		3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
@@ -328,9 +323,6 @@
 		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
-		325BA1171B68B22E006D64BD /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = ../RootViewController.h; sourceTree = "<group>"; };
-		325BA1181B68B22E006D64BD /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ../RootViewController.m; sourceTree = "<group>"; };
-		325BA1191B68B22E006D64BD /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RootViewController.xib; path = ../RootViewController.xib; sourceTree = "<group>"; };
 		325BA11C1B68BA1B006D64BD /* goodsthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goodsthumb.png; path = ../goodsthumb.png; sourceTree = "<group>"; };
 		325BA11E1B68BAF0006D64BD /* MMClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MMClass.h; path = ../MMClass.h; sourceTree = "<group>"; };
 		325DF93C1B69B16000351ACA /* PosterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterView.h; sourceTree = "<group>"; };
@@ -358,9 +350,6 @@
 		3264EA181B6C59B700F36A8D /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		3264EA191B6C59B700F36A8D /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildViewController.xib; sourceTree = "<group>"; };
-		3264EA271B6C5D8700F36A8D /* WomanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WomanViewController.h; sourceTree = "<group>"; };
-		3264EA281B6C5D8700F36A8D /* WomanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WomanViewController.m; sourceTree = "<group>"; };
-		3264EA291B6C5D8700F36A8D /* WomanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WomanViewController.xib; sourceTree = "<group>"; };
 		3264EA2C1B6C685500F36A8D /* PeopleCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleCollectionCell.h; sourceTree = "<group>"; };
 		3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleCollectionCell.m; sourceTree = "<group>"; };
 		3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleCollectionCell.xib; sourceTree = "<group>"; };
@@ -371,14 +360,8 @@
 		326E88901B71FDD800D15973 /* PurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController.xib; sourceTree = "<group>"; };
 		326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithUrl.h"; sourceTree = "<group>"; };
 		326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithUrl.m"; sourceTree = "<group>"; };
-		32746DC41B7432BD00816208 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
-		32746DC51B7432BD00816208 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
-		32746DC61B7432BD00816208 /* CollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewController.xib; sourceTree = "<group>"; };
 		32746DC91B7438FC00816208 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		32746DCA1B7438FC00816208 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
-		32746DCC1B743DB100816208 /* ClothesCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClothesCollectionCell.h; sourceTree = "<group>"; };
-		32746DCD1B743DB100816208 /* ClothesCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClothesCollectionCell.m; sourceTree = "<group>"; };
-		32746DCE1B743DB100816208 /* ClothesCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClothesCollectionCell.xib; sourceTree = "<group>"; };
 		32746DD11B74884B00816208 /* DetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsModel.h; sourceTree = "<group>"; };
 		32746DD21B74884B00816208 /* DetailsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsModel.m; sourceTree = "<group>"; };
 		32746DD51B74A22000816208 /* btn-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-plus.png"; sourceTree = "<group>"; };
@@ -521,6 +504,9 @@
 		3290C8891B886B0C00CFAFA0 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		3290C88B1B886B2600CFAFA0 /* AddressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressView.xib; sourceTree = "<group>"; };
 		3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LiHeiPro.ttf; sourceTree = "<group>"; };
+		32976B7E1BA117AE0045ADB9 /* icon-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-ok.png"; sourceTree = "<group>"; };
+		32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuihuo-close.png"; sourceTree = "<group>"; };
+		32976B801BA117AE0045ADB9 /* tuihuo-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuihuo-warning.png"; sourceTree = "<group>"; };
 		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
 		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
 		3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -783,6 +769,9 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32976B7E1BA117AE0045ADB9 /* icon-ok.png */,
+				32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */,
+				32976B801BA117AE0045ADB9 /* tuihuo-warning.png */,
 				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
 				327F80C21B95A60900EDDF5B /* MJRefresh */,
 				32A2884D1B93E790006DC949 /* backImage.jpg */,
@@ -822,9 +811,6 @@
 				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
 				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
-				325BA1171B68B22E006D64BD /* RootViewController.h */,
-				325BA1181B68B22E006D64BD /* RootViewController.m */,
-				325BA1191B68B22E006D64BD /* RootViewController.xib */,
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
 				325BA1001B68B18A006D64BD /* LaunchScreen.xib */,
 				32746E3D1B74A4EA00816208 /* Model */,
@@ -877,9 +863,6 @@
 				3264EA2C1B6C685500F36A8D /* PeopleCollectionCell.h */,
 				3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */,
 				3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */,
-				32746DCC1B743DB100816208 /* ClothesCollectionCell.h */,
-				32746DCD1B743DB100816208 /* ClothesCollectionCell.m */,
-				32746DCE1B743DB100816208 /* ClothesCollectionCell.xib */,
 				32891B4A1B81A881007E562A /* CartView.h */,
 				32891B4B1B81A881007E562A /* CartView.m */,
 				32891B5D1B81D1B7007E562A /* CartTableCellTableViewCell.h */,
@@ -917,9 +900,6 @@
 				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
 				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
 				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
-				3264EA271B6C5D8700F36A8D /* WomanViewController.h */,
-				3264EA281B6C5D8700F36A8D /* WomanViewController.m */,
-				3264EA291B6C5D8700F36A8D /* WomanViewController.xib */,
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
@@ -929,9 +909,6 @@
 				326E888E1B71FDD800D15973 /* PurchaseViewController.h */,
 				326E888F1B71FDD800D15973 /* PurchaseViewController.m */,
 				326E88901B71FDD800D15973 /* PurchaseViewController.xib */,
-				32746DC41B7432BD00816208 /* CollectionViewController.h */,
-				32746DC51B7432BD00816208 /* CollectionViewController.m */,
-				32746DC61B7432BD00816208 /* CollectionViewController.xib */,
 				326091C91B79ABFC00A763BA /* EnterViewController.h */,
 				326091CA1B79ABFC00A763BA /* EnterViewController.m */,
 				326091CB1B79ABFC00A763BA /* EnterViewController.xib */,
@@ -1426,7 +1403,6 @@
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
-				32746DC81B7432BD00816208 /* CollectionViewController.xib in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
@@ -1449,11 +1425,9 @@
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
 				32A288C41B942F6B006DC949 /* Head2View.xib in Resources */,
 				3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */,
-				32746DD01B743DB100816208 /* ClothesCollectionCell.xib in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
-				3264EA2B1B6C5D8700F36A8D /* WomanViewController.xib in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
@@ -1490,6 +1464,7 @@
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
+				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
@@ -1527,10 +1502,10 @@
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
+				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */,
 				32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */,
-				325BA11B1B68B22E006D64BD /* RootViewController.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,
 				32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */,
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
@@ -1538,6 +1513,7 @@
 				32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */,
 				32CC7C981BA0185A00475E2E /* TuihuoXQ2.xib in Resources */,
 				32746E3C1B74A22000816208 /* youhuiquan4.png in Resources */,
+				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				32CC7C9A1BA0186700475E2E /* TuihuoXQ3.xib in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
 				3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */,
@@ -1568,7 +1544,6 @@
 				327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */,
 				32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */,
 				32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */,
-				3264EA2A1B6C5D8700F36A8D /* WomanViewController.m in Sources */,
 				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
@@ -1594,7 +1569,6 @@
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
-				32746DC71B7432BD00816208 /* CollectionViewController.m in Sources */,
 				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
@@ -1623,7 +1597,6 @@
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */,
 				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
-				325BA11A1B68B22E006D64BD /* RootViewController.m in Sources */,
 				327F80D51B95A60900EDDF5B /* MJRefreshConst.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */,
@@ -1636,7 +1609,6 @@
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
-				32746DCF1B743DB100816208 /* ClothesCollectionCell.m in Sources */,
 				32891B4C1B81A881007E562A /* CartView.m in Sources */,
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
@@ -1741,7 +1713,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
@@ -1778,7 +1750,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "e158c9b7-bc56-476b-9936-240176f418aa";
 				SDKROOT = iphoneos;
@@ -1798,7 +1770,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1836,7 +1808,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

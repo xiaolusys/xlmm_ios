@@ -246,10 +246,15 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     OrderModel *model = [self.dataArray objectAtIndex:indexPath.row];
     NSInteger status = [model.refund_status integerValue];
+    NSInteger orderid = [model.ID integerValue];
+    
     NSLog(@"status = %ld", (long)status);
     
     TuihuoXiangqingViewController *xiangqingVC = [[TuihuoXiangqingViewController alloc] init];
     xiangqingVC.status = status;
+    xiangqingVC.orderID = orderid;
+    NSLog(@"status = %ld & id = %ld", (long)xiangqingVC.status, (long)xiangqingVC.orderID);
+    
     [self.navigationController pushViewController:xiangqingVC animated:YES];
     
 
