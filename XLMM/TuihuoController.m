@@ -14,6 +14,8 @@
 
 @interface TuihuoController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UIAlertViewDelegate>{
     UIAlertView *myAlterView;
+    NSInteger tuihuoNumber;
+
 }
 
 @property (nonatomic, strong) UIPickerView *myPickerView;
@@ -30,7 +32,6 @@
 @end
 
 @implementation TuihuoController{
-    NSInteger tuihuoNumber;
 }
 
 - (void)viewDidLoad {

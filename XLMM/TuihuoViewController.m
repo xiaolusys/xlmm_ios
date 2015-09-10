@@ -30,6 +30,13 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 //    http://192.168.1.79:8000/rest/v1/refunds
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    downloadCount = 0;
+    [self downlaodData];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
    // self.title = @"我的退货(款)";
@@ -45,7 +52,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     // Do any additional setup after loading the view.
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self createInfo];
-    [self downlaodData];
 
 }
 
@@ -112,9 +118,9 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (data == nil) {
         return;
     }
-    
+    [self.dataArray removeAllObjects];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
+   // NSLog(@"json = %@", json);
     
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {

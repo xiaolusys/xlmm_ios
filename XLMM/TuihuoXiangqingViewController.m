@@ -210,6 +210,27 @@
             textField1.delegate = self;
             textField2.borderStyle = UITextBorderStyleNone;
             textField2.delegate = self;
+           NSString *itemID = xiangqing.item_id;
+            NSLog(@"item_id = %@", itemID);
+            //  http://192.168.1.63:8000/rest/v1/products/421
+            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, itemID];
+            NSLog(@"url = %@", urlstring);
+            
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSLog(@"json = %@", json);
+            NSString *wear_by = [json objectForKey:@"ware_by"];
+            
+            NSLog(@"wear_by = %@", wear_by);
+            NSLog(@"hh");
+            
+            if ([wear_by integerValue] == 0) {
+                
+            }else if ([wear_by integerValue] == 1){
+                
+            }else if ([wear_by integerValue] == 2){
+                
+            }
             
             UIButton *button2 = (UIButton *)[myView viewWithTag:500];
             [button2 addTarget:self action:@selector(commitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -295,7 +316,7 @@
     modifyVC.tid = xiangqing.trade_id;
     
     
-        [self.navigationController pushViewController:modifyVC animated:YES];
+    [self.navigationController pushViewController:modifyVC animated:YES];
 }
 
 

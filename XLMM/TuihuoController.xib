@@ -247,6 +247,7 @@
                 <constraint firstItem="rGw-Xq-a4C" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pFA-Bb-wdk"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="519" y="375"/>
         </view>
     </objects>
     <resources>
