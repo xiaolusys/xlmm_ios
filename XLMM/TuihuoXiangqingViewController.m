@@ -11,7 +11,7 @@
 #import "TuihuoModel.h"
 
 
-@interface TuihuoXiangqingViewController ()<UITextViewDelegate>
+@interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong)NSArray *dataArray;
 
@@ -163,6 +163,10 @@
             
             UIView *myView = [arrayViews objectAtIndex:0];
             
+            UIButton *button = (UIButton *)[myView viewWithTag:666];
+            [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
             [self.view addSubview:myView];
         }
             break;
@@ -170,6 +174,29 @@
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
+            
+            UITextView *textView = (UITextView *)[myView viewWithTag:100];
+            textView.delegate = self;
+            textView.text = xiangqing.feedback;
+            
+            UIButton *button = (UIButton *)[myView viewWithTag:200];
+            [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UITextField *textField1 = (UITextField *)[myView viewWithTag:300];
+            
+            UITextField *textField2 = (UITextField *)[myView viewWithTag:400];
+            
+            textField1.borderStyle = UITextBorderStyleNone;
+            textField1.delegate = self;
+            textField2.borderStyle = UITextBorderStyleNone;
+            textField2.delegate = self;
+            
+            UIButton *button2 = (UIButton *)[myView viewWithTag:500];
+            [button2 addTarget:self action:@selector(commitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            
+            
             
             [self.view addSubview:myView];
         }
@@ -230,6 +257,36 @@
         default:
             break;
     }
+}
+
+- (void)lianxikefu:(UIButton *)button{
+    NSLog(@"联系客服 ");
+}
+
+- (void)commitBtnClicked:(UIButton *)button{
+    NSLog(@"提交申请");
+    
+}
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, -150, SCREENWIDTH, SCREENHEIGHT);
+        
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
