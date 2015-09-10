@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
@@ -11,60 +10,102 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atq-Hq-EQv">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuihuo-warning.png" translatesAutoresizingMaskIntoConstraints="NO" id="atq-Hq-EQv">
                     <rect key="frame" x="8" y="72" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="4l6-Zt-1DI"/>
+                        <constraint firstAttribute="width" constant="32" id="8wp-i0-Qa2"/>
+                    </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2j-50-9OZ">
-                    <rect key="frame" x="137" y="530" width="46" height="30"/>
-                    <state key="normal" title="Button">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="等待小鹿处理退货申请" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTO-bb-TIP">
+                    <rect key="frame" x="60" y="78" width="200" height="20"/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 如果小鹿同意： " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hN6-8j-k8n">
+                    <rect key="frame" x="8" y="112" width="129" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 如果小鹿很纠结： " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-lc-AUH">
+                    <rect key="frame" x="8" y="213" width="146" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 如果小鹿没来及处理： " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuS-XB-4iw">
+                    <rect key="frame" x="8" y="294" width="180" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 申请将达成,需要退货的用户需要退货给仓库,这里会通知您退货地址的信息. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEe-ar-GcV">
+                    <rect key="frame" x="8" y="141" width="300" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="K2w-bb-sga"/>
+                        <constraint firstAttribute="width" constant="300" id="fJo-Lm-6yC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 可能需要您修改退货申请内容以通过审核. " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS1-4J-PBP">
+                    <rect key="frame" x="8" y="242" width="265" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 超过5天,合理申请将默认达成,如需要退货,届时您需要将商品寄送到仓库;或者您可以联系客服人员为您服务~ " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yA0-kI-ubn">
+                    <rect key="frame" x="8" y="323" width="292" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="eqN-ki-iFk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2j-50-9OZ">
+                    <rect key="frame" x="8" y="520" width="304" height="40"/>
+                    <color key="backgroundColor" red="0.97647058823529409" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="wTz-VL-wxB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="联系客服：021-50939326">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTO-bb-TIP">
-                    <rect key="frame" x="139" y="77" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hN6-8j-k8n">
-                    <rect key="frame" x="29" y="117" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-lc-AUH">
-                    <rect key="frame" x="29" y="273" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuS-XB-4iw">
-                    <rect key="frame" x="29" y="391" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEe-ar-GcV">
-                    <rect key="frame" x="129" y="164" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iS1-4J-PBP">
-                    <rect key="frame" x="129" y="318" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yA0-kI-ubn">
-                    <rect key="frame" x="129" y="453" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="LuS-XB-4iw" firstAttribute="top" secondItem="jgq-lc-AUH" secondAttribute="bottom" constant="60" id="2cS-jh-pEu"/>
+                <constraint firstItem="atq-Hq-EQv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="3S7-Rd-Exd"/>
+                <constraint firstAttribute="centerX" secondItem="aTO-bb-TIP" secondAttribute="centerX" id="4tk-Pd-psI"/>
+                <constraint firstItem="yA0-kI-ubn" firstAttribute="top" secondItem="LuS-XB-4iw" secondAttribute="bottom" constant="8" id="56s-mo-Hv5"/>
+                <constraint firstAttribute="bottom" secondItem="c2j-50-9OZ" secondAttribute="bottom" constant="8" id="A7b-Sb-TOI"/>
+                <constraint firstItem="iS1-4J-PBP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="BQZ-J6-zpC"/>
+                <constraint firstAttribute="trailing" secondItem="yA0-kI-ubn" secondAttribute="trailing" constant="20" id="Ev1-rY-USt"/>
+                <constraint firstItem="hN6-8j-k8n" firstAttribute="top" secondItem="atq-Hq-EQv" secondAttribute="bottom" constant="8" id="Iyz-aX-EBj"/>
+                <constraint firstItem="cEe-ar-GcV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="NTb-9f-Xro"/>
+                <constraint firstItem="jgq-lc-AUH" firstAttribute="leading" secondItem="hN6-8j-k8n" secondAttribute="leading" id="VgH-dx-17K"/>
+                <constraint firstItem="c2j-50-9OZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="aB6-Ni-y7Y"/>
+                <constraint firstItem="yA0-kI-ubn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ajJ-Iw-9l1"/>
+                <constraint firstItem="jgq-lc-AUH" firstAttribute="leading" secondItem="LuS-XB-4iw" secondAttribute="leading" id="dqW-r7-2GT"/>
+                <constraint firstAttribute="trailing" secondItem="c2j-50-9OZ" secondAttribute="trailing" constant="8" id="kNo-6e-KQP"/>
+                <constraint firstItem="atq-Hq-EQv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="72" id="kR3-T3-qy5"/>
+                <constraint firstItem="iS1-4J-PBP" firstAttribute="top" secondItem="jgq-lc-AUH" secondAttribute="bottom" constant="8" id="ohy-R7-5Bt"/>
+                <constraint firstItem="cEe-ar-GcV" firstAttribute="top" secondItem="hN6-8j-k8n" secondAttribute="bottom" constant="8" id="qEp-eA-M6P"/>
+                <constraint firstItem="hN6-8j-k8n" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="rra-aQ-W5L"/>
+                <constraint firstItem="atq-Hq-EQv" firstAttribute="centerY" secondItem="aTO-bb-TIP" secondAttribute="centerY" id="tYD-ky-Nqt"/>
+                <constraint firstItem="jgq-lc-AUH" firstAttribute="top" secondItem="hN6-8j-k8n" secondAttribute="bottom" constant="80" id="znU-Rz-73l"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="tuihuo-warning.png" width="45" height="47"/>
+    </resources>
 </document>

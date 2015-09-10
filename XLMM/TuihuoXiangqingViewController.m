@@ -160,13 +160,18 @@
         case 3:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
-            [self.view addSubview:[arrayViews objectAtIndex:0]];
+            
+            UIView *myView = [arrayViews objectAtIndex:0];
+            
+            [self.view addSubview:myView];
         }
             break;
         case 4:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
-            [self.view addSubview:[arrayViews objectAtIndex:0]];
+            UIView *myView = [arrayViews objectAtIndex:0];
+            
+            [self.view addSubview:myView];
         }
             break;
         case 5:
