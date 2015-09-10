@@ -169,6 +169,8 @@
 		32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7E1BA117AE0045ADB9 /* icon-ok.png */; };
 		32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */; };
 		32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B801BA117AE0045ADB9 /* tuihuo-warning.png */; };
+		32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */; };
+		32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */; };
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
 		3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
@@ -507,6 +509,9 @@
 		32976B7E1BA117AE0045ADB9 /* icon-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-ok.png"; sourceTree = "<group>"; };
 		32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuihuo-close.png"; sourceTree = "<group>"; };
 		32976B801BA117AE0045ADB9 /* tuihuo-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuihuo-warning.png"; sourceTree = "<group>"; };
+		32976B841BA16C190045ADB9 /* ModifyshenqingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyshenqingViewController.h; sourceTree = "<group>"; };
+		32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyshenqingViewController.m; sourceTree = "<group>"; };
+		32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyshenqingViewController.xib; sourceTree = "<group>"; };
 		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
 		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
 		3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -762,6 +767,9 @@
 				32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */,
 				32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */,
 				32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */,
+				32976B841BA16C190045ADB9 /* ModifyshenqingViewController.h */,
+				32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */,
+				32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1435,6 +1443,7 @@
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
 				32746E2B1B74A22000816208 /* icon-wodejifen.png in Resources */,
 				32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */,
+				32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */,
 				32746E321B74A22000816208 /* logo.png in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
@@ -1627,6 +1636,7 @@
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
+				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,

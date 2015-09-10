@@ -9,6 +9,7 @@
 #import "TuihuoXiangqingViewController.h"
 #import "MMClass.h"
 #import "TuihuoModel.h"
+#import "ModifyshenqingViewController.h"
 
 
 @interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate>
@@ -19,6 +20,8 @@
 
 @implementation TuihuoXiangqingViewController{
     NSString *nibName;
+    TuihuoModel *xiangqing;
+
 }
 
 - (void)viewDidLoad {
@@ -103,7 +106,6 @@
 - (void)createView{
     NSLog(@"xiangqing = %ld",(long) self.status);
     nibName = [NSString stringWithFormat:@"TuihuoXQ%ld",(long) self.status];
-    TuihuoModel *xiangqing;
     NSLog(@"oredrID = %ld", (long)self.orderID);
     
     for (TuihuoModel *model in self.dataArray) {
@@ -288,6 +290,12 @@
 
 - (void)xiugaishengqing:(UIButton *)button{
     NSLog(@"修改申请");
+    ModifyshenqingViewController *modifyVC = [[ModifyshenqingViewController alloc] initWithNibName:@"ModifyshenqingViewController" bundle:nil];
+    modifyVC.oid = xiangqing.order_id;
+    modifyVC.tid = xiangqing.trade_id;
+    
+    
+        [self.navigationController pushViewController:modifyVC animated:YES];
 }
 
 
