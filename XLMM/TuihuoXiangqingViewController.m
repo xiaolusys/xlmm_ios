@@ -154,7 +154,25 @@
         case 2:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
-            [self.view addSubview:[arrayViews objectAtIndex:0]];
+            UIView *myView = [arrayViews objectAtIndex:0];
+            UITextView *textView = (UITextView *)[myView viewWithTag:11];
+            textView.delegate = self;
+            textView.text = xiangqing.feedback;
+            
+            UIButton *button = (UIButton *)[myView viewWithTag:22];
+            [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIButton *button2 = (UIButton *)[myView viewWithTag:33];
+            [button2 addTarget:self action:@selector(xiugaishengqing:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            
+            
+            
+            
+            
+            
+            [self.view addSubview:myView];
         }
             break;
         case 3:
@@ -266,6 +284,10 @@
 - (void)commitBtnClicked:(UIButton *)button{
     NSLog(@"提交申请");
     
+}
+
+- (void)xiugaishengqing:(UIButton *)button{
+    NSLog(@"修改申请");
 }
 
 
