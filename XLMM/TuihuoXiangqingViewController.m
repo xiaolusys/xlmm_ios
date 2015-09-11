@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "TuihuoModel.h"
 #import "ModifyshenqingViewController.h"
+#import "AFNetworking.h"
 
 
 @interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate>
@@ -21,6 +22,8 @@
 @implementation TuihuoXiangqingViewController{
     NSString *nibName;
     TuihuoModel *xiangqing;
+    UITextField *textField1;
+    UITextField *textField2;
 
 }
 
@@ -203,9 +206,9 @@
             UIButton *button = (UIButton *)[myView viewWithTag:200];
             [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
             
-            UITextField *textField1 = (UITextField *)[myView viewWithTag:300];
+           textField1 = (UITextField *)[myView viewWithTag:300];
             
-            UITextField *textField2 = (UITextField *)[myView viewWithTag:400];
+           textField2 = (UITextField *)[myView viewWithTag:400];
             
             textField1.borderStyle = UITextBorderStyleNone;
             textField1.delegate = self;
@@ -225,47 +228,57 @@
             NSLog(@"wear_by = %@", wear_by);
             NSLog(@"hh");
             
-            if ([wear_by integerValue] == 0) {
-                
-            }else if ([wear_by integerValue] == 1){
-                
-            }else if ([wear_by integerValue] == 2){
-                
-            }
+           
             
-            NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界售后(收)";
+            NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界";
             NSString *phone1 = @"021-50939326-818";
             NSString *youbian1 = @"201602";
             
-            NSString *beizhu = @"请将包裹里原发货单一并寄回，或者写张纸条，注明您的微信昵称、收件人手机号和退换货的原因方便我们售后收到及时为您处理哦，谢谢！ ^_^";
-            NSString *beizhu2 = @"质量问题的退货，邮费需要您先支付哦，到货验收后我们会把货款和运费分开退还给您的！发普通的快递即可！请勿发顺丰或EMS等高邮费的快递，拒收到付件，请保持衣服吊牌完整；不影响二次销售.";
-            
-            NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼售后(收)";
+            NSString *shouhuoren1 = @"售后(收)";
+            NSString *shouhuoren2 = @"售后(收)";
+            NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼";
             NSString *phone2 = @"15821245603";
             NSString *youbian2 = @"510000";
             
             NSDictionary *dic1 = @{@"address":backAddress1,
                                    @"phone":phone1,
                                    @"youbian":youbian1,
-                                   @"beizhu1":beizhu,
-                                   @"beizhu2":beizhu2
+                                   @"shouhuoren":shouhuoren1
+                               
                                    };
             NSDictionary *dic2 = @{@"address":backAddress2,
                                    @"phone":phone2,
                                    @"youbian":youbian2,
-                                   @"beizhu1":beizhu,
-                                   @"beizhu2":beizhu2
+                                  @"shouhuoren":shouhuoren2
                                    };
             NSArray *array = @[dic1, dic1, dic2];
             NSLog(@"array = %@", array);
+            NSDictionary *infoDic ;
+            if ([wear_by integerValue] == 0) {
+                infoDic = [array objectAtIndex:0];
+            }else if ([wear_by integerValue] == 1){
+                infoDic = [array objectAtIndex:1];
+
+            }else if ([wear_by integerValue] == 2){
+                infoDic = [array objectAtIndex:2];
+
+            }
             
+            UILabel *label1 = (UILabel *)[myView viewWithTag:1000];
+            UILabel *label2 = (UILabel *)[myView viewWithTag:2000];
+            UILabel *label3 = (UILabel *)[myView viewWithTag:3000];
+            UILabel *label4 = (UILabel *)[myView viewWithTag:4000];
+            
+            label1.text = [infoDic objectForKey:@"address"];
+             label2.text = [infoDic objectForKey:@"phone"];
+             label3.text = [infoDic objectForKey:@"shouhuoren"];
+             label4.text = [infoDic objectForKey:@"youbian"];
             
             
             UIButton *button2 = (UIButton *)[myView viewWithTag:500];
             [button2 addTarget:self action:@selector(commitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             
-            
-            
+           
             
             
             [self.view addSubview:myView];
@@ -340,6 +353,74 @@
 
 - (void)commitBtnClicked:(UIButton *)button{
     NSLog(@"提交申请");
+    if ([textField1.text isEqualToString:@""] ||[textField2.text isEqualToString:@""]) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"快递公司和快递编号不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+        
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSLog(@"urlstring = %@", urlString);
+    
+    NSString *refund_or_pro;
+    if ([xiangqing.status isEqual:@"已付款"]) {
+        refund_or_pro = @"0";
+        
+    } else if ([xiangqing.status isEqual:@"已发货"]){
+        refund_or_pro = @"1";
+    }else{
+         refund_or_pro = @"1";
+    }
+    NSLog(@"1111");
+    
+    
+    NSLog(@"%@",xiangqing.order_id );
+     NSLog(@"%@", xiangqing.trade_id);
+     NSLog(@"%@", refund_or_pro);
+     NSLog(@"%@", xiangqing.refund_num);
+     NSLog(@"%@", xiangqing.refund_fee);
+     NSLog(@"%@", xiangqing.feedback);
+     NSLog(@"%@", xiangqing.reason);
+     NSLog(@"%@", @2);
+     NSLog(@"%@", textField1.text);
+     NSLog(@"%@", textField2.text);
+   //  NSLog(@"%@", );
+    NSDictionary *parameters = @{@"id":xiangqing.order_id,
+                                 @"tid":xiangqing.trade_id,
+                                 @"refund_or_pro":refund_or_pro,
+                                 @"num":xiangqing.refund_num,
+                                 @"sum_price":xiangqing.refund_fee,
+                                 @"feedback":xiangqing.feedback,
+                                 @"reason":xiangqing.reason,
+                                 @"modify":@2,
+                                 @"company":textField1.text,
+                                 @"sid":textField2.text
+                                 };
+    
+    NSLog(@"parameters = %@", parameters);
+    
+    [manager POST:urlString parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              NSLog(@"perration = %@", operation);
+              [self.navigationController popViewControllerAnimated:YES];
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              NSLog(@"erro = %@\n%@", error.userInfo, error.description);
+              NSLog(@"perration = %@", operation);
+              
+              
+          }];
+    
+    
+    
     
 }
 
