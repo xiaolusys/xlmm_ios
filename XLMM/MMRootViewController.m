@@ -171,6 +171,11 @@
 
 #pragma mark --PageViewControllerDelegate--
 
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
+    NSLog(@"-->%@", pendingViewControllers);
+    
+}
+
 
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
@@ -251,9 +256,6 @@
                     
                 }
             }
-
-            
-            //[self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
         }
     }
     

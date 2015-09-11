@@ -150,4 +150,10 @@ NSDictionary *parameters = @{@"vmobile": phoneNumber};
           NSLog(@"Error: %@", error);
           
       }];
+
+UITouch ;
+UIGestureRecognizer  ;
+UIPageViewController;
+
+
 #endif
