@@ -37,6 +37,7 @@
 
 @implementation ModifyshenqingViewController{
     NSDictionary *jsondic;
+    BOOL isSaleOpen;
 }
 
 - (void)viewDidLoad {
@@ -45,7 +46,7 @@
     self.title = @"修改申请退货(款)";
     NSLog(@"tid = %@ and oid = %@", self.tid, self.oid);
     
-    
+    self.refund_or_pro = 0;
     
     self.title = @"申请退货";
     self.myTextView.delegate = self;
@@ -71,7 +72,19 @@
     [self.jianbutton setBackgroundImage:[UIImage imageNamed:@"btn-reduce.png"] forState:UIControlStateNormal];
     
     
+   
+    NSLog(@"item_id = %@", self.itemid);
+    //  http://192.168.1.63:8000/rest/v1/products/421
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, self.itemid];
+    NSLog(@"url = %@", urlstring);
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
 
+    isSaleOpen = [[json objectForKey:@"http://192.168.1.63:8000/rest/v1/products/421"]boolValue];
+    NSLog(@"issaleOpen = %d", isSaleOpen);
+    
 
     
     [self downloadData];
@@ -152,7 +165,7 @@
 
 
 - (void)createPickerView{
-    self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 260, 0, 0)];
+    self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 320, 0, 0)];
     self.myPickerView.dataSource = self;
     self.myPickerView.delegate = self;
     
@@ -241,10 +254,26 @@
 
 #pragma mark --UITextViewDelegate--
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+}
+
+
+
+
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    }];
+}
 
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     textView.text = @"";
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, -216, SCREENWIDTH, SCREENHEIGHT);
+    }];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
@@ -254,9 +283,7 @@
     return YES;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView{
-    NSLog(@"");
-}
+
 
 
 
@@ -399,6 +426,7 @@
             } else if ([self.status isEqual:@"已发货"]){
                 self.refund_or_pro = 1;
             }
+            
             NSLog(@"1111");
             
             NSDictionary *parameters = @{@"id":self.oid,

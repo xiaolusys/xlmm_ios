@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy)NSString *oid;
 @property (nonatomic, copy)NSString *tid;
+@property (nonatomic, copy)NSString *itemid;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;

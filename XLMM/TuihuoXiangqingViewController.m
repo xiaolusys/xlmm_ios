@@ -458,6 +458,8 @@
     ModifyshenqingViewController *modifyVC = [[ModifyshenqingViewController alloc] initWithNibName:@"ModifyshenqingViewController" bundle:nil];
     modifyVC.oid = xiangqing.order_id;
     modifyVC.tid = xiangqing.trade_id;
+    modifyVC.itemid = xiangqing.item_id;
+    
     
     
     [self.navigationController pushViewController:modifyVC animated:YES];
