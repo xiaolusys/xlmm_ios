@@ -18,8 +18,8 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youhuiquan-kv.png" translatesAutoresizingMaskIntoConstraints="NO" id="jSf-yh-QA7">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="25O-XF-Mkh"/>
-                        <constraint firstAttribute="height" constant="200" id="amf-0t-fTA"/>
+                        <constraint firstAttribute="width" constant="100" id="25O-XF-Mkh"/>
+                        <constraint firstAttribute="height" constant="100" id="amf-0t-fTA"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -90,14 +90,18 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="eBj-sq-fQC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="1bY-VY-GAe"/>
-                <constraint firstItem="8WZ-E6-eW4" firstAttribute="top" secondItem="jSf-yh-QA7" secondAttribute="bottom" constant="20" id="6Bt-MO-51V"/>
+                <constraint firstItem="8WZ-E6-eW4" firstAttribute="top" secondItem="jSf-yh-QA7" secondAttribute="bottom" constant="20" id="6Bt-MO-51V">
+                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                </constraint>
                 <constraint firstAttribute="centerX" secondItem="jSf-yh-QA7" secondAttribute="centerX" id="8eW-tA-A1S"/>
                 <constraint firstAttribute="centerX" secondItem="eBj-sq-fQC" secondAttribute="centerX" id="C3t-lc-HBa"/>
                 <constraint firstItem="jSf-yh-QA7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="YpF-pa-KD2"/>
                 <constraint firstItem="xTZ-Z2-GDz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="eDy-JE-A4R"/>
-                <constraint firstItem="eBj-sq-fQC" firstAttribute="top" secondItem="8WZ-E6-eW4" secondAttribute="bottom" constant="30" id="lhh-ss-Acn"/>
+                <constraint firstItem="eBj-sq-fQC" firstAttribute="top" secondItem="8WZ-E6-eW4" secondAttribute="bottom" constant="30" id="lhh-ss-Acn">
+                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                </constraint>
                 <constraint firstAttribute="centerX" secondItem="xTZ-Z2-GDz" secondAttribute="centerX" id="nik-vR-VGm"/>
-                <constraint firstItem="xTZ-Z2-GDz" firstAttribute="top" secondItem="eBj-sq-fQC" secondAttribute="bottom" constant="40" id="o5q-1y-QBg"/>
+                <constraint firstItem="xTZ-Z2-GDz" firstAttribute="top" secondItem="eBj-sq-fQC" secondAttribute="bottom" constant="20" id="o5q-1y-QBg"/>
                 <constraint firstAttribute="centerX" secondItem="8WZ-E6-eW4" secondAttribute="centerX" id="rA3-CD-qQX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
