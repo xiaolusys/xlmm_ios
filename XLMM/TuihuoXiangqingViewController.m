@@ -287,7 +287,33 @@
         case 5:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
-            [self.view addSubview:[arrayViews objectAtIndex:0]];
+            UIView *myView = [arrayViews objectAtIndex:0];
+            
+            UILabel *label1 = (UILabel *)[myView viewWithTag:91];
+            label1.text = [NSString stringWithFormat:@"￥%@", xiangqing.refund_fee];
+            UILabel *label2 = (UILabel *)[myView viewWithTag:92];
+            UILabel *label3 = (UILabel *)[myView viewWithTag:93];
+            label3.text = xiangqing.refund_no;
+            UILabel *label4 = (UILabel *)[myView viewWithTag:94];
+            label4.text = xiangqing.company_name;
+            UILabel *label5 = (UILabel *)[myView viewWithTag:95];
+            label5.text = [NSString stringWithFormat:@"%@", xiangqing.sid];
+            UITextView *textView = (UITextView *)[myView viewWithTag:96];
+            textView.delegate = self;
+            textView.text = [NSString stringWithFormat:@"%@", xiangqing.desc];
+            
+            UIButton *button = (UIButton *)[myView viewWithTag:97];
+            
+            [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+            
+            NSMutableString *string =[[NSMutableString alloc] initWithString:xiangqing.created];
+            NSRange range = [string rangeOfString:@"T"];
+            [string replaceCharactersInRange:range withString:@" "];
+            label2.text = string;
+            
+            
+            
+            [self.view addSubview:myView];
         }
             break;
         case 6:
