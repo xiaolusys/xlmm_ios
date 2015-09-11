@@ -194,7 +194,6 @@
 		32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288451B93E2AC006DC949 /* RECommonFunctions.m */; };
 		32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288471B93E2AC006DC949 /* RESideMenu.m */; };
 		32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */; };
-		32A2884E1B93E790006DC949 /* backImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A2884D1B93E790006DC949 /* backImage.jpg */; };
 		32A288BE1B942F53006DC949 /* Head1View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288BC1B942F53006DC949 /* Head1View.m */; };
 		32A288BF1B942F53006DC949 /* Head1View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288BD1B942F53006DC949 /* Head1View.xib */; };
 		32A288C31B942F6B006DC949 /* Head2View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288C11B942F6B006DC949 /* Head2View.m */; };
@@ -546,7 +545,6 @@
 		32A288471B93E2AC006DC949 /* RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESideMenu.m; sourceTree = "<group>"; };
 		32A288481B93E2AC006DC949 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
 		32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
-		32A2884D1B93E790006DC949 /* backImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backImage.jpg; sourceTree = "<group>"; };
 		32A288BB1B942F53006DC949 /* Head1View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Head1View.h; sourceTree = "<group>"; };
 		32A288BC1B942F53006DC949 /* Head1View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Head1View.m; sourceTree = "<group>"; };
 		32A288BD1B942F53006DC949 /* Head1View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Head1View.xib; sourceTree = "<group>"; };
@@ -785,7 +783,6 @@
 				32976B801BA117AE0045ADB9 /* tuihuo-warning.png */,
 				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
 				327F80C21B95A60900EDDF5B /* MJRefresh */,
-				32A2884D1B93E790006DC949 /* backImage.jpg */,
 				32121B3F1B9461BF00742E53 /* icon.png */,
 				32A288431B93E2AC006DC949 /* RESideMenu */,
 				3299D8701B8C7FAA000AA744 /* lib */,
@@ -1469,7 +1466,6 @@
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
-				32A2884E1B93E790006DC949 /* backImage.jpg in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
