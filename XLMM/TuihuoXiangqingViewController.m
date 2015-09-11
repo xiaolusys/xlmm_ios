@@ -182,7 +182,7 @@
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             
             UIView *myView = [arrayViews objectAtIndex:0];
-            
+            myView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
             UIButton *button = (UIButton *)[myView viewWithTag:666];
             [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -194,7 +194,8 @@
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
-            
+            myView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+
             UITextView *textView = (UITextView *)[myView viewWithTag:100];
             textView.delegate = self;
             textView.text = xiangqing.feedback;
@@ -232,6 +233,34 @@
                 
             }
             
+            NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界售后(收)";
+            NSString *phone1 = @"021-50939326-818";
+            NSString *youbian1 = @"201602";
+            
+            NSString *beizhu = @"请将包裹里原发货单一并寄回，或者写张纸条，注明您的微信昵称、收件人手机号和退换货的原因方便我们售后收到及时为您处理哦，谢谢！ ^_^";
+            NSString *beizhu2 = @"质量问题的退货，邮费需要您先支付哦，到货验收后我们会把货款和运费分开退还给您的！发普通的快递即可！请勿发顺丰或EMS等高邮费的快递，拒收到付件，请保持衣服吊牌完整；不影响二次销售.";
+            
+            NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼售后(收)";
+            NSString *phone2 = @"15821245603";
+            NSString *youbian2 = @"510000";
+            
+            NSDictionary *dic1 = @{@"address":backAddress1,
+                                   @"phone":phone1,
+                                   @"youbian":youbian1,
+                                   @"beizhu1":beizhu,
+                                   @"beizhu2":beizhu2
+                                   };
+            NSDictionary *dic2 = @{@"address":backAddress2,
+                                   @"phone":phone2,
+                                   @"youbian":youbian2,
+                                   @"beizhu1":beizhu,
+                                   @"beizhu2":beizhu2
+                                   };
+            NSArray *array = @[dic1, dic1, dic2];
+            NSLog(@"array = %@", array);
+            
+            
+            
             UIButton *button2 = (UIButton *)[myView viewWithTag:500];
             [button2 addTarget:self action:@selector(commitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -251,6 +280,11 @@
         case 6:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
+            
+            
+            
+            
+            
             [self.view addSubview:[arrayViews objectAtIndex:0]];
         }
             break;
@@ -322,7 +356,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [UIView animateWithDuration:0.3 animations:^{
-        self.view.frame = CGRectMake(0, -150, SCREENWIDTH, SCREENHEIGHT);
+        self.view.frame = CGRectMake(0, -216, SCREENWIDTH, SCREENHEIGHT);
         
     }];
 }
