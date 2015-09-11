@@ -293,12 +293,15 @@
         case 6:
         {
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
+            UIView *myView = [arrayViews objectAtIndex:0];
+            UIButton *button = (UIButton *)[myView viewWithTag:888];
+            [button addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
             
             
             
             
+            [self.view addSubview:myView];
             
-            [self.view addSubview:[arrayViews objectAtIndex:0]];
         }
             break;
         case 7:
