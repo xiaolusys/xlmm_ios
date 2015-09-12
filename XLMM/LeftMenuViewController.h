@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @protocol RootVCPushOtherVCDelegate <NSObject>
 
 - (void) rootVCPushOtherVC:(UIViewController *)vc;

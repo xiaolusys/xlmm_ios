@@ -203,7 +203,7 @@
         case 10:{
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setBool:NO forKey:kIsLogin];
+            [userDefaults setBool:NO forKey:@"login"];
             
             [userDefaults synchronize];
 

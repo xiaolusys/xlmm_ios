@@ -7,16 +7,23 @@
 //
 
 #import "AppDelegate.h"
+
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "LeftMenuViewController.h"
-#import "RightMenuViewController.h"
+
 #import "MMClass.h"
+
+#define login @"login"
+
 @interface AppDelegate ()
 
 @property (nonatomic ,copy) NSString *wxCode;
 @property (nonatomic ,copy) NSString *access_token;
 @property (nonatomic ,copy) NSString *openid;
+@property (nonatomic, strong) NSDictionary *tokenInfo;
+@property (nonatomic, strong) NSDictionary *userInfo;
+
 
 @end
 
@@ -30,21 +37,34 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
    BOOL isregister = [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
-    NSLog(@"%d", isregister);
+    
+    NSLog(@"注册微信的结果 %d", isregister);
     
  //   [self sendAuthRequest];
     
     //创建导航控制器，添加根视图控制器
-#if 0
-    RootViewController *root = [[RootViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    self.window.rootViewController = nav;
-#else
+
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+    
+    // 设置登录状态
+    NSUserDefaults *userDefualts = [NSUserDefaults standardUserDefaults];
+    if (![userDefualts boolForKey:login]) {
+        NSLog(@"没有登录");
+        [userDefualts setBool:NO forKey:login];
+    } else{
+        NSLog(@"已经登录过了");
+        [userDefualts setBool:YES forKey:login];
+        
+        
+        NSLog(@"自动获得用户名和密码进行登录");
+    }
+    [userDefualts synchronize];
+    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
+    // 设置代理
     leftMenu.pushVCDelegate = root;
-//    RightMenuViewController *rightMenu = [[RightMenuViewController alloc] initWithNibName:@"RightMenuViewController" bundle:nil];
+
     
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     
@@ -56,22 +76,15 @@
     menuVC.contentViewShadowOpacity = 0.6;
     menuVC.contentViewShadowRadius = 12;
     menuVC.contentViewShadowEnabled = YES;
+    
     self.window.rootViewController = menuVC;
     
-#endif
+
     [self.window makeKeyAndVisible];
     return YES;
 }
 
--(void)sendAuthRequest
-{
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo,snsapi_base";
-    req.state = @"123" ;
-    
-    NSLog(@"req = %@", req);
-    [WXApi sendReq:req];
-}
+
 
 -(void)onResp:(BaseReq *)resp
 {
@@ -90,9 +103,19 @@
         
         self.wxCode = code;
         
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setValue:code forKey:@"wxCode"];
+        [userDefaults synchronize];
+        
+        
         NSDictionary *dic = @{@"code":code};
         NSLog(@"dic11111 = %@", dic);
     }
+    //获取token和openid；
+    
+    
+    
     [self getAccess_token];
     
 }
@@ -110,6 +133,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (data) {
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                self.tokenInfo = dic;
                 
                 NSLog(@"dic = %@", dic);
                 /*
@@ -162,8 +187,14 @@
                  unionid = oyAaTjsxxxxxxQ42O3xxxxxxs;
                  }
                  */
+                self.userInfo = dic;
+
                 
-                NSLog(@"userInfo = %@", dic);
+                NSLog(@"tokeninfo = %@", self.tokenInfo);
+                
+                NSLog(@"userInfo = %@", self.userInfo);
+                
+                
                 
                 //                self.nickname.text = [dic objectForKey:@"nickname"];
                 //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
@@ -257,44 +288,5 @@
 }
 
 
-//向微信注册
 
-#if 0
-[WXApi registerApp:kWXAPP_ID withDescription:@"weixin"];
-
-//授权后回调 WXApiDelegate
--(void)onResp:(BaseReq *)resp
-{
-    /*
-     ErrCode ERR_OK = 0(用户同意)
-     ERR_AUTH_DENIED = -4（用户拒绝授权）
-     ERR_USER_CANCEL = -2（用户取消）
-     code    用户换取access_token的code，仅在ErrCode为0时有效
-     state   第三方程序发送时用来标识其请求的唯一性的标志，由第三方程序调用sendReq时传入，由微信终端回传，state字符串长度不能超过1K
-     lang    微信客户端当前语言
-     country 微信用户当前国家信息
-     */
-    SendAuthResp *aresp = (SendAuthResp *)resp;
-    if (aresp.errCode== 0) {
-        NSString *code = aresp.code;
-        NSDictionary *dic = @{@"code":code};
-    }
-}
-
-//和QQ,新浪并列回调句柄
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return [TencentOAuth HandleOpenURL:url] ||
-    [WeiboSDK handleOpenURL:url delegate:self] ||
-    [WXApi handleOpenURL:url delegate:self];;
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return [TencentOAuth HandleOpenURL:url] ||
-    [WeiboSDK handleOpenURL:url delegate:self] ||
-    [WXApi handleOpenURL:url delegate:self];;
-}
-
-#endif
 @end
