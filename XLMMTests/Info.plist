@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>xiaolumeimei.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>so.xiaolu.m.xiaolumeimei</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>UIAppFonts</key>
