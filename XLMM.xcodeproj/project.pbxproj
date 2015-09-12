@@ -212,6 +212,7 @@
 		32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
 		32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1F1B872CB5003501EF /* PerDingdanModel.m */; };
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
+		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
 		32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
@@ -231,7 +232,6 @@
 		32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */; };
 		32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */; };
 		32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */; };
-		32CE91B71B7C21D000CA67C3 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91B61B7C21D000CA67C3 /* area.plist */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
 		32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
@@ -574,6 +574,7 @@
 		32A88E1E1B872CB5003501EF /* PerDingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerDingdanModel.h; sourceTree = "<group>"; };
 		32A88E1F1B872CB5003501EF /* PerDingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerDingdanModel.m; sourceTree = "<group>"; };
 		32A957851B82BC5600C23B34 /* ConfirmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmView.xib; sourceTree = "<group>"; };
+		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -599,7 +600,6 @@
 		32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ6.xib; sourceTree = "<group>"; };
 		32CC7CA31BA018A000475E2E /* TuihuoXQ7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ7.xib; sourceTree = "<group>"; };
 		32CC7CA51BA018A800475E2E /* TuihuoXQ8.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoXQ8.xib; sourceTree = "<group>"; };
-		32CE91B61B7C21D000CA67C3 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressViewController.xib; sourceTree = "<group>"; };
@@ -777,6 +777,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32B83E141BA3FD8F004E3215 /* area.plist */,
 				32CC3FE91BA282B30043764F /* tuihuo-ing.png */,
 				32976B7E1BA117AE0045ADB9 /* icon-ok.png */,
 				32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */,
@@ -789,7 +790,6 @@
 				3290C88E1B88A6D000CFAFA0 /* resources */,
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
-				32CE91B61B7C21D000CA67C3 /* area.plist */,
 				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
 				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
 				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
@@ -1498,7 +1498,6 @@
 				3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
-				32CE91B71B7C21D000CA67C3 /* area.plist in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
@@ -1527,6 +1526,7 @@
 				32746E361B74A22000816208 /* yifu.png in Resources */,
 				3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */,
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
+				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
 			);

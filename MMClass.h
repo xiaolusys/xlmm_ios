@@ -36,7 +36,7 @@
 
 #define NumberOfCart @"NumberOfCart"
 
-#define kIsLogin @"isLogin"
+#define kIsLogin @"login"
 #define kUserName @"userName"
 #define kPassWord @"password"
 

@@ -84,7 +84,9 @@
 }
 
 - (void)loginBtnClicked:(UIButton *)button{
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kIsLogin]) {
+    
+    NSLog(@"login = %d", [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         NSLog(@"login");
 
     }else{
