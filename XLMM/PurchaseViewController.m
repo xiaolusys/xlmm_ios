@@ -18,7 +18,7 @@
 
 #import "UIImage+ImageWithUrl.h"
 
-#define kUrlScheme @"m.xiaolu.so" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+#define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface PurchaseViewController ()<BuyAddressDelegate>{
 

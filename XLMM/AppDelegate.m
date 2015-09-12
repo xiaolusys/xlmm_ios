@@ -36,6 +36,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    
+    NSString *plistPath1 = [paths objectAtIndex:0];
+    
+    NSLog(@"%@", plistPath1);
+    
    BOOL isregister = [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     NSLog(@"注册微信的结果 %d", isregister);

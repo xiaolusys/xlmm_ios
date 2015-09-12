@@ -28,7 +28,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 
-//    http://192.168.1.79:8000/rest/v1/refunds
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -41,7 +40,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [super viewDidLoad];
    // self.title = @"我的退货(款)";
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    downloadCount = 0;
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -73,6 +71,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (data == nil) {
         return;
     }
+    [self.dataArray removeAllObjects];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
@@ -80,17 +79,17 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         NSLog(@"您的积分列表为空");
         return;
     }
-    count = [[json objectForKey:@"count"] integerValue];
+    
     //NSLog(@"count = %@", [json objectForKey:@"count"]);
     
         NSArray *array = [json objectForKey:@"results"];
-    
+    count = array.count;
     
         NSLog(@"array = %@", array);
     
     for (int i = 0; i<count; i++) {
         
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
           //  NSLog(@"url = %@", kQuanbuDingdan_URL);
             
             
@@ -118,7 +117,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (data == nil) {
         return;
     }
-    [self.dataArray removeAllObjects];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
    // NSLog(@"json = %@", json);
     
