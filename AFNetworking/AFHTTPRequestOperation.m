@@ -58,6 +58,8 @@ static dispatch_group_t http_request_operation_completion_group() {
 
 @implementation AFHTTPRequestOperation
 @dynamic lock;
+@dynamic response;
+
 
 - (instancetype)initWithRequest:(NSURLRequest *)urlRequest {
     self = [super initWithRequest:urlRequest];
