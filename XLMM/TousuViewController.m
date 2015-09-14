@@ -8,7 +8,9 @@
 
 #import "TousuViewController.h"
 
-@interface TousuViewController ()
+@interface TousuViewController (){
+    NSMutableArray *dataArray;
+}
 
 @end
 
@@ -19,7 +21,97 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setInfo];
+    //获取投诉意见的内容;
     
+    dataArray = [[NSMutableArray alloc] init];
+    
+    //  http://m.xiaolu.so/rest/v1/complain
+    
+  
+
+    
+    
+  //  [self createComplaintLists];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+- (void)createComplaintLists{
+    NSString *string = @"http://m.xiaolu.so/rest/v1/complain";
+    NSURL *url = [NSURL URLWithString:string];
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    NSArray *array = [dic objectForKey:@"results"];
+    for (NSDictionary *dic in array) {
+        NSString *time = [dic objectForKey:@"created_time"];
+        NSString *content = [dic objectForKey:@"com_content"];
+        NSString *string = [NSString stringWithFormat:@"%@ : %@", time, content];
+        [dataArray addObject:string];
+    }
+    
+    while (true) {
+        
+        NSString *urlString = [dic objectForKey:@"next"];
+        
+        if ([urlString class] == [NSNull class]) {
+            NSLog(@"结束了");
+            break;
+        }
+        NSLog(@"urlStr = %@", urlString);
+        NSData *nextData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        
+        dic = [NSJSONSerialization JSONObjectWithData:nextData options:kNilOptions error:nil];
+        // NSLog(@"dic = %@", dic);
+        NSArray *array = [dic objectForKey:@"results"];
+        for (NSDictionary *dic in array) {
+            NSString *time = [dic objectForKey:@"created_time"];
+            NSString *content = [dic objectForKey:@"com_content"];
+            NSString *string = [NSString stringWithFormat:@"%@ : %@", time, content];
+            [dataArray addObject:string];
+        }
+        
+        
+    }
+    
+    
+    NSMutableString *stringMuabe = [[NSMutableString alloc] init];
+    for (NSString *string in dataArray) {
+        // NSLog(@"%d. %@", ++i, string);
+        NSString *stringnum = [NSString stringWithFormat:@"%@\n", string];
+        [stringMuabe appendString:stringnum];
+    }
+    
+    NSLog(@"string = %@", stringMuabe);
+    
+    
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    
+    NSString *plistPath1 = [paths objectAtIndex:0];
+    
+    NSLog(@"%@", plistPath1);
+    
+    //得到完整的文件名
+    
+    NSString *filename=[plistPath1 stringByAppendingPathComponent:@"complain.txt"];
+    
+    //输入写入
+    
+    BOOL fl = [stringMuabe writeToFile:filename atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    // BOOL fl = [stringMuabe writeToFile:filename atomically:YES]; //写入
+    
+    NSLog(@"ls = %d", fl);
 }
 
 - (void)setInfo{

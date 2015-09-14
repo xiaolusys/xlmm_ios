@@ -40,11 +40,11 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
-#define Root_URL @"http://192.168.1.63:8000"
+//#define Root_URL @"http://192.168.1.63:8000"
 //#define Root_URL @"http://youni.huyi.so"
 
 
-//#define Root_URL @"http://m.xiaolu.so"
+#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 
@@ -154,6 +154,23 @@ NSDictionary *parameters = @{@"vmobile": phoneNumber};
 UITouch ;
 UIGestureRecognizer  ;
 UIPageViewController;
+
+NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+
+NSString *plistPath1 = [paths objectAtIndex:0];
+
+NSLog(@"%@", plistPath1);
+
+//得到完整的文件名
+
+NSString *filename=[plistPath1 stringByAppendingPathComponent:@"aera.plist"];
+
+//输入写入
+
+BOOL fl = [addressArray writeToFile:filename atomically:YES]; //写入
+
+NSLog(@"ls = %d", fl);
+
 
 
 #endif

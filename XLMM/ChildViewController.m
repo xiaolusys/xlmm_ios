@@ -163,10 +163,13 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)downloadData{
     [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
+    
+    NSLog(@"url = %@", self.urlString);
 }
 
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
+    NSLog(@"responsedata = %@", responseData);
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (json == nil) {
         NSLog(@"数据解析失败");
