@@ -28,6 +28,29 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    
+    
+    NSLog(@"url = %@", kCart_Number_URL);
+    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    
+   // last_created = [json objectForKey:@"last_created"];
+   // result = [json objectForKey:@"result"];
+    if ([[json objectForKey:@"result"] integerValue] == 0) {
+        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+        [self.navigationController pushViewController:emptyVC animated:YES];
+        return;
+    }
+ 
+    
+    
     [self downloadData];
 
     
@@ -53,7 +76,7 @@
     UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
     navLabel.text = @"购物车";
     navLabel.textColor = [UIColor blackColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:30];
+    navLabel.font = [UIFont boldSystemFontOfSize:20];
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
     

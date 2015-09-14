@@ -65,25 +65,23 @@
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
     [super viewWillAppear:animated];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-        if (data != nil) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            
-            NSLog(@"%@", dic);
-            
-            
-            if ([dic objectForKey:@"result"] != nil) {
-                goodsCount = [[dic objectForKey:@"result"] integerValue];
-                NSLog(@"%ld", (long)goodsCount);
-                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                countLabel.text = strNum;
-            }
-            
+  
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        
+        
+        if ([dic objectForKey:@"result"] != nil) {
+            goodsCount = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"%ld", (long)goodsCount);
+            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+            countLabel.text = strNum;
         }
-    }else{
-        countLabel.text = @"0";
+        
     }
+  
 }
 
 
@@ -235,20 +233,9 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
-
-    if (goodsCount > 0) {
-        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-        [self.navigationController pushViewController:cartVC animated:YES];
-    } else{
-        NSLog(@"购物车为空");
-        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-        [self.navigationController pushViewController:emptyVC animated:YES];
-        
-    }
-    
-
-    
-    
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
+   
 }
     
 

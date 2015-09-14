@@ -87,11 +87,28 @@
     singleton.cartsView.frame = CGRectMake(0, SCREENHEIGHT - 110, 50, 50);
     singleton.cartsView.alpha = 0.7;
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor clearColor];
+    NSLog(@"url = %@", kCart_Number_URL);
+    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
     
-    [singleton.cartsView addSubview:button];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    
+    last_created = [json objectForKey:@"last_created"];
+    result = [json objectForKey:@"result"];
+    if ([result integerValue] > 0) {
+        
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor clearColor];
+        button.tag = 99;
+        [singleton.cartsView addSubview:button];
+    }
+   
     
     
     [self.view addSubview:singleton.cartsView];
@@ -361,6 +378,19 @@
     
     last_created = [json objectForKey:@"last_created"];
     result = [json objectForKey:@"result"];
+  
+    
+    if ([result integerValue] == 1) {
+        
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor clearColor];
+        button.tag = 99;
+        [singleton.cartsView addSubview:button];
+    }
+
+ 
     singleton.myNumberView.text = [NSString stringWithFormat:@"%@", result];
     //   NSTimeInterval
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[last_created doubleValue]];
