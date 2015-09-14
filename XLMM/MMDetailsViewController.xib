@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMDetailsViewController">
             <connections>
                 <outlet property="allPriceLabel" destination="Gbe-eb-1Xd" id="b85-aN-hmF"/>
+                <outlet property="backButton" destination="1ze-p9-wcv" id="ab9-YD-wF6"/>
                 <outlet property="beizhu" destination="v7M-5G-Mh3" id="nNR-pR-nkq"/>
                 <outlet property="bianhao" destination="NyJ-kc-mxh" id="nhU-60-46f"/>
                 <outlet property="caizhi" destination="FEN-tt-04m" id="ezx-av-tnS"/>
@@ -55,7 +56,7 @@
                                                 <constraint firstAttribute="height" constant="20" id="22V-Jc-fbh"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnV-T6-k8Y">
@@ -80,12 +81,24 @@
                                                 <constraint firstAttribute="height" constant="1" id="anh-Mp-zd3"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ze-p9-wcv">
+                                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="44" id="4ZM-ye-gAk"/>
+                                                <constraint firstAttribute="height" constant="44" id="PtU-PX-6FX"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="360" id="2tX-b6-ElM"/>
                                         <constraint firstAttribute="bottom" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="40" id="34w-lz-LUK"/>
                                         <constraint firstItem="gnV-T6-k8Y" firstAttribute="leading" secondItem="vuM-N0-go3" secondAttribute="leading" id="DSG-Xd-VPw"/>
+                                        <constraint firstItem="1ze-p9-wcv" firstAttribute="leading" secondItem="5Ts-Id-ulD" secondAttribute="leading" id="G88-Ec-2Yk"/>
                                         <constraint firstItem="LtF-EG-WdC" firstAttribute="top" secondItem="5Ts-Id-ulD" secondAttribute="top" id="IB8-nu-YyX"/>
                                         <constraint firstItem="LtF-EG-WdC" firstAttribute="leading" secondItem="5Ts-Id-ulD" secondAttribute="leading" id="Lnf-hD-8rW"/>
                                         <constraint firstAttribute="width" constant="320" id="Nmg-tS-RaT"/>
@@ -94,6 +107,7 @@
                                         <constraint firstItem="Gbe-eb-1Xd" firstAttribute="bottom" secondItem="gnV-T6-k8Y" secondAttribute="bottom" id="ai1-WB-xoy"/>
                                         <constraint firstItem="Gbe-eb-1Xd" firstAttribute="leading" secondItem="mP7-Ck-Pc5" secondAttribute="leading" id="cWM-EF-2Bw"/>
                                         <constraint firstItem="vuM-N0-go3" firstAttribute="leading" secondItem="5Ts-Id-ulD" secondAttribute="leading" constant="8" id="f6k-nd-jwq"/>
+                                        <constraint firstItem="1ze-p9-wcv" firstAttribute="top" secondItem="5Ts-Id-ulD" secondAttribute="top" id="h2j-vB-dpb"/>
                                         <constraint firstItem="gnV-T6-k8Y" firstAttribute="top" secondItem="vuM-N0-go3" secondAttribute="bottom" id="r1W-6e-dhd"/>
                                         <constraint firstItem="Gbe-eb-1Xd" firstAttribute="leading" secondItem="gnV-T6-k8Y" secondAttribute="trailing" constant="20" id="sj7-QO-po9"/>
                                         <constraint firstAttribute="trailing" secondItem="LtF-EG-WdC" secondAttribute="trailing" id="uev-te-2K0"/>

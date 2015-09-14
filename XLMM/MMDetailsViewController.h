@@ -13,6 +13,7 @@
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewwidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewHeitht;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 

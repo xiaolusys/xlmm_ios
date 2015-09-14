@@ -20,6 +20,8 @@
 
 
 
+
+
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
@@ -62,9 +64,19 @@
 
 @implementation MMDetailsViewController
 
+
+//typedef NS_ENUM(NSInteger, UIStatusBarStyle) {
+//    UIStatusBarStyleDefault                                     = 0, // Dark content, for use on light backgrounds
+//    UIStatusBarStyleLightContent     NS_ENUM_AVAILABLE_IOS(7_0) = 1, // Light content, for use on dark backgrounds
+//    
+//    UIStatusBarStyleBlackTranslucent NS_ENUM_DEPRECATED_IOS(2_0, 7_0, "Use UIStatusBarStyleLightContent") = 1,
+//    UIStatusBarStyleBlackOpaque      NS_ENUM_DEPRECATED_IOS(2_0, 7_0, "Use UIStatusBarStyleLightContent") = 2,
+//};
+
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
   
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     if (data != nil) {
@@ -82,6 +94,10 @@
         
     }
   
+}
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;//隐藏为YES，显示为NO
 }
 
 
@@ -117,10 +133,19 @@
     [self.imageView3 sd_setImageWithURL:[NSURL URLWithString:@"http://image.xiaolu.so/shangpincanshu.png"]];
     [self.imageView4 sd_setImageWithURL:[NSURL URLWithString:@"http://image.xiaolu.so/chimabiao.png"]];
    
+    [self.backButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhuiqianye.png"] forState:UIControlStateNormal];
+    self.backButton.layer.cornerRadius = 22;
+    [self.backButton addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
      [self createCartView];
     
      [self downloadData];
     
+}
+
+- (void)backClicked:(UIButton *)button{
+    NSLog(@"back");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -166,8 +191,6 @@
     
     [self createSizeView];
     [self createDetailsView];
-   
-   
     [self createContentView];
 
     
@@ -177,8 +200,84 @@
     [self setTime];
     
    
+    [self createLianxiKefu];
+}
+- (void)createLianxiKefu{
+    
+    UIView *kefuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 80)];
+    
+    kefuView.backgroundColor = [UIColor clearColor];
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 20, 80)];
+    label.text = @"在线客服";
+    label.backgroundColor = [UIColor orangeColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:14];
+    label.numberOfLines = 0;
+    label.textColor = [UIColor whiteColor];
+    
+    [kefuView addSubview:label];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Unknown.jpeg"]];
+    imageView.frame = CGRectMake(40, 0, 80, 80);
+    [kefuView addSubview:imageView];
+    
+    
+    kefuView.center = self.view.center;
+    
+    CGRect rect = kefuView.frame;
+    
+    rect.origin.x = SCREENWIDTH - 40;
+    kefuView.frame = rect;
+    
+    
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
+    [kefuView addGestureRecognizer:tap];
+    
+    
+    [self.view addSubview:kefuView];
+
+    
     
 }
+
+- (void)tapClicked:(UIGestureRecognizer *)recognizer{
+    static BOOL isopen = NO;
+    
+    __block CGRect rect = recognizer.view.frame;
+
+    if (isopen == NO) {
+        rect.origin.x = SCREENWIDTH - 120;
+        
+        [UIView animateWithDuration:0.5 delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
+            recognizer.view.frame = rect;
+
+        } completion:^(BOOL finished) {
+            
+        }];
+
+        isopen = YES;
+    } else {
+        rect.origin.x = SCREENWIDTH - 40;
+
+        
+        [UIView animateWithDuration:0.5 delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
+            recognizer.view.frame = rect;
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+
+        isopen = NO;
+        
+    }
+    
+    
+}
+
 
 - (void)createCartView{
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 90, 44, 44)];
@@ -356,7 +455,7 @@
        // button settit
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         [button.layer setMasksToBounds:YES];
-        [button.layer setBorderWidth:2.0];
+        [button.layer setBorderWidth:1];
         [button.layer setBorderColor:[UIColor grayColor].CGColor];
         //[button.layer setCornerRadius:8];
         
