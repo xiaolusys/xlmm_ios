@@ -12,8 +12,12 @@
 #import "CartCollectionCell.h"
 
 @interface EmptyCartViewController (){
-    NSMutableArray *dataArray;
+    
+    
 }
+
+
+@property (nonatomic, copy)NSArray *dataArray;
 
 @end
 
@@ -34,15 +38,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
-    dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    item.title = @"";
-    //  您的购物车空空如也，以下宝贝可重新加入哦~ ~ ~
-    self.navigationItem.leftBarButtonItem = item;
+    
+    //self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+   
+    [self createCollectionView];
     
     
     [self downloadData];
-    [self createCollectionView];
     
 }
 
@@ -61,8 +63,9 @@
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = YES;
    
-    //self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:[[UIView alloc] init]];
+    
+    
     [self.view addSubview:self.myCollectionView];
 }
 - (void)downloadData{
@@ -74,6 +77,58 @@
 }
 
 - (void)createDefaultView{
+    
+    
+    UIImage *image = [UIImage imageNamed:@"logo.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(0, 0, 328/2, 382/2);
+    imageView.center = self.view.center;
+    [self.view addSubview:imageView];
+    CGRect rect = imageView.frame;
+    rect.origin.y = 50;
+    imageView.frame = rect;
+    
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    
+    label1.font = [UIFont systemFontOfSize:18];
+    label1.text = @"您的购物车还是空的";
+    label1.textColor = [UIColor blackColor];
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.center = self.view.center;
+    
+    CGRect labelrect = label1.frame;
+    labelrect.origin.y = 250;
+    label1.frame = labelrect;
+    
+    
+    [self.view addSubview:label1];
+    
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    label2.font = [UIFont systemFontOfSize:18];
+    label2.text = @"去首页逛逛吧~~";
+    label2.textColor = [UIColor blackColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    label2.center = self.view.center;
+    
+    CGRect labelFram = label2.frame;
+    labelFram.origin.y = 280;
+    label2.frame = labelFram;
+    
+    [self.view addSubview:label2];
+    
+    self.frontLabel.hidden = YES;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -87,6 +142,8 @@
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
      NSLog(@"data = %@", array);
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
     for (NSDictionary *dic in array) {
         CartModel *model = [CartModel new];
         model.status = [dic objectForKey:@"status"];
@@ -104,10 +161,25 @@
         model.is_sale_out = [dic objectForKey:@"is_sale_out"];
         model.ID = [dic objectForKey:@"id"];
         model.buyer_id = [dic objectForKey:@"buyer_id"];
-        [dataArray addObject:model];
+        [mutableArray addObject:model];
     }
-    NSLog(@"dataArray = %@", dataArray);
-    [self.myCollectionView reloadData];
+    
+    self.dataArray = [[NSArray alloc] initWithArray:mutableArray];
+    
+    NSLog(@"dataArray = %@", self.dataArray);
+    
+    
+    if (self.dataArray.count == 0) {
+        NSLog(@"您的购物车为空！");
+        [self createDefaultView];
+        
+        
+    } else {
+        self.frontLabel.hidden = NO;
+        [self.myCollectionView reloadData];
+
+    }
+    
 }
 
 
@@ -119,7 +191,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return dataArray.count;
+    return self.dataArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -137,15 +209,29 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CartCollectionCell *cell = (CartCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cartCell" forIndexPath:indexPath];
    // cell.backgroundColor = [UIColor redColor];
-    CartModel *model = [dataArray objectAtIndex:indexPath.row];
+    CartModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     cell.nameLabel.text = model.title;
     cell.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     cell.allPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.std_sale_price];
     cell.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sku_name];
+    [cell.mybutton addTarget:self action:@selector(reBuyClicked:) forControlEvents:UIControlEventTouchUpInside];
+    cell.mybutton.tag = indexPath.row + 1000;
+    
     return cell;
 }
-              
+
+
+- (void)reBuyClicked:(UIButton *)button{
+    NSLog(@"重新购买");
+    NSLog(@"button.tag = %ld", (long)button.tag);
+    CartModel *model = [self.dataArray objectAtIndex:(button.tag - 1000)];
+    
+    NSLog(@"itemid = %@, skuid = %@", model.item_id, model.sku_id);
+    //重新加入购物车
+    
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -163,6 +249,7 @@
 */
 
 - (IBAction)gotoHomePage:(id)sender {
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end

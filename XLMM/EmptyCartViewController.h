@@ -11,5 +11,9 @@
 @interface EmptyCartViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) UICollectionView *myCollectionView;
+
 - (IBAction)gotoHomePage:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *frontLabel;
+
 @end
