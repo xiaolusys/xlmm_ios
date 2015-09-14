@@ -1,4 +1,4 @@
-//
+ //
 //  EmptyCartViewController.m
 //  XLMM
 //
@@ -10,14 +10,19 @@
 #import "MMClass.h"
 #import "CartModel.h"
 #import "CartCollectionCell.h"
+#import "AFNetworking.h"
+#import "MMCartsView.h"
+#import "CartViewController.h"
 
 @interface EmptyCartViewController (){
-    
-    
+    MMCartsView *singleton;
+    NSString *last_created;
+    NSString *result;
 }
 
 
 @property (nonatomic, copy)NSArray *dataArray;
+
 
 @end
 
@@ -25,6 +30,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self updataNumberLabel];
+    
     self.navigationController.navigationBarHidden = YES;
     [UIApplication sharedApplication].statusBarHidden = YES;
 }
@@ -43,6 +50,7 @@
    
     [self createCollectionView];
     
+    [self createCartsView];
     
     [self downloadData];
     
@@ -67,6 +75,36 @@
     
     
     [self.view addSubview:self.myCollectionView];
+    
+    
+    
+    
+}
+
+- (void)createCartsView{
+    singleton = [MMCartsView sharedCartsView];
+    
+    singleton.cartsView.frame = CGRectMake(0, SCREENHEIGHT - 110, 50, 50);
+    singleton.cartsView.alpha = 0.7;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor clearColor];
+    
+    [singleton.cartsView addSubview:button];
+    
+    
+    [self.view addSubview:singleton.cartsView];
+    
+}
+
+- (void)cartViewClicked:(UIButton *)button{
+    NSLog(@"进入购物车");
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    
 }
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -230,8 +268,114 @@
     NSLog(@"itemid = %@, skuid = %@", model.item_id, model.sku_id);
     //重新加入购物车
     
+ 
+    
+    
+    
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    NSDictionary *parameters = @{@"item_id": model.item_id,
+                                 @"sku_id":model.sku_id};
+    [manager POST:kCart_URL parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              NSLog(@"成功加入购物车");
+              
+              [self myAnimation:model andTag:button.tag - 1000];
+              
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              
+              NSLog(@"Error: %@", error);
+              NSLog(@"error:, --.>>>%@", error.description);
+              NSDictionary *dic = [error userInfo];
+              NSLog(@"dic = %@", dic);
+              
+              
+              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+              
+              NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+              NSLog(@"%@",str);
+              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
+              view.backgroundColor = [UIColor blackColor];
+              view.layer.cornerRadius = 8;
+              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+              label.text = @"商品库存不足";
+              label.textAlignment = NSTextAlignmentCenter;
+              label.textColor = [UIColor whiteColor];
+              label.font = [UIFont systemFontOfSize:24];
+              [view addSubview:label];
+              [self.view addSubview:view];
+              
+              
+              [UIView animateWithDuration:1.0 animations:^{
+                  view.alpha = 0;
+              } completion:^(BOOL finished) {
+                  [view removeFromSuperview];
+              }];
+              
+              
+              
+          }];
+    
+    
     
 }
+
+- (void)myAnimation:(CartModel *)model andTag:(NSInteger)tag{
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imagewithURLString:model.pic_path]];
+    imageview.frame = CGRectMake(SCREENWIDTH - 80, tag*112 + 56, 80, 80);
+    [self.view addSubview:imageview];
+    [imageview.layer setMasksToBounds:YES];
+    [imageview.layer setBorderWidth:1];
+    [imageview.layer setBorderColor:[UIColor redColor].CGColor];
+    
+    [UIView animateWithDuration:.8 animations:^{
+        imageview.frame = CGRectMake(30, SCREENHEIGHT - 96, 10, 10);
+    } completion:^(BOOL finished) {
+        [imageview removeFromSuperview];
+        [self updataNumberLabel];
+        
+    }];
+    
+}
+- (void)updataNumberLabel{
+    
+    NSLog(@"url = %@", kCart_Number_URL);
+    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    
+    last_created = [json objectForKey:@"last_created"];
+    result = [json objectForKey:@"result"];
+    singleton.myNumberView.text = [NSString stringWithFormat:@"%@", result];
+    //   NSTimeInterval
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[last_created doubleValue]];
+    NSLog(@"%@", date);
+    
+    
+}
+
+
+
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -85,6 +85,8 @@
         countLabel.text = @"0";
     }
 }
+
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if ([theTimer isValid]) {
@@ -117,7 +119,7 @@
     [self.imageView3 sd_setImageWithURL:[NSURL URLWithString:@"http://image.xiaolu.so/shangpincanshu.png"]];
     [self.imageView4 sd_setImageWithURL:[NSURL URLWithString:@"http://image.xiaolu.so/chimabiao.png"]];
    
-    
+     [self createCartView];
     
      [self downloadData];
     
@@ -176,7 +178,7 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
     
-    [self createCartView];
+   
     
 }
 
@@ -233,25 +235,18 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
-    
-    NSLog(@"gouguche ");
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        if (goodsCount > 0) {
-            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-            [self.navigationController pushViewController:cartVC animated:YES];
-        } else{
-            NSLog(@"购物车为空");
-            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-            [self.navigationController pushViewController:emptyVC animated:YES];
-            
-        }
-        
+
+    if (goodsCount > 0) {
+        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+        [self.navigationController pushViewController:cartVC animated:YES];
     } else{
-        NSLog(@"请您先登录");
-        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        [self.navigationController pushViewController:enterVC animated:YES];
+        NSLog(@"购物车为空");
+        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+        [self.navigationController pushViewController:emptyVC animated:YES];
+        
     }
     
+
     
     
 }
@@ -438,7 +433,7 @@
     NSLog(@"加入购物车");
     
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (islogin) {
+    NSLog(@"islogin = %d", islogin);
         if (skusID == nil) {
             [UIView animateWithDuration:.5f animations:^{
                 self.scrollerView.contentOffset = CGPointMake(0, 0);
@@ -536,10 +531,7 @@
             
             
         }
-    }else{
-        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        [self.navigationController pushViewController:enterVC animated:YES];
-    }
+    
     
 
 }

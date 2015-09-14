@@ -26,6 +26,13 @@
 
 @implementation CartViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self downloadData];
+
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.title = @"购物车";
@@ -33,7 +40,6 @@
     allPrice= 0;
     [self.view addSubview:self.myTableView];
     [self createInfo];
-    [self downloadData];
     
     
     self.totalPricelabel.text =[NSString stringWithFormat:@""] ;
