@@ -29,6 +29,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    [self downlaodData];
+
   
 }
 
@@ -46,7 +49,6 @@
     // Do any additional setup after loading the view from its nib.
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     //self.dataArray = [[NSMutableArray alloc] init];
-    [self downlaodData];
     [self.view addSubview:[[UIView alloc] init]];
     
 }
@@ -68,10 +70,7 @@
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
-        NSLog(@"无待支付列表");
-        return;
-    }
+    
     
     self.dataArray = [json objectForKey:@"results"];
     NSLog(@"dataArray = %@", self.dataArray);
@@ -79,10 +78,102 @@
     [self.collectionView reloadData];
     
     
+    
+    if ([[json objectForKey:@"count"] integerValue] == 0) {
+        NSLog(@"无待支付列表");
+        
+        [self creatrDefaultView];
+        return;
+    }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:self.dataArray repeats:YES];
     
     
 }
+
+- (void)creatrDefaultView{
+    
+    
+    UIImage *image = [UIImage imageNamed:@"logo.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(0, 0, 328/2, 382/2);
+    imageView.center = self.view.center;
+    [self.view addSubview:imageView];
+    CGRect rect = imageView.frame;
+    rect.origin.y = 100;
+    imageView.frame = rect;
+    
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    
+    label1.font = [UIFont systemFontOfSize:18];
+    label1.text = @"亲，您的待支付还是空的";
+    label1.textColor = [UIColor blackColor];
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.center = self.view.center;
+    
+    CGRect labelrect = label1.frame;
+    labelrect.origin.y = 300;
+    label1.frame = labelrect;
+    
+    
+    [self.view addSubview:label1];
+    
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    label2.font = [UIFont systemFontOfSize:18];
+    label2.text = @"去首页逛逛吧~~";
+    label2.textColor = [UIColor blackColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    label2.center = self.view.center;
+    
+    CGRect labelFram = label2.frame;
+    labelFram.origin.y = 330;
+    label2.frame = labelFram;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 50, SCREENWIDTH - 16, 44)];
+    
+    [button setTitle:@"去首页逛逛" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithR:249 G:172 B:20 alpha:1] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor whiteColor];
+    button.titleLabel.font = [UIFont systemFontOfSize:20];
+    [button addTarget:self action:@selector(gotoRootView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
+    [button.layer setMasksToBounds:YES];
+    [button.layer setBorderWidth:2];
+    button.layer.cornerRadius = 8;
+    [button.layer setBorderColor:[UIColor colorWithR:249 G:172 B:20 alpha:1].CGColor];
+    imageView.userInteractionEnabled = NO;
+    label1.userInteractionEnabled = NO;
+    label2.userInteractionEnabled = NO;
+    self.view.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(panClicked:)];
+    [self.view addGestureRecognizer:tap];
+    
+    
+    [self.view addSubview:label2];
+    
+}
+
+- (void)panClicked:(UIGestureRecognizer *)gesture{
+    NSLog(@"tap");
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
+}
+
+- (void)gotoRootView:(UIButton *)button{
+    NSLog(@"首页观光");
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
+    
+}
+
+
+
+
 - (void)createInfo{
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];

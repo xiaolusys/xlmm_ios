@@ -15,7 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "TuihuoController.h"
 
-@interface XiangQingViewController ()<NSURLConnectionDataDelegate>{
+@interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate>{
     NSString *tid;
     NSArray *oidArray;
     NSMutableArray *refund_statusArray;
@@ -179,7 +179,7 @@
             self.quxiaoBtn.hidden = YES;
             self.buyBtn.hidden = YES;
         }
-        if ([[refund_statusArray objectAtIndex:i] integerValue] == 0) {
+        if ([[refund_statusArray objectAtIndex:i] integerValue] == 0 && ![status isEqualToString:@"待付款"] && ![status isEqualToString:@"交易关闭"]) {
             
         
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];
@@ -310,18 +310,32 @@
 
 - (IBAction)quxiaodingdan:(id)sender {
     NSLog(@"取消订单");
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"小鹿美美" message:@"取消的产品可能会被人抢走哦~\n要取消吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alterView show];
     
-    NSLog(@"stringURL = %@", self.urlString);
-    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
-   NSRange range =  [string rangeOfString:@"/details"];
-    [string deleteCharactersInRange:range];
-    NSLog(@"newstring = %@", string);
+
     
-    NSURL *url = [NSURL URLWithString:string];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"DELETE"];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
+}
+
+#pragma mark --AlertViewDelegate--
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%D", buttonIndex);
+    if (buttonIndex == 1) {
+        NSLog(@"stringURL = %@", self.urlString);
+        NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
+       NSRange range =  [string rangeOfString:@"/details"];
+        [string deleteCharactersInRange:range];
+        NSLog(@"newstring = %@", string);
+    
+        NSURL *url = [NSURL URLWithString:string];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"DELETE"];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        [connection start];
+    }
+    
+    
     
 }
 
@@ -343,6 +357,13 @@
     
     
 }
+
+
+
+
+#pragma mark --NSURLConnectionDataDelegate--
+
+
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     NSLog(@"111 : %@", response);
 }
@@ -350,11 +371,14 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"222 : %@", dic);
     
+    
     NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSLog(@"3333 : %@", connection);
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 

@@ -31,23 +31,7 @@
     
     
     
-    NSLog(@"url = %@", kCart_Number_URL);
-    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        return;
-    }
-    
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
-    
-   // last_created = [json objectForKey:@"last_created"];
-   // result = [json objectForKey:@"result"];
-    if ([[json objectForKey:@"result"] integerValue] == 0) {
-        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-        [self.navigationController pushViewController:emptyVC animated:YES];
-        return;
-    }
+  
  
     
     
@@ -63,6 +47,25 @@
     allPrice= 0;
     [self.view addSubview:self.myTableView];
     [self createInfo];
+    
+    
+    NSLog(@"url = %@", kCart_Number_URL);
+    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    
+    // last_created = [json objectForKey:@"last_created"];
+    // result = [json objectForKey:@"result"];
+    if ([[json objectForKey:@"result"] integerValue] == 0) {
+        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+        [self.navigationController pushViewController:emptyVC animated:YES];
+        return;
+    }
     
     
     self.totalPricelabel.text =[NSString stringWithFormat:@""] ;
@@ -134,6 +137,17 @@
     }
     NSLog(@"%@", self.dataArray);
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%d", allPrice];
+//    
+//    if(self.dataArray.count == 0){
+//        
+//        //  购物车为空
+//        
+//        
+//        
+//        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+//        [self.navigationController pushViewController:emptyVC animated:YES];
+//        return;
+//    }
     [self.cartTableView reloadData];
     
     

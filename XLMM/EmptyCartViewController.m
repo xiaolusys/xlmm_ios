@@ -18,6 +18,9 @@
     MMCartsView *singleton;
     NSString *last_created;
     NSString *result;
+    UIButton *cartsButton;
+    UILabel *cartsTimeLabel;
+    NSTimer *theTimer;
 }
 
 
@@ -36,9 +39,16 @@
     [UIApplication sharedApplication].statusBarHidden = YES;
 }
 
+
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+        NSLog(@"销毁定时器");
+    }
 }
 
 
@@ -99,19 +109,39 @@
     
     last_created = [json objectForKey:@"last_created"];
     result = [json objectForKey:@"result"];
-    if ([result integerValue] > 0) {
+    
         
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor clearColor];
-        button.tag = 99;
-        [singleton.cartsView addSubview:button];
-    }
+    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+
+    cartsButton.frame = singleton.cartsView.frame;
+    [cartsButton addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+    cartsButton.backgroundColor = [UIColor clearColor];
+    
+    
+  
+    cartsTimeLabel = [[UILabel alloc] init];
+    cartsTimeLabel.frame = singleton.cartsView.frame;
+    CGRect timeLabelRect = cartsTimeLabel.frame;
+    
+    timeLabelRect.origin.x += 44;
+    
+    cartsTimeLabel.frame = timeLabelRect;
+    cartsTimeLabel.textAlignment = NSTextAlignmentCenter;
+    cartsTimeLabel.text = @"";
+    cartsTimeLabel.textColor = [UIColor redColor];
+    cartsTimeLabel.font = [UIFont systemFontOfSize:18];
+    cartsTimeLabel.hidden = YES;
+    
+    
    
     
     
     [self.view addSubview:singleton.cartsView];
+ 
+    [self.view addSubview:cartsButton];
+    [self.view addSubview:cartsTimeLabel];
+
     
 }
 
@@ -119,10 +149,8 @@
     NSLog(@"进入购物车");
     
     [self.navigationController popViewControllerAnimated:YES];
-    
-    
-    
 }
+
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
@@ -246,6 +274,8 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    
     return self.dataArray.count;
 }
 
@@ -349,7 +379,7 @@
 - (void)myAnimation:(CartModel *)model andTag:(NSInteger)tag{
     
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imagewithURLString:model.pic_path]];
-    imageview.frame = CGRectMake(SCREENWIDTH - 80, tag*112 + 56, 80, 80);
+    imageview.frame = CGRectMake(SCREENWIDTH - 80, 56, 80, 80);
     [self.view addSubview:imageview];
     [imageview.layer setMasksToBounds:YES];
     [imageview.layer setBorderWidth:1];
@@ -360,8 +390,71 @@
     } completion:^(BOOL finished) {
         [imageview removeFromSuperview];
         [self updataNumberLabel];
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = singleton.cartsView.frame;
+            rect.size.width = 100;
+            singleton.cartsView.frame = rect;
+            [self createTimeCartView];
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+        
         
     }];
+    
+}
+
+
+- (void)createTimeCartView{
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"%@", dic);
+        if ([dic objectForKey:@"result"] != nil) {
+            
+            last_created = [dic objectForKey:@"last_created"];
+          
+           
+        }
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        cartsButton.frame = CGRectMake(2, SCREENHEIGHT - 90, 100, 44);
+    } completion:^(BOOL finished) {
+        NSLog(@"显示剩余时间");
+        [self createTimeLabel];
+        
+    }];
+}
+
+- (void)createTimeLabel{
+    cartsTimeLabel.hidden = NO;
+    
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+}
+- (void)timerFireMethod:(NSTimer*)thetimer
+{
+    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[last_created doubleValue]];
+    // NSLog(@"%@", lastDate);
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    
+    
+    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
+    
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+    NSLog(@"string = %@", string);
+    if ([string isEqualToString:@"00:00"]) {
+        string = @"00:00";
+        [theTimer invalidate];
+    }
+    cartsTimeLabel.text = string;
     
 }
 - (void)updataNumberLabel{
@@ -380,14 +473,12 @@
     result = [json objectForKey:@"result"];
   
     
-    if ([result integerValue] == 1) {
+    if ([result integerValue] == 0) {
         
+        cartsButton.userInteractionEnabled = NO;
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [button addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor clearColor];
-        button.tag = 99;
-        [singleton.cartsView addSubview:button];
+    } else {
+        cartsButton.userInteractionEnabled = YES;
     }
 
  
@@ -426,4 +517,5 @@
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
 @end

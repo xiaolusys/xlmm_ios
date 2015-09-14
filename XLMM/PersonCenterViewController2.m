@@ -12,7 +12,7 @@
 
 #define kSimpleCellIdentifier @"simpleCell"
 
-@interface PersonCenterViewController2 ()
+@interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong)NSArray *dataArray;
 
@@ -168,6 +168,48 @@
 
 - (void)querenQianshou:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);
+    NSDictionary *dic = [self.dataArray objectAtIndex:(button.tag - 100)];
+    NSLog(@"dic = %@", dic);
+    //http://m.xiaolu.so/rest/v1/trades
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/confirm_sign", Root_URL, [dic objectForKey:@"id"]];
+    NSLog(@"urlString = %@", urlString);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+  
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+    
+}
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSLog(@"111 : %@", response);
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"222 : %@", dic);
+    
+    
+    NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    NSLog(@"3333 : %@", connection);
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"error");
     
 }
 

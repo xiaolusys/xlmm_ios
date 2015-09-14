@@ -574,7 +574,7 @@
                 } else {
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                     paySucceed = NO;
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 //[weakSelf showAlertMessage:result];
             }];

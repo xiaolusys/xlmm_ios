@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *myLabelView;
 @property (weak, nonatomic) IBOutlet UILabel *myNumberView;
 
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end

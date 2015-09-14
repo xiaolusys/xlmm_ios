@@ -233,6 +233,17 @@
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    if (goodsCount == 0) {
+        NSLog(@"购物车为空");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"亲，您的购物车为空\n请先加入购物车~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        
+        
+        
+        return;
+        
+    }
+    
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
     [self.navigationController pushViewController:cartVC animated:YES];
    

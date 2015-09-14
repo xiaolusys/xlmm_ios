@@ -37,6 +37,8 @@ static MMCartsView* _cartsView = nil;
         self.cartsView.layer.cornerRadius = 25;
         self.myLabelView.layer.cornerRadius = 10;
         self.myNumberView.text = @"0";
+        self.timeLabel.text = @"";
+        
         
         
     }

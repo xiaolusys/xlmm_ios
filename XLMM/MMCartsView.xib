@@ -10,6 +10,7 @@
                 <outlet property="myBackImageView" destination="mfo-RA-kbx" id="TJ0-H4-xLK"/>
                 <outlet property="myLabelView" destination="fyn-Cl-hBL" id="eCW-Mf-27M"/>
                 <outlet property="myNumberView" destination="pPx-0S-1hP" id="92c-Bo-b02"/>
+                <outlet property="timeLabel" destination="3zO-KB-uTb" id="boO-fo-fkz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -17,8 +18,17 @@
             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zO-KB-uTb">
+                    <rect key="frame" x="55" y="15" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-gouwuche.png" translatesAutoresizingMaskIntoConstraints="NO" id="mfo-RA-kbx">
                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="Qho-Mk-ilb"/>
+                    </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyn-Cl-hBL">
                     <rect key="frame" x="22" y="8" width="20" height="20"/>
@@ -41,14 +51,15 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="fyn-Cl-hBL" firstAttribute="top" secondItem="OrX-Vy-dRQ" secondAttribute="top" constant="8" id="Fgk-pw-u3F"/>
-                <constraint firstAttribute="trailing" secondItem="fyn-Cl-hBL" secondAttribute="trailing" constant="8" id="X2r-jM-ErE"/>
+                <constraint firstItem="3zO-KB-uTb" firstAttribute="leading" secondItem="OrX-Vy-dRQ" secondAttribute="leading" constant="55" id="Wan-ac-VCd"/>
                 <constraint firstAttribute="bottom" secondItem="mfo-RA-kbx" secondAttribute="bottom" id="c8Q-fd-h4C"/>
                 <constraint firstItem="mfo-RA-kbx" firstAttribute="top" secondItem="OrX-Vy-dRQ" secondAttribute="top" id="dvf-DI-Ktg"/>
                 <constraint firstItem="mfo-RA-kbx" firstAttribute="leading" secondItem="OrX-Vy-dRQ" secondAttribute="leading" id="gli-x3-9yY"/>
-                <constraint firstAttribute="trailing" secondItem="mfo-RA-kbx" secondAttribute="trailing" id="qKP-vf-wtx"/>
+                <constraint firstItem="fyn-Cl-hBL" firstAttribute="leading" secondItem="OrX-Vy-dRQ" secondAttribute="leading" constant="22" id="qUk-VN-tWu"/>
+                <constraint firstAttribute="centerY" secondItem="3zO-KB-uTb" secondAttribute="centerY" id="vut-BH-uLU"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
