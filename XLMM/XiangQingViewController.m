@@ -36,6 +36,12 @@
     PerDingdanModel *tuihuoModel;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self downloadData];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -60,7 +66,6 @@
     [frontView addSubview:activityView];
     [self.view addSubview:frontView];
     
-    [self downloadData];
 }
 
 - (void)downloadData{
@@ -77,13 +82,14 @@
 
 - (void)fetchedDingdanData:(NSData *)responsedata{
     NSError *error = nil;
+    
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
     NSLog(@"JSON = %@", dicJson);
     
     [activityView removeFromSuperview];
     NSString *statusname = [dicJson objectForKey:@"status_display"];
     status = [dicJson objectForKey:@"status_display"];
-    if ([statusname isEqualToString:@"交易关闭"]) {
+    if ([statusname isEqualToString:@"交易关闭"] || [statusname isEqualToString:@"交易成功"]) {
         NSLog(@"交易订单已经关闭");
         self.quxiaoBtn.hidden = YES;
         self.buyBtn.hidden = YES;
@@ -123,6 +129,9 @@
     
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
+    [dataArray removeAllObjects];
+    
+    
     for (NSDictionary *dic in orderArray) {
         PerDingdanModel *model = [PerDingdanModel new];
         model.urlString = [dic objectForKey:@"pic_path"];
@@ -179,7 +188,7 @@
             self.quxiaoBtn.hidden = YES;
             self.buyBtn.hidden = YES;
         }
-        if ([[refund_statusArray objectAtIndex:i] integerValue] == 0 && ![status isEqualToString:@"待付款"] && ![status isEqualToString:@"交易关闭"]) {
+        if ([[refund_statusArray objectAtIndex:i] integerValue] == 0 && ![status isEqualToString:@"待付款"] && ![status isEqualToString:@"交易关闭"] && ![status isEqualToString:@"交易成功"]) {
             
         
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];

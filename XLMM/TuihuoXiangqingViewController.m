@@ -13,9 +13,9 @@
 #import "AFNetworking.h"
 
 
-@interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate>
+@interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, strong)NSArray *dataArray;
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 @end
 
@@ -24,6 +24,8 @@
     TuihuoModel *xiangqing;
     UITextField *textField1;
     UITextField *textField2;
+    
+    NSDictionary *dictionary;
 
 }
 
@@ -32,7 +34,7 @@
     // Do any additional setup after loading the view.
     self.title = @"退货(款)详情";
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
       [self downlaodData];
     
     
@@ -42,28 +44,19 @@
 
 - (void)downlaodData{
     
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"url = %@", kRefunds_URL);
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kRefunds_URL]];
-        [self performSelectorOnMainThread:@selector(fetchedRefundData:) withObject:data waitUntilDone:YES];
-        
-        
-    });
     
-}
-
-- (void)fetchedRefundData:(NSData *)data{
+    NSLog(@"url = %@", kRefunds_URL);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kRefunds_URL]];
     if (data == nil) {
         return;
     }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
-    NSArray *array = [json objectForKey:@"results"];
+    dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+   // NSLog(@"json = %@", dictionary);
+    NSArray *array = [dictionary objectForKey:@"results"];
     if (array.count == 0) {
         return;
     }
-    NSLog(@"array = %@", array);
-    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
+   // NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
         TuihuoModel *model = [TuihuoModel new];
         model.ID = [dic objectForKey:@"id"];
@@ -94,18 +87,69 @@
         model.status = [dic objectForKey:@"status"];
         model.refund_fee = [dic objectForKey:@"refund_fee"];
         
-        
-        
-        
-        [mutableArray addObject:model];
+        [self.dataArray addObject:model];
         NSLog(@"orderid === %@", model.order_id);
     }
     
-    self.dataArray = [[NSArray alloc] initWithArray:mutableArray];
+    
+  
+    
+    while (true) {
+        NSString *string = [dictionary objectForKey:@"next"];
+        NSLog(@"url = %@", string);
+        
+        if ([string class] == [NSNull class]) {
+            NSLog(@"结束了");
+            break;
+        }
+        NSData *nextData = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    
+        dictionary = [NSJSONSerialization JSONObjectWithData:nextData options:kNilOptions error:nil];
+        // NSLog(@"dic = %@", dic);
+        NSArray *array = [dictionary objectForKey:@"results"];
+        for (NSDictionary *dic in array) {
+            TuihuoModel *model = [TuihuoModel new];
+            model.ID = [dic objectForKey:@"id"];
+            model.url = [dic objectForKey:@"url"];
+            model.refund_no = [dic objectForKey:@"refund_no"];
+            model.trade_id = [dic objectForKey:@"trade_id"];
+            model.order_id = [dic objectForKey:@"order_id"];
+            model.buyer_id = [dic objectForKey:@"buyer_id"];
+            model.item_id = [dic objectForKey:@"item_id"];
+            model.title = [dic objectForKey:@"title"];
+            model.sku_id = [dic objectForKey:@"sku_id"];
+            model.sku_name = [dic objectForKey:@"sku_name"];
+            model.refund_num = [dic objectForKey:@"refund_num"];
+            model.buyer_nick = [dic objectForKey:@"buyer_nick"];
+            model.mobile = [dic objectForKey:@"mobile"];
+            model.phone = [dic objectForKey:@"phone"];
+            model.total_fee = [dic objectForKey:@"total_fee"];
+            model.payment = [dic objectForKey:@"payment"];
+            model.created = [dic objectForKey:@"created"];
+            model.company_name = [dic objectForKey:@"company_name"];
+            model.sid = [dic objectForKey:@"sid"];
+            model.reason = [dic objectForKey:@"reason"];
+            model.desc = [dic objectForKey:@"desc"];
+            model.feedback = [dic objectForKey:@"feedback"];
+            model.has_good_return = [dic objectForKey:@"has_good_return"];
+            model.has_good_change = [dic objectForKey:@"has_good_change"];
+            model.good_status = [dic objectForKey:@"good_status"];
+            model.status = [dic objectForKey:@"status"];
+            model.refund_fee = [dic objectForKey:@"refund_fee"];
+            
+            [self.dataArray addObject:model];
+
+        }
+        
+    }
     NSLog(@"dataArray = %@", self.dataArray);
+
+    
+
+    
+    
     
 }
-
 - (void)createView{
     NSLog(@"xiangqing = %ld",(long) self.status);
     nibName = [NSString stringWithFormat:@"TuihuoXQ%ld",(long) self.status];
@@ -380,8 +424,15 @@
     NSLog(@"联系客服 ");
 }
 
-- (void)commitBtnClicked:(UIButton *)button{
-    NSLog(@"提交申请");
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%d  ",buttonIndex );
+    if (buttonIndex == 1) {
+        NSLog(@"tuihuo ");
+        [self tuihuocommit];
+    }
+}
+
+- (void)tuihuocommit{
     if ([textField1.text isEqualToString:@""] ||[textField2.text isEqualToString:@""]) {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"快递公司和快递编号不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -401,22 +452,22 @@
     } else if ([xiangqing.status isEqual:@"已发货"]){
         refund_or_pro = @"1";
     }else{
-         refund_or_pro = @"1";
+        refund_or_pro = @"1";
     }
     NSLog(@"1111");
     
     
     NSLog(@"%@",xiangqing.order_id );
-     NSLog(@"%@", xiangqing.trade_id);
-     NSLog(@"%@", refund_or_pro);
-     NSLog(@"%@", xiangqing.refund_num);
-     NSLog(@"%@", xiangqing.refund_fee);
-     NSLog(@"%@", xiangqing.feedback);
-     NSLog(@"%@", xiangqing.reason);
-     NSLog(@"%@", @2);
-     NSLog(@"%@", textField1.text);
-     NSLog(@"%@", textField2.text);
-   //  NSLog(@"%@", );
+    NSLog(@"%@", xiangqing.trade_id);
+    NSLog(@"%@", refund_or_pro);
+    NSLog(@"%@", xiangqing.refund_num);
+    NSLog(@"%@", xiangqing.refund_fee);
+    NSLog(@"%@", xiangqing.feedback);
+    NSLog(@"%@", xiangqing.reason);
+    NSLog(@"%@", @2);
+    NSLog(@"%@", textField1.text);
+    NSLog(@"%@", textField2.text);
+    //  NSLog(@"%@", );
     NSDictionary *parameters = @{@"id":xiangqing.order_id,
                                  @"tid":xiangqing.trade_id,
                                  @"refund_or_pro":refund_or_pro,
@@ -447,6 +498,15 @@
               
               
           }];
+
+}
+
+- (void)commitBtnClicked:(UIButton *)button{
+    NSLog(@"提交申请");
+    UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:@"确认要退吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alter show];
+    
     
     
     

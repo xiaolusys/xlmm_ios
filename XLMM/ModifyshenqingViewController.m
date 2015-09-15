@@ -79,6 +79,9 @@
     NSLog(@"url = %@", urlstring);
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+    if (data == nil ) {
+        return;
+    }
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
 

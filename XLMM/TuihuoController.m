@@ -257,6 +257,8 @@
 }
 */
 
+
+//       xd15091555f787581f093
 - (IBAction)commit:(id)sender {
     NSLog(@"commit !");
     
@@ -354,9 +356,25 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
+                      
+                      NSDictionary *dic = responseObject;
+                      NSString * result = [dic objectForKey:@"res"];
+                      if ([result isEqualToString:@"ok"]) {
+                          NSLog(@"申请成功了， 恭喜你哦");
+                          
+                          NSArray *viewControllers = self.navigationController.viewControllers;
+                          
+                          UIViewController *controller = [viewControllers objectAtIndex:viewControllers.count-3];
+                          
+                          [self.navigationController popToViewController:controller animated:YES];
+                          
+                          
+                      }
                       NSLog(@"perration = %@", operation);
                       
                   }
+             
+             // xd15091555f787581f093
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       
                       NSLog(@"Error: %@", error);

@@ -12,6 +12,8 @@
 #import "MMClass.h"
 #import "AddressTableCell.h"
 #import "AFNetworking.h"
+#import "AFNetworking.h"
+
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define MAINSCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -278,6 +280,36 @@
     selectCell = cell;
     cell.modifyBtn.userInteractionEnabled = YES;
     cell.deleteBtn.userInteractionEnabled = YES;
+    
+  //  http://192.168.1.61:8000/rest/v1/address/%@/change_default
+    
+    
+    NSString *addID = [[dataArray objectAtIndex:indexPath.row-1] addressID];
+    NSLog(@"addid = %@", addID);
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_default", Root_URL, addID];
+    NSLog(@"url = %@", urlString);
+    
+  //  NSURL *url = [NSURL URLWithString:urlString];
+   
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    
+    [manager POST:urlString parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+    //修改默认地址。。。。。
+    
     
     
 }

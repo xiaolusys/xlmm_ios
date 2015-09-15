@@ -43,8 +43,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [self downLoadData];
     NSLog(@"selectAddressModel = %@", selectedAddModel.addressID);
+    
     
     if (!paySucceed) {
         [self.navigationController popViewControllerAnimated:YES];
