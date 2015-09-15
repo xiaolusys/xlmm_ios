@@ -8,10 +8,19 @@
 
 #import "YouHuiQuanViewController.h"
 #import "AddYouhuiquanViewController.h"
+#import "MMClass.h"
+#import "YHQCollectionCell.h"
 
-@interface YouHuiQuanViewController ()
+@interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, retain) UICollectionView *myCollectionView;
+
+@property (nonatomic, copy) NSArray *dataArray;
+
 
 @end
+
+static NSString *ksimpleCell = @"youhuiCell";
 
 @implementation YouHuiQuanViewController
 
@@ -20,7 +29,85 @@
     // Do any additional setup after loading the view from its nib.
     
     [self createInfo];
+    
+     [self createCollectionView];
+   // self.containerView.hidden = YES;
+    
+    [self downLoadData];
 }
+
+- (void)downLoadData{
+    NSString *urlString = [NSString stringWithFormat:@"%@", KUserCoupins_URL];
+    NSLog(@"url = %@", urlString);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"array = %@", array);
+    self.dataArray = array;
+    
+}
+- (void)createCollectionView{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
+    
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
+    
+    self.myCollectionView.backgroundColor = [UIColor whiteColor];
+    
+    self.myCollectionView.delegate = self;
+    self.myCollectionView.dataSource = self;
+    self.myCollectionView.showsVerticalScrollIndicator = NO;
+    
+    
+    [self.myCollectionView registerClass:[YHQCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+   
+    [self.containerView addSubview:self.myCollectionView];
+    
+    
+}
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+
+    return self.dataArray.count;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    YHQCollectionCell *cell = (YHQCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+    
+    cell.backgroundColor = [UIColor whiteColor];
+    
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    
+    if ([[dic objectForKey:@"status"] integerValue] == 1) {
+        cell.myimageView.image = [UIImage imageNamed:@"youhuiquan4.png"];
+    }
+    cell.name1.text = [dic objectForKey:@"title"];
+    cell.name2.text = @"";
+    cell.time1.text = [NSString stringWithFormat:@"%@ －",[dic objectForKey: @"created"]];
+    cell.time2.text = [dic objectForKey: @"deadline"];
+    
+    
+    
+    
+       return cell;;
+    
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(SCREENWIDTH, SCREENWIDTH*164/590);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 4;
+}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 4;
+}
+
+
+
 
 - (void)createInfo{
     

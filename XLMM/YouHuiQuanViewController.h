@@ -10,4 +10,7 @@
 
 @interface YouHuiQuanViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+
+
 @end

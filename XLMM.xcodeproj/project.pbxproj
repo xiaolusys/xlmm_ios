@@ -241,6 +241,8 @@
 		32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */; };
 		32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */; };
 		32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */; };
+		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
+		32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E329971B70C70000A6F0BC /* DetailViewController.m */; };
@@ -616,6 +618,9 @@
 		32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCartsView.xib; sourceTree = "<group>"; };
 		32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-fanhuiqianye.png"; path = "../icon-fanhuiqianye.png"; sourceTree = "<group>"; };
 		32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Unknown.jpeg; path = ../Unknown.jpeg; sourceTree = "<group>"; };
+		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
+		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
+		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32E329621B708A4000A6F0BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		32E329961B70C70000A6F0BC /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -1290,6 +1295,9 @@
 				327F80BC1B9559F600EDDF5B /* PersonTableCell.h */,
 				327F80BD1B9559F600EDDF5B /* PersonTableCell.m */,
 				327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */,
+				32E00C911BA8192D00A73390 /* YHQCollectionCell.h */,
+				32E00C921BA8192D00A73390 /* YHQCollectionCell.m */,
+				32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -1498,6 +1506,7 @@
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
+				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
@@ -1678,6 +1687,7 @@
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
+				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,

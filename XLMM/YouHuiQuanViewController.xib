@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YouHuiQuanViewController">
             <connections>
+                <outlet property="containerView" destination="5UD-bM-ez4" id="jKP-9U-4TN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -121,10 +122,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="eRh-jo-pZR">
-                            <variation key="heightClass=regular-widthClass=compact" constant="200"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
                         </constraint>
                         <constraint firstAttribute="width" constant="240" id="pjX-Ex-UVy">
-                            <variation key="heightClass=regular-widthClass=compact" constant="200"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
                         </constraint>
                     </constraints>
                     <variation key="default">
@@ -140,13 +141,13 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无优惠券~" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsi-Xx-hs6">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无优惠券~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsi-Xx-hs6">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="123" id="IRA-5n-dBv"/>
                         <constraint firstAttribute="height" constant="27" id="qKQ-Zi-bb1"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -162,16 +163,31 @@
                         </mask>
                     </variation>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5UD-bM-ez4">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="5UD-bM-ez4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="94" id="01i-WB-Nzh">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="Aii-kC-FRt" secondAttribute="trailing" id="8Nj-4f-Vi8"/>
                 <constraint firstItem="Aii-kC-FRt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="P89-U2-kL3"/>
                 <constraint firstAttribute="centerX" secondItem="vsi-Xx-hs6" secondAttribute="centerX" id="RTn-c8-sc5"/>
                 <constraint firstItem="vsi-Xx-hs6" firstAttribute="top" secondItem="dj1-He-5ot" secondAttribute="bottom" constant="20" id="WWX-S1-dcg"/>
+                <constraint firstItem="5UD-bM-ez4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="186" id="WaS-Ly-aPX">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="centerX" secondItem="dj1-He-5ot" secondAttribute="centerX" id="X4h-5A-2XM"/>
                 <constraint firstAttribute="centerY" secondItem="dj1-He-5ot" secondAttribute="centerY" id="alg-6Q-ZEh"/>
                 <constraint firstItem="Aii-kC-FRt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oxI-b0-dNN"/>
+                <constraint firstAttribute="bottom" secondItem="5UD-bM-ez4" secondAttribute="bottom" constant="147" id="rbL-su-DN9">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="trailing" secondItem="5UD-bM-ez4" secondAttribute="trailing" constant="93" id="vLp-3l-QSP">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -180,15 +196,20 @@
                     <exclude reference="Aii-kC-FRt"/>
                     <exclude reference="dj1-He-5ot"/>
                     <exclude reference="vsi-Xx-hs6"/>
+                    <exclude reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="RTn-c8-sc5"/>
-                    <exclude reference="WWX-S1-dcg"/>
-                    <exclude reference="X4h-5A-2XM"/>
-                    <exclude reference="alg-6Q-ZEh"/>
                     <exclude reference="8Nj-4f-Vi8"/>
                     <exclude reference="P89-U2-kL3"/>
                     <exclude reference="oxI-b0-dNN"/>
+                    <exclude reference="01i-WB-Nzh"/>
+                    <exclude reference="WaS-Ly-aPX"/>
+                    <exclude reference="rbL-su-DN9"/>
+                    <exclude reference="vLp-3l-QSP"/>
+                    <exclude reference="X4h-5A-2XM"/>
+                    <exclude reference="alg-6Q-ZEh"/>
+                    <exclude reference="RTn-c8-sc5"/>
+                    <exclude reference="WWX-S1-dcg"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -196,15 +217,20 @@
                     <include reference="Aii-kC-FRt"/>
                     <include reference="dj1-He-5ot"/>
                     <include reference="vsi-Xx-hs6"/>
+                    <include reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="RTn-c8-sc5"/>
-                    <include reference="WWX-S1-dcg"/>
-                    <include reference="X4h-5A-2XM"/>
-                    <include reference="alg-6Q-ZEh"/>
                     <include reference="8Nj-4f-Vi8"/>
                     <include reference="P89-U2-kL3"/>
                     <include reference="oxI-b0-dNN"/>
+                    <include reference="01i-WB-Nzh"/>
+                    <include reference="WaS-Ly-aPX"/>
+                    <include reference="rbL-su-DN9"/>
+                    <include reference="vLp-3l-QSP"/>
+                    <include reference="X4h-5A-2XM"/>
+                    <include reference="alg-6Q-ZEh"/>
+                    <include reference="RTn-c8-sc5"/>
+                    <include reference="WWX-S1-dcg"/>
                 </mask>
             </variation>
         </view>

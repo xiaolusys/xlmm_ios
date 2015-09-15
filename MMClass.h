@@ -71,6 +71,11 @@
 #define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
 #define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
 #define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds",Root_URL]
+
+//  http://192.168.1.61:8000/rest/v1/usercoupons
+
+#define KUserCoupins_URL [NSString stringWithFormat:@"%@/rest/v1/usercoupons",Root_URL]
+
 #endif
 
 
