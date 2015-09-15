@@ -6,11 +6,17 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 
+
+//全部订单
+
 #import "PersonCenterViewController3.h"
 #import "MMClass.h"
 #import "XiangQingViewController.h"
 #import "DingdanModel.h"
 #import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
+
+
 
 #define kSimpleCellIdentifier @"simpleCell"
 
@@ -21,23 +27,115 @@
 
 @implementation PersonCenterViewController3{
     NSMutableArray *dataArray;
-    UIActivityIndicatorView *activityView;
+    BOOL _isFirst;
+    NSDictionary *diciontary;
+    UIAlertView *alterView;
 }
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_isFirst) {
+        //集成刷新控件
+        
+        [self setupRefresh];
+        self.quanbuCollectionView.footerHidden=NO;
+        self.quanbuCollectionView.headerHidden=NO;
+        [self.quanbuCollectionView headerBeginRefreshing];
+        _isFirst = NO;
+    }
+    
+}
+
+- (void)setupRefresh{
+    
+    
+    
+    [self.quanbuCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_quanbuCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    _quanbuCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
+    _quanbuCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
+    _quanbuCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
+    
+    _quanbuCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
+    _quanbuCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
+    _quanbuCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    
+}
+
+- (void)headerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self reload];
+        sleep(1.5);
+        [_quanbuCollectionView headerEndRefreshing];
+        
+    });
+}
+
+
+- (void)footerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self loadMore];
+        sleep(1.5);
+        [_quanbuCollectionView footerEndRefreshing];
+        
+    });
+}
+
+- (void)reload
+{
+    NSLog(@"reload");
+    //[self downloadData];
+    
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+      
+        [alterView show];
+        
+        
+        
+        return;
+    }
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDingdanData:)];
+    
+    
+
+    
+}
+
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.quanbuCollectionView];
     // Do any additional setup after loading the view from its nib.
     self.title = @"全部订单";
+    _isFirst = YES;
     dataArray = [[NSMutableArray alloc] initWithCapacity:5];
-    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityView.center = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2-80);
-    [activityView startAnimating];
-    
-    [self.quanbuCollectionView addSubview:activityView];
-    
 
     
+    alterView = [[UIAlertView alloc] initWithTitle:nil
+                                           message:@"没有更多订单"
+                                          delegate:nil
+                                 cancelButtonTitle:@"确定"
+                                 otherButtonTitles:nil
+                 , nil];
+    
+    [self.view addSubview:[[UIView alloc] init]];
+    [self.view addSubview:self.quanbuCollectionView];
+
     [self.quanbuCollectionView registerClass:[QuanbuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     
     [self createInfo];
@@ -54,9 +152,9 @@
 
 - (void)fetchedDingdanData:(NSData *)responsedata{
     NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
-    NSLog(@"array = %@", dicJson);
-    NSArray *array = [dicJson objectForKey:@"results"];
+    diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    NSLog(@"array = %@", diciontary);
+    NSArray *array = [diciontary objectForKey:@"results"];
     if (array.count == 0) {
         NSLog(@"没有订单");
         return;
@@ -74,8 +172,8 @@
         [dataArray addObject:model];
     }
     NSLog(@"dataArray = %@", dataArray);
-    [activityView stopAnimating];
-    [activityView removeFromSuperview];
+//    [activityView stopAnimating];
+//    [activityView removeFromSuperview];
     [self.quanbuCollectionView reloadData];
     
     
