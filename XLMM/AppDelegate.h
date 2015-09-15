@@ -10,11 +10,7 @@
 #import "RESideMenu.h"
 #import "WXApi.h"
 
-@protocol WeiXinBackDelegate <NSObject>
 
-- (void)getmoreInfo;
-
-@end
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RESideMenuDelegate, WXApiDelegate>
 

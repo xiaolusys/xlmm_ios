@@ -95,10 +95,10 @@
     }
   
 }
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;//隐藏为YES，显示为NO
-}
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;//隐藏为YES，显示为NO
+//}
 
 
 - (void)viewWillDisappear:(BOOL)animated{

@@ -768,14 +768,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
-				327F80C21B95A60900EDDF5B /* MJRefresh */,
-				32F3D94F1B6CCA41008530BA /* AFNetworking */,
-				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
-				32A288431B93E2AC006DC949 /* RESideMenu */,
-				3299D8701B8C7FAA000AA744 /* lib */,
-				3290C88E1B88A6D000CFAFA0 /* resources */,
-				32746DD41B74A22000816208 /* images */,
+				32E00C901BA7B79700A73390 /* The Third */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -1105,12 +1098,12 @@
 			name = framework;
 			sourceTree = "<group>";
 		};
-		3290C88E1B88A6D000CFAFA0 /* resources */ = {
+		3290C88E1B88A6D000CFAFA0 /* font */ = {
 			isa = PBXGroup;
 			children = (
 				3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */,
 			);
-			name = resources;
+			name = font;
 			sourceTree = "<group>";
 		};
 		3299D8701B8C7FAA000AA744 /* lib */ = {
@@ -1322,6 +1315,21 @@
 				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
 			);
 			name = "Custom Class";
+			sourceTree = "<group>";
+		};
+		32E00C901BA7B79700A73390 /* The Third */ = {
+			isa = PBXGroup;
+			children = (
+				3290C88E1B88A6D000CFAFA0 /* font */,
+				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
+				327F80C21B95A60900EDDF5B /* MJRefresh */,
+				32F3D94F1B6CCA41008530BA /* AFNetworking */,
+				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
+				32A288431B93E2AC006DC949 /* RESideMenu */,
+				3299D8701B8C7FAA000AA744 /* lib */,
+				32746DD41B74A22000816208 /* images */,
+			);
+			name = "The Third";
 			sourceTree = "<group>";
 		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
