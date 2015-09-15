@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
+
 @property (nonatomic, copy) NSString * urlString;
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
