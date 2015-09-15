@@ -14,6 +14,9 @@
 #import "DingDanXiangQingModel.h"
 #import "UIImageView+WebCache.h"
 #import "TuihuoController.h"
+#import "Pingpp.h"
+
+#define kUrlScheme @"wx25fcb32689872499"
 
 @interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate>{
     NSString *tid;
@@ -350,6 +353,7 @@
 
 - (IBAction)goumai:(id)sender {
     NSLog(@"重新购买");
+    
    // NSLog(@"stringURL = %@", self.urlString);
     NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
     NSRange range =  [string rangeOfString:@"/details"];
@@ -379,21 +383,23 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"222 : %@", dic);
+    NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+      NSLog(@"string = %@", charge);
     
-    
-    NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSLog(@"3333 : %@", connection);
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"error");
-    
+    XiangQingViewController * __weak weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+            
+            NSLog(@"completion block: %@", result);
+            
+            if (error == nil) {
+                NSLog(@"PingppError is nil");
+            } else {
+                NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            //[weakSelf showAlertMessage:result];
+        }];
+    });
 }
 @end

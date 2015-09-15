@@ -20,7 +20,7 @@
 
 
 
-@interface AddressTableCell : UITableViewCell
+@interface AddressTableCell : UITableViewCell <UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondLabel;

@@ -328,10 +328,7 @@
     NSLog(@"address id = %@", model.addressID);
     NSString *deleteurlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL,model.addressID];
     NSLog(@"deleteURL = %@", deleteurlString);
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
     [manager POST:deleteurlString parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
@@ -346,9 +343,9 @@
               NSLog(@"Error: %@", error);
               
           }];
-    
-    
 }
+
+
 - (void)modifyAddress:(AddressModel*)model{
     NSLog(@"修改地址-----");
     

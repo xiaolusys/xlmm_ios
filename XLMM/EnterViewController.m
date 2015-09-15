@@ -14,6 +14,8 @@
 @interface EnterViewController ()<WXApiDelegate>{
     NSTimer *theTimer;
     
+    
+    
 }
 
 @property (nonatomic, copy)NSString *access_token;
@@ -27,6 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
     if (islogin) {
         [self.navigationController popViewControllerAnimated:NO];
