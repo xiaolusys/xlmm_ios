@@ -32,10 +32,10 @@
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
 #define LOADIMAGE(a) [UIImage imageNamed:a]
 #define kLoansRRL(a) [NSURL URLWithString:a]
+#define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 #define NumberOfCart @"NumberOfCart"
-
 #define kIsLogin @"login"
 #define kUserName @"userName"
 #define kPassWord @"password"
@@ -51,10 +51,7 @@
 - (void)menuVCPushSide;
 
 @end
-
-
-#if 1
-
+#pragma mark --URLs--
 #define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today",Root_URL]
 #define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous",Root_URL]
 #define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today",Root_URL]
@@ -66,71 +63,16 @@
 #define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts",Root_URL]
 #define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
 #define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price",Root_URL]
-//    http://m.xiaolu.so/rest/v1/carts/show_carts_history
 #define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history",Root_URL]
 #define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num",Root_URL]
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address",Root_URL]
 #define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades",Root_URL]
-
-//  http://m.xiaolu.so/rest/v1/trades/waitpay
 #define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay",Root_URL]
-
-//  http://m.xiaolu.so/rest/v1/trades/waitsend
-
 #define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
-
-//  http://192.168.1.79:8000/rest/v1/integrallog
-
 #define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
-
-//  http://192.168.1.79:8000/rest/v1/refunds
-
 #define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds",Root_URL]
-
 #endif
 
-#if 0
-#define kTODAY_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/today"
-#define kPREVIOUS_POSTERS_URL @"http://youni.huyi.so/rest/v1/posters/previous"
-#define kTODAY_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_today"
-#define kPREVIOUS_PROMOTE_URL @"http://youni.huyi.so/rest/v1/products/promote_previous"
-#define kCHILD_LIST_URL @"http://youni.huyi.so/rest/v1/products/childlist"
-#define kLADY_LIST_URL @"http://youni.huyi.so/rest/v1/products/ladylist"
-#define kLOGIN_URL @"http://192.168.1.11:9000/rest/v1/register/customer_login"
-#define kModel_List_URL @"http://youni.huyi.so/rest/v1/products/modellist/%@"
-#define kCart_URL @"http://youni.huyi.so/rest/v1/carts"
-#define kCHILD_LIST_ORDER_URL @"http://youni.huyi.so/rest/v1/products/childlist?order_by=price"
-#define kCart_Number_URL @"http://youni.huyi.so/rest/v1/carts/show_carts_num"
-#define kAddress_List_URL @"http://youni.huyi.so/rest/v1/address"
-#define kQuanbuDingdan_URL @"http://youni.huyi.so/rest/v1/trades"
-
-
-
-
-#endif
-
-
-#if 0
-
-#define kTODAY_POSTERS_URL @"http://192.168.1.11:9000/rest/v1/posters/today"
-#define kPREVIOUS_POSTERS_URL @"http://192.168.1.11:9000/rest/v1/posters/previous"
-#define kTODAY_PROMOTE_URL @"http://192.168.1.11:9000/rest/v1/products/promote_today"
-#define kPREVIOUS_PROMOTE_URL @"http://192.168.1.11:9000/rest/v1/products/promote_previous"
-#define kCHILD_LIST_URL @"http://192.168.1.11:9000/rest/v1/products/childlist"
-#define kLADY_LIST_URL @"http://192.168.1.11:9000/rest/v1/products/ladylist"
-#define kLOGIN_URL @"http://192.168.1.11:9000/rest/v1/register/customer_login"
-#define kModel_List_URL @"http://192.168.1.11:9000/rest/v1/products/modellist/%@"
-#define kCart_URL @"http://192.168.1.11:9000/rest/v1/carts"
-#define kCHILD_LIST_ORDER_URL @"http://192.168.1.11:9000/rest/v1/products/childlist?order_by=price"
-#define kCart_Number_URL @"http://192.168.1.11:9000/rest/v1/carts/show_carts_num"
-#define kAddress_List_URL @"http://192.168.1.11:9000/rest/v1/address"
-#define kQuanbuDingdan_URL @"http://192.168.1.11:9000/rest/v1/trades"
-
-#endif
-
-#define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
-
-#endif
 
 #if 0
 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
