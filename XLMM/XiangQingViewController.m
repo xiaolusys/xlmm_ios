@@ -329,7 +329,7 @@
 #pragma mark --AlertViewDelegate--
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%D", buttonIndex);
+    NSLog(@"%lD", (long)buttonIndex);
     if (buttonIndex == 1) {
         NSLog(@"stringURL = %@", self.urlString);
         NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];

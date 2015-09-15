@@ -36,7 +36,7 @@
     self.nameTextField.tag = 100;
     self.numberTextField.tag = 101;
     if (_isAdd == NO) {
-        NSLog(@"修改地址");
+        NSLog(@"修改地址");       
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
         self.numberTextField.text = _addressModel.phoneNumber;
@@ -277,6 +277,9 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
+                  
+                  [self.navigationController popViewControllerAnimated:YES];
+                  
                   
                   NSLog(@"修改成功");
                   

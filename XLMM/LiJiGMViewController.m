@@ -16,13 +16,14 @@
 #import "UIImageView+WebCache.h"
 #import "Pingpp.h"
 #import "LiJiBuyModel.h"
+#import "AddressViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 
 @interface LiJiGMViewController ()<BuyAddressDelegate>{
     NSMutableArray *addressArray;
-    AddressView *owner[8];
+    AddressView *owner;
     AddressModel *selectedAddModel;
     NSNumber *buyNumber;
     LiJiBuyModel *buyModel;
@@ -174,14 +175,14 @@
     NSLog(@"count = %ld", (unsigned long)addressArray.count);
     
     
-    self.addressViewHeight.constant = 100 * addressArray.count + 60;
+    self.addressViewHeight.constant = 100 * 1 + 60;
     NSLog(@"height = %d",(int) self.addressViewHeight.constant);
-    NSUInteger number = addressArray.count;
-    for (int i = 0; i<number; i++) {
+   // NSUInteger number = addressArray.count;
+    for (int i = 0; i<1; i++) {
         NSLog(@"i = %d", i);
-       owner[i] = [AddressView new];
-        AddressView *myowner = owner[i];
-        NSLog(@"%@", owner[i]);
+       owner = [AddressView new];
+        AddressView *myowner = owner;
+        NSLog(@"%@", owner);
         [[NSBundle mainBundle]loadNibNamed:@"AddressView" owner:myowner options:nil];
         myowner.view.frame = CGRectMake(0, i*100 + 60, SCREENWIDTH, 100);
         NSLog(@"%@", myowner.view);
@@ -211,8 +212,8 @@
 - (IBAction)addAddress:(id)sender {
     
     NSLog(@"增加收货地址");
-    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
-    addVC.isAdd = YES;
+    AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:NSStringFromClass([AddressViewController class]) bundle:nil];
+   // addVC.isAdd = YES;
     [self.navigationController pushViewController:addVC animated:YES];
     
     
@@ -450,9 +451,9 @@
 - (void)selectAddress:(AddressView *)view{
     NSLog(@"我选择这个地址");
     view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
-    NSUInteger number = addressArray.count;
-    for (int i = 0; i<number; i++) {
-        if(owner[i] == view)
+//    NSUInteger number = addressArray.count;
+    for (int i = 0; i<1; i++) {
+        if(owner == view)
         {
             view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
             
@@ -461,7 +462,7 @@
         }
         else
         {
-            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+            owner.headImage.image = [UIImage imageNamed:@"icon-radio.png"];
         }
     }
     
@@ -469,9 +470,9 @@
 - (void)modifyAddress:(AddressView *)view{
     
     NSLog(@"我要修改此地址");
-    NSUInteger number = addressArray.count;
-    for (int i = 0; i<number; i++) {
-        if(owner[i] == view)
+//    NSUInteger number = addressArray.count;
+    for (int i = 0; i<1; i++) {
+        if(owner == view)
         {
             view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
             
@@ -482,7 +483,7 @@
         }
         else
         {
-            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+            owner.headImage.image = [UIImage imageNamed:@"icon-radio.png"];
         }
     }
 }

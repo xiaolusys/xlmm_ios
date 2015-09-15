@@ -15,7 +15,7 @@
 #import "BuyModel.h"
 #import "BuyCartsView.h"
 #import "Pingpp.h"
-
+#import "AddressViewController.h"
 #import "UIImage+ImageWithUrl.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
@@ -30,7 +30,7 @@
 @implementation PurchaseViewController{
     NSMutableArray *dataArray;
     NSMutableArray *cartsDataArray;
-    AddressView *owner[10];
+    AddressView *owner;
     AddressModel *selectedAddModel;
     BuyCartsView *cartOwner;
     
@@ -81,6 +81,13 @@
     
     
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
+    if (self.cartsArray.count == 0) {
+        //购物车为空。
+        
+        NSLog(@"购物车为空");
+        
+        return;
+    }
     for (ShoppingCartModel *model in self.cartsArray) {
         NSString *str = [NSString stringWithFormat:@"%@,",model.cartID];
         [paramstring appendString:str];
@@ -290,7 +297,7 @@
     NSLog(@"addNumber = %lu", (unsigned long)addNumber);
 
   //  self.addressView.backgroundColor = [UIColor orangeColor];
-    self.addressViewHeight.constant = addNumber * 100 + 60;
+    self.addressViewHeight.constant = 1 * 100 + 60;
     
     
     [self createAddressHeightView];
@@ -317,8 +324,8 @@
 
 - (void)addClicked:(UIButton *)button{
     NSLog(@"增加收货地址");
-    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:NSStringFromClass([AddAdressViewController class]) bundle:nil];
-    addVC.isAdd = YES;
+    AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:NSStringFromClass([AddressViewController class]) bundle:nil];
+//    addVC.isAdd = YES;
     [self.navigationController pushViewController:addVC animated:YES];
     
 
@@ -326,9 +333,9 @@
     
 }
 - (void)createAddressListView{
-    for (int i = 0; i<dataArray.count; i++) {
-        owner[i] = [AddressView new];
-        AddressView *myowner = owner[i];
+    for (int i = 0; i<1; i++) {
+        owner = [AddressView new];
+        AddressView *myowner = owner;
         [[NSBundle mainBundle] loadNibNamed:@"AddressView" owner:myowner options:nil];
         AddressModel *model = [dataArray objectAtIndex:i];
         NSString *nameString = [NSString stringWithFormat:@"%@  %@", model.buyerName, model.phoneNumber];
@@ -353,9 +360,9 @@
 - (void)selectAddress:(AddressView *)view{
     NSLog(@"我选择这个地址");
     view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
-    NSUInteger number = dataArray.count;
-    for (int i = 0; i<number; i++) {
-        if(owner[i] == view)
+//    NSUInteger number = dataArray.count;
+    for (int i = 0; i<1; i++) {
+        if(owner == view)
         {
             view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
             
@@ -366,7 +373,7 @@
         }
         else
         {
-            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+            owner.headImage.image = [UIImage imageNamed:@"icon-radio.png"];
         }
     }
     
@@ -374,9 +381,9 @@
 - (void)modifyAddress:(AddressView *)view{
     
     NSLog(@"我要修改此地址");
-    NSUInteger number = dataArray.count;
-    for (int i = 0; i<number; i++) {
-        if(owner[i] == view)
+//    NSUInteger number = dataArray.count;
+    for (int i = 0; i<1; i++) {
+        if(owner == view)
         {
             view.headImage.image = [UIImage imageNamed:@"icon-radio-select.png"];
             
@@ -387,7 +394,7 @@
         }
         else
         {
-            owner[i].headImage.image = [UIImage imageNamed:@"icon-radio.png"];
+            owner.headImage.image = [UIImage imageNamed:@"icon-radio.png"];
         }
     }
 }

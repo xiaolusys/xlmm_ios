@@ -425,7 +425,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%d  ",buttonIndex );
+    NSLog(@"%ld  ",(long)buttonIndex );
     if (buttonIndex == 1) {
         NSLog(@"tuihuo ");
         [self tuihuocommit];
