@@ -20,6 +20,8 @@
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 
+#import "PostersViewController.h"
+
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -546,15 +548,19 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
             childVC.urlString = kLADY_LIST_URL;
-            
+            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+            childVC.titleName = @"时尚女装";
             
             [self.navigationController pushViewController:childVC animated:YES];
             
         } else{
-            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
             childVC.urlString = kCHILD_LIST_URL;
+            childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+            childVC.titleName = @"潮童装区";
+            
             [self.navigationController pushViewController:childVC animated:YES];
             
         }

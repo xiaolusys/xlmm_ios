@@ -4,7 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostersViewController"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostersViewController">
+            <connections>
+                <outlet property="childCollectionView" destination="xZP-CB-ySy" id="QRP-1C-bdA"/>
+                <outlet property="view" destination="Tge-ST-Pvh" id="VT5-aN-WGr"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Tge-ST-Pvh">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -22,6 +27,10 @@
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="cgL-qb-4Kw"/>
+                                <outlet property="delegate" destination="-1" id="CkH-0W-1Aw"/>
+                            </connections>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j59-z6-XO0">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -46,6 +55,9 @@
                                             <include reference="5KP-iI-Zbd"/>
                                         </mask>
                                     </variation>
+                                    <connections>
+                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Thg-d9-rpx"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFN-T3-kDP">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -54,6 +66,9 @@
                                         <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="b0n-yo-57K"/>
+                                    </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7E-9n-qtb">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 
-#import "ChildViewController.h"
+#import "PostersViewController.h"
 #import "PeopleCollectionCell.h"
 #import "MMClass.h"
 #import "PurchaseViewController.h"
@@ -25,7 +25,7 @@
 
 static NSString * ksimpleCell = @"simpleCell";
 
-@interface ChildViewController (){
+@interface PostersViewController () {
     
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
@@ -40,7 +40,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @end
 
-@implementation ChildViewController
+@implementation PostersViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -131,8 +131,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
-    self.topdistant.constant = 64;
-    NSLog(@"%ld",(long) self.topdistant.constant);
+  
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
     
     //  self.childCollectionView.bounces = NO;
@@ -140,9 +139,36 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     // [self downloadData];
+    [self createInfo];
+    
+}
+
+- (void)createInfo{
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.text = self.titleName;
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:20];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
+    imageView.frame = CGRectMake(8, 12, 12, 22);
+    [button addSubview:imageView];
+    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     
     
 }
+
+
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];

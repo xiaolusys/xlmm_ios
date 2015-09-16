@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChildViewController : UIViewController<
+@interface PostersViewController : UIViewController<
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout,
 UICollectionViewDelegate>{
@@ -17,10 +17,10 @@ UICollectionViewDelegate>{
 @property (assign, nonatomic) BOOL isRoot;
 @property (copy, nonatomic) NSString *urlString;
 @property (copy, nonatomic) NSString *orderUrlString;
+@property (copy, nonatomic) NSString *titleName;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistant;
 
-@property (weak, nonatomic) IBOutlet UIView *containerView;
+
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
 
