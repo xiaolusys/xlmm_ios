@@ -44,6 +44,20 @@
     [self setInfo];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    
+    if ([WXApi isWXAppInstalled]) {
+        NSLog(@"安装了微信");
+        
+        self.wxButton.hidden = NO;
+
+    }
+    else{
+        NSLog(@"没有安装微信");
+        
+        self.wxButton.hidden = YES;
+
+    }
+    
 }
 
 
@@ -128,7 +142,13 @@
 
 
 
+//
 
+/*! @brief 检查微信是否已被用户安装
+ *
+ * @return 微信已安装返回YES，未安装返回NO。
+ */
+//+(BOOL) isWXAppInstalled;
 
 
 

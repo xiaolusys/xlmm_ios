@@ -11,5 +11,6 @@
 @interface EnterViewController : UIViewController
 - (IBAction)mmLogin:(id)sender;
 - (IBAction)weixinLogin:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *wxButton;
 
 @end
