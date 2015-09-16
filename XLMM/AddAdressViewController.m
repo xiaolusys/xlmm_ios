@@ -247,6 +247,7 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
+                  [self.navigationController popViewControllerAnimated:YES];
                
                   
               }

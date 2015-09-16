@@ -174,7 +174,10 @@
     
     NSLog(@"count = %ld", (unsigned long)addressArray.count);
     
-    
+    if (addressArray.count == 0) {
+        return;
+        
+    }
     self.addressViewHeight.constant = 100 * 1 + 60;
     NSLog(@"height = %d",(int) self.addressViewHeight.constant);
    // NSUInteger number = addressArray.count;

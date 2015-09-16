@@ -77,6 +77,12 @@
     //  NSLog(@"appear");
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
+        
+    }else{
+        countLabel.text = @"0";
+        return;
+    }
   
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     if (data != nil) {
@@ -142,6 +148,14 @@
     
      [self downloadData];
     
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return YES;
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -313,29 +327,45 @@
     countLabel.font = [UIFont systemFontOfSize:10];
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        NSLog(@"%@", dic);
-        if ([dic objectForKey:@"result"] != nil) {
-            
-            
-            goodsCount = [[dic objectForKey:@"result"] integerValue];
-            NSLog(@"%ld", (long)goodsCount);
-            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-            countLabel.text = strNum;
-        }
-    }
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+//    if (data != nil) {
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//        
+//        NSLog(@"%@", dic);
+//        if ([dic objectForKey:@"result"] != nil) {
+//            
+//            
+//            goodsCount = [[dic objectForKey:@"result"] integerValue];
+//            NSLog(@"%ld", (long)goodsCount);
+//            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+//            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
+//                countLabel.text = strNum;
+//            } else {
+//                countLabel.text = @"0";
+//
+//            }
+//            
+//            
+//           // countLabel.text = strNum;
+//        }
+//    }
+    countLabel.text = @"0";
     countLabel.font = [UIFont systemFontOfSize:14];
     [view addSubview:countLabel];
     [cartsButton addSubview:view];
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
+    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    if (login == NO) {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+        return;
+    }
     if (goodsCount == 0) {
         NSLog(@"购物车为空");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"亲，您的购物车为空\n请先加入购物车~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"您的购物车为空\n请先加入购物车~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertView show];
         
         
@@ -532,6 +562,12 @@
     
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     NSLog(@"islogin = %d", islogin);
+    if (islogin == NO) {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+        return;
+        
+    }
         if (skusID == nil) {
             [UIView animateWithDuration:.5f animations:^{
                 self.scrollerView.contentOffset = CGPointMake(0, 0);

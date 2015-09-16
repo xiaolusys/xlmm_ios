@@ -208,7 +208,11 @@
         
         } else{
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(220, 75, 130, 32)];
-            label.text = [refund_status_displayArray objectAtIndex:i];
+            NSString *string = [refund_status_displayArray objectAtIndex:i];
+            if ([string isEqualToString:@"没有退款"]) {
+                string = @"";
+            }
+            label.text = string;
             label.font = [UIFont systemFontOfSize:12];
             label.textAlignment = NSTextAlignmentLeft;
             label.textColor = [UIColor darkGrayColor];

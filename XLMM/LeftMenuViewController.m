@@ -24,7 +24,7 @@
 
 #import "TuihuoViewController.h"
 
-
+#import "EnterViewController.h"
 
 
 
@@ -71,6 +71,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
+        
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+
+         
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+    
+    
     switch (indexPath.row) {
         case 0:
         {
