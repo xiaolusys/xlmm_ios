@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
+		320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320CABDF1BA906D400C62E36 /* PostersViewController.m */; };
+		320CABE21BA906D400C62E36 /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320CABE01BA906D400C62E36 /* PostersViewController.xib */; };
 		32121B401B9461BF00742E53 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32121B3F1B9461BF00742E53 /* icon.png */; };
 		32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32121B421B9481B900742E53 /* PosterCollectionCell.m */; };
 		32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32121B431B9481B900742E53 /* PosterCollectionCell.xib */; };
@@ -284,6 +286,9 @@
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
+		320CABDE1BA906D400C62E36 /* PostersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostersViewController.h; sourceTree = "<group>"; };
+		320CABDF1BA906D400C62E36 /* PostersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostersViewController.m; sourceTree = "<group>"; };
+		320CABE01BA906D400C62E36 /* PostersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostersViewController.xib; sourceTree = "<group>"; };
 		32121B3F1B9461BF00742E53 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		32121B411B9481B900742E53 /* PosterCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell.h; sourceTree = "<group>"; };
 		32121B421B9481B900742E53 /* PosterCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell.m; sourceTree = "<group>"; };
@@ -883,9 +888,6 @@
 				32620C6E1B6AFD56006E806A /* RegisterViewController.h */,
 				32620C6F1B6AFD56006E806A /* RegisterViewController.m */,
 				32620C701B6AFD56006E806A /* RegisterViewController.xib */,
-				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
-				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
-				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
@@ -1227,6 +1229,9 @@
 		32A288291B93E198006DC949 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
+				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
+				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
 				32A2882A1B93E1C6006DC949 /* TodayViewController.h */,
 				32A2882B1B93E1C6006DC949 /* TodayViewController.m */,
 				32A2882C1B93E1C6006DC949 /* TodayViewController.xib */,
@@ -1248,6 +1253,9 @@
 				32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */,
 				32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */,
 				32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */,
+				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
+				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
+				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1473,6 +1481,7 @@
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
+				320CABE21BA906D400C62E36 /* PostersViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
@@ -1643,6 +1652,7 @@
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
+				320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
 				32A2883C1B93E20F006DC949 /* RightMenuViewController.m in Sources */,
 				3282F2831B6B5B1300E73EB9 /* SDWebImageDecoder.m in Sources */,

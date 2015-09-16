@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ChildViewController : UIViewController<
-                                    UICollectionViewDataSource,
-                                    UICollectionViewDelegateFlowLayout,
+UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout,
 UICollectionViewDelegate>{
 }
 

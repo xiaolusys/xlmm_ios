@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChildViewController">
             <connections>
                 <outlet property="childCollectionView" destination="9QH-ZB-iCK" id="jfl-rN-TUu"/>
+                <outlet property="containerView" destination="KPZ-fZ-AC8" id="DSa-fp-Ca7"/>
+                <outlet property="topdistant" destination="S2t-Ko-kIB" id="5OS-xS-UZ4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -167,21 +169,21 @@
                                     <exclude reference="YmS-11-3H0"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <exclude reference="M5I-4r-naT"/>
-                                    <exclude reference="ceW-Le-t6p"/>
-                                    <exclude reference="gvw-JX-nGE"/>
-                                    <exclude reference="2Wd-53-o4I"/>
-                                    <exclude reference="5bB-ZC-rNi"/>
-                                    <exclude reference="74v-cL-wzQ"/>
-                                    <exclude reference="gzD-Sw-lsI"/>
-                                    <exclude reference="zBU-xu-aFm"/>
-                                    <exclude reference="MGX-Vd-Xo1"/>
-                                    <exclude reference="pD8-m1-hPd"/>
                                     <exclude reference="Bly-RA-5aW"/>
                                     <exclude reference="FDZ-jN-XXd"/>
                                     <exclude reference="Oe2-WQ-SmW"/>
                                     <exclude reference="oQy-xa-nsz"/>
                                     <exclude reference="taf-67-Spc"/>
+                                    <exclude reference="2Wd-53-o4I"/>
+                                    <exclude reference="5bB-ZC-rNi"/>
+                                    <exclude reference="MGX-Vd-Xo1"/>
+                                    <exclude reference="pD8-m1-hPd"/>
+                                    <exclude reference="74v-cL-wzQ"/>
+                                    <exclude reference="gzD-Sw-lsI"/>
+                                    <exclude reference="zBU-xu-aFm"/>
+                                    <exclude reference="M5I-4r-naT"/>
+                                    <exclude reference="ceW-Le-t6p"/>
+                                    <exclude reference="gvw-JX-nGE"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -193,21 +195,21 @@
                                     <include reference="YmS-11-3H0"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <include reference="M5I-4r-naT"/>
-                                    <include reference="ceW-Le-t6p"/>
-                                    <include reference="gvw-JX-nGE"/>
-                                    <include reference="2Wd-53-o4I"/>
-                                    <include reference="5bB-ZC-rNi"/>
-                                    <include reference="74v-cL-wzQ"/>
-                                    <include reference="gzD-Sw-lsI"/>
-                                    <include reference="zBU-xu-aFm"/>
-                                    <include reference="MGX-Vd-Xo1"/>
-                                    <include reference="pD8-m1-hPd"/>
                                     <include reference="Bly-RA-5aW"/>
                                     <include reference="FDZ-jN-XXd"/>
                                     <include reference="Oe2-WQ-SmW"/>
                                     <include reference="oQy-xa-nsz"/>
                                     <include reference="taf-67-Spc"/>
+                                    <include reference="2Wd-53-o4I"/>
+                                    <include reference="5bB-ZC-rNi"/>
+                                    <include reference="MGX-Vd-Xo1"/>
+                                    <include reference="pD8-m1-hPd"/>
+                                    <include reference="74v-cL-wzQ"/>
+                                    <include reference="gzD-Sw-lsI"/>
+                                    <include reference="zBU-xu-aFm"/>
+                                    <include reference="M5I-4r-naT"/>
+                                    <include reference="ceW-Le-t6p"/>
+                                    <include reference="gvw-JX-nGE"/>
                                 </mask>
                             </variation>
                         </view>
@@ -231,7 +233,9 @@
                         <constraint firstItem="9QH-ZB-iCK" firstAttribute="top" secondItem="Dm4-DC-Z76" secondAttribute="bottom" constant="10" id="at7-T5-Hb6">
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
-                        <constraint firstItem="Dm4-DC-Z76" firstAttribute="top" secondItem="KPZ-fZ-AC8" secondAttribute="top" id="dxA-rK-Fag"/>
+                        <constraint firstItem="Dm4-DC-Z76" firstAttribute="top" secondItem="KPZ-fZ-AC8" secondAttribute="top" id="dxA-rK-Fag">
+                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                        </constraint>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
@@ -275,7 +279,7 @@
                 <constraint firstAttribute="bottom" secondItem="KPZ-fZ-AC8" secondAttribute="bottom" constant="166" id="CMq-tD-frW">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
-                <constraint firstItem="KPZ-fZ-AC8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="167" id="S2t-Ko-kIB">
+                <constraint firstItem="KPZ-fZ-AC8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" symbolic="YES" id="S2t-Ko-kIB">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="KPZ-fZ-AC8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="93" id="fUu-gh-Xg8">

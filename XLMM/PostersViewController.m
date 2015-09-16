@@ -44,7 +44,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
     
 }
 
@@ -120,7 +120,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
+    
     
     
     // Do any additional setup after loading the view from its nib.
@@ -128,20 +128,20 @@ static NSString * ksimpleCell = @"simpleCell";
     _isFirst = YES;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
-
+    
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
     self.topdistant.constant = 64;
     NSLog(@"%ld",(long) self.topdistant.constant);
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
     
-  //  self.childCollectionView.bounces = NO;
+    //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
-   
-   // [self downloadData];
-   
- 
+    
+    // [self downloadData];
+    
+    
 }
 
 - (void)setLayout{
@@ -193,11 +193,11 @@ static NSString * ksimpleCell = @"simpleCell";
         [_dataArray addObject:model];
         
     }
-
+    
     
     [self.childCollectionView reloadData];
     
-
+    
 }
 
 #pragma mark  -----CollectionViewDelete----
@@ -228,9 +228,9 @@ static NSString * ksimpleCell = @"simpleCell";
     
     if (isOrder) {
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-      
+        
         [cell fillData:model];
-       
+        
     }else{
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
         
@@ -240,7 +240,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-  if (_dataArray.count == 0) {
+    if (_dataArray.count == 0) {
         return;
     }
     if (isOrder) {
@@ -307,7 +307,7 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.navigationController pushViewController:personVC animated:YES];
         NSLog(@"您现在是游客身份，请先登录");
     }
-
+    
     
 }
 
@@ -329,27 +329,27 @@ static NSString * ksimpleCell = @"simpleCell";
         
         [self.childCollectionView reloadData];
     }
-
+    
 }
 
 - (void)downloadOrderData{
     [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderLadyListData:)];
 }
- 
+
 - (void)fatchedOrderLadyListData:(NSData *)responseData{
     NSError *error;
     self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-   // MMLOG(json);
+    // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *ladyInfo in array) {
         PromoteModel *model = [self fillModel:ladyInfo];
         
         
         [self.orderDataArray addObject:model];
-
+        
     }
-     [activityIndicator removeFromSuperview];
+    [activityIndicator removeFromSuperview];
     [self.childCollectionView reloadData];
 }
 
@@ -362,7 +362,7 @@ static NSString * ksimpleCell = @"simpleCell";
     model.agentPrice = [dic objectForKey:@"agent_price"];
     model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
     model.outerID = [dic objectForKey:@"outer_id"];
-   model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
     model.isSaleout = [dic objectForKey:@"is_saleout"];
     model.category = [dic objectForKey:@"category"];
     model.remainNum = [dic objectForKey:@"remain_num"];
@@ -390,13 +390,13 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

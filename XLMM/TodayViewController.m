@@ -546,10 +546,16 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-
+            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+            childVC.urlString = kLADY_LIST_URL;
+            
+            
+            [self.navigationController pushViewController:childVC animated:YES];
             
         } else{
-
+            ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
+            childVC.urlString = kCHILD_LIST_URL;
+            [self.navigationController pushViewController:childVC animated:YES];
             
         }
         
