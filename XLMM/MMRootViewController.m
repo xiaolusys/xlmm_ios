@@ -94,7 +94,7 @@
     [self.navigationController pushViewController:loginVC animated:YES];
     }
 }
-
+  
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 45);
