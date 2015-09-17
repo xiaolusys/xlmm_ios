@@ -157,6 +157,7 @@
                                 <constraint firstAttribute="trailing" secondItem="f6a-5E-GdG" secondAttribute="trailing" constant="94" id="mjz-Ad-s8r">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
+                                <constraint firstAttribute="height" constant="44" id="zHh-bf-Gbl"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="subviews">
@@ -167,11 +168,7 @@
                                     <exclude reference="rjy-Bi-c9F"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <exclude reference="4xH-Qt-LQD"/>
-                                    <exclude reference="6qN-OF-y3m"/>
-                                    <exclude reference="8Qw-Nv-bgl"/>
-                                    <exclude reference="X0y-L7-gBs"/>
-                                    <exclude reference="h7y-aG-msC"/>
+                                    <exclude reference="zHh-bf-Gbl"/>
                                     <exclude reference="Fgg-Xk-vN4"/>
                                     <exclude reference="PHt-kn-gg0"/>
                                     <exclude reference="6FL-s9-Y32"/>
@@ -182,6 +179,11 @@
                                     <exclude reference="mjz-Ad-s8r"/>
                                     <exclude reference="Zck-lX-4OO"/>
                                     <exclude reference="hvd-J8-VVY"/>
+                                    <exclude reference="4xH-Qt-LQD"/>
+                                    <exclude reference="6qN-OF-y3m"/>
+                                    <exclude reference="8Qw-Nv-bgl"/>
+                                    <exclude reference="X0y-L7-gBs"/>
+                                    <exclude reference="h7y-aG-msC"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -193,11 +195,7 @@
                                     <include reference="rjy-Bi-c9F"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <include reference="4xH-Qt-LQD"/>
-                                    <include reference="6qN-OF-y3m"/>
-                                    <include reference="8Qw-Nv-bgl"/>
-                                    <include reference="X0y-L7-gBs"/>
-                                    <include reference="h7y-aG-msC"/>
+                                    <include reference="zHh-bf-Gbl"/>
                                     <include reference="Fgg-Xk-vN4"/>
                                     <include reference="PHt-kn-gg0"/>
                                     <include reference="6FL-s9-Y32"/>
@@ -208,6 +206,11 @@
                                     <include reference="mjz-Ad-s8r"/>
                                     <include reference="Zck-lX-4OO"/>
                                     <include reference="hvd-J8-VVY"/>
+                                    <include reference="4xH-Qt-LQD"/>
+                                    <include reference="6qN-OF-y3m"/>
+                                    <include reference="8Qw-Nv-bgl"/>
+                                    <include reference="X0y-L7-gBs"/>
+                                    <include reference="h7y-aG-msC"/>
                                 </mask>
                             </variation>
                         </view>
@@ -228,9 +231,6 @@
                         <constraint firstAttribute="trailing" secondItem="j59-z6-XO0" secondAttribute="trailing" constant="94" id="bgp-WN-XFZ">
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
-                        <constraint firstItem="xZP-CB-ySy" firstAttribute="top" secondItem="j59-z6-XO0" secondAttribute="bottom" constant="10" id="gJE-hk-oC5">
-                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                        </constraint>
                         <constraint firstItem="j59-z6-XO0" firstAttribute="leading" secondItem="62U-Ku-Prj" secondAttribute="leading" constant="93" id="rnA-6M-ptX">
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
@@ -248,7 +248,6 @@
                             <exclude reference="E53-Ke-3Qj"/>
                             <exclude reference="R5L-mP-on9"/>
                             <exclude reference="Ym1-vH-k61"/>
-                            <exclude reference="gJE-hk-oC5"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -264,7 +263,6 @@
                             <include reference="E53-Ke-3Qj"/>
                             <include reference="R5L-mP-on9"/>
                             <include reference="Ym1-vH-k61"/>
-                            <include reference="gJE-hk-oC5"/>
                         </mask>
                     </variation>
                 </view>

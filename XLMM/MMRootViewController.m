@@ -175,16 +175,18 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
     NSLog(@"-->%@", pendingViewControllers);
-    
 }
+
 
 
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
+
     if (currentIndex < _pageContentVC.count - 1) {
         
-     //   pageViewController.view.userInteractionEnabled = YES;
         NSLog(@"1111");
         _pageCurrentIndex = currentIndex + 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
@@ -194,34 +196,39 @@
         NSLog(@"2222");
 
     }
-    // pageViewController.view.userInteractionEnabled = NO;
     
     return nil;
 }
 
+
+
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (currentIndex > 0) {
-    //    pageViewController.view.userInteractionEnabled = YES;
         
         NSLog(@"3333");
         _pageCurrentIndex = currentIndex - 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
     } else{
         
+        
+        
+     
+        
         NSLog(@"4444");
-   //pageViewController.view.userInteractionEnabled = NO;
     }
-    
-    //pageViewController.view.userInteractionEnabled = NO;
+  //  return [_pageContentVC objectAtIndex:_pageCurrentIndex];
 
-    return nil;
+   return nil;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     NSInteger currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
     
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (completed)
     {
         NSInteger btnTag = currentIndex + 100;
