@@ -169,6 +169,11 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="zHh-bf-Gbl"/>
+                                    <exclude reference="4xH-Qt-LQD"/>
+                                    <exclude reference="6qN-OF-y3m"/>
+                                    <exclude reference="8Qw-Nv-bgl"/>
+                                    <exclude reference="X0y-L7-gBs"/>
+                                    <exclude reference="h7y-aG-msC"/>
                                     <exclude reference="Fgg-Xk-vN4"/>
                                     <exclude reference="PHt-kn-gg0"/>
                                     <exclude reference="6FL-s9-Y32"/>
@@ -179,11 +184,6 @@
                                     <exclude reference="mjz-Ad-s8r"/>
                                     <exclude reference="Zck-lX-4OO"/>
                                     <exclude reference="hvd-J8-VVY"/>
-                                    <exclude reference="4xH-Qt-LQD"/>
-                                    <exclude reference="6qN-OF-y3m"/>
-                                    <exclude reference="8Qw-Nv-bgl"/>
-                                    <exclude reference="X0y-L7-gBs"/>
-                                    <exclude reference="h7y-aG-msC"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -196,6 +196,11 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="zHh-bf-Gbl"/>
+                                    <include reference="4xH-Qt-LQD"/>
+                                    <include reference="6qN-OF-y3m"/>
+                                    <include reference="8Qw-Nv-bgl"/>
+                                    <include reference="X0y-L7-gBs"/>
+                                    <include reference="h7y-aG-msC"/>
                                     <include reference="Fgg-Xk-vN4"/>
                                     <include reference="PHt-kn-gg0"/>
                                     <include reference="6FL-s9-Y32"/>
@@ -206,11 +211,6 @@
                                     <include reference="mjz-Ad-s8r"/>
                                     <include reference="Zck-lX-4OO"/>
                                     <include reference="hvd-J8-VVY"/>
-                                    <include reference="4xH-Qt-LQD"/>
-                                    <include reference="6qN-OF-y3m"/>
-                                    <include reference="8Qw-Nv-bgl"/>
-                                    <include reference="X0y-L7-gBs"/>
-                                    <include reference="h7y-aG-msC"/>
                                 </mask>
                             </variation>
                         </view>

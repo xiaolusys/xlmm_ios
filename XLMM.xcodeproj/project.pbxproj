@@ -39,7 +39,6 @@
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
-		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 325BA11C1B68BA1B006D64BD /* goodsthumb.png */; };
 		325DF93E1B69B16000351ACA /* PosterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF93D1B69B16000351ACA /* PosterView.m */; };
 		325DF9401B69B17F00351ACA /* PosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF93F1B69B17F00351ACA /* PosterView.xib */; };
@@ -272,16 +271,6 @@
 		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		325BA1081B68B18A006D64BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 325BA0E61B68B18A006D64BD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 325BA0ED1B68B18A006D64BD;
-			remoteInfo = XLMM;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
@@ -332,7 +321,6 @@
 		325BA0F61B68B18A006D64BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		325BA0FE1B68B18A006D64BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		325BA1011B68B18A006D64BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
 		325BA11C1B68BA1B006D64BD /* goodsthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goodsthumb.png; path = ../goodsthumb.png; sourceTree = "<group>"; };
@@ -695,13 +683,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		325BA1041B68B18A006D64BD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -790,7 +771,6 @@
 			isa = PBXGroup;
 			children = (
 				325BA0EE1B68B18A006D64BD /* XLMM.app */,
-				325BA1071B68B18A006D64BD /* XLMMTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1396,41 +1376,18 @@
 			productReference = 325BA0EE1B68B18A006D64BD /* XLMM.app */;
 			productType = "com.apple.product-type.application";
 		};
-		325BA1061B68B18A006D64BD /* XLMMTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 325BA1141B68B18A006D64BD /* Build configuration list for PBXNativeTarget "XLMMTests" */;
-			buildPhases = (
-				325BA1031B68B18A006D64BD /* Sources */,
-				325BA1041B68B18A006D64BD /* Frameworks */,
-				325BA1051B68B18A006D64BD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				325BA1091B68B18A006D64BD /* PBXTargetDependency */,
-			);
-			name = XLMMTests;
-			productName = XLMMTests;
-			productReference = 325BA1071B68B18A006D64BD /* XLMMTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		325BA0E61B68B18A006D64BD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "上海己美";
 				TargetAttributes = {
 					325BA0ED1B68B18A006D64BD = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = QM2A85BC28;
-					};
-					325BA1061B68B18A006D64BD = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 69QQ367Q33;
-						TestTargetID = 325BA0ED1B68B18A006D64BD;
 					};
 				};
 			};
@@ -1448,7 +1405,6 @@
 			projectRoot = "";
 			targets = (
 				325BA0ED1B68B18A006D64BD /* XLMM */,
-				325BA1061B68B18A006D64BD /* XLMMTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1594,13 +1550,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		325BA1051B68B18A006D64BD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1722,23 +1671,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		325BA1031B68B18A006D64BD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		325BA1091B68B18A006D64BD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 325BA0ED1B68B18A006D64BD /* XLMM */;
-			targetProxy = 325BA1081B68B18A006D64BD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		325BA1001B68B18A006D64BD /* LaunchScreen.xib */ = {
@@ -1773,6 +1706,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1787,11 +1721,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "b7b9b8b0-8eee-4717-bc01-9a37edf5009c";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos8.0;
 			};
 			name = Debug;
 		};
@@ -1824,10 +1758,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "b7b9b8b0-8eee-4717-bc01-9a37edf5009c";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos8.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1836,15 +1770,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1865,8 +1800,10 @@
 					"$(PROJECT_DIR)/WeChatSDK_1.5_OnlyIphone",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaoumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b7b9b8b0-8eee-4717-bc01-9a37edf5009c";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos9.0;
 			};
 			name = Debug;
 		};
@@ -1874,15 +1811,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1903,48 +1841,10 @@
 					"$(PROJECT_DIR)/WeChatSDK_1.5_OnlyIphone",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b7b9b8b0-8eee-4717-bc01-9a37edf5009c";
-			};
-			name = Release;
-		};
-		325BA1151B68B18A006D64BD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = XLMMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaoumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XLMM.app/XLMM";
-			};
-			name = Debug;
-		};
-		325BA1161B68B18A006D64BD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = XLMMTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XLMM.app/XLMM";
+				SDKROOT = iphoneos9.0;
 			};
 			name = Release;
 		};
@@ -1965,15 +1865,6 @@
 			buildConfigurations = (
 				325BA1121B68B18A006D64BD /* Debug */,
 				325BA1131B68B18A006D64BD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		325BA1141B68B18A006D64BD /* Build configuration list for PBXNativeTarget "XLMMTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				325BA1151B68B18A006D64BD /* Debug */,
-				325BA1161B68B18A006D64BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
