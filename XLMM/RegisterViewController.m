@@ -13,7 +13,7 @@
 @interface RegisterViewController ()
 {
     NSTimer *countDownTimer;
-    
+    UILabel *buttonLabel;
     int secondsCountDown;
 }
 @end
@@ -49,6 +49,18 @@
     _resetPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _setPasswordTextField.delegate = self;
     _resetPasswordTextField.delegate = self;
+    
+    buttonLabel = [[UILabel  alloc] init];
+    buttonLabel.text = @"获取验证码";
+    buttonLabel.frame = CGRectMake(0, 8, 180, 30);
+    
+    
+    buttonLabel.textColor = [UIColor blueColor];
+    buttonLabel.textAlignment = NSTextAlignmentLeft;
+    buttonLabel.font = [UIFont systemFontOfSize:18];
+    [self.getCodeBtn addSubview:buttonLabel];
+    //[self.getCodeBtn setBackgroundColor:[UIColor clearColor]];
+    
     
 }
 
@@ -183,9 +195,7 @@
             countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
              _getCodeBtn.userInteractionEnabled = NO;
              [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//             [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
-             
-             //[self.navigationController popViewControllerAnimated:YES];
+
              
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -198,7 +208,7 @@
 - (void)timeFireMethod
 {
     secondsCountDown--;
-    [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
+    buttonLabel.text = [NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] ;
     
     if (secondsCountDown == 55)
     {
@@ -206,7 +216,8 @@
         [countDownTimer invalidate];
         
         _getCodeBtn.userInteractionEnabled = YES;
-        [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码"] forState:UIControlStateNormal];
+        buttonLabel.text = @"获取验证码";
+        
         [_getCodeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         
     }
