@@ -235,7 +235,7 @@ BOOL isImageCache = NO;
         NSLog(@"error = %@", error.description);
         return;
     }
-    NSLog(@"poster data : %@", jsonDic);
+//    NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     PosterModel *childModel = [PosterModel new];
@@ -276,7 +276,7 @@ BOOL isImageCache = NO;
         NSLog(@"error = %@", error.description);
         return;
     }
-    NSLog(@"promote data = %@", promoteDic);
+//    NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
     ladyListNumber = ladyArray.count;
     for (NSDictionary *ladyInfo in ladyArray) {
