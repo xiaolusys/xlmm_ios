@@ -239,6 +239,8 @@
 		32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */; };
 		32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */; };
 		32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */; };
+		32CF039F1BB14D2900F4FF83 /* WXLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CF039D1BB14D2900F4FF83 /* WXLoginController.m */; settings = {ASSET_TAGS = (); }; };
+		32CF03A01BB14D2900F4FF83 /* WXLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CF039E1BB14D2900F4FF83 /* WXLoginController.xib */; settings = {ASSET_TAGS = (); }; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
 		32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
@@ -608,6 +610,9 @@
 		32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCartsView.xib; sourceTree = "<group>"; };
 		32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-fanhuiqianye.png"; path = "../icon-fanhuiqianye.png"; sourceTree = "<group>"; };
 		32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Unknown.jpeg; path = ../Unknown.jpeg; sourceTree = "<group>"; };
+		32CF039C1BB14D2900F4FF83 /* WXLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXLoginController.h; sourceTree = "<group>"; };
+		32CF039D1BB14D2900F4FF83 /* WXLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXLoginController.m; sourceTree = "<group>"; };
+		32CF039E1BB14D2900F4FF83 /* WXLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXLoginController.xib; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
 		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
@@ -752,6 +757,9 @@
 				32976B841BA16C190045ADB9 /* ModifyshenqingViewController.h */,
 				32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */,
 				32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */,
+				32CF039C1BB14D2900F4FF83 /* WXLoginController.h */,
+				32CF039D1BB14D2900F4FF83 /* WXLoginController.m */,
+				32CF039E1BB14D2900F4FF83 /* WXLoginController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -1474,6 +1482,7 @@
 				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
+				32CF03A01BB14D2900F4FF83 /* WXLoginController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
@@ -1599,6 +1608,7 @@
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				32CF039F1BB14D2900F4FF83 /* WXLoginController.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
 				320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */,

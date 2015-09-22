@@ -10,6 +10,7 @@
 #import "LogInViewController.h"
 #import "MMClass.h"
 #import "WXApi.h"
+#import "WXLoginController.h"
 
 @interface EnterViewController ()<WXApiDelegate>{
     NSTimer *theTimer;
@@ -61,18 +62,90 @@
 }
 
 
+/*
+
+
+
+
+
+
+
+
+
+*/
+
+
 - (void)update:(NSNotificationCenter *)notification{
     NSLog(@"微信一键登录成功， 请您绑定手机号");
     
     
     
-    NSString *unionid = [[NSUserDefaults standardUserDefaults]objectForKey:@"unionid"];
-    NSLog(@"unionid = %@", unionid);
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    NSLog(@"用户信息 = %@", dic);
+    
+    //http://m.xiaolu.so/rest/v1/register/wxapp_login
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login", Root_URL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSLog(@"urlString = %@", urlString);
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    NSString* dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], [dic objectForKey:@"openid"], [dic objectForKey:@"unionid"]];
+    NSLog(@"params = %@", dict);
+    
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    [postRequest setHTTPBody:data];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //  [self showAlertWait];
+    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        NSLog(@"response = %@", httpResponse);
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"dictionary = %@", dictionary);
+        
+        NSLog(@"dataString = %@", str);
+        
+        
+        
+        //提示用户输入手机号和密码：
+        
+        
+        
+        
+        
+        if (httpResponse.statusCode != 200) {
+            NSLog(@"出错了");
+              return;
+        }
+        
+        if (connectionError != nil) {
+            NSLog(@"error = %@", connectionError);
+            return;
+        }
+        
+    
+        
+        
+        
+    }];
+
     
     
     
     
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+    wxloginVC.title = @"微信登陆";
+    
+    
+    [self.navigationController pushViewController:wxloginVC animated:YES];
+    
+    
+//    [self.navigationController popViewControllerAnimated:YES];
     
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setBool:YES forKey:@"login"];

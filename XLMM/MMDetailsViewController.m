@@ -132,6 +132,10 @@
     [frontView addSubview:indicatorView];
     [self.view addSubview:frontView];
     
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeBack:)];
+    [ self.view addGestureRecognizer:swipe];
+    
+    
     self.title = @"商品详情";
     NSLog(@"%@", self.urlString);
     
@@ -148,6 +152,15 @@
     
      [self downloadData];
     
+}
+
+- (void)swipeBack:(UIGestureRecognizer *)gesture{
+    UISwipeGestureRecognizer *swipe = (UISwipeGestureRecognizer *)gesture;
+    
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{

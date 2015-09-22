@@ -162,6 +162,19 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeBack:)];
+    [ self.view addGestureRecognizer:swipe];
+    
+    
+}
+
+- (void)swipeBack:(UIGestureRecognizer *)gesture{
+    UISwipeGestureRecognizer *swipe = (UISwipeGestureRecognizer *)gesture;
+    
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
 }
 
 
@@ -422,7 +435,7 @@ static NSString * ksimpleCell = @"simpleCell";
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
- }
- */
+}
+*/
 
 @end

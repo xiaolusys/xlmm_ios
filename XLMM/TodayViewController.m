@@ -242,7 +242,6 @@ BOOL isImageCache = NO;
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-    [posterDataArray addObject:childModel];
 
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
     PosterModel *ladyModel = [PosterModel new];
@@ -250,6 +249,8 @@ BOOL isImageCache = NO;
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
     ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
     [posterDataArray addObject:ladyModel];
+
+    [posterDataArray addObject:childModel];
 
     step1 = YES;
     if (step1 && step2) {

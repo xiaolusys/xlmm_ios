@@ -208,7 +208,7 @@
                 NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
                 
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:[dic objectForKey:@"unionid"] forKey:@"unionid"];
+                [userDefaults setObject:dic forKey:@"userInfo"];
                 
                 
                 
