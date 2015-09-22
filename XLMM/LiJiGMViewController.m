@@ -49,7 +49,9 @@
     NSLog(@"selectAddressModel = %@", selectedAddModel.addressID);
     
     
-    if (!paySucceed) {
+   // UIGestureRecognizer *
+    
+    if(!paySucceed) {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -291,37 +293,6 @@
         
    
     }
-  
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    
-//  //  NSLog(@"phoneNumber = %@\n", _numberTextField.text);
-//    NSDictionary *parameters = @{@"sku_id": self.skuID,
-//                                 @"sku_num":[NSNumber numberWithInt:i]};
-//    NSLog(@"paraneters = %@", parameters);
-//    __block BOOL flag = YES;
-//    [manager POST:@"http://youni.huyi.so/rest/v1/carts/sku_num_enough" parameters:parameters
-//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//              
-//              NSLog(@"JSON: %@", responseObject);
-//              
-//              
-//          }
-//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              NSLog(@"i = %d", i);
-////NSLog(@"Error: %@", error);
-//              flag = NO;
-//              NSDictionary *dic = error.userInfo;
-//              NSData *data =  [dic objectForKey:@"com.alamofire.serialization.response.error.data"];
-//              NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//              NSLog(@"dic = %@", str);
-//              
-//          }];
-//    if (flag == NO) {
-//        i--;
-//    }
-//    
-//    [self downLoadWithURLString:urlString andSelector:@selector(fetchedNumberData:)];
     allprice = price * i;
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
     allpay = allprice + yunfeifee -youhuifee;
@@ -579,34 +550,7 @@
             }
         }
         
-    }else if (button.tag == 82){
-      //  NSLog(@"yinglian");
-        
-        for (int i = 60; i<64; i++) {
-            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
-            if (i == button.tag - 20) {
-                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
-            }
-        }
-        
-    }else if (button.tag == 83){
-     //   NSLog(@"baidu");
-        for (int i = 60; i<64; i++) {
-            UIImageView *imageView = (UIImageView *)[self.myZhifuView viewWithTag:i];
-            if (i == button.tag - 20) {
-                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
-            }
-        }
-        
-        
+            
     }
 }
 @end

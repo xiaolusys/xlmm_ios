@@ -7,14 +7,13 @@
 //
 
 #import "AppDelegate.h"
-
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "LeftMenuViewController.h"
-
 #import "MMClass.h"
-
 #define login @"login"
+#define kappid @"wx25fcb32689872499"
+#define kappsecret @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @interface AppDelegate ()
 
@@ -23,6 +22,7 @@
 @property (nonatomic ,copy) NSString *openid;
 @property (nonatomic, strong) NSDictionary *tokenInfo;
 @property (nonatomic, strong) NSDictionary *userInfo;
+
 
 
 @end
@@ -131,7 +131,7 @@
 {
     
     
-    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",@"wx25fcb32689872499",@"3c7b4e3eb5ae4cfb132b2ac060a872ee",self.wxCode];
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",kappid,kappsecret,self.wxCode];
     
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURL *zoneUrl = [NSURL URLWithString:url];
@@ -206,6 +206,14 @@
                 //                self.nickname.text = [dic objectForKey:@"nickname"];
                 //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
                 NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:[dic objectForKey:@"unionid"] forKey:@"unionid"];
+                
+                
+                
+                [userDefaults synchronize];
+                
                 
                 NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object: self ];
                 NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];

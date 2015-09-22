@@ -10,12 +10,9 @@
 #import "RESideMenu.h"
 #import "WXApi.h"
 
-
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RESideMenuDelegate, WXApiDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 
 @end
 

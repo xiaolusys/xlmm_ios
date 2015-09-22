@@ -41,10 +41,10 @@
 #define kPassWord @"password"
 
 //#define Root_URL @"http://192.168.1.61:8000"
-#define Root_URL @"http://youni.huyi.so"
+//#define Root_URL @"http://youni.huyi.so"
 
 
-//#define Root_URL @"http://m.xiaolu.so"
+#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 

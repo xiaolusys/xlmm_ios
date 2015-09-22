@@ -215,7 +215,7 @@
     [self setTime];
     
    
-    [self createLianxiKefu];
+   // [self createLianxiKefu];
 }
 - (void)createLianxiKefu{
     

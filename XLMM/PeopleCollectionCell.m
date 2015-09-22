@@ -55,7 +55,11 @@
 }
 
 - (void)fillData:( PromoteModel*)model{
-    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+    
+    
+    //[self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+    self.imageView.image = [UIImage imagewithURLString:model.picPath];
+    
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];

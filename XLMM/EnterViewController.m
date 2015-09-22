@@ -63,6 +63,15 @@
 
 - (void)update:(NSNotificationCenter *)notification{
     NSLog(@"微信一键登录成功， 请您绑定手机号");
+    
+    
+    
+    NSString *unionid = [[NSUserDefaults standardUserDefaults]objectForKey:@"unionid"];
+    NSLog(@"unionid = %@", unionid);
+    
+    
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
     
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
@@ -134,7 +143,7 @@
 {
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
-    req.state = @"123" ;
+    req.state = @"xiaolu" ;
     
     NSLog(@"req = %@", req);
     [WXApi sendReq:req];
@@ -142,13 +151,7 @@
 
 
 
-//
 
-/*! @brief 检查微信是否已被用户安装
- *
- * @return 微信已安装返回YES，未安装返回NO。
- */
-//+(BOOL) isWXAppInstalled;
 
 
 

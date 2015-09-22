@@ -134,11 +134,7 @@
 
 - (IBAction)confirmClicked:(id)sender {
     NSLog(@"确认");
-    if (![self.setPasswordTextField.text isEqualToString:self.confirmPasswordTextField.text])
-    {
-        self.passwordLabel.hidden = NO;
-        return;
-    } else{
+   
         self.passwordLabel.hidden = YES;
         
         NSLog(@"注册");
@@ -188,7 +184,7 @@
               }];
 
         
-    }
+    
 }
 
 - (IBAction)getCode:(id)sender {
