@@ -87,6 +87,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login", Root_URL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSLog(@"urlString = %@", urlString);
+    
+    
+    //微信登录 hash算法。。。。
+    
+    
+    
+    
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     NSString* dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], [dic objectForKey:@"openid"], [dic objectForKey:@"unionid"]];
     NSLog(@"params = %@", dict);

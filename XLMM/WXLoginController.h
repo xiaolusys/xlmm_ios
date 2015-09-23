@@ -21,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *codeButton;
 - (IBAction)getCodeClicked:(id)sender;
 - (IBAction)commitClicked:(id)sender;
+- (IBAction)backClicked:(id)sender;
 
 @end
