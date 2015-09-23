@@ -1116,8 +1116,6 @@
 			isa = PBXGroup;
 			children = (
 				3299D8721B8C7FAA000AA744 /* Alipay */,
-				3299D8761B8C7FAA000AA744 /* ApplePay */,
-				3299D8771B8C7FAA000AA744 /* Bfb */,
 				3299D87E1B8C7FAA000AA744 /* UnionPay */,
 				3299D8811B8C7FAA000AA744 /* Wx */,
 			);
@@ -1132,68 +1130,6 @@
 				3299D8751B8C7FAA000AA744 /* libpingpp+alipay.a */,
 			);
 			path = Alipay;
-			sourceTree = "<group>";
-		};
-		3299D8761B8C7FAA000AA744 /* ApplePay */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ApplePay;
-			sourceTree = "<group>";
-		};
-		3299D8771B8C7FAA000AA744 /* Bfb */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8781B8C7FAA000AA744 /* Dependencies */,
-			);
-			path = Bfb;
-			sourceTree = "<group>";
-		};
-		3299D8781B8C7FAA000AA744 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8791B8C7FAA000AA744 /* ASIHttpRequest */,
-				3299D87A1B8C7FAA000AA744 /* BaiduMobStat */,
-				3299D87C1B8C7FAA000AA744 /* JSONKit */,
-				3299D87D1B8C7FAA000AA744 /* SDWebImage */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		3299D8791B8C7FAA000AA744 /* ASIHttpRequest */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ASIHttpRequest;
-			sourceTree = "<group>";
-		};
-		3299D87A1B8C7FAA000AA744 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-				3299D87B1B8C7FAA000AA744 /* BaiduMobStat */,
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3299D87B1B8C7FAA000AA744 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3299D87C1B8C7FAA000AA744 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		3299D87D1B8C7FAA000AA744 /* SDWebImage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SDWebImage;
 			sourceTree = "<group>";
 		};
 		3299D87E1B8C7FAA000AA744 /* UnionPay */ = {
@@ -1798,12 +1734,6 @@
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
 					"$(PROJECT_DIR)/XLMM/lib",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
-					"$(PROJECT_DIR)/lib/Channels/ApplePay",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/JSONKit",
-					"$(PROJECT_DIR)/lib/Channels/Bfb",
 					"$(PROJECT_DIR)/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/lib/Channels/Wx",
 					"$(PROJECT_DIR)/lib",
@@ -1839,12 +1769,6 @@
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
 					"$(PROJECT_DIR)/XLMM/lib",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
-					"$(PROJECT_DIR)/lib/Channels/ApplePay",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/BaiduMobStat",
-					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/JSONKit",
-					"$(PROJECT_DIR)/lib/Channels/Bfb",
 					"$(PROJECT_DIR)/lib/Channels/UnionPay",
 					"$(PROJECT_DIR)/lib/Channels/Wx",
 					"$(PROJECT_DIR)/lib",
