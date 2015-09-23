@@ -11,6 +11,8 @@
 #import "MMClass.h"
 #import "WXApi.h"
 #import "WXLoginController.h"
+#import <CommonCrypto/CommonDigest.h>
+#import "NSString+Encrypto.h"
 
 @interface EnterViewController ()<WXApiDelegate>{
     NSTimer *theTimer;
@@ -46,7 +48,12 @@
     [self setInfo];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    NSString *strings = @"a=1&b=3&c=2&noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c";
     
+    NSLog(@"%@", [strings sha1]);
+    if ([[strings sha1] isEqualToString:@"366a83819b064149a7f4e9f6c06f1e60eaeb02f7"]) {
+        NSLog(@"yiyang");
+    }
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
         
@@ -113,7 +120,7 @@
     long time = [timeSp longLongValue];
     NSLog(@"time = %ld", (long)time);
     
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<6; i++) {
         index = arc4random()%count;
         // NSLog(@"index = %d", index);
         NSString *string = [randomArray objectAtIndex:index];
@@ -122,14 +129,28 @@
     NSLog(@"%@%@",timeSp ,randomstring);
 
     
-    
-    
-    
+//    NSString *secret = @"3c7b4e3eb5ae4c";
+    NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    NSString* dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], [dic objectForKey:@"openid"], [dic objectForKey:@"unionid"]];
-    NSLog(@"params = %@", dict);
+   
     
+    //获得参数，升序排列
+    
+    NSString* sign_params = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&secret=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], noncestr,[dic objectForKey:@"openid"],SECRET,[dic objectForKey:@"unionid"]];
+    
+    
+    NSLog(@"sign_params = %@", sign_params);
+    
+  //  NSString *sign = hash.sha1(sign_string).hexdigest();
+    NSString *sign = [sign_params sha1];
+    NSString *dict;
+    
+    NSLog(@"sign = %@", sign);
+    
+      dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&sign=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], noncestr,[dic objectForKey:@"openid"],sign,[dic objectForKey:@"unionid"]];
+
+    NSLog(@"params = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
@@ -152,37 +173,20 @@
         
         //提示用户输入手机号和密码：
         
-        
-        
-        
-        
-        if (httpResponse.statusCode != 200) {
-            NSLog(@"出错了");
-              return;
+        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
+            NSLog(@"未绑定手机号码");
+            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+            wxloginVC.userInfo = dic;
+            [self.navigationController pushViewController:wxloginVC animated:YES];
+            
+        } else {
+            NSLog(@"已绑定手机号码");
+            [self.navigationController popViewControllerAnimated:YES];
+            
         }
-        
-        if (connectionError != nil) {
-            NSLog(@"error = %@", connectionError);
-            return;
-        }
-        
-    
-        
-        
-        
     }];
 
-    if ([[dic objectForKey:@"mobile"] isEqualToString:@""]) {
-        NSLog(@"未绑定手机号码");
-        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-        wxloginVC.userInfo = dic;
-        [self.navigationController pushViewController:wxloginVC animated:YES];
-
-    } else {
-        NSLog(@"已绑定手机号码");
-        [self.navigationController popViewControllerAnimated:YES];
-
-    }
+ 
     
     
     
@@ -201,6 +205,23 @@
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self name:@"login" object:nil];
 }
+
+//- (NSString*) sha1
+//{
+//    const charchar *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
+//    NSData *data = [NSData dataWithBytes:cstr length:self.length];
+//    
+//    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+//    
+//    CC_SHA1(data.bytes, data.length, digest);
+//    
+//    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+//    
+//    for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
+//        [output appendFormat:@"%02x", digest[i]];
+//    
+//    return output;
+//}
 - (void)setInfo{
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -223,8 +244,6 @@
 }
 
 - (NSArray *)randomArray{
-//    NSArray *array = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0",@"a",@"b",@"c",@"d",@"e",@"f",@"g",@"h",@"i",@"j",@"k",@"l",@"m",@"n",@"o",@"p",@"q",@"r",@"s",@"t",@"u",@"v",@"w",@"x",@"y",@"z",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
-//    return array;
     NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
     
     for (int i = 0; i<10; i++) {
@@ -233,12 +252,6 @@
         [mutable addObject:string];
     }
     for (char i = 'a'; i<='z'; i++) {
-       // NSLog(@"%c", i);
-        NSString *string = [NSString stringWithFormat:@"%c", i];
-        
-        [mutable addObject:string];
-    }
-    for (char i = 'A'; i<='Z'; i++) {
        // NSLog(@"%c", i);
         NSString *string = [NSString stringWithFormat:@"%c", i];
         
