@@ -139,7 +139,7 @@
     
     
     WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-    wxloginVC.title = @"微信登陆";
+    wxloginVC.userInfo = dic;
     
     
     [self.navigationController pushViewController:wxloginVC animated:YES];

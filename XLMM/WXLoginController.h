@@ -10,4 +10,16 @@
 
 @interface WXLoginController : UIViewController
 
+@property (nonatomic, strong)NSDictionary *userInfo;
+
+@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+@property (weak, nonatomic) IBOutlet UITextField *codeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *psdTextField;
+@property (weak, nonatomic) IBOutlet UITextField *confirmTextField;
+@property (weak, nonatomic) IBOutlet UIButton *codeButton;
+- (IBAction)getCodeClicked:(id)sender;
+- (IBAction)commitClicked:(id)sender;
+
 @end

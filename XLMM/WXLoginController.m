@@ -17,6 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.title = @"微信登录";
+    NSLog(@"用户信息 = %@", self.userInfo);
+    self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];
+    self.nameLabel.text = [self.userInfo objectForKey:@"nickname"];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,4 +41,13 @@
 */
 
 
+- (IBAction)getCodeClicked:(id)sender {
+    NSLog(@"验证码");
+    
+}
+
+- (IBAction)commitClicked:(id)sender {
+    NSLog(@"提交");
+    
+}
 @end
