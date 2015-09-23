@@ -46,7 +46,7 @@
 
 #define Root_URL @"http://m.xiaolu.so"
 
-#define SECRET @"3c7b4e3eb5ae4c"
+#define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 
