@@ -14,6 +14,7 @@
 
 @interface EnterViewController ()<WXApiDelegate>{
     NSTimer *theTimer;
+    NSMutableString *randomstring;
     
     
     
@@ -58,17 +59,24 @@
         self.wxButton.hidden = YES;
 
     }
+   // NSLog(@"randomArray = %@", [self randomArray]);
+    randomstring = [[NSMutableString alloc] init];
+    
     
 }
 
 
 /*
+ 
+ 
+ 
+1442999252RwOO7Qb70y
+1442999240QbaUmMxKys
+14429992191wXjOfh0vf
 
-
-
-
-
-
+ XPoAc9iDonWDsSdd8SL1
+ hxnrW2q8bNW3FGq7CuTY
+ Fq7OEkL7WZ0KhcSkCfud
 
 
 
@@ -90,6 +98,30 @@
     
     
     //微信登录 hash算法。。。。
+    
+    
+
+    
+    NSArray *randomArray = [self randomArray];
+    unsigned long count = (unsigned long)randomArray.count;
+    NSLog(@"count = %lu", count);
+    int index = 0;
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    NSLog(@"timeSp:%@",timeSp);
+    
+    long time = [timeSp longLongValue];
+    NSLog(@"time = %ld", (long)time);
+    
+    for (int i = 0; i<10; i++) {
+        index = arc4random()%count;
+        // NSLog(@"index = %d", index);
+        NSString *string = [randomArray objectAtIndex:index];
+        [randomstring appendString:string];
+    }
+    NSLog(@"%@%@",timeSp ,randomstring);
+
+    
     
     
     
@@ -140,19 +172,26 @@
         
     }];
 
+    if ([[dic objectForKey:@"mobile"] isEqualToString:@""]) {
+        NSLog(@"未绑定手机号码");
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
+
+    } else {
+        NSLog(@"已绑定手机号码");
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
     
     
     
     
-    
-    WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-    wxloginVC.userInfo = dic;
+ 
     
     
-    [self.navigationController pushViewController:wxloginVC animated:YES];
     
     
-//    [self.navigationController popViewControllerAnimated:YES];
     
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setBool:YES forKey:@"login"];
@@ -179,6 +218,34 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     
+    
+    
+}
+
+- (NSArray *)randomArray{
+//    NSArray *array = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0",@"a",@"b",@"c",@"d",@"e",@"f",@"g",@"h",@"i",@"j",@"k",@"l",@"m",@"n",@"o",@"p",@"q",@"r",@"s",@"t",@"u",@"v",@"w",@"x",@"y",@"z",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
+//    return array;
+    NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
+    
+    for (int i = 0; i<10; i++) {
+       // NSLog(@"%d", i);
+       NSString *string = [NSString stringWithFormat:@"%d",i];
+        [mutable addObject:string];
+    }
+    for (char i = 'a'; i<='z'; i++) {
+       // NSLog(@"%c", i);
+        NSString *string = [NSString stringWithFormat:@"%c", i];
+        
+        [mutable addObject:string];
+    }
+    for (char i = 'A'; i<='Z'; i++) {
+       // NSLog(@"%c", i);
+        NSString *string = [NSString stringWithFormat:@"%c", i];
+        
+        [mutable addObject:string];
+    }
+    NSArray *array = [NSArray arrayWithArray:mutable];
+    return array;
     
     
 }
