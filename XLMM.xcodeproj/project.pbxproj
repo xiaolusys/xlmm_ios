@@ -697,6 +697,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		320530151BB4007B0012AFA1 /* Cagetorys */ = {
+			isa = PBXGroup;
+			children = (
+				320530121BB3FE430012AFA1 /* NSObject+FillDataModel.h */,
+				320530131BB3FE430012AFA1 /* NSObject+FillDataModel.m */,
+				320225D21BB2CFB000B24831 /* NSString+Encrypto.h */,
+				320225D31BB2CFB000B24831 /* NSString+Encrypto.m */,
+				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
+				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
+				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
+				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
+			);
+			name = Cagetorys;
+			sourceTree = "<group>";
+		};
 		32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +807,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				320530151BB4007B0012AFA1 /* Cagetorys */,
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
 				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
@@ -804,8 +820,6 @@
 				325DF95C1B6A472600351ACA /* Controller */,
 				32E00C8F1BA7B48500A73390 /* Custom Class */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
-				320225D21BB2CFB000B24831 /* NSString+Encrypto.h */,
-				320225D31BB2CFB000B24831 /* NSString+Encrypto.m */,
 			);
 			path = XLMM;
 			sourceTree = "<group>";
@@ -815,8 +829,6 @@
 			children = (
 				325BA0F21B68B18A006D64BD /* Info.plist */,
 				325BA0F31B68B18A006D64BD /* main.m */,
-				320530121BB3FE430012AFA1 /* NSObject+FillDataModel.h */,
-				320530131BB3FE430012AFA1 /* NSObject+FillDataModel.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1259,10 +1271,6 @@
 			children = (
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
-				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
-				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
-				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
-				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
