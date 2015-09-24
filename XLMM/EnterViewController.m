@@ -52,7 +52,7 @@
     
     NSLog(@"%@", [strings sha1]);
     if ([[strings sha1] isEqualToString:@"366a83819b064149a7f4e9f6c06f1e60eaeb02f7"]) {
-        NSLog(@"yiyang");
+        NSLog(@"****一样的\n");
     }
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
