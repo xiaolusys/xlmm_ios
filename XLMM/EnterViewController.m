@@ -48,10 +48,10 @@
     [self setInfo];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
-    NSString *strings = @"a=1&b=3&c=2&noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c";
+    NSString *strings = @"noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c&timestamp=1442995986";
     
     NSLog(@"%@", [strings sha1]);
-    if ([[strings sha1] isEqualToString:@"366a83819b064149a7f4e9f6c06f1e60eaeb02f7"]) {
+    if ([[strings sha1] isEqualToString:@"39ae931c59394c9b4b0973b3902956f63a35c21e"]) {
         NSLog(@"****一样的\n");
     }
     if ([WXApi isWXAppInstalled]) {
@@ -100,11 +100,7 @@
     NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
     
-    //http://m.xiaolu.so/rest/v1/register/wxapp_login
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login", Root_URL];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSLog(@"urlString = %@", urlString);
-    
+ 
     
     //微信登录 hash算法。。。。
     
@@ -133,61 +129,37 @@
     
 //    NSString *secret = @"3c7b4e3eb5ae4c";
     NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
-    
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+
    
     
     //获得参数，升序排列
     
  
     
-       NSString *dataUTF8 = [[dic objectForKey:@"nickname"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSLog(@"dataUTF8 = %@", dataUTF8);
-    
-  NSString *replacestring = @"\\x";
-    
-    
-    NSRange range;
-    NSMutableString *strings;
-    strings = [[NSMutableString alloc] initWithString:dataUTF8];
-    
-    do {
-        range = [strings rangeOfString:@"%"];
-        if (range.location == NSNotFound) {
-            break;
-        }
-        [strings replaceCharactersInRange:range withString:replacestring];
-        
-    } while (true);
-    
-    NSLog(@"dataUTF8 = %@",strings);
-    NSString *lowString = [self toLower:strings];
-   
-    NSLog(@"dataUTF8 = %@", lowString);
     
    
     
-    NSString* sign_params = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&secret=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], @"1443057792v6s5fb",[dic objectForKey:@"openid"],SECRET,[dic objectForKey:@"unionid"]];
+    NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
     
     
-    NSString *tosign_params = @"headimgurl=http://wx.qlogo.cn/mmopen/jfpC8E6yr8fmy8ZiaDvgErTtktib0FK1n7Y6SkoO6KLSs0q0TKibENkS0XxtQicvMqiczEGAMAp67kV9Lpich7HXHzmhUeiaMvibQuVM/0&nickname=\xe9\x99\x88\xe9\x87\x8d\xe9\x98\xb3@\xe5\xb0\x8f\xe9\xb9\xbf\xe7\xbe\x8e\xe7\xbe\x8e&noncestr=1443057792v6s5fb&openid=oLcb0wdvxuW_Ndony36bbqc8PEXE&secret=3c7b4e3eb5ae4cfb132b2ac060a872ee&unionid=o29cQsyyVk9IQnZmt6emtt3mGSRQ";
-    
-    if ([tosign_params isEqualToString:sign_params]) {
-        NSLog(@"是一样的啊  ————————————");
-    }else{
-        NSLog(@"不一样啊——————————————");
-    }
+  
     
     NSLog(@"1.————》%@", sign_params);
-    NSLog(@"2.————》%@", tosign_params);
-  //  NSString *sign = hash.sha1(sign_string).hexdigest();
-    NSString *sign = [tosign_params sha1];
+
+    NSString *sign = [sign_params sha1];
     NSString *dict;
     
     NSLog(@"sign = %@", sign);
     
-      dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&sign=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], noncestr,[dic objectForKey:@"openid"],sign,[dic objectForKey:@"unionid"]];
+    
+    //http://m.xiaolu.so/rest/v1/register/wxapp_login
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSLog(@"urlString = %@", urlString);
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+      dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
 
     NSLog(@"params = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];

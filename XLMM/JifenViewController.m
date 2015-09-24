@@ -38,8 +38,11 @@ static NSString * const reuseIdentifier = @"jifenCell";
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
     NSLog(@"url = %@", urlstring);
     
-//    NSString *string = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlstring] encoding:NSUTF8StringEncoding error:nil];
-//    NSData *data = [[NSData alloc] initwith]
+    NSString *string = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlstring] encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dic = [ NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+   // NSLog(@"")
     
     
     
