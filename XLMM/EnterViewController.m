@@ -70,6 +70,8 @@
     randomstring = [[NSMutableString alloc] init];
     
     
+    
+    
 }
 
 
@@ -137,13 +139,50 @@
     
     //获得参数，升序排列
     
-    NSString* sign_params = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&secret=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], noncestr,[dic objectForKey:@"openid"],SECRET,[dic objectForKey:@"unionid"]];
+ 
+    
+       NSString *dataUTF8 = [[dic objectForKey:@"nickname"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"dataUTF8 = %@", dataUTF8);
+    
+  NSString *replacestring = @"\\x";
     
     
-    NSLog(@"sign_params = %@", sign_params);
+    NSRange range;
+    NSMutableString *strings;
+    strings = [[NSMutableString alloc] initWithString:dataUTF8];
     
+    do {
+        range = [strings rangeOfString:@"%"];
+        if (range.location == NSNotFound) {
+            break;
+        }
+        [strings replaceCharactersInRange:range withString:replacestring];
+        
+    } while (true);
+    
+    NSLog(@"dataUTF8 = %@",strings);
+    NSString *lowString = [self toLower:strings];
+   
+    NSLog(@"dataUTF8 = %@", lowString);
+    
+   
+    
+    NSString* sign_params = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&noncestr=%@&openid=%@&secret=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"], @"1443057792v6s5fb",[dic objectForKey:@"openid"],SECRET,[dic objectForKey:@"unionid"]];
+    
+    
+    NSString *tosign_params = @"headimgurl=http://wx.qlogo.cn/mmopen/jfpC8E6yr8fmy8ZiaDvgErTtktib0FK1n7Y6SkoO6KLSs0q0TKibENkS0XxtQicvMqiczEGAMAp67kV9Lpich7HXHzmhUeiaMvibQuVM/0&nickname=\xe9\x99\x88\xe9\x87\x8d\xe9\x98\xb3@\xe5\xb0\x8f\xe9\xb9\xbf\xe7\xbe\x8e\xe7\xbe\x8e&noncestr=1443057792v6s5fb&openid=oLcb0wdvxuW_Ndony36bbqc8PEXE&secret=3c7b4e3eb5ae4cfb132b2ac060a872ee&unionid=o29cQsyyVk9IQnZmt6emtt3mGSRQ";
+    
+    if ([tosign_params isEqualToString:sign_params]) {
+        NSLog(@"是一样的啊  ————————————");
+    }else{
+        NSLog(@"不一样啊——————————————");
+    }
+    
+    NSLog(@"1.————》%@", sign_params);
+    NSLog(@"2.————》%@", tosign_params);
   //  NSString *sign = hash.sha1(sign_string).hexdigest();
-    NSString *sign = [sign_params sha1];
+    NSString *sign = [tosign_params sha1];
     NSString *dict;
     
     NSLog(@"sign = %@", sign);
@@ -204,6 +243,18 @@
     
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self name:@"login" object:nil];
+}
+
+-(NSString *)toLower:(NSString *)str{
+    for (NSInteger i=0; i<str.length; i++) {
+        if ([str characterAtIndex:i]>='A'&[str characterAtIndex:i]<='Z') {
+            //A  65  a  97
+            char  temp=[str characterAtIndex:i]+32;
+            NSRange range=NSMakeRange(i, 1);
+            str=[str stringByReplacingCharactersInRange:range withString:[NSString stringWithFormat:@"%c",temp]];
+        }
+    }
+    return str;
 }
 
 //- (NSString*) sha1

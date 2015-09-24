@@ -34,6 +34,16 @@ static NSString * const reuseIdentifier = @"jifenCell";
     self.title = @"我的积分";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
+    //  http://m.xiaolu.so/rest/v1/integral
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
+    NSLog(@"url = %@", urlstring);
+    
+//    NSString *string = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlstring] encoding:NSUTF8StringEncoding error:nil];
+//    NSData *data = [[NSData alloc] initwith]
+    
+    
+    
+    
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
     
@@ -43,6 +53,8 @@ static NSString * const reuseIdentifier = @"jifenCell";
 //   http://192.168.1.79:8000/rest/v1/integrallog
 
 - (void)downlaodData{
+    
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kIntegrallogURL]];
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
