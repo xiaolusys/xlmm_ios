@@ -117,7 +117,7 @@
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
     NSLog(@"timeSp:%@",timeSp);
     
-    long time = [timeSp longLongValue];
+    long time = [timeSp integerValue];
     NSLog(@"time = %ld", (long)time);
     
     for (int i = 0; i<6; i++) {
@@ -173,17 +173,17 @@
         
         //提示用户输入手机号和密码：
         
-        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
-            NSLog(@"未绑定手机号码");
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
-            
-        } else {
-            NSLog(@"已绑定手机号码");
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }
+//        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
+//            NSLog(@"未绑定手机号码");
+//            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+//            wxloginVC.userInfo = dic;
+//            [self.navigationController pushViewController:wxloginVC animated:YES];
+//            
+//        } else {
+//            NSLog(@"已绑定手机号码");
+//            [self.navigationController popViewControllerAnimated:YES];
+//            
+//        }
     }];
 
  
