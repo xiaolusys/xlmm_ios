@@ -118,7 +118,7 @@
     long time = [timeSp integerValue];
     NSLog(@"time = %ld", (long)time);
     
-    for (int i = 0; i<6; i++) {
+    for (int i = 0; i<8; i++) {
         index = arc4random()%count;
         // NSLog(@"index = %d", index);
         NSString *string = [randomArray objectAtIndex:index];

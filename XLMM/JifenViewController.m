@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JiFenModel.m"
 #import "JiFenCollectionCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface JifenViewController ()
 
@@ -19,7 +20,7 @@
 
 @implementation JifenViewController
 
-static NSString * const reuseIdentifier = @"jifenCell";
+static NSString * reuseIdentifier = @"jifenCell";
 
 - (void)viewDidLoad {
     
@@ -42,7 +43,11 @@ static NSString * const reuseIdentifier = @"jifenCell";
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dic = [ NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
-   // NSLog(@"")
+    NSLog(@"json = %@", dic);
+    NSDictionary *result = [[dic objectForKey:@"results"] lastObject];
+    NSString *jifen = [result objectForKey:@"integral_value"];
+    NSString *titleString = [NSString stringWithFormat:@"我的积分:%@", jifen];
+    self.title = titleString;
     
     
     
@@ -185,8 +190,10 @@ static NSString * const reuseIdentifier = @"jifenCell";
     // Configure the cell
     //cell.backgroundColor = [UIColor redColor];
     JiFenModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    
+//    cell.myImageView.image = [UIImage imagewithURLString:[model.order objectForKey:@"pic_link"]];
     
-    cell.myImageView.image = [UIImage imagewithURLString:[model.order objectForKey:@"pic_link"]];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.order objectForKey:@"pic_link"]]];
     cell.bianhao.text = [model.order objectForKey:@"order_id"];
     cell.jine.text = [NSString stringWithFormat:@"¥%@", model.log_value];
     cell.jinfen.text = [NSString stringWithFormat:@"%@", model.log_value];
