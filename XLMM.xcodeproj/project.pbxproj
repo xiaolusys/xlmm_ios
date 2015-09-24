@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		320225D41BB2CFB000B24831 /* NSString+Encrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 320225D31BB2CFB000B24831 /* NSString+Encrypto.m */; settings = {ASSET_TAGS = (); }; };
+		320530141BB3FE430012AFA1 /* NSObject+FillDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 320530131BB3FE430012AFA1 /* NSObject+FillDataModel.m */; settings = {ASSET_TAGS = (); }; };
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
 		320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320CABDF1BA906D400C62E36 /* PostersViewController.m */; };
@@ -277,6 +278,8 @@
 /* Begin PBXFileReference section */
 		320225D21BB2CFB000B24831 /* NSString+Encrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Encrypto.h"; sourceTree = "<group>"; };
 		320225D31BB2CFB000B24831 /* NSString+Encrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Encrypto.m"; sourceTree = "<group>"; };
+		320530121BB3FE430012AFA1 /* NSObject+FillDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FillDataModel.h"; sourceTree = "<group>"; };
+		320530131BB3FE430012AFA1 /* NSObject+FillDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FillDataModel.m"; sourceTree = "<group>"; };
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
@@ -812,6 +815,8 @@
 			children = (
 				325BA0F21B68B18A006D64BD /* Info.plist */,
 				325BA0F31B68B18A006D64BD /* main.m */,
+				320530121BB3FE430012AFA1 /* NSObject+FillDataModel.h */,
+				320530131BB3FE430012AFA1 /* NSObject+FillDataModel.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1569,6 +1574,7 @@
 				32A288BE1B942F53006DC949 /* Head1View.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
+				320530141BB3FE430012AFA1 /* NSObject+FillDataModel.m in Sources */,
 				32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */,
 				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
 				327F80D51B95A60900EDDF5B /* MJRefreshConst.m in Sources */,

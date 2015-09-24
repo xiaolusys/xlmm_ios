@@ -218,10 +218,11 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     
-    NSDictionary *parameters = @{@"username": @"13816404857",
-                                 @"password1": @"123456",
-                                 @"password2": @"123456",
-                                 @"valid_code":@"204173"};
+    NSDictionary *parameters = @{@"username": self.phoneTextField.text,
+                                 @"password1": self.psdTextField.text,
+                                 @"password2": self.confirmTextField.text,
+                                 @"valid_code":self.codeTextField.text
+                        };
     NSLog(@"parameters = %@", parameters);
     
     
@@ -234,6 +235,33 @@
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"result"];
               NSLog(@"result = %@", string);
+              
+              if ([string isEqualToString:@"0"]) {
+                  [self.navigationController popViewControllerAnimated:YES];
+              }
+              if ([string isEqualToString:@"1"]) {
+                  
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+                  [alterView show];
+              }
+              if ([string isEqualToString:@"2"]) {
+                  
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"参数错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+                  [alterView show];
+              }
+              if ([string isEqualToString:@"3"]) {
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+                  [alterView show];
+              }
+              if ([string isEqualToString:@"4"]) {
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码过期" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+                  [alterView show];
+              }
+              if ([string isEqualToString:@"5"]) {
+                  [self.navigationController popViewControllerAnimated:YES];
+              }
+              
+              
               
               
               
