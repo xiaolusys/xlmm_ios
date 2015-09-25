@@ -13,7 +13,7 @@
 @interface RegisterViewController ()
 {
     NSTimer *countDownTimer;
-    UILabel *buttonLabel;
+    
     int secondsCountDown;
 }
 @end
@@ -50,20 +50,6 @@
     _setPasswordTextField.delegate = self;
     _resetPasswordTextField.delegate = self;
     
-    buttonLabel = [[UILabel  alloc] init];
-    buttonLabel.text = @"获取验证码";
-    buttonLabel.frame = CGRectMake(0, 0, 180, 30);
-    
-    
-    buttonLabel.textColor = [UIColor blueColor];
-    buttonLabel.textAlignment = NSTextAlignmentLeft;
-    buttonLabel.font = [UIFont systemFontOfSize:18];
-    [self.getCodeBtn addSubview:buttonLabel];
-    [self.getCodeBtn setTitle:@"" forState:UIControlStateNormal];
-    
-    //[self.getCodeBtn setBackgroundColor:[UIColor clearColor]];
-    
-    
 }
 
 
@@ -86,29 +72,20 @@
                                 @"password1":password1,
                                 @"password2":password2,
                                 };
-
     
     NSString *stringUrl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
     NSLog(@"url = %@", stringUrl);
-    if ([self.passwordTextField.text isEqualToString:@""]) {
-        self.passwordLabel.text = @"请输入正确的验证码!";
-        self.passwordLabel.hidden = NO;
-        return;
-    }
-    if (![self.setPasswordTextField.text isEqualToString:self.resetPasswordTextField.text]) {
-        self.passwordLabel.text = @"两次密码输入不一样，请重新输入!";
-        self.passwordLabel.hidden = NO;
-        return ;
-    }
-    
-
     [manager POST:stringUrl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
                           // [self.navigationController popViewControllerAnimated:YES];
          
-              
+              if (![self.setPasswordTextField.text isEqualToString:self.resetPasswordTextField.text]) {
+                  self.passwordLabel.text = @"两次密码输入不一样，请重新输入!";
+                  self.passwordLabel.hidden = NO;
+                  return ;
+              }
               int result = [[responseObject objectForKey:@"result"] intValue];
             
               NSLog(@"result = %d", result);
@@ -122,14 +99,14 @@
                   
                   
               } else if(result == 0){
-//                  self.passwordLabel.text = @"该手机已注册，请输入新的手机号";
-//                  self.passwordLabel.hidden = NO;
+                  self.passwordLabel.text = @"该手机已注册，请输入新的手机号";
+                  self.passwordLabel.hidden = NO;
               } else if(result == 1){
                   self.passwordLabel.text = @"验证码输入错误，请重新输入";
                   self.passwordLabel.hidden = NO;
               } else if(result == 2){
-//                  self.passwordLabel.text = @"表单填写有误，请重新输入";
-//                  self.passwordLabel.hidden = NO;
+                  self.passwordLabel.text = @"表单填写有误，请重新输入";
+                  self.passwordLabel.hidden = NO;
               } else if(result == 3){
                   self.passwordLabel.text = @"未获取验证码，请先获取验证码";
                   self.passwordLabel.hidden = NO;
@@ -197,24 +174,22 @@
              if ([string isEqualToString:@"false"]) {
                  self.infoLabel.text = @"请输入正确的手机号码!";
                  self.infoLabel.hidden = NO;
-                 return ;
              } else if([string isEqualToString:@"0"]){
                  self.infoLabel.hidden = NO;
                  self.infoLabel.text = @"该手机号码已经注册过了!";
-                 return ;
              } else{
                  self.infoLabel.hidden = YES;
              }
             countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
              _getCodeBtn.userInteractionEnabled = NO;
-
+             [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//             [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
+             
+             //[self.navigationController popViewControllerAnimated:YES];
              
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
-             self.infoLabel.text = @"请输入正确的手机号码!";
-             self.infoLabel.hidden = NO;
-
              NSLog(@"Error: %@", error);
              
          }];
@@ -223,17 +198,16 @@
 - (void)timeFireMethod
 {
     secondsCountDown--;
-    buttonLabel.text = [NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown];
-    buttonLabel.textColor = [UIColor darkGrayColor];
+    [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
     
     if (secondsCountDown == 55)
     {
-        secondsCountDown= 60;
+        secondsCountDown=60;
         [countDownTimer invalidate];
         
         _getCodeBtn.userInteractionEnabled = YES;
-        buttonLabel.text = @"获取验证码";
-        buttonLabel.textColor = [UIColor blueColor];
+        [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码"] forState:UIControlStateNormal];
+        [_getCodeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         
     }
     

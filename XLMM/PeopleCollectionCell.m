@@ -41,32 +41,33 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-    
-    if ([model.isSaleopen boolValue]) {
-        if ([model.isSaleout boolValue]) {
-            self.backView.hidden = NO;//显示
-        } else{
-            self.backView.hidden = YES; //隐藏
-            
-        }
-        
-        
+    if ([model.isSaleout boolValue]) {
+       
     } else{
-        self.backView.hidden = NO;  //显示
+        self.backView.hidden = YES;
+        
+    }
+    if ([model.isSaleopen boolValue]) {
+        self.backView.hidden = YES;
+    } else{
+        self.backView.hidden = NO;
     }
 }
 
 - (void)fillData:( PromoteModel*)model{
-    
-    
     [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
-    
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
-    self.backView.hidden = YES;
-   
+    if (![model.isSaleopen boolValue] || [model.isSaleout boolValue]) {
+        
+    } else{
+        self.backView.hidden = YES;
+        
+    }
+ 
+    
 }
 
 @end

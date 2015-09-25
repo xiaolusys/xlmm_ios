@@ -16,57 +16,57 @@
 #import "LogInViewController.h"
 #include "EnterViewController.h"
 
-
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
 
 @interface MMRootViewController ()
 {
-    UIView *_view;                  //
-    UIPageViewController *_pageVC;  //
-    NSArray *_pageContentVC;        //
-    NSInteger _pageCurrentIndex;    //
-    BOOL _isFirst;                  //
-    NSInteger topdistance;
+    UIView *_view;
+    UIPageViewController *_pageVC;
+    NSArray *_pageContentVC;
+    NSInteger _pageCurrentIndex;
+    UIButton *leftButton;
+    BOOL _isFirst;
+    
 }
 
 @end
 
 @implementation MMRootViewController
 
-
+//- (void)viewWillAppear:(BOOL)animated{
+//    [super viewWillAppear:animated];
+//
+//        self.navigationController.navigationBarHidden = NO;
+//   
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
-    topdistance = 110;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, topdistance, WIDTH, HEIGHT - topdistance)];
-    [self.view addSubview:_view];//展示pageviews
-    
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+40, WIDTH, HEIGHT - 64 - 5 - 40)];
+    [self.view addSubview:_view];
     _pageCurrentIndex = 0;
-    
     [self createInfo];
     
     [self creatPageData];
 }
 
 - (void)createInfo{
-    
+    self.title = @"小鹿美美";
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"font-logo.png"]];
     imageView.frame = CGRectMake(0, 0, 147, 40);
     self.navigationItem.titleView = imageView;
     
-    UIButton *leftItemButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    
-    [leftItemButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
     leftImageview.frame = CGRectMake(8, 8, 26, 30);
-//    leftItemButton.backgroundColor = [UIColor orangeColor];
-    [leftItemButton addSubview:leftImageview];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftItemButton];
+    [leftButton addSubview:leftImageview];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -77,6 +77,10 @@
     [rightBtn addSubview:loginImageView];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+
+    
+    [ self.view addSubview:[[UIView alloc] init]];
 }
 
 - (void)loginBtnClicked:(UIButton *)button{
@@ -90,25 +94,31 @@
     [self.navigationController pushViewController:loginVC animated:YES];
     }
 }
-  //创建PageVC
+  
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - topdistance);
+    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 45);
+    _pageVC.view.userInteractionEnabled = YES;
+    
     _pageVC.dataSource = self;
     _pageVC.delegate = self;
     
     TodayViewController *todayVC = [[TodayViewController alloc] initWithNibName:@"TodayViewController" bundle:nil];
+    
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
+    
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
     childVC.urlString = kCHILD_LIST_URL;
     childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+  
     ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
     womanVC.urlString = kLADY_LIST_URL;
     womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+    
+    
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];
     
     [_pageVC setViewControllers:@[todayVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
-
     [self addChildViewController:_pageVC];
     [_view addSubview:_pageVC.view];
     [_pageVC didMoveToParentViewController:self];
@@ -121,14 +131,15 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    
+    NSLog(@"DEMOFirstViewController will appear");
     if (_isFirst) {
         
-   
+        NSLog(@"111");
         
     }else{
-   
+        NSLog(@"222");
         
+       // [self presentLeftMenuViewController:leftButton];
 
     }
     
@@ -139,6 +150,7 @@
 {
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    NSLog(@"DEMOFirstViewController will disappear");
    
    
 }
@@ -162,8 +174,7 @@
 #pragma mark --PageViewControllerDelegate--
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
-    
-    
+    NSLog(@"-->%@", pendingViewControllers);
 }
 
 
@@ -171,10 +182,21 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
+
     if (currentIndex < _pageContentVC.count - 1) {
+        
+        NSLog(@"1111");
         _pageCurrentIndex = currentIndex + 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
+        
+
+    } else{
+        NSLog(@"2222");
+
     }
+    
     return nil;
 }
 
@@ -182,46 +204,90 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (currentIndex > 0) {
+        
+        NSLog(@"3333");
         _pageCurrentIndex = currentIndex - 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
+    } else{
+        
+        
+        
+     
+        
+        NSLog(@"4444");
     }
-    return nil;
+  //  return [_pageContentVC objectAtIndex:_pageCurrentIndex];
+
+   return nil;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    _pageCurrentIndex = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
+    NSInteger currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
+    
+    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (completed)
     {
-        [self changeColor];
-    }else{
+        NSInteger btnTag = currentIndex + 100;
+        for (int i = 100; i<104; i++) {
+            if (btnTag == i) {
+                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+                
+            }
+            else{
+                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+
+            }
+        }
+        
+       // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
+        
+    }else
+    {
         if (finished)
         {
-            [self changeColor];
+            
+            NSInteger btnTag = currentIndex + 100;
+            for (int i = 100; i<104; i++) {
+                if (btnTag == i) {
+                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                    button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+                    
+                }
+                else{
+                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                    button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+                    
+                }
+            }
         }
     }
-}
-
-- (void)changeColor{
-    NSInteger btnTag = _pageCurrentIndex + 100;
-    for (int i = 100; i<104; i++) {
-        if (btnTag == i) {
-            UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-            button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
-        }
-        else{
-            UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-            button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
-        }
-    }
+    
 }
 
 - (IBAction)btnClicked:(id)sender {
     
     UIButton *button = (UIButton *)sender;
     NSInteger btnTag = button.tag;
-  
+    if (btnTag == 100) {
+        NSLog(@"100");
+    } else if (btnTag == 101){
+        NSLog(@"101");
+        
+    } else if (btnTag == 102){
+        NSLog(@"102");
+    } else if (btnTag == 103){
+        NSLog(@"103");
+    }
+    
+    else{
+        NSLog(@"others");
+    }
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
             button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
@@ -230,6 +296,9 @@
             button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
         }
     }
+    
+    
+    
     NSInteger index = btnTag - 100;
     BOOL state = 0;
     if (_pageCurrentIndex < index) {
@@ -237,10 +306,32 @@
     }
     _pageCurrentIndex = index;
     [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    
+    
 }
+
+
+
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc{
     [self.navigationController pushViewController:vc animated:YES];
+    
 }
+
+
 @end
 
+//
+//NSInteger index = sender.tag - 101;
+//BOOL state = 0;
+//[self sliderLabelPositonWithIndex:index withDuration:.35];
+//
+//if (_pageCurrentIndex < index) {
+//    
+//    state = 1;
+//    
+//}
+//
+//_pageCurrentIndex = index;
+//
+//[_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];

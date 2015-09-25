@@ -88,20 +88,8 @@
     isSaleOpen = [[json objectForKey:@"http://192.168.1.63:8000/rest/v1/products/421"]boolValue];
     NSLog(@"issaleOpen = %d", isSaleOpen);
     
-    
 
-   //    NSDictionary
     
-    //    NSSet
-    
-    //   NSDate
-    
-//    NSDateComponents
-//    NSDateFormatter
-
-  //  NSCalendar
-    
-//    [NSTimeZone timeZoneWithAbbreviation:;]
     [self downloadData];
     
 }

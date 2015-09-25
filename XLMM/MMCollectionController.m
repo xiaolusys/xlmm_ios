@@ -58,19 +58,8 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeBack:)];
-    [ self.view addGestureRecognizer:swipe];
-
     
-}
-
-- (void)swipeBack:(UIGestureRecognizer *)gesture{
-    UISwipeGestureRecognizer *swipe = (UISwipeGestureRecognizer *)gesture;
     
-    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    }
 }
 
 

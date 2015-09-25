@@ -457,9 +457,35 @@
             }
         }
         
-    }
+    }else if (button.tag == 82){
+      //  NSLog(@"yinglian");
         
-    
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+    }else if (button.tag == 83){
+      //  NSLog(@"baidu");
+        for (int i = 60; i<64; i++) {
+            UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
+            if (i == button.tag - 20) {
+                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
+            }
+        }
+        
+        
+    }
     
     NSLog(@"channel = %@", channel);
 }

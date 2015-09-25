@@ -173,12 +173,12 @@
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
-    [self.navigationController pushViewController:[[ModifyPasswordViewController alloc] initWithNibName:@"ModifyPasswordViewController" bundle:nil] animated:YES];
+    [self.navigationController pushViewController:[[ModifyPasswordViewController alloc] init] animated:YES];
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {
     NSLog(@"注册");
-    RegisterViewController *registerVC = [[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+    RegisterViewController *registerVC = [[RegisterViewController alloc] init];
     [self.navigationController pushViewController:registerVC animated:YES];
 }
 @end
