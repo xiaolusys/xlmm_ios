@@ -12,6 +12,6 @@
 @interface NSObject (FillDataModel)
 
 - (PromoteModel *)fillModel:(NSDictionary *)dic;
-
+- (void)downloadDataWithURLString:(NSString *)aURL andSelector:(SEL)aSelector;
 
 @end

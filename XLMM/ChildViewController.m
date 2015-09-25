@@ -173,10 +173,17 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
+    NSLog(@"data = %@", responseData);
+    
     //NSLog(@"responsedata = %@", responseData);
+    
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+        
+    }
     if (json == nil) {
-        NSLog(@"数据解析失败");
+        NSLog(@"json数据解析失败");
         return;
     }
     NSArray *array = [json objectForKey:@"results"];

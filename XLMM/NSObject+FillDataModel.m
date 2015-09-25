@@ -45,4 +45,13 @@
     
 }
 
+- (void)downloadDataWithURLString:(NSString *)aURL andSelector:(SEL)aSelector{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:aURL]];
+        NSLog(@"today promote url = %@", aURL);
+        [self performSelectorOnMainThread:(aSelector) withObject:data waitUntilDone:YES];
+    });
+}
+
+
 @end

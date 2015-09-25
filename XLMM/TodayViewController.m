@@ -25,36 +25,23 @@ static NSString *kposterView = @"posterView";
 static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
 
-BOOL isImageCache = NO;
-
 @interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
-    
     UIView *ladyPoster;
     UIView *childPoster;
-    
     NSMutableArray *childDataArray;
     NSMutableArray *ladyDataArray;
     NSMutableArray *posterDataArray;
-    
     NSInteger childListNumber;
     NSInteger ladyListNumber;
-    
     BOOL step1;
     BOOL step2;
-    
     NSTimer *theTimer;
-
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
-    
     BOOL _isFirst;
-    
-    
 }
-
 @property (nonatomic, retain) UICollectionView *myCollectionView;
-
 
 @end
 
@@ -64,14 +51,12 @@ BOOL isImageCache = NO;
 {
     [super viewDidAppear:animated];
     if (_isFirst) {
-        
         [self setupRefresh];
         self.myCollectionView.footerHidden=NO;
         self.myCollectionView.headerHidden=NO;
         [self.myCollectionView headerBeginRefreshing];
         _isFirst = NO;
     }
-    
 }
 
 - (void)setupRefresh{
@@ -79,11 +64,10 @@ BOOL isImageCache = NO;
     [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
-    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
-    
+    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮您刷新中", nil);
     _myCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
     _myCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
-    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮您加载中", nil);
 }
 
 - (void)headerRereshing
@@ -92,10 +76,8 @@ BOOL isImageCache = NO;
         [self reload];
         sleep(1.5);
         [_myCollectionView headerEndRefreshing];
-        
     });
 }
-
 
 - (void)footerRereshing
 {
@@ -103,9 +85,9 @@ BOOL isImageCache = NO;
         [self loadMore];
         sleep(1.5);
         [_myCollectionView footerEndRefreshing];
-        
     });
 }
+
 - (void)reload
 {
     NSLog(@"reload");
@@ -117,22 +99,29 @@ BOOL isImageCache = NO;
     NSLog(@"loadmore");
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        childDataArray = [[NSMutableArray alloc] initWithCapacity:30];
+        ladyDataArray = [[NSMutableArray alloc] initWithCapacity:30];
+        posterDataArray = [[NSMutableArray alloc] initWithCapacity:2];
+        step1 = NO;
+        step2 = NO;
+        _isFirst = YES;
+        theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    childDataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    ladyDataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    step1 = NO;
-    step2 = NO;
-    _isFirst = YES;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
     [self createCollectionView];
-    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    
 }
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer
@@ -206,18 +195,9 @@ BOOL isImageCache = NO;
 
 
 - (void)downloadData{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_PROMOTE_URL]];
-        NSLog(@"today promote url = %@", kTODAY_PROMOTE_URL);
-        [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
-    });
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_POSTERS_URL]];
-        NSLog(@"today podters url = %@", kTODAY_POSTERS_URL);
-        [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
-    });
+    [self downloadDataWithURLString:kTODAY_POSTERS_URL andSelector:@selector(fetchedPosterData:)];
+    [self downloadDataWithURLString:kTODAY_PROMOTE_URL andSelector:@selector(fetchedPromoteData:)];
 }
-
 
 
 
@@ -442,8 +422,15 @@ BOOL isImageCache = NO;
             childVC.titleName = @"潮童装区";
             [self.navigationController pushViewController:childVC animated:YES];
         }
-    } else if (indexPath.section == 1){
-        PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
+    } else{
+        PromoteModel *model;
+        if (indexPath.section ==1) {
+            model  = [childDataArray objectAtIndex:indexPath.row];
+
+        } else if (indexPath.section == 2){
+             model = [ladyDataArray objectAtIndex:indexPath.row];
+
+        }
         if (model.productModel == nil) {
             NSString * urlString = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details", Root_URL, model.ID];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
@@ -456,20 +443,7 @@ BOOL isImageCache = NO;
             collectionVC.urlString = urlString;
             [self.navigationController pushViewController:collectionVC animated:YES];
         }
-    } else if (indexPath.section == 2){
-        PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
-            NSString * urlString = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details", Root_URL, model.ID];
-            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-            detailVC.urlString = urlString;
-            [self.navigationController pushViewController:detailVC animated:YES];
-        }else{
-            NSString *modelID = [model.productModel objectForKey:@"id"];
-            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL, modelID];
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = urlString;
-            [self.navigationController pushViewController:collectionVC animated:YES];
-        }
+        
     }
 }
 @end

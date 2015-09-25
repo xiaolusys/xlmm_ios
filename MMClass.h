@@ -54,10 +54,11 @@
 
 @end
 #pragma mark --URLs--
-#define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today",Root_URL]
-#define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous",Root_URL]
-#define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today",Root_URL]
-#define kPREVIOUS_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous",Root_URL]
+
+#define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today.json",Root_URL]
+#define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous.json",Root_URL]
+#define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today.json",Root_URL]
+#define kPREVIOUS_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous.json",Root_URL]
 #define kCHILD_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist",Root_URL]
 #define kLADY_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist",Root_URL]
 #define kLOGIN_URL [NSString stringWithFormat:@"%@/rest/v1/register/customer_login",Root_URL]
@@ -73,9 +74,6 @@
 #define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
 #define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
 #define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds",Root_URL]
-
-//  http://192.168.1.61:8000/rest/v1/usercoupons
-
 #define KUserCoupins_URL [NSString stringWithFormat:@"%@/rest/v1/usercoupons",Root_URL]
 
 #endif
