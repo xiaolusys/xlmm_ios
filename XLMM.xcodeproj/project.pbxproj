@@ -1842,7 +1842,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
@@ -1881,7 +1880,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
@@ -1919,7 +1917,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1939,7 +1937,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = XLMMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
