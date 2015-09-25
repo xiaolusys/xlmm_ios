@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment version="2048" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyCartViewController">
@@ -16,10 +17,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nwF-v1-ejO">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="8" y="510" width="304" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIf-he-BFf">
-                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                            <rect key="frame" x="2" y="2" width="300" height="46"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="20"/>
                             <state key="normal" title="去首页逛逛">
@@ -36,110 +37,30 @@
                         <constraint firstItem="qIf-he-BFf" firstAttribute="leading" secondItem="nwF-v1-ejO" secondAttribute="leading" constant="2" id="MK8-Pk-SQn"/>
                         <constraint firstAttribute="trailing" secondItem="qIf-he-BFf" secondAttribute="trailing" constant="2" id="N24-v5-jz6"/>
                         <constraint firstAttribute="height" constant="50" id="O9w-3Z-O21"/>
-                        <constraint firstAttribute="bottom" secondItem="qIf-he-BFf" secondAttribute="bottom" constant="5" id="cWH-VS-IOc">
-                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
-                        </constraint>
-                        <constraint firstItem="qIf-he-BFf" firstAttribute="top" secondItem="nwF-v1-ejO" secondAttribute="top" constant="5" id="g7H-SQ-pkh">
-                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
-                        </constraint>
+                        <constraint firstAttribute="bottom" secondItem="qIf-he-BFf" secondAttribute="bottom" constant="2" id="cWH-VS-IOc"/>
+                        <constraint firstItem="qIf-he-BFf" firstAttribute="top" secondItem="nwF-v1-ejO" secondAttribute="top" constant="2" id="g7H-SQ-pkh"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="qIf-he-BFf"/>
-                        </mask>
-                        <mask key="constraints">
-                            <exclude reference="O9w-3Z-O21"/>
-                            <exclude reference="MK8-Pk-SQn"/>
-                            <exclude reference="N24-v5-jz6"/>
-                            <exclude reference="cWH-VS-IOc"/>
-                            <exclude reference="g7H-SQ-pkh"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="subviews">
-                            <include reference="qIf-he-BFf"/>
-                        </mask>
-                        <mask key="constraints">
-                            <include reference="O9w-3Z-O21"/>
-                            <include reference="MK8-Pk-SQn"/>
-                            <include reference="N24-v5-jz6"/>
-                            <include reference="cWH-VS-IOc"/>
-                            <include reference="g7H-SQ-pkh"/>
-                        </mask>
-                    </variation>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的购物车空空如也，以下宝贝可重新加入哦~~" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-9e-U4M">
-                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <rect key="frame" x="8" y="20" width="304" height="36"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="sU7-C2-l5s">
-                            <variation key="heightClass=regular-widthClass=compact" constant="36"/>
-                        </constraint>
+                        <constraint firstAttribute="height" constant="36" id="sU7-C2-l5s"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="sU7-C2-l5s"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="sU7-C2-l5s"/>
-                        </mask>
-                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="xb5-9e-U4M" secondAttribute="trailing" constant="297" id="4gC-6a-Lcf">
-                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
-                </constraint>
-                <constraint firstAttribute="bottom" secondItem="nwF-v1-ejO" secondAttribute="bottom" constant="197" id="Axy-Hi-omY">
-                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
-                </constraint>
-                <constraint firstItem="xb5-9e-U4M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="VbV-c6-fVd">
-                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
-                </constraint>
-                <constraint firstAttribute="trailing" secondItem="nwF-v1-ejO" secondAttribute="trailing" constant="77" id="e2G-tH-eeU">
-                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
-                </constraint>
-                <constraint firstItem="xb5-9e-U4M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="kXV-FH-Ssz">
-                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
-                </constraint>
-                <constraint firstItem="nwF-v1-ejO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="78" id="q5t-xe-9im">
-                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
-                </constraint>
+                <constraint firstAttribute="trailing" secondItem="xb5-9e-U4M" secondAttribute="trailing" constant="8" id="4gC-6a-Lcf"/>
+                <constraint firstAttribute="bottom" secondItem="nwF-v1-ejO" secondAttribute="bottom" constant="8" id="Axy-Hi-omY"/>
+                <constraint firstItem="xb5-9e-U4M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="VbV-c6-fVd"/>
+                <constraint firstAttribute="trailing" secondItem="nwF-v1-ejO" secondAttribute="trailing" constant="8" id="e2G-tH-eeU"/>
+                <constraint firstItem="xb5-9e-U4M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="kXV-FH-Ssz"/>
+                <constraint firstItem="nwF-v1-ejO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="q5t-xe-9im"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="nwF-v1-ejO"/>
-                    <exclude reference="xb5-9e-U4M"/>
-                </mask>
-                <mask key="constraints">
-                    <exclude reference="4gC-6a-Lcf"/>
-                    <exclude reference="VbV-c6-fVd"/>
-                    <exclude reference="kXV-FH-Ssz"/>
-                    <exclude reference="Axy-Hi-omY"/>
-                    <exclude reference="e2G-tH-eeU"/>
-                    <exclude reference="q5t-xe-9im"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=compact">
-                <mask key="subviews">
-                    <include reference="nwF-v1-ejO"/>
-                    <include reference="xb5-9e-U4M"/>
-                </mask>
-                <mask key="constraints">
-                    <include reference="4gC-6a-Lcf"/>
-                    <include reference="VbV-c6-fVd"/>
-                    <include reference="kXV-FH-Ssz"/>
-                    <include reference="Axy-Hi-omY"/>
-                    <include reference="e2G-tH-eeU"/>
-                    <include reference="q5t-xe-9im"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="366.5" y="289.5"/>
         </view>
     </objects>
