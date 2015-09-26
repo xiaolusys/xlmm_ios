@@ -11,7 +11,7 @@
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "LeftMenuViewController.h"
-
+#import "AFNetworking.h"
 #import "MMClass.h"
 
 #define login @"login"
@@ -55,17 +55,29 @@
     
     // 设置登录状态
     NSUserDefaults *userDefualts = [NSUserDefaults standardUserDefaults];
-    if (![userDefualts boolForKey:login]) {
-        NSLog(@"没有登录");
-        [userDefualts setBool:NO forKey:login];
-    } else{
-        NSLog(@"已经登录过了");
+    NSLog(@"userDefaults = %@", userDefualts);
+    
+    NSString *username = [userDefualts objectForKey:kUserName];
+    NSString *password = [userDefualts objectForKey:kPassWord];
+    
+    NSLog(@"username = %@", username);
+    NSLog(@"password = %@", password);
+    if (username != nil && password != nil) {
+        NSLog(@"自动登录");
+        
+        
+        [self autoLoginWithUsername:username andPassword:password];
         [userDefualts setBool:YES forKey:login];
         
-        
-        NSLog(@"自动获得用户名和密码进行登录");
+    }
+    else{
+        NSLog(@"手动登录");
+        [userDefualts setBool:NO forKey:login];
+
     }
     [userDefualts synchronize];
+    
+  
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
@@ -90,7 +102,43 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+- (BOOL)autoLoginWithUsername:(NSString *)username andPassword:(NSString *)password{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
+    
+    NSLog(@"userName : %@, password : %@", username, password);
+    
+    
+    NSDictionary *parameters = @{@"username":username,
+                                 @"password":password
+                                 };
+    NSLog(@"parameters = %@", parameters);
+    
+    [manager POST:kLOGIN_URL parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              //  NSError *error;
+              MMLOG(operation);
+              NSLog(@"JSON: %@", responseObject);
+              
+              
+              
+           
+              
+            
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MMLOG(operation);
+              NSLog(@"Error: %@", error);
+              
+              
+          }];
+    
+    return YES;
+    
+}
 
 
 -(void)onResp:(BaseReq *)resp

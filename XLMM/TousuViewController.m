@@ -8,7 +8,7 @@
 
 #import "TousuViewController.h"
 
-@interface TousuViewController (){
+@interface TousuViewController ()<UIAlertViewDelegate>{
     NSMutableArray *dataArray;
 }
 
@@ -27,11 +27,11 @@
     
     //  http://m.xiaolu.so/rest/v1/complain
     
-  
-
+    self.infoLabel.userInteractionEnabled = NO;
+    self.tipsLabel.hidden = YES;
     
     
-    [self createComplaintLists];
+   // [self createComplaintLists];
     
     
     
@@ -164,10 +164,17 @@
     NSString *text = self.tousuTextView.text;
     NSUInteger length = text.length;
     if (length<5 || length>500) {
+        self.tipsLabel.hidden = NO;
         self.tipsLabel.text = @"您的意见<5个字符，或>500个字符，请核实后再提交~";
+        [self performSelector:@selector(hiddenLabel) withObject:nil afterDelay:4];
+        
     } else{
         
-        NSLog(@"提交投诉意见");
+        [self performSelector:@selector(successCommit) withObject:nil afterDelay:0.5];
+        
+//        NSLog(@"提交投诉意见");
+//        UIAlertView *laterView = [[UIAlertView alloc] initWithTitle:nil message:@"提交成功!\n谢谢您的反馈，我们将不断完善，给您最好的服务!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [laterView show];
         
         
         
@@ -175,27 +182,41 @@
         
         
         
-        
-        self.tipsLabel.text = @"提交成功!谢谢您的反馈，我们将不断完善，给您最好的服务!";
     }
     
+}
+
+- (void)hiddenLabel{
+    self.tipsLabel.hidden = YES;
+}
+- (void)successCommit{
+    NSLog(@"提交投诉意见");
+    UIAlertView *laterView = [[UIAlertView alloc] initWithTitle:nil message:@"提交成功!\n谢谢您的反馈，我们将不断完善，给您最好的服务!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [laterView show];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 
 #pragma mark --UITextFieldDelegate--
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
-    textView.text = @"";
+ 
+    
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-    NSString *text = self.tousuTextView.text;
-    NSString *string = [NSString stringWithFormat:@"最少输入5个字符，最多输入500个字符，您已输入%lu个字符。", (unsigned long)[text length]];
-    self.lengthLabel.text = string;
+//    NSString *text = self.tousuTextView.text;
+//    NSString *string = [NSString stringWithFormat:@"最少输入5个字符，最多输入500个字符，您已输入%lu个字符。", (unsigned long)[text length]];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
-    
+   
 }
 
 

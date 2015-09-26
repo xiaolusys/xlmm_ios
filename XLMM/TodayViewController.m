@@ -152,8 +152,6 @@ static NSString *khead2View = @"head2View";
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kIsLogin];
-    
     [userDefaults setInteger:0 forKey:NumberOfCart];
     [userDefaults synchronize];
 

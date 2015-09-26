@@ -72,7 +72,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
     }else{
         

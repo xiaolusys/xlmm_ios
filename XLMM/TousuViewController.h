@@ -10,8 +10,8 @@
 
 @interface TousuViewController : UIViewController <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *tousuTextView;
-@property (weak, nonatomic) IBOutlet UILabel *lengthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tipsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 - (IBAction)tijiaoClicked:(id)sender;
 

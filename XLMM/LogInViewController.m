@@ -124,7 +124,7 @@
                                  @"password":password
                                  };
     MMLOG(parameters);
-
+    
     
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -137,11 +137,11 @@
                   self.infoLabel.text = @"用户名和密码不能为空!";
                   self.infoLabel.hidden = NO;
               }
-             // result = null;
-
-            //  result = "u_error";
-            //  result = "p_error";
-
+              // result = null;
+              
+              //  result = "u_error";
+              //  result = "p_error";
+              
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
                   NSLog(@"用户名错误");
                   self.infoLabel.text = @"用户名错误!";
