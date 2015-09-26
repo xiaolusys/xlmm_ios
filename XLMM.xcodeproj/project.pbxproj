@@ -508,6 +508,8 @@
 		32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */; };
 		32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */; };
 		32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */; };
+		32D8762D1BB695C800D0C30F /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D8762B1BB695C800D0C30F /* UserInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		32D8762E1BB695C800D0C30F /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762C1BB695C800D0C30F /* UserInfoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
 		32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
@@ -895,6 +897,9 @@
 		32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCartsView.xib; sourceTree = "<group>"; };
 		32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-fanhuiqianye.png"; path = "../icon-fanhuiqianye.png"; sourceTree = "<group>"; };
 		32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Unknown.jpeg; path = ../Unknown.jpeg; sourceTree = "<group>"; };
+		32D8762A1BB695C800D0C30F /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
+		32D8762B1BB695C800D0C30F /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		32D8762C1BB695C800D0C30F /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoViewController.xib; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
 		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
@@ -1528,6 +1533,9 @@
 		32A288291B93E198006DC949 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				32D8762A1BB695C800D0C30F /* UserInfoViewController.h */,
+				32D8762B1BB695C800D0C30F /* UserInfoViewController.m */,
+				32D8762C1BB695C800D0C30F /* UserInfoViewController.xib */,
 				329E8A911BB648A3008AA0B6 /* WXLoginController.h */,
 				329E8A921BB648A3008AA0B6 /* WXLoginController.m */,
 				329E8A931BB648A3008AA0B6 /* WXLoginController.xib */,
@@ -1792,6 +1800,7 @@
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
+				32D8762E1BB695C800D0C30F /* UserInfoViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
@@ -2100,6 +2109,7 @@
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
+				32D8762D1BB695C800D0C30F /* UserInfoViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,

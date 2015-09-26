@@ -159,6 +159,8 @@
                   self.infoLabel.text = @"登录成功!";
                   self.infoLabel.hidden = NO;
                   [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
+                  [[NSUserDefaults standardUserDefaults]setObject:@"0000" forKey:@"userInfo"];
+                  [[NSUserDefaults standardUserDefaults] synchronize];
                   [self.navigationController popViewControllerAnimated:NO];
               }
               

@@ -10,7 +10,7 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 
-@interface WXLoginController ()<UITextFieldDelegate>
+@interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
 
 @end
@@ -20,7 +20,7 @@
     NSInteger countdownSecond;
     UILabel *timeLabel;
     
-    
+    NSInteger countSecond;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -31,7 +31,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    countdownSecond = 60;
+    
+    countSecond = 60;
+    countdownSecond = countSecond;
     
     
     self.title = @"微信登录";
@@ -180,8 +182,8 @@
     
     NSString *text = [NSString stringWithFormat:@"剩余%ld秒", (long)countdownSecond];
     timeLabel.text = text;
-    if (countdownSecond == 55) {
-        countdownSecond = 60;
+    if (countdownSecond == 0) {
+        countdownSecond = countSecond;
         [myTimer invalidate];
         self.codeButton.enabled = YES;
         [self.codeButton setTitleColor:[UIColor blueColor] forState:UIControlStateDisabled];
@@ -235,9 +237,14 @@
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"result"];
               NSLog(@"result = %@", string);
-              
+            //  string = @"0";
               if ([string isEqualToString:@"0"]) {
-                  [self.navigationController popViewControllerAnimated:YES];
+                  
+                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已成功绑定手机号" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                  [alertView show];
+                  
+                  [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.0];
+//                  [self.navigationController popViewControllerAnimated:YES];
               }
               if ([string isEqualToString:@"1"]) {
                   
@@ -279,6 +286,20 @@
     
     
 }
+
+- (void) dimissAlert:(UIAlertView *)alert {
+    if(alert)     {
+        [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
+}
+
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    if (buttonIndex == 0) {
+//    }
+//}
 
 - (IBAction)backClicked:(id)sender {
     

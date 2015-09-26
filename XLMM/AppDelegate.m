@@ -123,7 +123,9 @@
               NSLog(@"JSON: %@", responseObject);
               
               
-              
+              [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
+              [[NSUserDefaults standardUserDefaults]setObject:@"0000" forKey:@"userInfo"];
+              [[NSUserDefaults standardUserDefaults] synchronize];
            
               
             

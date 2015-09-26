@@ -15,6 +15,8 @@
 #import "MMClass.h"
 #import "LogInViewController.h"
 #include "EnterViewController.h"
+#import "UserInfoViewController.h"
+
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -88,6 +90,12 @@
     NSLog(@"login = %d", [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         NSLog(@"login");
+        UserInfoViewController *loginVC = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        
+        
+        
+        
 
     }else{
     EnterViewController *loginVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
