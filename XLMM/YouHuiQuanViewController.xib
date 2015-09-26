@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YouHuiQuanViewController">
@@ -199,17 +200,17 @@
                     <exclude reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="8Nj-4f-Vi8"/>
-                    <exclude reference="P89-U2-kL3"/>
-                    <exclude reference="oxI-b0-dNN"/>
+                    <exclude reference="RTn-c8-sc5"/>
+                    <exclude reference="WWX-S1-dcg"/>
+                    <exclude reference="X4h-5A-2XM"/>
+                    <exclude reference="alg-6Q-ZEh"/>
                     <exclude reference="01i-WB-Nzh"/>
                     <exclude reference="WaS-Ly-aPX"/>
                     <exclude reference="rbL-su-DN9"/>
                     <exclude reference="vLp-3l-QSP"/>
-                    <exclude reference="X4h-5A-2XM"/>
-                    <exclude reference="alg-6Q-ZEh"/>
-                    <exclude reference="RTn-c8-sc5"/>
-                    <exclude reference="WWX-S1-dcg"/>
+                    <exclude reference="8Nj-4f-Vi8"/>
+                    <exclude reference="P89-U2-kL3"/>
+                    <exclude reference="oxI-b0-dNN"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -220,17 +221,17 @@
                     <include reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="8Nj-4f-Vi8"/>
-                    <include reference="P89-U2-kL3"/>
-                    <include reference="oxI-b0-dNN"/>
+                    <include reference="RTn-c8-sc5"/>
+                    <include reference="WWX-S1-dcg"/>
+                    <include reference="X4h-5A-2XM"/>
+                    <include reference="alg-6Q-ZEh"/>
                     <include reference="01i-WB-Nzh"/>
                     <include reference="WaS-Ly-aPX"/>
                     <include reference="rbL-su-DN9"/>
                     <include reference="vLp-3l-QSP"/>
-                    <include reference="X4h-5A-2XM"/>
-                    <include reference="alg-6Q-ZEh"/>
-                    <include reference="RTn-c8-sc5"/>
-                    <include reference="WWX-S1-dcg"/>
+                    <include reference="8Nj-4f-Vi8"/>
+                    <include reference="P89-U2-kL3"/>
+                    <include reference="oxI-b0-dNN"/>
                 </mask>
             </variation>
         </view>

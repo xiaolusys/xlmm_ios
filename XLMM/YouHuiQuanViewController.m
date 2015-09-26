@@ -81,7 +81,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     
     if ([[dic objectForKey:@"status"] integerValue] == 1) {
-        cell.myimageView.image = [UIImage imageNamed:@"youhuiquan4.png"];
+        cell.myimageView.image = [UIImage imageNamed:@"yhq_not_valid.jpg"];
     }
     cell.name1.text = [dic objectForKey:@"title"];
     cell.name2.text = @"";
