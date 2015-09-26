@@ -52,29 +52,26 @@
 
 @end
 #pragma mark --URLs--
-#define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today",Root_URL]
-#define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous",Root_URL]
-#define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today",Root_URL]
-#define kPREVIOUS_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous",Root_URL]
-#define kCHILD_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist",Root_URL]
-#define kLADY_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist",Root_URL]
+#define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today.json",Root_URL]
+#define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous.json",Root_URL]
+#define kTODAY_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_today.json",Root_URL]
+#define kPREVIOUS_PROMOTE_URL [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous.json",Root_URL]
+#define kCHILD_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist.json",Root_URL]
+#define kLADY_LIST_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist.json",Root_URL]
 #define kLOGIN_URL [NSString stringWithFormat:@"%@/rest/v1/register/customer_login",Root_URL]
-#define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@",Root_URL]
-#define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts",Root_URL]
+#define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json",Root_URL]
+#define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts.json",Root_URL]
 #define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
 #define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price",Root_URL]
-#define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history",Root_URL]
-#define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num",Root_URL]
-#define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address",Root_URL]
-#define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades",Root_URL]
-#define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay",Root_URL]
-#define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend",Root_URL]
-#define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog",Root_URL]
-#define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds",Root_URL]
-
-//  http://192.168.1.61:8000/rest/v1/usercoupons
-
-#define KUserCoupins_URL [NSString stringWithFormat:@"%@/rest/v1/usercoupons",Root_URL]
+#define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history.json",Root_URL]
+#define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json",Root_URL]
+#define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address.json",Root_URL]
+#define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades.json",Root_URL]
+#define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay.json",Root_URL]
+#define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend.json",Root_URL]
+#define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog.json",Root_URL]
+#define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds.json",Root_URL]
+#define KUserCoupins_URL [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json",Root_URL]
 
 #endif
 

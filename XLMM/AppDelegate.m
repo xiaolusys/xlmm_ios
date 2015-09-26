@@ -248,7 +248,9 @@
                 NSLog(@"tokeninfo = %@", self.tokenInfo);
                 
                 NSLog(@"userInfo = %@", self.userInfo);
-                
+                NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+                [userdefault setObject:self.userInfo forKey:@"userInfo"];
+                [userdefault synchronize];
                 
                 
                 //                self.nickname.text = [dic objectForKey:@"nickname"];

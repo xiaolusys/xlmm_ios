@@ -20,8 +20,8 @@
     NSTimer *theTimer;
     NSMutableString *randomstring;
     
-    
-    
+    BOOL isBangding;
+    NSDictionary *dic;
 }
 
 @property (nonatomic, copy)NSString *access_token;
@@ -51,7 +51,7 @@
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
     NSString *strings = @"noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c&timestamp=1442995986";
-    
+    isBangding = NO;
     NSLog(@"%@", [strings sha1]);
     if ([[strings sha1] isEqualToString:@"39ae931c59394c9b4b0973b3902956f63a35c21e"]) {
         NSLog(@"****一样的\n");
@@ -99,7 +99,7 @@
     
     
     
-    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+   dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
     
     
@@ -188,17 +188,34 @@
         
         if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
             NSLog(@"未绑定手机号码");
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
+            isBangding = NO;
+            NSLog(@"11isBangDing = %d", isBangding);
+
             
         } else {
-            NSLog(@"已绑定手机号码");
-            [self.navigationController popViewControllerAnimated:YES];
-            
+            NSLog(@"22已绑定手机号码");
+            isBangding = YES;
+            NSLog(@"22isBangDing = %d", isBangding);
+
         }
     }];
     
+    UIView *backView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:backView];
+    backView.backgroundColor = [UIColor whiteColor];
+    [UIView animateWithDuration:1 animations:^{
+        backView.frame = CGRectMake(0, 0, SCREENWIDTH +1, SCREENHEIGHT +1);
+    } completion:^(BOOL finished) {
+        [backView removeFromSuperview];
+    }];
+    
+    
+    
+ 
+    [self performSelector:@selector(loginSuccessful) withObject:nil afterDelay:0.3];
+    
+   
+
     
     
     
@@ -217,6 +234,21 @@
     
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self name:@"login" object:nil];
+}
+
+- (void) loginSuccessful {
+    NSLog(@"33isBangDing = %d", isBangding);
+    
+    if (isBangding) {
+        NSLog(@"跳转首页");
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } else {
+        NSLog(@"请绑定手机");
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
+    }
 }
 
 -(NSString *)toLower:(NSString *)str{
