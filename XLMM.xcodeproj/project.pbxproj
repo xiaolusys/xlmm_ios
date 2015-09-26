@@ -444,6 +444,9 @@
 		329E8A891BB574B0008AA0B6 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		329E8A8A1BB574B0008AA0B6 /* yifu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E031B74A22000816208 /* yifu2.png */; };
 		329E8A8B1BB574B0008AA0B6 /* icon-jia.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DE51B74A22000816208 /* icon-jia.png */; };
+		329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329E8A921BB648A3008AA0B6 /* WXLoginController.m */; settings = {ASSET_TAGS = (); }; };
+		329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 329E8A931BB648A3008AA0B6 /* WXLoginController.xib */; settings = {ASSET_TAGS = (); }; };
+		329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */; settings = {ASSET_TAGS = (); }; };
 		32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2882B1B93E1C6006DC949 /* TodayViewController.m */; };
 		32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A2882C1B93E1C6006DC949 /* TodayViewController.xib */; };
 		32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288301B93E1E5006DC949 /* PreviousViewController.m */; };
@@ -796,6 +799,11 @@
 		3299D8861B8C7FAA000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		329E8A8F1BB574B0008AA0B6 /* XLMM copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XLMM copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XLMM copy-Info.plist"; path = "/Users/younishijie/Desktop/xlmm/XLMM/XLMM copy-Info.plist"; sourceTree = "<absolute>"; };
+		329E8A911BB648A3008AA0B6 /* WXLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXLoginController.h; sourceTree = "<group>"; };
+		329E8A921BB648A3008AA0B6 /* WXLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXLoginController.m; sourceTree = "<group>"; };
+		329E8A931BB648A3008AA0B6 /* WXLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXLoginController.xib; sourceTree = "<group>"; };
+		329E8A961BB64A32008AA0B6 /* NSString+Encrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Encrypto.h"; sourceTree = "<group>"; };
+		329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Encrypto.m"; sourceTree = "<group>"; };
 		32A2882A1B93E1C6006DC949 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		32A2882B1B93E1C6006DC949 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		32A2882C1B93E1C6006DC949 /* TodayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayViewController.xib; sourceTree = "<group>"; };
@@ -1520,6 +1528,9 @@
 		32A288291B93E198006DC949 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				329E8A911BB648A3008AA0B6 /* WXLoginController.h */,
+				329E8A921BB648A3008AA0B6 /* WXLoginController.m */,
+				329E8A931BB648A3008AA0B6 /* WXLoginController.xib */,
 				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
 				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
 				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
@@ -1620,6 +1631,8 @@
 				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
 				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
 				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
+				329E8A961BB64A32008AA0B6 /* NSString+Encrypto.h */,
+				329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -1827,6 +1840,7 @@
 				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
+				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
@@ -2090,6 +2104,7 @@
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
+				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
@@ -2099,6 +2114,7 @@
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
 				320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */,
