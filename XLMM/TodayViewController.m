@@ -575,7 +575,7 @@ static NSString *khead2View = @"head2View";
         }else{
             NSString *modelID = [model.productModel objectForKey:@"id"];
             NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@", modelID]];
+            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
             collectionVC.urlString = urlString;
             [self.navigationController pushViewController:collectionVC animated:YES];
@@ -596,7 +596,7 @@ static NSString *khead2View = @"head2View";
         }else{
             NSString *modelID = [model.productModel objectForKey:@"id"];
             NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@", modelID]];
+            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
             collectionVC.urlString = urlString;
             [self.navigationController pushViewController:collectionVC animated:YES];

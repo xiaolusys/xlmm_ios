@@ -279,7 +279,7 @@ static NSString * ksimpleCell = @"simpleCell";
             [self.navigationController pushViewController:detailsVC animated:YES];
             
         } else {
-            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL, [model.productModel objectForKey:@"id"]];
+            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
             NSLog(@"stringURL -> = %@", string);
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
             collectionVC.urlString = string;
@@ -298,7 +298,7 @@ static NSString * ksimpleCell = @"simpleCell";
             
             
         } else {
-            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@", Root_URL, [model.productModel objectForKey:@"id"]];
+            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
             NSLog(@"stringURL -> = %@", string);
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
             collectionVC.urlString = string;

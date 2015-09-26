@@ -20,11 +20,25 @@
 
 @end
 
-@implementation MMCollectionController
+@implementation MMCollectionController{
+    NSTimer *theTimer;
+    UILabel *titleLabel;
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+        
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self downloadData];
+
 }
 
 - (void)viewDidLoad {
@@ -35,20 +49,24 @@
     //self.view.backgroundColor = [UIColor redColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
-    [self downloadData];
     
     [self createCollectionView];
     [self createInfo];
+    
+    
 }
+
+
+
 
 - (void)createInfo{
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"商品集合";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    titleLabel.text = @"";
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = titleLabel;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
@@ -57,12 +75,7 @@
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-    
 }
-
-
 
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -99,8 +112,20 @@
         NSLog(@"集合页面数据下载失败");
     }
     NSError *error;
+    
     [self.dataArray removeAllObjects];
+    
+    
+    
+    
+//    NSLog(@"data = %@", data);
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"string = %@",string);
+    
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+    }
     
     NSLog(@"collections = %@", collections);
     for (NSDictionary *dic in collections) {
@@ -126,8 +151,70 @@
         [self.dataArray addObject:model];
         
     }
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    [self timerFireMethod:theTimer];
     NSLog(@"dataArray = %@", _dataArray);
     [self.collectionView reloadData];
+}
+
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+     CollectionModel *model = [self.dataArray objectAtIndex:0];
+    NSString *saleTime = model.saleTime;
+    NSLog(@"saleTime = %@", saleTime);
+    
+    
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd";
+    
+    NSDate *toDate = [formatter dateFromString:saleTime];
+    
+   
+    
+    
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    comps = [calendar components:unitFlags fromDate:toDate];
+    NSLog(@"comps = %@", comps);
+    
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+    int nextday = day + 1;
+    
+    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:nextday];
+    [endTime setHour:14];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+    NSLog(@" end time = %@", endTime);
+    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+    
+    //用来得到具体的时差
+    
+    NSDate *date = [NSDate date];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ([d hour] < 0) {
+        titleLabel.text = @"已下架";
+        NSLog(@"已下架");
+    } else{
+        NSString * string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+        NSLog(@"string = %@", string);
+        titleLabel.text = string;
+    }
+
+    
 }
 
 
