@@ -397,7 +397,7 @@ static NSString * ksimpleCell = @"simpleCell";
     if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
         //  NSLog(@"没有集合页");
         model.productModel = nil;
-        model.picPath = [dic objectForKey:@"pic_path"];
+        model.picPath = [dic objectForKey:@"head_img"];
     } else{
         model.productModel = [dic objectForKey:@"product_model"];
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
