@@ -18,102 +18,61 @@
 #import "AFNetworking.h"
 #import "LiJiGMViewController.h"
 
-
-
-
-
-#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
-
-
 @interface MMDetailsViewController (){
     
     NSArray *normalSkus;
     NSDictionary *details;
    // NSString *bianhao;
-    
-    
     NSString *skusID;
     NSString *itemID;
     NSString *saleTime;
-    
     UIView *frontView;
     NSTimer *timer;
-    
     UILabel *countLabel;
     NSInteger goodsCount;
-    
     NSDictionary *json;
     UIButton *cartsButton;
-    
     NSString *last_created;
     NSTimer *theTimer;
     UILabel *shengyutimeLabel;
-    
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageview1;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 
 @end
 
 @implementation MMDetailsViewController
 
-
-//typedef NS_ENUM(NSInteger, UIStatusBarStyle) {
-//    UIStatusBarStyleDefault                                     = 0, // Dark content, for use on light backgrounds
-//    UIStatusBarStyleLightContent     NS_ENUM_AVAILABLE_IOS(7_0) = 1, // Light content, for use on dark backgrounds
-//    
-//    UIStatusBarStyleBlackTranslucent NS_ENUM_DEPRECATED_IOS(2_0, 7_0, "Use UIStatusBarStyleLightContent") = 1,
-//    UIStatusBarStyleBlackOpaque      NS_ENUM_DEPRECATED_IOS(2_0, 7_0, "Use UIStatusBarStyleLightContent") = 2,
-//};
-
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
-        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+        if (data != nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            if ([dic objectForKey:@"result"] != nil) {
+                goodsCount = [[dic objectForKey:@"result"] integerValue];
+                NSLog(@"%ld", (long)goodsCount);
+                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                countLabel.text = strNum;
+            }
+            
+        }
     }else{
         countLabel.text = @"0";
         return;
     }
-  
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        NSLog(@"%@", dic);
-        
-        
-        if ([dic objectForKey:@"result"] != nil) {
-            goodsCount = [[dic objectForKey:@"result"] integerValue];
-            NSLog(@"%ld", (long)goodsCount);
-            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-            countLabel.text = strNum;
-        }
-        
-    }
-  
 }
-//- (BOOL)prefersStatusBarHidden
-//{
-//    return YES;//隐藏为YES，显示为NO
-//}
-
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
-    [theTimer invalidate];
-    
 }
 
 
@@ -168,12 +127,12 @@
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString]];
-        [self performSelectorOnMainThread:@selector(fetchedCollectionData:)withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
         
     });
     
 }
-- (void)fetchedCollectionData:(NSData *)data{
+- (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
         NSLog(@"urlstring = %@", _urlString);
         NSLog(@"集合页面数据下载失败");
@@ -207,92 +166,11 @@
     [self createSizeView];
     [self createDetailsView];
     [self createContentView];
-
-    
     [frontView removeFromSuperview];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
-    
-   
-   // [self createLianxiKefu];
 }
-- (void)createLianxiKefu{
-    
-    UIView *kefuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 80)];
-    
-    kefuView.backgroundColor = [UIColor clearColor];
-    
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 20, 80)];
-    label.text = @"在线客服";
-    label.backgroundColor = [UIColor orangeColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:14];
-    label.numberOfLines = 0;
-    label.textColor = [UIColor whiteColor];
-    
-    [kefuView addSubview:label];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Unknown.jpeg"]];
-    imageView.frame = CGRectMake(40, 0, 80, 80);
-    [kefuView addSubview:imageView];
-    
-    
-    kefuView.center = self.view.center;
-    
-    CGRect rect = kefuView.frame;
-    
-    rect.origin.x = SCREENWIDTH - 40;
-    kefuView.frame = rect;
-    
-    
-    
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
-    [kefuView addGestureRecognizer:tap];
-    
-    
-    [self.view addSubview:kefuView];
-
-    
-    
-}
-
-- (void)tapClicked:(UIGestureRecognizer *)recognizer{
-    static BOOL isopen = NO;
-    
-    __block CGRect rect = recognizer.view.frame;
-
-    if (isopen == NO) {
-        rect.origin.x = SCREENWIDTH - 120;
-        
-        [UIView animateWithDuration:0.5 delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
-            recognizer.view.frame = rect;
-
-        } completion:^(BOOL finished) {
-            
-        }];
-
-        isopen = YES;
-    } else {
-        rect.origin.x = SCREENWIDTH - 40;
-
-        
-        [UIView animateWithDuration:0.5 delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
-            recognizer.view.frame = rect;
-            
-        } completion:^(BOOL finished) {
-            
-        }];
-
-        isopen = NO;
-        
-    }
-    
-    
-}
-
 
 - (void)createCartView{
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 90, 44, 44)];
@@ -313,7 +191,6 @@
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gouwuche.png"]];
     imageview.frame = CGRectMake(0, 0, 44, 44);
     [cartsButton addSubview:imageview];
-    
     [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view bringSubviewToFront:cartsButton];
     cartsButton.alpha = 0.5;
@@ -327,28 +204,6 @@
     countLabel.font = [UIFont systemFontOfSize:10];
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-//    if (data != nil) {
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//        
-//        NSLog(@"%@", dic);
-//        if ([dic objectForKey:@"result"] != nil) {
-//            
-//            
-//            goodsCount = [[dic objectForKey:@"result"] integerValue];
-//            NSLog(@"%ld", (long)goodsCount);
-//            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-//            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
-//                countLabel.text = strNum;
-//            } else {
-//                countLabel.text = @"0";
-//
-//            }
-//            
-//            
-//           // countLabel.text = strNum;
-//        }
-//    }
     countLabel.text = @"0";
     countLabel.font = [UIFont systemFontOfSize:14];
     [view addSubview:countLabel];
@@ -367,11 +222,7 @@
         NSLog(@"购物车为空");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"您的购物车为空\n请先加入购物车~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertView show];
-        
-        
-        
         return;
-        
     }
     
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
@@ -382,14 +233,11 @@
 
 
 - (void)setTime{
-    //     "sale_time": "2015-09-05",
-   // NSRange rang
+ 
     int year = [[saleTime substringWithRange:NSMakeRange(0, 4)]intValue];
     int month = [[saleTime substringWithRange:NSMakeRange(5, 2)]intValue];
     int day = [[saleTime substringWithRange:NSMakeRange(8, 2)] intValue];
-   // NSLog(@"%d-%02d-%02d", year, month, day);
-    
-    
+
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     
@@ -422,14 +270,8 @@
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
 
-        string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
-  
-   
-    
-    self.timeLabel.text = string;
-
-
-    
+    string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+  self.timeLabel.text = string;
 }
 
 - (void)createContentView{
@@ -501,15 +343,17 @@
         NSLog(@"%@", dic);
         NSLog(@"%d", (int)button.tag);
         [button setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
-        if ([[dic objectForKey:@"is_saleout"]boolValue]) {
-            [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
-            button.userInteractionEnabled = NO;
-        }
+      
         
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
             button.userInteractionEnabled = NO;
+        } else{
+            if ([[dic objectForKey:@"is_saleout"]boolValue]) {
+                [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
+                button.userInteractionEnabled = NO;
+            }
         }
         
     }
@@ -522,11 +366,7 @@
             [button.layer setBorderColor:[UIColor redColor].CGColor];
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
-            
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
-            
-            
-            
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
@@ -535,10 +375,6 @@
             }
         }
     }
-    
-    
-    
-    
 }
 
 
@@ -600,84 +436,55 @@
             
         } else{
             NSLog(@"加入购物车");
-            
-            //                sku_id;
-            //                item_id;
             //                http://youni.huyi.so/rest/v1/carts
             NSLog(@"item_id = %@", itemID);
             NSLog(@"sku_id = %@", skusID);
             
-            
-          
-            
-            
             AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            
-            
             NSDictionary *parameters = @{@"item_id": itemID,
                                          @"sku_id":skusID};
 //            self.detailsModel.skuID = selectskuID;
             [manager POST:kCart_URL parameters:parameters
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      
                       NSLog(@"JSON: %@", responseObject);
-                      
                       [self myAnimation];
-                      
-                   
-                      
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    
-                      
-                      NSLog(@"Error: %@", error);
-                      NSLog(@"error:, --.>>>%@", error.description);
-                      NSDictionary *dic = [error userInfo];
-                      NSLog(@"dic = %@", dic);
-                      
-                      
-                      NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
-                      
-                      NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-                      NSLog(@"%@",str);
-                      UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
-                      view.backgroundColor = [UIColor blackColor];
-                      view.layer.cornerRadius = 8;
-                      UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
-                      label.text = @"商品库存不足";
-                      label.textAlignment = NSTextAlignmentCenter;
-                      label.textColor = [UIColor whiteColor];
-                      label.font = [UIFont systemFontOfSize:24];
-                      [view addSubview:label];
-                      [self.view addSubview:view];
-                      
-                      
-                      [UIView animateWithDuration:1.0 animations:^{
-                          view.alpha = 0;
-                      } completion:^(BOOL finished) {
-                          [view removeFromSuperview];
-                      }];
-                      
-                      
-                      
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+                  NSLog(@"error:, --.>>>%@", error.description);
+                  NSDictionary *dic = [error userInfo];
+                  NSLog(@"dic = %@", dic);
+                  NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+                  
+                  NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+                  NSLog(@"%@",str);
+                  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
+                  view.backgroundColor = [UIColor blackColor];
+                  view.layer.cornerRadius = 8;
+                  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+                  label.text = @"商品库存不足";
+                  label.textAlignment = NSTextAlignmentCenter;
+                  label.textColor = [UIColor whiteColor];
+                  label.font = [UIFont systemFontOfSize:24];
+                  [view addSubview:label];
+                  [self.view addSubview:view];
+                  
+                  
+                  [UIView animateWithDuration:1.0 animations:^{
+                      view.alpha = 0;
+                  } completion:^(BOOL finished) {
+                      [view removeFromSuperview];
                   }];
-            
-            
-            
+            }];
         }
-    
-    
-
 }
 
 - (void)myAnimation{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 , SCREENHEIGHT - 44, 16, 16)];
     //view.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
-    
     view.backgroundColor = [UIColor redColor];
     view.layer.cornerRadius = 8;
     [self.view addSubview:view];
-   // [self.view sendSubviewToBack:view];
     CGFloat width = SCREENWIDTH;
     CGFloat height = SCREENHEIGHT;
     
@@ -697,24 +504,18 @@
     ani.duration=0.7;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    
     [view.layer addAnimation:ani forKey:@"position"];
-    
-    
     [UIView animateWithDuration:0.5 animations:^{
         view.bounds = CGRectMake(0, 0, 12, 12);
          view.alpha = 0.9;
          //view.frame = CGRectMake(30, height-80, 16, 16);
      } completion:^(BOOL finished) {
-        
-         [view removeFromSuperview];
+        [view removeFromSuperview];
          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
          if (data != nil) {
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-             
              NSLog(@"%@", dic);
              if ([dic objectForKey:@"result"] != nil) {
-                 
                  last_created = [dic objectForKey:@"last_created"];
                  goodsCount = [[dic objectForKey:@"result"] integerValue];
                  NSLog(@"%ld", (long)goodsCount);
@@ -722,18 +523,14 @@
                  countLabel.text = strNum;
              }
          }
-         
          [self createTimeCartView];
-         
-         
-     }];
+    }];
 }
 
 - (void)createTimeCartView{
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     if (data != nil) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
         NSLog(@"%@", dic);
         if ([dic objectForKey:@"result"] != nil) {
             
@@ -744,19 +541,18 @@
             countLabel.text = strNum;
         }
     }
-
     [UIView animateWithDuration:0.5 animations:^{
         cartsButton.frame = CGRectMake(2, SCREENHEIGHT - 90, 100, 44);
     } completion:^(BOOL finished) {
         NSLog(@"显示剩余时间");
         [self createTimeLabel];
-        
     }];
 }
-
 - (void)createTimeLabel{
     shengyutimeLabel.hidden = NO;
-    
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
 }
 - (void)timerFireMethod:(NSTimer*)thetimer
@@ -769,8 +565,6 @@
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-
-    
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
   
      NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
