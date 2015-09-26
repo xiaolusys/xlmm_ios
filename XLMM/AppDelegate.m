@@ -62,7 +62,7 @@
     
     NSLog(@"username = %@", username);
     NSLog(@"password = %@", password);
-    if (username != nil && password != nil) {
+    if (username != nil && password != nil && password.length > 3) {
         NSLog(@"自动登录");
         
         
@@ -124,7 +124,6 @@
               
               
               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
-              [[NSUserDefaults standardUserDefaults]setObject:@"0000" forKey:@"userInfo"];
               [[NSUserDefaults standardUserDefaults] synchronize];
            
               

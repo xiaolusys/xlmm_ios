@@ -7,6 +7,7 @@
 //
 
 #import "UserInfoViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface UserInfoViewController ()
 
@@ -25,6 +26,9 @@
     
     if ([diction isKindOfClass:[NSDictionary class]]) {
         NSLog(@"微信账号登录");
+        self.nameLabel.text = [diction objectForKey:@"nickname"];
+        [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[diction objectForKey:@"headimgurl"]]];
+        [self createView];
 
     } else if ([diction isKindOfClass:[NSString class]]){
         NSLog(@"小鹿美美账号登录");
@@ -35,6 +39,11 @@
     }
     
     
+    
+}
+
+- (void)createView{
+  
     
 }
 
