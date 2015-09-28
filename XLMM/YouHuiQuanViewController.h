@@ -11,6 +11,7 @@
 @interface YouHuiQuanViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (assign, nonatomic) NSInteger payment;
 
 
 @end

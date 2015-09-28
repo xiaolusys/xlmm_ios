@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZhiFuCollectionCell">
@@ -19,9 +20,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="157"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="157"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下单时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTF-kR-1ss">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="下单时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTF-kR-1ss">
                         <rect key="frame" x="8" y="8" width="163" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="BoS-Y9-wNt"/>
@@ -30,13 +31,13 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeT-bH-Amj">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="剩余时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeT-bH-Amj">
                         <rect key="frame" x="196" y="8" width="116" height="21"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                         <color key="textColor" red="0.89803921568627454" green="0.19215686274509805" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="KCL-Jl-SjN">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="KCL-Jl-SjN">
                         <rect key="frame" x="8" y="37" width="112" height="112"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="93" id="skb-ZV-ICQ"/>
@@ -246,18 +247,18 @@
                     <exclude reference="AGm-jg-L6O"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="IwN-Md-Uoh"/>
+                    <exclude reference="nBK-6E-EpX"/>
+                    <exclude reference="zT4-Fm-OMa"/>
+                    <exclude reference="QmE-Bg-e9m"/>
+                    <exclude reference="71p-KL-rrN"/>
+                    <exclude reference="TLo-ab-0fI"/>
+                    <exclude reference="K8a-z6-vsb"/>
+                    <exclude reference="1wr-Ou-zmu"/>
+                    <exclude reference="6PE-h4-a0o"/>
                     <exclude reference="Cpx-Bb-8Pp"/>
                     <exclude reference="Uhi-O8-m71"/>
                     <exclude reference="wQw-BX-Xfi"/>
-                    <exclude reference="K8a-z6-vsb"/>
-                    <exclude reference="zT4-Fm-OMa"/>
-                    <exclude reference="6PE-h4-a0o"/>
-                    <exclude reference="QmE-Bg-e9m"/>
-                    <exclude reference="1wr-Ou-zmu"/>
-                    <exclude reference="IwN-Md-Uoh"/>
-                    <exclude reference="nBK-6E-EpX"/>
-                    <exclude reference="71p-KL-rrN"/>
-                    <exclude reference="TLo-ab-0fI"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -269,18 +270,18 @@
                     <include reference="AGm-jg-L6O"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="IwN-Md-Uoh"/>
+                    <include reference="nBK-6E-EpX"/>
+                    <include reference="zT4-Fm-OMa"/>
+                    <include reference="QmE-Bg-e9m"/>
+                    <include reference="71p-KL-rrN"/>
+                    <include reference="TLo-ab-0fI"/>
+                    <include reference="K8a-z6-vsb"/>
+                    <include reference="1wr-Ou-zmu"/>
+                    <include reference="6PE-h4-a0o"/>
                     <include reference="Cpx-Bb-8Pp"/>
                     <include reference="Uhi-O8-m71"/>
                     <include reference="wQw-BX-Xfi"/>
-                    <include reference="K8a-z6-vsb"/>
-                    <include reference="zT4-Fm-OMa"/>
-                    <include reference="6PE-h4-a0o"/>
-                    <include reference="QmE-Bg-e9m"/>
-                    <include reference="1wr-Ou-zmu"/>
-                    <include reference="IwN-Md-Uoh"/>
-                    <include reference="nBK-6E-EpX"/>
-                    <include reference="71p-KL-rrN"/>
-                    <include reference="TLo-ab-0fI"/>
                 </mask>
             </variation>
             <connections>

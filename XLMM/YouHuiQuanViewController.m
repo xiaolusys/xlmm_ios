@@ -11,7 +11,7 @@
 #import "MMClass.h"
 #import "YHQCollectionCell.h"
 
-@interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 
@@ -105,6 +105,63 @@ static NSString *ksimpleCell = @"youhuiCell";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     return 4;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath = %@", indexPath);
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    NSLog(@"diction = %@", dic);
+    NSInteger couponType = [[dic objectForKey:@"coupon_type"] integerValue];
+    NSLog(@"couponType = %ld", (long)couponType);
+    
+    
+    if (couponType == 2) {
+        if (self.payment < 150 ) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            
+            return;
+        }
+        
+        
+    } else if(couponType ==3){
+        
+        if (self.payment < 259) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.delegate = self;
+    [alertView show];
+    
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        NSLog(@"是的， 我要使用这样优惠券");
+        
+        
+        
+        
+        //记录选择的优惠券 并返回上一个界面。。。。
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
+}
+
+
 
 
 

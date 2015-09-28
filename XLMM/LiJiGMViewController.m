@@ -17,6 +17,7 @@
 #import "Pingpp.h"
 #import "LiJiBuyModel.h"
 #import "AddressViewController.h"
+#import "YouHuiQuanViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -84,6 +85,47 @@
     NSLog(@"urlString = %@", urlString);
     
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandle)];
+    [self.youhuiView addGestureRecognizer:tap];
+    
+    [self downloadYouhuiData];
+    
+}
+
+- (void)downloadYouhuiData{
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json", Root_URL];
+    NSURL *url = [NSURL URLWithString:urlstring];
+    NSLog(@"url = %@", urlstring);
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"youhuiquan = %@", array);
+    NSInteger number = 0;
+    for (NSDictionary *dic in array) {
+        NSLog(@"dic = %@", dic);
+        if ([[dic objectForKey:@"status"]integerValue] == 0) {
+            NSLog(@"可用优惠券");
+            number++;
+            
+             NSLog(@"可用优惠券(%ld)", (long)number);
+        }
+    }
+    self.usableNumber.text = [NSString stringWithFormat:@"可用优惠券（%ld）", (long)number];
+    
+
+    // http://m.xiaolu.so/rest/v1/usercoupons
+
+
+}
+- (void)tapHandle{
+    NSLog(@"选择优惠券");
+    YouHuiQuanViewController *youhui = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+    youhui.payment = allprice;
+    NSLog(@"youhui payment = %ld", (long)youhui.payment);
+    
+    [[self navigationController] pushViewController:youhui animated:YES];
+    
     
 }
 

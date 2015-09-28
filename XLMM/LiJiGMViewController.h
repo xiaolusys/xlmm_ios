@@ -15,7 +15,9 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewWidth;
+@property (weak, nonatomic) IBOutlet UIView *youhuiView;
 
+@property (weak, nonatomic) IBOutlet UILabel *usableNumber;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *couponViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *payViewHeight;

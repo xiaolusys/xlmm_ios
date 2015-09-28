@@ -212,7 +212,7 @@
     
     
  
-    [self performSelector:@selector(loginSuccessful) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(loginSuccessful) withObject:nil afterDelay:0.5];
     
    
 
