@@ -7,11 +7,22 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LiJiGMViewController1">
             <connections>
+                <outlet property="allPaymentLabel" destination="d7B-H4-nOH" id="8QQ-BH-37z"/>
+                <outlet property="allPriceLabel" destination="E1s-ND-xBC" id="bpD-ux-xNR"/>
                 <outlet property="containterWidth" destination="khj-6y-j08" id="isG-WK-GIu"/>
                 <outlet property="modifyButton" destination="tgZ-Bl-2kD" id="Smy-0T-Vte"/>
+                <outlet property="myimageView" destination="Np3-CL-bNG" id="11Q-Kb-MdA"/>
+                <outlet property="nameLabel" destination="xkN-kf-ejl" id="aKC-DH-VZ7"/>
+                <outlet property="numberLabel" destination="hay-ES-miX" id="AUf-fZ-8us"/>
+                <outlet property="oldPriceLabel" destination="pkB-H6-Inv" id="b8O-gd-mEI"/>
+                <outlet property="priceLabel" destination="3db-1v-v1L" id="Qkn-GP-XxV"/>
                 <outlet property="shouhuodizhi" destination="Blb-0T-Zgl" id="kXE-yS-bC4"/>
                 <outlet property="shouhuoren" destination="O3q-4C-hbe" id="Ugp-vS-aCq"/>
+                <outlet property="sizeLabel" destination="kOu-MF-Khj" id="IcX-u1-uBc"/>
+                <outlet property="usableNumber" destination="rjB-Th-fWo" id="14d-S5-AST"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="youhuiLabel" destination="jPj-mz-xAm" id="pEz-uJ-BgL"/>
+                <outlet property="yunfeiLabel" destination="mD1-vQ-N4m" id="bFn-E0-Wi1"/>
                 <outlet property="zhifuHeight" destination="RAV-x4-KCp" id="hWi-Cy-kMA"/>
             </connections>
         </placeholder>
@@ -288,7 +299,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vb9-IN-5Za">
                                             <rect key="frame" x="8" y="8" width="160" height="30"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可用优惠券（10）" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjB-Th-fWo">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可用优惠券" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjB-Th-fWo">
                                                     <rect key="frame" x="0.0" y="0.0" width="160" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

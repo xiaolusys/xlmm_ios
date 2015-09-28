@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DetailsModel.h"
 
-@class DetailsModel;
 
 @interface LiJiGMViewController : UIViewController
 
@@ -20,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *usableNumber;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *couponViewHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *payViewHeight;
 
 @property (weak, nonatomic) IBOutlet UIView *addressViewContaint;
 

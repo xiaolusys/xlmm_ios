@@ -18,10 +18,29 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containterWidth;
 
+@property (weak, nonatomic) IBOutlet UILabel *usableNumber;
 
 @property (weak, nonatomic) IBOutlet UILabel *shouhuoren;
 @property (weak, nonatomic) IBOutlet UILabel *shouhuodizhi;
 @property (weak, nonatomic) IBOutlet UIButton *modifyButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *myimageView;
+@property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;
+@property (weak, nonatomic) IBOutlet UILabel *youhuiLabel;
+@property (weak, nonatomic) IBOutlet UILabel *allPaymentLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
+
+
+
+
+
+
 
 - (IBAction)addAddressClicked:(id)sender;
 

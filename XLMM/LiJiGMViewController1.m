@@ -11,6 +11,8 @@
 #import "AddAdressViewController.h"
 #import "MMClass.h"
 #import "AddressModel.h"
+#import "YouHuiQuanViewController.h"
+
 
 @interface LiJiGMViewController1 ()
 
@@ -18,6 +20,12 @@
 
 @implementation LiJiGMViewController1{
     AddressModel *addressModel;
+    int price;
+    int allprice;
+    int yunfeifee;
+    int youhuifee;
+    int allpay;
+    NSNumber *buyNumber;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -35,7 +43,88 @@
     [super viewDidLoad];
     self.title = @"确认订单";
     
-    // Do any additional setup after loading the view from its nib.
+
+    buyNumber = @1;
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/now_payinfo?sku_id=%@", Root_URL,self.skuID];
+  
+    NSLog(@"sku_id = %@, ",self.skuID);
+    
+    NSLog(@"urlString = %@", urlString);
+    
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    
+  
+    
+    [self downloadYouhuiData];
+    
+}
+
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
+}
+- (void)downloadYouhuiData{
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json", Root_URL];
+    NSURL *url = [NSURL URLWithString:urlstring];
+    NSLog(@"url = %@", urlstring);
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"youhuiquan = %@", array);
+    NSInteger number = 0;
+    for (NSDictionary *dic in array) {
+        NSLog(@"dic = %@", dic);
+        if ([[dic objectForKey:@"status"]integerValue] == 0) {
+            NSLog(@"可用优惠券");
+            number++;
+            
+            NSLog(@"可用优惠券(%ld)", (long)number);
+        }
+    }
+    self.usableNumber.text = [NSString stringWithFormat:@"可用优惠券（%ld）", (long)number];
+    
+    
+    // http://m.xiaolu.so/rest/v1/usercoupons
+}
+
+
+- (void)setDetailsInfo{
+    
+}
+
+- (void)fetchedDetailsData:(NSData *)responseData{
+    
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    NSDictionary *dic2 = [dic objectForKey:@"sku"];
+    NSDictionary *dic3 = [dic2 objectForKey:@"product"];
+    self.myimageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic3 objectForKey:@"pic_path"]]]];
+    // self.myimageView.image = [UIimage im dic3 objectForKey:@"pic_path"]]];
+    self.sizeLabel.text = [dic2 objectForKey:@"name"];
+    self.nameLabel.text = [dic3 objectForKey:@"name"];
+    price = (int)[[dic2 objectForKey:@"agent_price"] integerValue];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"agent_price"]];
+    
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"std_sale_price"]];
+    allprice = (int)[[dic objectForKey:@"total_fee"]integerValue];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_fee"]];
+    yunfeifee = (int)[[dic objectForKey:@"post_fee"]integerValue];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"post_fee"]];
+    youhuifee = (int)[[dic objectForKey:@"discount_fee"] integerValue];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"discount_fee"]];
+    allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_payment"]];
+    self.numberLabel.text = @"1";
+
+    
 }
 
 - (void)downloadAddressData{
@@ -64,7 +153,7 @@
     addressModel.streetName = [dic objectForKey:@"receiver_address"];
     addressModel.buyerName = [dic objectForKey:@"receiver_name"];
     addressModel.phoneNumber = [dic objectForKey:@"receiver_mobile"];
-    
+    addressModel.addressID = [dic objectForKeyedSubscript:@"id"];
     
 //    @property (nonatomic, retain)NSString *provinceName;
 //    @property (nonatomic, retain)NSString *cityName;
@@ -114,14 +203,74 @@
 
 - (IBAction)reduceClicked:(id)sender {
     NSLog(@"----");
+    int i = [buyNumber intValue];
+    i--;
+    if (i == 0) {
+        UIAlertView *view = [[UIAlertView alloc] initWithTitle:nil message:@"至少买一件嘛" delegate:nil
+                                             cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [view show];
+        i = 1;
+    }
+    allprice = price * i;
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    allpay = allprice + yunfeifee -youhuifee;
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    buyNumber = [NSNumber numberWithInt:i];
+    self.numberLabel.text = [buyNumber stringValue];
+    
 }
 
 - (IBAction)plusClicked:(id)sender {
+    
+    int i = [buyNumber intValue];
+    i++;
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/carts/sku_num_enough", Root_URL];
+    NSLog(@"url = %@", string);
+    NSURL *url = [NSURL URLWithString:string];
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    
+    NSString *str = [NSString stringWithFormat:@"sku_id=%@&sku_num=%i", self.skuID, i];//设置参数
+    NSLog(@"params = %@", str);
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [request setHTTPBody:data];
+    
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSError *error = nil;
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    if ([[dic objectForKey:@"sku_id"]integerValue] == [self.skuID integerValue]) {
+        NSLog(@"ok");
+    } else{
+        i--;
+        UIAlertView *view = [[UIAlertView alloc] initWithTitle:nil message:@"库存不足赶快下单" delegate:nil
+                                             cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [view show];
+    }
+    allprice = price * i;
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    allpay = allprice + yunfeifee -youhuifee;
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    
+    buyNumber = [NSNumber numberWithInt:i];
+    self.numberLabel.text = [buyNumber stringValue];
     NSLog(@"++++");
 }
 
 - (IBAction)selectYouhuiClicked:(id)sender {
     NSLog(@"选择优惠券");
+    YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+    vc.payment = allprice;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
