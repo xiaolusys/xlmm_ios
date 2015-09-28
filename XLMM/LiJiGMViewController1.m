@@ -12,9 +12,10 @@
 #import "MMClass.h"
 #import "AddressModel.h"
 #import "YouHuiQuanViewController.h"
+#import "YHQModel.h"
 
 
-@interface LiJiGMViewController1 ()
+@interface LiJiGMViewController1 ()<YouhuiquanDelegate>
 
 @end
 
@@ -26,13 +27,14 @@
     int youhuifee;
     int allpay;
     NSNumber *buyNumber;
+    YHQModel *yhqModel;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
-    self.zhifuHeight.constant = 80;
+   // self.zhifuHeight.constant = 80;
     self.containterWidth.constant = [UIScreen mainScreen].bounds.size.width;
     [self downloadAddressData];
 
@@ -267,10 +269,24 @@
     NSLog(@"选择优惠券");
     YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
     vc.payment = allprice;
+    vc.delegate = self;
+    
     [self.navigationController pushViewController:vc animated:YES];
     
     
     
+}
+- (void)updateYouhuiquanWithmodel:(YHQModel *)model{
+    NSLog(@"立即购买优惠券更新");
+    NSLog(@"model = %@", model);
+   // yhqModel = model;
+    
+    NSLog(@"model.title = %@, %@-%@", model.title, model.deadline, model.created);
+
+    
+    self.yhqCreateLabel.text = model.created;
+    self.yhqdeadlineLabel.text = model.deadline;
+    self.yhqNameLabel.text = model.title;
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {

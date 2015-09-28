@@ -36,9 +36,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *yhqNameLabel;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *yhqCreateLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *yhqdeadlineLabel;
 
 
 

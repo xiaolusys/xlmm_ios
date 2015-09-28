@@ -8,10 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class YHQModel;
+@protocol YouhuiquanDelegate <NSObject>
+
+
+- (void)updateYouhuiquanWithmodel:(YHQModel *)model;
+
+@end
+
+
 @interface YouHuiQuanViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (assign, nonatomic) NSInteger payment;
+@property (assign, nonatomic) id <YouhuiquanDelegate> delegate;
 
 
 @end

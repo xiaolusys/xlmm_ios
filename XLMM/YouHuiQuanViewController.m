@@ -10,6 +10,7 @@
 #import "AddYouhuiquanViewController.h"
 #import "MMClass.h"
 #import "YHQCollectionCell.h"
+#import "YHQModel.h"
 
 @interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
@@ -22,11 +23,16 @@
 
 static NSString *ksimpleCell = @"youhuiCell";
 
-@implementation YouHuiQuanViewController
+@implementation YouHuiQuanViewController{
+    YHQModel *model;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    model = [YHQModel new];
+    
     
     [self createInfo];
     
@@ -109,6 +115,21 @@ static NSString *ksimpleCell = @"youhuiCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    model.ID = [dic objectForKey:@"ID"];
+    model.coupon_no = [dic objectForKey:@"coupon_no"];
+    model.coupon_type = [dic objectForKey:@"coupon_type"];
+    model.coupon_value = [dic objectForKey:@"coupon_value"];
+    model.created = [dic objectForKey:@"created"];
+    model.customer = [dic objectForKey:@"customer"];
+    model.deadline = [dic objectForKey:@"deadline"];
+    model.poll_status = [dic objectForKey:@"poll_status"];
+    
+    model.sale_trade = [dic objectForKey:@"sale_trade"];
+    model.status = [dic objectForKey:@"status"];
+    model.title = [dic objectForKey:@"title"];
+    model.valid = [dic objectForKey:@"valid"];
+  
+    
     NSLog(@"diction = %@", dic);
     NSInteger couponType = [[dic objectForKey:@"coupon_type"] integerValue];
     NSLog(@"couponType = %ld", (long)couponType);
@@ -137,7 +158,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     [alertView show];
     
     
-    
+  
    
     
     
@@ -153,7 +174,12 @@ static NSString *ksimpleCell = @"youhuiCell";
         NSLog(@"是的， 我要使用这样优惠券");
         
         
-        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
+            NSLog(@"更新优惠券");
+            [self.delegate updateYouhuiquanWithmodel:model];
+            NSLog(@"model = %@", model);
+            NSLog(@"model.title = %@, %@-%@", model.title, model.deadline, model.created);
+        }
         
         //记录选择的优惠券 并返回上一个界面。。。。
         [self.navigationController popViewControllerAnimated:YES];
