@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
+		320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 320B30061BB90002006C4FC4 /* LiJiGMViewController1.m */; settings = {ASSET_TAGS = (); }; };
+		320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320B30071BB90002006C4FC4 /* LiJiGMViewController1.xib */; settings = {ASSET_TAGS = (); }; };
 		320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320CABDF1BA906D400C62E36 /* PostersViewController.m */; };
 		320CABE21BA906D400C62E36 /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320CABE01BA906D400C62E36 /* PostersViewController.xib */; };
 		32121B401B9461BF00742E53 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32121B3F1B9461BF00742E53 /* icon.png */; };
@@ -555,6 +557,9 @@
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
+		320B30051BB90002006C4FC4 /* LiJiGMViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiGMViewController1.h; sourceTree = "<group>"; };
+		320B30061BB90002006C4FC4 /* LiJiGMViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiGMViewController1.m; sourceTree = "<group>"; };
+		320B30071BB90002006C4FC4 /* LiJiGMViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiJiGMViewController1.xib; sourceTree = "<group>"; };
 		320CABDE1BA906D400C62E36 /* PostersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostersViewController.h; sourceTree = "<group>"; };
 		320CABDF1BA906D400C62E36 /* PostersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostersViewController.m; sourceTree = "<group>"; };
 		320CABE01BA906D400C62E36 /* PostersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostersViewController.xib; sourceTree = "<group>"; };
@@ -1218,6 +1223,9 @@
 				3290C8831B88232F00CFAFA0 /* LiJiGMViewController.h */,
 				3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */,
 				3290C8851B88232F00CFAFA0 /* LiJiGMViewController.xib */,
+				320B30051BB90002006C4FC4 /* LiJiGMViewController1.h */,
+				320B30061BB90002006C4FC4 /* LiJiGMViewController1.m */,
+				320B30071BB90002006C4FC4 /* LiJiGMViewController1.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1824,6 +1832,7 @@
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
+				320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */,
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
@@ -2129,6 +2138,7 @@
 				3249B98A1B6F38410086D030 /* PersonCenterViewController2.m in Sources */,
 				3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */,
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
+				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,

@@ -17,6 +17,7 @@
 #import "EnterViewController.h"
 #import "AFNetworking.h"
 #import "LiJiGMViewController.h"
+#import "LiJiGMViewController1.h"
 
 @interface MMDetailsViewController (){
     
@@ -617,7 +618,7 @@
         } else {
             NSLog(@"可以购买");
             // 立即购买
-            LiJiGMViewController *lijiVC = [[LiJiGMViewController alloc] initWithNibName:@"LiJiGMViewController" bundle:nil];
+            LiJiGMViewController1 *lijiVC = [[LiJiGMViewController1 alloc] initWithNibName:@"LiJiGMViewController1" bundle:nil];
             NSLog(@"skuid = %@", skusID);
             lijiVC.skuID = skusID;
             lijiVC.itemID = itemID;
