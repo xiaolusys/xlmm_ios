@@ -15,6 +15,8 @@
 #import "YHQModel.h"
 #import "Pingpp.h"
 #import "AFNetworking.h"
+#import "WXApi.h"
+
 
 #define kUrlScheme @"wx25fcb32689872499"
 @interface LiJiGMViewController1 ()<YouhuiquanDelegate>
@@ -41,10 +43,30 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
-   // self.zhifuHeight.constant = 80;
     self.containterWidth.constant = [UIScreen mainScreen].bounds.size.width;
     [self downloadAddressData];
-    
+    if ([WXApi isWXAppInstalled]) {
+        NSLog(@"安装了微信");
+        
+        
+    }
+    else{
+        NSLog(@"没有安装微信");
+        
+         self.zhifuHeight.constant = 80;
+        zhifuSelected = @"alipay";
+        self.weixinImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+        self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+        /*
+         icon-radio.png
+         icon-radio-select.png
+         wx
+         alipay
+         
+         */
+        NSLog(@"zhifu = %@", zhifuSelected);
+
+    }
  
 
     

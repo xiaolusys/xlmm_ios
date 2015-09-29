@@ -19,6 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yhqCreateLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *zhifuHeight;
+@property (weak, nonatomic) IBOutlet UIImageView *zhifuImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqdeadlineLabel;
 
