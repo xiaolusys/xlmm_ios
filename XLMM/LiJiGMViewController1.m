@@ -87,6 +87,9 @@
     NSLog(@"url = %@", urlstring);
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSError *error = nil;
+    if (data == nil) {
+        return;
+    }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     NSLog(@"youhuiquan = %@", array);
     NSInteger number = 0;
@@ -154,6 +157,9 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSError *error = nil;
+    if (data == nil) {
+        return;
+    }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     NSLog(@"address = %@", array);
     if (array.count == 0) {

@@ -19,7 +19,7 @@
 #import "MJRefresh.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
-
+#import "AFNetworking.h"
 #import "PostersViewController.h"
 
 
@@ -271,10 +271,10 @@ static NSString *khead2View = @"head2View";
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     NSLog(@"childDic = %@", childDic);
-    if (childDic == nil) {
-        NSLog(@"海报为空");
-        return;
-    }
+//    if (childDic == nil) {
+//        NSLog(@"海报为空");
+//        return;
+//    }
    // NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
@@ -322,7 +322,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
    
-   // NSLog(@"%ld", (long)ladyArray.count);
+    NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
         PromoteModel *model = [self fillModel:ladyInfo];
         
@@ -330,7 +330,7 @@ static NSString *khead2View = @"head2View";
         [ladyDataArray addObject:model];
         
     }
-  //  NSLog(@"ladyDataArray = %@", ladyDataArray);
+   NSLog(@"ladyDataArray = %@", ladyDataArray);
     
     
     
@@ -342,10 +342,8 @@ static NSString *khead2View = @"head2View";
         return;
     }
      childListNumber = childArray.count;
-  //  NSLog(@"%ld", (long)childArray.count);
-    if (childArray.count == 0) {
-        return;
-    }
+   NSLog(@"%ld", (long)childArray.count);
+   
     
     for (NSDictionary *childInfo in childArray) {
         PromoteModel *model = [self fillModel:childInfo];
@@ -354,7 +352,7 @@ static NSString *khead2View = @"head2View";
         [childDataArray addObject:model];
         
     }
-  //  NSLog(@"childDataArray = %@", childDataArray);
+    NSLog(@"childDataArray = %@", childDataArray);
     
     step2 = YES;
     
@@ -388,19 +386,30 @@ static NSString *khead2View = @"head2View";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
-    model.productModel = [dic objectForKey:@"product_model"];
-
- 
-    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-        // NSLog(@"没有集合页");
-        model.picPath = [dic objectForKey:@"head_img"];
+    if ([[dic objectForKey:@"product_model"]class] ==[NSNull class]) {
+        model.productModel = nil;
+          model.picPath = [dic objectForKey:@"head_img"];
+        NSLog(@"product_model==null");
         
     } else{
+        model.productModel = [dic objectForKey:@"product_model"];
         
-        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-        model.name = [model.productModel objectForKey:@"name"];
-    
+        
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+            // NSLog(@"没有集合页");
+            model.picPath = [dic objectForKey:@"head_img"];
+            
+        } else{
+            
+            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+            model.name = [model.productModel objectForKey:@"name"];
+            
+        }
+        
     }
+    
+    
+   
     return model;
 
     
@@ -565,12 +574,52 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-            childVC.urlString = kLADY_LIST_URL;
-            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
-            childVC.titleName = @"时尚女装";
+//            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+//            childVC.urlString = kLADY_LIST_URL;
+//            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+//            childVC.titleName = @"时尚女装";
+//            
+//            [self.navigationController pushViewController:childVC animated:YES];
             
-            [self.navigationController pushViewController:childVC animated:YES];
+            
+            NSLog(@"获取优惠券");
+            
+            
+            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
+            NSLog(@"url = %@", urlstring);
+          //  NSURL *url = [NSURL URLWithString:urlstring];
+            
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+            NSDictionary *parameters = @{@"coupon_type": @"C259_20"};
+            
+            [manager POST:urlstring parameters:parameters
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      
+                      NSLog(@"JSON: %@", responseObject);
+                      
+                      
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      
+                      NSLog(@"Error: %@", error);
+                      
+                  }];
+            
+            
+            
+//            - {prefix}/method: post 创建用户优惠券
+//            ->arg: coupon_type 优惠券类型
+//            -->C150_10:满150减10
+//            -->C259_20:满259减20
+//            :return
+//            {'res':'limit'} ->: 创建受限
+//            {'res':'success'} ->: 创建成功
+//            {'res':'not_release'} ->: 暂未发放
+            
+            
+            
+            
             
         } else{
             PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
@@ -584,7 +633,8 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 1){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+          if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];
@@ -604,7 +654,8 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 2){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+          if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];

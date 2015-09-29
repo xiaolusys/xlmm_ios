@@ -46,6 +46,9 @@ static NSString *ksimpleCell = @"youhuiCell";
     NSString *urlString = [NSString stringWithFormat:@"%@", KUserCoupins_URL];
     NSLog(@"url = %@", urlString);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+    if (data == nil) {
+        return;
+    }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
