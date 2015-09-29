@@ -17,10 +17,14 @@
 #import "Pingpp.h"
 #import "AddressViewController.h"
 #import "UIImage+ImageWithUrl.h"
+#import "YHQModel.h"
+#import "YouHuiQuanViewController.h"
+
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
-@interface PurchaseViewController ()<BuyAddressDelegate>{
+@interface PurchaseViewController ()<BuyAddressDelegate, YouhuiquanDelegate>{
+    YHQModel *yhqModel;
 
 }
 
@@ -69,7 +73,7 @@
     cartsDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self.view addSubview:self.myScrollView];
     self.screenWidth.constant = SCREENWIDTH;
-    
+    yhqModel = [YHQModel new];
     NSLog(@"%@", self.cartsArray);
     [self downloadCartsData];
 
@@ -426,7 +430,7 @@
     if (button.tag == 80) {
         //NSLog(@"weixin");
         
-        channel = @"wx";
+        channel = @"alipay";
         
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
@@ -445,7 +449,7 @@
         
     }else if (button.tag == 81){
         //NSLog(@"zhifubao");
-        channel = @"alipay";
+        channel = @"wx";
         for (int i = 60; i<64; i++) {
             UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
             if (i == button.tag - 20) {
@@ -456,37 +460,8 @@
                 imageView.image = [UIImage imageNamed:@"icon-radio.png"];
             }
         }
-        
-    }else if (button.tag == 82){
-      //  NSLog(@"yinglian");
-        
-        for (int i = 60; i<64; i++) {
-            UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
-            if (i == button.tag - 20) {
-                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
-            }
-        }
-        
-    }else if (button.tag == 83){
-      //  NSLog(@"baidu");
-        for (int i = 60; i<64; i++) {
-            UIImageView *imageView = (UIImageView *)[self.zhifuView viewWithTag:i];
-            if (i == button.tag - 20) {
-                imageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"icon-radio.png"];
-            }
-        }
-        
         
     }
-    
     NSLog(@"channel = %@", channel);
 }
 
@@ -535,7 +510,7 @@
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
-    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartsIDs,addressID ,channel, payment,post_fee,discount_fee,total_fee,uuid];
+    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, payment,post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
     NSLog(@"%@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
  
@@ -590,8 +565,45 @@
         
         
     }];
+}
+- (IBAction)selectYHqClicked:(id)sender {
     
+    NSLog(@"选择优惠券");
+    YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+    vc.isSelectedYHQ = YES;
+    vc.payment = totalfee;
+    vc.delegate = self;
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+}
 
+- (void)updateYouhuiquanWithmodel:(YHQModel *)model{
+    
+    NSLog(@"立即购买优惠券更新");
+    NSLog(@"model = %@", model);
+    yhqModel = model;
+    
+    NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
+    
+    NSLog(@"coupon_id = %@", yhqModel.ID);
+    
+    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+    
+}
+
+- (void)updateUI{
+    self.yhqCreateLabel.text = yhqModel.created;
+    self.yhqdeadlineLabel.text = yhqModel.deadline;
+    self.yhqtitleLabel.text = yhqModel.title;
+    discountfee = [yhqModel.coupon_value intValue];
+    
+    
+    self.discountfeeLabel.text = [NSString stringWithFormat:@"￥%@", yhqModel.coupon_value];
+    //    allpay -= [yhqModel.coupon_value intValue];
+    self.totalPayLabel.text = [NSString stringWithFormat:@"￥%d",(int)(totalpayment - [yhqModel.coupon_value intValue])];
+    
     
     
 }

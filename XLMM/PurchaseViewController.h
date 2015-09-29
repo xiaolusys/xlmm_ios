@@ -17,6 +17,14 @@
 
 @property (strong, nonatomic) NSArray *cartsArray;
 
+@property (weak, nonatomic) IBOutlet UILabel *yhqtitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yhqCreateLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *yhqdeadlineLabel;
+
+- (IBAction)selectYHqClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *yhqLabel;
+
 @property (weak, nonatomic) IBOutlet UIView *addressView;
 
 
