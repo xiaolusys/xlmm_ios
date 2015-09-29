@@ -33,6 +33,8 @@
     NSString *zhifuSelected;
     NSString *uuid;
     
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -42,6 +44,8 @@
    // self.zhifuHeight.constant = 80;
     self.containterWidth.constant = [UIScreen mainScreen].bounds.size.width;
     [self downloadAddressData];
+    
+ 
 
     
 }
@@ -111,6 +115,14 @@
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSLog(@"dic = %@", dic);
+    
+    NSLog(@"---------------");
+    NSDictionary *coupon_ticket = [dic objectForKey:@"coupon_ticket"];
+    NSLog(@"coupon_ticket = %@", coupon_ticket);
+    NSLog(@"---------------");
+    
+    
+    
     NSDictionary *dic2 = [dic objectForKey:@"sku"];
     NSDictionary *dic3 = [dic2 objectForKey:@"product"];
     self.myimageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic3 objectForKey:@"pic_path"]]]];
@@ -275,6 +287,7 @@
 - (IBAction)selectYouhuiClicked:(id)sender {
     NSLog(@"选择优惠券");
     YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+    vc.isSelectedYHQ = YES;
     vc.payment = allprice;
     vc.delegate = self;
     
@@ -297,9 +310,12 @@
     self.yhqCreateLabel.text = yhqModel.created;
     self.yhqdeadlineLabel.text = yhqModel.deadline;
     self.yhqNameLabel.text = yhqModel.title;
+    youhuifee = [yhqModel.coupon_value intValue];
+    
+   
     self.youhuiLabel.text = [NSString stringWithFormat:@"￥%@", yhqModel.coupon_value];
-    allpay -= [yhqModel.coupon_value intValue];
-    self.allPaymentLabel.text = [NSString stringWithFormat:@"￥%d", allpay];
+//    allpay -= [yhqModel.coupon_value intValue];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"￥%d", allpay - [yhqModel.coupon_value intValue]];
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
@@ -330,8 +346,9 @@
 - (IBAction)buyClicked:(id)sender {
     NSLog(@"购买！！");
     
-  
-    NSLog(@"应付金额：%i", allpay);
+    int payment = allprice + yunfeifee - youhuifee;
+
+    NSLog(@"应付金额：%i", payment);
 
     
     
@@ -343,8 +360,7 @@
     
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    
-    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],uuid, self.itemID, self.skuID, buyNumber];
+    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@&coupon_id=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber, yhqModel.ID];
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);

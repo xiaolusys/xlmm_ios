@@ -16,7 +16,7 @@
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 
-@property (nonatomic, copy) NSArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 
 @end
@@ -32,7 +32,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     // Do any additional setup after loading the view from its nib.
     
     model = [YHQModel new];
-    
+    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self createInfo];
     
@@ -48,7 +48,47 @@ static NSString *ksimpleCell = @"youhuiCell";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"array = %@", array);
-    self.dataArray = array;
+    for (NSDictionary *dic in array) {
+        if (self.isSelectedYHQ == YES) {
+            if ([[dic objectForKey:@"status"] integerValue] == 0) {
+                
+         
+                YHQModel *model1 = [YHQModel new];
+                model1.ID = [dic objectForKey:@"id"];
+                model1.coupon_no = [dic objectForKey:@"coupon_no"];
+                model1.coupon_type = [dic objectForKey:@"coupon_type"];
+                model1.coupon_value = [dic objectForKey:@"coupon_value"];
+                model1.created = [dic objectForKey:@"created"];
+                model1.customer = [dic objectForKey:@"customer"];
+                model1.deadline = [dic objectForKey:@"deadline"];
+                model1.poll_status = [dic objectForKey:@"poll_status"];
+                
+                model1.sale_trade = [dic objectForKey:@"sale_trade"];
+                model1.status = [dic objectForKey:@"status"];
+                model1.title = [dic objectForKey:@"title"];
+                model1.valid = [dic objectForKey:@"valid"];
+                [self.dataArray addObject:model1];
+            }
+            
+        } else {
+            YHQModel *model1 = [YHQModel new];
+            model1.ID = [dic objectForKey:@"id"];
+            model1.coupon_no = [dic objectForKey:@"coupon_no"];
+            model1.coupon_type = [dic objectForKey:@"coupon_type"];
+            model1.coupon_value = [dic objectForKey:@"coupon_value"];
+            model1.created = [dic objectForKey:@"created"];
+            model1.customer = [dic objectForKey:@"customer"];
+            model1.deadline = [dic objectForKey:@"deadline"];
+            model1.poll_status = [dic objectForKey:@"poll_status"];
+            
+            model1.sale_trade = [dic objectForKey:@"sale_trade"];
+            model1.status = [dic objectForKey:@"status"];
+            model1.title = [dic objectForKey:@"title"];
+            model1.valid = [dic objectForKey:@"valid"];
+            [self.dataArray addObject:model1];
+        }
+    }
+    [self.myCollectionView reloadData];
     
 }
 - (void)createCollectionView{
@@ -84,15 +124,18 @@ static NSString *ksimpleCell = @"youhuiCell";
     
     cell.backgroundColor = [UIColor whiteColor];
     
-    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    YHQModel *model2 = [self.dataArray objectAtIndex:indexPath.row];
     
-    if ([[dic objectForKey:@"status"] integerValue] == 1) {
+    if ([model2.status integerValue] == 1) {
         cell.myimageView.image = [UIImage imageNamed:@"yhq_not_valid.jpg"];
     }
-    cell.name1.text = [dic objectForKey:@"title"];
+    if ([model2.status integerValue] == 0) {
+        cell.myimageView.image = [UIImage imageNamed:@"yhq_valid.jpg"];
+    }
+    cell.name1.text = model2.title;
     cell.name2.text = @"";
-    cell.time1.text = [NSString stringWithFormat:@"%@ －",[dic objectForKey: @"created"]];
-    cell.time2.text = [dic objectForKey: @"deadline"];
+    cell.time1.text = model2.created;
+    cell.time2.text = model2.deadline;
     
     
     
@@ -112,26 +155,20 @@ static NSString *ksimpleCell = @"youhuiCell";
     return 4;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.isSelectedYHQ == YES) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
-    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    model.ID = [dic objectForKey:@"id"];
-    model.coupon_no = [dic objectForKey:@"coupon_no"];
-    model.coupon_type = [dic objectForKey:@"coupon_type"];
-    model.coupon_value = [dic objectForKey:@"coupon_value"];
-    model.created = [dic objectForKey:@"created"];
-    model.customer = [dic objectForKey:@"customer"];
-    model.deadline = [dic objectForKey:@"deadline"];
-    model.poll_status = [dic objectForKey:@"poll_status"];
-    
-    model.sale_trade = [dic objectForKey:@"sale_trade"];
-    model.status = [dic objectForKey:@"status"];
-    model.title = [dic objectForKey:@"title"];
-    model.valid = [dic objectForKey:@"valid"];
+    model = [self.dataArray objectAtIndex:indexPath.row];
+   
   
-    
-    NSLog(@"diction = %@", dic);
-    NSInteger couponType = [[dic objectForKey:@"coupon_type"] integerValue];
+ 
+    NSInteger couponType = [model.coupon_type integerValue];
     NSLog(@"couponType = %ld", (long)couponType);
     
     

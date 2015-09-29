@@ -259,7 +259,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
- //   NSLog(@"data = %@", data);
+   NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
     if (data == nil) {
         //[frontView removeFromSuperview];
@@ -267,9 +267,14 @@ static NSString *khead2View = @"head2View";
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-  //  NSLog(@"poster data : %@", jsonDic);
+   NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
+    NSLog(@"childDic = %@", childDic);
+    if (childDic == nil) {
+        NSLog(@"海报为空");
+        return;
+    }
    // NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
@@ -311,7 +316,12 @@ static NSString *khead2View = @"head2View";
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     //  NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
+   
     ladyListNumber = ladyArray.count;
+    if (ladyListNumber == 0) {
+        return;
+    }
+   
    // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
         PromoteModel *model = [self fillModel:ladyInfo];
@@ -327,8 +337,15 @@ static NSString *khead2View = @"head2View";
     
     
     NSArray *childArray = [promoteDic objectForKey:@"child_list"];
+    if (![childArray isKindOfClass:[NSArray class]]) {
+        NSLog(@"数据失败");
+        return;
+    }
      childListNumber = childArray.count;
   //  NSLog(@"%ld", (long)childArray.count);
+    if (childArray.count == 0) {
+        return;
+    }
     
     for (NSDictionary *childInfo in childArray) {
         PromoteModel *model = [self fillModel:childInfo];
@@ -371,16 +388,18 @@ static NSString *khead2View = @"head2View";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
-    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+    model.productModel = [dic objectForKey:@"product_model"];
+
+ 
+    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
         // NSLog(@"没有集合页");
-        model.productModel = nil;
         model.picPath = [dic objectForKey:@"head_img"];
         
     } else{
-        model.productModel = [dic objectForKey:@"product_model"];
+        
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
         model.name = [model.productModel objectForKey:@"name"];
-        // NSLog(@"*************");
+    
     }
     return model;
 
@@ -565,7 +584,7 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 1){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];
@@ -585,7 +604,7 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 2){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];

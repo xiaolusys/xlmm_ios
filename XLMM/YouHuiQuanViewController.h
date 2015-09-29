@@ -17,7 +17,10 @@
 @end
 
 
-@interface YouHuiQuanViewController : UIViewController
+@interface YouHuiQuanViewController : UIViewController{
+}
+
+@property (assign, nonatomic)BOOL isSelectedYHQ;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (assign, nonatomic) NSInteger payment;

@@ -245,7 +245,7 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     if (isOrder) {
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSLog(@"没有集合页面");
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
@@ -263,7 +263,7 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     } else {
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSLog(@"没有集合页面");
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
@@ -362,18 +362,18 @@ static NSString * ksimpleCell = @"simpleCell";
     model.agentPrice = [dic objectForKey:@"agent_price"];
     model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
     model.outerID = [dic objectForKey:@"outer_id"];
-   model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
     model.isSaleout = [dic objectForKey:@"is_saleout"];
     model.category = [dic objectForKey:@"category"];
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
-    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+     model.productModel = [dic objectForKey:@"product_model"];
+    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
         //  NSLog(@"没有集合页");
-        model.productModel = nil;
+       
         model.picPath = [dic objectForKey:@"head_img"];
     } else{
-        model.productModel = [dic objectForKey:@"product_model"];
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
         model.name = [model.productModel objectForKey:@"name"];
         //  NSLog(@"----集合页----");

@@ -141,6 +141,7 @@
             break;
         case 3:{
             YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+            youhuiVC.isSelectedYHQ = NO;
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
                 [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
             }

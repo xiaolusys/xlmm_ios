@@ -374,13 +374,13 @@ static NSString *khead2View = @"head2View";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
-    if ([[dic objectForKey:@"product_model"] class] == [NSNull class]) {
+    model.productModel = [dic objectForKey:@"product_model"];
+
+    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
         // NSLog(@"没有集合页");
-        model.productModel = nil;
         model.picPath = [dic objectForKey:@"head_img"];
         
     } else{
-        model.productModel = [dic objectForKey:@"product_model"];
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
         model.name = [model.productModel objectForKey:@"name"];
         // NSLog(@"*************");
@@ -575,7 +575,7 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 1){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];
@@ -595,7 +595,7 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 2){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
             [urlString appendString:@"/details"];
