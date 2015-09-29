@@ -58,6 +58,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self downloadAddressData];
+    [self downloadYouhuiData];
+
     NSLog(@"selectAddressModel = %@", selectedAddModel.addressID);
     //CALayer
     // CGFloat
@@ -489,6 +491,33 @@
     NSLog(@"channel = %@", channel);
 }
 
+- (void)downloadYouhuiData{
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json", Root_URL];
+    NSURL *url = [NSURL URLWithString:urlstring];
+    NSLog(@"url = %@", urlstring);
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *error = nil;
+    if (data == nil) {
+        return;
+    }
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"youhuiquan = %@", array);
+    NSInteger number = 0;
+    for (NSDictionary *dic in array) {
+        NSLog(@"dic = %@", dic);
+        if ([[dic objectForKey:@"status"]integerValue] == 0) {
+            NSLog(@"可用优惠券");
+            number++;
+            
+            NSLog(@"可用优惠券(%ld)", (long)number);
+        }
+    }
+    self.usableNumber.text = [NSString stringWithFormat:@"可用优惠券（%ld）", (long)number];
+    
+    
+    // http://m.xiaolu.so/rest/v1/usercoupons
+}
+
 - (IBAction)goumaiClicked:(id)sender {
     
     NSLog(@"购买商品");
@@ -530,11 +559,14 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     
+    NSInteger allpay = totalfee -discountfee +postfee;
+    
+    NSLog(@"allpay = %d", (int)allpay);
     
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
-    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, payment,post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
+    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
     NSLog(@"%@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
  

@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cartsViewHeight;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *usableNumber;
 @property (strong, nonatomic) NSArray *cartsArray;
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqtitleLabel;

@@ -45,6 +45,8 @@
     
     self.containterWidth.constant = [UIScreen mainScreen].bounds.size.width;
     [self downloadAddressData];
+    [self downloadYouhuiData];
+
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
         
@@ -89,7 +91,6 @@
     
   
     
-    [self downloadYouhuiData];
     
 }
 
