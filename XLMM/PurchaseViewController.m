@@ -646,7 +646,7 @@
     NSLog(@"coupon_id = %@", yhqModel.ID);
     
     [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
-    
+ //   NSFontAttributeName
 }
 
 - (void)updateUI{

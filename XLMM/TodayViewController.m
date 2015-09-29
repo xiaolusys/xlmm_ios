@@ -574,37 +574,37 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-//            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-//            childVC.urlString = kLADY_LIST_URL;
-//            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
-//            childVC.titleName = @"时尚女装";
+            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+            childVC.urlString = kLADY_LIST_URL;
+            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+            childVC.titleName = @"时尚女装";
+            
+            [self.navigationController pushViewController:childVC animated:YES];
+            
+            
+//            NSLog(@"获取优惠券");
 //            
-//            [self.navigationController pushViewController:childVC animated:YES];
-            
-            
-            NSLog(@"获取优惠券");
-            
-            
-            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
-            NSLog(@"url = %@", urlstring);
-          //  NSURL *url = [NSURL URLWithString:urlstring];
-            
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            
-            NSDictionary *parameters = @{@"coupon_type": @"C259_20"};
-            
-            [manager POST:urlstring parameters:parameters
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      
-                      NSLog(@"JSON: %@", responseObject);
-                      
-                      
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      
-                      NSLog(@"Error: %@", error);
-                      
-                  }];
+//            
+//            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
+//            NSLog(@"url = %@", urlstring);
+//          //  NSURL *url = [NSURL URLWithString:urlstring];
+//            
+//            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//            
+//            NSDictionary *parameters = @{@"coupon_type": @"C259_20"};
+//            
+//            [manager POST:urlstring parameters:parameters
+//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                      
+//                      NSLog(@"JSON: %@", responseObject);
+//                      
+//                      
+//                  }
+//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                      
+//                      NSLog(@"Error: %@", error);
+//                      
+//                  }];
             
             
             
