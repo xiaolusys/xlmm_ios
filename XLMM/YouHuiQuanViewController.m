@@ -115,7 +115,7 @@ static NSString *ksimpleCell = @"youhuiCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    model.ID = [dic objectForKey:@"ID"];
+    model.ID = [dic objectForKey:@"id"];
     model.coupon_no = [dic objectForKey:@"coupon_no"];
     model.coupon_type = [dic objectForKey:@"coupon_type"];
     model.coupon_value = [dic objectForKey:@"coupon_value"];
@@ -178,7 +178,7 @@ static NSString *ksimpleCell = @"youhuiCell";
             NSLog(@"更新优惠券");
             [self.delegate updateYouhuiquanWithmodel:model];
             NSLog(@"model = %@", model);
-            NSLog(@"model.title = %@, %@-%@", model.title, model.deadline, model.created);
+            NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
         }
         
         //记录选择的优惠券 并返回上一个界面。。。。

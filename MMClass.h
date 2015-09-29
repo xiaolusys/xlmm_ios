@@ -40,7 +40,7 @@
 #define kUserName @"userName"
 #define kPassWord @"password"
 
-//#define Root_URL @"http://192.168.1.61:8000"
+//#define Root_URL @"http://192.168.1.31:9000"
 #define Root_URL @"http://youni.huyi.so"
 
 

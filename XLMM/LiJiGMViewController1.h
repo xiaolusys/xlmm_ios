@@ -43,6 +43,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqdeadlineLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *zhifuImageView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *weixinImageView;
+
 
 
 - (IBAction)addAddressClicked:(id)sender;

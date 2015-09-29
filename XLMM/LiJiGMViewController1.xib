@@ -21,12 +21,14 @@
                 <outlet property="sizeLabel" destination="kOu-MF-Khj" id="IcX-u1-uBc"/>
                 <outlet property="usableNumber" destination="rjB-Th-fWo" id="14d-S5-AST"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="weixinImageView" destination="1B8-mb-Qf4" id="s2a-Fx-Vbd"/>
                 <outlet property="yhqCreateLabel" destination="CJj-Sm-bQW" id="yRy-Uc-wcP"/>
                 <outlet property="yhqNameLabel" destination="Hp6-CT-ASb" id="3Fo-c8-MES"/>
                 <outlet property="yhqdeadlineLabel" destination="Abc-ft-XF1" id="pV6-qa-nO4"/>
                 <outlet property="youhuiLabel" destination="jPj-mz-xAm" id="pEz-uJ-BgL"/>
                 <outlet property="yunfeiLabel" destination="mD1-vQ-N4m" id="bFn-E0-Wi1"/>
                 <outlet property="zhifuHeight" destination="RAV-x4-KCp" id="hWi-Cy-kMA"/>
+                <outlet property="zhifuImageView" destination="bmk-Z6-LG9" id="721-FZ-spX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -424,15 +426,6 @@
                                                 <constraint firstAttribute="width" constant="20" id="rLk-6e-9lC"/>
                                             </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69r-1n-TPQ" userLabel="weixin">
-                                            <rect key="frame" x="8" y="76" width="112" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="H0W-uI-bzw"/>
-                                            </constraints>
-                                            <connections>
-                                                <action selector="weixinClicked:" destination="-1" eventType="touchUpInside" id="IXh-tU-khi"/>
-                                            </connections>
-                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cu-R5-WZl" userLabel="zhifubao">
                                             <rect key="frame" x="8" y="32" width="112" height="44"/>
                                             <constraints>
@@ -440,6 +433,15 @@
                                             </constraints>
                                             <connections>
                                                 <action selector="zhifubaoClicked:" destination="-1" eventType="touchUpInside" id="jBv-3M-Zxs"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69r-1n-TPQ" userLabel="weixin">
+                                            <rect key="frame" x="8" y="76" width="112" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="H0W-uI-bzw"/>
+                                            </constraints>
+                                            <connections>
+                                                <action selector="weixinClicked:" destination="-1" eventType="touchUpInside" id="IXh-tU-khi"/>
                                             </connections>
                                         </button>
                                     </subviews>

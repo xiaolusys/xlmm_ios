@@ -13,8 +13,10 @@
 #import "AddressModel.h"
 #import "YouHuiQuanViewController.h"
 #import "YHQModel.h"
+#import "Pingpp.h"
+#import "AFNetworking.h"
 
-
+#define kUrlScheme @"wx25fcb32689872499"
 @interface LiJiGMViewController1 ()<YouhuiquanDelegate>
 
 @end
@@ -28,6 +30,9 @@
     int allpay;
     NSNumber *buyNumber;
     YHQModel *yhqModel;
+    NSString *zhifuSelected;
+    NSString *uuid;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -125,6 +130,8 @@
     allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_payment"]];
     self.numberLabel.text = @"1";
+    uuid = [dic objectForKey:@"uuid"];
+    
 
     
 }
@@ -277,28 +284,119 @@
     
 }
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
+    
     NSLog(@"立即购买优惠券更新");
     NSLog(@"model = %@", model);
-   // yhqModel = model;
+    yhqModel = model;
     
-    NSLog(@"model.title = %@, %@-%@", model.title, model.deadline, model.created);
+    NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
+    
+    NSLog(@"coupon_id = %@", yhqModel.ID);
 
     
-    self.yhqCreateLabel.text = model.created;
-    self.yhqdeadlineLabel.text = model.deadline;
-    self.yhqNameLabel.text = model.title;
+    self.yhqCreateLabel.text = yhqModel.created;
+    self.yhqdeadlineLabel.text = yhqModel.deadline;
+    self.yhqNameLabel.text = yhqModel.title;
+    self.youhuiLabel.text = [NSString stringWithFormat:@"￥%@", yhqModel.coupon_value];
+    allpay -= [yhqModel.coupon_value intValue];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"￥%d", allpay];
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
     NSLog(@"支付宝支付");
+    zhifuSelected = @"alipay";
+    self.weixinImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+    self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    /*
+     icon-radio.png
+     icon-radio-select.png
+     wx
+     alipay
+     
+    */
+    NSLog(@"zhifu = %@", zhifuSelected);
+    
 }
 
 - (IBAction)weixinClicked:(id)sender {
     NSLog(@"微信支付");
-    
+    zhifuSelected = @"wx";
+    self.weixinImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+ 
+       NSLog(@"zhifu = %@", zhifuSelected);
 }
 
 - (IBAction)buyClicked:(id)sender {
     NSLog(@"购买！！");
+    
+  
+    NSLog(@"应付金额：%i", allpay);
+
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/buynow_create", Root_URL];
+    NSLog(@"urlstring = %@", urlString);
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:allprice],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:allpay],uuid, self.itemID, self.skuID, buyNumber];
+    
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@", dict);
+    // NSLog(@"string ------>>>%@", bodyData);
+    NSLog(@"data = ---->>>>%@", data);
+    [postRequest setHTTPBody:data];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    LiJiGMViewController1 * __weak weakSelf = self;
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //  [self showAlertWait];
+    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        
+        NSLog(@"response = %@", httpResponse);
+        
+        NSLog(@"data = %@", data);
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"dataString = %@", str);
+        if (httpResponse.statusCode != 200) {
+            NSLog(@"出错了");
+            //  return;
+        }
+        
+        if (connectionError != nil) {
+            NSLog(@"error = %@", connectionError);
+            return;
+        }
+        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"charge = %@", charge);
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                
+                NSLog(@"completion block: %@", result);
+                
+                if (error == nil) {
+                    NSLog(@"PingppError is nil");
+                } else {
+                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                
+            }];
+        });
+        
+        
+        
+    }];
+
 }
 @end
