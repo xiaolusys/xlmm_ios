@@ -36,6 +36,68 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
+    action.identifier = @"action";//按钮的标示
+    action.title=@"Accept";//按钮的标题
+    action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+    //    action.authenticationRequired = YES;
+    //    action.destructive = YES;
+    
+    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+    action2.identifier = @"action2";
+    action2.title=@"Reject";
+    action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+    action.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+    action.destructive = YES;
+    
+    UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+    categorys.identifier = @"alert";//这组动作的唯一标示
+    [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
+    
+    UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:[NSSet setWithObjects:categorys, nil]];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate=[NSDate dateWithTimeIntervalSinceNow:5];
+    notification.timeZone=[NSTimeZone defaultTimeZone];
+    notification.alertBody=@"测试推送的快捷回复";
+    notification.category = @"alert";
+    [[UIApplication sharedApplication]  scheduleLocalNotification:notification];
+    
+    //用这两个方法判断是否注册成功
+    // NSLog(@"currentUserNotificationSettings = %@",[[UIApplication sharedApplication] currentUserNotificationSettings]);
+    //[[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+    
+//    
+//#ifdef __IPHONE_8_0 //这里主要是针对iOS 8.0,相应的8.1,8.2等版本各程序员可自行发挥，如果苹果以后推出更高版本还不会使用这个注册方式就不得而知了……
+//    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    }  else {
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//    }
+//#else
+//    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//#endif
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        //IOS8
+        //创建UIUserNotificationSettings，并设置消息的显示类类型
+        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
+        
+        [application registerUserNotificationSettings:notiSettings];
+        
+    } else{ // ios7
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+    }
+    
+    
+    
+
     
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     
@@ -102,6 +164,33 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
+    NSLog(@"---Token--%@", pToken);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    NSLog(@"userInfo == %@",userInfo);
+    NSString *message = [[userInfo objectForKey:@"aps"]objectForKey:@"alert"];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alert show];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    NSLog(@"Regist fail%@",error);
+}
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
+#endif
+
 - (BOOL)autoLoginWithUsername:(NSString *)username andPassword:(NSString *)password{
     
     
@@ -140,6 +229,47 @@
     return YES;
     
 }
+
+
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    //收到本地推送消息后调用的方法
+    NSLog(@"%@",notification);
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+{
+    //在非本App界面时收到本地消息，下拉消息会有快捷回复的按钮，点击按钮后调用的方法，根据identifier来判断点击的哪个按钮，notification为消息内容
+    NSLog(@"%@----%@",identifier,notification);
+    completionHandler();//处理完消息，最后一定要调用这个代码块
+}
+
+//远程推送通知
+//-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//    //向APNS注册成功，收到返回的deviceToken
+//    NSLog(@"token = %@", deviceToken);
+//}
+//
+//-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+//{
+//    //向APNS注册失败，返回错误信息error
+//    NSLog(@"error = %@", error);
+//}
+//
+//-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+//{
+//    NSLog(@"userInfo = %@", userInfo);
+//    //收到远程推送通知消息
+//}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
+{
+    //在没有启动本App时，收到服务器推送消息，下拉消息会有快捷回复的按钮，点击按钮后调用的方法，根据identifier来判断点击的哪个按钮
+}
+
+
 
 
 -(void)onResp:(BaseReq *)resp

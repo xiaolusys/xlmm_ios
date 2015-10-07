@@ -362,8 +362,10 @@
 -(void)sendAuthRequest
 {
     SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo,snsapi_base";
-    req.state = @"xiaolu" ;
+  req.scope = @"snsapi_userinfo,snsapi_base";
+//    req.scope = @"snsapi_message,snsapi_friend,snsapi_contact";
+
+    req.state = @"xiaolumeimei" ;
     
     NSLog(@"req = %@", req);
     [WXApi sendReq:req];
