@@ -264,13 +264,13 @@ static NSString *khead2View = @"head2View";
     NSError *error;
     //   NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
+    
     if (data == nil) {
         //[frontView removeFromSuperview];
-        
         return;
     }
     NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    //  NSLog(@"poster data : %@", jsonDic);
+      NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     // NSLog(@"%@", childDic);
@@ -312,7 +312,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    //  NSLog(@"promote data = %@", promoteDic);
+      NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
     ladyListNumber = ladyArray.count;
     // NSLog(@"%ld", (long)ladyArray.count);
@@ -375,16 +375,28 @@ static NSString *khead2View = @"head2View";
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
+    
+    if ([model.productModel class] == [NSNull class]) {
+         model.picPath = [dic objectForKey:@"head_img"];
+        NSLog(@"productModel is null.");
+        model.productModel = nil;
+        return model;
+    }
+    
 
     if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
         // NSLog(@"没有集合页");
+       
         model.picPath = [dic objectForKey:@"head_img"];
-        
+
     } else{
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
         model.name = [model.productModel objectForKey:@"name"];
         // NSLog(@"*************");
     }
+    
+    
+    
     return model;
     
     
@@ -575,42 +587,64 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 1){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+        
+        if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details"];
+            [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
-            NSString *modelID = [model.productModel objectForKey:@"id"];
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = urlString;
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+                [urlString appendString:@"/details.json"];
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailVC.urlString = urlString;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            else{
+                NSString *modelID = [model.productModel objectForKey:@"id"];
+                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = urlString;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+                
+            }
         }
         
         
     } else if (indexPath.section == 2){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+        if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details"];
+            [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
             [self.navigationController pushViewController:detailVC animated:YES];
-            
         }else{
-            NSString *modelID = [model.productModel objectForKey:@"id"];
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = urlString;
-            [self.navigationController pushViewController:collectionVC animated:YES];
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+                [urlString appendString:@"/details.json"];
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailVC.urlString = urlString;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            else{
+                NSString *modelID = [model.productModel objectForKey:@"id"];
+                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = urlString;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+                
+            }
         }
+
         
     }
 }

@@ -389,6 +389,7 @@ static NSString *khead2View = @"head2View";
     if ([[dic objectForKey:@"product_model"]class] ==[NSNull class]) {
         model.productModel = nil;
           model.picPath = [dic objectForKey:@"head_img"];
+        model.productModel = nil;
         NSLog(@"product_model==null");
         
     } else{
@@ -396,7 +397,7 @@ static NSString *khead2View = @"head2View";
         
         
         if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-            // NSLog(@"没有集合页");
+             NSLog(@"没有集合页");
             model.picPath = [dic objectForKey:@"head_img"];
             
         } else{
@@ -633,45 +634,63 @@ static NSString *khead2View = @"head2View";
         
     } else if (indexPath.section == 1){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
-//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-          if (model.productModel == nil) {
+
+        if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details"];
+            [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
-            NSString *modelID = [model.productModel objectForKey:@"id"];
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = urlString;
-            [self.navigationController pushViewController:collectionVC animated:YES];
-
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+                [urlString appendString:@"/details.json"];
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailVC.urlString = urlString;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            else{
+                NSString *modelID = [model.productModel objectForKey:@"id"];
+                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = urlString;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+                
+            }
         }
         
         
     } else if (indexPath.section == 2){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
-//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-          if (model.productModel == nil) {
+        if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
             [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details"];
+            [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
             [self.navigationController pushViewController:detailVC animated:YES];
-            
         }else{
-            NSString *modelID = [model.productModel objectForKey:@"id"];
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = urlString;
-            [self.navigationController pushViewController:collectionVC animated:YES];
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
+                [urlString appendString:@"/details.json"];
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailVC.urlString = urlString;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            else{
+                NSString *modelID = [model.productModel objectForKey:@"id"];
+                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
+                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = urlString;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+                
+            }
         }
-        
     }
 }
 

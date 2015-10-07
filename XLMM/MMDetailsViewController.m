@@ -149,6 +149,15 @@
     
     itemID = [dic objectForKey:@"id"];
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    NSData *imagedata  = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    NSLog(@"image data = %@", imagedata);
+    
+    
+    
+    
+    
+    
+    NSLog(@"images ========= %@", [dic objectForKey:@"pic_path"]);
     self.nameLabel.text = [dic objectForKey:@"name"];
     self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];

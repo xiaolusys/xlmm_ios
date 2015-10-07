@@ -270,45 +270,60 @@ static NSString * ksimpleCell = @"simpleCell";
         return;
     }
     if (isOrder) {
+        
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+        
+        if (model.productModel == nil) {
             NSLog(@"没有集合页面");
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
             [self.navigationController pushViewController:detailsVC animated:YES];
-            
-        } else {
-            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-            NSLog(@"stringURL -> = %@", string);
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = string;
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
-            
+        } else{
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSLog(@"没有集合页面");
+                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
+                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailsVC.urlString = string;
+                [self.navigationController pushViewController:detailsVC animated:YES];
+                
+            } else {
+                NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
+                NSLog(@"stringURL -> = %@", string);
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = string;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+                
+                
+            }
+
         }
     } else {
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+        if (model.productModel == nil) {
             NSLog(@"没有集合页面");
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details",Root_URL,model.ID ];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
             [self.navigationController pushViewController:detailsVC animated:YES];
-            
-            
-        } else {
-            NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-            NSLog(@"stringURL -> = %@", string);
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-            collectionVC.urlString = string;
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
-            
-            
+        } else{
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                NSLog(@"没有集合页面");
+                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
+                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+                detailsVC.urlString = string;
+                [self.navigationController pushViewController:detailsVC animated:YES];
+                
+                
+            } else {
+                NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
+                NSLog(@"stringURL -> = %@", string);
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
+                collectionVC.urlString = string;
+                [self.navigationController pushViewController:collectionVC animated:YES];
+            }
         }
     }
-    
 }
 
 
@@ -395,6 +410,14 @@ static NSString * ksimpleCell = @"simpleCell";
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
+    
+    
+    if ([model.productModel class] == [NSNull class]) {
+        model.picPath = [dic objectForKey:@"head_img"];
+        model.productModel = nil;
+        NSLog(@"productModel is null.");
+        return model;
+    }
 
     if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
         //  NSLog(@"没有集合页");
