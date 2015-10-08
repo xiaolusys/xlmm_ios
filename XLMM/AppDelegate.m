@@ -272,7 +272,7 @@
 
 
 
--(void)onResp:(BaseReq *)resp
+-(void)onResp:(BaseResp *)resp
 {
     /*
      ErrCode ERR_OK = 0(用户同意)
@@ -283,26 +283,60 @@
      lang    微信客户端当前语言
      country 微信用户当前国家信息
      */
-    SendAuthResp *aresp = (SendAuthResp *)resp;
-    if (aresp.errCode== 0) {
-        NSString *code = aresp.code;
+//    SendAuthResp *aresp = (SendAuthResp *)resp;
+//    if (aresp.errCode== 0) {
+//        NSString *code = aresp.code;
+//        
+//        self.wxCode = code;
+//        
+//        
+//        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//        [userDefaults setValue:code forKey:@"wxCode"];
+//        [userDefaults synchronize];
+//        
+//        
+//        NSDictionary *dic = @{@"code":code};
+//        NSLog(@"dic11111 = %@", dic);
+//        
+//    }
+//    //获取token和openid；
+//     [self getAccess_token];
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+      
+        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+        if (resp.errCode == 0) {
+            strMsg = @"分享成功";
+        } else {
+            strMsg = @"分享失败";
+        }
         
-        self.wxCode = code;
-        
-        
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setValue:code forKey:@"wxCode"];
-        [userDefaults synchronize];
-        
-        
-        NSDictionary *dic = @{@"code":code};
-        NSLog(@"dic11111 = %@", dic);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+       
+    } else {
+        SendAuthResp *aresp = (SendAuthResp *)resp;
+        if (aresp.errCode== 0) {
+            NSString *code = aresp.code;
+            
+            self.wxCode = code;
+            
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setValue:code forKey:@"wxCode"];
+            [userDefaults synchronize];
+            
+            
+            NSDictionary *dic = @{@"code":code};
+            NSLog(@"dic11111 = %@", dic);
+            
+        }
+        //获取token和openid；
+        [self getAccess_token];
     }
-    //获取token和openid；
     
-    
-    
-    [self getAccess_token];
+   
     
 }
 

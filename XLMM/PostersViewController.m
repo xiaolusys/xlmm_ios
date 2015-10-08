@@ -22,6 +22,7 @@
 #import "MMCollectionController.h"
 
 #import "MJRefresh.h"
+#import "WXApi.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -159,6 +160,79 @@ static NSString * ksimpleCell = @"simpleCell";
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharedMethod)];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+
+
+
+- (void)sharedMethod{
+    NSLog(@"分享");
+    
+    
+    //   http://xiaolu.so/rest/v1/users/profile
+    
+    NSString *string = @"http://xiaolu.so/rest/v1/users/profile";
+    NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    NSError *error = nil;
+    NSLog(@"data = %@", data);
+    if (data == nil) {
+        
+    } else{
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        NSLog(@"dic = %@", dic);
+        NSDictionary *xiaolummID = [dic objectForKey:@"xiaolumm"];
+        NSLog(@"id = %@", xiaolummID);
+        if ([xiaolummID class] == [NSNull class]) {
+            NSLog(@"不是小鹿妈妈");
+            kLinkURL = @"http://xiaolu.so/m/0/";
+        }else {
+            kLinkURL = [NSString stringWithFormat:@"http://xiaolu.so/m/%@/", [xiaolummID objectForKey:@"id"]];
+            NSLog(@"是小鹿妈妈， id = %@", xiaolummID);
+        }
+        NSLog(@"url = %@", kLinkURL);
+    }
+ 
+
+  //  kLinkURL = @"http://xiaolu.so/m/18807/";
+   //NSString *kLinkTagName = @"xiaolumeimei";
+     NSString *kLinkTitle = @"小鹿美美童装女装特卖平台";
+    //NSString *kLinkDescription = @"小鹿美美童装女装特卖平台";
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = kLinkURL;
+    
+    
+   
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = kLinkTitle;
+    message.description = nil;
+    message.mediaObject = ext;
+    message.messageExt = nil;
+    message.messageAction = nil;
+    message.mediaTagName = nil;
+    [message setThumbImage:[UIImage imageNamed:@"logo.png"]];
+
+
+    
+
+    
+
+    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+    req.bText = NO;
+    req.scene = 1;
+    if (/* DISABLES CODE */ (NO))
+        req.text = nil;
+    else
+        req.message = message;
+
+    [WXApi sendReq:req];
+    
     
     
     
