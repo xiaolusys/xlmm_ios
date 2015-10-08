@@ -33,5 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 - (IBAction)addCartBtnClicked:(id)sender;
 - (IBAction)buyBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeTableHeight;
+@property (weak, nonatomic) IBOutlet UIView *sizeTableView;
 
 @end

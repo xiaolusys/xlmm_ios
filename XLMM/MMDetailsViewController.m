@@ -177,7 +177,7 @@
     [self createDetailsView];
     [self createContentView];
     [frontView removeFromSuperview];
-    
+    cartsButton.hidden = NO;
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
 }
@@ -218,6 +218,7 @@
     countLabel.font = [UIFont systemFontOfSize:14];
     [view addSubview:countLabel];
     [cartsButton addSubview:view];
+    cartsButton.hidden = YES;
 }
 - (void)cartClicked:(UIButton *)btn{
     NSLog(@"gouguche ");
@@ -367,6 +368,137 @@
         }
         
     }
+    
+    [self createSizeTable];
+}
+
+- (void)createSizeTable{
+    NSInteger width = 0;
+    NSInteger height;
+    NSMutableArray *mutableSize = [[NSMutableArray alloc] initWithCapacity:5];
+    NSMutableArray *mutableSizeName = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    for (NSDictionary *dic in normalSkus) {
+        // NSLog(@"dic = %@", dic);
+        
+        NSDictionary *dic2 = [[dic objectForKey:@"size_of_sku"] objectForKey:@"result"];
+        [mutableSize addObject:dic2];
+        [mutableSizeName addObject:[dic objectForKey:@"name"]];
+        NSInteger result = dic2.count;
+        width = result;
+        NSLog(@"result = %ld", (long)result);
+        
+    }
+    NSLog(@"mutable = %@", mutableSize);
+    NSLog(@"mutable = %@", mutableSizeName);
+    height = normalSkus.count;
+    self.sizeTableHeight.constant = (height + 1)*24;
+    self.sizeTableView.backgroundColor = [UIColor whiteColor];
+    CGRect parentFrame = self.sizeTableView.frame;
+  
+    NSInteger sizewidth = parentFrame.size.width/(width +1);
+    NSInteger sizeHeight = 24;
+    
+    NSInteger viewWidth = sizewidth * (width +1);
+    NSInteger viewHeight = sizeHeight * (height +1);
+    
+    //1.画线
+    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, sizeHeight)];
+    view1.backgroundColor = [UIColor lightGrayColor];
+    [self.sizeTableView addSubview:view1];
+    UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, sizewidth, viewHeight)];
+    view2.backgroundColor = [UIColor lightGrayColor];
+    [self.sizeTableView addSubview:view2];
+    
+    for (int i = 1; i<height+2; i++) {
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i , viewWidth, 0.5)];
+        if (i == 1) {
+            line.backgroundColor = [UIColor redColor];
+            CGRect rect = line.frame;
+            rect.size.height = 1;
+            line.frame = rect;
+        }else{
+            line.backgroundColor = [UIColor grayColor];
+        }
+        [self.sizeTableView addSubview:line];
+        
+    }
+    for (int i = 1; i<width+2; i++) {
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(sizewidth*i, 0 , 0.5, viewHeight)];
+        if (i == 1) {
+            line.backgroundColor = [UIColor redColor];
+            CGRect rect = line.frame;
+            rect.size.width = 1;
+            line.frame = rect;
+        }else{
+            line.backgroundColor = [UIColor grayColor];
+        }
+        [self.sizeTableView addSubview:line];
+        
+    }
+    
+    
+    //2.填数据
+    
+    UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sizewidth, sizeHeight)];
+    label0.text = @"尺码";
+    label0.font = [UIFont systemFontOfSize:14];
+    label0.backgroundColor = [UIColor clearColor];
+    label0.textColor = [UIColor darkGrayColor];
+    label0.textAlignment = NSTextAlignmentCenter;
+    [self.sizeTableView addSubview:label0];
+    for (int i = 1; i<=height; i++) {
+        UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, sizeHeight * i, sizewidth, sizeHeight)];
+        label0.text = [mutableSizeName objectAtIndex:i-1];
+        label0.font = [UIFont systemFontOfSize:12];
+        label0.backgroundColor = [UIColor clearColor];
+        label0.textColor = [UIColor darkGrayColor];
+        label0.textAlignment = NSTextAlignmentCenter;
+        [self.sizeTableView addSubview:label0];
+    }
+    NSArray *diction = [[mutableSize lastObject] allKeys];
+    
+    NSLog(@"diction = %@", diction);
+    
+//    [[mutableSize lastObject] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+//        NSLog(@"key = %@ and obj = %@", key, obj);
+//    }];
+    
+    
+        for (int i = 1; i<=width; i++) {
+            
+            UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(sizewidth * i, 0, sizewidth, sizeHeight)];
+            label0.text = [diction objectAtIndex:i-1];
+            label0.font = [UIFont systemFontOfSize:12];
+            label0.backgroundColor = [UIColor clearColor];
+            label0.textColor = [UIColor darkGrayColor];
+            label0.textAlignment = NSTextAlignmentCenter;
+            [self.sizeTableView addSubview:label0];
+        }
+   
+    for (int i = 1; i<=height; i++) {
+        for (int j = 1; j<=width; j++) {
+            NSDictionary *sizedic = [mutableSize objectAtIndex:i-1];
+            
+            UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(sizewidth * j, sizeHeight *i, sizewidth, sizeHeight)];
+            label0.text = [sizedic objectForKey:[diction objectAtIndex:j-1]];
+            label0.font = [UIFont systemFontOfSize:12];
+            label0.backgroundColor = [UIColor clearColor];
+            label0.textColor = [UIColor darkGrayColor];
+            label0.textAlignment = NSTextAlignmentCenter;
+            [self.sizeTableView addSubview:label0];
+
+            
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
 - (void)btnClicked:(UIButton *)button{

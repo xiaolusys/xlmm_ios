@@ -263,7 +263,7 @@
     
     NSString *ID = model.ID;
     
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details", Root_URL, ID];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, ID];
     NSLog(@"urlString = %@", string);
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
     detailsVC.urlString = string;
