@@ -43,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 
+
+
 @end
 
 @implementation MMDetailsViewController
@@ -487,19 +489,12 @@
             label0.textColor = [UIColor darkGrayColor];
             label0.textAlignment = NSTextAlignmentCenter;
             [self.sizeTableView addSubview:label0];
-
-            
-            
         }
     }
-    
-    
-    
-    
-    
-    
-    
 }
+
+//点击按钮显示提示信息。。。。
+
 
 - (void)btnClicked:(UIButton *)button{
     NSLog(@"button.tag = %ld", (long)button.tag);
@@ -508,7 +503,11 @@
             [button.layer setBorderColor:[UIColor redColor].CGColor];
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
+            
+            [self createInfoView];
+            
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
+            
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
@@ -517,6 +516,11 @@
             }
         }
     }
+}
+
+- (void)createInfoView{
+    
+    
 }
 
 
