@@ -48,6 +48,7 @@ static NSString *khead2View = @"head2View";
     BOOL _isFirst;
     BOOL step1;
     BOOL step2;
+    BOOL _isDone;
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -91,6 +92,7 @@ static NSString *khead2View = @"head2View";
         [self reload];
         sleep(1.5);
         [_myCollectionView headerEndRefreshing];
+        _isDone = YES;
         
     });
 }
@@ -131,6 +133,7 @@ static NSString *khead2View = @"head2View";
     step1 = NO;
     step2 = NO;
     _isFirst = YES;
+    _isDone = NO;
     [self createCollectionView];
  
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -190,7 +193,7 @@ static NSString *khead2View = @"head2View";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     
-    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) collectionViewLayout:flowLayout];
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 33) collectionViewLayout:flowLayout];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     self.myCollectionView.delegate = self;
@@ -545,6 +548,21 @@ static NSString *khead2View = @"head2View";
     headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"head2View" forIndexPath:indexPath];
    
     return headerView;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGPoint point = scrollView.contentOffset;
+    
+    NSLog(@"%f", point.y );
+    
+    if (point.y > 10) {
+        self.navigationController.navigationBarHidden = YES;
+        
+        
+    } else {
+        self.navigationController.navigationBarHidden = NO;
+ 
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

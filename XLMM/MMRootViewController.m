@@ -52,7 +52,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+40, WIDTH, HEIGHT - 64 - 5 - 40)];
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 64 - 5 - 28)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     
@@ -105,7 +105,7 @@
   
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 45);
+    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 33);
     _pageVC.view.userInteractionEnabled = YES;
     
     _pageVC.dataSource = self;

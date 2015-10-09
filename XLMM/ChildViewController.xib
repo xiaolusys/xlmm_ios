@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChildViewController">
@@ -26,7 +26,7 @@
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFE-0Y-vvi">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="pYd-wz-3dG"/>
+                                        <constraint firstAttribute="height" constant="36" id="pYd-wz-3dG"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
                                     <state key="normal" title="推荐排序">
@@ -45,17 +45,6 @@
                                     </variation>
                                     <connections>
                                         <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Ebl-es-9Xi"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOa-nV-73Q">
-                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
-                                    <state key="normal" title="价格排序↑">
-                                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="MjW-yM-OTG"/>
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cWs-tR-B7h">
@@ -116,6 +105,17 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOa-nV-73Q">
+                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
+                                    <state key="normal" title="价格排序↑">
+                                        <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="MjW-yM-OTG"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="uFE-0Y-vvi" firstAttribute="leading" secondItem="Dm4-DC-Z76" secondAttribute="leading" id="2Wd-53-o4I"/>
@@ -142,7 +142,7 @@
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="leading" secondItem="uFE-0Y-vvi" secondAttribute="trailing" id="oQy-xa-nsz"/>
                                 <constraint firstItem="YmS-11-3H0" firstAttribute="top" secondItem="Dm4-DC-Z76" secondAttribute="top" constant="11" id="pD8-m1-hPd"/>
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="width" secondItem="uFE-0Y-vvi" secondAttribute="width" id="taf-67-Spc"/>
-                                <constraint firstAttribute="height" constant="44" id="y5n-ii-TNg"/>
+                                <constraint firstAttribute="height" constant="36" id="y5n-ii-TNg"/>
                                 <constraint firstAttribute="trailing" secondItem="Ywo-eh-goW" secondAttribute="trailing" constant="94" id="zBU-xu-aFm">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
@@ -150,55 +150,55 @@
                             <variation key="default">
                                 <mask key="subviews">
                                     <exclude reference="uFE-0Y-vvi"/>
-                                    <exclude reference="DOa-nV-73Q"/>
                                     <exclude reference="cWs-tR-B7h"/>
                                     <exclude reference="Ywo-eh-goW"/>
                                     <exclude reference="YmS-11-3H0"/>
+                                    <exclude reference="DOa-nV-73Q"/>
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="y5n-ii-TNg"/>
-                                    <exclude reference="M5I-4r-naT"/>
-                                    <exclude reference="ceW-Le-t6p"/>
-                                    <exclude reference="gvw-JX-nGE"/>
-                                    <exclude reference="2Wd-53-o4I"/>
-                                    <exclude reference="5bB-ZC-rNi"/>
-                                    <exclude reference="74v-cL-wzQ"/>
-                                    <exclude reference="gzD-Sw-lsI"/>
-                                    <exclude reference="zBU-xu-aFm"/>
-                                    <exclude reference="MGX-Vd-Xo1"/>
-                                    <exclude reference="pD8-m1-hPd"/>
                                     <exclude reference="Bly-RA-5aW"/>
                                     <exclude reference="FDZ-jN-XXd"/>
                                     <exclude reference="Oe2-WQ-SmW"/>
                                     <exclude reference="oQy-xa-nsz"/>
                                     <exclude reference="taf-67-Spc"/>
+                                    <exclude reference="2Wd-53-o4I"/>
+                                    <exclude reference="5bB-ZC-rNi"/>
+                                    <exclude reference="MGX-Vd-Xo1"/>
+                                    <exclude reference="pD8-m1-hPd"/>
+                                    <exclude reference="74v-cL-wzQ"/>
+                                    <exclude reference="gzD-Sw-lsI"/>
+                                    <exclude reference="zBU-xu-aFm"/>
+                                    <exclude reference="M5I-4r-naT"/>
+                                    <exclude reference="ceW-Le-t6p"/>
+                                    <exclude reference="gvw-JX-nGE"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="subviews">
                                     <include reference="uFE-0Y-vvi"/>
-                                    <include reference="DOa-nV-73Q"/>
                                     <include reference="cWs-tR-B7h"/>
                                     <include reference="Ywo-eh-goW"/>
                                     <include reference="YmS-11-3H0"/>
+                                    <include reference="DOa-nV-73Q"/>
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="y5n-ii-TNg"/>
-                                    <include reference="M5I-4r-naT"/>
-                                    <include reference="ceW-Le-t6p"/>
-                                    <include reference="gvw-JX-nGE"/>
-                                    <include reference="2Wd-53-o4I"/>
-                                    <include reference="5bB-ZC-rNi"/>
-                                    <include reference="74v-cL-wzQ"/>
-                                    <include reference="gzD-Sw-lsI"/>
-                                    <include reference="zBU-xu-aFm"/>
-                                    <include reference="MGX-Vd-Xo1"/>
-                                    <include reference="pD8-m1-hPd"/>
                                     <include reference="Bly-RA-5aW"/>
                                     <include reference="FDZ-jN-XXd"/>
                                     <include reference="Oe2-WQ-SmW"/>
                                     <include reference="oQy-xa-nsz"/>
                                     <include reference="taf-67-Spc"/>
+                                    <include reference="2Wd-53-o4I"/>
+                                    <include reference="5bB-ZC-rNi"/>
+                                    <include reference="MGX-Vd-Xo1"/>
+                                    <include reference="pD8-m1-hPd"/>
+                                    <include reference="74v-cL-wzQ"/>
+                                    <include reference="gzD-Sw-lsI"/>
+                                    <include reference="zBU-xu-aFm"/>
+                                    <include reference="M5I-4r-naT"/>
+                                    <include reference="ceW-Le-t6p"/>
+                                    <include reference="gvw-JX-nGE"/>
                                 </mask>
                             </variation>
                         </view>
@@ -229,7 +229,7 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
                         <constraint firstItem="9QH-ZB-iCK" firstAttribute="top" secondItem="KPZ-fZ-AC8" secondAttribute="top" id="LKe-ch-e56">
-                            <variation key="heightClass=regular-widthClass=compact" constant="44"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="36"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="9QH-ZB-iCK" secondAttribute="trailing" id="RUK-Mf-v3C"/>
                         <constraint firstItem="9QH-ZB-iCK" firstAttribute="leading" secondItem="KPZ-fZ-AC8" secondAttribute="leading" id="Znp-AW-4ue"/>
