@@ -328,18 +328,3 @@
 
 
 @end
-
-//
-//NSInteger index = sender.tag - 101;
-//BOOL state = 0;
-//[self sliderLabelPositonWithIndex:index withDuration:.35];
-//
-//if (_pageCurrentIndex < index) {
-//    
-//    state = 1;
-//    
-//}
-//
-//_pageCurrentIndex = index;
-//
-//[_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
