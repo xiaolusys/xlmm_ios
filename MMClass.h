@@ -26,6 +26,8 @@
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
 
+
+
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 #define KTITLENAME @"小鹿美美"
@@ -44,7 +46,7 @@
 //#define Root_URL @"http://youni.huyi.so"
 
 
-#define Root_URL @"http://xiaolu.so"
+#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 

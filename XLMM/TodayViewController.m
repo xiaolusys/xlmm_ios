@@ -123,7 +123,8 @@ static NSString *khead2View = @"head2View";
 - (void)reload
 {
     NSLog(@"reload");
-    [self downloadData];
+    
+    [self downloadData123];
     
 }
 
@@ -234,7 +235,7 @@ static NSString *khead2View = @"head2View";
 
 
 
-- (void)downloadData{
+- (void)downloadData123{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_PROMOTE_URL]];
         NSLog(@"%@", kTODAY_PROMOTE_URL);
@@ -275,14 +276,14 @@ static NSString *khead2View = @"head2View";
 //        NSLog(@"海报为空");
 //        return;
 //    }
-   // NSLog(@"%@", childDic);
+    NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
-  //  NSLog(@"%@", ladyDic);
+    NSLog(@"%@", ladyDic);
     PosterModel *ladyModel = [PosterModel new];
     ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
@@ -314,7 +315,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    //  NSLog(@"promote data = %@", promoteDic);
+      NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
    
     ladyListNumber = ladyArray.count;

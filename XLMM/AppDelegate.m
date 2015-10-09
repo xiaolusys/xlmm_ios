@@ -36,36 +36,36 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
-    action.identifier = @"action";//按钮的标示
-    action.title=@"Accept";//按钮的标题
-    action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
-    //    action.authenticationRequired = YES;
-    //    action.destructive = YES;
-    
-    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
-    action2.identifier = @"action2";
-    action2.title=@"Reject";
-    action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
-    action.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
-    action.destructive = YES;
-    
-    UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
-    categorys.identifier = @"alert";//这组动作的唯一标示
-    [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
-    
-    UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:[NSSet setWithObjects:categorys, nil]];
-    
-    [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
-    
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.fireDate=[NSDate dateWithTimeIntervalSinceNow:5];
-    notification.timeZone=[NSTimeZone defaultTimeZone];
-    notification.alertBody=@"测试推送的快捷回复";
-    notification.category = @"alert";
-    [[UIApplication sharedApplication]  scheduleLocalNotification:notification];
-    
+//    UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
+//    action.identifier = @"action";//按钮的标示
+//    action.title=@"Accept";//按钮的标题
+//    action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+//    //    action.authenticationRequired = YES;
+//    //    action.destructive = YES;
+//    
+//    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+//    action2.identifier = @"action2";
+//    action2.title=@"Reject";
+//    action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+//    action.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+//    action.destructive = YES;
+//    
+//    UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+//    categorys.identifier = @"alert";//这组动作的唯一标示
+//    [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
+//    
+//    UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:[NSSet setWithObjects:categorys, nil]];
+//    
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    
+//    UILocalNotification *notification = [[UILocalNotification alloc] init];
+//    notification.fireDate=[NSDate dateWithTimeIntervalSinceNow:5];
+//    notification.timeZone=[NSTimeZone defaultTimeZone];
+//    notification.alertBody=@"测试推送的快捷回复";
+//    notification.category = @"alert";
+//    [[UIApplication sharedApplication]  scheduleLocalNotification:notification];
+//    
     //用这两个方法判断是否注册成功
     // NSLog(@"currentUserNotificationSettings = %@",[[UIApplication sharedApplication] currentUserNotificationSettings]);
     //[[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
@@ -83,18 +83,18 @@
 //    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 //    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
 //#endif
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-    {
-        //IOS8
-        //创建UIUserNotificationSettings，并设置消息的显示类类型
-        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
-        
-        [application registerUserNotificationSettings:notiSettings];
-        
-    } else{ // ios7
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
-    }
-    
+//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+//    {
+//        //IOS8
+//        //创建UIUserNotificationSettings，并设置消息的显示类类型
+//        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
+//        
+//        [application registerUserNotificationSettings:notiSettings];
+//        
+//    } else{ // ios7
+//        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+//    }
+//    
     
     
 
@@ -110,6 +110,7 @@
     NSLog(@"注册微信的结果 %d", isregister);
     
  //   [self sendAuthRequest];
+   // UIView
     
     //创建导航控制器，添加根视图控制器
 

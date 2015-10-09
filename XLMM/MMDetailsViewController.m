@@ -36,12 +36,16 @@
     NSString *last_created;
     NSTimer *theTimer;
     UILabel *shengyutimeLabel;
+    BOOL isInfoHidden;
+    
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageview1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
+
+@property (nonatomic, strong) UIView *infoView;
 
 
 
@@ -84,9 +88,10 @@
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:self.scrollerView];
     
+    isInfoHidden = YES;
     self.headViewwidth.constant = SCREENWIDTH;
     self.headViewHeitht.constant = SCREENWIDTH + 40;
-    frontView = [[UIView alloc] initWithFrame:self.view.frame];
+    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     frontView.backgroundColor = [UIColor whiteColor];
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicatorView.frame = CGRectMake(SCREENWIDTH/2-40, 200, 80, 80);
@@ -151,9 +156,9 @@
     
     itemID = [dic objectForKey:@"id"];
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
-    NSData *imagedata  = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
-    NSLog(@"image data = %@", imagedata);
-    
+//    NSData *imagedata  = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+//    NSLog(@"image data = %@", imagedata);
+//    
     
     
     
@@ -370,6 +375,7 @@
         }
         
     }
+      [self createInfoView];
     
     [self createSizeTable];
 }
@@ -383,16 +389,24 @@
     for (NSDictionary *dic in normalSkus) {
         // NSLog(@"dic = %@", dic);
         
-        NSDictionary *dic2 = [[dic objectForKey:@"size_of_sku"] objectForKey:@"result"];
-        [mutableSize addObject:dic2];
-        [mutableSizeName addObject:[dic objectForKey:@"name"]];
-        NSInteger result = dic2.count;
-        width = result;
-        NSLog(@"result = %ld", (long)result);
-        
+        id object = [[dic objectForKey:@"size_of_sku"] objectForKey:@"result"];
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dic2 = (NSDictionary *)object;
+            [mutableSize addObject:dic2];
+            [mutableSizeName addObject:[dic objectForKey:@"name"]];
+            NSInteger result = dic2.count;
+            width = result;
+            NSLog(@"result = %ld", (long)result);
+        }
     }
+    
+        
+    
     NSLog(@"mutable = %@", mutableSize);
     NSLog(@"mutable = %@", mutableSizeName);
+    if (mutableSize.count != 0) {
+        
+    
     height = normalSkus.count;
     self.sizeTableHeight.constant = (height + 1)*24;
     self.sizeTableView.backgroundColor = [UIColor whiteColor];
@@ -491,6 +505,8 @@
             [self.sizeTableView addSubview:label0];
         }
     }
+    }
+    
 }
 
 //点击按钮显示提示信息。。。。
@@ -504,7 +520,16 @@
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
             
-            [self createInfoView];
+            
+//            if (self.infoView.isHidden == isInfoHidden) {
+//                self.infoView.hidden = NO;
+//            } else {
+//                self.infoView.hidden = YES;
+//            }
+       
+            
+            
+            
             
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             
@@ -519,7 +544,10 @@
 }
 
 - (void)createInfoView{
-    
+    self.infoView = [[UIView alloc] initWithFrame:CGRectMake(10, -50, SCREENWIDTH-20, 60)];
+    self.infoView.backgroundColor = [UIColor orangeColor];
+    [self.sizeView addSubview:self.infoView];
+    self.infoView.hidden = YES;
     
 }
 
