@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMNavigationDelegate.h"
 
 @interface ChildViewController : UIViewController<
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegateFlowLayout,
 UICollectionViewDelegate>{
 }
+
+@property (nonatomic, assign) id<MMNavigationDelegate>delegate;
+
 
 @property (assign, nonatomic) BOOL isRoot;
 @property (copy, nonatomic) NSString *urlString;

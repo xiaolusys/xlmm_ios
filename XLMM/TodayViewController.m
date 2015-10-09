@@ -23,7 +23,7 @@
 #import "PostersViewController.h"
 #import "CartViewController.h"
 #import "EnterViewController.h"
-
+#import "MMNavigationDelegate.h"
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -193,7 +193,7 @@ static NSString *khead2View = @"head2View";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     
-    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 33) collectionViewLayout:flowLayout];
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     self.myCollectionView.delegate = self;
@@ -556,11 +556,19 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%f", point.y );
     
     if (point.y > 10) {
-        self.navigationController.navigationBarHidden = YES;
+        
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
+        //self.navigationController.navigationBarHidden = YES;
         
         
     } else {
-        self.navigationController.navigationBarHidden = NO;
+        //self.navigationController.navigationBarHidden = NO;
+        
+        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+            [self.delegate showNavigation];
+        }
  
     }
 }

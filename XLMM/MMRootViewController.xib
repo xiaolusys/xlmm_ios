@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMRootViewController">
             <connections>
                 <outlet property="btnView" destination="qrf-17-OWC" id="Wpd-bu-kbe"/>
+                <outlet property="topHeight" destination="ab5-dO-aNf" id="cgB-E2-uYW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -91,7 +92,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="qrf-17-OWC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="G23-SH-sby"/>
                 <constraint firstItem="qrf-17-OWC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ab5-dO-aNf"/>

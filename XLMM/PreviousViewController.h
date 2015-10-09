@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMNavigationDelegate.h"
+
 
 @interface PreviousViewController : UIViewController
+
+
+@property (nonatomic, assign) id<MMNavigationDelegate>delegate;
 
 @end

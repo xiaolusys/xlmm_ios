@@ -313,11 +313,19 @@ static NSString * ksimpleCell = @"simpleCell";
     NSLog(@"%f", point.y );
     
     if (point.y > 10) {
-        self.navigationController.navigationBarHidden = YES;
+        
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
+        //self.navigationController.navigationBarHidden = YES;
         
         
     } else {
-        self.navigationController.navigationBarHidden = NO;
+        //self.navigationController.navigationBarHidden = NO;
+        
+        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+            [self.delegate showNavigation];
+        }
         
     }
 }

@@ -20,13 +20,15 @@
 #import "CartViewController.h"
 
 #import "MMCartsView.h"
+#import "MMNavigationDelegate.h"
 
 
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
 
-@interface MMRootViewController ()
+@interface MMRootViewController ()<MMNavigationDelegate>
+
 {
     UIView *_view;
     UIPageViewController *_pageVC;
@@ -105,24 +107,26 @@
   
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 33);
+    _pageVC.view.frame = _view.bounds;
     _pageVC.view.userInteractionEnabled = YES;
     
     _pageVC.dataSource = self;
     _pageVC.delegate = self;
     
     TodayViewController *todayVC = [[TodayViewController alloc] initWithNibName:@"TodayViewController" bundle:nil];
-    
+    todayVC.delegate = self;
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
+    preVC.delegate = self;
     
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
     childVC.urlString = kCHILD_LIST_URL;
     childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+    childVC.delegate = self;
   
     ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:nil];
     womanVC.urlString = kLADY_LIST_URL;
     womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
-    
+    womanVC.delegate = self;
     
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];
     
@@ -399,6 +403,36 @@
     [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
     
     
+}
+
+#pragma mark --mmNavigationDelegate--
+
+- (void)hiddenNavigation{
+    NSLog(@"hhhhhhh");
+    self.navigationController.navigationBarHidden = YES;
+
+                                        
+        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
+        
+        _view.frame = CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 20 - 5 - 28);
+
+    
+  
+    
+}
+
+- (void)showNavigation{
+    NSLog(@"sssssss");
+       self.navigationController.navigationBarHidden = NO;
+
+         self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+  
+    
+ 
+
+
+  
+  
 }
 
 

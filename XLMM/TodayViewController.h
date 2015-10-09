@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MMNavigationDelegate.h"
 
 @interface TodayViewController : UIViewController
+
+@property (nonatomic, assign) id<MMNavigationDelegate>delegate;
+
 
 @end
