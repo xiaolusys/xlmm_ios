@@ -481,6 +481,8 @@
 		32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
 		32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1F1B872CB5003501EF /* PerDingdanModel.m */; };
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
+		32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */; settings = {ASSET_TAGS = (); }; };
+		32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */; settings = {ASSET_TAGS = (); }; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
@@ -866,6 +868,9 @@
 		32A88E1E1B872CB5003501EF /* PerDingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerDingdanModel.h; sourceTree = "<group>"; };
 		32A88E1F1B872CB5003501EF /* PerDingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerDingdanModel.m; sourceTree = "<group>"; };
 		32A957851B82BC5600C23B34 /* ConfirmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmView.xib; sourceTree = "<group>"; };
+		32B5DE3A1BC7B1E500AEE6B3 /* CartsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartsCell.h; sourceTree = "<group>"; };
+		32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartsCell.m; sourceTree = "<group>"; };
+		32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartsCell.xib; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
@@ -1172,9 +1177,6 @@
 				3264EA2C1B6C685500F36A8D /* PeopleCollectionCell.h */,
 				3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */,
 				3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */,
-				32891B5D1B81D1B7007E562A /* CartTableCellTableViewCell.h */,
-				32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */,
-				32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */,
 				32BDE4801B85620F00FBEC25 /* AddressTableCell.h */,
 				32BDE4811B85620F00FBEC25 /* AddressTableCell.m */,
 				32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */,
@@ -1190,6 +1192,12 @@
 				327FC2601B9AF1CD00F111B3 /* CartCollectionCell.h */,
 				327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */,
 				327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */,
+				32891B5D1B81D1B7007E562A /* CartTableCellTableViewCell.h */,
+				32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */,
+				32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */,
+				32B5DE3A1BC7B1E500AEE6B3 /* CartsCell.h */,
+				32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */,
+				32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -1932,6 +1940,7 @@
 				32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,
 				32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */,
+				32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */,
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
 				32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */,
@@ -2115,6 +2124,7 @@
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
 				32A288411B93E230006DC949 /* MMRootViewController.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
+				32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
