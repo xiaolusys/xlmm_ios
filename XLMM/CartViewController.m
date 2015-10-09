@@ -30,11 +30,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
-  
- 
-    
-    
     [self downloadData];
 
     
@@ -58,9 +53,7 @@
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
-    
-    // last_created = [json objectForKey:@"last_created"];
-    // result = [json objectForKey:@"result"];
+  
     if ([[json objectForKey:@"result"] integerValue] == 0) {
         EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
         [self.navigationController pushViewController:emptyVC animated:YES];
@@ -68,7 +61,7 @@
     }
     
     
-    self.totalPricelabel.text =[NSString stringWithFormat:@""] ;
+    self.totalPricelabel.text =[NSString stringWithFormat:@"￥"] ;
 
     
     // Do any additional setup after loading the view from its nib.
@@ -83,16 +76,8 @@
     navLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = navLabel;
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 29, 33);
-    [rightButton setBackgroundImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"] forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(peopleCenter:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 18, 31);
+    leftButton.frame = CGRectMake(0, 0, 12, 18);
     [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui.png"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
@@ -137,25 +122,12 @@
     }
     NSLog(@"%@", self.dataArray);
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%d", allPrice];
-//    
-//    if(self.dataArray.count == 0){
-//        
-//        //  购物车为空
-//        
-//        
-//        
-//        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-//        [self.navigationController pushViewController:emptyVC animated:YES];
-//        return;
-//    }
+
     [self.cartTableView reloadData];
     
     
 }
 
-- (void)peopleCenter:(UIButton *)button{
-    NSLog(@"个人中心");
-}
 
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -333,7 +305,7 @@
     
 }
 - (void)retainClicked{
-    NSLog(@"不删除");
+
     
     
         [self.myView removeFromSuperview];
@@ -347,30 +319,14 @@
         self.frontView.hidden = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
     NSLog(@"url = %@", urlString);
-    
-    //第一步，创建URL
-    //第二步，创建请求
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
     NSLog(@"%@",str1);
-                 [self downloadData];
-
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager POST:urlString parameters:nil
-//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//              
-//              NSLog(@"JSON: %@", responseObject);
-//          }
-//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              
-//              NSLog(@"Error: %@", error);
-//              
-//          }
-//     ];
+    [self downloadData];
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     NSLog(@"data = %@", data);

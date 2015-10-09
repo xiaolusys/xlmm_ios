@@ -17,10 +17,6 @@
 @property (nonatomic, copy)NSString *cartID;
 @property (nonatomic, copy)NSString *buyerID;
 @property (nonatomic, assign)NSInteger number;
-
-
 @property (nonatomic, copy)NSString *sizeName;
-
-
 
 @end

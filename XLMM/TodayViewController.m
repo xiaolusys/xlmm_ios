@@ -21,6 +21,8 @@
 #import "MMCollectionController.h"
 #import "AFNetworking.h"
 #import "PostersViewController.h"
+#import "CartViewController.h"
+#import "EnterViewController.h"
 
 
 static NSString *ksimpleCell = @"simpleCell";
@@ -31,36 +33,24 @@ static NSString *khead2View = @"head2View";
 
 @interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
-    
-    UIView *ladyPoster;
-    UIView *childPoster;
-    
     NSMutableArray *childDataArray;
     NSMutableArray *ladyDataArray;
     NSMutableArray *posterDataArray;
     
-    UIView *frontView;
     NSInteger childListNumber;
     NSInteger ladyListNumber;
- 
-    
-    
-    BOOL step1;
-    BOOL step2;
-    
-    
+
     NSTimer *theTimer;
 
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
     
-     BOOL _isFirst;
-    
-    
+    BOOL _isFirst;
+    BOOL step1;
+    BOOL step2;
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
-
 
 @end
 
@@ -82,9 +72,6 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)setupRefresh{
-    
-    
-    
     [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
     [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
@@ -137,27 +124,18 @@ static NSString *khead2View = @"head2View";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    // 数据初始化。。。。
     childDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     ladyDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     step1 = NO;
     step2 = NO;
     _isFirst = YES;
-    
-  //  myTimeLabelString = @"剩余1天23小时23分59秒";
-    
     [self createCollectionView];
-    
-   // [self downloadData];
-    
+ 
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setInteger:0 forKey:NumberOfCart];
-    [userDefaults synchronize];
 
-    
-    
     
 }
 
@@ -215,7 +193,6 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) collectionViewLayout:flowLayout];
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
-    
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = NO;
@@ -223,11 +200,9 @@ static NSString *khead2View = @"head2View";
    
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:kposterView];
-    
-    
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View];
-    self.view.backgroundColor = [UIColor yellowColor];
+    
     [self.view addSubview:self.myCollectionView];
 }
 
@@ -263,7 +238,7 @@ static NSString *khead2View = @"head2View";
    NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
     if (data == nil) {
-        //[frontView removeFromSuperview];
+
         
         return;
     }
@@ -311,7 +286,7 @@ static NSString *khead2View = @"head2View";
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {
-       // [frontView removeFromSuperview];
+
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -694,6 +669,10 @@ static NSString *khead2View = @"head2View";
         }
     }
 }
+
+
+
+
 
 
 

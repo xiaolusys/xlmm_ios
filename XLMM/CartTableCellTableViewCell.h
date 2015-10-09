@@ -18,7 +18,6 @@
 - (void)deleteCartView:(ShoppingCartModel*)model;
 - (void)buyOneGood;
 
-
 @end
 
 @interface CartTableCellTableViewCell : UITableViewCell
@@ -35,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 - (IBAction)reduceBtn:(id)sender;
 - (IBAction)addBtn:(id)sender;
-- (IBAction)deleteBtn:(id)sender;
 
 
 @end

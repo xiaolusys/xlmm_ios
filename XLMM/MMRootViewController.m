@@ -17,6 +17,11 @@
 #include "EnterViewController.h"
 #import "UserInfoViewController.h"
 
+#import "CartViewController.h"
+
+#import "MMCartsView.h"
+
+
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -30,18 +35,16 @@
     UIButton *leftButton;
     BOOL _isFirst;
     
+    NSInteger goodsCount;
+    UILabel *label;
+
+    
 }
 
 @end
 
 @implementation MMRootViewController
 
-//- (void)viewWillAppear:(BOOL)animated{
-//    [super viewWillAppear:animated];
-//
-//        self.navigationController.navigationBarHidden = NO;
-//   
-//}
 
 - (void)viewDidLoad
 {
@@ -52,9 +55,11 @@
     _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+40, WIDTH, HEIGHT - 64 - 5 - 40)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
+    
     [self createInfo];
     
     [self creatPageData];
+    
 }
 
 - (void)createInfo{
@@ -92,11 +97,6 @@
         NSLog(@"login");
         UserInfoViewController *loginVC = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
-        
-        
-        
-        
-
     }else{
     EnterViewController *loginVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
     [self.navigationController pushViewController:loginVC animated:YES];
@@ -129,9 +129,90 @@
     [_pageVC setViewControllers:@[todayVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:_pageVC];
     [_view addSubview:_pageVC.view];
+    
+    [self createCartsView];
+
     [_pageVC didMoveToParentViewController:self];
     
+ 
     
+}
+
+- (void)createCartsView{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 166, 44, 44)];
+    [_view addSubview:view];
+    view.backgroundColor = [UIColor clearColor];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
+    [button addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
+    [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
+    [view addSubview:button];
+    
+    UIView *litleView = [[UIView alloc] initWithFrame:CGRectMake(22, 6, 16, 16)];
+    litleView.layer.cornerRadius = 8;
+    litleView.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
+    litleView.userInteractionEnabled = NO;
+    litleView.alpha = 0.7;
+    
+    [button addSubview:litleView];
+    label = [[UILabel alloc] initWithFrame:litleView.bounds];
+    label.text = @"12";
+    label.font = [UIFont boldSystemFontOfSize:12.0f];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [litleView addSubview:label];
+    
+    
+    [self setLabelNumber];
+    
+    //  http://m.xiaolu.so/rest/v1/carts/show_carts_num
+  
+}
+
+- (void)setLabelNumber{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"login"] == NO) {
+        label.text = @"0";
+        return;
+        
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json", Root_URL];
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+    NSError *error = nil;
+    if (data == nil) {
+        label.text = @"0";
+        return;
+    }
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    goodsCount = [[dic objectForKey:@"result"]integerValue];
+    NSLog(@"goods count = %ld", (long)goodsCount);
+    label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
+    
+}
+
+- (void)gotoCarts:(id)sender{
+    NSLog(@"进入购物车。。。");
+    
+    NSLog(@"gouguche ");
+    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    if (login == NO) {
+        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        [self.navigationController pushViewController:enterVC animated:YES];
+        return;
+    }
+    if (goodsCount == 0) {
+//        NSLog(@"购物车为空");
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"您的购物车为空~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alertView show];
+//        return;
+    }
+    
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:cartVC animated:YES];
     
 }
 
@@ -150,6 +231,8 @@
        // [self presentLeftMenuViewController:leftButton];
 
     }
+    
+    [self setLabelNumber];
     
     
 }
@@ -317,6 +400,10 @@
     
     
 }
+
+
+
+
 
 
 
