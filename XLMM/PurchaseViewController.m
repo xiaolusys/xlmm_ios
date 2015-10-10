@@ -86,6 +86,12 @@
         
     }
     
+    if (yhqModel == nil) {
+        self.yhqImageView.hidden = YES;
+    } else{
+        self.yhqImageView.hidden = NO;
+    }
+    
 
 }
 
@@ -99,9 +105,15 @@
     cartsDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self.view addSubview:self.myScrollView];
     self.screenWidth.constant = SCREENWIDTH;
-    yhqModel = [YHQModel new];
+   // yhqModel = [YHQModel new];
     NSLog(@"%@", self.cartsArray);
     [self downloadCartsData];
+    
+    if (yhqModel == nil) {
+        self.yhqImageView.hidden = YES;
+    } else{
+        self.yhqImageView.hidden = NO;
+    }
 
     
     
@@ -505,7 +517,7 @@
     NSInteger number = 0;
     for (NSDictionary *dic in array) {
         NSLog(@"dic = %@", dic);
-        if ([[dic objectForKey:@"status"]integerValue] == 0) {
+        if ([[dic objectForKey:@"status"]integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue]!= 2) {
             NSLog(@"可用优惠券");
             number++;
             

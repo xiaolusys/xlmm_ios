@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
@@ -18,6 +17,7 @@
                 <outlet property="usableNumber" destination="MIS-Ss-aq7" id="eTT-ZN-7qZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="yhqCreateLabel" destination="bo0-wF-pGF" id="2X2-Bf-uh5"/>
+                <outlet property="yhqImageView" destination="e32-mm-ayB" id="4r2-OS-B2J"/>
                 <outlet property="yhqLabel" destination="MIS-Ss-aq7" id="uJH-XY-pdK"/>
                 <outlet property="yhqdeadlineLabel" destination="KjH-7m-4mn" id="tFB-Ft-Jh8"/>
                 <outlet property="yhqtitleLabel" destination="zfG-7a-KW1" id="oa7-U7-bji"/>

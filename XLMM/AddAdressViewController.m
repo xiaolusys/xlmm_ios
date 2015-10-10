@@ -122,7 +122,7 @@
         [self.nameTextField resignFirstResponder];
         [self.numberTextField resignFirstResponder];
         [self.streetTextView resignFirstResponder];
-    return NO;
+        return NO;
     }
     else{
         [self cancelLocatePicker];

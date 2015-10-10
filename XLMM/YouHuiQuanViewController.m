@@ -53,7 +53,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
         if (self.isSelectedYHQ == YES) {
-            if ([[dic objectForKey:@"status"] integerValue] == 0) {
+            if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ]!= 2) {
                 
          
                 YHQModel *model1 = [YHQModel new];
@@ -89,6 +89,23 @@ static NSString *ksimpleCell = @"youhuiCell";
             model1.title = [dic objectForKey:@"title"];
             model1.valid = [dic objectForKey:@"valid"];
             [self.dataArray addObject:model1];
+            
+           
+            for (int i = 0, j = 0; j<self.dataArray.count; i++, j++) {
+                YHQModel *model3 = [self.dataArray objectAtIndex:i];
+                if ([model3.poll_status integerValue] == 2) {
+                    [self.dataArray removeObjectAtIndex:i];
+                    [self.dataArray addObject:model3];
+                    i--;
+                    
+                }
+              
+                
+                
+                
+            }
+            
+            
         }
     }
     [self.myCollectionView reloadData];
@@ -129,14 +146,19 @@ static NSString *ksimpleCell = @"youhuiCell";
     
     YHQModel *model2 = [self.dataArray objectAtIndex:indexPath.row];
     
-    if ([model2.status integerValue] == 1) {
+    if ([model2.status integerValue] == 1 || [model2.poll_status integerValue] == 2) {
         cell.myimageView.image = [UIImage imageNamed:@"yhq_not_valid.jpg"];
     }
-    if ([model2.status integerValue] == 0) {
+    else {
         cell.myimageView.image = [UIImage imageNamed:@"yhq_valid.jpg"];
     }
     cell.name1.text = model2.title;
+    if ([model2.poll_status integerValue] == 2) {
+         cell.name2.text = @"已过期";
+    }else{
     cell.name2.text = @"";
+    }
+//    cell.name2.text = @"";
     cell.time1.text = model2.created;
     cell.time2.text = model2.deadline;
     
@@ -196,34 +218,19 @@ static NSString *ksimpleCell = @"youhuiCell";
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.delegate = self;
     [alertView show];
-    
-    
-  
-   
-    
-    
-    
-    
-    
-    
-    
-    
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         NSLog(@"是的， 我要使用这样优惠券");
-        
-        
         if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
             NSLog(@"更新优惠券");
             [self.delegate updateYouhuiquanWithmodel:model];
             NSLog(@"model = %@", model);
             NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
         }
-        
         //记录选择的优惠券 并返回上一个界面。。。。
         [self.navigationController popViewControllerAnimated:YES];
-        
     }
 }
 
@@ -243,7 +250,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
+    imageView.frame = CGRectMake(8, 14, 8, 18);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -251,7 +258,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     
     UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia.png"]];
-    imageView2.frame = CGRectMake(8, 8, 30, 30);
+    imageView2.frame = CGRectMake(8, 14, 20, 20);
     [button2 addSubview:imageView2];
     [button2 addTarget:self action:@selector(addBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button2];
