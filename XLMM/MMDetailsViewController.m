@@ -20,32 +20,38 @@
 #import "LiJiGMViewController1.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate>{
+  
     
-    NSArray *normalSkus;
-    NSDictionary *details;
-   // NSString *bianhao;
-    NSString *skusID;
-    NSString *itemID;
-    NSString *saleTime;
-    UIView *frontView;
-    NSTimer *timer;
-    UILabel *countLabel;
-    NSInteger goodsCount;
-    NSDictionary *json;
-    UIButton *cartsButton;
-    NSString *last_created;
-    NSTimer *theTimer;
-    UILabel *shengyutimeLabel;
-    BOOL isInfoHidden;
+    NSDictionary *json; //详情页json数据
+    
+    NSArray *normalSkus; //尺码表
+    NSDictionary *details;//商品参数
+    NSString *skusID;  //规格id
+    NSString *itemID;  //商品id
+    NSString *saleTime;//上佳时间
+    UIView *frontView; //完成前显示 界面
+    NSTimer *timer;    // 底部定时器
+    UILabel *countLabel;// 购物车label
+    NSInteger goodsCount;//购物车商品数量
+    
+    UIButton *cartsButton;//购物车按钮
+    NSString *last_created;//  最后加入购物车的时间
+    NSTimer *theTimer;//  购物车定时器
+    UILabel *shengyutimeLabel;// 购物车剩余时间 label
+    BOOL isInfoHidden;  //
     
 }
+
+
+// 4张链接图片
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageview1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 
-@property (nonatomic, strong) UIView *infoView;
+@property (nonatomic, strong) UIView *infoView;//显示信息视图
 
 
 
@@ -54,23 +60,38 @@
 @implementation MMDetailsViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-    //  NSLog(@"appear");
+      NSLog(@"appear");
     [super viewWillAppear:animated];
-
+    //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-        if (data != nil) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            if ([dic objectForKey:@"result"] != nil) {
-                goodsCount = [[dic objectForKey:@"result"] integerValue];
-                NSLog(@"%ld", (long)goodsCount);
-                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                countLabel.text = strNum;
-            }
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+            NSLog(@"%@", kCart_Number_URL);
+            [self performSelectorOnMainThread:@selector(fetchedCartNumber:)withObject:data waitUntilDone:YES];
             
+        });
+    }
+    
+        
+  
+}
+
+
+- (void)fetchedCartNumber:(NSData *)data{
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        if ([dic objectForKey:@"result"] != nil) {
+            goodsCount = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"%ld", (long)goodsCount);
+            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+            countLabel.text = strNum;
         }
-    }else{
+        
+    } else{
         countLabel.text = @"0";
         return;
     }
@@ -94,15 +115,21 @@
     
     
     isInfoHidden = YES;
+    
+    
     self.headViewwidth.constant = SCREENWIDTH;
     self.headViewHeitht.constant = SCREENWIDTH + 40;
+    //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    
     frontView.backgroundColor = [UIColor whiteColor];
+    
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicatorView.frame = CGRectMake(SCREENWIDTH/2-40, 200, 80, 80);
     [indicatorView startAnimating];
     [frontView addSubview:indicatorView];
     [self.view addSubview:frontView];
+    
     
     self.title = @"商品详情";
     NSLog(@"%@", self.urlString);
@@ -113,13 +140,20 @@
     [self.imageView4 sd_setImageWithURL:[NSURL URLWithString:@"http://image.xiaolu.so/chimabiao.png"]];
    
     [self.backButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhuiqianye.png"] forState:UIControlStateNormal];
+    
     self.backButton.layer.cornerRadius = 22;
     [self.backButton addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
     
      [self createCartView];
     
-     [self downloadData];
+     [self downloadDetailsData];
     
+}
+
+
+- (void)backClicked:(UIButton *)button{
+    NSLog(@"back");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -131,24 +165,10 @@
     }
    
 }
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
-- (void)backClicked:(UIButton *)button{
-    NSLog(@"back");
-   [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-
-- (void)downloadData{
+- (void)downloadDetailsData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
+        NSLog(@"details url = %@", self.urlString);
         [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
         
     });
@@ -168,39 +188,29 @@
     
     NSLog(@"details data = %@", dic);
     
-    itemID = [dic objectForKey:@"id"];
+    
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
-//    NSData *imagedata  = [NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
-//    NSLog(@"image data = %@", imagedata);
-//    
-    
-    
-    
-    
-    
-    NSLog(@"images ========= %@", [dic objectForKey:@"pic_path"]);
     self.nameLabel.text = [dic objectForKey:@"name"];
     self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
-    
-    normalSkus = [dic objectForKey:@"normal_skus"];
-    NSLog(@"normal_skus = %@", normalSkus);
-    
-    details = [dic objectForKey:@"details"];
-    saleTime = [dic objectForKey:@"sale_time"];
-    NSLog(@"details = %@", details);
-    
     self.bianhao.text = [dic objectForKey:@"outer_id"];
     self.mingcheng.text = [dic objectForKey:@"name"];
-   //sizeCount = 20;
+    itemID = [dic objectForKey:@"id"];
+    normalSkus = [dic objectForKey:@"normal_skus"];
+    details = [dic objectForKey:@"details"];
+    saleTime = [dic objectForKey:@"sale_time"];
+    
+  [frontView removeFromSuperview];
+    
     
     [self createSizeView];
     [self createDetailsView];
-    [self createContentView];
-    [frontView removeFromSuperview];
-    cartsButton.hidden = NO;
-    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
-    [self setTime];
+//    [self createContentView];
+//
+//    
+//    cartsButton.hidden = NO;
+//    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
+//    [self setTime];
 }
 
 - (void)createCartView{

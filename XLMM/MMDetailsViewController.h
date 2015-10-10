@@ -11,6 +11,10 @@
 @interface MMDetailsViewController : UIViewController{
     
 }
+
+
+@property (nonatomic, copy) NSString * urlString;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewwidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewHeitht;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
@@ -29,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
-@property (nonatomic, copy) NSString * urlString;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 - (IBAction)addCartBtnClicked:(id)sender;
 - (IBAction)buyBtnClicked:(id)sender;
