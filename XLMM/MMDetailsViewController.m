@@ -19,7 +19,7 @@
 #import "LiJiGMViewController.h"
 #import "LiJiGMViewController1.h"
 
-@interface MMDetailsViewController (){
+@interface MMDetailsViewController ()<UIGestureRecognizerDelegate>{
     
     NSArray *normalSkus;
     NSDictionary *details;
@@ -56,6 +56,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     //  NSLog(@"appear");
     [super viewWillAppear:animated];
+
     self.navigationController.navigationBarHidden = YES;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
@@ -88,6 +89,10 @@
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:self.scrollerView];
     
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    
+    
     isInfoHidden = YES;
     self.headViewwidth.constant = SCREENWIDTH;
     self.headViewHeitht.constant = SCREENWIDTH + 40;
@@ -117,6 +122,15 @@
     
 }
 
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if ( self.navigationController.viewControllers.count == 1) {
+        return NO;
+    } else {
+        return YES;
+    }
+   
+}
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
@@ -127,7 +141,7 @@
 
 - (void)backClicked:(UIButton *)button{
     NSLog(@"back");
-    [self.navigationController popViewControllerAnimated:YES];
+   [self.navigationController popViewControllerAnimated:YES];
 }
 
 
