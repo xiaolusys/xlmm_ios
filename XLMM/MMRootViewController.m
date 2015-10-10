@@ -223,20 +223,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    if (self.navigationController.navigationBarHidden == YES) {
-        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
-        UIView *cartView = [_view viewWithTag:123];
-        cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
-    } else {
-        
-        self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        
-        
-        
-        UIView *cartView = [_view viewWithTag:123];
-        cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
-        
-    }
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
