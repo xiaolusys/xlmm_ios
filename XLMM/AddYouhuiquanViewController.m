@@ -7,8 +7,12 @@
 //
 
 #import "AddYouhuiquanViewController.h"
+#import "AFNetworking.h"
+#import "MMClass.h"
 
 @interface AddYouhuiquanViewController ()<UITextFieldDelegate>
+
+@property (nonatomic, strong) UIAlertView *alertView;
 
 @end
 
@@ -18,11 +22,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     
     [self createInfo];
-    self.youhuiTextField.delegate = self;
-   // self.youhuiTextField.keyboardType = UIKeyboardTypeNumberPad;
-    self.youhuiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     
     
 }
@@ -47,7 +50,7 @@
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    self.navigationItem.backBarButtonItem = leftItem;
     
   
     
@@ -70,22 +73,85 @@
 }
 */
 
-- (IBAction)submitClickded:(id)sender {
+
+
+
+//            - {prefix}/method: post 创建用户优惠券
+//            ->arg: coupon_type 优惠券类型
+//            -->C150_10:满150减10
+//            -->C259_20:满259减20
+//            :return
+//            {'res':'limit'} ->: 创建受限
+//            {'res':'success'} ->: 创建成功
+//            {'res':'not_release'} ->: 暂未发放
+
+- (void)getYHQWithType:(NSString *)type{
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
+    NSLog(@"url = %@", urlstring);
+    //  NSURL *url = [NSURL URLWithString:urlstring];
     
-    NSLog(@"提交优惠号码");
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{@"coupon_type": type};
+    
+    [manager POST:urlstring parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              
+              if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                  NSLog(@"是字典");
+                  NSDictionary *dic = (NSDictionary *)responseObject;
+                  NSString *result = [dic objectForKey:@"res"];
+                  if ([result isEqualToString:@"limit"]) {
+                      NSLog(@"创建受限");
+                      self.alertView.message = @"创建受限";
+                      [self.alertView show];
+                      
+                  } else if ([result isEqualToString:@"success"]){
+                      NSLog(@"创建成功");
+                      self.alertView.message = @"创建成功";
+                      [self.alertView show];
+                      
+                  } else if ([result isEqualToString:@"not_release"]){
+                      NSLog(@"暂未发放");
+                      self.alertView.message = @"暂未发放";
+                      [self.alertView show];
+                  }
+                  
+                  
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+}
+
+
+
+- (IBAction)btn1Clicked:(id)sender {
+    NSLog(@"领取优惠券11");
+    
+    
+                NSLog(@"获取优惠券");
+    [self getYHQWithType:@"C150_10"];
+    
+    
+    
+    
+    
+
     
 }
 
+- (IBAction)btn2Clicked:(id)sender {
+    NSLog(@"领取优惠券22");
+    
+    NSLog(@"获取优惠券");
+    
+    [self getYHQWithType:@"C150_20"];
 
-#pragma mark --UITextFieldDelegate--
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
 }
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.youhuiTextField resignFirstResponder];
-}
-
 @end

@@ -572,7 +572,7 @@ static NSString *khead2View = @"head2View";
     NSLog(@"%f", point.y );
     
     
-    if (point.y > 10) {
+    if (point.y > 160) {
         
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
@@ -580,7 +580,7 @@ static NSString *khead2View = @"head2View";
         //self.navigationController.navigationBarHidden = YES;
         
         
-    } else {
+    } else if(point.y < -66){
         //self.navigationController.navigationBarHidden = NO;
         
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {

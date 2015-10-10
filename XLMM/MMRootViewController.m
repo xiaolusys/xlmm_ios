@@ -54,7 +54,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 64 - 5 - 28)];
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 20 - 5 - 28)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     
@@ -78,32 +78,12 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    
-    [rightBtn addTarget:self action:@selector(loginBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *loginImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
-    loginImageView.frame = CGRectMake(8, 8, 26, 30);
-    [rightBtn addSubview:loginImageView];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
 
     
     [ self.view addSubview:[[UIView alloc] init]];
 }
 
-- (void)loginBtnClicked:(UIButton *)button{
-    
-    NSLog(@"login = %d", [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        NSLog(@"login");
-        UserInfoViewController *loginVC = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
-        [self.navigationController pushViewController:loginVC animated:YES];
-    }else{
-    EnterViewController *loginVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-    [self.navigationController pushViewController:loginVC animated:YES];
-    }
-}
+
   
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -144,6 +124,7 @@
 
 - (void)createCartsView{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 166, 44, 44)];
+    view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor clearColor];
     
@@ -223,8 +204,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     NSLog(@"DEMOFirstViewController will appear");
+  
     if (_isFirst) {
         
         NSLog(@"111");
@@ -239,6 +220,23 @@
     [self setLabelNumber];
     
     
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (self.navigationController.navigationBarHidden == YES) {
+        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
+        UIView *cartView = [_view viewWithTag:123];
+        cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
+    } else {
+        
+        self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        
+        
+        
+        UIView *cartView = [_view viewWithTag:123];
+        cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+        
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -410,11 +408,16 @@
 - (void)hiddenNavigation{
     NSLog(@"hhhhhhh");
     self.navigationController.navigationBarHidden = YES;
+    
+    
+
+        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
+        UIView *cartView = [_view viewWithTag:123];
+        cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
+
 
                                         
-        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
-        
-        _view.frame = CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 20 - 5 - 28);
+ 
 
     
   
@@ -429,7 +432,8 @@
   
     
  
-
+    UIView *cartView = [_view viewWithTag:123];
+    cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
 
   
   

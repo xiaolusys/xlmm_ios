@@ -125,7 +125,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     if ( self.navigationController.viewControllers.count == 1) {
-        return NO;
+        return NO;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     } else {
         return YES;
     }

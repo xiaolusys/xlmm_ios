@@ -483,6 +483,7 @@
 		32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A957851B82BC5600C23B34 /* ConfirmView.xib */; };
 		32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */; settings = {ASSET_TAGS = (); }; };
 		32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */; settings = {ASSET_TAGS = (); }; };
+		32B5DE8A1BC8D53700AEE6B3 /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */; settings = {ASSET_TAGS = (); }; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
@@ -872,6 +873,7 @@
 		32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartsCell.m; sourceTree = "<group>"; };
 		32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartsCell.xib; sourceTree = "<group>"; };
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
+		32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lingquyouhuiquan.png; path = ../../lingquyouhuiquan.png; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
@@ -1098,6 +1100,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */,
 				32E00C901BA7B79700A73390 /* The Third */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
@@ -1883,6 +1886,7 @@
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
+				32B5DE8A1BC8D53700AEE6B3 /* lingquyouhuiquan.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,

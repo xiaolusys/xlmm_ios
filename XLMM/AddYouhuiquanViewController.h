@@ -10,10 +10,7 @@
 
 @interface AddYouhuiquanViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *youhuiTextField;
-
-
-
-- (IBAction)submitClickded:(id)sender;
+- (IBAction)btn1Clicked:(id)sender;
+- (IBAction)btn2Clicked:(id)sender;
 
 @end

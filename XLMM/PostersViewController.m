@@ -45,12 +45,14 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    
+    //self.navigationController.navigationBarHidden = NO;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.navigationController.navigationBarHidden = NO;
+
     [super viewDidAppear:animated];
     if (_isFirst) {
         //集成刷新控件

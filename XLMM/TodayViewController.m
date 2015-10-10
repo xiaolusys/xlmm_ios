@@ -555,7 +555,7 @@ static NSString *khead2View = @"head2View";
     
     NSLog(@"%f", point.y );
     
-    if (point.y > 10) {
+    if (point.y > 260) {
         
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
@@ -563,7 +563,7 @@ static NSString *khead2View = @"head2View";
         //self.navigationController.navigationBarHidden = YES;
         
         
-    } else {
+    } else  if (point.y < - 66){
         //self.navigationController.navigationBarHidden = NO;
         
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
@@ -584,42 +584,7 @@ static NSString *khead2View = @"head2View";
             
             [self.navigationController pushViewController:childVC animated:YES];
             
-            
-//            NSLog(@"获取优惠券");
-//            
-//            
-//            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
-//            NSLog(@"url = %@", urlstring);
-//          //  NSURL *url = [NSURL URLWithString:urlstring];
-//            
-//            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//            
-//            NSDictionary *parameters = @{@"coupon_type": @"C259_20"};
-//            
-//            [manager POST:urlstring parameters:parameters
-//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                      
-//                      NSLog(@"JSON: %@", responseObject);
-//                      
-//                      
-//                  }
-//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                      
-//                      NSLog(@"Error: %@", error);
-//                      
-//                  }];
-            
-            
-            
-//            - {prefix}/method: post 创建用户优惠券
-//            ->arg: coupon_type 优惠券类型
-//            -->C150_10:满150减10
-//            -->C259_20:满259减20
-//            :return
-//            {'res':'limit'} ->: 创建受限
-//            {'res':'success'} ->: 创建成功
-//            {'res':'not_release'} ->: 暂未发放
-            
+
             
             
             

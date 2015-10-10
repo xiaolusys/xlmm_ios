@@ -44,7 +44,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   self.navigationController.navigationBarHidden = NO;
     
 }
 
@@ -312,7 +311,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     NSLog(@"%f", point.y );
     
-    if (point.y > 10) {
+    if (point.y > 260) {
         
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
@@ -320,7 +319,7 @@ static NSString * ksimpleCell = @"simpleCell";
         //self.navigationController.navigationBarHidden = YES;
         
         
-    } else {
+    } else if (point.y < - 66){
         //self.navigationController.navigationBarHidden = NO;
         
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
