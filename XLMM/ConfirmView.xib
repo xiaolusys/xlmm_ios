@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="LiHeiPro.ttf">
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
             <string>LiHeiPro</string>
             <string>LiHeiPro</string>
         </mutableArray>
@@ -26,15 +24,11 @@
             <subviews>
                 <button opaque="NO" tag="80" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fNU-0y-HQy">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.77254901960784317" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="OXr-jq-CJJ"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
-                    <state key="normal" title="先留着">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="先留着"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="OXr-jq-CJJ"/>
@@ -49,9 +43,9 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="删掉的商品可能被别人抢走哦～" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARW-4X-cHd">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="FUh-Ga-Xyh"/>
+                        <constraint firstAttribute="height" constant="24" id="FUh-Ga-Xyh"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="16"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -62,25 +56,6 @@
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
                             <include reference="FUh-Ga-Xyh"/>
-                        </mask>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="要删除吗?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agb-KT-8RB">
-                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="Yof-i5-baX"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
-                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Yof-i5-baX"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="Yof-i5-baX"/>
                         </mask>
                     </variation>
                 </label>
@@ -105,13 +80,30 @@
                 </imageView>
                 <button opaque="NO" tag="81" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1R-fO-fhd">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.87058823529999996" green="0.29803921570000003" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="删除">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="要删除吗?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agb-KT-8RB">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="Yof-i5-baX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="16"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Yof-i5-baX"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Yof-i5-baX"/>
+                        </mask>
+                    </variation>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -139,9 +131,9 @@
                 <mask key="subviews">
                     <exclude reference="fNU-0y-HQy"/>
                     <exclude reference="ARW-4X-cHd"/>
-                    <exclude reference="agb-KT-8RB"/>
                     <exclude reference="R9A-ee-Sfn"/>
                     <exclude reference="V1R-fO-fhd"/>
+                    <exclude reference="agb-KT-8RB"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="3PR-XS-SW1"/>
@@ -165,9 +157,9 @@
                 <mask key="subviews">
                     <include reference="fNU-0y-HQy"/>
                     <include reference="ARW-4X-cHd"/>
-                    <include reference="agb-KT-8RB"/>
                     <include reference="R9A-ee-Sfn"/>
                     <include reference="V1R-fO-fhd"/>
+                    <include reference="agb-KT-8RB"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="3PR-XS-SW1"/>

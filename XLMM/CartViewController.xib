@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="LiHeiPro.ttf">
@@ -54,7 +54,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HcG-2g-KjK">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="Ofd-cj-Sr2"/>
+                        <constraint firstAttribute="width" constant="180" id="Ofd-cj-Sr2"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,27 +75,6 @@
                     <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
                     <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brX-H3-cws">
-                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="Xsr-Tf-nob">
-                            <variation key="heightClass=regular-widthClass=compact" constant="100"/>
-                        </constraint>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
-                    <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Xsr-Tf-nob"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="Xsr-Tf-nob"/>
-                        </mask>
-                    </variation>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tws-zf-Qgq">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -126,13 +105,34 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brX-H3-cws">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Xsr-Tf-nob">
+                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                        </constraint>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>
+                    <color key="textColor" red="0.87843137250000003" green="0.18823529410000001" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Xsr-Tf-nob"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Xsr-Tf-nob"/>
+                        </mask>
+                    </variation>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="brX-H3-cws" firstAttribute="height" secondItem="OGk-Hb-y6V" secondAttribute="height" id="07H-lG-iGl"/>
                 <constraint firstItem="brX-H3-cws" firstAttribute="height" secondItem="HcG-2g-KjK" secondAttribute="height" id="4BK-Vp-q1C"/>
                 <constraint firstItem="OGk-Hb-y6V" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="7Uu-Ua-r33"/>
-                <constraint firstAttribute="trailing" secondItem="brX-H3-cws" secondAttribute="trailing" constant="8" id="8Za-wg-uc1"/>
+                <constraint firstAttribute="trailing" secondItem="brX-H3-cws" secondAttribute="trailing" id="8Za-wg-uc1"/>
                 <constraint firstAttribute="trailing" secondItem="5xa-h8-S1m" secondAttribute="trailing" constant="99" id="8mn-JR-fbU">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
@@ -165,16 +165,16 @@
                 <constraint firstItem="brX-H3-cws" firstAttribute="height" secondItem="0SI-Gn-QG3" secondAttribute="height" id="qlM-jF-FNS"/>
                 <constraint firstItem="brX-H3-cws" firstAttribute="leading" secondItem="0SI-Gn-QG3" secondAttribute="trailing" id="z2V-I5-aSd"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="u7N-le-ZFh"/>
                     <exclude reference="OGk-Hb-y6V"/>
                     <exclude reference="HcG-2g-KjK"/>
                     <exclude reference="0SI-Gn-QG3"/>
-                    <exclude reference="brX-H3-cws"/>
                     <exclude reference="tws-zf-Qgq"/>
                     <exclude reference="5xa-h8-S1m"/>
+                    <exclude reference="brX-H3-cws"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="XHq-Yi-Mtl"/>
@@ -208,9 +208,9 @@
                     <include reference="OGk-Hb-y6V"/>
                     <include reference="HcG-2g-KjK"/>
                     <include reference="0SI-Gn-QG3"/>
-                    <include reference="brX-H3-cws"/>
                     <include reference="tws-zf-Qgq"/>
-                    <include reference="5xa-h8-S1m"/>
+                    <exclude reference="5xa-h8-S1m"/>
+                    <include reference="brX-H3-cws"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="XHq-Yi-Mtl"/>

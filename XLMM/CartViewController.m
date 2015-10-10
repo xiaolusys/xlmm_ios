@@ -122,6 +122,18 @@
     }
     NSLog(@"%@", self.dataArray);
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%d", allPrice];
+    
+    
+    
+    if (allPrice >= 150) {
+        self.discountLabel.text = @"有可用优惠券";
+    } else{
+        self.discountLabel.text = [NSString stringWithFormat:@"差%d元可用优惠券", 150 - (int)allPrice];
+        
+    }
+    
+    
+    
 
     [self.cartTableView reloadData];
     
@@ -175,6 +187,66 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 88;
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    [super setEditing:editing animated:animated];
+    [self.myTableView setEditing:editing animated:animated];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        deleteModel = [self.dataArray objectAtIndex:indexPath.row];
+        [self.dataArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        //调用删除接口。。。。。。
+        
+        [self deleteCatr];
+        
+    }
+}
+- (void)deleteCatr{
+    NSLog(@"确认删除");
+//    [self.myView removeFromSuperview];
+//    self.frontView.hidden = YES;
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
+    NSLog(@"url = %@", urlString);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@",str1);
+    
+    
+    
+    [self downloadData];
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    NSLog(@"data = %@", data);
+    if (data != nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        NSLog(@"dic = %@", dic);
+        
+        NSInteger count = [[dic objectForKey:@"result"] integerValue];
+        NSLog(@"count = %ld", (long)count);
+        if (count == 0) {
+            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+            [self.navigationController pushViewController:emptyVC animated:YES];
+        }
+    } else{
+        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
+        [self.navigationController pushViewController:emptyVC animated:YES];
+    }
+    
+
 }
 
 /*
@@ -276,7 +348,7 @@
               [self downloadData];
               
               
-              //7b226465 7461696c 223a22e5 9586e593 81e5ba93 e5ad98e4 b88de8b6 b3227d
+             
              
           }
      ];
@@ -296,11 +368,11 @@
      NSLog(@"%@", btn1);
      NSLog(@"%@", btn2);
     deleteModel = cartModel;
-    self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 220);
+    self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 200);
         
    
     [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];
-    [btn2 addTarget:self action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_myView];
     
 }
@@ -313,7 +385,7 @@
         self.frontView.hidden = YES;
     
 }
-- (void)deleteClicked:(UIButton *)btn{
+- (void)deleteClicked{
     NSLog(@"确认删除");
         [self.myView removeFromSuperview];
         self.frontView.hidden = YES;
@@ -348,6 +420,12 @@
 
 
     
+    
+}
+
+
+
+- (void)updateYouhuiquanLabel{
     
 }
 

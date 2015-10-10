@@ -36,8 +36,8 @@
     number --;
     if (number == 0) {
         NSLog(@"买一个吧");
-        if (self.delegate && [self.delegate respondsToSelector:@selector(buyOneGood)]) {
-            [self.delegate buyOneGood];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deleteCartView:)]) {
+            [self.delegate deleteCartView:_cartModel];
         }
        
         return;
