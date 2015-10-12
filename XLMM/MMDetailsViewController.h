@@ -38,5 +38,10 @@
 - (IBAction)buyBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeTableHeight;
 @property (weak, nonatomic) IBOutlet UIView *sizeTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomImageViewHeight;
+@property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
+- (IBAction)backqianye:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet UIView *backHeadImageView;
 
 @end

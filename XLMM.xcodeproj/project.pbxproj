@@ -873,7 +873,7 @@
 		32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartsCell.m; sourceTree = "<group>"; };
 		32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartsCell.xib; sourceTree = "<group>"; };
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
-		32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lingquyouhuiquan.png; path = ../../lingquyouhuiquan.png; sourceTree = "<group>"; };
+		32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lingquyouhuiquan.png; path = ../../../lingquyouhuiquan.png; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
@@ -1100,7 +1100,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */,
 				32E00C901BA7B79700A73390 /* The Third */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
@@ -1248,6 +1247,7 @@
 		32746DD41B74A22000816208 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */,
 				32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */,
 				32D876301BB6C07B00D0C30F /* yhq_valid.jpg */,
 				32121B3F1B9461BF00742E53 /* icon.png */,
@@ -2422,7 +2422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "f46c8f5e-a626-46cc-aa64-42f3dbfaf022";
@@ -2460,7 +2460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "f46c8f5e-a626-46cc-aa64-42f3dbfaf022";
 				SDKROOT = iphoneos;
@@ -2479,7 +2479,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2517,7 +2517,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

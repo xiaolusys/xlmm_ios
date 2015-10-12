@@ -19,7 +19,7 @@
 #import "LiJiGMViewController.h"
 #import "LiJiGMViewController1.h"
 
-@interface MMDetailsViewController ()<UIGestureRecognizerDelegate>{
+@interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
     
     NSDictionary *json; //详情页json数据
@@ -109,6 +109,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:self.scrollerView];
+    [self.view addSubview:self.backView];
+    
+    self.scrollerView.delegate = self;
     
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
@@ -116,7 +119,7 @@
     
     isInfoHidden = YES;
     
-    
+    self.bottomImageViewHeight.constant = SCREENWIDTH;
     self.headViewwidth.constant = SCREENWIDTH;
     self.headViewHeitht.constant = SCREENWIDTH + 40;
     //完成前的显示界面
@@ -149,6 +152,31 @@
      [self downloadDetailsData];
     
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+//     [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    NSLog(@"scrolling");
+    CGPoint contentOffset = scrollView.contentOffset;
+  
+    
+    self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , SCREENWIDTH);
+
+    if (contentOffset.y<0) {
+        //图片拉大
+        CGFloat imagewidth = SCREENWIDTH - contentOffset.y;
+        self.bottomImageViewHeight.constant = SCREENWIDTH - contentOffset.y;
+        self.backHeadImageView.frame = CGRectMake(contentOffset.y/2, 0, imagewidth, imagewidth);
+        
+     
+       
+        NSLog(@"frame = %@", NSStringFromCGRect(self.backHeadImageView.frame));
+        
+        
+        
+    }
+}
+
 
 
 - (void)backClicked:(UIButton *)button{
@@ -189,7 +217,10 @@
     NSLog(@"details data = %@", dic);
     
     
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    
+    
+    NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
     self.nameLabel.text = [dic objectForKey:@"name"];
     self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
@@ -205,12 +236,12 @@
     
     [self createSizeView];
     [self createDetailsView];
-//    [self createContentView];
+    [self createContentView];
 //
 //    
-//    cartsButton.hidden = NO;
-//    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
-//    [self setTime];
+    cartsButton.hidden = NO;
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
+    [self setTime];
 }
 
 - (void)createCartView{
@@ -828,5 +859,9 @@
         EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
     }
+}
+- (IBAction)backqianye:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
