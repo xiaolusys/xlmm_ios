@@ -39,6 +39,7 @@
     NSTimer *theTimer;//  购物车定时器
     UILabel *shengyutimeLabel;// 购物车剩余时间 label
     BOOL isInfoHidden;  //
+    int contentCount;
     
 }
 
@@ -112,7 +113,7 @@
     [self.view addSubview:self.backView];
     
     self.scrollerView.delegate = self;
-    
+    contentCount = 0;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     
@@ -350,6 +351,7 @@
     for (int i = 0; i<imageArray.count; i++) {
         
         UIImageView *imageview = [[UIImageView alloc] init];
+        
         [imageview sd_setImageWithURL:[NSURL URLWithString:[imageArray objectAtIndex:i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
             imagewidth = SCREENWIDTH;
@@ -358,18 +360,20 @@
             [heights addObject:[NSNumber numberWithFloat:imageHeight]];
           
             NSLog(@"imagewidth = %f, imageheight = %f", imagewidth, imageHeight);
+            NSLog(@"contentCount = %d", contentCount);
             
-            
-            if (i == 0) {
+            if (contentCount == 0) {
                 origineY = 0;
             } else {
-                origineY += [[heights objectAtIndex:(i-1)] floatValue];
+                origineY += [[heights objectAtIndex:(contentCount-1)] floatValue];
             }
+            contentCount++;
+            
             NSLog(@"origineY = %f", origineY);
             
             imageview.frame = CGRectMake(0, origineY, imagewidth, imageHeight);
             
-            
+            self.contentViewHeight.constant = origineY + imageHeight;
             
         }];
         
@@ -377,7 +381,7 @@
         
       
     }
-    self.contentViewHeight.constant = origineY + imageHeight;
+  
 
 }
 
