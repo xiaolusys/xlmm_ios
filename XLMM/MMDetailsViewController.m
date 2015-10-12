@@ -340,35 +340,45 @@
 
 - (void)createContentView{
     NSArray *imageArray = [details objectForKey:@"content_imgs"];
-    NSLog(@"imageUlrs = %@", imageArray);
-    NSInteger height = 0;
-    float imageheight [imageArray.count];
-    NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:0];
+    NSLog(@"contentImgs = %@", imageArray);
+    __block float origineY = 0.0;
+    __block float imagewidth = 0.0;
+    __block float imageHeight = 0.0;
+    
+    NSMutableArray *heights = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i<imageArray.count; i++) {
-        UIImage *image = [UIImage imagewithURLString:[imageArray objectAtIndex:i]];
-
-        imageheight[i] = image.size.height/image.size.width * SCREENWIDTH;
         
-        height += imageheight[i];
-        [images addObject:image];
-    }
-    self.contentViewHeight.constant = height;
-    for (int i = 0; i<imageArray.count; i++) {
-        UIImageView *imageview = [[UIImageView alloc] initWithImage:[images objectAtIndex:i]];
-        float yheight = 0;
-        if (i ==0) {
-            yheight = 0;
-        }else{
-            for (int j = 0; j<i; j++) {
-                yheight = yheight +imageheight[j];
+        UIImageView *imageview = [[UIImageView alloc] init];
+        [imageview sd_setImageWithURL:[NSURL URLWithString:[imageArray objectAtIndex:i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+            imagewidth = SCREENWIDTH;
+            imageHeight = image.size.height/image.size.width * SCREENWIDTH;
+            
+            [heights addObject:[NSNumber numberWithFloat:imageHeight]];
+          
+            NSLog(@"imagewidth = %f, imageheight = %f", imagewidth, imageHeight);
+            
+            
+            if (i == 0) {
+                origineY = 0;
+            } else {
+                origineY += [[heights objectAtIndex:(i-1)] floatValue];
             }
-        }
-       
-        imageview.frame = CGRectMake(0, yheight, SCREENWIDTH, imageheight[i]);
+            NSLog(@"origineY = %f", origineY);
+            
+            imageview.frame = CGRectMake(0, origineY, imagewidth, imageHeight);
+            
+            
+            
+        }];
+        
         [self.contentView addSubview:imageview];
         
-    
+      
     }
+    self.contentViewHeight.constant = origineY + imageHeight;
+
 }
 
 - (void)createDetailsView{
