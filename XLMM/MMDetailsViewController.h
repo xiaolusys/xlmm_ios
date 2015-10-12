@@ -43,5 +43,7 @@
 - (IBAction)backqianye:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet UIView *backHeadImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageleading;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTrailing;
 
 @end

@@ -21,9 +21,11 @@
                 <outlet property="headImageView" destination="LtF-EG-WdC" id="SmZ-Bp-U9f"/>
                 <outlet property="headViewHeitht" destination="2tX-b6-ElM" id="Kfp-w4-eu1"/>
                 <outlet property="headViewwidth" destination="Nmg-tS-RaT" id="wvg-Zo-IfN"/>
+                <outlet property="imageTrailing" destination="b41-l2-Iwx" id="fRm-TB-x3p"/>
                 <outlet property="imageView2" destination="oAl-8X-mcL" id="KG9-3f-VGm"/>
                 <outlet property="imageView3" destination="3eA-1L-E6n" id="vh2-TV-w74"/>
                 <outlet property="imageView4" destination="LPN-pA-kZ1" id="YDf-Nl-z2i"/>
+                <outlet property="imageleading" destination="veK-Da-HhU" id="gr5-x0-tNm"/>
                 <outlet property="imageview1" destination="KFr-uY-7BM" id="r9P-Js-rW7"/>
                 <outlet property="mingcheng" destination="zB4-xz-g1j" id="YPp-oN-l1F"/>
                 <outlet property="nameLabel" destination="vuM-N0-go3" id="FUw-bn-ROc"/>
@@ -70,11 +72,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="360"/>
                                     <subviews>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yifu.png" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-EG-WdC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
                                             <color key="backgroundColor" red="0.3294117647" green="0.78039215689999997" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZaG-6v-WYj">
-                                            <rect key="frame" x="0.0" y="320" width="320" height="40"/>
+                                            <rect key="frame" x="0.0" y="310" width="320" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuM-N0-go3">
@@ -123,7 +125,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="360" id="2tX-b6-ElM"/>
-                                        <constraint firstAttribute="bottom" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="40" id="34w-lz-LUK"/>
+                                        <constraint firstAttribute="bottom" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="50" id="34w-lz-LUK"/>
                                         <constraint firstAttribute="bottom" secondItem="ZaG-6v-WYj" secondAttribute="bottom" id="CUP-Q9-VNI"/>
                                         <constraint firstItem="gnV-T6-k8Y" firstAttribute="leading" secondItem="vuM-N0-go3" secondAttribute="leading" id="DSG-Xd-VPw"/>
                                         <constraint firstItem="1ze-p9-wcv" firstAttribute="leading" secondItem="5Ts-Id-ulD" secondAttribute="leading" id="G88-Ec-2Yk"/>
@@ -142,7 +144,7 @@
                                         <constraint firstItem="Gbe-eb-1Xd" firstAttribute="leading" secondItem="gnV-T6-k8Y" secondAttribute="trailing" constant="20" id="sj7-QO-po9"/>
                                         <constraint firstAttribute="trailing" secondItem="LtF-EG-WdC" secondAttribute="trailing" id="uev-te-2K0"/>
                                         <constraint firstAttribute="trailing" secondItem="ZaG-6v-WYj" secondAttribute="trailing" id="w4U-MJ-09D"/>
-                                        <constraint firstItem="vuM-N0-go3" firstAttribute="top" secondItem="LtF-EG-WdC" secondAttribute="bottom" id="xiH-jx-zAM"/>
+                                        <constraint firstItem="vuM-N0-go3" firstAttribute="top" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="10" id="xiH-jx-zAM"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-cl-9YW">

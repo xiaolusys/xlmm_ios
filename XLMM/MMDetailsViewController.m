@@ -121,7 +121,7 @@
     
     self.bottomImageViewHeight.constant = SCREENWIDTH;
     self.headViewwidth.constant = SCREENWIDTH;
-    self.headViewHeitht.constant = SCREENWIDTH + 40;
+    self.headViewHeitht.constant = SCREENWIDTH + 50;
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -155,25 +155,17 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-//     [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
-    NSLog(@"scrolling");
+
     CGPoint contentOffset = scrollView.contentOffset;
   
     
     self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , SCREENWIDTH);
 
     if (contentOffset.y<0) {
-        //图片拉大
-        CGFloat imagewidth = SCREENWIDTH - contentOffset.y;
-        self.bottomImageViewHeight.constant = SCREENWIDTH - contentOffset.y;
-        self.backHeadImageView.frame = CGRectMake(contentOffset.y/2, 0, imagewidth, imagewidth);
-        
-     
-       
-        NSLog(@"frame = %@", NSStringFromCGRect(self.backHeadImageView.frame));
-        
-        
-        
+        CGFloat sizeheight = SCREENWIDTH - contentOffset.y;
+        self.bottomImageViewHeight.constant = sizeheight;
+        self.imageleading.constant = contentOffset.y/2;
+        self.imageTrailing.constant = contentOffset.y/2;
     }
 }
 
@@ -237,8 +229,7 @@
     [self createSizeView];
     [self createDetailsView];
     [self createContentView];
-//
-//    
+    
     cartsButton.hidden = NO;
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
