@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="LiHeiPro.ttf">
-            <string>LiHeiPro</string>
-            <string>LiHeiPro</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CartViewController">
             <connections>
@@ -42,22 +37,9 @@
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="删掉的商品可能被别人抢走哦～" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARW-4X-cHd">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="FUh-Ga-Xyh"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="FUh-Ga-Xyh"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="FUh-Ga-Xyh"/>
-                        </mask>
-                    </variation>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="R9A-ee-Sfn">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -87,22 +69,9 @@
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="要删除吗?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agb-KT-8RB">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="Yof-i5-baX"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="LiHeiPro" family="LiHei Pro" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Yof-i5-baX"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="Yof-i5-baX"/>
-                        </mask>
-                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,7 +82,7 @@
                 <constraint firstAttribute="trailing" secondItem="agb-KT-8RB" secondAttribute="trailing" id="9Xp-8t-O0E"/>
                 <constraint firstItem="V1R-fO-fhd" firstAttribute="top" secondItem="fNU-0y-HQy" secondAttribute="top" id="GdE-QL-8pr"/>
                 <constraint firstItem="ARW-4X-cHd" firstAttribute="leading" secondItem="B7Q-0j-Jyw" secondAttribute="leading" id="H3O-4X-EvT"/>
-                <constraint firstItem="fNU-0y-HQy" firstAttribute="top" secondItem="agb-KT-8RB" secondAttribute="bottom" constant="8" id="K8V-kw-Rdi"/>
+                <constraint firstItem="fNU-0y-HQy" firstAttribute="top" secondItem="agb-KT-8RB" secondAttribute="bottom" id="K8V-kw-Rdi"/>
                 <constraint firstItem="V1R-fO-fhd" firstAttribute="leading" secondItem="fNU-0y-HQy" secondAttribute="trailing" constant="60" id="M6y-28-eMs"/>
                 <constraint firstItem="fNU-0y-HQy" firstAttribute="leading" secondItem="B7Q-0j-Jyw" secondAttribute="leading" constant="30" id="N8G-WN-KST"/>
                 <constraint firstItem="R9A-ee-Sfn" firstAttribute="top" secondItem="B7Q-0j-Jyw" secondAttribute="top" constant="8" id="VcX-Cn-MUd"/>
@@ -179,7 +148,7 @@
                     <include reference="VcX-Cn-MUd"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="435" y="164"/>
+            <point key="canvasLocation" x="435" y="-32.5"/>
         </view>
     </objects>
     <resources>

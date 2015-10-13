@@ -45,5 +45,8 @@
 @property (weak, nonatomic) IBOutlet UIView *backHeadImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageleading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTrailing;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottom;
 
 @end

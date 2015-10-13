@@ -15,12 +15,12 @@
 #import "CartViewController.h"
 
 @interface EmptyCartViewController (){
-    MMCartsView *singleton;
-    NSString *last_created;
-    NSString *result;
-    UIButton *cartsButton;
-    UILabel *cartsTimeLabel;
-    NSTimer *theTimer;
+    MMCartsView *singleton; //购物车视图
+    NSString *last_created; //最后加入购物车的时间
+    NSString *result;       //购物车数量
+    UIButton *cartsButton;  //购物车点击按钮
+    UILabel *cartsTimeLabel;//购物车倒计时
+    NSTimer *theTimer;      //定时器
 }
 
 
@@ -36,10 +36,7 @@
     [self updataNumberLabel];
     
     self.navigationController.navigationBarHidden = YES;
-    [UIApplication sharedApplication].statusBarHidden = YES;
 }
-
-
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -67,34 +64,25 @@
 }
 
 - (void)createCollectionView{
+    
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
-    
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 56, SCREENWIDTH, SCREENHEIGHT - 120) collectionViewLayout:flowLayout];
-    
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
-    
     [self.myCollectionView registerClass:[CartCollectionCell class] forCellWithReuseIdentifier:@"cartCell"];
-    
-    
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = YES;
-   
+    self.myCollectionView.multipleTouchEnabled = YES;  
     [self.view addSubview:[[UIView alloc] init]];
-    
-    
     [self.view addSubview:self.myCollectionView];
-    
-    
-    
-    
 }
 
 - (void)createCartsView{
     singleton = [MMCartsView sharedCartsView];
     
-    singleton.cartsView.frame = CGRectMake(0, SCREENHEIGHT - 110, 50, 50);
+    singleton.cartsView.frame = CGRectMake(8, SCREENHEIGHT - 58, 50, 50);
     singleton.cartsView.alpha = 0.7;
     
     NSLog(@"url = %@", kCart_Number_URL);
@@ -103,51 +91,33 @@
     if (data == nil) {
         return;
     }
-    
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
-    
     last_created = [json objectForKey:@"last_created"];
     result = [json objectForKey:@"result"];
-    
-        
-        
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-
     cartsButton.frame = singleton.cartsView.frame;
     [cartsButton addTarget:self action:@selector(cartViewClicked:) forControlEvents:UIControlEventTouchUpInside];
     cartsButton.backgroundColor = [UIColor clearColor];
-    
-    
-  
+   
+//    cartsButton.backgroundColor = [UIColor redColor];
     cartsTimeLabel = [[UILabel alloc] init];
     cartsTimeLabel.frame = singleton.cartsView.frame;
     CGRect timeLabelRect = cartsTimeLabel.frame;
-    
     timeLabelRect.origin.x += 44;
-    
     cartsTimeLabel.frame = timeLabelRect;
     cartsTimeLabel.textAlignment = NSTextAlignmentCenter;
     cartsTimeLabel.text = @"";
     cartsTimeLabel.textColor = [UIColor redColor];
     cartsTimeLabel.font = [UIFont systemFontOfSize:18];
     cartsTimeLabel.hidden = YES;
-    
-    
-   
-    
-    
     [self.view addSubview:singleton.cartsView];
- 
     [self.view addSubview:cartsButton];
     [self.view addSubview:cartsTimeLabel];
-
-    
 }
 
 - (void)cartViewClicked:(UIButton *)button{
     NSLog(@"进入购物车");
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -314,29 +284,17 @@
     
     NSLog(@"itemid = %@, skuid = %@", model.item_id, model.sku_id);
     //重新加入购物车
-    
- 
-    
-    
-    
-    
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id};
+    [self myAnimation:model andTag:button.tag - 1000];
+
     [manager POST:kCart_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSLog(@"成功加入购物车");
-              
-              [self myAnimation:model andTag:button.tag - 1000];
-              
-              
-              
-          }
+        }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
               
@@ -367,27 +325,25 @@
               } completion:^(BOOL finished) {
                   [view removeFromSuperview];
               }];
-              
-              
-              
-          }];
-    
-    
-    
+        }];
 }
 
 - (void)myAnimation:(CartModel *)model andTag:(NSInteger)tag{
     
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imagewithURLString:model.pic_path]];
-    imageview.frame = CGRectMake(SCREENWIDTH - 80, 56, 80, 80);
+    
+    NSLog(@"%@",NSStringFromCGPoint(self.myCollectionView.contentOffset));
+    imageview.frame = CGRectMake(SCREENWIDTH - 80, 56 + 112 *tag - self.myCollectionView.contentOffset.y, 80, 80);
     [self.view addSubview:imageview];
     [imageview.layer setMasksToBounds:YES];
     [imageview.layer setBorderWidth:1];
     [imageview.layer setBorderColor:[UIColor redColor].CGColor];
-    
-    [UIView animateWithDuration:.8 animations:^{
-        imageview.frame = CGRectMake(30, SCREENHEIGHT - 96, 10, 10);
+
+    [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        imageview.frame = CGRectMake(36, SCREENHEIGHT - 48, 10, 10);
+        
     } completion:^(BOOL finished) {
+        NSLog(@"完成加入购物车");
         [imageview removeFromSuperview];
         [self updataNumberLabel];
         [UIView animateWithDuration:0.3 animations:^{
@@ -399,9 +355,9 @@
         } completion:^(BOOL finished) {
             
         }];
-        
-        
+
     }];
+  
     
 }
 
@@ -421,7 +377,7 @@
     }
     
     [UIView animateWithDuration:0.5 animations:^{
-        cartsButton.frame = CGRectMake(2, SCREENHEIGHT - 90, 100, 44);
+        cartsButton.frame = CGRectMake(8, SCREENHEIGHT - 58, 100, 50);
     } completion:^(BOOL finished) {
         NSLog(@"显示剩余时间");
         [self createTimeLabel];
@@ -432,6 +388,9 @@
 - (void)createTimeLabel{
     cartsTimeLabel.hidden = NO;
     
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
 }
 - (void)timerFireMethod:(NSTimer*)thetimer
@@ -492,7 +451,19 @@
 
 
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"begin");
+}
 
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"cancel");
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"end");
+}
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"moves");
+}
 
 
 

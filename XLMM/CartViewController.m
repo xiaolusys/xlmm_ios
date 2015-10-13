@@ -368,7 +368,7 @@
      NSLog(@"%@", btn1);
      NSLog(@"%@", btn2);
     deleteModel = cartModel;
-    self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 200);
+    self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 188);
         
    
     [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];

@@ -168,6 +168,13 @@
         self.imageleading.constant = contentOffset.y/2;
         self.imageTrailing.constant = contentOffset.y/2;
     }
+    if (contentOffset.y >= 0 && contentOffset.y < SCREENWIDTH) {
+        NSLog(@"");
+        //上拉 headImageView
+        
+        self.imageViewTop.constant = -contentOffset.y/3;
+        self.imageBottom.constant = contentOffset.y/3;
+    }
 }
 
 

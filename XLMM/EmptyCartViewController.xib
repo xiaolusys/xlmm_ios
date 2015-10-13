@@ -22,9 +22,8 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIf-he-BFf">
                             <rect key="frame" x="2" y="2" width="300" height="46"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <state key="normal" title="去首页逛逛">
-                                <color key="titleColor" red="0.97647058823529409" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -32,7 +31,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.97647058823529409" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="qIf-he-BFf" firstAttribute="leading" secondItem="nwF-v1-ejO" secondAttribute="leading" constant="2" id="MK8-Pk-SQn"/>
                         <constraint firstAttribute="trailing" secondItem="qIf-he-BFf" secondAttribute="trailing" constant="2" id="N24-v5-jz6"/>
@@ -41,7 +40,7 @@
                         <constraint firstItem="qIf-he-BFf" firstAttribute="top" secondItem="nwF-v1-ejO" secondAttribute="top" constant="2" id="g7H-SQ-pkh"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的购物车空空如也，以下宝贝可重新加入哦~~" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-9e-U4M">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的购物车为空，以下宝贝可重新加入哦~~" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-9e-U4M">
                     <rect key="frame" x="8" y="20" width="304" height="36"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="sU7-C2-l5s"/>

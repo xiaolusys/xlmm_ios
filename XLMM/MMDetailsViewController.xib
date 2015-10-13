@@ -27,10 +27,13 @@
                 <outlet property="headImageView" destination="LtF-EG-WdC" id="SmZ-Bp-U9f"/>
                 <outlet property="headViewHeitht" destination="2tX-b6-ElM" id="Kfp-w4-eu1"/>
                 <outlet property="headViewwidth" destination="Nmg-tS-RaT" id="wvg-Zo-IfN"/>
+                <outlet property="imageBottom" destination="FWU-Qc-s76" id="u5z-bd-rb4"/>
+                <outlet property="imageTop" destination="IB8-nu-YyX" id="dVD-wL-3MW"/>
                 <outlet property="imageTrailing" destination="b41-l2-Iwx" id="fRm-TB-x3p"/>
                 <outlet property="imageView2" destination="oAl-8X-mcL" id="KG9-3f-VGm"/>
                 <outlet property="imageView3" destination="3eA-1L-E6n" id="vh2-TV-w74"/>
                 <outlet property="imageView4" destination="LPN-pA-kZ1" id="YDf-Nl-z2i"/>
+                <outlet property="imageViewTop" destination="UJz-mj-9D6" id="Vdn-jo-DAf"/>
                 <outlet property="imageleading" destination="veK-Da-HhU" id="gr5-x0-tNm"/>
                 <outlet property="imageview1" destination="KFr-uY-7BM" id="r9P-Js-rW7"/>
                 <outlet property="mingcheng" destination="zB4-xz-g1j" id="YPp-oN-l1F"/>
@@ -59,7 +62,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="319" height="320"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="oPv-BN-vFb" secondAttribute="bottom" id="FWU-Qc-s76"/>
                         <constraint firstAttribute="height" constant="320" id="Gmy-B4-6Ly"/>
