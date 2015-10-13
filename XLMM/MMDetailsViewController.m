@@ -413,7 +413,7 @@
         height = 8;
     }
     self.sizeViewHeight.constant = 20 + 44*(int)(sizeCount/3)+height;
-    NSLog(@"height = %f",20 + 44*sizeCount/3+height);
+    NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 *105+5,20 + i/3 *48, 100, 44)];

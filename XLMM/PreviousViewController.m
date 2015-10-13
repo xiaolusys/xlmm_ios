@@ -432,11 +432,11 @@ static NSString *khead2View = @"head2View";
     if (section == 0) {
         return 2;
     } else if (section == 1){
-        return childDataArray.count;
+        return ladyDataArray.count;
         //return 4;
         // return childDataArray.count;
     } else if (section == 2){
-        return ladyDataArray.count;
+        return childDataArray.count;
         
         //return 4;
         //return ladyDataArray.count;
@@ -500,7 +500,7 @@ static NSString *khead2View = @"head2View";
         
         
     }
-    else if (indexPath.section == 1)
+    else if (indexPath.section == 2)
     {
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
@@ -543,7 +543,7 @@ static NSString *khead2View = @"head2View";
     if (indexPath.section == 0) {
         headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View forIndexPath:indexPath];
         return headerView;
-    } else if (indexPath.section == 1){
+    } else if (indexPath.section == 2){
         
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
         headerView.nameLabel.text = @"潮童专区";
@@ -551,7 +551,7 @@ static NSString *khead2View = @"head2View";
         childTimeLabel = headerView.timeLabel;
         
         return headerView;
-    } else if (indexPath.section == 2){
+    } else if (indexPath.section == 1){
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
         headerView.nameLabel.text = @"时尚女装";
         headerView.headView.layer.cornerRadius = 4;
@@ -609,7 +609,7 @@ static NSString *khead2View = @"head2View";
             
         }
         
-    } else if (indexPath.section == 1){
+    } else if (indexPath.section == 2){
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
         
         if (model.productModel == nil) {
@@ -640,7 +640,7 @@ static NSString *khead2View = @"head2View";
         }
         
         
-    } else if (indexPath.section == 2){
+    } else if (indexPath.section == 1){
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
