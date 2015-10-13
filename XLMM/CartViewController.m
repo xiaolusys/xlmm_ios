@@ -346,11 +346,7 @@
               NSLog(@"data = %@", str);
               
               [self downloadData];
-              
-              
-             
-             
-          }
+        }
      ];
     
 }
@@ -377,29 +373,24 @@
     
 }
 - (void)retainClicked{
-
-    
-    
-        [self.myView removeFromSuperview];
-
-        self.frontView.hidden = YES;
+    [self.myView removeFromSuperview];
+    self.frontView.hidden = YES;
     
 }
 - (void)deleteClicked{
     NSLog(@"确认删除");
-        [self.myView removeFromSuperview];
-        self.frontView.hidden = YES;
+    [self.myView removeFromSuperview];
+    self.frontView.hidden = YES;
+    
+    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
     NSLog(@"url = %@", urlString);
-
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
     NSLog(@"%@",str1);
     [self downloadData];
-    
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     NSLog(@"data = %@", data);
     if (data != nil) {
@@ -417,17 +408,13 @@
         EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
         [self.navigationController pushViewController:emptyVC animated:YES];
     }
-
-
-    
-    
 }
 
 
-
-- (void)updateYouhuiquanLabel{
-    
-}
+//
+//- (void)updateYouhuiquanLabel{
+//    
+//}
 
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");

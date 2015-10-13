@@ -40,37 +40,22 @@
             [self.delegate deleteCartView:_cartModel];
         }
        
-        return;
-    }
-
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(reduceNumber:)]) {
-        [self.delegate reduceNumber:_cartModel];
+    }else{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(reduceNumber:)]) {
+            [self.delegate reduceNumber:_cartModel];
+        }
     }
 }
 
 - (IBAction)addBtn:(id)sender {
     NSLog(@"add");
-    
-   
-
-    
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(addNumber:)]) {
         [self.delegate addNumber:_cartModel];
     }
     
 }
 
-- (IBAction)deleteBtn:(id)sender {
-    NSLog(@"delete");
-    if (self.delegate && [self.delegate respondsToSelector:@selector(deleteCartView:)]) {
-        [self.delegate deleteCartView:_cartModel];
-    }
-    
 
-    
-}
 
 
 
