@@ -26,8 +26,8 @@
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     if ([theTimer isValid]) {
         [theTimer invalidate];
         
@@ -77,7 +77,7 @@
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 12, 12, 22);
+    imageView.frame = CGRectMake(8, 14, 10, 17);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -157,6 +157,10 @@
         
         [self.dataArray addObject:model];
         
+    }
+    
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
     }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];

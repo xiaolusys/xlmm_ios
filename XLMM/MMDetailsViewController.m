@@ -362,8 +362,13 @@
         [imageview sd_setImageWithURL:[NSURL URLWithString:[imageArray objectAtIndex:i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
             imagewidth = SCREENWIDTH;
-            imageHeight = image.size.height/image.size.width * SCREENWIDTH;
             
+            if (image.size.width == 0) {
+                imageHeight = 0;
+                NSLog(@"图片的宽度为0。");
+            } else {
+            imageHeight = image.size.height/image.size.width * SCREENWIDTH;
+            }
             [heights addObject:[NSNumber numberWithFloat:imageHeight]];
           
             NSLog(@"imagewidth = %f, imageheight = %f", imagewidth, imageHeight);
@@ -400,11 +405,15 @@
      self.shuoming.text = [details objectForKey:@"wash_instructions"];
     
 }
-
+// 可选尺码。。。
 - (void)createSizeView{
-    NSInteger sizeCount = normalSkus.count;
-    self.sizeViewHeight.constant = 20 + 44*sizeCount/3+50;
-    
+    int sizeCount = (int)normalSkus.count;
+    float height = 52;
+    if (sizeCount%3 == 0) {
+        height = 8;
+    }
+    self.sizeViewHeight.constant = 20 + 44*(int)(sizeCount/3)+height;
+    NSLog(@"height = %f",20 + 44*sizeCount/3+height);
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 *105+5,20 + i/3 *48, 100, 44)];
@@ -421,7 +430,7 @@
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor whiteColor];
         [self.sizeView addSubview:button];
-        
+        self.sizeView.backgroundColor = [UIColor whiteColor];
     }
     for (int i = 0; i<sizeCount; i++) {
         UIButton *button = (UIButton *)[self.sizeView viewWithTag:i + 100];
@@ -443,7 +452,7 @@
         }
         
     }
-      [self createInfoView];
+    //  [self createInfoView];
     
     [self createSizeTable];
 }
@@ -611,13 +620,13 @@
     }
 }
 
-- (void)createInfoView{
-    self.infoView = [[UIView alloc] initWithFrame:CGRectMake(10, -50, SCREENWIDTH-20, 60)];
-    self.infoView.backgroundColor = [UIColor orangeColor];
-    [self.sizeView addSubview:self.infoView];
-    self.infoView.hidden = YES;
-    
-}
+//- (void)createInfoView{
+//    self.infoView = [[UIView alloc] initWithFrame:CGRectMake(10, -50, SCREENWIDTH-20, 60)];
+//    self.infoView.backgroundColor = [UIColor orangeColor];
+//    [self.sizeView addSubview:self.infoView];
+//    self.infoView.hidden = YES;
+//    
+//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -813,7 +822,10 @@
     NSLog(@"string = %@", string);
     if ([string isEqualToString:@"00:00"]) {
         string = @"00:00";
-        [theTimer invalidate];
+        if ([theTimer isValid]) {
+            [theTimer invalidate];
+            
+        }
     }
     shengyutimeLabel.text = string;
     

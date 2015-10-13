@@ -154,24 +154,6 @@
                                         <constraint firstItem="vuM-N0-go3" firstAttribute="top" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="10" id="xiH-jx-zAM"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-cl-9YW">
-                                    <rect key="frame" x="0.0" y="360" width="320" height="120"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-uY-7BM">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="320" id="Hce-VH-23I"/>
-                                                <constraint firstAttribute="height" constant="16" id="IVq-tL-082"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="leading" secondItem="mWS-cl-9YW" secondAttribute="leading" id="Faz-ug-jGa"/>
-                                        <constraint firstAttribute="height" constant="120" id="LyR-OB-Dts"/>
-                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="top" secondItem="mWS-cl-9YW" secondAttribute="top" id="zn2-wN-aiW"/>
-                                    </constraints>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZYQ-9I-4yO" userLabel="Size TableView">
                                     <rect key="frame" x="0.0" y="770" width="320" height="17"/>
                                     <subviews>
@@ -354,6 +336,24 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="2" id="6Zd-hP-UAU"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-cl-9YW">
+                                    <rect key="frame" x="0.0" y="360" width="320" height="120"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-uY-7BM">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="320" id="Hce-VH-23I"/>
+                                                <constraint firstAttribute="height" constant="16" id="IVq-tL-082"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="leading" secondItem="mWS-cl-9YW" secondAttribute="leading" id="Faz-ug-jGa"/>
+                                        <constraint firstAttribute="height" constant="120" id="LyR-OB-Dts"/>
+                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="top" secondItem="mWS-cl-9YW" secondAttribute="top" id="zn2-wN-aiW"/>
                                     </constraints>
                                 </view>
                             </subviews>

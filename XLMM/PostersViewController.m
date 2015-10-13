@@ -24,6 +24,8 @@
 #import "MJRefresh.h"
 #import "WXApi.h"
 
+#import "UIViewController+NavigationBar.h"
+
 static NSString * ksimpleCell = @"simpleCell";
 
 @interface PostersViewController () {
@@ -142,8 +144,8 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     // [self downloadData];
+   // [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backBtnClicked:)];
     [self createInfo];
-    
 }
 
 - (void)createInfo{
@@ -157,7 +159,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 12, 12, 22);
+    imageView.frame = CGRectMake(8, 14, 10, 17);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -176,8 +178,10 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //   http://xiaolu.so/rest/v1/users/profile
     
-    NSString *string = @"http://xiaolu.so/rest/v1/users/profile";
+    NSString *string = @"http://xiaolu.so/rest/v1/users/profile.json";
     NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
+    
+    NSLog(@"url = %@", string);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     NSError *error = nil;
     NSLog(@"data = %@", data);

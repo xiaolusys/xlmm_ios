@@ -15,7 +15,6 @@
 #import "MMClass.h"
 #import "LogInViewController.h"
 #include "EnterViewController.h"
-#import "UserInfoViewController.h"
 
 #import "CartViewController.h"
 
