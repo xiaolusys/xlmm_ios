@@ -493,6 +493,7 @@
 		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
 		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
 		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
+		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; settings = {ASSET_TAGS = (); }; };
 		32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CC3FE91BA282B30043764F /* tuihuo-ing.png */; };
 		32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C841B9FFF2F00475E2E /* OrderModel.m */; };
 		32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */; };
@@ -887,6 +888,7 @@
 		32BDE48F1B85CD1100FBEC25 /* TousuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TousuViewController.h; sourceTree = "<group>"; };
 		32BDE4901B85CD1100FBEC25 /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
 		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
+		32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiaolufont.ttf; sourceTree = "<group>"; };
 		32CC3FE91BA282B30043764F /* tuihuo-ing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tuihuo-ing.png"; path = "../tuihuo-ing.png"; sourceTree = "<group>"; };
 		32CC7C831B9FFF2F00475E2E /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		32CC7C841B9FFF2F00475E2E /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
@@ -1441,6 +1443,7 @@
 		3290C88E1B88A6D000CFAFA0 /* font */ = {
 			isa = PBXGroup;
 			children = (
+				32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */,
 				3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */,
 			);
 			name = font;
@@ -1846,6 +1849,7 @@
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				320CABE21BA906D400C62E36 /* PostersViewController.xib in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
+				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
 				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,

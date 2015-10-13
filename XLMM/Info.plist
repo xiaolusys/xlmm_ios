@@ -44,6 +44,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>LiHei Pro.ttf</string>
+		<string>xiaolufont.ttf</string>
 	</array>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
