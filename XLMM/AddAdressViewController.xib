@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddAdressViewController">
@@ -27,7 +27,7 @@
                         <constraint firstAttribute="height" constant="30" id="xm2-ka-vu3"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -43,36 +43,36 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择市" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3QO-fb-ksS">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择区/县" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKm-cg-OW7">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="街道地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PP9-gO-Kwd">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收货人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3M-iD-mVJ">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6s-2t-S5o">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写正确信息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yz4-SW-UMU">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="1" green="0.17321943049999999" blue="0.2484869827" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -82,7 +82,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="9ds-6g-tkG"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="保存地址">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -106,7 +106,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="180" id="79c-ga-DnS"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -124,7 +124,7 @@
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请选择市" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f5c-a7-CZo">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="4z1-AQ-eZq"/>
@@ -132,7 +132,7 @@
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请选择区/县" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8b-AI-mcp">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="ErE-nm-ea6"/>
@@ -140,7 +140,7 @@
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入收货人姓名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxn-20-l9p">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="wdM-F1-moQ"/>
@@ -153,7 +153,7 @@
                         <constraint firstAttribute="height" constant="60" id="LzC-8h-BMq"/>
                         <constraint firstAttribute="width" constant="180" id="mf5-YO-xcm"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -173,7 +173,7 @@
                 </textView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入收货人手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aFz-Ai-hED">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="ajl-MX-A4v"/>
@@ -187,12 +187,12 @@
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="leading" secondItem="V8b-AI-mcp" secondAttribute="leading" id="3N1-i5-97x"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="height" secondItem="PP9-gO-Kwd" secondAttribute="height" id="4jv-iK-xyI"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="width" secondItem="aFz-Ai-hED" secondAttribute="width" id="9vj-uR-aab"/>
-                <constraint firstItem="y3M-iD-mVJ" firstAttribute="top" secondItem="PP9-gO-Kwd" secondAttribute="bottom" constant="30" id="9wo-29-QpP"/>
+                <constraint firstItem="y3M-iD-mVJ" firstAttribute="top" secondItem="PP9-gO-Kwd" secondAttribute="bottom" constant="20" id="9wo-29-QpP"/>
                 <constraint firstItem="aFz-Ai-hED" firstAttribute="centerY" secondItem="r6s-2t-S5o" secondAttribute="centerY" id="Bcu-Tz-E2k"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="leading" secondItem="PP9-gO-Kwd" secondAttribute="leading" id="CFl-rR-pj1"/>
-                <constraint firstItem="3QO-fb-ksS" firstAttribute="top" secondItem="1Mn-OZ-bRV" secondAttribute="bottom" constant="30" id="CN9-h4-2Sh"/>
+                <constraint firstItem="3QO-fb-ksS" firstAttribute="top" secondItem="1Mn-OZ-bRV" secondAttribute="bottom" constant="10" id="CN9-h4-2Sh"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="leading" secondItem="dKm-cg-OW7" secondAttribute="leading" id="Dhn-Ei-PKJ"/>
-                <constraint firstItem="1Mn-OZ-bRV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="84" id="EFn-aX-dQn"/>
+                <constraint firstItem="1Mn-OZ-bRV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="EFn-aX-dQn"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="width" secondItem="V8b-AI-mcp" secondAttribute="width" id="ERc-hf-rg3"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="height" secondItem="1Mn-OZ-bRV" secondAttribute="height" id="Fa9-DA-hLf"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="width" secondItem="XGk-je-ffe" secondAttribute="width" id="H0q-0B-RDW"/>
@@ -203,23 +203,23 @@
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="width" secondItem="pxn-20-l9p" secondAttribute="width" id="RIj-Ij-wRp"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="leading" secondItem="XGk-je-ffe" secondAttribute="leading" id="Tdz-kC-SMf"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="leading" secondItem="r6s-2t-S5o" secondAttribute="leading" id="Utk-18-riK"/>
-                <constraint firstItem="dKm-cg-OW7" firstAttribute="top" secondItem="3QO-fb-ksS" secondAttribute="bottom" constant="30" id="YOd-aM-cWf"/>
+                <constraint firstItem="dKm-cg-OW7" firstAttribute="top" secondItem="3QO-fb-ksS" secondAttribute="bottom" constant="10" id="YOd-aM-cWf"/>
                 <constraint firstAttribute="centerX" secondItem="Y9g-PU-L70" secondAttribute="centerX" id="a3x-Zw-n6E"/>
                 <constraint firstItem="XGk-je-ffe" firstAttribute="centerY" secondItem="1Mn-OZ-bRV" secondAttribute="centerY" id="aHz-nN-L7D"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="height" secondItem="dKm-cg-OW7" secondAttribute="height" id="an3-Ms-2LA"/>
                 <constraint firstItem="Y9g-PU-L70" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="bKu-Zn-b2y"/>
                 <constraint firstItem="dKm-cg-OW7" firstAttribute="centerY" secondItem="V8b-AI-mcp" secondAttribute="centerY" id="bgJ-Fi-y8O"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="height" secondItem="y3M-iD-mVJ" secondAttribute="height" id="ek2-MV-0tS"/>
-                <constraint firstItem="PP9-gO-Kwd" firstAttribute="top" secondItem="dKm-cg-OW7" secondAttribute="bottom" constant="30" id="g1x-pZ-o94"/>
+                <constraint firstItem="PP9-gO-Kwd" firstAttribute="top" secondItem="dKm-cg-OW7" secondAttribute="bottom" constant="20" id="g1x-pZ-o94"/>
                 <constraint firstItem="pxn-20-l9p" firstAttribute="centerY" secondItem="y3M-iD-mVJ" secondAttribute="centerY" id="hXq-Ok-DQQ"/>
-                <constraint firstItem="r6s-2t-S5o" firstAttribute="top" secondItem="y3M-iD-mVJ" secondAttribute="bottom" constant="30" id="i8Q-7w-TIM"/>
+                <constraint firstItem="r6s-2t-S5o" firstAttribute="top" secondItem="y3M-iD-mVJ" secondAttribute="bottom" constant="10" id="i8Q-7w-TIM"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="leading" secondItem="aFz-Ai-hED" secondAttribute="leading" id="jrk-PN-3Rd"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="leading" secondItem="yz4-SW-UMU" secondAttribute="leading" id="kue-Ow-avo"/>
                 <constraint firstItem="f5c-a7-CZo" firstAttribute="centerY" secondItem="3QO-fb-ksS" secondAttribute="centerY" id="l8e-rv-XjF"/>
-                <constraint firstItem="yz4-SW-UMU" firstAttribute="top" secondItem="r6s-2t-S5o" secondAttribute="bottom" constant="30" id="rOh-1v-kDW"/>
+                <constraint firstItem="Y9g-PU-L70" firstAttribute="top" secondItem="yz4-SW-UMU" secondAttribute="bottom" constant="20" id="nmi-bj-NaP"/>
+                <constraint firstItem="yz4-SW-UMU" firstAttribute="top" secondItem="r6s-2t-S5o" secondAttribute="bottom" constant="10" id="rOh-1v-kDW"/>
                 <constraint firstItem="1Mn-OZ-bRV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="s0i-ho-OlP"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="leading" secondItem="1Mn-OZ-bRV" secondAttribute="leading" id="tGl-EN-e4D"/>
-                <constraint firstAttribute="bottom" secondItem="Y9g-PU-L70" secondAttribute="bottom" constant="8" id="tc4-vv-v4O"/>
                 <constraint firstItem="3QO-fb-ksS" firstAttribute="height" secondItem="r6s-2t-S5o" secondAttribute="height" id="zKj-Jb-Gpq"/>
                 <constraint firstItem="XGk-je-ffe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="zxy-DR-Lju"/>
             </constraints>
@@ -257,12 +257,8 @@
                     <exclude reference="kue-Ow-avo"/>
                     <exclude reference="tGl-EN-e4D"/>
                     <exclude reference="zKj-Jb-Gpq"/>
-                    <exclude reference="g1x-pZ-o94"/>
                     <exclude reference="aHz-nN-L7D"/>
                     <exclude reference="zxy-DR-Lju"/>
-                    <exclude reference="Bcu-Tz-E2k"/>
-                    <exclude reference="YOd-aM-cWf"/>
-                    <exclude reference="bgJ-Fi-y8O"/>
                     <exclude reference="3N1-i5-97x"/>
                     <exclude reference="9vj-uR-aab"/>
                     <exclude reference="ERc-hf-rg3"/>
@@ -273,15 +269,19 @@
                     <exclude reference="Tdz-kC-SMf"/>
                     <exclude reference="jrk-PN-3Rd"/>
                     <exclude reference="l8e-rv-XjF"/>
+                    <exclude reference="YOd-aM-cWf"/>
+                    <exclude reference="bgJ-Fi-y8O"/>
+                    <exclude reference="g1x-pZ-o94"/>
+                    <exclude reference="3LF-F5-N0p"/>
+                    <exclude reference="9wo-29-QpP"/>
                     <exclude reference="hXq-Ok-DQQ"/>
                     <exclude reference="i8Q-7w-TIM"/>
-                    <exclude reference="9wo-29-QpP"/>
+                    <exclude reference="Bcu-Tz-E2k"/>
                     <exclude reference="rOh-1v-kDW"/>
                     <exclude reference="1h9-ys-mlM"/>
                     <exclude reference="a3x-Zw-n6E"/>
                     <exclude reference="bKu-Zn-b2y"/>
-                    <exclude reference="tc4-vv-v4O"/>
-                    <exclude reference="3LF-F5-N0p"/>
+                    <exclude reference="nmi-bj-NaP"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -317,12 +317,8 @@
                     <include reference="kue-Ow-avo"/>
                     <include reference="tGl-EN-e4D"/>
                     <include reference="zKj-Jb-Gpq"/>
-                    <include reference="g1x-pZ-o94"/>
                     <include reference="aHz-nN-L7D"/>
                     <include reference="zxy-DR-Lju"/>
-                    <include reference="Bcu-Tz-E2k"/>
-                    <include reference="YOd-aM-cWf"/>
-                    <include reference="bgJ-Fi-y8O"/>
                     <include reference="3N1-i5-97x"/>
                     <include reference="9vj-uR-aab"/>
                     <include reference="ERc-hf-rg3"/>
@@ -333,15 +329,19 @@
                     <include reference="Tdz-kC-SMf"/>
                     <include reference="jrk-PN-3Rd"/>
                     <include reference="l8e-rv-XjF"/>
+                    <include reference="YOd-aM-cWf"/>
+                    <include reference="bgJ-Fi-y8O"/>
+                    <include reference="g1x-pZ-o94"/>
+                    <include reference="3LF-F5-N0p"/>
+                    <include reference="9wo-29-QpP"/>
                     <include reference="hXq-Ok-DQQ"/>
                     <include reference="i8Q-7w-TIM"/>
-                    <include reference="9wo-29-QpP"/>
+                    <include reference="Bcu-Tz-E2k"/>
                     <include reference="rOh-1v-kDW"/>
                     <include reference="1h9-ys-mlM"/>
                     <include reference="a3x-Zw-n6E"/>
                     <include reference="bKu-Zn-b2y"/>
-                    <include reference="tc4-vv-v4O"/>
-                    <include reference="3LF-F5-N0p"/>
+                    <include reference="nmi-bj-NaP"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="206" y="359"/>
