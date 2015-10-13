@@ -13,6 +13,7 @@
 #import "AddressTableCell.h"
 #import "AFNetworking.h"
 #import "AFNetworking.h"
+#import "UIViewController+NavigationBar.h"
 
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
@@ -22,6 +23,8 @@
 @interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate>
 {
     NSMutableArray *dataArray;
+    AddressModel *deleteModel;
+    
     
 }
 
@@ -38,8 +41,6 @@
     if (dataArray.count != 0) {
         [dataArray removeAllObjects];
     }
-    
-
     [self downloadAddressData];
 
 
@@ -54,10 +55,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"收货地址";
-    [self setInfo];
+   // self.title = @"收货地址";
     
-    
+    [self createNavigationBarWithTitle:@"收货地址" selecotr:@selector(backBtnClicked:)];
     dataArray = [[NSMutableArray alloc] init];
     
     self.addressTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) style:UITableViewStylePlain];
@@ -67,22 +67,7 @@
    
 }
 
-- (void)setInfo{
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"收货地址";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-}
+
 
 - (void)backBtnClicked:(UIButton *)button{
     NSLog(@"fanhui");
@@ -108,7 +93,11 @@
 }
 - (void)fatchedAddressData:(NSData *)responsedata{
     NSError *error = nil;
+    
     NSArray *addressArray = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    if (error != nil) {
+        return;
+    }
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
@@ -138,13 +127,7 @@
 //   13816404857
 #pragma mark --AddAddressDelegate--
 
-- (void)updateAddressList:(AddressModel *)model{
-//    NSLog(@"up data");
-//    [dataArray addObject:model];
-//    NSLog(@"dataArray = %@", dataArray);
-//    [self.addressTableView reloadData];
-//    
-}
+
 
 - (UIView *)createHeadView{
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAINSCREENWIDTH, 80)];
@@ -163,13 +146,13 @@
     btnImage.frame = CGRectMake(8, 8, 24, 24);
     
     [button addSubview:btnImage];
-    [button addTarget:self action:@selector(addAdress:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(addAdress) forControlEvents:UIControlEventTouchUpInside];
     button.frame = CGRectMake(MAINSCREENWIDTH - 60, 36, 44, 44);
     [headView addSubview:button];
     return headView;
 }
 
-- (void)addAdress:(UIButton *)button{
+- (void)addAdress{
     NSLog(@"新增地址");
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addAdVC.isAdd = YES;
@@ -208,12 +191,11 @@
 
         return cell;
     }
-   //  AddressTableCell *cell = (AddressTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-   // if (cell == nil) {
+ 
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
       AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-  //  }
+  
     AddressModel *model = [dataArray objectAtIndex:indexPath.row -1];
     NSString *address = [NSString stringWithFormat:@"%@-%@-%@-%@", model.provinceName, model.cityName, model.countyName, model.streetName];
     
@@ -227,43 +209,36 @@
     cell.firstLabel.userInteractionEnabled = NO;
     cell.secondLabel.userInteractionEnabled = NO;
     cell.frontImageView.userInteractionEnabled = NO;
-    [cell.modifyBtn setBackgroundImage:[UIImage imageNamed:@"icon-xiugai.png"] forState:UIControlStateNormal];
-    cell.modifyBtn.userInteractionEnabled = NO;
-    [cell.deleteBtn setBackgroundImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
-    cell.deleteBtn.userInteractionEnabled = NO;
     cell.firstLabel.textColor = [UIColor blackColor];
     cell.backgroundView.backgroundColor = [UIColor whiteColor];
 
+    if (indexPath.row == 1) {
+        cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+        //cell.bgView.backgroundColor = [UIColor redColor];
+        cell.firstLabel.textColor = [UIColor redColor];
+    }
+    
     
     return cell;
-
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//        
-//        
-//    }
-//    if (indexPath.row == 0) {
-//        
-//        [cell.contentView addSubview:[self createHeadView]];
-//        
-//        return cell;
-//    }
-
 }
 
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld", (long)indexPath.row);
     if (indexPath.row == 0) {
-
+        
+        
         return;
     }
+    
+    
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.frontImageView.image = [UIImage imageNamed:@"icon-radio.png"];
     cell.bgView.backgroundColor = [UIColor whiteColor];
     cell.firstLabel.textColor = [UIColor blackColor];
-    cell.modifyBtn.userInteractionEnabled = NO;
-    cell.deleteBtn.userInteractionEnabled = NO;
+    
+    
+
     
 }
 
@@ -271,15 +246,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
 
+        [self addAdress];
         return;
     }
+    NSIndexPath *indexpathDefaule = [NSIndexPath indexPathForRow:1 inSection:0];
+    
+    if (indexPath.row != 1) {
+        AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexpathDefaule];
+        cell.frontImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+        cell.bgView.backgroundColor = [UIColor whiteColor];
+        cell.firstLabel.textColor = [UIColor blackColor];
+    }
+    
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-    cell.bgView.backgroundColor = [UIColor redColor];
+    //cell.bgView.backgroundColor = [UIColor redColor];
     cell.firstLabel.textColor = [UIColor redColor];
     selectCell = cell;
-    cell.modifyBtn.userInteractionEnabled = YES;
-    cell.deleteBtn.userInteractionEnabled = YES;
+
     
   //  http://192.168.1.61:8000/rest/v1/address/%@/change_default
     
@@ -289,7 +273,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_default", Root_URL, addID];
     NSLog(@"url = %@", urlString);
     
-  //  NSURL *url = [NSURL URLWithString:urlString];
    
     
     
@@ -308,10 +291,36 @@
               NSLog(@"Error: %@", error);
               
           }];
-    //修改默认地址。。。。。
+
     
     
     
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    [super setEditing:editing animated:animated];
+    [self.addressTableView setEditing:editing animated:animated];
+}
+
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        deleteModel = [dataArray objectAtIndex:indexPath.row - 1];
+        [dataArray removeObjectAtIndex:indexPath.row - 1];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        //调用删除接口。。。。。。
+        
+       [self deleteAddress:deleteModel];
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -344,6 +353,8 @@
               
           }];
 }
+
+
 
 
 - (void)modifyAddress:(AddressModel*)model{

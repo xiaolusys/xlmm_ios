@@ -515,6 +515,7 @@
 		32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */; };
 		32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */; };
 		32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */; };
+		32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */; settings = {ASSET_TAGS = (); }; };
 		32D8762D1BB695C800D0C30F /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D8762B1BB695C800D0C30F /* UserInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
 		32D8762E1BB695C800D0C30F /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762C1BB695C800D0C30F /* UserInfoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		32D876311BB6C07B00D0C30F /* yhq_not_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */; settings = {ASSET_TAGS = (); }; };
@@ -917,6 +918,8 @@
 		32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCartsView.xib; sourceTree = "<group>"; };
 		32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-fanhuiqianye.png"; path = "../icon-fanhuiqianye.png"; sourceTree = "<group>"; };
 		32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Unknown.jpeg; path = ../Unknown.jpeg; sourceTree = "<group>"; };
+		32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
+		32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
 		32D8762A1BB695C800D0C30F /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		32D8762B1BB695C800D0C30F /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		32D8762C1BB695C800D0C30F /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoViewController.xib; sourceTree = "<group>"; };
@@ -1676,6 +1679,8 @@
 				329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */,
 				320B300A1BB93E46006C4FC4 /* YHQModel.h */,
 				320B300B1BB93E46006C4FC4 /* YHQModel.m */,
+				32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */,
+				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2222,6 +2227,7 @@
 				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
+				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,

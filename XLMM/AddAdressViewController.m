@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 
-
+#import "UIViewController+NavigationBar.h"
 
 @interface AddAdressViewController ()
 
@@ -52,26 +52,15 @@
 }
 
 - (void)setInfo{
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     if (_isAdd == YES) {
-        label.text = @"新增收货地址";
+      //  label.text = @"新增收货地址";
+        [self createNavigationBarWithTitle:@"新增收货地址" selecotr:@selector(backBtnClicked:)];
         
     }else{
-        label.text = @"修改收货地址";
-
+      //  label.text = @"修改收货地址";
+          [self createNavigationBarWithTitle:@"修改收货地址" selecotr:@selector(backBtnClicked:)];
     }
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
+  
 }
 
 - (void)backBtnClicked:(UIButton *)button{
