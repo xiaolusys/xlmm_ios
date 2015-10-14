@@ -69,6 +69,11 @@
         NSLog(@"zhifu = %@", zhifuSelected);
 
     }
+    if (yhqModel == nil) {
+        self.yhqImageView.hidden = YES;
+    } else{
+        self.yhqImageView.hidden = NO;
+    }
  
 
     
@@ -118,7 +123,7 @@
     NSInteger number = 0;
     for (NSDictionary *dic in array) {
         NSLog(@"dic = %@", dic);
-        if ([[dic objectForKey:@"status"]integerValue] == 0) {
+        if ([[dic objectForKey:@"status"]integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue]!= 2) {
             NSLog(@"可用优惠券");
             number++;
             
@@ -389,7 +394,14 @@
     
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    NSString* dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber];
+    
+    NSString* dict;
+    if (yhqModel.ID == nil) {
+        dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber];
+    } else {
+   dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@&coupon_id=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber, yhqModel.ID];     
+    }
+   
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);

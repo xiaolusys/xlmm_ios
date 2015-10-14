@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containterWidth;
 
 @property (weak, nonatomic) IBOutlet UILabel *usableNumber;
+@property (weak, nonatomic) IBOutlet UIImageView *yhqImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *shouhuoren;
 @property (weak, nonatomic) IBOutlet UILabel *shouhuodizhi;

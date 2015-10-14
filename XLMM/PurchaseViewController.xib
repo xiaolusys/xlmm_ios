@@ -132,25 +132,22 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ir-OK-2qP">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ir-OK-2qP">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="dWL-xt-Orc">
                                             <variation key="heightClass=regular-widthClass=compact" constant="44"/>
                                         </constraint>
-                                        <constraint firstAttribute="width" constant="120" id="gd7-Ip-UGA"/>
                                     </constraints>
                                     <state key="normal" title="选择优惠券"/>
                                     <variation key="default">
                                         <mask key="constraints">
                                             <exclude reference="dWL-xt-Orc"/>
-                                            <exclude reference="gd7-Ip-UGA"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="constraints">
                                             <include reference="dWL-xt-Orc"/>
-                                            <include reference="gd7-Ip-UGA"/>
                                         </mask>
                                     </variation>
                                     <connections>
@@ -245,6 +242,9 @@
                                     <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                 </constraint>
                                 <constraint firstAttribute="trailing" secondItem="bE9-2V-ikw" secondAttribute="trailing" id="BXE-Xo-RM4"/>
+                                <constraint firstItem="5ir-OK-2qP" firstAttribute="leading" secondItem="b3Y-SA-c2Y" secondAttribute="leading" constant="247" id="FdX-kA-c5u">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                </constraint>
                                 <constraint firstAttribute="height" constant="150" id="IUt-GP-2sI"/>
                                 <constraint firstItem="bE9-2V-ikw" firstAttribute="leading" secondItem="b3Y-SA-c2Y" secondAttribute="leading" id="K3w-qu-A6a"/>
                                 <constraint firstItem="mMK-33-iiT" firstAttribute="leading" secondItem="b3Y-SA-c2Y" secondAttribute="leading" id="Q88-kP-V49">
@@ -269,14 +269,15 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="IUt-GP-2sI"/>
-                                    <exclude reference="T5X-cO-7Ur"/>
-                                    <exclude reference="lyA-wI-u3X"/>
+                                    <exclude reference="Q88-kP-V49"/>
+                                    <exclude reference="rP1-TW-DnY"/>
                                     <exclude reference="7bd-zG-R2s"/>
                                     <exclude reference="BXE-Xo-RM4"/>
                                     <exclude reference="K3w-qu-A6a"/>
                                     <exclude reference="ktN-fj-z70"/>
-                                    <exclude reference="Q88-kP-V49"/>
-                                    <exclude reference="rP1-TW-DnY"/>
+                                    <exclude reference="FdX-kA-c5u"/>
+                                    <exclude reference="T5X-cO-7Ur"/>
+                                    <exclude reference="lyA-wI-u3X"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -287,14 +288,15 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="IUt-GP-2sI"/>
-                                    <include reference="T5X-cO-7Ur"/>
-                                    <include reference="lyA-wI-u3X"/>
+                                    <include reference="Q88-kP-V49"/>
+                                    <include reference="rP1-TW-DnY"/>
                                     <include reference="7bd-zG-R2s"/>
                                     <include reference="BXE-Xo-RM4"/>
                                     <include reference="K3w-qu-A6a"/>
                                     <include reference="ktN-fj-z70"/>
-                                    <include reference="Q88-kP-V49"/>
-                                    <include reference="rP1-TW-DnY"/>
+                                    <include reference="FdX-kA-c5u"/>
+                                    <include reference="T5X-cO-7Ur"/>
+                                    <include reference="lyA-wI-u3X"/>
                                 </mask>
                             </variation>
                         </view>

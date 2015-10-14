@@ -381,7 +381,7 @@
         [[NSBundle mainBundle] loadNibNamed:@"AddressView" owner:myowner options:nil];
         AddressModel *model = [dataArray objectAtIndex:i];
         NSString *nameString = [NSString stringWithFormat:@"%@  %@", model.buyerName, model.phoneNumber];
-        NSString *addString = [NSString stringWithFormat:@"%@-%@-%@", model.provinceName, model.cityName, model.countyName];
+        NSString *addString = [NSString stringWithFormat:@"%@-%@-%@-%@", model.provinceName, model.cityName, model.countyName, model.streetName];
         myowner.nameLabel.text = nameString;
         myowner.delegate = self;
         myowner.addressLabel.text = addString;
@@ -577,8 +577,14 @@
     
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    NSString* dict;
     
-    NSString* dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
+    if (yhqModel.ID == nil) {
+        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid];
+    } else {
+     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
+    }
+   
     NSLog(@"%@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
  

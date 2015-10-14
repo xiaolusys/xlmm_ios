@@ -81,20 +81,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="360"/>
                                     <subviews>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yifu.png" translatesAutoresizingMaskIntoConstraints="NO" id="LtF-EG-WdC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                                             <color key="backgroundColor" red="0.3294117647" green="0.78039215689999997" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZaG-6v-WYj">
-                                            <rect key="frame" x="0.0" y="310" width="320" height="50"/>
+                                            <rect key="frame" x="0.0" y="300" width="320" height="60"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gbe-eb-1Xd">
-                                                    <rect key="frame" x="51" y="33" width="29" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <rect key="frame" x="51" y="35" width="27" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jng-N0-5RW">
-                                                    <rect key="frame" x="47" y="33" width="4" height="12"/>
+                                                    <rect key="frame" x="47" y="35" width="4" height="12"/>
                                                     <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="11"/>
                                                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -106,16 +106,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuM-N0-go3">
-                                            <rect key="frame" x="8" y="320" width="35" height="20"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="22V-Jc-fbh"/>
-                                            </constraints>
+                                            <rect key="frame" x="8" y="308" width="35" height="20"/>
                                             <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnV-T6-k8Y">
-                                            <rect key="frame" x="8" y="340" width="39" height="18"/>
+                                            <rect key="frame" x="8" y="332" width="39" height="18"/>
                                             <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="16"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -134,7 +131,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="360" id="2tX-b6-ElM"/>
-                                        <constraint firstAttribute="bottom" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="50" id="34w-lz-LUK"/>
+                                        <constraint firstAttribute="bottom" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="60" id="34w-lz-LUK"/>
                                         <constraint firstAttribute="bottom" secondItem="ZaG-6v-WYj" secondAttribute="bottom" id="CUP-Q9-VNI"/>
                                         <constraint firstItem="gnV-T6-k8Y" firstAttribute="leading" secondItem="vuM-N0-go3" secondAttribute="leading" id="DSG-Xd-VPw"/>
                                         <constraint firstItem="1ze-p9-wcv" firstAttribute="leading" secondItem="5Ts-Id-ulD" secondAttribute="leading" id="G88-Ec-2Yk"/>
@@ -148,10 +145,10 @@
                                         <constraint firstItem="1ze-p9-wcv" firstAttribute="top" secondItem="5Ts-Id-ulD" secondAttribute="top" id="h2j-vB-dpb"/>
                                         <constraint firstItem="jng-N0-5RW" firstAttribute="leading" secondItem="gnV-T6-k8Y" secondAttribute="trailing" id="l1L-UN-gtB"/>
                                         <constraint firstItem="Gbe-eb-1Xd" firstAttribute="baseline" secondItem="gnV-T6-k8Y" secondAttribute="baseline" id="lLJ-b2-EvR"/>
-                                        <constraint firstItem="gnV-T6-k8Y" firstAttribute="top" secondItem="vuM-N0-go3" secondAttribute="bottom" id="r1W-6e-dhd"/>
+                                        <constraint firstItem="gnV-T6-k8Y" firstAttribute="top" secondItem="vuM-N0-go3" secondAttribute="bottom" constant="4" id="r1W-6e-dhd"/>
                                         <constraint firstAttribute="trailing" secondItem="LtF-EG-WdC" secondAttribute="trailing" id="uev-te-2K0"/>
                                         <constraint firstAttribute="trailing" secondItem="ZaG-6v-WYj" secondAttribute="trailing" id="w4U-MJ-09D"/>
-                                        <constraint firstItem="vuM-N0-go3" firstAttribute="top" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="10" id="xiH-jx-zAM"/>
+                                        <constraint firstItem="vuM-N0-go3" firstAttribute="top" secondItem="LtF-EG-WdC" secondAttribute="bottom" constant="8" id="xiH-jx-zAM"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZYQ-9I-4yO" userLabel="Size TableView">
