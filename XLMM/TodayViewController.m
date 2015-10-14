@@ -553,7 +553,7 @@ static NSString *khead2View = @"head2View";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGPoint point = scrollView.contentOffset;
     
-    NSLog(@"%f", point.y );
+//    NSLog(@"%f", point.y );
     
     if (point.y > 260) {
         

@@ -516,6 +516,7 @@
 		32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF911BA6CE4900FF3BD3 /* icon-fanhuiqianye.png */; };
 		32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */; };
 		32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */; settings = {ASSET_TAGS = (); }; };
+		32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */; settings = {ASSET_TAGS = (); }; };
 		32D876311BB6C07B00D0C30F /* yhq_not_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */; settings = {ASSET_TAGS = (); }; };
 		32D876321BB6C07B00D0C30F /* yhq_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D876301BB6C07B00D0C30F /* yhq_valid.jpg */; settings = {ASSET_TAGS = (); }; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
@@ -918,6 +919,8 @@
 		32CECF931BA6D37000FF3BD3 /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Unknown.jpeg; path = ../Unknown.jpeg; sourceTree = "<group>"; };
 		32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
 		32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
+		32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ChangeGray.h"; sourceTree = "<group>"; };
+		32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ChangeGray.m"; sourceTree = "<group>"; };
 		32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yhq_not_valid.jpg; sourceTree = "<group>"; };
 		32D876301BB6C07B00D0C30F /* yhq_valid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yhq_valid.jpg; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
@@ -1661,6 +1664,8 @@
 		32E00C8F1BA7B48500A73390 /* Custom Class */ = {
 			isa = PBXGroup;
 			children = (
+				32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */,
+				32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */,
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
 				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
@@ -2217,6 +2222,7 @@
 				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
+				32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */,
 				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,

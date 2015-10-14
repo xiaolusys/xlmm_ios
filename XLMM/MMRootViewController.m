@@ -392,7 +392,9 @@
 #pragma mark --mmNavigationDelegate--
 
 - (void)hiddenNavigation{
-    NSLog(@"hhhhhhh");
+
+    
+    
     self.navigationController.navigationBarHidden = YES;
     
     

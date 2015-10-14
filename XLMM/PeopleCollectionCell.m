@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "MMClass.h"
 #import "CollectionModel.h"
+#import "UIImage+ChangeGray.h"
 
 
 
@@ -55,13 +56,21 @@
 }
 
 - (void)fillData:( PromoteModel*)model{
-    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //image = [UIImage grayscale:image];
+
+    }] ;
+    
+    
+    
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 40;
     if (![model.isSaleopen boolValue] || [model.isSaleout boolValue]) {
         
+
+       
     } else{
         self.backView.hidden = YES;
         
