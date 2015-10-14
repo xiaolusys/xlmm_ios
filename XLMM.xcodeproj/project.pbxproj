@@ -44,6 +44,7 @@
 		325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 325BA11C1B68BA1B006D64BD /* goodsthumb.png */; };
+		325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325D567E1BCE449700B12EE6 /* ArrowView.m */; settings = {ASSET_TAGS = (); }; };
 		325DF93E1B69B16000351ACA /* PosterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF93D1B69B16000351ACA /* PosterView.m */; };
 		325DF9401B69B17F00351ACA /* PosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF93F1B69B17F00351ACA /* PosterView.xib */; };
 		325DF9421B69B38400351ACA /* poster1.png in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9411B69B38400351ACA /* poster1.png */; };
@@ -618,6 +619,8 @@
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
 		325BA11C1B68BA1B006D64BD /* goodsthumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goodsthumb.png; path = ../goodsthumb.png; sourceTree = "<group>"; };
 		325BA11E1B68BAF0006D64BD /* MMClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MMClass.h; path = ../MMClass.h; sourceTree = "<group>"; };
+		325D567D1BCE449700B12EE6 /* ArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowView.h; sourceTree = "<group>"; };
+		325D567E1BCE449700B12EE6 /* ArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowView.m; sourceTree = "<group>"; };
 		325DF93C1B69B16000351ACA /* PosterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterView.h; sourceTree = "<group>"; };
 		325DF93D1B69B16000351ACA /* PosterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterView.m; sourceTree = "<group>"; };
 		325DF93F1B69B17F00351ACA /* PosterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterView.xib; sourceTree = "<group>"; };
@@ -1664,6 +1667,8 @@
 		32E00C8F1BA7B48500A73390 /* Custom Class */ = {
 			isa = PBXGroup;
 			children = (
+				325D567D1BCE449700B12EE6 /* ArrowView.h */,
+				325D567E1BCE449700B12EE6 /* ArrowView.m */,
 				32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */,
 				32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */,
 				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
@@ -2226,6 +2231,7 @@
 				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
+				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,

@@ -178,12 +178,18 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //   http://xiaolu.so/rest/v1/users/profile
     
-    NSString *string = @"http://xiaolu.so/rest/v1/users/profile.json";
+    NSString *string = @"http://m.xiaolu.so/rest/v1/users/profile.json";
     NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
     
     NSLog(@"url = %@", string);
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]options:NSDataReadingMappedAlways error:&error];
+    
+    if (error != nil) {
+        NSLog(@"Error:%@,\n%@", error, error.description);
+    }
+    error = nil;
+    
     NSLog(@"data = %@", data);
     if (data == nil) {
         
@@ -474,7 +480,7 @@ static NSString * ksimpleCell = @"simpleCell";
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
-    
+     
     
     if ([model.productModel class] == [NSNull class]) {
         model.picPath = [dic objectForKey:@"head_img"];

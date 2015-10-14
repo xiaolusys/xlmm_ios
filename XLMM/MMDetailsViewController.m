@@ -18,6 +18,7 @@
 #import "AFNetworking.h"
 #import "LiJiGMViewController.h"
 #import "LiJiGMViewController1.h"
+#import "ArrowView.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
@@ -54,7 +55,8 @@
 
 @property (nonatomic, strong) UIView *infoView;//显示信息视图
 
-
+@property (nonatomic, strong) ArrowView *popView;
+@property (nonatomic, strong) NSMutableArray *popViewArray;
 
 @end
 
@@ -111,7 +113,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:self.scrollerView];
     [self.view addSubview:self.backView];
-    
+    self.popViewArray = [[NSMutableArray alloc] initWithCapacity:0];
     self.scrollerView.delegate = self;
     contentCount = 0;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -438,8 +440,12 @@
         NSLog(@"%@", dic);
         NSLog(@"%d", (int)button.tag);
         [button setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
-      
         
+        NSLog(@"button.frame = %@", NSStringFromCGRect(button.frame));
+      
+        CGRect rect = button.frame;
+    
+         [self createInfoViewWithFrame:rect];
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
@@ -452,9 +458,38 @@
         }
         
     }
-    //  [self createInfoView];
+   
     
     [self createSizeTable];
+    
+    NSLog(@"popViewArray = %@", self.popViewArray);
+    
+}
+
+- (void)createInfoViewWithFrame:(CGRect)frame{
+    ArrowView *poperView = [[ArrowView alloc] initWithFrame:CGRectMake(0, frame.origin.y - 60, SCREENWIDTH, 60) style:ArrowView_Bottom height:frame.origin.x + frame.size.width/2];
+    [self.sizeView addSubview:poperView];
+    poperView.backgroundColor = [UIColor clearColor];
+    poperView.hidden = YES;
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 44, -18, 44, 44)];
+    button.backgroundColor = [UIColor blackColor];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-guanbi.png"]];
+    imageView.frame = CGRectMake(SCREENWIDTH - 30, -10, 30, 30);
+    imageView.layer.cornerRadius = 15;
+    [poperView addSubview:imageView];
+    button.layer.cornerRadius = 22;
+    [button addTarget:self action:@selector(popviewHidden:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [poperView addSubview:button];
+    button.backgroundColor = [UIColor clearColor];
+    
+    [self.popViewArray addObject:poperView];
+    
+    
+}
+
+- (void)popviewHidden:(UIButton *)button{
+    NSLog(@"guanbi");
 }
 
 - (void)createSizeTable{
@@ -592,29 +627,25 @@
 - (void)btnClicked:(UIButton *)button{
     NSLog(@"button.tag = %ld", (long)button.tag);
     for (int i = 100; i<100+normalSkus.count; i++) {
+        
         if (button.tag == i) {
             [button.layer setBorderColor:[UIColor redColor].CGColor];
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
-            
-            
-//            if (self.infoView.isHidden == isInfoHidden) {
-//                self.infoView.hidden = NO;
-//            } else {
-//                self.infoView.hidden = YES;
-//            }
-       
-            
-            
-            
-            
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
+            ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+           
+           
+                popView.hidden = !popView.hidden;
+            
             
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
                 [btn.layer setBorderColor:[UIColor grayColor].CGColor];
                 [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+                popView.hidden = YES;
             }
         }
     }
