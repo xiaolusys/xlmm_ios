@@ -37,19 +37,7 @@
                     </label>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paa-sZ-unt">
                         <rect key="frame" x="92" y="259" width="31" height="10"/>
-                        <color key="backgroundColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <view hidden="YES" alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
-                        <rect key="frame" x="47" y="75" width="80" height="80"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
-                                <rect key="frame" x="4" y="26" width="72" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95691373999473672" green="0.94480950479736836" blue="0.95917525315263097" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" tag="24" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAl-eb-VKY">
                         <rect key="frame" x="98" y="210" width="27" height="11"/>
@@ -74,6 +62,24 @@
                             <constraint firstAttribute="width" secondItem="uhQ-WN-ROj" secondAttribute="height" multiplier="1:1" id="W8P-NJ-zrD"/>
                         </constraints>
                     </imageView>
+                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
+                        <rect key="frame" x="60" y="60" width="60" height="60"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已抢光" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
+                                <rect key="frame" x="9" y="22" width="42" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="6Ay-r3-Hg6"/>
+                            <constraint firstAttribute="height" constant="60" id="NA1-2c-L8L"/>
+                            <constraint firstItem="PSt-Yf-KYY" firstAttribute="centerX" secondItem="WUt-wu-bjn" secondAttribute="centerX" id="b0u-hz-kZk"/>
+                            <constraint firstItem="PSt-Yf-KYY" firstAttribute="centerY" secondItem="WUt-wu-bjn" secondAttribute="centerY" id="beO-HW-uN3"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -85,12 +91,14 @@
                 <constraint firstItem="Rif-Ul-A9W" firstAttribute="top" secondItem="uhQ-WN-ROj" secondAttribute="bottom" constant="6" id="8g7-2G-aol"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GQH-Wc-KXm"/>
                 <constraint firstItem="CAl-eb-VKY" firstAttribute="baseline" secondItem="SQ1-Th-Bsz" secondAttribute="baseline" id="OEM-qP-nIr"/>
+                <constraint firstItem="WUt-wu-bjn" firstAttribute="centerY" secondItem="uhQ-WN-ROj" secondAttribute="centerY" id="ds4-Y3-4vG"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ejb-YE-Y6j"/>
                 <constraint firstItem="SQ1-Th-Bsz" firstAttribute="centerY" secondItem="dWw-kK-fDJ" secondAttribute="centerY" id="lIi-r5-ID5"/>
                 <constraint firstAttribute="trailing" secondItem="uhQ-WN-ROj" secondAttribute="trailing" id="mac-FS-S3a"/>
                 <constraint firstItem="CAl-eb-VKY" firstAttribute="leading" secondItem="dWw-kK-fDJ" secondAttribute="trailing" id="mpX-5I-hRA"/>
                 <constraint firstItem="dWw-kK-fDJ" firstAttribute="leading" secondItem="SQ1-Th-Bsz" secondAttribute="trailing" id="sYR-fI-bN4"/>
                 <constraint firstItem="dWw-kK-fDJ" firstAttribute="centerX" secondItem="Rif-Ul-A9W" secondAttribute="centerX" constant="6" id="tJU-86-uwd"/>
+                <constraint firstItem="WUt-wu-bjn" firstAttribute="centerX" secondItem="uhQ-WN-ROj" secondAttribute="centerX" id="xq9-LC-E2N"/>
             </constraints>
             <size key="customSize" width="180" height="222"/>
             <connections>

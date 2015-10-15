@@ -405,7 +405,35 @@
     self.caizhi.text = [details objectForKey:@"material"];
     self.yanse.text = [details objectForKey:@"color"];
      self.beizhu.text = [details objectForKey:@"note"];
+    
+    UIFont *labelFont = [UIFont systemFontOfSize:12.0];
+    
+    NSString *s = [details objectForKey:@"note"];
+    
+    
+    
+//    - (CGRect)boundingRectWithSize:(CGSize)size
+//options:(NSStringDrawingOptions)options
+//attributes:(NSDictionary<NSString *,
+//            id> *)attributes
+//context:(NSStringDrawingContext *)context
+//    CGRect labelsize = [s boundingRectWithSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) options:0 attributes:nil context:nil];
+    
+   CGSize size = [s sizeWithFont:labelFont constrainedToSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) lineBreakMode:NSLineBreakByCharWrapping];
+    
+    
+    self.beizhuHeight.constant = size.height - 6;
+    NSLog(@"size = %@", NSStringFromCGSize(size));
+    NSInteger lineNumbers = self.beizhu.numberOfLines;
+    NSLog(@"备注内容的行数：  %ld", (long)lineNumbers);
+    NSLog(@"%@", self.beizhu.text);
+    NSLog(@"%@",NSStringFromCGRect(self.beizhu.frame));
      self.shuoming.text = [details objectForKey:@"wash_instructions"];
+    
+    
+    
+    
+    
     
 }
 // 可选尺码。。。
@@ -445,9 +473,9 @@
         
         NSLog(@"button.frame = %@", NSStringFromCGRect(button.frame));
       
-        CGRect rect = button.frame;
+       // CGRect rect = button.frame;
     
-         [self createInfoViewWithFrame:rect];
+        // [self createInfoViewWithFrame:rect];
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
@@ -646,10 +674,10 @@
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
-            ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+           // ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
            
            
-                popView.hidden = !popView.hidden;
+              //  popView.hidden = !popView.hidden;
             
             
         }else{
@@ -657,8 +685,8 @@
             if ([btn isUserInteractionEnabled]) {
                 [btn.layer setBorderColor:[UIColor grayColor].CGColor];
                 [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
-                popView.hidden = YES;
+              //  ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+              //  popView.hidden = YES;
             }
         }
     }

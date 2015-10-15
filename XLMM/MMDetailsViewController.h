@@ -48,5 +48,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *beizhuHeight;
 
 @end

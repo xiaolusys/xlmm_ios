@@ -13,6 +13,8 @@
 #import "WXLoginController.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "NSString+Encrypto.h"
+#import "UIViewController+NavigationBar.h"
+
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -35,7 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
     if (islogin) {
         [self.navigationController popViewControllerAnimated:NO];
@@ -45,15 +47,15 @@
     NSLog(@"array = %@", array);
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.navigationBarHidden = NO;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setInfo];
+    //[self setInfo];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    [self createNavigationBarWithTitle:@"小鹿美美" selecotr:@selector(btnClicked:)];
+    
     NSString *strings = @"noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c&timestamp=1442995986";
     isBangding = NO;
     NSLog(@"%@", [strings sha1]);
@@ -78,6 +80,10 @@
     
     
     
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -190,18 +196,26 @@
         
         //提示用户输入手机号和密码：
         
-        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
-            NSLog(@"未绑定手机号码");
-            isBangding = NO;
-            NSLog(@"11isBangDing = %d", isBangding);
-
-            
-        } else {
-            NSLog(@"22已绑定手机号码");
-            isBangding = YES;
-            NSLog(@"22isBangDing = %d", isBangding);
-
+        if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
+       
+            if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
+                NSLog(@"未绑定手机号码");
+                isBangding = NO;
+                NSLog(@"11isBangDing = %d", isBangding);
+                
+                
+            } else {
+                NSLog(@"22已绑定手机号码");
+                isBangding = YES;
+                NSLog(@"22isBangDing = %d", isBangding);
+                
+            }
+        } else{
+//            NSLog(@"取消微信登录");
+//            isBangding = YES;
         }
+        
+       
     }];
     
     UIView *backView = [[UIView alloc] initWithFrame:self.view.frame];

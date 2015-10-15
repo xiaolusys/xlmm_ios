@@ -39,12 +39,12 @@
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
     [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
     self.imageView.layer.borderWidth = 1;
-    self.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
-    self.backView.layer.cornerRadius = 40;
+    self.backView.layer.cornerRadius = 30;
     if ([model.isSaleout boolValue]) {
        
     } else{
@@ -64,7 +64,7 @@
 
     }] ;
     self.imageView.layer.borderWidth = 1;
-    self.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     
     
@@ -72,7 +72,7 @@
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
-    self.backView.layer.cornerRadius = 40;
+    self.backView.layer.cornerRadius = 30;
     if (![model.isSaleopen boolValue] || [model.isSaleout boolValue]) {
         
 
