@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "TuihuoController.h"
 #import "Pingpp.h"
+#import "UIViewController+NavigationBar.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -48,8 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createInfo];
-    
+    //[self createInfo];
+    [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(btnClicked:)];
     refund_status_displayArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     
@@ -69,6 +70,10 @@
     [frontView addSubview:activityView];
     [self.view addSubview:frontView];
     
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downloadData{

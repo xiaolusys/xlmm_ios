@@ -15,6 +15,7 @@
 #import "DingdanModel.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
+#import "UIViewController+NavigationBar.h"
 
 
 
@@ -122,6 +123,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"全部订单";
+    
+    [self createNavigationBarWithTitle:@"全部订单" selecotr:@selector(backBtnClicked:)];
     _isFirst = YES;
     dataArray = [[NSMutableArray alloc] initWithCapacity:5];
 
@@ -138,7 +141,7 @@
 
     [self.quanbuCollectionView registerClass:[QuanbuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     
-    [self createInfo];
+//    [self createInfo];
     [self downloadData];
 }
 

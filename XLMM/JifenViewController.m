@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JiFenModel.m"
 #import "JiFenCollectionCell.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface JifenViewController ()
 
@@ -32,12 +33,19 @@ static NSString * const reuseIdentifier = @"jifenCell";
     [self.collectionView registerClass:[JiFenCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     self.title = @"我的积分";
+    [self createNavigationBarWithTitle:@"我的积分" selecotr:@selector(btnClicked:)];
+    
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 //   http://192.168.1.79:8000/rest/v1/integrallog

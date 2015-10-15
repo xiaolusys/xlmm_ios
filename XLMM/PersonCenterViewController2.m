@@ -9,7 +9,7 @@
 #import "PersonCenterViewController2.h"
 #import "MMClass.h"
 #import "XiangQingViewController.h"
-
+#import "UIViewController+NavigationBar.h"
 #define kSimpleCellIdentifier @"simpleCell"
 
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
@@ -25,12 +25,16 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"待收货订单";
      [self.collectionView registerClass:[ShouHuoCollectionViewCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
-    [self createInfo];
-    
+    //[self createInfo];
+    [self createNavigationBarWithTitle:@"待收货订单" selecotr:@selector(btnClicked:)];
     [self downlaodData];
     [self.view addSubview:[[UIView alloc] init]];
     
     
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downlaodData{

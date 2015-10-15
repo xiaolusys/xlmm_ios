@@ -8,6 +8,8 @@
 
 #import "TousuViewController.h"
 
+#import "UIViewController+NavigationBar.h"
+
 @interface TousuViewController ()<UIAlertViewDelegate>{
     NSMutableArray *dataArray;
 }
@@ -20,9 +22,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self setInfo];
+   // [self setInfo];
     //获取投诉意见的内容;
-    
+    [self createNavigationBarWithTitle:@"投诉建议" selecotr:@selector(backBtnClicked:)];
     dataArray = [[NSMutableArray alloc] init];
     
     //  http://m.xiaolu.so/rest/v1/complain

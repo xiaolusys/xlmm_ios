@@ -178,7 +178,7 @@
 {
 	
     CGContextSetLineWidth(context, 2.0);
-    CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
     switch (self.style) {
         case ArrowView_Left:{
             [self getDrawPath_ArrowLeft:context];

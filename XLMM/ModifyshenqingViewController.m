@@ -9,6 +9,7 @@
 #import "ModifyshenqingViewController.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface ModifyshenqingViewController ()<UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
     UIAlertView *myAlterView;
@@ -43,7 +44,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"修改申请退货(款)";
+  //  self.title = @"修改申请退货(款)";
+    
+    [self createNavigationBarWithTitle:@"修改申请退货(款)" selecotr:@selector(backBUttonClicked:)];
+    
     NSLog(@"tid = %@ and oid = %@", self.tid, self.oid);
     
     self.refund_or_pro = 0;
@@ -93,6 +97,11 @@
     [self downloadData];
     
 }
+
+- (void)backBUttonClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)downloadData{
     
     //  http://192.168.1.63:8000/rest/v1/trades/217/details

@@ -10,7 +10,7 @@
 #import "MMClass.h"
 #import "PerDingdanModel.h"
 #import "AFNetworking.h"
-
+#import "UIViewController+NavigationBar.h"
 
 @interface TuihuoController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UIAlertViewDelegate>{
     UIAlertView *myAlterView;
@@ -39,6 +39,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.title = @"申请退货";
+    [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(btnClicked:)];
     self.myTextView.delegate = self;
     self.myTextField1.delegate = self;
     self.myTextField2.delegate = self;
@@ -83,6 +84,10 @@
     
     self.sizename.text = [NSString stringWithFormat:@"%@", self.dingdanModel.sizeString];
    
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)createPickerView{

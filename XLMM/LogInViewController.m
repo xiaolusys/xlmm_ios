@@ -12,6 +12,7 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "UIViewController+NavigationBar.h"
 
 
 @interface LogInViewController ()
@@ -45,6 +46,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"登录";
+    
+    [self createNavigationBarWithTitle:@"登录" selecotr:@selector(btnClicked:)];
     self.infoLabel.hidden = YES;
     _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTextField.secureTextEntry = YES;
@@ -72,6 +75,10 @@
     _userIDTextField.text = username;
     _passwordTextField.text = password;
     
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

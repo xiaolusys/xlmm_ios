@@ -11,6 +11,7 @@
 #import "TuihuoModel.h"
 #import "ModifyshenqingViewController.h"
 #import "AFNetworking.h"
+#import "UIViewController+NavigationBar.h"
 
 
 @interface TuihuoXiangqingViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
@@ -33,6 +34,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"退货(款)详情";
+    [self createNavigationBarWithTitle:@"退货(款)详情" selecotr:@selector(backbuttonClicked:)];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
       [self downlaodData];
@@ -40,6 +43,10 @@
     
     [self createView];
   
+}
+
+- (void)backbuttonClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downlaodData{

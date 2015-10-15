@@ -336,21 +336,29 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-cl-9YW">
-                                    <rect key="frame" x="0.0" y="380" width="320" height="120"/>
+                                    <rect key="frame" x="0.0" y="320" width="320" height="180"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOV-40-Lmo">
+                                            <rect key="frame" x="0.0" y="60" width="320" height="120"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-uY-7BM">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
+                                            <rect key="frame" x="0.0" y="60" width="320" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="320" id="Hce-VH-23I"/>
                                                 <constraint firstAttribute="height" constant="16" id="IVq-tL-082"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="KFr-uY-7BM" firstAttribute="leading" secondItem="mWS-cl-9YW" secondAttribute="leading" id="Faz-ug-jGa"/>
-                                        <constraint firstAttribute="height" constant="120" id="LyR-OB-Dts"/>
-                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="top" secondItem="mWS-cl-9YW" secondAttribute="top" id="zn2-wN-aiW"/>
+                                        <constraint firstAttribute="height" constant="180" id="LyR-OB-Dts"/>
+                                        <constraint firstAttribute="bottom" secondItem="NOV-40-Lmo" secondAttribute="bottom" id="Qv7-QT-R80"/>
+                                        <constraint firstAttribute="trailing" secondItem="NOV-40-Lmo" secondAttribute="trailing" id="Ujd-5v-dGv"/>
+                                        <constraint firstItem="NOV-40-Lmo" firstAttribute="leading" secondItem="mWS-cl-9YW" secondAttribute="leading" id="cre-NF-LyM"/>
+                                        <constraint firstItem="NOV-40-Lmo" firstAttribute="top" secondItem="KFr-uY-7BM" secondAttribute="bottom" constant="-16" id="l6s-M9-LmM"/>
+                                        <constraint firstItem="KFr-uY-7BM" firstAttribute="top" secondItem="mWS-cl-9YW" secondAttribute="top" constant="60" id="zn2-wN-aiW"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -376,7 +384,7 @@
                                 <constraint firstItem="HD3-6K-8JT" firstAttribute="top" secondItem="L5P-hK-A6Z" secondAttribute="bottom" id="rdK-TX-rk0"/>
                                 <constraint firstItem="mWS-cl-9YW" firstAttribute="leading" secondItem="cOc-Z1-tUM" secondAttribute="leading" id="shh-tR-vcO"/>
                                 <constraint firstItem="L5P-hK-A6Z" firstAttribute="leading" secondItem="cOc-Z1-tUM" secondAttribute="leading" id="uWY-vH-oxW"/>
-                                <constraint firstItem="mWS-cl-9YW" firstAttribute="top" secondItem="5Ts-Id-ulD" secondAttribute="bottom" id="y6n-1e-j0B"/>
+                                <constraint firstItem="mWS-cl-9YW" firstAttribute="top" secondItem="5Ts-Id-ulD" secondAttribute="bottom" constant="-60" id="y6n-1e-j0B"/>
                                 <constraint firstAttribute="trailing" secondItem="mWS-cl-9YW" secondAttribute="trailing" id="zfK-OU-2xd"/>
                             </constraints>
                         </view>

@@ -12,6 +12,7 @@
 #import "TuihuoCollectionCell.h"
 #import "OrderModel.h"
 #import "TuihuoXiangqingViewController.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface TuihuoViewController ()
 
@@ -49,7 +50,8 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     
     // Do any additional setup after loading the view.
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    [self createInfo];
+    //[self createInfo];
+    [self createNavigationBarWithTitle:@"我的退货(款)" selecotr:@selector(backBtnClicked:)];
 
 }
 

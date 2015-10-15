@@ -10,6 +10,7 @@
 #import "ZhiFuCollectionCell.h"
 #import "MMClass.h"
 #import "XiangQingViewController.h"
+#import "UIViewController+NavigationBar.h"
 
 #define kSimpleCellIdentifier @"simpleCell"
 
@@ -44,13 +45,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"待支付订单";
+    [self createNavigationBarWithTitle:@"待支付订单" selecotr:@selector(btnClicked:)];
     
-    [self createInfo];
+    
+   // [self createInfo];
     // Do any additional setup after loading the view from its nib.
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     //self.dataArray = [[NSMutableArray alloc] init];
     [self.view addSubview:[[UIView alloc] init]];
     
+}
+
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downlaodData{

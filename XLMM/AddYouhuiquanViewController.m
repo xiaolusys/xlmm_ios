@@ -9,6 +9,7 @@
 #import "AddYouhuiquanViewController.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface AddYouhuiquanViewController ()<UITextFieldDelegate>
 
@@ -24,9 +25,9 @@
     
     self.alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     
-    [self createInfo];
+   // [self createInfo];
 
-    
+    [self createNavigationBarWithTitle:@"获取优惠券" selecotr:@selector(backBtnClicked:)];
     
 }
 

@@ -11,6 +11,7 @@
 #import "MMClass.h"
 #import "YHQCollectionCell.h"
 #import "YHQModel.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
@@ -35,7 +36,7 @@ static NSString *ksimpleCell = @"youhuiCell";
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self createInfo];
-    
+   // [self createNavigationBarWithTitle:@"" selecotr:@selector(backBtnClicked:)];
      [self createCollectionView];
    // self.containerView.hidden = YES;
     
@@ -244,13 +245,13 @@ static NSString *ksimpleCell = @"youhuiCell";
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = @"优惠券";
     label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
+    label.font = [UIFont systemFontOfSize:20];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 14, 8, 18);
+    imageView.frame = CGRectMake(8, 14, 10, 17);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];

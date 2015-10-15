@@ -122,6 +122,7 @@
     
     isInfoHidden = YES;
     
+    
     self.bottomImageViewHeight.constant = SCREENWIDTH;
     self.headViewwidth.constant = SCREENWIDTH;
     self.headViewHeitht.constant = SCREENWIDTH + 60;
@@ -414,11 +415,12 @@
     if (sizeCount%3 == 0) {
         height = 8;
     }
-    self.sizeViewHeight.constant = 20 + 44*(int)(sizeCount/3)+height;
+    self.sizeViewHeight.constant = 20 + 60 + 44*(int)(sizeCount/3)+height;
     NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
+    CGFloat buttonwidth = (SCREENWIDTH-20)/3;
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 *105+5,20 + i/3 *48, 100, 44)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 *(buttonwidth+5)+5,20 +60 + i/3 *48, buttonwidth, 44)];
         button.tag = i + 100;
         [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -432,7 +434,7 @@
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor whiteColor];
         [self.sizeView addSubview:button];
-        self.sizeView.backgroundColor = [UIColor whiteColor];
+//        self.sizeView.backgroundColor = [UIColor whiteColor];
     }
     for (int i = 0; i<sizeCount; i++) {
         UIButton *button = (UIButton *)[self.sizeView viewWithTag:i + 100];
@@ -471,16 +473,23 @@
     [self.sizeView addSubview:poperView];
     poperView.backgroundColor = [UIColor clearColor];
     poperView.hidden = YES;
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 44, -18, 44, 44)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 60, -24, 60, 60)];
     button.backgroundColor = [UIColor blackColor];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-guanbi.png"]];
     imageView.frame = CGRectMake(SCREENWIDTH - 30, -10, 30, 30);
     imageView.layer.cornerRadius = 15;
     [poperView addSubview:imageView];
     button.layer.cornerRadius = 22;
+   
     [button addTarget:self action:@selector(popviewHidden:) forControlEvents:UIControlEventTouchUpInside];
     
     [poperView addSubview:button];
+    
+    
+    
+    
+    
+    
     button.backgroundColor = [UIColor clearColor];
     
     [self.popViewArray addObject:poperView];
@@ -490,6 +499,10 @@
 
 - (void)popviewHidden:(UIButton *)button{
     NSLog(@"guanbi");
+    for (ArrowView *popView in self.popViewArray) {
+        popView.hidden = YES;
+    }
+    
 }
 
 - (void)createSizeTable{

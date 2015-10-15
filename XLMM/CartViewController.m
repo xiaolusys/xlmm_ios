@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "EmptyCartViewController.h"
 #import "PurchaseViewController.h"
+#import "UIViewController+NavigationBar.h"
 
 
 @interface CartViewController ()<CartViewDelegate>{
@@ -41,8 +42,8 @@
     self.dataArray = [[NSMutableArray alloc] init];
     allPrice= 0;
     [self.view addSubview:self.myTableView];
-    [self createInfo];
-    
+    //[self createInfo];
+    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backBtnClicked:)];
     
     NSLog(@"url = %@", kCart_Number_URL);
     NSURL *url = [NSURL URLWithString:kCart_Number_URL];

@@ -9,6 +9,8 @@
 #import "RegisterViewController.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "UIViewController+NavigationBar.h"
+
 
 @interface RegisterViewController ()
 {
@@ -24,6 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"注册";
+    
+    [self createNavigationBarWithTitle:@"注册" selecotr:@selector(btnClicked:)];
     self.infoLabel.hidden = YES;
     self.passwordLabel.hidden = YES;
     secondsCountDown = 60;
@@ -50,6 +54,10 @@
     _setPasswordTextField.delegate = self;
     _resetPasswordTextField.delegate = self;
     
+}
+
+- (void)btnClicked:(UIButton*)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

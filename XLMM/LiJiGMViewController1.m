@@ -16,7 +16,7 @@
 #import "Pingpp.h"
 #import "AFNetworking.h"
 #import "WXApi.h"
-
+#import "UIViewController+NavigationBar.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 @interface LiJiGMViewController1 ()<YouhuiquanDelegate>
@@ -81,8 +81,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"确认订单";
-    
+   // self.title = @"确认订单";
+    [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
 
     buyNumber = @1;
     
@@ -97,6 +97,10 @@
   
     
     
+}
+
+- (void)backButtonClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{

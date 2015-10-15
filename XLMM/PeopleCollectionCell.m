@@ -38,6 +38,9 @@
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
     [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+    self.imageView.layer.borderWidth = 1;
+    self.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
@@ -60,6 +63,9 @@
         //image = [UIImage grayscale:image];
 
     }] ;
+    self.imageView.layer.borderWidth = 1;
+    self.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     
     
     

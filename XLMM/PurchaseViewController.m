@@ -20,6 +20,7 @@
 #import "YHQModel.h"
 #import "YouHuiQuanViewController.h"
 #import "WXApi.h"
+#import "UIViewController+NavigationBar.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -101,6 +102,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"确认订单";
+    [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
     dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     cartsDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self.view addSubview:self.myScrollView];
@@ -117,6 +119,10 @@
 
     
     
+}
+
+- (void)backButtonClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downloadCartsData{
