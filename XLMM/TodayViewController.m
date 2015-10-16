@@ -57,8 +57,22 @@ static NSString *khead2View = @"head2View";
 
 @implementation TodayViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+   // self.navigationController.navigationBarHidden = YES;
+    
+ 
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+    CGFloat topddistince =  self.myCollectionView.contentOffset.y ;
+    NSLog(@"%f", topddistince);
+    if (topddistince > 160) {
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
+    }
     [super viewDidAppear:animated];
     if (_isFirst) {
         //集成刷新控件
@@ -494,8 +508,15 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-           //[cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
-            cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+           [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//               NSLog(@"error = %@", error);
+//               NSLog(@"errorUserinfo = %@", error.userInfo);
+//               NSLog(@"errordescription = %@", error.description);
+//               NSLog(@"image = %@", image);
+//               NSLog(@"url = %@", imageURL);
+//               NSLog(@"cachetype = %d", (int)cacheType);
+           }];
+           // cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
            

@@ -53,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 
+
 @property (nonatomic, strong) UIView *infoView;//显示信息视图
 
 @property (nonatomic, strong) ArrowView *popView;
@@ -980,6 +981,12 @@
 }
 - (IBAction)backqianye:(id)sender {
     
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [@"d" drawInRect:CGRectZero withAttributes:nil];
+    [@"d" drawAtPoint:CGPointZero withAttributes:nil];
+    //[@"d" drawLayer:nil inContext:nil];
 }
 @end
