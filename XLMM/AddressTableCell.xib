@@ -40,10 +40,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZU-A3-iXG" userLabel="modify">
-                                        <rect key="frame" x="264" y="24" width="44" height="44"/>
+                                        <rect key="frame" x="248" y="16" width="60" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="Bkn-zR-KNt"/>
-                                            <constraint firstAttribute="height" constant="44" id="lWf-UV-XNH"/>
+                                            <constraint firstAttribute="width" constant="60" id="Bkn-zR-KNt"/>
+                                            <constraint firstAttribute="height" constant="60" id="lWf-UV-XNH"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

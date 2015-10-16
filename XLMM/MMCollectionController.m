@@ -26,25 +26,33 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    if ([theTimer isValid]) {
-        [theTimer invalidate];
-        
-    }
-}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   // self.navigationController.navigationBarHidden = NO;
+   // self.navigationController.navigationBarHidden = YES;
     [self downloadData];
 
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-     self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+        
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //self.navigationController.navigationBarHidden = YES;
 }
 
 
@@ -172,7 +180,7 @@
 {
      CollectionModel *model = [self.dataArray objectAtIndex:0];
     NSString *saleTime = model.saleTime;
-    NSLog(@"saleTime = %@", saleTime);
+  //  NSLog(@"saleTime = %@", saleTime);
     
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
@@ -194,7 +202,7 @@
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     comps = [calendar components:unitFlags fromDate:toDate];
-    NSLog(@"comps = %@", comps);
+  //  NSLog(@"comps = %@", comps);
     
     int year=(int)[comps year];
     int month =(int) [comps month];
@@ -209,7 +217,7 @@
     [endTime setHour:14];
     [endTime setMinute:0];
     [endTime setSecond:0];
-    NSLog(@" end time = %@", endTime);
+ //   NSLog(@" end time = %@", endTime);
     NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
@@ -218,10 +226,10 @@
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     if ([d hour] < 0) {
         titleLabel.text = @"已下架";
-        NSLog(@"已下架");
+     //   NSLog(@"已下架");
     } else{
         NSString * string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
-        NSLog(@"string = %@", string);
+    //    NSLog(@"string = %@", string);
         titleLabel.text = string;
     }
 

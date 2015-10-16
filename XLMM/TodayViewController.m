@@ -58,6 +58,7 @@ static NSString *khead2View = @"head2View";
 @implementation TodayViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
    // self.navigationController.navigationBarHidden = YES;
     
  
@@ -66,13 +67,13 @@ static NSString *khead2View = @"head2View";
 - (void)viewDidAppear:(BOOL)animated
 {
     
-    CGFloat topddistince =  self.myCollectionView.contentOffset.y ;
-    NSLog(@"%f", topddistince);
-    if (topddistince > 160) {
-        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-            [self.delegate hiddenNavigation];
-        }
-    }
+//    CGFloat topddistince =  self.myCollectionView.contentOffset.y ;
+//    NSLog(@"%f", topddistince);
+//    if (topddistince > 160) {
+//        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+//            [self.delegate hiddenNavigation];
+//        }
+//    }
     [super viewDidAppear:animated];
     if (_isFirst) {
         //集成刷新控件

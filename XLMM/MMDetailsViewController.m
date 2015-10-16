@@ -68,20 +68,13 @@
     [super viewWillAppear:animated];
     //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
-        
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
             NSLog(@"%@", kCart_Number_URL);
             [self performSelectorOnMainThread:@selector(fetchedCartNumber:)withObject:data waitUntilDone:YES];
-            
         });
     }
-    
-        
-  
 }
 
 
@@ -839,14 +832,14 @@
     //动画起始点
     CGPathMoveToPoint(aPath, nil, width/2, height - 50);
     CGPathAddCurveToPoint(aPath, nil,
-                          width/2 - 50 , height - 120,//控制点
-                          width/2  - 100, height - 150,//控制点
+                          width/2 - 50 , height - 140,//控制点
+                          width/2  - 140, height - 80,//控制点
                           20, height - 60
                           );//控制点
     
     ani.path=aPath;
     ani.rotationMode = @"auto";
-    ani.duration=0.7;
+    ani.duration=0.9;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [view.layer addAnimation:ani forKey:@"position"];

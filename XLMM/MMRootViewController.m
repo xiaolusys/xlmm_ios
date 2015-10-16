@@ -38,6 +38,8 @@
     
     NSInteger goodsCount;
     UILabel *label;
+    
+    CGRect frame;
 
     
 }
@@ -46,6 +48,58 @@
 
 @implementation MMRootViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_isFirst) {
+        
+        NSLog(@"111");
+        
+    }else{
+        NSLog(@"222");
+        
+        // [self presentLeftMenuViewController:leftButton];
+        
+    }
+    self.view.frame = frame;
+    
+    [self setLabelNumber];
+    
+    
+    
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+  
+    if (_isFirst) {
+
+    }else{
+        
+//        UIView *cartView = [_view viewWithTag:123];
+//        cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+    }
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    _isFirst = NO;
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+    NSLog(@"DEMOFirstViewController will disappear");
+    frame = self.view.frame;
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    frame = self.view.frame;
+    NSLog(@"fram = %@", NSStringFromCGRect(frame));
+}
 
 - (void)viewDidLoad
 {
@@ -62,6 +116,7 @@
     [self creatPageData];
     
 }
+
 
 - (void)createInfo{
     self.title = @"小鹿美美";
@@ -200,39 +255,7 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    NSLog(@"DEMOFirstViewController will appear");
-  
-    if (_isFirst) {
-        
-        NSLog(@"111");
-        
-    }else{
-        NSLog(@"222");
-        
-       // [self presentLeftMenuViewController:leftButton];
 
-    }
-    
-    [self setLabelNumber];
-    
-    
-}
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    _isFirst = NO;
-    [super viewWillDisappear:animated];
-    NSLog(@"DEMOFirstViewController will disappear");
-   
-   
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -392,47 +415,19 @@
 #pragma mark --mmNavigationDelegate--
 
 - (void)hiddenNavigation{
-
-    
-    
     self.navigationController.navigationBarHidden = YES;
-    
-    
-
-        self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
-        UIView *cartView = [_view viewWithTag:123];
-        cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
-
-
-                                        
- 
-
-    
-  
-    
+    self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
+    UIView *cartView = [_view viewWithTag:123];
+    cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
 }
 
 - (void)showNavigation{
-    NSLog(@"sssssss");
-       self.navigationController.navigationBarHidden = NO;
-
-         self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-  
-    
- 
+   // NSLog(@"sssssss");
+    self.navigationController.navigationBarHidden = NO;
+    self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
-
-  
-  
 }
-
-
-
-
-
-
-
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc{
     [self.navigationController pushViewController:vc animated:YES];
