@@ -311,6 +311,16 @@ static NSString *khead2View = @"head2View";
     }
    NSLog(@"ladyDataArray = %@", ladyDataArray);
     
+    PromoteModel *firstModel = [ladyDataArray objectAtIndex:0];
+    NSString *string = firstModel.picPath;
+    
+    NSLog(@"first image url = %@", string);
+   // UIImage *image = [UIImage imagewithURLString:string];
+    NSUserDefaults *defualt = [NSUserDefaults standardUserDefaults];
+    
+    [defualt setObject:string forKey:@"imageUrlString"];
+    [defualt synchronize];
+    
     
     
     
@@ -484,7 +494,8 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+           //[cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
            

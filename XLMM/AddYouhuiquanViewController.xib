@@ -85,16 +85,16 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="JSS-Zn-uwW"/>
-                            <exclude reference="JFA-tp-Lj6"/>
-                            <exclude reference="PSC-1x-Zrm"/>
-                            <exclude reference="a0T-bM-JX8"/>
-                            <exclude reference="sDG-cU-Ox9"/>
-                            <exclude reference="ZTB-7Q-tJQ"/>
-                            <exclude reference="oIW-nK-HVB"/>
                             <exclude reference="XMc-bv-FJX"/>
                             <exclude reference="Z2t-O0-6aH"/>
                             <exclude reference="flm-hP-QNv"/>
                             <exclude reference="llu-w6-SaI"/>
+                            <exclude reference="ZTB-7Q-tJQ"/>
+                            <exclude reference="oIW-nK-HVB"/>
+                            <exclude reference="JFA-tp-Lj6"/>
+                            <exclude reference="PSC-1x-Zrm"/>
+                            <exclude reference="a0T-bM-JX8"/>
+                            <exclude reference="sDG-cU-Ox9"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -105,16 +105,16 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="JSS-Zn-uwW"/>
-                            <include reference="JFA-tp-Lj6"/>
-                            <include reference="PSC-1x-Zrm"/>
-                            <include reference="a0T-bM-JX8"/>
-                            <include reference="sDG-cU-Ox9"/>
-                            <include reference="ZTB-7Q-tJQ"/>
-                            <include reference="oIW-nK-HVB"/>
                             <include reference="XMc-bv-FJX"/>
                             <include reference="Z2t-O0-6aH"/>
                             <include reference="flm-hP-QNv"/>
                             <include reference="llu-w6-SaI"/>
+                            <include reference="ZTB-7Q-tJQ"/>
+                            <include reference="oIW-nK-HVB"/>
+                            <include reference="JFA-tp-Lj6"/>
+                            <include reference="PSC-1x-Zrm"/>
+                            <include reference="a0T-bM-JX8"/>
+                            <include reference="sDG-cU-Ox9"/>
                         </mask>
                     </variation>
                 </view>
@@ -147,11 +147,11 @@
                     <exclude reference="kn8-sy-jW2"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="2Wb-aL-JHa"/>
+                    <exclude reference="pb1-Dq-a6z"/>
                     <exclude reference="3kd-aj-mfO"/>
                     <exclude reference="4qa-6c-v5e"/>
                     <exclude reference="s1A-Ue-fd2"/>
-                    <exclude reference="2Wb-aL-JHa"/>
-                    <exclude reference="pb1-Dq-a6z"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -160,11 +160,11 @@
                     <include reference="kn8-sy-jW2"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="2Wb-aL-JHa"/>
+                    <include reference="pb1-Dq-a6z"/>
                     <include reference="3kd-aj-mfO"/>
                     <include reference="4qa-6c-v5e"/>
                     <include reference="s1A-Ue-fd2"/>
-                    <include reference="2Wb-aL-JHa"/>
-                    <include reference="pb1-Dq-a6z"/>
                 </mask>
             </variation>
         </view>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
@@ -269,15 +270,15 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="IUt-GP-2sI"/>
-                                    <exclude reference="Q88-kP-V49"/>
-                                    <exclude reference="rP1-TW-DnY"/>
+                                    <exclude reference="FdX-kA-c5u"/>
+                                    <exclude reference="T5X-cO-7Ur"/>
+                                    <exclude reference="lyA-wI-u3X"/>
                                     <exclude reference="7bd-zG-R2s"/>
                                     <exclude reference="BXE-Xo-RM4"/>
                                     <exclude reference="K3w-qu-A6a"/>
                                     <exclude reference="ktN-fj-z70"/>
-                                    <exclude reference="FdX-kA-c5u"/>
-                                    <exclude reference="T5X-cO-7Ur"/>
-                                    <exclude reference="lyA-wI-u3X"/>
+                                    <exclude reference="Q88-kP-V49"/>
+                                    <exclude reference="rP1-TW-DnY"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -288,15 +289,15 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="IUt-GP-2sI"/>
-                                    <include reference="Q88-kP-V49"/>
-                                    <include reference="rP1-TW-DnY"/>
+                                    <include reference="FdX-kA-c5u"/>
+                                    <include reference="T5X-cO-7Ur"/>
+                                    <include reference="lyA-wI-u3X"/>
                                     <include reference="7bd-zG-R2s"/>
                                     <include reference="BXE-Xo-RM4"/>
                                     <include reference="K3w-qu-A6a"/>
                                     <include reference="ktN-fj-z70"/>
-                                    <include reference="FdX-kA-c5u"/>
-                                    <include reference="T5X-cO-7Ur"/>
-                                    <include reference="lyA-wI-u3X"/>
+                                    <include reference="Q88-kP-V49"/>
+                                    <include reference="rP1-TW-DnY"/>
                                 </mask>
                             </variation>
                         </view>

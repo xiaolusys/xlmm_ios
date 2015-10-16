@@ -406,34 +406,55 @@
     self.yanse.text = [details objectForKey:@"color"];
      self.beizhu.text = [details objectForKey:@"note"];
     
-    UIFont *labelFont = [UIFont systemFontOfSize:12.0];
+  //  UIFont *labelFont = [UIFont systemFontOfSize:12.0];
     
     NSString *s = [details objectForKey:@"note"];
     
     
-    
+////    
 //    - (CGRect)boundingRectWithSize:(CGSize)size
 //options:(NSStringDrawingOptions)options
 //attributes:(NSDictionary<NSString *,
 //            id> *)attributes
-//context:(NSStringDrawingContext *)context
+//context:(NSStringDrawingContext *)context;
 //    CGRect labelsize = [s boundingRectWithSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) options:0 attributes:nil context:nil];
     
-   CGSize size = [s sizeWithFont:labelFont constrainedToSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) lineBreakMode:NSLineBreakByCharWrapping];
     
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:s];
+   // textView.attributedText = attrStr;
+    NSRange range = NSMakeRange(0, attrStr.length);
+    NSDictionary *dic = [attrStr attributesAtIndex:0 effectiveRange:&range];
+//   CGSize size = [s sizeWithFont:labelFont constrainedToSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) lineBreakMode:NSLineBreakByCharWrapping];
+    NSLog(@"attributes = %@", dic);
+    CGRect rect = [s boundingRectWithSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0]} context:nil];
+//    @"ss" dr
+    CGSize size = rect.size;
     
+
+//    
+    NSRange allRange = [s rangeOfString:s];
+    
+    [attrStr addAttribute:NSFontAttributeName
+                    value:[UIFont systemFontOfSize:12.0]
+                    range:allRange];
+//    [attrStr addAttribute:NSForegroundColorAttributeName
+//                    value:[UIColor blackColor]
+//                    range:allRange];
+
     self.beizhuHeight.constant = size.height - 6;
     NSLog(@"size = %@", NSStringFromCGSize(size));
+    
     NSInteger lineNumbers = self.beizhu.numberOfLines;
     NSLog(@"备注内容的行数：  %ld", (long)lineNumbers);
     NSLog(@"%@", self.beizhu.text);
     NSLog(@"%@",NSStringFromCGRect(self.beizhu.frame));
+    
      self.shuoming.text = [details objectForKey:@"wash_instructions"];
     
     
     
     
-    
+//    UITextAttributeTextShadowColor
     
 }
 // 可选尺码。。。

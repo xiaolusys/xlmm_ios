@@ -36,6 +36,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSInteger goodsCount;
     UILabel *countLabel;
     BOOL _isFirst;
+    UIImage *shareImage;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -125,7 +126,10 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString * string = [defaults objectForKey:@"imageUrlString"];
+    NSLog(@"imageLinkString = %@", string);
+    shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:string]]];
     
     
     // Do any additional setup after loading the view from its nib.
@@ -212,7 +216,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
   //  kLinkURL = @"http://xiaolu.so/m/18807/";
    //NSString *kLinkTagName = @"xiaolumeimei";
-     NSString *kLinkTitle = @"小鹿美美童装女装特卖平台";
+     NSString *kLinkTitle = @"小鹿美美外贸原单 天天惊喜";
     //NSString *kLinkDescription = @"小鹿美美童装女装特卖平台";
     
     WXWebpageObject *ext = [WXWebpageObject object];
@@ -228,7 +232,8 @@ static NSString * ksimpleCell = @"simpleCell";
     message.messageExt = nil;
     message.messageAction = nil;
     message.mediaTagName = nil;
-    [message setThumbImage:[UIImage imageNamed:@"logo.png"]];
+    UIImage *image = [UIImage imageNamed:@"logo.png"];
+    [message setThumbImage:image];
 
 
     
