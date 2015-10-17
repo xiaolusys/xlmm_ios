@@ -45,7 +45,7 @@
     [super viewDidLoad];
    //  Do any additional setup after loading the view from its nib.
    
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
     
     self.tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, SCREENHEIGHT - 80) style:UITableViewStylePlain];
@@ -61,16 +61,31 @@
         tableView;
     });
     [self.view addSubview:self.tableView];
-    
+ 
+//    [UIColor darkGrayColor];
 }
 
 
 #pragma mark -
 #pragma mark UITableView Delegate
 
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UIView *backView = [[UIView alloc] initWithFrame:cell.bounds];
+    backView.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+    
+    cell.selectedBackgroundView = backView;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UIView *backView = [[UIView alloc] initWithFrame:cell.bounds];
+    backView.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+    
+    cell.selectedBackgroundView = backView;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
@@ -278,9 +293,9 @@
     NSArray *images = @[@"icon-daizhifu.png", @"icon-daishouhuo.png", @"icon-quanbudingdan.png", @"icon-youhuiquan.png", @"icon-wodejifen.png", @"icon-dizhiguanli.png", @"icon-tuihuanhuo.png",@"icon-mimaxiugai.png",@"icon-tousujianyi.png",@"icon-qiehuanzhanghao.png",@""];
     cell.nameLabel.text = titles[indexPath.row];
     cell.nameLabel.textColor = [UIColor whiteColor];
-    cell.contentView.backgroundColor = [UIColor lightGrayColor];
+    cell.contentView.backgroundColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
     cell.myImageView.image = [UIImage imageNamed:images[indexPath.row]];
-    
+    cell.backgroundColor = [UIColor colorWithR:249 G:158 B:0 alpha:1];
     return cell;
 }
 

@@ -58,7 +58,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)downlaodData{
     
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"url = %@", kQuanbuDingdan_URL);
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kQuanbuDingdan_URL]];
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
@@ -92,7 +92,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     
     for (int i = 0; i<count; i++) {
         
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
           //  NSLog(@"url = %@", kQuanbuDingdan_URL);
             
             
