@@ -27,7 +27,10 @@ static NSString *ksimpleCell = @"youhuiCell";
 @implementation YouHuiQuanViewController{
     YHQModel *model;
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

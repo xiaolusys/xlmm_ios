@@ -120,21 +120,43 @@
 
 - (void)createInfo{
     self.title = @"小鹿美美";
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"font-logo.png"]];
-    imageView.frame = CGRectMake(0, 0, 147, 40);
-    self.navigationItem.titleView = imageView;
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"name.png"]];
+    
+    imageView.frame = CGRectMake(0, 8, 83, 20);
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+    [view addSubview:imageView];
+    imageView.center = view.center;
+    CGRect imageframe = imageView.frame;
+    imageframe.origin.y += 2;
+   imageView.frame = imageframe;
+    
+    self.navigationItem.titleView = view;
     
     leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
-    leftImageview.frame = CGRectMake(8, 8, 26, 30);
+    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profiles.png"]];
+    leftImageview.frame = CGRectMake(0, 11, 26, 26);
     [leftButton addSubview:leftImageview];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
+//    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+//    rightImageView.frame = CGRectMake(18, 11, 26, 26);
+//    [rightBtn addSubview:rightImageView];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    self.navigationItem.rightBarButtonItem = rightItem;
 
+//    rightBtn.backgroundColor = [UIColor redColor];
+//    leftButton.backgroundColor = [UIColor redColor];
     
     [ self.view addSubview:[[UIView alloc] init]];
+}
+
+- (void)rightClicked:(UIButton *)button{
+    NSLog(@"right");
 }
 
 

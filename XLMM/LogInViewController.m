@@ -19,11 +19,13 @@
 
 @end
 
+
 @implementation LogInViewController
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
     _passwordTextField.text = [userDefault objectForKey:kPassWord];

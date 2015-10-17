@@ -38,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     if (dataArray.count != 0) {
         [dataArray removeAllObjects];
     }

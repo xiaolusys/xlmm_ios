@@ -126,6 +126,17 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://m.xiaolu.so/images/icon-xiaolu.png"]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    NSLog(@"path = %@", path);
+    NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
+    [data writeToFile:fileName atomically:YES];
+    
+    
+    
+    NSLog(@"data = %@", data);
+//
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString * string = [defaults objectForKey:@"imageUrlString"];
     NSLog(@"imageLinkString = %@", string);
@@ -179,60 +190,100 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)sharedMethod{
     NSLog(@"分享");
     
+  //  http://m.xiaolu.so/rest/v1/share/today
+    
+    NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
+    NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
+    NSError *shareError = nil;
+    NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
+    NSLog(@"shareDic = %@", shareDic);
+    
     
     //   http://xiaolu.so/rest/v1/users/profile
     
-    NSString *string = @"http://m.xiaolu.so/rest/v1/users/profile.json";
-    NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
-    
-    NSLog(@"url = %@", string);
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]options:NSDataReadingMappedAlways error:&error];
-    
-    if (error != nil) {
-        NSLog(@"Error:%@,\n%@", error, error.description);
-    }
-    error = nil;
-    
-    NSLog(@"data = %@", data);
-    if (data == nil) {
-        
-    } else{
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        
-        NSLog(@"dic = %@", dic);
-        NSDictionary *xiaolummID = [dic objectForKey:@"xiaolumm"];
-        NSLog(@"id = %@", xiaolummID);
-        if ([xiaolummID class] == [NSNull class]) {
-            NSLog(@"不是小鹿妈妈");
-            kLinkURL = @"http://xiaolu.so/m/0/";
-        }else {
-            kLinkURL = [NSString stringWithFormat:@"http://xiaolu.so/m/%@/", [xiaolummID objectForKey:@"id"]];
-            NSLog(@"是小鹿妈妈， id = %@", xiaolummID);
-        }
-        NSLog(@"url = %@", kLinkURL);
-    }
- 
+//    NSString *string = @"http://m.xiaolu.so/rest/v1/users/profile.json";
+//    NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
+//    
+//    NSLog(@"url = %@", string);
+//    NSError *error = nil;
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]options:NSDataReadingMappedAlways error:&error];
+//    
+//    if (error != nil) {
+//        NSLog(@"Error:%@,\n%@", error, error.description);
+//    }
+//    error = nil;
+//    
+//    NSLog(@"data = %@", data);
+//    if (data == nil) {
+//        
+//    } else{
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//        
+//        NSLog(@"dic = %@", dic);
+//        NSDictionary *xiaolummID = [dic objectForKey:@"xiaolumm"];
+//        NSLog(@"id = %@", xiaolummID);
+//        if ([xiaolummID class] == [NSNull class]) {
+//            NSLog(@"不是小鹿妈妈");
+//            kLinkURL = @"http://xiaolu.so/m/0/";
+//        }else {
+//            kLinkURL = [NSString stringWithFormat:@"http://xiaolu.so/m/%@/", [xiaolummID objectForKey:@"id"]];
+//            NSLog(@"是小鹿妈妈， id = %@", xiaolummID);
+//        }
+//        NSLog(@"url = %@", kLinkURL);
+//    }
+// 
 
   //  kLinkURL = @"http://xiaolu.so/m/18807/";
    //NSString *kLinkTagName = @"xiaolumeimei";
-     NSString *kLinkTitle = @"小鹿美美外贸原单 天天惊喜";
-    //NSString *kLinkDescription = @"小鹿美美童装女装特卖平台";
+    NSString *shareTitle = [shareDic objectForKey:@"title"];
+    NSString *shareDesc = [shareDic objectForKey:@"desc"];
+     NSString *kLinkTitle = shareTitle;
+    NSString *kLinkDescription = shareDesc;
     
     WXWebpageObject *ext = [WXWebpageObject object];
-    ext.webpageUrl = kLinkURL;
+    NSString *shareLink = [shareDic objectForKey:@"share_link"];
+    ext.webpageUrl = shareLink;
     
+    NSLog(@"title = %@", shareTitle);
+    NSLog(@"desc = %@", shareDesc);
+    NSLog(@"shareLink = %@", shareLink);
     
    
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = kLinkTitle;
-    message.description = nil;
+    message.description = kLinkDescription;
     message.mediaObject = ext;
     message.messageExt = nil;
     message.messageAction = nil;
     message.mediaTagName = nil;
-    UIImage *image = [UIImage imageNamed:@"logo.png"];
+    NSString *imageUrlString = [shareDic objectForKey:@"share_img"];
+    NSLog(@"imageUrl = %@", imageUrlString);
+    NSData *imageData = nil;
+    
+    do {
+        NSLog(@"下载图片");
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlString]];
+        if (imageData != nil) {
+           
+            NSLog(@"图片下载成功");
+            break;
+        }
+        NSLog(@"图片下载失败，重新下载！");
+       
+    } while (YES);
+
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    NSLog(@"path = %@", path);
+    NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
+    NSLog(@"fileName = %@", fileName);
+    
+//   UIImage * image = [UIImage imageWithContentsOfFile:fileName];
+    
+    NSLog(@"image = %@", image);
     [message setThumbImage:image];
 
 

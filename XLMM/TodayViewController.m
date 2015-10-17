@@ -517,7 +517,7 @@ static NSString *khead2View = @"head2View";
 //               NSLog(@"url = %@", imageURL);
 //               NSLog(@"cachetype = %d", (int)cacheType);
            }];
-           // cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+         //  cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
            

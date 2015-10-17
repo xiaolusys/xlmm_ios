@@ -37,6 +37,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     if (_isFirst) {
         //集成刷新控件
         

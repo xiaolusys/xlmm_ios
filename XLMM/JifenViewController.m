@@ -21,6 +21,10 @@
 @implementation JifenViewController
 
 static NSString * const reuseIdentifier = @"jifenCell";
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 
 - (void)viewDidLoad {
     

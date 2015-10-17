@@ -32,6 +32,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     downloadCount = 0;
     [self downlaodData];
 
