@@ -450,7 +450,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618+24);
         
     }
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 44);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
     
 }
 
@@ -491,7 +491,9 @@ static NSString *khead2View = @"head2View";
             
             
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            //[cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+            
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
         }
@@ -569,7 +571,7 @@ static NSString *khead2View = @"head2View";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGPoint point = scrollView.contentOffset;
     
-    NSLog(@"%f", point.y );
+   // NSLog(@"%f", point.y );
     
     
     if (point.y > 160) {

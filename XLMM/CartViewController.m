@@ -178,7 +178,14 @@
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
     
     cell.nameLabel.text = model.name;
-    cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
+  //  cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
+    if ([model.price integerValue]!=[model.price floatValue]) {
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
+    } else {
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    }
+    
+    
     cell.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)model.number];
     cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
     cell.sizeLabel.text = model.sizeName;

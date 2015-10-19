@@ -26,10 +26,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeViewHeight;
 @property (weak, nonatomic) IBOutlet UILabel *mingcheng;
 @property (weak, nonatomic) IBOutlet UILabel *bianhao;
-@property (weak, nonatomic) IBOutlet UILabel *caizhi;
-@property (weak, nonatomic) IBOutlet UILabel *yanse;
-@property (weak, nonatomic) IBOutlet UILabel *beizhu;
-@property (weak, nonatomic) IBOutlet UILabel *shuoming;
+
+@property (weak, nonatomic) IBOutlet UIView *canshuView;
+
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
@@ -48,6 +47,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottom;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *beizhuHeight;
+
 
 @end

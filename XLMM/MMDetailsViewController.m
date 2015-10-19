@@ -219,7 +219,12 @@
     
     NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
     self.nameLabel.text = [dic objectForKey:@"name"];
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
+    if ([[dic objectForKey:@"agent_price"] integerValue] != [[dic objectForKey:@"agent_price"] floatValue]) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dic objectForKey:@"agent_price"] floatValue]];
+    } else {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", [dic objectForKey:@"agent_price"]];
+    }
+   // self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
     self.bianhao.text = [dic objectForKey:@"outer_id"];
     self.mingcheng.text = [dic objectForKey:@"name"];
@@ -396,59 +401,16 @@
 }
 
 - (void)createDetailsView{
-    self.caizhi.text = [details objectForKey:@"material"];
-    self.yanse.text = [details objectForKey:@"color"];
-     self.beizhu.text = [details objectForKey:@"note"];
+
     
-  //  UIFont *labelFont = [UIFont systemFontOfSize:12.0];
-    
-    NSString *s = [details objectForKey:@"note"];
-    
-    
-////    
-//    - (CGRect)boundingRectWithSize:(CGSize)size
-//options:(NSStringDrawingOptions)options
-//attributes:(NSDictionary<NSString *,
-//            id> *)attributes
-//context:(NSStringDrawingContext *)context;
-//    CGRect labelsize = [s boundingRectWithSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) options:0 attributes:nil context:nil];
-    
-    
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:s];
-   // textView.attributedText = attrStr;
-    NSRange range = NSMakeRange(0, attrStr.length);
-    NSDictionary *dic = [attrStr attributesAtIndex:0 effectiveRange:&range];
-//   CGSize size = [s sizeWithFont:labelFont constrainedToSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) lineBreakMode:NSLineBreakByCharWrapping];
-    NSLog(@"attributes = %@", dic);
-    CGRect rect = [s boundingRectWithSize:CGSizeMake(SCREENWIDTH - 60 - 16, 80) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0]} context:nil];
-//    @"ss" dr
-    CGSize size = rect.size;
     
 
-//    
-    NSRange allRange = [s rangeOfString:s];
     
-    [attrStr addAttribute:NSFontAttributeName
-                    value:[UIFont systemFontOfSize:12.0]
-                    range:allRange];
-//    [attrStr addAttribute:NSForegroundColorAttributeName
-//                    value:[UIColor blackColor]
-//                    range:allRange];
 
-    self.beizhuHeight.constant = size.height - 6;
-    NSLog(@"size = %@", NSStringFromCGSize(size));
-    
-    NSInteger lineNumbers = self.beizhu.numberOfLines;
-    NSLog(@"备注内容的行数：  %ld", (long)lineNumbers);
-    NSLog(@"%@", self.beizhu.text);
-    NSLog(@"%@",NSStringFromCGRect(self.beizhu.frame));
-    
-     self.shuoming.text = [details objectForKey:@"wash_instructions"];
     
     
     
     
-//    UITextAttributeTextShadowColor
     
 }
 // 可选尺码。。。

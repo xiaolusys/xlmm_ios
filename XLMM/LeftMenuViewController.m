@@ -289,7 +289,7 @@
         cell = [[PersonTableCell alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44)];
     }
     
-    NSArray *titles = @[@"待支付", @"待收获", @"全部订单", @"优惠券", @"我的积分",@"地址管理", @"我的退货（款）", @"密码修改", @"投诉建议", @"切换账号",@"退出"];
+    NSArray *titles = @[@"待支付", @"待收货", @"全部订单", @"优惠券", @"我的积分",@"地址管理", @"我的退货（款）", @"密码修改", @"投诉建议", @"切换账号",@"退出"];
     NSArray *images = @[@"icon-daizhifu.png", @"icon-daishouhuo.png", @"icon-quanbudingdan.png", @"icon-youhuiquan.png", @"icon-wodejifen.png", @"icon-dizhiguanli.png", @"icon-tuihuanhuo.png",@"icon-mimaxiugai.png",@"icon-tousujianyi.png",@"icon-qiehuanzhanghao.png",@""];
     cell.nameLabel.text = titles[indexPath.row];
     cell.nameLabel.textColor = [UIColor whiteColor];

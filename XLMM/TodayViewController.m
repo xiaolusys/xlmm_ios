@@ -468,7 +468,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618+24);
         
     }
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 44);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
     
 }
 
@@ -484,7 +484,7 @@ static NSString *khead2View = @"head2View";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return CGSizeMake(SCREENWIDTH, 30);
+        return CGSizeMake(SCREENWIDTH, 0);
         
     } else if (section == 1){
         return CGSizeMake(SCREENWIDTH, 40);
@@ -509,15 +509,15 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-           [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+           //[cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 //               NSLog(@"error = %@", error);
 //               NSLog(@"errorUserinfo = %@", error.userInfo);
 //               NSLog(@"errordescription = %@", error.description);
 //               NSLog(@"image = %@", image);
 //               NSLog(@"url = %@", imageURL);
 //               NSLog(@"cachetype = %d", (int)cacheType);
-           }];
-         //  cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+       //.    }];
+           cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
             cell.titleLabel.text = model.firstName;
             cell.subjectLabel.text = model.secondName;
            

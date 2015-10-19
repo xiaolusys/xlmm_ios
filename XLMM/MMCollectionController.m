@@ -224,7 +224,7 @@
     
     NSDate *date = [NSDate date];
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
-    if ([d hour] < 0) {
+    if ([d hour] < 0 || [d minute] < 0) {
         titleLabel.text = @"已下架";
      //   NSLog(@"已下架");
     } else{
@@ -248,7 +248,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 40);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
     
 }
 

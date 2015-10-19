@@ -24,44 +24,32 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="simpleCell" id="gTV-IL-0wX" customClass="PeopleCollectionCell">
-            <rect key="frame" x="0.0" y="0.0" width="180" height="222"/>
+            <rect key="frame" x="0.0" y="0.0" width="180" height="238"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="180" height="222"/>
+                <rect key="frame" x="0.0" y="0.0" width="180" height="238"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装男童男童" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
-                        <rect key="frame" x="12" y="186" width="156" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paa-sZ-unt">
                         <rect key="frame" x="92" y="259" width="31" height="10"/>
                         <color key="backgroundColor" red="0.95691373999473672" green="0.94480950479736836" blue="0.95917525315263097" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" tag="24" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAl-eb-VKY">
-                        <rect key="frame" x="98" y="210" width="27" height="11"/>
+                        <rect key="frame" x="98" y="216" width="27" height="11"/>
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="10"/>
                         <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWw-kK-fDJ">
-                        <rect key="frame" x="94" y="207" width="4" height="12"/>
+                        <rect key="frame" x="94" y="213" width="4" height="12"/>
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="11"/>
                         <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" tag="23" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥68" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQ1-Th-Bsz">
-                        <rect key="frame" x="58" y="204" width="36" height="19"/>
+                        <rect key="frame" x="58" y="210" width="36" height="19"/>
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
-                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="uhQ-WN-ROj" secondAttribute="height" multiplier="1:1" id="W8P-NJ-zrD"/>
-                        </constraints>
-                    </imageView>
                     <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
                         <rect key="frame" x="60" y="60" width="60" height="60"/>
                         <subviews>
@@ -80,6 +68,18 @@
                             <constraint firstItem="PSt-Yf-KYY" firstAttribute="centerY" secondItem="WUt-wu-bjn" secondAttribute="centerY" id="beO-HW-uN3"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装男童男童" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
+                        <rect key="frame" x="12" y="190" width="156" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uhQ-WN-ROj" secondAttribute="height" multiplier="1:1" id="W8P-NJ-zrD"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -87,8 +87,8 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Rif-Ul-A9W" secondAttribute="trailing" constant="12" id="0ZH-wK-PDa"/>
                 <constraint firstItem="Rif-Ul-A9W" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="3n0-BT-B9p"/>
-                <constraint firstItem="dWw-kK-fDJ" firstAttribute="top" secondItem="Rif-Ul-A9W" secondAttribute="bottom" constant="6" id="6DC-eI-ms6"/>
-                <constraint firstItem="Rif-Ul-A9W" firstAttribute="top" secondItem="uhQ-WN-ROj" secondAttribute="bottom" constant="6" id="8g7-2G-aol"/>
+                <constraint firstItem="dWw-kK-fDJ" firstAttribute="top" secondItem="Rif-Ul-A9W" secondAttribute="bottom" constant="8" id="6DC-eI-ms6"/>
+                <constraint firstItem="Rif-Ul-A9W" firstAttribute="top" secondItem="uhQ-WN-ROj" secondAttribute="bottom" constant="10" id="8g7-2G-aol"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GQH-Wc-KXm"/>
                 <constraint firstItem="CAl-eb-VKY" firstAttribute="baseline" secondItem="SQ1-Th-Bsz" secondAttribute="baseline" id="OEM-qP-nIr"/>
                 <constraint firstItem="WUt-wu-bjn" firstAttribute="centerY" secondItem="uhQ-WN-ROj" secondAttribute="centerY" id="ds4-Y3-4vG"/>
@@ -100,7 +100,7 @@
                 <constraint firstItem="dWw-kK-fDJ" firstAttribute="centerX" secondItem="Rif-Ul-A9W" secondAttribute="centerX" constant="6" id="tJU-86-uwd"/>
                 <constraint firstItem="WUt-wu-bjn" firstAttribute="centerX" secondItem="uhQ-WN-ROj" secondAttribute="centerX" id="xq9-LC-E2N"/>
             </constraints>
-            <size key="customSize" width="180" height="222"/>
+            <size key="customSize" width="180" height="238"/>
             <connections>
                 <outlet property="backView" destination="WUt-wu-bjn" id="y0q-PD-AKU"/>
                 <outlet property="imageView" destination="uhQ-WN-ROj" id="ofb-oQ-Aaa"/>
@@ -108,7 +108,7 @@
                 <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="HlJ-TV-C1E"/>
                 <outlet property="priceLabel" destination="SQ1-Th-Bsz" id="tT1-t9-MI3"/>
             </connections>
-            <point key="canvasLocation" x="308" y="144"/>
+            <point key="canvasLocation" x="308" y="152"/>
         </collectionViewCell>
     </objects>
     <resources>

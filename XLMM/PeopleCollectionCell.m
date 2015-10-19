@@ -42,7 +42,11 @@
     self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     self.nameLabel.text = model.name;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    if ([model.agentPrice integerValue]<[model.agentPrice floatValue]) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.agentPrice floatValue]];
+    } else {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    }
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 30;
     if ([model.isSaleout boolValue]) {
@@ -70,17 +74,32 @@
     
     
     self.nameLabel.text = model.name;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    
+    if ([model.agentPrice integerValue]!=[model.agentPrice floatValue]) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.agentPrice floatValue]];
+    } else {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
+    }
+    
+    
+    
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 30;
-    if (![model.isSaleopen boolValue] || [model.isSaleout boolValue]) {
+    
+    if ([model.isSaleopen boolValue]) {
+        NSLog(@"已上架");
+        if ([model.isSaleout boolValue]) {
+            NSLog(@"已抢光\n\n");
+        } else {
+            NSLog(@"未抢光\n\n");
+            self.backView.hidden = YES;
+        }
+    } else {
         
-
-       
-    } else{
-        self.backView.hidden = YES;
+        NSLog(@"已下架\n\n");
         
     }
+  
  
     
 }

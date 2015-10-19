@@ -41,7 +41,6 @@
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
-		325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 325BA11C1B68BA1B006D64BD /* goodsthumb.png */; };
 		325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325D567E1BCE449700B12EE6 /* ArrowView.m */; settings = {ASSET_TAGS = (); }; };
@@ -342,7 +341,6 @@
 		329E8A1F1BB574B0008AA0B6 /* goods-img.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD91B74A22000816208 /* goods-img.png */; };
 		329E8A201BB574B0008AA0B6 /* youhuiquan1.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E051B74A22000816208 /* youhuiquan1.png */; };
 		329E8A211BB574B0008AA0B6 /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
-		329E8A221BB574B0008AA0B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325BA1001B68B18A006D64BD /* LaunchScreen.xib */; };
 		329E8A231BB574B0008AA0B6 /* LadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF94E1B69D96800351ACA /* LadyView.xib */; };
 		329E8A241BB574B0008AA0B6 /* PreviousViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288311B93E1E5006DC949 /* PreviousViewController.xib */; };
 		329E8A251BB574B0008AA0B6 /* icon-guanbi.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DE41B74A22000816208 /* icon-guanbi.png */; };
@@ -486,6 +484,10 @@
 		32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */; settings = {ASSET_TAGS = (); }; };
 		32B5DE8A1BC8D53700AEE6B3 /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */; settings = {ASSET_TAGS = (); }; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
+		32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA51BD4BB70008ADAA2 /* ios7.png */; settings = {ASSET_TAGS = (); }; };
+		32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */; settings = {ASSET_TAGS = (); }; };
+		32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */; settings = {ASSET_TAGS = (); }; };
+		32BC3CAC1BD4BB70008ADAA2 /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA81BD4BB70008ADAA2 /* retina4.png */; settings = {ASSET_TAGS = (); }; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
 		32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
@@ -509,8 +511,6 @@
 		32CDC9431BD1FC9100EF5FA6 /* name.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9421BD1FC9100EF5FA6 /* name.png */; settings = {ASSET_TAGS = (); }; };
 		32CDC9461BD2028F00EF5FA6 /* category.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9441BD2028F00EF5FA6 /* category.png */; settings = {ASSET_TAGS = (); }; };
 		32CDC9471BD2028F00EF5FA6 /* profiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9451BD2028F00EF5FA6 /* profiles.png */; settings = {ASSET_TAGS = (); }; };
-		32CDC9531BD24B6900EF5FA6 /* launch_screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9521BD24B6900EF5FA6 /* launch_screen.png */; settings = {ASSET_TAGS = (); }; };
-		32CDC9551BD24E2500EF5FA6 /* launch_screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9541BD24E2500EF5FA6 /* launch_screen@2x.png */; settings = {ASSET_TAGS = (); }; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
 		32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
@@ -618,7 +618,6 @@
 		325BA0F51B68B18A006D64BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		325BA0F61B68B18A006D64BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		325BA0FE1B68B18A006D64BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		325BA1011B68B18A006D64BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
@@ -884,6 +883,10 @@
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
 		32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lingquyouhuiquan.png; path = ../../../lingquyouhuiquan.png; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
+		32BC3CA51BD4BB70008ADAA2 /* ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7.png; sourceTree = "<group>"; };
+		32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios8_retina_HD5.5.png; sourceTree = "<group>"; };
+		32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina_HD4.7.png; sourceTree = "<group>"; };
+		32BC3CA81BD4BB70008ADAA2 /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -913,8 +916,6 @@
 		32CDC9421BD1FC9100EF5FA6 /* name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = name.png; sourceTree = "<group>"; };
 		32CDC9441BD2028F00EF5FA6 /* category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = category.png; sourceTree = "<group>"; };
 		32CDC9451BD2028F00EF5FA6 /* profiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profiles.png; sourceTree = "<group>"; };
-		32CDC9521BD24B6900EF5FA6 /* launch_screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch_screen.png; sourceTree = "<group>"; };
-		32CDC9541BD24E2500EF5FA6 /* launch_screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch_screen@2x.png"; sourceTree = "<group>"; };
 		32CE91B81B7C2A4D00CA67C3 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressViewController.xib; sourceTree = "<group>"; };
@@ -1116,8 +1117,10 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32CDC9521BD24B6900EF5FA6 /* launch_screen.png */,
-				32CDC9541BD24E2500EF5FA6 /* launch_screen@2x.png */,
+				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
+				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
+				32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */,
+				32BC3CA81BD4BB70008ADAA2 /* retina4.png */,
 				32CDC9421BD1FC9100EF5FA6 /* name.png */,
 				32CDC9441BD2028F00EF5FA6 /* category.png */,
 				32CDC9451BD2028F00EF5FA6 /* profiles.png */,
@@ -1146,7 +1149,6 @@
 				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
 				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
-				325BA1001B68B18A006D64BD /* LaunchScreen.xib */,
 				32CECF8B1BA6661200FF3BD3 /* Singletons */,
 				32CECF8A1BA665A100FF3BD3 /* Custom Views */,
 				32A288291B93E198006DC949 /* New Group */,
@@ -1868,6 +1870,7 @@
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
 				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				320CABE21BA906D400C62E36 /* PostersViewController.xib in Resources */,
@@ -1875,7 +1878,6 @@
 				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
 				32A88E1A1B87191A003501EF /* XiangQingView.xib in Resources */,
-				325BA1021B68B18A006D64BD /* LaunchScreen.xib in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
 				320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */,
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
@@ -1904,6 +1906,7 @@
 				328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */,
 				3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
+				32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
@@ -1913,13 +1916,13 @@
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
+				32BC3CAC1BD4BB70008ADAA2 /* retina4.png in Resources */,
 				32B5DE8A1BC8D53700AEE6B3 /* lingquyouhuiquan.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
-				32CDC9531BD24B6900EF5FA6 /* launch_screen.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
@@ -1953,6 +1956,7 @@
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
 				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3249B9B81B6F3EE60086D030 /* ZhiFuCollectionCell.xib in Resources */,
+				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
 				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
 				3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
@@ -1980,7 +1984,6 @@
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
 				32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */,
 				32CC7C981BA0185A00475E2E /* TuihuoXQ2.xib in Resources */,
-				32CDC9551BD24E2500EF5FA6 /* launch_screen@2x.png in Resources */,
 				32746E3C1B74A22000816208 /* youhuiquan4.png in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				32CC7C9A1BA0186700475E2E /* TuihuoXQ3.xib in Resources */,
@@ -2031,7 +2034,6 @@
 				329E8A1F1BB574B0008AA0B6 /* goods-img.png in Resources */,
 				329E8A201BB574B0008AA0B6 /* youhuiquan1.png in Resources */,
 				329E8A211BB574B0008AA0B6 /* XiangQingView.xib in Resources */,
-				329E8A221BB574B0008AA0B6 /* LaunchScreen.xib in Resources */,
 				329E8A231BB574B0008AA0B6 /* LadyView.xib in Resources */,
 				329E8A241BB574B0008AA0B6 /* PreviousViewController.xib in Resources */,
 				329E8A251BB574B0008AA0B6 /* icon-guanbi.png in Resources */,
@@ -2405,17 +2407,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		325BA1001B68B18A006D64BD /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				325BA1011B68B18A006D64BD /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		325BA10F1B68B18A006D64BD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2454,7 +2445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
@@ -2492,7 +2483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
 				SDKROOT = iphoneos;
@@ -2504,6 +2495,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2511,7 +2503,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2542,6 +2534,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2549,7 +2542,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
