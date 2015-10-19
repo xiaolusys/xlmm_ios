@@ -36,11 +36,13 @@
     number --;
     if (number == 0) {
         NSLog(@"买一个吧");
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(deleteCartView:)]) {
             [self.delegate deleteCartView:_cartModel];
         }
        
     }else{
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(reduceNumber:)]) {
             [self.delegate reduceNumber:_cartModel];
         }

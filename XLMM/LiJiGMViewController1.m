@@ -25,11 +25,11 @@
 
 @implementation LiJiGMViewController1{
     AddressModel *addressModel;
-    int price;
-    int allprice;
-    int yunfeifee;
-    int youhuifee;
-    int allpay;
+    float price;
+    float allprice;
+    float yunfeifee;
+    float youhuifee;
+    float allpay;
     NSNumber *buyNumber;
     YHQModel *yhqModel;
     NSString *zhifuSelected;
@@ -164,18 +164,18 @@
     // self.myimageView.image = [UIimage im dic3 objectForKey:@"pic_path"]]];
     self.sizeLabel.text = [dic2 objectForKey:@"name"];
     self.nameLabel.text = [dic3 objectForKey:@"name"];
-    price = (int)[[dic2 objectForKey:@"agent_price"] integerValue];
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"agent_price"]];
+    price = [[dic2 objectForKey:@"agent_price"] floatValue];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic2 objectForKey:@"agent_price"] floatValue]];
     
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"std_sale_price"]];
-    allprice = (int)[[dic objectForKey:@"total_fee"]integerValue];
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_fee"]];
-    yunfeifee = (int)[[dic objectForKey:@"post_fee"]integerValue];
-    self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"post_fee"]];
-    youhuifee = (int)[[dic objectForKey:@"discount_fee"] integerValue];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"discount_fee"]];
+    allprice = (int)[[dic objectForKey:@"total_fee"]floatValue];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_fee"] floatValue]];
+    yunfeifee = (int)[[dic objectForKey:@"post_fee"]floatValue];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"post_fee"] floatValue]];
+    youhuifee = (int)[[dic objectForKey:@"discount_fee"] floatValue];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
     allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
-    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"total_payment"]];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_payment"] floatValue]];
     self.numberLabel.text = @"1";
     uuid = [dic objectForKey:@"uuid"];
     
@@ -271,9 +271,9 @@
         i = 1;
     }
     allprice = price * i;
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", allprice];
     allpay = allprice + yunfeifee -youhuifee;
-    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     buyNumber = [NSNumber numberWithInt:i];
     self.numberLabel.text = [buyNumber stringValue];
     
@@ -313,9 +313,9 @@
         [view show];
     }
     allprice = price * i;
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", allprice];
     allpay = allprice + yunfeifee -youhuifee;
-    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     
     buyNumber = [NSNumber numberWithInt:i];
     self.numberLabel.text = [buyNumber stringValue];
@@ -353,7 +353,7 @@
    
     self.youhuiLabel.text = [NSString stringWithFormat:@"￥%@", yhqModel.coupon_value];
 //    allpay -= [yhqModel.coupon_value intValue];
-    self.allPaymentLabel.text = [NSString stringWithFormat:@"￥%d", allpay - [yhqModel.coupon_value intValue]];
+    self.allPaymentLabel.text = [NSString stringWithFormat:@"￥%.1f", allpay - [yhqModel.coupon_value floatValue]];
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
@@ -384,9 +384,9 @@
 - (IBAction)buyClicked:(id)sender {
     NSLog(@"购买！！");
     
-    int payment = allprice + yunfeifee - youhuifee;
+    float payment = allprice + yunfeifee - youhuifee;
 
-    NSLog(@"应付金额：%i", payment);
+    NSLog(@"应付金额：%.1f", payment);
 
     
     
@@ -401,9 +401,9 @@
     
     NSString* dict;
     if (yhqModel.ID == nil) {
-        dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber];
+        dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%.1f&post_fee=%@&discount_fee=%@&total_fee=%.1f&uuid=%@&item_id=%@&sku_id=%@&num=%@",addressModel.addressID ,zhifuSelected, payment,[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],allprice,uuid, self.itemID, self.skuID, buyNumber];
     } else {
-   dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&item_id=%@&sku_id=%@&num=%@&coupon_id=%@",addressModel.addressID ,zhifuSelected, [NSNumber numberWithInt:payment],[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],[NSNumber numberWithInt:allprice],uuid, self.itemID, self.skuID, buyNumber, yhqModel.ID];     
+   dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%.1f&post_fee=%@&discount_fee=%@&total_fee=%.1f&uuid=%@&item_id=%@&sku_id=%@&num=%@&coupon_id=%@",addressModel.addressID ,zhifuSelected, payment,[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],allprice,uuid, self.itemID, self.skuID, buyNumber, yhqModel.ID];
     }
    
     

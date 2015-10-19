@@ -39,10 +39,10 @@
     AddressModel *selectedAddModel;
     BuyCartsView *cartOwner;
     
-    NSInteger totalfee;
+    float totalfee;
     NSInteger postfee;
     NSInteger discountfee;
-    NSInteger totalpayment;
+    float totalpayment;
     
     NSString *channel;
     NSString *addressID;
@@ -167,10 +167,10 @@
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     
-    totalfee = [[dic objectForKey:@"total_fee"] integerValue];
+    totalfee = [[dic objectForKey:@"total_fee"] floatValue];
     postfee = [[dic objectForKey:@"post_fee"] integerValue];
     discountfee = [[dic objectForKey:@"discount_fee"] integerValue];
-    totalpayment = [[dic objectForKey:@"total_payment"] integerValue];
+    totalpayment = [[dic objectForKey:@"total_payment"] floatValue];
     
     uuid = [dic objectForKey:@"uuid"];
     discount_fee = [dic objectForKey:@"discount_fee"];
@@ -211,7 +211,7 @@
 //
 - (void)createBuyView{
     self.discountfeeLabel.text = [NSString stringWithFormat:@"￥%ld",(long)discountfee];
-    self.totalPayLabel.text = [NSString stringWithFormat:@"￥%ld", (long)totalpayment];
+    self.totalPayLabel.text = [NSString stringWithFormat:@"￥%.1f", totalpayment];
 }
 - (void)createCartsView{
     self.cartsViewHeight.constant = cartsDataArray.count * 120 + 125;
@@ -246,7 +246,7 @@
         cartOwner.nameLabel.text = model.name;
         cartOwner.sizeLabel.text = model.sizeName;
         cartOwner.numberLabel.text = [[NSNumber numberWithInteger:model.buyNumber ]stringValue ];
-        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
         cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
         cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
 
@@ -272,7 +272,7 @@
     
     
     UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, height - 90, 80, 30)];
-    label3.text = [NSString stringWithFormat:@"￥%ld", (long)totalfee];
+    label3.text = [NSString stringWithFormat:@"￥%.1f", totalfee];
     label3.textColor = [UIColor colorWithR:224 G:48 B:116 alpha:1];
     label3.font = [UIFont systemFontOfSize:16];
     label3.textAlignment = NSTextAlignmentLeft;
@@ -577,18 +577,18 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     
-    NSInteger allpay = totalfee -discountfee +postfee;
+    float allpay = totalfee - discountfee + postfee;
     
-    NSLog(@"allpay = %d", (int)allpay);
+    NSLog(@"allpay = %.1f", allpay);
     
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     NSString* dict;
     
     if (yhqModel.ID == nil) {
-        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid];
+        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%.1f", allpay],post_fee,discount_fee,total_fee,uuid];
     } else {
-     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%ld", (long)allpay],post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
+     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartsIDs,addressID ,channel, [NSString stringWithFormat:@"%.1f", allpay],post_fee,discount_fee,total_fee,uuid, yhqModel.ID];
     }
    
     NSLog(@"%@", dict);

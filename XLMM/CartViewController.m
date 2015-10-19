@@ -63,32 +63,33 @@
     }
     
     
-    self.totalPricelabel.text =[NSString stringWithFormat:@"￥"] ;
+    self.totalPricelabel.text =[NSString stringWithFormat:@" "] ;
 
     
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)createInfo{
-    
-    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
-    navLabel.text = @"购物车";
-    navLabel.textColor = [UIColor blackColor];
-    navLabel.font = [UIFont boldSystemFontOfSize:20];
-    navLabel.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = navLabel;
-    
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 12, 18);
-    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui.png"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-}
+//- (void)createInfo{
+//    
+//    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+//    navLabel.text = @"购物车";
+//    navLabel.textColor = [UIColor blackColor];
+//    navLabel.font = [UIFont boldSystemFontOfSize:20];
+//    navLabel.textAlignment = NSTextAlignmentCenter;
+//    self.navigationItem.titleView = navLabel;
+//    
+//    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    leftButton.frame = CGRectMake(0, 0, 12, 18);
+//    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui.png"] forState:UIControlStateNormal];
+//    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+//    self.navigationItem.leftBarButtonItem = leftItem;
+//    
+//    
+//}
 
 - (void)downloadData{
+    NSLog(@"cart Url = %@", kCart_URL);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_URL]];
         if (data == nil) {
@@ -103,10 +104,15 @@
     if (responseData == nil) {
         return;
     }
-    NSError *error;
+    NSError *error = nil;
     NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     [self.dataArray removeAllObjects];
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+        return;
+    }
     NSLog(@"json = %@", json);
+    allPrice = 0.0f;
     for (NSDictionary *dic in json) {
         NewCartsModel *model = [NewCartsModel new];
         model.status = [[dic objectForKey:@"status"] intValue];
@@ -128,14 +134,14 @@
         [self.dataArray addObject:model];
     }
     NSLog(@"%@", self.dataArray);
-    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
+    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
     
     
     
     if (allPrice >= 150) {
         self.discountLabel.text = @"有可用优惠券";
     } else{
-        self.discountLabel.text = [NSString stringWithFormat:@"差%d元可用优惠券", 150 - (int)allPrice];
+        self.discountLabel.text = [NSString stringWithFormat:@"差%.1f元可用优惠券", 150.0 - allPrice];
         
     }
     
@@ -175,7 +181,7 @@
     if (cell == nil) {
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CartTableCellTableViewCell" owner:nil options:nil];
         cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.cartModel= model;
