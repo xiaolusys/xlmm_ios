@@ -95,7 +95,7 @@
             self.backView.hidden = YES;
         }
     } else {
-        
+        self.backView.hidden = NO;
         NSLog(@"已下架\n\n");
         
     }

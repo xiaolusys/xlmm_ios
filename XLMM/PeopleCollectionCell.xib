@@ -50,7 +50,19 @@
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
+                    <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装男童男童" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
+                        <rect key="frame" x="12" y="190" width="156" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uhQ-WN-ROj" secondAttribute="height" multiplier="1:1" id="W8P-NJ-zrD"/>
+                        </constraints>
+                    </imageView>
+                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
                         <rect key="frame" x="60" y="60" width="60" height="60"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已抢光" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">
@@ -68,18 +80,6 @@
                             <constraint firstItem="PSt-Yf-KYY" firstAttribute="centerY" secondItem="WUt-wu-bjn" secondAttribute="centerY" id="beO-HW-uN3"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装男童男童" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
-                        <rect key="frame" x="12" y="190" width="156" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
-                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="uhQ-WN-ROj" secondAttribute="height" multiplier="1:1" id="W8P-NJ-zrD"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>

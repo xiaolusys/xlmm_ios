@@ -168,13 +168,13 @@
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic2 objectForKey:@"agent_price"] floatValue]];
     
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"std_sale_price"]];
-    allprice = (int)[[dic objectForKey:@"total_fee"]floatValue];
+    allprice = [[dic objectForKey:@"total_fee"]floatValue];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_fee"] floatValue]];
-    yunfeifee = (int)[[dic objectForKey:@"post_fee"]floatValue];
+    yunfeifee = [[dic objectForKey:@"post_fee"]floatValue];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"post_fee"] floatValue]];
-    youhuifee = (int)[[dic objectForKey:@"discount_fee"] floatValue];
+    youhuifee = [[dic objectForKey:@"discount_fee"] floatValue];
     self.youhuiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
-    allpay = (int)[[dic objectForKey:@"total_payment"] integerValue];
+    allpay = [[dic objectForKey:@"total_payment"] floatValue];
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_payment"] floatValue]];
     self.numberLabel.text = @"1";
     uuid = [dic objectForKey:@"uuid"];
