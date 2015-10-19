@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "MMCartsView.h"
 #import "CartViewController.h"
+#import "HistoryCartsModel.h"
 
 @interface EmptyCartViewController (){
     MMCartsView *singleton; //购物车视图
@@ -121,6 +122,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
@@ -198,22 +200,22 @@
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     for (NSDictionary *dic in array) {
-        CartModel *model = [CartModel new];
-        model.status = [dic objectForKey:@"status"];
+        HistoryCartsModel *model = [HistoryCartsModel new];
+        model.status = [[dic objectForKey:@"status"] intValue];
         model.sku_id = [dic objectForKey:@"sku_id"];
         model.title = [dic objectForKey:@"title"];
-        model.price = [dic objectForKey:@"price"];
+        model.price = [[dic objectForKey:@"price"] floatValue];
         model.buyer_nick = [dic objectForKey:@"buyer_nick"];
-        model.num = [dic objectForKey:@"num"];
+        model.num = [[dic objectForKey:@"num"] intValue];
         model.remain_time = [dic objectForKey:@"remain_time"];
-        model.std_sale_price = [dic objectForKey:@"std_sale_price"];
-        model.total_fee = [dic objectForKey:@"total_fee"];
+        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
+        model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
         model.item_id = [dic objectForKey:@"item_id"];
         model.pic_path = [dic objectForKey:@"pic_path"];
         model.sku_name = [dic objectForKey:@"sku_name"];
-        model.is_sale_out = [dic objectForKey:@"is_sale_out"];
-        model.ID = [dic objectForKey:@"id"];
-        model.buyer_id = [dic objectForKey:@"buyer_id"];
+        model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
+        model.ID = [[dic objectForKey:@"id"] intValue];
+        model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
         [mutableArray addObject:model];
     }
     
@@ -264,11 +266,11 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CartCollectionCell *cell = (CartCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cartCell" forIndexPath:indexPath];
    // cell.backgroundColor = [UIColor redColor];
-    CartModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    HistoryCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     cell.nameLabel.text = model.title;
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    cell.allPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.std_sale_price];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", model.price];
+    cell.allPriceLabel.text = [NSString stringWithFormat:@"￥%.0f", model.std_sale_price];
     cell.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sku_name];
     [cell.mybutton addTarget:self action:@selector(reBuyClicked:) forControlEvents:UIControlEventTouchUpInside];
     cell.mybutton.tag = indexPath.row + 1000;
@@ -464,6 +466,7 @@
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     NSLog(@"moves");
 }
+
 
 
 

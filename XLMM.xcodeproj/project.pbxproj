@@ -488,6 +488,7 @@
 		32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */; settings = {ASSET_TAGS = (); }; };
 		32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */; settings = {ASSET_TAGS = (); }; };
 		32BC3CAC1BD4BB70008ADAA2 /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA81BD4BB70008ADAA2 /* retina4.png */; settings = {ASSET_TAGS = (); }; };
+		32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */; settings = {ASSET_TAGS = (); }; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
 		32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
@@ -887,6 +888,8 @@
 		32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios8_retina_HD5.5.png; sourceTree = "<group>"; };
 		32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina_HD4.7.png; sourceTree = "<group>"; };
 		32BC3CA81BD4BB70008ADAA2 /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
+		32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCartsModel.h; sourceTree = "<group>"; };
+		32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCartsModel.m; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -1344,6 +1347,8 @@
 		32746E3D1B74A4EA00816208 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */,
+				32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */,
 				32A288CF1B943EB4006DC949 /* PromoteModel.h */,
 				32A288D01B943EB4006DC949 /* PromoteModel.m */,
 				327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */,
@@ -2155,6 +2160,7 @@
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
 				327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */,
 				32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */,
+				32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */,
 				32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */,
 				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
