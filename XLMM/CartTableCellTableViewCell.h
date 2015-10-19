@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShoppingCartModel;
+@class NewCartsModel;
 
 @protocol CartViewDelegate <NSObject>
 
 @required
 
-- (void)reduceNumber:(ShoppingCartModel*)model;
-- (void)addNumber:(ShoppingCartModel*)model;
-- (void)deleteCartView:(ShoppingCartModel*)model;
+- (void)reduceNumber:(NewCartsModel*)model;
+- (void)addNumber:(NewCartsModel*)model;
+- (void)deleteCartView:(NewCartsModel*)model;
 - (void)buyOneGood;
 
 @end
@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) id<CartViewDelegate>delegate;
 
-@property (strong, nonatomic)ShoppingCartModel *cartModel;
+@property (strong, nonatomic)NewCartsModel *cartModel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

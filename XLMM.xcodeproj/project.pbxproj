@@ -489,6 +489,7 @@
 		32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */; settings = {ASSET_TAGS = (); }; };
 		32BC3CAC1BD4BB70008ADAA2 /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA81BD4BB70008ADAA2 /* retina4.png */; settings = {ASSET_TAGS = (); }; };
 		32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */; settings = {ASSET_TAGS = (); }; };
+		32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */; settings = {ASSET_TAGS = (); }; };
 		32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
 		32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
 		32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
@@ -890,6 +891,8 @@
 		32BC3CA81BD4BB70008ADAA2 /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
 		32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCartsModel.h; sourceTree = "<group>"; };
 		32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCartsModel.m; sourceTree = "<group>"; };
+		32BC3CB01BD4E271008ADAA2 /* NewCartsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCartsModel.h; sourceTree = "<group>"; };
+		32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCartsModel.m; sourceTree = "<group>"; };
 		32BDE4801B85620F00FBEC25 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		32BDE4811B85620F00FBEC25 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -1381,6 +1384,8 @@
 				32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */,
 				32CC7C831B9FFF2F00475E2E /* OrderModel.h */,
 				32CC7C841B9FFF2F00475E2E /* OrderModel.m */,
+				32BC3CB01BD4E271008ADAA2 /* NewCartsModel.h */,
+				32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2270,6 +2275,7 @@
 				327F80D71B95A60900EDDF5B /* MJRefreshHeaderView.m in Sources */,
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
+				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
 				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,

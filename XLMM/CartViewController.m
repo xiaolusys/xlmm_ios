@@ -14,11 +14,12 @@
 #import "EmptyCartViewController.h"
 #import "PurchaseViewController.h"
 #import "UIViewController+NavigationBar.h"
+#import "NewCartsModel.h"
 
 
 @interface CartViewController ()<CartViewDelegate>{
-    int allPrice;
-    ShoppingCartModel *deleteModel;
+    float allPrice;
+    NewCartsModel *deleteModel;
 }
 
 
@@ -40,7 +41,7 @@
     [super viewDidLoad];
     //self.title = @"购物车";
     self.dataArray = [[NSMutableArray alloc] init];
-    allPrice= 0;
+    allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
     //[self createInfo];
     [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backBtnClicked:)];
@@ -106,23 +107,28 @@
     NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     [self.dataArray removeAllObjects];
     NSLog(@"json = %@", json);
-    allPrice = 0;
     for (NSDictionary *dic in json) {
-        ShoppingCartModel *model = [ShoppingCartModel new];
-        model.imageURL = [dic objectForKey:@"pic_path"];
-        model.name = [dic objectForKey:@"title"];
-        model.price = [dic objectForKey:@"price"];
-        model.oldPrice = [dic objectForKey:@"std_sale_price"];
-        model.sizeName = [dic objectForKey:@"sku_name"];
-        model.cartID = [dic objectForKey:@"id"];
-        model.number = [[dic objectForKey:@"num"] integerValue];
-        allPrice += model.number * [model.price integerValue];
-        model.buyerID = [dic objectForKey:@"buyer_id"];
-        
+        NewCartsModel *model = [NewCartsModel new];
+        model.status = [[dic objectForKey:@"status"] intValue];
+        model.sku_id = [dic objectForKey:@"sku_id"];
+        model.title = [dic objectForKey:@"title"];
+        model.price = [[dic objectForKey:@"price"] floatValue];
+        model.buyer_nick = [dic objectForKey:@"buyer_nick"];
+        model.num = [[dic objectForKey:@"num"] intValue];
+        model.remain_time = [dic objectForKey:@"remain_time"];
+        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
+        model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
+        model.item_id = [dic objectForKey:@"item_id"];
+        model.pic_path = [dic objectForKey:@"pic_path"];
+        model.sku_name = [dic objectForKey:@"sku_name"];
+       // model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
+        model.ID = [[dic objectForKey:@"id"] intValue];
+        model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
+        allPrice += model.total_fee;
         [self.dataArray addObject:model];
     }
     NSLog(@"%@", self.dataArray);
-    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%d", allPrice];
+    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
     
     
     
@@ -171,24 +177,19 @@
         cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
-    ShoppingCartModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.cartModel= model;
     cell.delegate = self;
     
-    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     
-    cell.nameLabel.text = model.name;
-  //  cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.price];
-    if ([model.price integerValue]!=[model.price floatValue]) {
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
-    } else {
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    }
+    cell.nameLabel.text = model.title;
+    cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
+
     
-    
-    cell.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)model.number];
-    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", model.oldPrice];
-    cell.sizeLabel.text = model.sizeName;
+    cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
+    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+    cell.sizeLabel.text = model.sku_name;
     
     return cell;
 }
@@ -227,7 +228,7 @@
     NSLog(@"确认删除");
 //    [self.myView removeFromSuperview];
 //    self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
     NSLog(@"url = %@", urlString);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
@@ -295,9 +296,9 @@
     
     
 }
-- (void)reduceNumber:(ShoppingCartModel *)cartModel{
+- (void)reduceNumber:(NewCartsModel *)cartModel{
   
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/minus_product_carts", Root_URL, cartModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -318,9 +319,9 @@
     
     
 }
-- (void)addNumber:(ShoppingCartModel *)cartModel{
+- (void)addNumber:(NewCartsModel *)cartModel{
    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/plus_product_carts", Root_URL,cartModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -363,8 +364,8 @@
      ];
     
 }
-- (void)deleteCartView:(ShoppingCartModel *)cartModel{
-    NSLog(@"id = %@", cartModel.cartID);
+- (void)deleteCartView:(NewCartsModel *)cartModel{
+    NSLog(@"id = %d", cartModel.ID);
 
     NSLog(@"删除购物车");
     self.frontView.hidden = NO;
@@ -396,7 +397,7 @@
     self.frontView.hidden = YES;
     
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%@/delete_carts", Root_URL,deleteModel.cartID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
     NSLog(@"url = %@", urlString);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET

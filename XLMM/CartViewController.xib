@@ -109,7 +109,7 @@
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="Xsr-Tf-nob">
-                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="66"/>
                         </constraint>
                     </constraints>
                     <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="16"/>

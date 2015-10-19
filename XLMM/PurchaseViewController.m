@@ -21,7 +21,7 @@
 #import "YouHuiQuanViewController.h"
 #import "WXApi.h"
 #import "UIViewController+NavigationBar.h"
-
+#import "NewCartsModel.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface PurchaseViewController ()<BuyAddressDelegate, YouhuiquanDelegate>{
@@ -136,8 +136,8 @@
         
         return;
     }
-    for (ShoppingCartModel *model in self.cartsArray) {
-        NSString *str = [NSString stringWithFormat:@"%@,",model.cartID];
+    for (NewCartsModel *model in self.cartsArray) {
+        NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
         [paramstring appendString:str];
     }
     NSRange rang =  {paramstring.length -1, 1};
