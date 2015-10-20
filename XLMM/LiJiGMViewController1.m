@@ -406,6 +406,7 @@
    dict = [NSString stringWithFormat:@"addr_id=%@&channel=%@&payment=%.1f&post_fee=%@&discount_fee=%@&total_fee=%.1f&uuid=%@&item_id=%@&sku_id=%@&num=%@&coupon_id=%@",addressModel.addressID ,zhifuSelected, payment,[NSNumber numberWithInt:yunfeifee],[NSNumber numberWithInt:youhuifee],allprice,uuid, self.itemID, self.skuID, buyNumber, yhqModel.ID];
     }
    
+    uuid = nil;
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);
@@ -438,9 +439,12 @@
         }
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"charge = %@", charge);
+        NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"diction = %@", diction);
+        NSString *chargeID = [diction objectForKey:@"order_no"];
         
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"chargeID = %@", chargeID);
+        dispatch_sync(dispatch_get_main_queue(), ^{
             [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                 
                 NSLog(@"completion block: %@", result);
