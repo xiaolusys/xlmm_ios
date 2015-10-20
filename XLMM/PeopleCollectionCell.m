@@ -42,23 +42,26 @@
     self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     self.nameLabel.text = model.name;
-    if ([model.agentPrice integerValue]<[model.agentPrice floatValue]) {
+    if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
         self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.agentPrice floatValue]];
     } else {
         self.priceLabel.text = [NSString stringWithFormat:@"￥%@", model.agentPrice];
     }
     self.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@",model.stdSalePrice];
     self.backView.layer.cornerRadius = 30;
-    if ([model.isSaleout boolValue]) {
-       
-    } else{
-        self.backView.hidden = YES;
-        
-    }
+    
     if ([model.isSaleopen boolValue]) {
-        self.backView.hidden = YES;
+        self.backView.hidden = NO;
+        
+        if ([model.isSaleout boolValue]) {
+            
+        } else{
+            self.backView.hidden = YES;
+            
+        }
     } else{
         self.backView.hidden = NO;
+        
     }
 }
 

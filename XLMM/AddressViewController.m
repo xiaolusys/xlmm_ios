@@ -144,11 +144,11 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     
     UIImageView *btnImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia.png"]];
-    btnImage.frame = CGRectMake(8, 8, 24, 24);
+    btnImage.frame = CGRectMake(16, 16, 16, 16);
     
     [button addSubview:btnImage];
     [button addTarget:self action:@selector(addAdress) forControlEvents:UIControlEventTouchUpInside];
-    button.frame = CGRectMake(MAINSCREENWIDTH - 60, 36, 44, 44);
+    button.frame = CGRectMake(MAINSCREENWIDTH - 50, 36, 44, 44);
     [headView addSubview:button];
     return headView;
 }

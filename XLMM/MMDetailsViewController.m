@@ -577,9 +577,8 @@
         
         NSLog(@"button.frame = %@", NSStringFromCGRect(button.frame));
       
-       // CGRect rect = button.frame;
-    
-        // [self createInfoViewWithFrame:rect];
+//        CGRect rect = button.frame;
+//        [self createInfoViewWithFrame:rect];
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
@@ -778,10 +777,8 @@
             [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
-           // ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
-           
-           
-              //  popView.hidden = !popView.hidden;
+//            ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+//            popView.hidden = !popView.hidden;
             
             
         }else{
@@ -789,8 +786,8 @@
             if ([btn isUserInteractionEnabled]) {
                 [btn.layer setBorderColor:[UIColor grayColor].CGColor];
                 [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-              //  ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
-              //  popView.hidden = YES;
+//                ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
+//                popView.hidden = YES;
             }
         }
     }
