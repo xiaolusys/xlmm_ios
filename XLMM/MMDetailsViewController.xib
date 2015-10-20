@@ -20,6 +20,7 @@
                 <outlet property="bianhao" destination="NyJ-kc-mxh" id="nhU-60-46f"/>
                 <outlet property="bottomImageView" destination="oPv-BN-vFb" id="S8z-af-59t"/>
                 <outlet property="bottomImageViewHeight" destination="Gmy-B4-6Ly" id="Asi-Hk-ZBW"/>
+                <outlet property="canshuHeight" destination="bnD-f0-HOJ" id="pZB-XN-aQi"/>
                 <outlet property="canshuView" destination="HD3-6K-8JT" id="TXS-OJ-sr5"/>
                 <outlet property="contentView" destination="qY3-ym-6Qk" id="5R4-AC-Lv1"/>
                 <outlet property="contentViewHeight" destination="sIp-CM-DO6" id="gCK-EN-pjO"/>
@@ -198,15 +199,6 @@
                                                 <constraint firstAttribute="height" constant="17" id="PBZ-lx-mZp"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名称:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HwP-NE-A24">
-                                            <rect key="frame" x="8" y="30" width="60" height="15"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="60" id="RU7-MQ-aeJ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="货品编号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5SI-zp-78z">
                                             <rect key="frame" x="8" y="53" width="60" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -232,6 +224,15 @@
                                                 <constraint firstAttribute="height" constant="1" id="6fz-hs-GIc"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名称:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HwP-NE-A24">
+                                            <rect key="frame" x="8" y="30" width="60" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="RU7-MQ-aeJ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>

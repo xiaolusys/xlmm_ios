@@ -42,6 +42,12 @@
     BOOL isInfoHidden;  //
     int contentCount;
     
+    NSString *caizhi;
+    NSString *yanse;
+    NSString *beizhu;
+    NSString *shuoming;
+    
+    
 }
 
 
@@ -402,15 +408,136 @@
 
 - (void)createDetailsView{
 
+    NSLog(@"json = %@", json);
+    NSDictionary *dic = [json objectForKey:@"details"];
+    caizhi = [dic objectForKey:@"material"];
+    yanse = [dic objectForKey:@"color"];
+    beizhu = [dic objectForKey:@"note"];
+    shuoming = [dic objectForKey:@"wash_instructions"];
+    NSLog(@"caizhi = %@\n yanse = %@\n beizhu = %@\n shuoming = %@\n", caizhi, yanse, beizhu, shuoming);
     
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor lightGrayColor]
+                                 };
+    NSStringDrawingOptions option = NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+    CGSize size = CGSizeMake(SCREENWIDTH - 76, 1024);
+    CGRect rect = CGRectZero;
+    UILabel *label1 = nil;
+     int margin = 8;
+    if (caizhi != nil) {
     
+        rect = [caizhi boundingRectWithSize:size
+                                           options:option
+                                        attributes:attributes
+                                           context:nil];
+        NSLog(@"rect = %@", NSStringFromCGRect(rect));
+        label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, 76, rect.size.width, rect.size.height)];
+        label1.numberOfLines = 0;
 
-    
+        NSAttributedString *attrsCaizhi = [[NSAttributedString alloc] initWithString:caizhi attributes:attributes];
+        label1.attributedText = attrsCaizhi;
+        
+        [self.canshuView addSubview:label1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, label1.frame.origin.y, 60, 14)];
+        NSAttributedString *attrs = [[NSAttributedString alloc] initWithString:@"商品材质:" attributes:attributes];
+        label.attributedText = attrs;
+        
+        [self.canshuView addSubview:label];
+        
+    }
+ 
+    if (yanse != nil) {
+        rect = [yanse boundingRectWithSize:size
+                                   options:option
+                                attributes:attributes
+                                   context:nil];
+        NSLog(@"rect = %@", NSStringFromCGRect(rect));
+        CGRect labelFrame = label1.frame;
+        
+        if (label1.frame.size.height == 0) {
+            label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, 76, rect.size.width, rect.size.height)];
+        } else {
+        label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, labelFrame.origin.y + labelFrame.size.height + margin, rect.size.width, rect.size.height)];
+        }
+        
+        label1.numberOfLines = 0;
 
+        NSAttributedString *attrsYanse = [[NSAttributedString alloc] initWithString:yanse attributes:attributes];
+        label1.attributedText = attrsYanse;
+        
+        [self.canshuView addSubview:label1];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, label1.frame.origin.y, 60, 14)];
+        NSAttributedString *attrs = [[NSAttributedString alloc] initWithString:@"可选颜色:" attributes:attributes];
+        label.attributedText = attrs;
+        
+        [self.canshuView addSubview:label];
+
+    }
+    if (beizhu != nil) {
+        rect = [beizhu boundingRectWithSize:size
+                                    options:option
+                                 attributes:attributes
+                                    context:nil];
+        NSLog(@"rect = %@", NSStringFromCGRect(rect));
+        CGRect labelFrame = label1.frame;
+        
+        if (label1.frame.size.height == 0) {
+            label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, 76, rect.size.width, rect.size.height)];
+        } else {
+            label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, labelFrame.origin.y + labelFrame.size.height + margin, rect.size.width, rect.size.height)];
+        }
+        label1.numberOfLines = 0;
+
+        NSAttributedString *attrsBeizhu = [[NSAttributedString alloc] initWithString:beizhu attributes:attributes];
+        label1.attributedText = attrsBeizhu;
+        
+        [self.canshuView addSubview:label1];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, label1.frame.origin.y, 60, 14)];
+        NSAttributedString *attrs = [[NSAttributedString alloc] initWithString:@"商品备注:" attributes:attributes];
+        label.attributedText = attrs;
+        
+        [self.canshuView addSubview:label];
+    }
+    
+   
+    
+    if (shuoming != nil) {
+        rect = [shuoming boundingRectWithSize:size
+                                      options:option
+                                   attributes:attributes
+                                      context:nil];
+        NSLog(@"rect = %@", NSStringFromCGRect(rect));
+        CGRect labelFrame = label1.frame;
+        if (label1.frame.size.height == 0) {
+            label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, 76, rect.size.width, rect.size.height)];
+        } else {
+            label1 = [[UILabel alloc] initWithFrame:CGRectMake(68, labelFrame.origin.y + labelFrame.size.height + margin, rect.size.width, rect.size.height)];
+        }
+        label1.numberOfLines = 0;
+
+        NSAttributedString *attrShuoming = [[NSAttributedString alloc] initWithString:shuoming attributes:attributes];
+        label1.attributedText = attrShuoming;
+        
+        [self.canshuView addSubview:label1];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, label1.frame.origin.y, 60, 14)];
+        NSAttributedString *attrs = [[NSAttributedString alloc] initWithString:@"洗涤说明:" attributes:attributes];
+        label.attributedText = attrs;
+        
+        [self.canshuView addSubview:label];
+    }
+   
+    NSLog(@"label frame = %@", NSStringFromCGRect(label1.frame));
+    
+    self.canshuHeight.constant = label1.frame.origin.y + label1.frame.size.height + 8;
     
     
     
     
+   
+  
     
 }
 // 可选尺码。。。
