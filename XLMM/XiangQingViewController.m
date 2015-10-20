@@ -117,7 +117,7 @@
     self.lastStatusLabel.text = [dicJson objectForKey:@"status_display"];
     self.yuanqiuView.layer.cornerRadius = 6;
     self.timeLabel.text = string;
-    self.jineLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"payment"]];
+    self.jineLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
     
     self.nameLabel.text = [dicJson objectForKey:@"receiver_name"];
     self.phoneLabel.text = [dicJson objectForKey:@"receiver_mobile"];
@@ -128,10 +128,10 @@
                             [dicJson objectForKey:@"receiver_address"]];
     self.addressLabel.text = addressStr;
     
-    self.allPriceLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"total_fee"]];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"total_fee"] floatValue]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"post_fee"]];
     self.youhuiLabel.text = [NSString stringWithFormat:@"￥-%@", [dicJson objectForKey:@"discount_fee"]];
-    self.yingfuLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"payment"]];
+    self.yingfuLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
     
     
     
@@ -189,7 +189,7 @@
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
         owner.numberLabel.text = [NSString stringWithFormat:@"%@", model.numberString];
-        owner.priceLabel.text =[NSString stringWithFormat:@"¥%@", model.priceString];
+        owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
         
         if ([status isEqualToString:@"已发货"]||[status isEqualToString:@"已付款"]) {
             

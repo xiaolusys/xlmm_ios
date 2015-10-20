@@ -249,7 +249,7 @@
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURLString]];
     cell.bianhaoLabel.text = model.dingdanbianhao;
     cell.zhuangtaiLabel.text = model.dingdanZhuangtai;
-    cell.jineLabel.text = [NSString stringWithFormat:@"¥%@",  model.dingdanJine];
+    cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",  [model.dingdanJine floatValue]];
     
     
     return cell;

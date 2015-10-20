@@ -139,7 +139,7 @@
     [string replaceCharactersInRange:range withString:@"/"];
     cell.xiadanshijianLabel.text = string;
     cell.zhuangtaiLabel.text = [dic objectForKey:@"status_display"];
-    cell.jineLabel.text = [NSString stringWithFormat:@"¥%@",[dic objectForKey:@"payment"]];
+    cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",[[dic objectForKey:@"payment"] floatValue]];
     cell.biaohaoLabel.text = [dic objectForKey:@"tid"];
     
     if ([status isEqualToString:@"已发货"]) {
