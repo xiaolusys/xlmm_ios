@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *idLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shengyuTime;
 
 @property (weak, nonatomic) IBOutlet UILabel *paymentLable;
 
