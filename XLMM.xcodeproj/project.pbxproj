@@ -23,6 +23,8 @@
 		32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */; };
 		32151C001B96EA4A003569D7 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */; };
 		32151C011B96EA4A003569D7 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32151BFD1B96EA4A003569D7 /* read_me.txt */; };
+		3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132B1BD76CCC00D3D036 /* NSArray+Log.m */; settings = {ASSET_TAGS = (); }; };
+		3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */; settings = {ASSET_TAGS = (); }; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
@@ -592,6 +594,10 @@
 		32151BFD1B96EA4A003569D7 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
 		32151BFE1B96EA4A003569D7 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		32151BFF1B96EA4A003569D7 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		3218132A1BD76CCC00D3D036 /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
+		3218132B1BD76CCC00D3D036 /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
+		3218132D1BD76CF900D3D036 /* NSDictionary+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Log.h"; sourceTree = "<group>"; };
+		3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
@@ -1710,6 +1716,10 @@
 				320B300B1BB93E46006C4FC4 /* YHQModel.m */,
 				32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */,
 				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
+				3218132A1BD76CCC00D3D036 /* NSArray+Log.h */,
+				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
+				3218132D1BD76CF900D3D036 /* NSDictionary+Log.h */,
+				3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2170,6 +2180,7 @@
 				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
+				3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
 				32A288411B93E230006DC949 /* MMRootViewController.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
@@ -2237,6 +2248,7 @@
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
 				327FC2631B9AF1CD00F111B3 /* CartCollectionCell.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
+				3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,

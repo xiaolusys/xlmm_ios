@@ -22,6 +22,9 @@
 #import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
+#import "NSArray+Log.h"
+//#import "NSDictionary+Log.h"
+
 
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h

@@ -46,7 +46,7 @@
     NSString *yanse;
     NSString *beizhu;
     NSString *shuoming;
-    
+    NSArray *allSizeKeys;
     
 }
 
@@ -119,7 +119,14 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     
-    
+    allSizeKeys = @[@"领围",@"肩宽",@"胸围",@"袖长",
+                    @"插肩袖",@"袖口",@"腰围",
+                    @"衣长",@"裙腰",@"裤腰",
+                    @"臀围",@"下摆围",@"前档",
+                    @"后档",@"大腿围",@"小腿围",
+                    @"脚口",@"裙长",@"裤长",
+                    @"建议身高"];
+    NSLog(@"keys = %@", allSizeKeys);
     isInfoHidden = YES;
     
     
@@ -745,7 +752,17 @@
         label0.textAlignment = NSTextAlignmentCenter;
         [self.sizeTableView addSubview:label0];
     }
-    NSArray *diction = [[mutableSize lastObject] allKeys];
+    NSArray *dictionArray = [[mutableSize lastObject] allKeys];
+        NSMutableArray *diction = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        for (NSString *key1 in allSizeKeys) {
+            for (NSString *key2 in dictionArray) {
+                if ([key1 isEqualToString:key2]) {
+                    [diction addObject:key2];
+                }
+            }
+        }
+        
     
     NSLog(@"diction = %@", diction);
     
