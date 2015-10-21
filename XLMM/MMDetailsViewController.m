@@ -19,6 +19,7 @@
 #import "LiJiGMViewController.h"
 #import "LiJiGMViewController1.h"
 #import "ArrowView.h"
+#import "MMSizeChartView.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
@@ -48,6 +49,7 @@
     NSString *shuoming;
     NSArray *allSizeKeys;
     
+    MMSizeChartView *mmSizeChart;
 }
 
 
@@ -688,7 +690,7 @@
         
     
     height = normalSkus.count;
-    self.sizeTableHeight.constant = (height + 1)*24;
+    self.sizeTableHeight.constant = (height + 1)*24 + 8;
     self.sizeTableView.backgroundColor = [UIColor whiteColor];
     CGRect parentFrame = self.sizeTableView.frame;
   
@@ -706,32 +708,32 @@
     view2.backgroundColor = [UIColor lightGrayColor];
     [self.sizeTableView addSubview:view2];
     
-    for (int i = 1; i<height+2; i++) {
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i , viewWidth, 0.5)];
-        if (i == 1) {
-            line.backgroundColor = [UIColor redColor];
-            CGRect rect = line.frame;
-            rect.size.height = 1;
-            line.frame = rect;
-        }else{
-            line.backgroundColor = [UIColor grayColor];
-        }
-        [self.sizeTableView addSubview:line];
-        
-    }
-    for (int i = 1; i<width+2; i++) {
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(sizewidth*i, 0 , 0.5, viewHeight)];
-        if (i == 1) {
-            line.backgroundColor = [UIColor redColor];
-            CGRect rect = line.frame;
-            rect.size.width = 1;
-            line.frame = rect;
-        }else{
-            line.backgroundColor = [UIColor grayColor];
-        }
-        [self.sizeTableView addSubview:line];
-        
-    }
+//    for (int i = 1; i<height+2; i++) {
+//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i , viewWidth, 0.5)];
+//        if (i == 1) {
+//            line.backgroundColor = [UIColor redColor];
+//            CGRect rect = line.frame;
+//            rect.size.height = 1;
+//            line.frame = rect;
+//        }else{
+//            line.backgroundColor = [UIColor grayColor];
+//        }
+//        [self.sizeTableView addSubview:line];
+//        
+//    }
+//    for (int i = 1; i<width+2; i++) {
+//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(sizewidth*i, 0 , 0.5, viewHeight)];
+//        if (i == 1) {
+//            line.backgroundColor = [UIColor redColor];
+//            CGRect rect = line.frame;
+//            rect.size.width = 1;
+//            line.frame = rect;
+//        }else{
+//            line.backgroundColor = [UIColor grayColor];
+//        }
+//        [self.sizeTableView addSubview:line];
+//        
+//    }
     
     
     //2.填数据
@@ -796,6 +798,16 @@
         }
     }
     }
+    
+    mmSizeChart = [[MMSizeChartView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH,mutableSize.count == 0?0:  (normalSkus.count + 1) *24) andArray:normalSkus];
+    mmSizeChart.backgroundColor = [UIColor whiteColor];
+    mmSizeChart.hidden = NO;
+    [self.sizeTableView addSubview:mmSizeChart];
+    
+   
+    
+  
+    
     
 }
 

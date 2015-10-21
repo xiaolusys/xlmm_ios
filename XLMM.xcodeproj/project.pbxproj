@@ -25,6 +25,7 @@
 		32151C011B96EA4A003569D7 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32151BFD1B96EA4A003569D7 /* read_me.txt */; };
 		3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132B1BD76CCC00D3D036 /* NSArray+Log.m */; settings = {ASSET_TAGS = (); }; };
 		3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */; settings = {ASSET_TAGS = (); }; };
+		321813611BD7961700D3D036 /* MMSizeChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321813601BD7961700D3D036 /* MMSizeChartView.m */; settings = {ASSET_TAGS = (); }; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
@@ -598,6 +599,8 @@
 		3218132B1BD76CCC00D3D036 /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
 		3218132D1BD76CF900D3D036 /* NSDictionary+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Log.h"; sourceTree = "<group>"; };
 		3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
+		3218135F1BD7961700D3D036 /* MMSizeChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSizeChartView.h; sourceTree = "<group>"; };
+		321813601BD7961700D3D036 /* MMSizeChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSizeChartView.m; sourceTree = "<group>"; };
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
@@ -1653,6 +1656,8 @@
 		32CECF8A1BA665A100FF3BD3 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				3218135F1BD7961700D3D036 /* MMSizeChartView.h */,
+				321813601BD7961700D3D036 /* MMSizeChartView.m */,
 				3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */,
 				3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */,
 				3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */,
@@ -2283,6 +2288,7 @@
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
+				321813611BD7961700D3D036 /* MMSizeChartView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				327F80D71B95A60900EDDF5B /* MJRefreshHeaderView.m in Sources */,
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
