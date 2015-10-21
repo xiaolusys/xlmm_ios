@@ -358,7 +358,21 @@
 }
 
 - (void)createContentView{
-    NSArray *imageArray = [details objectForKey:@"content_imgs"];
+    NSArray *imageArray;
+    NSLog(@"%@", json);
+    NSLog(@"%@", [json objectForKey:@"product_model"]);
+    if ([[json objectForKey:@"product_model"] class] != [NSNull class]) {
+        NSDictionary *produltModel = [json objectForKey:@"product_model"];
+        NSLog(@"Model = %@", produltModel);
+        imageArray = [produltModel objectForKey:@"content_imgs"];
+        
+    } else{
+       imageArray  = [details objectForKey:@"content_imgs"];
+    }
+    
+    
+    
+    
     NSLog(@"contentImgs = %@", imageArray);
     __block float origineY = 0.0;
     __block float imagewidth = 0.0;
