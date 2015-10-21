@@ -76,6 +76,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     self.virticalSpace.constant = 0;
 
+    [super viewDidDisappear:animated];
 }
 
 - (void)backClicked:(UIButton *)button{

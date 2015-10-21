@@ -613,8 +613,8 @@
                           );//控制点
     
     ani.path=aPath;
-    ani.rotationMode = @"auto";
-    ani.duration=0.5;
+    //ani.rotationMode = @"auto";
+   // ani.duration=0.5;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 

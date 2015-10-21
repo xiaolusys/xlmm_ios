@@ -307,7 +307,7 @@
     {
         NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
       
-        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+        NSString *strMsg;
         if (resp.errCode == 0) {
             strMsg = @"分享成功";
         } else {

@@ -166,14 +166,14 @@ static NSString *khead2View = @"head2View";
     
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
+  
     NSInteger unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-    comps = [calendar components:unitFlags fromDate:date];
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];

@@ -194,14 +194,14 @@
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
+   // NSDateComponents *comps =
     NSInteger unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-    comps = [calendar components:unitFlags fromDate:toDate];
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:toDate];
   //  NSLog(@"comps = %@", comps);
     
     int year=(int)[comps year];

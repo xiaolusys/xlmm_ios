@@ -323,14 +323,14 @@
     
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
+   
     NSInteger unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-    comps = [calendar components:unitFlags fromDate:date];
+   // NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
  
    
     
@@ -352,6 +352,9 @@
 
     string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
   self.timeLabel.text = string;
+    if ([d hour] < 0 || [d minute] < 0 || [d second] < 0) {
+        self.timeLabel.text = @"00:00:00";
+    }
 }
 
 - (void)createContentView{
