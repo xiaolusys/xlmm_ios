@@ -10,6 +10,8 @@
 
 @interface PurchaseViewController1 : UIViewController
 
+@property (strong, nonatomic) NSArray *cartsArray;
+
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -27,10 +29,18 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *allPayLabel;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailsViewHeight;
+
+
+@property (weak, nonatomic) IBOutlet UIView *detailsView;
+
+
 
 
 - (IBAction)addAddress:(id)sender;
 - (IBAction)modifyAddress:(id)sender;
+- (IBAction)yhqClicked:(id)sender;
+
 - (IBAction)zhifubaoClicked:(id)sender;
 - (IBAction)weixinZhifuClicked:(id)sender;
 
