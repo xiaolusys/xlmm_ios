@@ -10,4 +10,32 @@
 
 @interface PurchaseViewController1 : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *postFeeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *usableYHQLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yhqTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yhqCreatedTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yhqEndTimeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *youhuijineLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *allPayLabel;
+
+
+
+- (IBAction)addAddress:(id)sender;
+- (IBAction)modifyAddress:(id)sender;
+- (IBAction)zhifubaoClicked:(id)sender;
+- (IBAction)weixinZhifuClicked:(id)sender;
+
+
+
+- (IBAction)buyClicked:(id)sender;
+
 @end

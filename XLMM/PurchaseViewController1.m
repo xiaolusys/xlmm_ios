@@ -34,4 +34,18 @@
 }
 */
 
+- (IBAction)addAddress:(id)sender {
+}
+
+- (IBAction)modifyAddress:(id)sender {
+}
+
+- (IBAction)zhifubaoClicked:(id)sender {
+}
+
+- (IBAction)weixinZhifuClicked:(id)sender {
+}
+
+- (IBAction)buyClicked:(id)sender {
+}
 @end
