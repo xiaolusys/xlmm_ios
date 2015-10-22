@@ -355,10 +355,8 @@
     NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
-    
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
-
     string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
   self.timeLabel.text = string;
     if ([d hour] < 0 || [d minute] < 0 || [d second] < 0) {
@@ -378,10 +376,6 @@
     } else{
        imageArray  = [details objectForKey:@"content_imgs"];
     }
-    
-    
-    
-    
     NSLog(@"contentImgs = %@", imageArray);
     __block float origineY = 0.0;
     __block float imagewidth = 0.0;
@@ -422,14 +416,8 @@
             self.contentViewHeight.constant = origineY + imageHeight;
             
         }];
-        
         [self.contentView addSubview:imageview];
-        
-      
     }
-    
-  
-
 }
 
 - (void)createDetailsView{
@@ -526,9 +514,6 @@
         
         [self.canshuView addSubview:label];
     }
-    
-   
-    
     if (shuoming != nil) {
         rect = [shuoming boundingRectWithSize:size
                                       options:option
@@ -554,17 +539,8 @@
         
         [self.canshuView addSubview:label];
     }
-   
-    NSLog(@"label frame = %@", NSStringFromCGRect(label1.frame));
-    
+   NSLog(@"label frame = %@", NSStringFromCGRect(label1.frame));
     self.canshuHeight.constant = label1.frame.origin.y + label1.frame.size.height + 8;
-    
-    
-    
-    
-   
-  
-    
 }
 // 可选尺码。。。
 - (void)createSizeView{
@@ -617,10 +593,7 @@
         }
         
     }
-   
-    
     [self createSizeTable];
-    
     NSLog(@"popViewArray = %@", self.popViewArray);
     
 }
@@ -637,18 +610,9 @@
     imageView.layer.cornerRadius = 15;
     [poperView addSubview:imageView];
     button.layer.cornerRadius = 22;
-   
     [button addTarget:self action:@selector(popviewHidden:) forControlEvents:UIControlEventTouchUpInside];
-    
     [poperView addSubview:button];
-    
-    
-    
-    
-    
-    
     button.backgroundColor = [UIColor clearColor];
-    
     [self.popViewArray addObject:poperView];
     
     
@@ -687,121 +651,17 @@
     NSLog(@"mutable = %@", mutableSize);
     NSLog(@"mutable = %@", mutableSizeName);
     if (mutableSize.count != 0) {
-        
+    
     
     height = normalSkus.count;
     self.sizeTableHeight.constant = (height + 1)*24 + 8;
-    self.sizeTableView.backgroundColor = [UIColor whiteColor];
-    CGRect parentFrame = self.sizeTableView.frame;
-  
-    NSInteger sizewidth = parentFrame.size.width/(width +1);
-    NSInteger sizeHeight = 24;
-    
-    NSInteger viewWidth = sizewidth * (width +1);
-    NSInteger viewHeight = sizeHeight * (height +1);
-    
-    //1.画线
-    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, sizeHeight)];
-    view1.backgroundColor = [UIColor lightGrayColor];
-    [self.sizeTableView addSubview:view1];
-    UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, sizewidth, viewHeight)];
-    view2.backgroundColor = [UIColor lightGrayColor];
-    [self.sizeTableView addSubview:view2];
-    
-//    for (int i = 1; i<height+2; i++) {
-//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i , viewWidth, 0.5)];
-//        if (i == 1) {
-//            line.backgroundColor = [UIColor redColor];
-//            CGRect rect = line.frame;
-//            rect.size.height = 1;
-//            line.frame = rect;
-//        }else{
-//            line.backgroundColor = [UIColor grayColor];
-//        }
-//        [self.sizeTableView addSubview:line];
-//        
-//    }
-//    for (int i = 1; i<width+2; i++) {
-//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(sizewidth*i, 0 , 0.5, viewHeight)];
-//        if (i == 1) {
-//            line.backgroundColor = [UIColor redColor];
-//            CGRect rect = line.frame;
-//            rect.size.width = 1;
-//            line.frame = rect;
-//        }else{
-//            line.backgroundColor = [UIColor grayColor];
-//        }
-//        [self.sizeTableView addSubview:line];
-//        
-//    }
-    
-    
-    //2.填数据
-    
-    UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sizewidth, sizeHeight)];
-    label0.text = @"尺码";
-    label0.font = [UIFont systemFontOfSize:14];
-    label0.backgroundColor = [UIColor clearColor];
-    label0.textColor = [UIColor darkGrayColor];
-    label0.textAlignment = NSTextAlignmentCenter;
-    [self.sizeTableView addSubview:label0];
-    for (int i = 1; i<=height; i++) {
-        UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(0, sizeHeight * i, sizewidth, sizeHeight)];
-        label0.text = [mutableSizeName objectAtIndex:i-1];
-        label0.font = [UIFont systemFontOfSize:12];
-        label0.backgroundColor = [UIColor clearColor];
-        label0.textColor = [UIColor darkGrayColor];
-        label0.textAlignment = NSTextAlignmentCenter;
-        [self.sizeTableView addSubview:label0];
     }
-    NSArray *dictionArray = [[mutableSize lastObject] allKeys];
-        NSMutableArray *diction = [[NSMutableArray alloc] initWithCapacity:0];
-        
-        for (NSString *key1 in allSizeKeys) {
-            for (NSString *key2 in dictionArray) {
-                if ([key1 isEqualToString:key2]) {
-                    [diction addObject:key2];
-                }
-            }
-        }
-        
+
     
-    NSLog(@"diction = %@", diction);
-    
-//    [[mutableSize lastObject] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-//        NSLog(@"key = %@ and obj = %@", key, obj);
-//    }];
-    
-    
-        for (int i = 1; i<=width; i++) {
-            
-            UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(sizewidth * i, 0, sizewidth, sizeHeight)];
-            label0.text = [diction objectAtIndex:i-1];
-            label0.font = [UIFont systemFontOfSize:12];
-            label0.backgroundColor = [UIColor clearColor];
-            label0.textColor = [UIColor darkGrayColor];
-            label0.textAlignment = NSTextAlignmentCenter;
-            [self.sizeTableView addSubview:label0];
-        }
-   
-    for (int i = 1; i<=height; i++) {
-        for (int j = 1; j<=width; j++) {
-            NSDictionary *sizedic = [mutableSize objectAtIndex:i-1];
-            
-            UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(sizewidth * j, sizeHeight *i, sizewidth, sizeHeight)];
-            label0.text = [sizedic objectForKey:[diction objectAtIndex:j-1]];
-            label0.font = [UIFont systemFontOfSize:12];
-            label0.backgroundColor = [UIColor clearColor];
-            label0.textColor = [UIColor darkGrayColor];
-            label0.textAlignment = NSTextAlignmentCenter;
-            [self.sizeTableView addSubview:label0];
-        }
-    }
-    }
-    
-    mmSizeChart = [[MMSizeChartView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH,mutableSize.count == 0?0:  (normalSkus.count + 1) *24) andArray:normalSkus];
+    mmSizeChart = [[MMSizeChartView alloc] initWithFrame:CGRectMake(8, 0, SCREENWIDTH - 8,mutableSize.count == 0?0:  (normalSkus.count + 1) *24) andArray:normalSkus];
     mmSizeChart.backgroundColor = [UIColor whiteColor];
-    mmSizeChart.hidden = NO;
+//    mmSizeChart.hidden = NO;
+    self.sizeTableView.backgroundColor = [UIColor whiteColor];
     [self.sizeTableView addSubview:mmSizeChart];
     
    
@@ -839,13 +699,7 @@
     }
 }
 
-//- (void)createInfoView{
-//    self.infoView = [[UIView alloc] initWithFrame:CGRectMake(10, -50, SCREENWIDTH-20, 60)];
-//    self.infoView.backgroundColor = [UIColor orangeColor];
-//    [self.sizeView addSubview:self.infoView];
-//    self.infoView.hidden = YES;
-//    
-//}
+
 
 
 - (void)didReceiveMemoryWarning {
