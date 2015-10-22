@@ -38,31 +38,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqNameLabel;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *yhqCreateLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *yhqdeadlineLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *zhifuImageView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *weixinImageView;
 
 
-
 - (IBAction)addAddressClicked:(id)sender;
-
 - (IBAction)modifyAddressClicked:(id)sender;
-
 - (IBAction)reduceClicked:(id)sender;
 - (IBAction)plusClicked:(id)sender;
 - (IBAction)selectYouhuiClicked:(id)sender;
 - (IBAction)zhifubaoClicked:(id)sender;
 - (IBAction)weixinClicked:(id)sender;
-
-
-
-
 - (IBAction)buyClicked:(id)sender;
 
 @end
