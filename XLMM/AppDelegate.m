@@ -14,6 +14,8 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 
+#import "NewLeftViewController.h"
+
 #define login @"login"
 
 @interface AppDelegate ()
@@ -143,9 +145,15 @@
   
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
-    // 设置代理
-    leftMenu.pushVCDelegate = root;
+    
+//    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
+//    // 设置代理
+//    
+//    
+//    leftMenu.pushVCDelegate = root;
+    
+    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
+//    leftMenu.push
 
     
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
