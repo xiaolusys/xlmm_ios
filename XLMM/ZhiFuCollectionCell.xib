@@ -246,18 +246,18 @@
                     <exclude reference="AGm-jg-L6O"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="IwN-Md-Uoh"/>
+                    <exclude reference="nBK-6E-EpX"/>
+                    <exclude reference="zT4-Fm-OMa"/>
+                    <exclude reference="QmE-Bg-e9m"/>
+                    <exclude reference="71p-KL-rrN"/>
+                    <exclude reference="TLo-ab-0fI"/>
+                    <exclude reference="K8a-z6-vsb"/>
+                    <exclude reference="1wr-Ou-zmu"/>
+                    <exclude reference="6PE-h4-a0o"/>
                     <exclude reference="Cpx-Bb-8Pp"/>
                     <exclude reference="Uhi-O8-m71"/>
                     <exclude reference="wQw-BX-Xfi"/>
-                    <exclude reference="K8a-z6-vsb"/>
-                    <exclude reference="zT4-Fm-OMa"/>
-                    <exclude reference="6PE-h4-a0o"/>
-                    <exclude reference="QmE-Bg-e9m"/>
-                    <exclude reference="1wr-Ou-zmu"/>
-                    <exclude reference="IwN-Md-Uoh"/>
-                    <exclude reference="nBK-6E-EpX"/>
-                    <exclude reference="71p-KL-rrN"/>
-                    <exclude reference="TLo-ab-0fI"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -269,18 +269,18 @@
                     <include reference="AGm-jg-L6O"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="IwN-Md-Uoh"/>
+                    <include reference="nBK-6E-EpX"/>
+                    <include reference="zT4-Fm-OMa"/>
+                    <include reference="QmE-Bg-e9m"/>
+                    <include reference="71p-KL-rrN"/>
+                    <include reference="TLo-ab-0fI"/>
+                    <include reference="K8a-z6-vsb"/>
+                    <include reference="1wr-Ou-zmu"/>
+                    <include reference="6PE-h4-a0o"/>
                     <include reference="Cpx-Bb-8Pp"/>
                     <include reference="Uhi-O8-m71"/>
                     <include reference="wQw-BX-Xfi"/>
-                    <include reference="K8a-z6-vsb"/>
-                    <include reference="zT4-Fm-OMa"/>
-                    <include reference="6PE-h4-a0o"/>
-                    <include reference="QmE-Bg-e9m"/>
-                    <include reference="1wr-Ou-zmu"/>
-                    <include reference="IwN-Md-Uoh"/>
-                    <include reference="nBK-6E-EpX"/>
-                    <include reference="71p-KL-rrN"/>
-                    <include reference="TLo-ab-0fI"/>
                 </mask>
             </variation>
             <connections>

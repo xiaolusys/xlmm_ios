@@ -40,5 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIView *zhifuView;
 - (IBAction)zhifuSelected:(id)sender;
 - (IBAction)goumaiClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yhqViewHeight;
 
 @end

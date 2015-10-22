@@ -58,6 +58,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [self downloadAddressData];
     [self downloadYouhuiData];
 
@@ -89,8 +90,11 @@
     
     if (yhqModel == nil) {
         self.yhqImageView.hidden = YES;
+        
+        self.yhqViewHeight.constant = 66;
     } else{
         self.yhqImageView.hidden = NO;
+        self.yhqViewHeight.constant = 150;
     }
     
 

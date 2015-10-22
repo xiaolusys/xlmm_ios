@@ -26,6 +26,8 @@
 		3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132B1BD76CCC00D3D036 /* NSArray+Log.m */; settings = {ASSET_TAGS = (); }; };
 		3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */; settings = {ASSET_TAGS = (); }; };
 		321813611BD7961700D3D036 /* MMSizeChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321813601BD7961700D3D036 /* MMSizeChartView.m */; settings = {ASSET_TAGS = (); }; };
+		321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */; settings = {ASSET_TAGS = (); }; };
+		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; settings = {ASSET_TAGS = (); }; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
@@ -601,6 +603,9 @@
 		3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
 		3218135F1BD7961700D3D036 /* MMSizeChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSizeChartView.h; sourceTree = "<group>"; };
 		321813601BD7961700D3D036 /* MMSizeChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSizeChartView.m; sourceTree = "<group>"; };
+		321C8D941BD87C4B0060FB62 /* PurchaseViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController1.h; sourceTree = "<group>"; };
+		321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController1.m; sourceTree = "<group>"; };
+		321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController1.xib; sourceTree = "<group>"; };
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
@@ -1262,6 +1267,9 @@
 				326E888E1B71FDD800D15973 /* PurchaseViewController.h */,
 				326E888F1B71FDD800D15973 /* PurchaseViewController.m */,
 				326E88901B71FDD800D15973 /* PurchaseViewController.xib */,
+				321C8D941BD87C4B0060FB62 /* PurchaseViewController1.h */,
+				321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */,
+				321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */,
 				326091C91B79ABFC00A763BA /* EnterViewController.h */,
 				326091CA1B79ABFC00A763BA /* EnterViewController.m */,
 				326091CB1B79ABFC00A763BA /* EnterViewController.xib */,
@@ -1937,6 +1945,7 @@
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
+				321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
@@ -2237,6 +2246,7 @@
 				32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */,
 				326091CC1B79ABFC00A763BA /* EnterViewController.m in Sources */,
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
+				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				32A288BE1B942F53006DC949 /* Head1View.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
