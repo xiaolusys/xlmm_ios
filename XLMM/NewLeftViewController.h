@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeftMenuViewController.h"
 
 @interface NewLeftViewController : UIViewController
+
+@property (nonatomic, assign)id<RootVCPushOtherVCDelegate>pushVCDelegate;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeight;
 @property (weak, nonatomic) IBOutlet UIButton *quitButton;

@@ -7,6 +7,15 @@
 //
 
 #import "NewLeftViewController.h"
+#import "PersonCenterViewController1.h"
+#import "RESideMenu.h"
+#import "EnterViewController.h"
+#import "PersonCenterViewController2.h"
+#import "PersonCenterViewController3.h"
+#import "TuihuoController.h"
+#import "TuihuoViewController.h"
+#import "TousuViewController.h"
+
 
 @interface NewLeftViewController ()
 
@@ -60,25 +69,148 @@
 
 - (IBAction)suggestionClicked:(id)sender {
     NSLog(@"投诉建议");
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+   
+    
+    
+    
 }
 
 - (IBAction)waitPayClicked:(id)sender {
     NSLog(@"待支付");
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self.sideMenuViewController hideMenuViewController];
+        
+        NSLog(@"待支付");
+        PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+
+   
+
 }
 
 - (IBAction)waitSendClicked:(id)sender {
      NSLog(@"待收货");
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:shouhuoVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+    
+    
 }
 
 - (IBAction)tuihuoClicked:(id)sender {
      NSLog(@"退换货");
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:tuihuoVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+  
 }
 
 - (IBAction)allDingdanClicked:(id)sender {
      NSLog(@"全部订单");
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        PersonCenterViewController3 *quanbuVC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:quanbuVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+ 
 }
 
 - (IBAction)tuichuClicked:(id)sender {
     NSLog(@"退出账户");
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:@"login"];
+    
+    [userDefaults synchronize];
+    
+    
+    
+    [self.sideMenuViewController hideMenuViewController];
 }
 @end

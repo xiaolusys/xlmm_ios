@@ -155,7 +155,7 @@
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
 //    leftMenu.push
 
-    
+    leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     
    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
