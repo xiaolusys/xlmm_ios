@@ -16,4 +16,15 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
 
+- (IBAction)settingClicked:(id)sender;
+- (IBAction)suggestionClicked:(id)sender;
+
+- (IBAction)waitPayClicked:(id)sender;
+
+- (IBAction)waitSendClicked:(id)sender;
+- (IBAction)tuihuoClicked:(id)sender;
+- (IBAction)allDingdanClicked:(id)sender;
+- (IBAction)tuichuClicked:(id)sender;
+
+
 @end

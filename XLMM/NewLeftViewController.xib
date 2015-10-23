@@ -119,11 +119,21 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w87-ch-QDq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <connections>
+                                        <action selector="waitPayClicked:" destination="-1" eventType="touchUpInside" id="hiN-F2-Flb"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="w87-ch-QDq" secondAttribute="bottom" id="4fp-rU-GXt"/>
                                 <constraint firstItem="3A6-4q-0bB" firstAttribute="centerY" secondItem="Pc5-p4-oif" secondAttribute="centerY" id="NzQ-UR-Ifj"/>
                                 <constraint firstItem="3A6-4q-0bB" firstAttribute="leading" secondItem="Pc5-p4-oif" secondAttribute="leading" constant="44" id="WPq-MR-Zqg"/>
+                                <constraint firstItem="w87-ch-QDq" firstAttribute="top" secondItem="Pc5-p4-oif" secondAttribute="top" id="f03-zO-Thu"/>
+                                <constraint firstItem="w87-ch-QDq" firstAttribute="leading" secondItem="Pc5-p4-oif" secondAttribute="leading" id="i2E-3N-awf"/>
+                                <constraint firstAttribute="trailing" secondItem="w87-ch-QDq" secondAttribute="trailing" id="woo-NG-nqN"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-IO-cuQ">
@@ -135,10 +145,20 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdM-eo-IdH">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <connections>
+                                        <action selector="waitSendClicked:" destination="-1" eventType="touchUpInside" id="XLO-mY-9Cg"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstItem="WdM-eo-IdH" firstAttribute="top" secondItem="Zex-IO-cuQ" secondAttribute="top" id="FPK-rb-mne"/>
                                 <constraint firstItem="tOh-uh-qzf" firstAttribute="centerY" secondItem="Zex-IO-cuQ" secondAttribute="centerY" id="HZx-hI-p3R"/>
+                                <constraint firstItem="WdM-eo-IdH" firstAttribute="leading" secondItem="Zex-IO-cuQ" secondAttribute="leading" id="ffW-Pc-jgR"/>
+                                <constraint firstAttribute="bottom" secondItem="WdM-eo-IdH" secondAttribute="bottom" id="gNe-or-FTX"/>
+                                <constraint firstAttribute="trailing" secondItem="WdM-eo-IdH" secondAttribute="trailing" id="x6C-1E-oZU"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sz6-wZ-tL7">
@@ -150,10 +170,20 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQH-R0-9fZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <connections>
+                                        <action selector="allDingdanClicked:" destination="-1" eventType="touchUpInside" id="Ua9-nc-xTN"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstItem="hQH-R0-9fZ" firstAttribute="leading" secondItem="sz6-wZ-tL7" secondAttribute="leading" id="MGK-b8-PHE"/>
+                                <constraint firstAttribute="bottom" secondItem="hQH-R0-9fZ" secondAttribute="bottom" id="acL-ld-DuP"/>
                                 <constraint firstItem="3Vl-6D-Tmz" firstAttribute="centerY" secondItem="sz6-wZ-tL7" secondAttribute="centerY" id="exb-dn-4ed"/>
+                                <constraint firstAttribute="trailing" secondItem="hQH-R0-9fZ" secondAttribute="trailing" id="oGJ-Uq-FRX"/>
+                                <constraint firstItem="hQH-R0-9fZ" firstAttribute="top" secondItem="sz6-wZ-tL7" secondAttribute="top" id="oxd-Zd-5e3"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ltu-wT-JkJ">
@@ -165,10 +195,20 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HwV-yD-Kr3">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <connections>
+                                        <action selector="tuihuoClicked:" destination="-1" eventType="touchUpInside" id="XAH-4l-Uwt"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="HwV-yD-Kr3" secondAttribute="trailing" id="ACA-R2-RRE"/>
+                                <constraint firstItem="HwV-yD-Kr3" firstAttribute="top" secondItem="Ltu-wT-JkJ" secondAttribute="top" id="GJU-it-Zi1"/>
                                 <constraint firstItem="iUm-Av-BgS" firstAttribute="centerY" secondItem="Ltu-wT-JkJ" secondAttribute="centerY" id="KFq-DX-K7i"/>
+                                <constraint firstAttribute="bottom" secondItem="HwV-yD-Kr3" secondAttribute="bottom" id="WTv-Ow-krt"/>
+                                <constraint firstItem="HwV-yD-Kr3" firstAttribute="leading" secondItem="Ltu-wT-JkJ" secondAttribute="leading" id="hVN-WK-79C"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -226,18 +266,45 @@
                             <state key="normal" title="退出账户">
                                 <color key="titleColor" red="0.62745098039215685" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="tuichuClicked:" destination="-1" eventType="touchUpInside" id="RlK-hb-M80"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="68X-dl-H8I">
+                            <rect key="frame" x="0.0" y="51" width="375" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="2oO-zr-sMV"/>
+                            </constraints>
+                            <connections>
+                                <action selector="suggestionClicked:" destination="-1" eventType="touchUpInside" id="oor-7L-jr8"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTE-f0-Ge3">
+                            <rect key="frame" x="0.0" y="7" width="375" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="lZC-9H-iEV"/>
+                            </constraints>
+                            <connections>
+                                <action selector="settingClicked:" destination="-1" eventType="touchUpInside" id="RIw-c1-I81"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="tTE-f0-Ge3" firstAttribute="leading" secondItem="D2J-VP-Z45" secondAttribute="leading" id="17s-US-zwL"/>
+                        <constraint firstAttribute="trailing" secondItem="68X-dl-H8I" secondAttribute="trailing" id="48m-Qi-TY8"/>
+                        <constraint firstItem="68X-dl-H8I" firstAttribute="top" secondItem="tTE-f0-Ge3" secondAttribute="bottom" id="6I8-Ou-r1o"/>
                         <constraint firstItem="afa-hI-qLT" firstAttribute="top" secondItem="D2J-VP-Z45" secondAttribute="top" constant="20" id="8dM-e0-YF8"/>
                         <constraint firstAttribute="height" constant="207" id="CvD-Dn-LgJ"/>
                         <constraint firstItem="Yab-wv-3dP" firstAttribute="leading" secondItem="D2J-VP-Z45" secondAttribute="leading" constant="80" id="EeA-6A-fhd"/>
                         <constraint firstItem="2PE-nz-7Kv" firstAttribute="leading" secondItem="afa-hI-qLT" secondAttribute="leading" id="IWb-N8-tLB"/>
                         <constraint firstAttribute="trailing" secondItem="Wxb-VC-IM6" secondAttribute="trailing" id="LF5-RU-4ei"/>
+                        <constraint firstItem="tTE-f0-Ge3" firstAttribute="centerY" secondItem="afa-hI-qLT" secondAttribute="centerY" id="Luh-yX-hgp"/>
                         <constraint firstItem="Wxb-VC-IM6" firstAttribute="leading" secondItem="D2J-VP-Z45" secondAttribute="leading" id="NCU-7F-nh6"/>
                         <constraint firstItem="2PE-nz-7Kv" firstAttribute="top" secondItem="afa-hI-qLT" secondAttribute="bottom" constant="30" id="TVz-nT-x5w"/>
+                        <constraint firstAttribute="trailing" secondItem="tTE-f0-Ge3" secondAttribute="trailing" id="VpZ-sp-BtR"/>
                         <constraint firstItem="Wxb-VC-IM6" firstAttribute="top" secondItem="D2J-VP-Z45" secondAttribute="top" id="hRc-jH-Gn0"/>
+                        <constraint firstItem="68X-dl-H8I" firstAttribute="leading" secondItem="D2J-VP-Z45" secondAttribute="leading" id="vaY-Il-Nkb"/>
                         <constraint firstAttribute="bottom" secondItem="Yab-wv-3dP" secondAttribute="bottom" constant="8" id="zYd-HO-HaC"/>
                     </constraints>
                 </view>
@@ -258,7 +325,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="853.5" y="375.5"/>
+            <point key="canvasLocation" x="909.5" y="308.5"/>
         </view>
     </objects>
     <resources>

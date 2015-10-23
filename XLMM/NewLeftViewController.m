@@ -54,4 +54,31 @@
 }
 */
 
+- (IBAction)settingClicked:(id)sender {
+    NSLog(@"设置");
+}
+
+- (IBAction)suggestionClicked:(id)sender {
+    NSLog(@"投诉建议");
+}
+
+- (IBAction)waitPayClicked:(id)sender {
+    NSLog(@"待支付");
+}
+
+- (IBAction)waitSendClicked:(id)sender {
+     NSLog(@"待收货");
+}
+
+- (IBAction)tuihuoClicked:(id)sender {
+     NSLog(@"退换货");
+}
+
+- (IBAction)allDingdanClicked:(id)sender {
+     NSLog(@"全部订单");
+}
+
+- (IBAction)tuichuClicked:(id)sender {
+    NSLog(@"退出账户");
+}
 @end
