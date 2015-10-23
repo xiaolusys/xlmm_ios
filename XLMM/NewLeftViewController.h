@@ -20,6 +20,19 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *touxiangImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *jifenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *youhuiquanLabel;
+
+- (IBAction)jifenClicked:(id)sender;
+- (IBAction)youhuquanClicked:(id)sender;
+
+
+
 - (IBAction)settingClicked:(id)sender;
 - (IBAction)suggestionClicked:(id)sender;
 

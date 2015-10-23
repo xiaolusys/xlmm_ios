@@ -15,6 +15,11 @@
 #import "TuihuoController.h"
 #import "TuihuoViewController.h"
 #import "TousuViewController.h"
+#import "JifenViewController.h"
+#import "YouHuiQuanViewController.h"
+#import "UIImageView+WebCache.h"
+
+
 
 
 @interface NewLeftViewController ()
@@ -30,7 +35,11 @@
     NSLog(@"mainScreen %@", NSStringFromCGRect(mainSize));
     self.headerViewHeight.constant = mainSize.size.height * 0.297f;
     self.footerViewHeight.constant = mainSize.size.height * 0.3126f;
+   NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    NSLog(@"用户信息 = %@", dic);
     
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
+    self.nameLabel.text = [dic objectForKey:@"nickname"];
     NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
     self.quitButton.layer.borderWidth = 1.0;
     self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
@@ -38,13 +47,35 @@
     self.touxiangImage.layer.cornerRadius = 30;
     self.touxiangImage.layer.borderColor = [UIColor colorWithRed:253/255.0 green:203/255.0 blue:14/255.0 alpha:1].CGColor;
     self.touxiangImage.layer.masksToBounds = YES;
-    self.touxiangImage.layer.borderWidth = 2;
+    self.touxiangImage.layer.borderWidth = 1;
     if (mainSize.size.height == 480) {
         NSLog(@"ihone 4s");
         self.topDistance.constant = 24;
         self.bottomDistance.constant = 24;
         
     }
+    [self setJifenInfo];
+    
+    
+}
+
+- (void)setJifenInfo{
+  //  http://m.xiaolu.so/rest/v1/integral
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
+    NSLog(@"jifen Url = %@", string);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    NSArray *array = [dic objectForKey:@"results"];
+    NSDictionary *results = [array objectAtIndex:0];
+    
+    NSLog(@"results = %@", results);
+    
+    self.jifenLabel.text = [NSString stringWithFormat:@"%ld", (long)[[results objectForKey:@"integral_value"] integerValue]];
     
 }
 
@@ -62,6 +93,61 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)jifenClicked:(id)sender {
+    NSLog(@"积分");
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:jifenVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+  
+    
+}
+
+- (IBAction)youhuquanClicked:(id)sender {
+    NSLog(@"优惠券");
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        youhuiVC.isSelectedYHQ = NO;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+    
+   
+    
+    
+}
 
 - (IBAction)settingClicked:(id)sender {
     NSLog(@"设置");
@@ -206,9 +292,16 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:@"login"];
+//    [userDefaults setObject:nil forKey:@"userInfo"];
     
+   
     [userDefaults synchronize];
     
+//     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    self.touxiangImageView.image = nil;
+    self.nameLabel.text = @"未登录";
+    self.jifenLabel.text = @"0";
+    self.youhuiquanLabel.text = @"0";
     
     
     [self.sideMenuViewController hideMenuViewController];

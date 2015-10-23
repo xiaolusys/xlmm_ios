@@ -80,26 +80,31 @@ static NSString * const reuseIdentifier = @"jifenCell";
     
     NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
+        if ([[dic objectForKey:@"log_status"] integerValue] == 1) {
         
-        JiFenModel *model = [JiFenModel new];
-        model.ID = [dic objectForKey:@"id"];
-        model.integral_user = [dic objectForKey:@"integral_user"];
-        model.mobile = [dic objectForKey:@"mobile"];
-        model.log_status = [dic objectForKey:@"log_status"];
-        model.log_type = [dic objectForKey:@"log_type"];
-        model.log_value = [dic objectForKey:@"log_value"];
-        model.in_out = [dic objectForKey:@"in_out"];
-        model.created = [dic objectForKey:@"created"];
-        model.modified = [dic objectForKey:@"modified"];
+            JiFenModel *model = [JiFenModel new];
+            model.ID = [dic objectForKey:@"id"];
+            model.integral_user = [dic objectForKey:@"integral_user"];
+            model.mobile = [dic objectForKey:@"mobile"];
+            model.log_status = [dic objectForKey:@"log_status"];
+            model.log_type = [dic objectForKey:@"log_type"];
+            model.log_value = [dic objectForKey:@"log_value"];
+            model.in_out = [dic objectForKey:@"in_out"];
+            model.created = [dic objectForKey:@"created"];
+            model.modified = [dic objectForKey:@"modified"];
+            
+            NSString *order = [dic objectForKey:@"order"];
+            NSData *data = [order dataUsingEncoding:NSUTF8StringEncoding];
+            NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSDictionary *orderDic = [array objectAtIndex:0];
+            NSLog(@"orders = %@", orderDic);
+            model.order = orderDic;
+            
+            [mutableArray addObject:model];
+       
+        }
         
-        NSString *order = [dic objectForKey:@"order"];
-        NSData *data = [order dataUsingEncoding:NSUTF8StringEncoding];
-        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSDictionary *orderDic = [array objectAtIndex:0];
-        NSLog(@"orders = %@", orderDic);
-        model.order = orderDic;
-        
-        [mutableArray addObject:model];
+       
     }
     self.dataArray = [[NSArray alloc] initWithArray:mutableArray];
     NSLog(@"array = %@", self.dataArray);
