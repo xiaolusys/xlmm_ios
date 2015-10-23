@@ -28,7 +28,6 @@
 		321813611BD7961700D3D036 /* MMSizeChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321813601BD7961700D3D036 /* MMSizeChartView.m */; settings = {ASSET_TAGS = (); }; };
 		321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */; settings = {ASSET_TAGS = (); }; };
 		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; settings = {ASSET_TAGS = (); }; };
-		321C8D9C1BD8E2110060FB62 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; settings = {ASSET_TAGS = (); }; };
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; settings = {ASSET_TAGS = (); }; };
@@ -507,6 +506,8 @@
 		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
 		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
 		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
+		32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32BE33931BDA0A720078C8B0 /* testImage.jpg */; settings = {ASSET_TAGS = (); }; };
+		32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; settings = {ASSET_TAGS = (); }; };
 		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; settings = {ASSET_TAGS = (); }; };
 		32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CC3FE91BA282B30043764F /* tuihuo-ing.png */; };
 		32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C841B9FFF2F00475E2E /* OrderModel.m */; };
@@ -929,6 +930,7 @@
 		32BDE48F1B85CD1100FBEC25 /* TousuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TousuViewController.h; sourceTree = "<group>"; };
 		32BDE4901B85CD1100FBEC25 /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
 		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
+		32BE33931BDA0A720078C8B0 /* testImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage.jpg; sourceTree = "<group>"; };
 		32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiaolufont.ttf; sourceTree = "<group>"; };
 		32CC3FE91BA282B30043764F /* tuihuo-ing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tuihuo-ing.png"; path = "../tuihuo-ing.png"; sourceTree = "<group>"; };
 		32CC7C831B9FFF2F00475E2E /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
@@ -1148,6 +1150,7 @@
 			isa = PBXGroup;
 			children = (
 				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
+				32BE33931BDA0A720078C8B0 /* testImage.jpg */,
 				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
 				32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */,
 				32BC3CA81BD4BB70008ADAA2 /* retina4.png */,
@@ -2025,6 +2028,7 @@
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
+				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */,
@@ -2241,6 +2245,7 @@
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
+				32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
 				3249B98A1B6F38410086D030 /* PersonCenterViewController2.m in Sources */,
 				3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */,
@@ -2268,7 +2273,6 @@
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				32A288BE1B942F53006DC949 /* Head1View.m in Sources */,
-				321C8D9C1BD8E2110060FB62 /* NewLeftViewController.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */,

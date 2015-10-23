@@ -17,6 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    CGRect mainSize = [UIScreen mainScreen].bounds;
+    NSLog(@"mainScreen %@", NSStringFromCGRect(mainSize));
+    self.headerViewHeight.constant = mainSize.size.height * 0.297f;
+    self.footerViewHeight.constant = mainSize.size.height * 0.3126f;
+    
+    NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
+    self.quitButton.layer.borderWidth = 1.0;
+    self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.quitButton.layer.cornerRadius = 18.5;
+    self.touxiangImage.layer.cornerRadius = 30;
+    self.touxiangImage.layer.borderColor = [UIColor colorWithRed:253/255.0 green:203/255.0 blue:14/255.0 alpha:1].CGColor;
+    self.touxiangImage.layer.masksToBounds = YES;
+    self.touxiangImage.layer.borderWidth = 2;
+    if (mainSize.size.height == 480) {
+        NSLog(@"ihone 4s");
+        self.topDistance.constant = 24;
+        self.bottomDistance.constant = 24;
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
