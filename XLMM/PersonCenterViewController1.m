@@ -41,7 +41,7 @@
     [super viewWillDisappear:animated];
     if ([theTimer isValid]) {
         [theTimer invalidate];
-    }
+    } 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

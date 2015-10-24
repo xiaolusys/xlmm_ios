@@ -7,7 +7,8 @@
 //
 
 #import "TousuViewController.h"
-
+#import "MMClass.h"
+#import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 
 @interface TousuViewController ()<UIAlertViewDelegate>{
@@ -179,14 +180,41 @@
         
         [self performSelector:@selector(successCommit) withObject:nil afterDelay:0.5];
         
-//        NSLog(@"提交投诉意见");
-//        UIAlertView *laterView = [[UIAlertView alloc] initWithTitle:nil message:@"提交成功!\n谢谢您的反馈，我们将不断完善，给您最好的服务!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [laterView show];
+        NSLog(@"投诉内容：%@", self.tousuTextView.text);
+        // com_content 
+        //  http://m.xiaolu.so/rest/v1/complain
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/complain", Root_URL];
+        NSLog(@"urlString = %@", urlString);
         
         
         
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        //第二步，创建请求
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+        
+        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+        
+        NSString *str = [NSString stringWithFormat:@"com_content=%@", self.tousuTextView.text];//设置参数
+        
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        
+        [request setHTTPBody:data];
+        
+        //第三步，连接服务器
         
         
+        
+        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        
+        
+        
+        NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+        
+        
+        
+        NSLog(@"%@",str1);
         
         
     }
