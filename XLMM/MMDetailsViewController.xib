@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMDetailsViewController">
             <connections>
+                <outlet property="addCartButton" destination="7OT-9i-gjk" id="iOw-E8-ePS"/>
                 <outlet property="allPriceLabel" destination="Gbe-eb-1Xd" id="b85-aN-hmF"/>
                 <outlet property="backButton" destination="1ze-p9-wcv" id="ab9-YD-wF6"/>
                 <outlet property="backHeadImageView" destination="cYX-qE-1cH" id="mAV-Z3-s82"/>
@@ -36,6 +37,7 @@
                 <outlet property="imageViewTop" destination="UJz-mj-9D6" id="Vdn-jo-DAf"/>
                 <outlet property="imageleading" destination="veK-Da-HhU" id="gr5-x0-tNm"/>
                 <outlet property="imageview1" destination="KFr-uY-7BM" id="r9P-Js-rW7"/>
+                <outlet property="lijiBuyButton" destination="JjY-IA-xjG" id="e59-xB-VPG"/>
                 <outlet property="mingcheng" destination="zB4-xz-g1j" id="YPp-oN-l1F"/>
                 <outlet property="nameLabel" destination="vuM-N0-go3" id="FUw-bn-ROc"/>
                 <outlet property="priceLabel" destination="gnV-T6-k8Y" id="eUL-fY-oCf"/>

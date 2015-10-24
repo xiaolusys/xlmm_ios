@@ -47,6 +47,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottom;
+@property (weak, nonatomic) IBOutlet UIButton *addCartButton;
+@property (weak, nonatomic) IBOutlet UIButton *lijiBuyButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuHeight;
 

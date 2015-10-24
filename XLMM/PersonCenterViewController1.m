@@ -58,7 +58,7 @@
 }
 
 - (void)btnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)downlaodData{
@@ -220,7 +220,7 @@
 
 
 - (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
     NSLog(@"back to root");
     

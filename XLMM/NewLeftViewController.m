@@ -28,6 +28,29 @@
 
 @implementation NewLeftViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+   // [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
+    
+}
+
+- (void)updataAfterLogin:(NSNotification *)notification{
+    NSLog(@"12345678909");
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+   NSDictionary *userInfo =  [userDefaults objectForKey:@"userInfo"];
+    NSLog(@"userInfo = %@", userInfo);
+    
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
+    self.nameLabel.text = [userInfo objectForKey:@"nickname"];
+    [self setJifenInfo];
+    [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -296,6 +319,19 @@
     
    
     [userDefaults synchronize];
+    if ([self.quitButton.titleLabel.text  isEqual: @"登录"] ) {
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+    
+    
     
 //     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     self.touxiangImageView.image = nil;
@@ -303,6 +339,7 @@
     self.jifenLabel.text = @"0";
     self.youhuiquanLabel.text = @"0";
     
+    [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
     
     [self.sideMenuViewController hideMenuViewController];
 }

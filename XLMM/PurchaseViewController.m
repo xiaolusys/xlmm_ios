@@ -22,6 +22,7 @@
 #import "WXApi.h"
 #import "UIViewController+NavigationBar.h"
 #import "NewCartsModel.h"
+#import "PersonCenterViewController1.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface PurchaseViewController ()<BuyAddressDelegate, YouhuiquanDelegate>{
@@ -58,6 +59,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelZhifuCatrs:) name:@"CancleZhifu" object:nil];
     self.navigationController.navigationBarHidden = NO;
     [self downloadAddressData];
     [self downloadYouhuiData];
@@ -100,6 +103,14 @@
 
 }
 
+- (void)cancelZhifuCatrs:(NSNotification *)notification{
+    NSLog(@"取消购物车支付");
+    [self.navigationController pushViewController:[[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil] animated:YES];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+}
 
 
 - (void)viewDidLoad {

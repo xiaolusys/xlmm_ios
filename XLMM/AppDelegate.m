@@ -38,85 +38,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
-//    action.identifier = @"action";//按钮的标示
-//    action.title=@"Accept";//按钮的标题
-//    action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
-//    //    action.authenticationRequired = YES;
-//    //    action.destructive = YES;
-//    
-//    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
-//    action2.identifier = @"action2";
-//    action2.title=@"Reject";
-//    action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
-//    action.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
-//    action.destructive = YES;
-//    
-//    UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
-//    categorys.identifier = @"alert";//这组动作的唯一标示
-//    [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
-//    
-//    UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:[NSSet setWithObjects:categorys, nil]];
-//    
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
-//    [[UIApplication sharedApplication] registerForRemoteNotifications];
-//    
-//    UILocalNotification *notification = [[UILocalNotification alloc] init];
-//    notification.fireDate=[NSDate dateWithTimeIntervalSinceNow:5];
-//    notification.timeZone=[NSTimeZone defaultTimeZone];
-//    notification.alertBody=@"测试推送的快捷回复";
-//    notification.category = @"alert";
-//    [[UIApplication sharedApplication]  scheduleLocalNotification:notification];
-//    
-    //用这两个方法判断是否注册成功
-    // NSLog(@"currentUserNotificationSettings = %@",[[UIApplication sharedApplication] currentUserNotificationSettings]);
-    //[[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
-    
-//    
-//#ifdef __IPHONE_8_0 //这里主要是针对iOS 8.0,相应的8.1,8.2等版本各程序员可自行发挥，如果苹果以后推出更高版本还不会使用这个注册方式就不得而知了……
-//    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:nil];
-//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-//    }  else {
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-//    }
-//#else
-//    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-//#endif
-//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-//    {
-//        //IOS8
-//        //创建UIUserNotificationSettings，并设置消息的显示类类型
-//        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
-//        
-//        [application registerUserNotificationSettings:notiSettings];
-//        
-//    } else{ // ios7
-//        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
-//    }
-//    
-    
-    
-
-    
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     
     NSString *plistPath1 = [paths objectAtIndex:0];
     
     NSLog(@"%@", plistPath1);
     
-   BOOL isregister = [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
-    NSLog(@"注册微信的结果 %d", isregister);
     
- //   [self sendAuthRequest];
-   // UIView
     
     //创建导航控制器，添加根视图控制器
 
-    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     
     // 设置登录状态
     NSUserDefaults *userDefualts = [NSUserDefaults standardUserDefaults];
@@ -132,7 +65,7 @@
         
         
         [self autoLoginWithUsername:username andPassword:password];
-        [userDefualts setBool:YES forKey:login];
+       // [userDefualts setBool:YES forKey:login];
         
     }
     else{
@@ -144,6 +77,9 @@
     
   
     
+    
+    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
 //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
@@ -172,6 +108,7 @@
     
 
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -217,11 +154,10 @@
     
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              //  NSError *error;
-              MMLOG(operation);
+              
               NSLog(@"JSON: %@", responseObject);
               
-              
+              //登录成功
               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
               [[NSUserDefaults standardUserDefaults] synchronize];
            
@@ -230,8 +166,11 @@
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MMLOG(operation);
+             //登录失败
+              
               NSLog(@"Error: %@", error);
+              [[NSUserDefaults standardUserDefaults]setBool:NO forKey:kIsLogin];
+              [[NSUserDefaults standardUserDefaults] synchronize];
               
               
           }];
@@ -255,24 +194,7 @@
     completionHandler();//处理完消息，最后一定要调用这个代码块
 }
 
-//远程推送通知
-//-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-//{
-//    //向APNS注册成功，收到返回的deviceToken
-//    NSLog(@"token = %@", deviceToken);
-//}
-//
-//-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-//{
-//    //向APNS注册失败，返回错误信息error
-//    NSLog(@"error = %@", error);
-//}
-//
-//-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-//{
-//    NSLog(@"userInfo = %@", userInfo);
-//    //收到远程推送通知消息
-//}
+
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
 {
@@ -487,9 +409,14 @@
            withCompletion:^(NSString *result, PingppError *error) {
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
+                   NSLog(@"支付成功");
+                   
+                   
                } else {
                    // 支付失败或取消
-                   NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
+                   NSLog(@"取消支付或支付失败");
+                   [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+                   NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
     

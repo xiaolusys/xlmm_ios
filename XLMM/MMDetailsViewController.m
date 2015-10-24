@@ -50,6 +50,7 @@
     NSArray *allSizeKeys;
     
     MMSizeChartView *mmSizeChart;
+    int theNumberOfSizeCanSelected;
 }
 
 
@@ -74,6 +75,8 @@
 - (void)viewWillAppear:(BOOL)animated{
       NSLog(@"appear");
     [super viewWillAppear:animated];
+    
+    
     //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"]) {
@@ -84,6 +87,10 @@
         });
     }
 }
+
+
+
+
 
 
 - (void)fetchedCartNumber:(NSData *)data{
@@ -120,6 +127,7 @@
     contentCount = 0;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    theNumberOfSizeCanSelected = 0;
     
     allSizeKeys = @[@"领围",@"肩宽",@"胸围",@"袖长",
                     @"插肩袖",@"袖口",@"腰围",
@@ -585,14 +593,49 @@
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
             [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
             button.userInteractionEnabled = NO;
-        } else{
+        } else {
             if ([[dic objectForKey:@"is_saleout"]boolValue]) {
                 [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
                 button.userInteractionEnabled = NO;
+            } else {
+                theNumberOfSizeCanSelected++;
             }
+            
         }
         
     }
+    if (theNumberOfSizeCanSelected == 0) {
+        NSLog(@"已抢光");
+        [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
+        [self.lijiBuyButton setTitle:@"" forState:UIControlStateNormal];
+        self.addCartButton.backgroundColor = [UIColor grayColor];
+        self.lijiBuyButton.backgroundColor = [UIColor lightGrayColor];
+        self.addCartButton.enabled = NO;
+        self.lijiBuyButton.enabled = NO;
+        
+    } else if (theNumberOfSizeCanSelected == 1){
+        NSLog(@"只有一种可选尺码");
+        
+        for (int i = 0; i<sizeCount; i++) {
+            UIButton *button = (UIButton *)[self.sizeView viewWithTag:i + 100];
+            NSDictionary *dic = [normalSkus objectAtIndex:i];
+
+            
+            
+            if (![[dic objectForKey:@"is_saleout"]boolValue]) {
+                [button.layer setBorderColor:[UIColor redColor].CGColor];
+                [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                skusID = [[normalSkus objectAtIndex:i] objectForKey:@"id"];
+                NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
+            }
+            
+            
+            
+        }
+        
+    }
+    NSLog(@"theNumberOfSizeCanSelected = %d", theNumberOfSizeCanSelected);
+    
     [self createSizeTable];
     NSLog(@"popViewArray = %@", self.popViewArray);
     
