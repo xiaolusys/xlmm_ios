@@ -336,6 +336,30 @@
     [userDefaults setBool:NO forKey:@"login"];
 //    [userDefaults setObject:nil forKey:@"userInfo"];
     
+    //   http://m.xiaolu.so/rest/v1/users/customer_logout
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
+    NSLog(@"urlString = %@", urlString);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //第二步，创建请求
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    
+    
+    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSLog(@"%@",str1);
+    
    
     [userDefaults synchronize];
     if ([self.quitButton.titleLabel.text  isEqual: @"登录"] ) {
