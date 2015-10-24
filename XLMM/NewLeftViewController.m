@@ -31,7 +31,23 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     
+    
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
+
+
+}
+
+- (void)phoneNumberLogin:(NSNotification *)notification{
+    NSLog(@"phone number longin");
+    self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    [self setJifenInfo];
+    [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -61,8 +77,8 @@
    NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
     
-    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
-    self.nameLabel.text = [dic objectForKey:@"nickname"];
+    //[self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
+    self.nameLabel.text = @"未登录";
     NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
     self.quitButton.layer.borderWidth = 1.0;
     self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
@@ -77,7 +93,10 @@
         self.bottomDistance.constant = 24;
         
     }
-    [self setJifenInfo];
+    //[self setJifenInfo];
+    [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     
 }

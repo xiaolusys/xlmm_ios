@@ -64,7 +64,7 @@
         NSLog(@"自动登录");
         
         
-        [self autoLoginWithUsername:username andPassword:password];
+       // [self autoLoginWithUsername:username andPassword:password];
        // [userDefualts setBool:YES forKey:login];
         
     }

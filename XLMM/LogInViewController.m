@@ -169,6 +169,12 @@
                   self.infoLabel.hidden = NO;
                   [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
                   [[NSUserDefaults standardUserDefaults] synchronize];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+                  
+                  
+                  
+                  
                   [self.navigationController popViewControllerAnimated:NO];
               }
               
