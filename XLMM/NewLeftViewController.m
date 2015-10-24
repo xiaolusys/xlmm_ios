@@ -72,8 +72,20 @@
     // Do any additional setup after loading the view from its nib.
     CGRect mainSize = [UIScreen mainScreen].bounds;
     NSLog(@"mainScreen %@", NSStringFromCGRect(mainSize));
-    self.headerViewHeight.constant = mainSize.size.height * 0.297f;
-    self.footerViewHeight.constant = mainSize.size.height * 0.3126f;
+    
+    if (mainSize.size.height > 600) {
+
+        self.headerViewHeight.constant = mainSize.size.height * 0.29f;
+
+    } else if (mainSize.size.height > 550){
+  
+          self.headerViewHeight.constant = mainSize.size.height * 0.33f;
+    } else {
+        self.headerViewHeight.constant = mainSize.size.height * 0.35f;
+        
+    }
+  
+    self.footerViewHeight.constant = mainSize.size.height * 0.29f;
    NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
     
