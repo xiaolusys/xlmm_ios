@@ -50,10 +50,11 @@
     allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
     //[self createInfo];
+    self.myTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+   // self.view.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
-    
-    
+ //   self.myTableView.bounces = NO;
     [self createNavigationBarWithTitle:@"购物袋" selecotr:@selector(backBtnClicked:)];
     self.buyButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
     self.buyButton.layer.borderWidth = 1;
@@ -83,24 +84,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-//- (void)createInfo{
-//    
-//    UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
-//    navLabel.text = @"购物车";
-//    navLabel.textColor = [UIColor blackColor];
-//    navLabel.font = [UIFont boldSystemFontOfSize:20];
-//    navLabel.textAlignment = NSTextAlignmentCenter;
-//    self.navigationItem.titleView = navLabel;
-//    
-//    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    leftButton.frame = CGRectMake(0, 0, 12, 18);
-//    [leftButton setBackgroundImage:[UIImage imageNamed:@"icon-fanhui.png"] forState:UIControlStateNormal];
-//    [leftButton addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-//    self.navigationItem.leftBarButtonItem = leftItem;
-//    
-//    
-//}
+
 
 - (void)downloadData{
     NSLog(@"cart Url = %@", kCart_URL);
@@ -151,16 +135,6 @@
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
     
     
-    
-    if (allPrice >= 150) {
-        self.discountLabel.text = @"有可用优惠券";
-    } else{
-        self.discountLabel.text = [NSString stringWithFormat:@"差%.1f元可用优惠券", 150.0 - allPrice];
-        
-    }
-    
-    
-    
 
     [self.cartTableView reloadData];
     
@@ -199,8 +173,7 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
         
-        cell.layer.borderWidth = 1;
-        cell.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 120, 24)];
         label.font = [UIFont systemFontOfSize:14];
         label.textAlignment = NSTextAlignmentLeft;
@@ -235,8 +208,10 @@
     NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.cartModel= model;
     cell.delegate = self;
-    cell.myImageView.layer.borderWidth = 1;
+    cell.myImageView.layer.borderWidth = 0.5;
     cell.myImageView.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+    cell.myImageView.layer.cornerRadius = 10;
+    cell.myImageView.layer.masksToBounds = YES;
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     
     cell.nameLabel.text = model.title;
@@ -254,7 +229,7 @@
     if (indexPath.row == self.dataArray.count) {
         return 300;
     }
-    return 110;
+    return 120;
 }
 
 
@@ -282,6 +257,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         deleteModel = [self.dataArray objectAtIndex:indexPath.row];
         [self.dataArray removeObjectAtIndex:indexPath.row];
+//        NSLog(@"indexpath . row ", )
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         //调用删除接口。。。。。。
         

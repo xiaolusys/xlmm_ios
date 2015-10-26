@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIView *frontView;
 @property (strong, nonatomic)NSMutableArray *dataArray;
 
-@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *cartTableView;
 @property (weak, nonatomic) IBOutlet UILabel *totalPricelabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
