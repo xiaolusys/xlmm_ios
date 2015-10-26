@@ -363,26 +363,9 @@
     self.addressViewHeight.constant = 1 * 100 + 60;
     
     
-    [self createAddressHeightView];
-    [self createAddressListView];
 }
 
-- (void)createAddressHeightView{
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 16, 200, 30)];
-    label.text = @"新增收货地址";
-    label.font = [UIFont systemFontOfSize:18];
-    label.textAlignment = NSTextAlignmentLeft;
-    [self.addressView addSubview:label];
-    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia2.png"]];
-    imageview.frame = CGRectMake(SCREENWIDTH - 30, 24, 18, 18);
-    [self.addressView addSubview:imageview];
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 8, SCREENWIDTH - 16, 50)];
-    [button addTarget:self action:@selector(addClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 58, SCREENWIDTH, 1)];
-    view.backgroundColor = [UIColor lightGrayColor];
-    [self.addressView addSubview:view];
-    [self.addressView addSubview:button];
-}
+
 
 
 - (void)addClicked:(UIButton *)button{

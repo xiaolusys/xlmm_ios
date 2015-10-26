@@ -186,6 +186,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if ([self.dataArray count] == 0) {
+        return 0;
+    }
     return [self.dataArray count] + 1;
 }
 
@@ -213,6 +216,10 @@
             label.text = [NSString stringWithFormat:@"还差%.1f元,可用优惠券", 150 - allPrice];
             [cell.contentView addSubview:label];
         }
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, 8, 35, 20)];
+        imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
+        [cell.contentView addSubview:imageView];
+        
         
         return cell;
     }

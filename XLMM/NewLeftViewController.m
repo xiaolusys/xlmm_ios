@@ -125,11 +125,15 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     NSLog(@"dic = %@", dic);
     NSArray *array = [dic objectForKey:@"results"];
-    NSDictionary *results = [array objectAtIndex:0];
-    
-    NSLog(@"results = %@", results);
-    
-    self.jifenLabel.text = [NSString stringWithFormat:@"%ld", (long)[[results objectForKey:@"integral_value"] integerValue]];
+    if (array.count != 0) {
+   
+        NSDictionary *results = [array objectAtIndex:0];
+        
+        NSLog(@"results = %@", results);
+        
+        self.jifenLabel.text = [NSString stringWithFormat:@"%ld", (long)[[results objectForKey:@"integral_value"] integerValue]];
+    }
+   
     
 }
 
