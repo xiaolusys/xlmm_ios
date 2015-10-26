@@ -39,6 +39,13 @@
     // Do any additional setup after loading the view from its nib.
 
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
+    
+    self.buyButton.layer.borderWidth = 1;
+    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.cornerRadius = 20;
+    
+    
+    
     NSLog(@"cartsArray =  %@", self.cartsArray);
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:1];
     self.mutableCatrsArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -128,29 +135,23 @@
 
 - (void)createCartsListView{
     BuyCartsView * cartOwner = [BuyCartsView new];
-    self.detailsViewHeight.constant = 40 + self.mutableCatrsArray.count * 120;
+    self.detailsViewHeight.constant = self.mutableCatrsArray.count * 80;
     
     for (int i = 0; i<self.mutableCatrsArray.count; i++) {
         
         BuyModel *model = [self.mutableCatrsArray objectAtIndex:i];
         [[NSBundle mainBundle] loadNibNamed:@"BuyCartsView" owner:cartOwner options:nil];
         
-        cartOwner.view.frame = CGRectMake(0, 30 + i*120, SCREENWIDTH, 120);
+        cartOwner.view.frame = CGRectMake(0, i*80, SCREENWIDTH, 80);
         // cartOwner.view.backgroundColor = [UIColor redColor];
         
         cartOwner.nameLabel.text = model.name;
         cartOwner.sizeLabel.text = model.sizeName;
-        cartOwner.numberLabel.text = [[NSNumber numberWithInteger:model.buyNumber ]stringValue ];
-        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
-        cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
-        cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+        cartOwner.numberLabel.text = [NSString stringWithFormat:@"x%@",[[NSNumber numberWithInteger:model.buyNumber ]stringValue]];
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 75, 36, 36)];
-        view.backgroundColor = [UIColor whiteColor];
-        [view.layer setMasksToBounds:YES];
-        [view.layer setBorderWidth:1];
-        [view.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [cartOwner.view addSubview:view];
+        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
+     
+        cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
         
         [self.detailsView addSubview:cartOwner.view];
         

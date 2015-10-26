@@ -499,7 +499,7 @@
     NSLog(@"购买商品");
     
     
-    PurchaseViewController *purchaseVC = [[PurchaseViewController alloc] initWithNibName:@"PurchaseViewController" bundle:nil];
+    PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
     
     purchaseVC.cartsArray = self.dataArray;
     

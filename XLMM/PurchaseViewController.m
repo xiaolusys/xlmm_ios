@@ -262,7 +262,6 @@
         cartOwner.sizeLabel.text = model.sizeName;
         cartOwner.numberLabel.text = [[NSNumber numberWithInteger:model.buyNumber ]stringValue ];
         cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
-        cartOwner.oldPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.oldPrice];
         cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
 
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(150, 75, 36, 36)];
@@ -360,7 +359,7 @@
     NSLog(@"addNumber = %lu", (unsigned long)addNumber);
 
   //  self.addressView.backgroundColor = [UIColor orangeColor];
-    self.addressViewHeight.constant = 1 * 100 + 60;
+    self.addressViewHeight.constant = 100;
     
     
 }

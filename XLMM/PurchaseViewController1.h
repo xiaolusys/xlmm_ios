@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
 
