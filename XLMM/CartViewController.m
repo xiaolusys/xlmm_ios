@@ -50,7 +50,15 @@
     allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
     //[self createInfo];
-    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backBtnClicked:)];
+    
+    
+    
+    
+    [self createNavigationBarWithTitle:@"购物袋" selecotr:@selector(backBtnClicked:)];
+    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.buyButton.layer.borderWidth = 1;
+    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.cornerRadius = 20;
     
     NSLog(@"url = %@", kCart_Number_URL);
     NSURL *url = [NSURL URLWithString:kCart_Number_URL];
@@ -178,11 +186,39 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.dataArray count];
+    return [self.dataArray count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"simpleCellID";
+    if (self.dataArray.count == indexPath.row) {
+        NSLog(@"最后一个");
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+        
+        cell.layer.borderWidth = 1;
+        cell.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 120, 24)];
+        label.font = [UIFont systemFontOfSize:14];
+        label.textAlignment = NSTextAlignmentLeft;
+        label.text = [NSString stringWithFormat:@"总金额￥%.1f",allPrice];
+        [cell.contentView addSubview:label];
+        
+        if (allPrice - 150 >= 0) {
+            
+        } else {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(130, 8, 150, 24)];
+            label.font = [UIFont systemFontOfSize:14];
+            label.textAlignment = NSTextAlignmentLeft;
+            label.text = [NSString stringWithFormat:@"还差%.1f元,可用优惠券", 150 - allPrice];
+            [cell.contentView addSubview:label];
+        }
+        
+        return cell;
+    }
+    NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
+    
+  
     CartTableCellTableViewCell *cell = (CartTableCellTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CartTableCellTableViewCell" owner:nil options:nil];
@@ -192,7 +228,8 @@
     NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.cartModel= model;
     cell.delegate = self;
-    
+    cell.myImageView.layer.borderWidth = 1;
+    cell.myImageView.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     
     cell.nameLabel.text = model.title;
@@ -207,11 +244,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 88;
+    if (indexPath.row == self.dataArray.count) {
+        return 300;
+    }
+    return 110;
 }
 
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == self.dataArray.count) {
+        return 0;
+    }
     return UITableViewCellEditingStyleDelete;
 }
 
@@ -226,6 +269,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.dataArray.count == indexPath.row) {
+        return;
+    }
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         deleteModel = [self.dataArray objectAtIndex:indexPath.row];
         [self.dataArray removeObjectAtIndex:indexPath.row];
