@@ -41,6 +41,10 @@
 		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
+		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; settings = {ASSET_TAGS = (); }; };
+		323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */; settings = {ASSET_TAGS = (); }; };
+		323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */; settings = {ASSET_TAGS = (); }; };
+		323B9C681BDDB6690060BFC1 /* shopping_cart_jian.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C671BDDB6690060BFC1 /* shopping_cart_jian.png */; settings = {ASSET_TAGS = (); }; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -636,6 +640,10 @@
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
+		323B9C5F1BDDB5FC0060BFC1 /* back_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_image.png; sourceTree = "<group>"; };
+		323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_cart_add.png; sourceTree = "<group>"; };
+		323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_coupon.png; sourceTree = "<group>"; };
+		323B9C671BDDB6690060BFC1 /* shopping_cart_jian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_cart_jian.png; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -1106,6 +1114,10 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				323B9C671BDDB6690060BFC1 /* shopping_cart_jian.png */,
+				323B9C5F1BDDB5FC0060BFC1 /* back_image.png */,
+				323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */,
+				323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */,
 				321928EB1BDB8599004EA6A7 /* refund.png */,
 				321928BB1BDB7EB8004EA6A7 /* alltrades.png */,
 				321928BE1BDB7EB8004EA6A7 /* coupon.png */,
@@ -2014,6 +2026,7 @@
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
+				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
@@ -2031,6 +2044,7 @@
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
+				323B9C681BDDB6690060BFC1 /* shopping_cart_jian.png in Resources */,
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
@@ -2059,7 +2073,9 @@
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
+				323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */,
 				32746E331B74A22000816208 /* pro1.jpg in Resources */,
+				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
 				32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */,
 				3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
