@@ -43,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *zhifuImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *weixinImageView;
 
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
 
 - (IBAction)addAddressClicked:(id)sender;
 - (IBAction)modifyAddressClicked:(id)sender;

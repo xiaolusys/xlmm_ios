@@ -334,7 +334,7 @@
    
     }
     allprice = price * i;
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%i", allprice];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"合计:¥%i", allprice];
     allpay = allprice + yunfeifee -youhuifee;
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%i", allpay];
     

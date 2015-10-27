@@ -99,7 +99,7 @@
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
 
     buyNumber = @1;
-    
+    zhifuSelected = @"alipay";
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/now_payinfo?sku_id=%@", Root_URL,self.skuID];
   
     NSLog(@"sku_id = %@, ",self.skuID);
@@ -107,7 +107,13 @@
     NSLog(@"urlString = %@", urlString);
     
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
+    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+
     
+    self.buyButton.layer.borderWidth = 1;
+    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.cornerRadius = 20;
+ 
   
     
     
@@ -176,6 +182,13 @@
     NSDictionary *dic3 = [dic2 objectForKey:@"product"];
     self.myimageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic3 objectForKey:@"pic_path"]]]];
     // self.myimageView.image = [UIimage im dic3 objectForKey:@"pic_path"]]];
+    self.myimageView.layer.masksToBounds = YES;
+    self.myimageView.layer.cornerRadius = 8;
+    self.myimageView.layer.borderWidth = 0.5;
+    self.myimageView.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+    
+    
+    
     self.sizeLabel.text = [dic2 objectForKey:@"name"];
     self.nameLabel.text = [dic3 objectForKey:@"name"];
     price = [[dic2 objectForKey:@"agent_price"] floatValue];
@@ -183,11 +196,11 @@
     
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic2 objectForKey:@"std_sale_price"]];
     allprice = [[dic objectForKey:@"total_fee"]floatValue];
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_fee"] floatValue]];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", [[dic objectForKey:@"total_fee"] floatValue]];
     yunfeifee = [[dic objectForKey:@"post_fee"]floatValue];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"post_fee"] floatValue]];
     youhuifee = [[dic objectForKey:@"discount_fee"] floatValue];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"已优惠¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
     allpay = [[dic objectForKey:@"total_payment"] floatValue];
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_payment"] floatValue]];
     self.numberLabel.text = @"1";
@@ -285,7 +298,7 @@
         i = 1;
     }
     allprice = price * i;
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", allprice];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", allprice];
     allpay = allprice + yunfeifee -youhuifee;
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     buyNumber = [NSNumber numberWithInt:i];
@@ -327,7 +340,7 @@
         [view show];
     }
     allprice = price * i;
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", allprice];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", allprice];
     allpay = allprice + yunfeifee -youhuifee;
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     
@@ -373,8 +386,8 @@
 - (IBAction)zhifubaoClicked:(id)sender {
     NSLog(@"支付宝支付");
     zhifuSelected = @"alipay";
-    self.weixinImageView.image = [UIImage imageNamed:@"icon-radio.png"];
-    self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    self.weixinImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+    self.zhifuImageView.image = [UIImage imageNamed:@"selected_icon.png"];
     /*
      icon-radio.png
      icon-radio-select.png
@@ -389,8 +402,8 @@
 - (IBAction)weixinClicked:(id)sender {
     NSLog(@"微信支付");
     zhifuSelected = @"wx";
-    self.weixinImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-    self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+    self.weixinImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+    self.zhifuImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
  
        NSLog(@"zhifu = %@", zhifuSelected);
 }
