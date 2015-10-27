@@ -214,7 +214,7 @@
     cell.backgroundView.backgroundColor = [UIColor whiteColor];
 
     if (indexPath.row == 1) {
-        cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+        cell.frontImageView.image = [UIImage imageNamed:@"selected_icon.png"];
         //cell.bgView.backgroundColor = [UIColor redColor];
         cell.firstLabel.textColor = [UIColor redColor];
     }
@@ -234,7 +234,7 @@
     
     
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.frontImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+    cell.frontImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
     cell.bgView.backgroundColor = [UIColor whiteColor];
     cell.firstLabel.textColor = [UIColor blackColor];
     
@@ -254,13 +254,16 @@
     
     if (indexPath.row != 1) {
         AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexpathDefaule];
-        cell.frontImageView.image = [UIImage imageNamed:@"icon-radio.png"];
+        cell.frontImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
         cell.bgView.backgroundColor = [UIColor whiteColor];
         cell.firstLabel.textColor = [UIColor blackColor];
     }
     
     AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.frontImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+    
+    //  selected_icon.png
+    //  unselected_icon.png
+    cell.frontImageView.image = [UIImage imageNamed:@"selected_icon.png"];
     //cell.bgView.backgroundColor = [UIColor redColor];
     cell.firstLabel.textColor = [UIColor redColor];
     selectCell = cell;
