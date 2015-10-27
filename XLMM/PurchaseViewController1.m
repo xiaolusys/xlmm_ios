@@ -61,6 +61,7 @@
     // Do any additional setup after loading the view from its nib.
 
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
+    self.addressViewWidth.constant = SCREENWIDTH;
     self.buyButton.layer.borderWidth = 1;
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     self.buyButton.layer.cornerRadius = 20;

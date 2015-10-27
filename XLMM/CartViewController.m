@@ -56,7 +56,7 @@
     
  //   self.myTableView.bounces = NO;
     [self createNavigationBarWithTitle:@"购物袋" selecotr:@selector(backBtnClicked:)];
-    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
     self.buyButton.layer.borderWidth = 1;
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     self.buyButton.layer.cornerRadius = 20;

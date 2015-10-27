@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *youhuijineLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allPayLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailsViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewWidth;
+
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 
 - (IBAction)addAddress:(id)sender;
