@@ -26,6 +26,7 @@
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface PurchaseViewController ()<BuyAddressDelegate, YouhuiquanDelegate>{
+    
     YHQModel *yhqModel;
 
 }
@@ -65,13 +66,11 @@
     [self downloadAddressData];
     [self downloadYouhuiData];
 
-    NSLog(@"selectAddressModel = %@", selectedAddModel.addressID);
+    NSLog(@"selectAddressModel.id = %@", selectedAddModel.addressID);
     //CALayer
     // CGFloat
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
-        
-        
     }
     else{
         NSLog(@"没有安装微信");
@@ -80,13 +79,7 @@
         channel = @"alipay";
       
         self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
-        /*
-         icon-radio.png
-         icon-radio-select.png
-         wx
-         alipay
-         
-         */
+        
         NSLog(@"zhifu = %@", channel);
         
     }
@@ -680,8 +673,5 @@
     self.discountfeeLabel.text = [NSString stringWithFormat:@"￥%@", yhqModel.coupon_value];
     //    allpay -= [yhqModel.coupon_value intValue];
     self.totalPayLabel.text = [NSString stringWithFormat:@"￥%d",(int)(totalpayment - [yhqModel.coupon_value intValue])];
-    
-    
-    
 }
 @end

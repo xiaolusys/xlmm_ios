@@ -39,6 +39,8 @@
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; };
+		321E5FCC1BDF0A8900E78FFC /* LiJiGMViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E5FCA1BDF0A8900E78FFC /* LiJiGMViewController2.m */; };
+		321E5FCD1BDF0A8900E78FFC /* LiJiGMViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321E5FCB1BDF0A8900E78FFC /* LiJiGMViewController2.xib */; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
@@ -643,6 +645,9 @@
 		321C8D9E1BD8E22A0060FB62 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		321E5FC91BDF0A8900E78FFC /* LiJiGMViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiGMViewController2.h; sourceTree = "<group>"; };
+		321E5FCA1BDF0A8900E78FFC /* LiJiGMViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiGMViewController2.m; sourceTree = "<group>"; };
+		321E5FCB1BDF0A8900E78FFC /* LiJiGMViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiJiGMViewController2.xib; sourceTree = "<group>"; };
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
@@ -1361,6 +1366,9 @@
 				320B30051BB90002006C4FC4 /* LiJiGMViewController1.h */,
 				320B30061BB90002006C4FC4 /* LiJiGMViewController1.m */,
 				320B30071BB90002006C4FC4 /* LiJiGMViewController1.xib */,
+				321E5FC91BDF0A8900E78FFC /* LiJiGMViewController2.h */,
+				321E5FCA1BDF0A8900E78FFC /* LiJiGMViewController2.m */,
+				321E5FCB1BDF0A8900E78FFC /* LiJiGMViewController2.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1976,6 +1984,7 @@
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
+				321E5FCD1BDF0A8900E78FFC /* LiJiGMViewController2.xib in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
 				32A88E121B86BD8C003501EF /* XiangQingViewController.xib in Resources */,
@@ -2316,6 +2325,7 @@
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
+				321E5FCC1BDF0A8900E78FFC /* LiJiGMViewController2.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
