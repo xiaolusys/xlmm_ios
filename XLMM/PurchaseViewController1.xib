@@ -17,6 +17,7 @@
                 <outlet property="postFeeLabel" destination="z8L-dq-E8k" id="OU7-wb-XjP"/>
                 <outlet property="totalFeeLabel" destination="77l-2U-pE7" id="d2d-7I-iSx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="weixinView" destination="yN8-G7-Ydf" id="eQf-iN-7qf"/>
                 <outlet property="wxImageView" destination="0hH-0q-BoX" id="P7h-Mf-dr0"/>
                 <outlet property="youhuijineLabel" destination="29G-5J-BBG" id="isz-Xb-LFz"/>
                 <outlet property="zhifubaoImageView" destination="6qW-Xk-XOY" id="is2-0s-2qT"/>
@@ -350,11 +351,31 @@
                                                 <action selector="weixinZhifuClicked:" destination="-1" eventType="touchUpInside" id="Nhd-KZ-ziK"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yN8-G7-Ydf">
+                                            <rect key="frame" x="0.0" y="80" width="320" height="64"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ds-sH-Pay">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="nkz-F5-Cld"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="1ds-sH-Pay" firstAttribute="top" secondItem="yN8-G7-Ydf" secondAttribute="top" id="0bl-Fc-LDI"/>
+                                                <constraint firstItem="1ds-sH-Pay" firstAttribute="leading" secondItem="yN8-G7-Ydf" secondAttribute="leading" id="XLG-AI-A2W"/>
+                                                <constraint firstAttribute="trailing" secondItem="1ds-sH-Pay" secondAttribute="trailing" id="kXf-IS-SQs"/>
+                                                <constraint firstAttribute="height" constant="64" id="nLK-dS-lrX"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="wNO-pg-EuD" firstAttribute="leading" secondItem="Bmd-QS-cPF" secondAttribute="leading" id="4ht-0P-54j"/>
                                         <constraint firstItem="fSF-Mo-Q9M" firstAttribute="top" secondItem="Bmd-QS-cPF" secondAttribute="top" constant="81" id="5VW-ud-jQR"/>
+                                        <constraint firstAttribute="bottom" secondItem="yN8-G7-Ydf" secondAttribute="bottom" id="6Ss-8m-LWl"/>
                                         <constraint firstAttribute="trailing" secondItem="FMm-DX-2B9" secondAttribute="trailing" id="Bic-HC-Ts1"/>
                                         <constraint firstAttribute="height" constant="144" id="CRi-rx-KGR"/>
                                         <constraint firstItem="0hH-0q-BoX" firstAttribute="centerY" secondItem="bgb-8x-ywS" secondAttribute="centerY" id="En7-Ow-obq"/>
@@ -371,6 +392,7 @@
                                         <constraint firstItem="sWT-MF-sYU" firstAttribute="leading" secondItem="Bmd-QS-cPF" secondAttribute="leading" constant="8" id="d26-CX-nt3"/>
                                         <constraint firstItem="6qW-Xk-XOY" firstAttribute="centerY" secondItem="3qN-X0-phg" secondAttribute="centerY" id="dRC-sp-2mP"/>
                                         <constraint firstAttribute="trailing" secondItem="fSF-Mo-Q9M" secondAttribute="trailing" id="eNB-iD-t8C"/>
+                                        <constraint firstAttribute="trailing" secondItem="yN8-G7-Ydf" secondAttribute="trailing" id="eOn-UR-iDq"/>
                                         <constraint firstItem="cWs-cI-0q0" firstAttribute="leading" secondItem="QvE-oP-GXg" secondAttribute="leading" id="eQv-nX-D4T"/>
                                         <constraint firstItem="3qN-X0-phg" firstAttribute="top" secondItem="wNO-pg-EuD" secondAttribute="bottom" constant="13" id="frB-5r-WRp"/>
                                         <constraint firstItem="PXf-1z-MXs" firstAttribute="leading" secondItem="Bmd-QS-cPF" secondAttribute="leading" id="hfv-je-LPS"/>
@@ -380,6 +402,7 @@
                                         <constraint firstItem="FMm-DX-2B9" firstAttribute="leading" secondItem="Bmd-QS-cPF" secondAttribute="leading" id="xLf-LV-os9"/>
                                         <constraint firstItem="QvE-oP-GXg" firstAttribute="leading" secondItem="3qN-X0-phg" secondAttribute="trailing" constant="8" id="xPF-7U-Yz2"/>
                                         <constraint firstItem="sWT-MF-sYU" firstAttribute="top" secondItem="Bmd-QS-cPF" secondAttribute="top" constant="30" id="y45-nZ-KIm"/>
+                                        <constraint firstItem="yN8-G7-Ydf" firstAttribute="leading" secondItem="Bmd-QS-cPF" secondAttribute="leading" id="yOQ-yA-lIk"/>
                                         <constraint firstAttribute="trailing" secondItem="wNO-pg-EuD" secondAttribute="trailing" id="yoM-IX-hNe"/>
                                     </constraints>
                                 </view>

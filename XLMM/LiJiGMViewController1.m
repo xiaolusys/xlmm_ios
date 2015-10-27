@@ -51,16 +51,16 @@
 
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
-        
+        self.weixinView.hidden = YES;
         
     }
     else{
         NSLog(@"没有安装微信");
-        
+        self.weixinView.hidden = NO;
          self.zhifuHeight.constant = 80;
         zhifuSelected = @"alipay";
-        self.weixinImageView.image = [UIImage imageNamed:@"icon-radio.png"];
-        self.zhifuImageView.image = [UIImage imageNamed:@"icon-radio-select.png"];
+        self.weixinImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        self.zhifuImageView.image = [UIImage imageNamed:@"selected_icon.png"];
         /*
          icon-radio.png
          icon-radio-select.png

@@ -20,7 +20,7 @@
 #import "YHQModel.h"
 #import "AFNetworking.h"
 #import "Pingpp.h"
-
+#import "WXApi.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 
@@ -54,6 +54,28 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self downloadAddressData];
+    if ([WXApi isWXAppInstalled]) {
+        NSLog(@"安装了微信");
+        self.weixinView.hidden = YES;
+        
+    }
+    else{
+        NSLog(@"没有安装微信");
+        self.weixinView.hidden = NO;
+        payMethod = @"alipay";
+        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+        /*
+         icon-radio.png
+         icon-radio-select.png
+         wx
+         alipay
+         
+         */
+        NSLog(@"zhifu = %@", payMethod);
+        
+    }
+
+    
 }
 
 - (void)viewDidLoad {

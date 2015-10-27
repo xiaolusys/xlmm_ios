@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
+@property (weak, nonatomic) IBOutlet UIView *weixinView;
 
 @property (weak, nonatomic) IBOutlet UILabel *yhqNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yhqCreateLabel;
