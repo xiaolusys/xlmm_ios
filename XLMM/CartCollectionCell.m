@@ -26,6 +26,11 @@
         }
         self = [arrayOfViews objectAtIndex:0];
     }
+    self.myImageView.layer.masksToBounds = YES;
+    self.myImageView.layer.cornerRadius = 8;
+    self.myImageView.layer.borderWidth = 0.5;
+    self.myImageView.layer.borderColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1].CGColor;
+    
     [self.mybutton.layer setMasksToBounds:YES];
     [self.mybutton.layer setBorderWidth:1.0];
     [self.mybutton.layer setBorderColor:[UIColor redColor].CGColor];

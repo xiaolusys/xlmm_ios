@@ -45,16 +45,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.title = @"购物车";
     self.dataArray = [[NSMutableArray alloc] init];
     allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
-    //[self createInfo];
     self.myTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
-   // self.view.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
- //   self.myTableView.bounces = NO;
     [self createNavigationBarWithTitle:@"购物袋" selecotr:@selector(backBtnClicked:)];
     self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
     self.buyButton.layer.borderWidth = 1;
@@ -91,6 +87,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_URL]];
         if (data == nil) {
+            NSLog(@"下载失败");
             return ;
         }
         [self performSelectorOnMainThread:@selector(fetchedCartData:) withObject:data waitUntilDone:YES];
@@ -99,17 +96,20 @@
 }
 
 - (void)fetchedCartData:(NSData *)responseData{
-    if (responseData == nil) {
-        return;
-    }
+   
     NSError *error = nil;
     NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    [self.dataArray removeAllObjects];
     if (error != nil) {
+        
+        NSLog(@"解析失败");
         NSLog(@"error = %@", error);
+        
         return;
     }
     NSLog(@"json = %@", json);
+    [self.dataArray removeAllObjects];
+
+    
     allPrice = 0.0f;
     for (NSDictionary *dic in json) {
         NewCartsModel *model = [NewCartsModel new];
@@ -125,7 +125,6 @@
         model.item_id = [dic objectForKey:@"item_id"];
         model.pic_path = [dic objectForKey:@"pic_path"];
         model.sku_name = [dic objectForKey:@"sku_name"];
-       // model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
         model.ID = [[dic objectForKey:@"id"] intValue];
         model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
         allPrice += model.total_fee;
@@ -160,9 +159,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ([self.dataArray count] == 0) {
-        return 0;
-    }
+    
     return [self.dataArray count] + 1;
 }
 
@@ -188,10 +185,12 @@
             label.textAlignment = NSTextAlignmentLeft;
             label.text = [NSString stringWithFormat:@"还差%.1f元,可用优惠券", 150 - allPrice];
             [cell.contentView addSubview:label];
+        
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, 8, 35, 20)];
+            imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
+            [cell.contentView addSubview:imageView];
+            
         }
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, 8, 35, 20)];
-        imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
-        [cell.contentView addSubview:imageView];
         
         
         return cell;
@@ -229,7 +228,7 @@
     if (indexPath.row == self.dataArray.count) {
         return 300;
     }
-    return 120;
+    return 110;
 }
 
 

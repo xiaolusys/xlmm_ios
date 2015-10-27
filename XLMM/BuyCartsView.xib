@@ -129,13 +129,6 @@
                     <exclude reference="IuQ-QZ-8oF"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="DFg-RE-Jvl"/>
-                    <exclude reference="Vli-r6-4UY"/>
-                    <exclude reference="L00-qU-XpX"/>
-                    <exclude reference="aVB-mU-CdL"/>
-                    <exclude reference="ylZ-WA-Tnp"/>
-                    <exclude reference="oPH-6R-vr7"/>
-                    <exclude reference="z9C-g2-3Dy"/>
                     <exclude reference="04a-63-Xeq"/>
                     <exclude reference="mCa-kc-zwx"/>
                     <exclude reference="GFH-cZ-Czg"/>
@@ -144,6 +137,13 @@
                     <exclude reference="U5S-1b-T9J"/>
                     <exclude reference="XvU-KG-Cup"/>
                     <exclude reference="xRf-43-pya"/>
+                    <exclude reference="oPH-6R-vr7"/>
+                    <exclude reference="z9C-g2-3Dy"/>
+                    <exclude reference="L00-qU-XpX"/>
+                    <exclude reference="aVB-mU-CdL"/>
+                    <exclude reference="ylZ-WA-Tnp"/>
+                    <exclude reference="DFg-RE-Jvl"/>
+                    <exclude reference="Vli-r6-4UY"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -156,13 +156,6 @@
                     <include reference="IuQ-QZ-8oF"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="DFg-RE-Jvl"/>
-                    <include reference="Vli-r6-4UY"/>
-                    <include reference="L00-qU-XpX"/>
-                    <include reference="aVB-mU-CdL"/>
-                    <include reference="ylZ-WA-Tnp"/>
-                    <include reference="oPH-6R-vr7"/>
-                    <include reference="z9C-g2-3Dy"/>
                     <include reference="04a-63-Xeq"/>
                     <include reference="mCa-kc-zwx"/>
                     <include reference="GFH-cZ-Czg"/>
@@ -171,6 +164,13 @@
                     <include reference="U5S-1b-T9J"/>
                     <exclude reference="XvU-KG-Cup"/>
                     <include reference="xRf-43-pya"/>
+                    <include reference="oPH-6R-vr7"/>
+                    <include reference="z9C-g2-3Dy"/>
+                    <include reference="L00-qU-XpX"/>
+                    <include reference="aVB-mU-CdL"/>
+                    <include reference="ylZ-WA-Tnp"/>
+                    <include reference="DFg-RE-Jvl"/>
+                    <include reference="Vli-r6-4UY"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="65" y="284"/>

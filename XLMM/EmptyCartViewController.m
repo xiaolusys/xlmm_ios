@@ -273,7 +273,23 @@
     cell.allPriceLabel.text = [NSString stringWithFormat:@"￥%.0f", model.std_sale_price];
     cell.sizeLabel.text = [NSString stringWithFormat:@"%@", model.sku_name];
     [cell.mybutton addTarget:self action:@selector(reBuyClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     cell.mybutton.tag = indexPath.row + 1000;
+    
+    if (model.is_sale_out) {
+        cell.mybutton.enabled = NO;
+        [cell.mybutton setTitle:@"已抢光" forState:UIControlStateNormal];
+        [cell.mybutton setTitleColor:[UIColor colorWithR:218 G:218 B:218 alpha:1] forState:UIControlStateNormal];
+        [cell.mybutton.layer setBorderWidth:1.0];
+        [cell.mybutton.layer setBorderColor:[UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor];
+        
+    } else {
+        cell.mybutton.enabled = YES;
+        [cell.mybutton setTitle:@"重新购买" forState:UIControlStateNormal];
+        [cell.mybutton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [cell.mybutton.layer setBorderWidth:1.0];
+        [cell.mybutton.layer setBorderColor:[UIColor redColor].CGColor];
+    }
     
     return cell;
 }
@@ -338,8 +354,9 @@
     imageview.frame = CGRectMake(SCREENWIDTH - 80, 56 + 112 *tag - self.myCollectionView.contentOffset.y, 80, 80);
     [self.view addSubview:imageview];
     [imageview.layer setMasksToBounds:YES];
-    [imageview.layer setBorderWidth:1];
-    [imageview.layer setBorderColor:[UIColor redColor].CGColor];
+    [imageview.layer setBorderWidth:0.5];
+    imageview.layer.cornerRadius = 8;
+    [imageview.layer setBorderColor:[UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor];
 
     [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         imageview.frame = CGRectMake(36, SCREENHEIGHT - 48, 10, 10);
