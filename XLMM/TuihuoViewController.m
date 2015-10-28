@@ -201,7 +201,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
     cell.zhuangtai.text = model.status_display;
     cell.jine.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
-    cell.xiadanTime.text = model.created;
+    NSMutableString *string = [NSMutableString stringWithString:model.created];
+    NSRange range = [string rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    
+    
+    cell.xiadanTime.text = string;
     
     return cell;
 }
