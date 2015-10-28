@@ -359,12 +359,12 @@
         for (int i = 100; i<104; i++) {
             if (btnTag == i) {
                 UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+              [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
                 
             }
             else{
-                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+                [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
 
             }
         }
@@ -380,12 +380,12 @@
             for (int i = 100; i<104; i++) {
                 if (btnTag == i) {
                     UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                    button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+                  [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
                     
                 }
                 else{
-                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                    button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+                    [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
                     
                 }
             }
@@ -414,10 +414,11 @@
     }
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
-            button.backgroundColor = [UIColor colorWithRed:84/255.0 green:199/255.0 blue:189/255.0 alpha:1];
+            [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+            
         }else{
             UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            button.backgroundColor = [UIColor colorWithRed:250/255.0 green:172/255.0 blue:20/255.0 alpha:1];
+            [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
         }
     }
     

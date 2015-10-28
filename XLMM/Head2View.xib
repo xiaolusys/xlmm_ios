@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Head2View">
             <connections>
-                <outlet property="headView" destination="Wnx-jM-cGr" id="tvL-dc-IvC"/>
+                <outlet property="headImageView" destination="u8f-nQ-W4d" id="qkQ-VX-FXE"/>
                 <outlet property="nameLabel" destination="v5C-GC-K2a" id="rXV-kY-GwZ"/>
                 <outlet property="timeLabel" destination="FNe-Jl-yJj" id="iSY-jk-AHN"/>
             </connections>
@@ -17,21 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wnx-jM-cGr">
-                    <rect key="frame" x="8" y="17" width="16" height="16"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="16" id="7S3-vh-smv"/>
-                        <constraint firstAttribute="height" constant="16" id="Ejx-q5-Dck"/>
-                    </constraints>
-                </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="            " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNe-Jl-yJj">
-                    <rect key="frame" x="162" y="17" width="46" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="            shengyu " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNe-Jl-yJj">
+                    <rect key="frame" x="219" y="18" width="93" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-shengyu2.png" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-sc-ka9">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-shengyu2.png" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-sc-ka9">
                     <rect key="frame" x="140" y="16" width="18" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="bN6-1n-TSc"/>
@@ -39,31 +30,38 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5C-GC-K2a">
-                    <rect key="frame" x="32" y="14" width="48" height="22"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="44" y="15" width="40" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="childImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="u8f-nQ-W4d">
+                    <rect key="frame" x="8" y="7" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="2dt-My-ndP"/>
+                        <constraint firstAttribute="height" constant="36" id="WgP-LT-6sT"/>
+                    </constraints>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.3294117647" green="0.78039215689999997" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="u8f-nQ-W4d" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="0hy-2M-duS"/>
                 <constraint firstAttribute="centerY" secondItem="v5C-GC-K2a" secondAttribute="centerY" id="1ZD-pN-0c9"/>
-                <constraint firstAttribute="centerY" secondItem="FNe-Jl-yJj" secondAttribute="centerY" id="Byj-l5-1NS"/>
+                <constraint firstItem="u8f-nQ-W4d" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="8JR-Uj-ibg"/>
+                <constraint firstItem="FNe-Jl-yJj" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="FYz-xK-cal"/>
                 <constraint firstAttribute="centerY" secondItem="WNR-sc-ka9" secondAttribute="centerY" id="HYP-vF-eep"/>
-                <constraint firstAttribute="centerY" secondItem="Wnx-jM-cGr" secondAttribute="centerY" id="L0a-FQ-7V2"/>
-                <constraint firstItem="FNe-Jl-yJj" firstAttribute="leading" secondItem="WNR-sc-ka9" secondAttribute="trailing" constant="4" id="QQN-5X-7m9"/>
-                <constraint firstItem="Wnx-jM-cGr" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="cth-fF-fm1"/>
-                <constraint firstItem="v5C-GC-K2a" firstAttribute="leading" secondItem="Wnx-jM-cGr" secondAttribute="trailing" constant="8" id="mxL-02-7vm"/>
+                <constraint firstItem="v5C-GC-K2a" firstAttribute="leading" secondItem="u8f-nQ-W4d" secondAttribute="trailing" id="T5N-51-iZM"/>
                 <constraint firstItem="WNR-sc-ka9" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="140" id="tiC-wJ-E1P"/>
+                <constraint firstAttribute="trailing" secondItem="FNe-Jl-yJj" secondAttribute="trailing" constant="8" id="xRV-gf-jH1"/>
             </constraints>
             <connections>
-                <outlet property="headView" destination="Wnx-jM-cGr" id="MDh-DP-bLD"/>
+                <outlet property="headImageView" destination="u8f-nQ-W4d" id="3jD-5U-mwz"/>
                 <outlet property="nameLabel" destination="v5C-GC-K2a" id="k4Y-Qf-RsU"/>
                 <outlet property="timeLabel" destination="FNe-Jl-yJj" id="kPH-Ad-Ttj"/>
             </connections>
         </collectionReusableView>
     </objects>
     <resources>
+        <image name="childImage.png" width="60" height="60"/>
         <image name="icon-shengyu2.png" width="24" height="24"/>
     </resources>
 </document>

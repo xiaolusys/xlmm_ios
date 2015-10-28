@@ -156,7 +156,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
-    
+    self.childCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
     
     // [self downloadData];
    // [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backBtnClicked:)];

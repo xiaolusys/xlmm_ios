@@ -176,6 +176,8 @@
 		3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */; };
 		3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */; };
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
+		3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FC1BE0BEAA00C8A775 /* childImage.png */; };
+		3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */; };
 		32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B4E1B81C152007E562A /* EmptyCartViewController.m */; };
 		32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B4F1B81C152007E562A /* EmptyCartViewController.xib */; };
 		32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B591B81C9E0007E562A /* CartViewController.m */; };
@@ -838,6 +840,8 @@
 		3282F27D1B6B5B1300E73EB9 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3286F2FC1BE0BEAA00C8A775 /* childImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childImage.png; sourceTree = "<group>"; };
+		3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladyImage.png; sourceTree = "<group>"; };
 		32891B4D1B81C152007E562A /* EmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCartViewController.h; sourceTree = "<group>"; };
 		32891B4E1B81C152007E562A /* EmptyCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyCartViewController.m; sourceTree = "<group>"; };
 		32891B4F1B81C152007E562A /* EmptyCartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCartViewController.xib; sourceTree = "<group>"; };
@@ -1126,6 +1130,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3286F2FC1BE0BEAA00C8A775 /* childImage.png */,
+				3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */,
 				32D2B7911BDDF59100603FCE /* rightArrow.png */,
 				32D2B7871BDDF41C00603FCE /* address_icon.png */,
 				32D2B7881BDDF41C00603FCE /* selected_icon.png */,
@@ -2062,6 +2068,7 @@
 				32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
+				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
 				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
@@ -2129,6 +2136,7 @@
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
+				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

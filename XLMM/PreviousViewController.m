@@ -225,6 +225,7 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:kposterView];
+    self.myCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
     
     
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
@@ -551,6 +552,7 @@ static NSString *khead2View = @"head2View";
         headerView.nameLabel.text = @"潮童专区";
         headerView.headView.layer.cornerRadius = 4;
         childTimeLabel = headerView.timeLabel;
+        headerView.headImageView.image = [UIImage imageNamed:@"childImage.png"];
         
         return headerView;
     } else if (indexPath.section == 1){
@@ -558,7 +560,7 @@ static NSString *khead2View = @"head2View";
         headerView.nameLabel.text = @"时尚女装";
         headerView.headView.layer.cornerRadius = 4;
         childTimeLabel = headerView.timeLabel;
-        
+        headerView.headImageView.image = [UIImage imageNamed:@"ladyImage.png"];
         return headerView;
     }
     

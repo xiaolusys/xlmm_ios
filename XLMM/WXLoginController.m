@@ -54,7 +54,10 @@
     timeLabel.text = @"";
     [self.codeButton addSubview:timeLabel];
     
-    
+    self.myImageView.layer.cornerRadius = 30;
+    self.myImageView.layer.masksToBounds = YES;
+    self.myImageView.layer.borderWidth = 1;
+    self.myImageView.layer.borderColor = [UIColor colorWithR:253 G:203 B:14 alpha:1].CGColor;
     
 }
 

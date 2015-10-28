@@ -138,7 +138,8 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
-
+    self.childCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
+    
    
  
 }
