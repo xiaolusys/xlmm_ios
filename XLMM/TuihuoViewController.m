@@ -58,9 +58,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)downlaodData{
     
+   // http://m.xiaolu.so/rest/v1/refunds
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"url = %@", kQuanbuDingdan_URL);
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kQuanbuDingdan_URL]];
+        NSLog(@"url = %@", urlstring);
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
         
         
@@ -79,89 +82,55 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
-        NSLog(@"您的积分列表为空");
+        NSLog(@"您的退货列表为空");
         return;
     }
-    
-    //NSLog(@"count = %@", [json objectForKey:@"count"]);
-    
-        NSArray *array = [json objectForKey:@"results"];
-    count = array.count;
-    
-        NSLog(@"array = %@", array);
-    
-    for (int i = 0; i<count; i++) {
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          //  NSLog(@"url = %@", kQuanbuDingdan_URL);
-            
-            
-            NSString * string = [[array objectAtIndex:i] objectForKey:@"orders"];
-            
-            
-            NSLog(@"url = %@", string);
-            
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-            [self performSelectorOnMainThread:@selector(fetchedtradeData:) withObject:data waitUntilDone:YES];
-            
-            
-        });
-        
-        
-        
-    }
-    
-    
-
-}
-
-- (void)fetchedtradeData:(NSData *)data{
-    
-    if (data == nil) {
-        return;
-    }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"json = %@", json);
-    
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
+        TuihuoModel *model = [TuihuoModel new];
+        model.ID = [[dic objectForKey:kID] integerValue];
+        model.url = [dic objectForKey:kURL];
+        model.refund_no = [dic objectForKey:kRefund_NO];
+        model.trade_id = [[dic objectForKey:kTrade_ID] integerValue];
+        model.order_id = [[dic objectForKey:kOrder_ID] integerValue];
+        model.buyer_id = [[dic objectForKey:kBuyer_ID] integerValue];
+        model.item_id = [[dic objectForKey:kItem_ID] integerValue];
+        model.title = [dic objectForKey:kTitle];
+        model.sku_id = [[dic objectForKey:kSku_ID] integerValue];
+        model.sku_name = [dic objectForKey:kSku_Name];
+        model.refund_num = [[dic objectForKey:kRefund_Num] integerValue];
+        model.buyer_nick = [dic objectForKey:kBuyer_Nick];
+        model.mobile = [dic objectForKey:kMobile];
+        model.phone = [dic objectForKey:kPhone];
+        model.total_fee = [[dic objectForKey:kTotal_Fee] floatValue];
+        model.payment = [[dic objectForKey:kPayment] floatValue];
+        model.created = [dic objectForKey:kCreated];
+        model.company_name = [dic objectForKey:kCompany_Name];
+        model.sid = [dic objectForKey:kSID];
+        model.reason = [dic objectForKey:kReason];
+        model.pic_path = [dic objectForKey:kPic_Path];
+        model.desc = [dic objectForKey:kDesc];
+        model.feedback = [dic objectForKey:kFeedback];
+        model.has_good_return = [[dic objectForKey:kHas_Good_Return] boolValue];
+        model.has_good_change = [[dic objectForKey:kHas_Good_Change] boolValue];
+        model.good_status = [[dic objectForKey:kGood_status] integerValue];
+        model.status = [[dic objectForKey:kStatus] integerValue];
+        model.refund_fee = [[dic objectForKey:kRefune_Fee] floatValue];
+        model.status_display = [dic objectForKey:kStatus_Display];
+        NSLog(@"model = %@", model);
         
-        if ([[dic objectForKey:@"refund_status"] integerValue] != 0) {
-            NSLog(@"加入退货列表");
-            OrderModel *model = [OrderModel new];
-            model.ID = [dic objectForKey:@"id"];
-             model.oID = [dic objectForKey:@"oid"];
-             model.item_id = [dic objectForKey:@"item_id"];
-             model.title = [dic objectForKey:@"title"];
-             model.sku_id = [dic objectForKey:@"sku_id"];
-             model.num = [dic objectForKey:@"num"];
-             model.outer_id = [dic objectForKey:@"outer_id"];
-             model.total_fee = [dic objectForKey:@"total_fee"];
-             model.payment = [dic objectForKey:@"payment"];
-             model.sku_name = [dic objectForKey:@"sku_name"];
-             model.pic_path = [dic objectForKey:@"pic_path"];
-             model.status = [dic objectForKey:@"status"];
-             model.status_display = [dic objectForKey:@"status_display"];
-             model.refund_status = [dic objectForKey:@"refund_status"];
-             model.refund_status_display = [dic objectForKey:@"refund_status_display"];
-//             model.ID = [dic objectForKey:@""];
-//             model.ID = [dic objectForKey:@""];
-            [self.dataArray addObject:model];
-            
-        }
-       
-    }
-    NSLog(@"data = %@", self.dataArray);
-
-    downloadCount ++;
-    NSLog(@"%ld,   %ld", (long)downloadCount, (long)count);
-    if (downloadCount == count) {
-        [self.collectionView reloadData];
-
-        NSLog(@"刷新数据");
-    }
+        
+        [self.dataArray addObject:model];
     
+    }
+    [self.collectionView reloadData];
+    
+    
+        
+        
 }
+
+
 
 
 - (void)createInfo{
@@ -223,17 +192,15 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     TuihuoCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
-   // TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    //cell.myImageView.image = [UIImage imagewithURLString:model.]
+
     
-    OrderModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.myImageView.image = [UIImage imagewithURLString:model.pic_path];
-    cell.infoLabel.text = model.refund_status_display;
-    cell.bianhao.text = [NSString stringWithFormat:@"%@", model.oID];
+    cell.infoLabel.text = model.status_display;
+    cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
     cell.zhuangtai.text = model.status_display;
-    cell.jine.text = [NSString stringWithFormat:@"¥%@", model.payment];
-    
+    cell.jine.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
+    cell.xiadanTime.text = model.created;
     
     return cell;
 }
@@ -251,9 +218,9 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    OrderModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    NSInteger status = [model.refund_status integerValue];
-    NSInteger orderid = [model.ID integerValue];
+    TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSInteger status = model.status;
+    NSInteger orderid = model.order_id;
     
     NSLog(@"status = %ld", (long)status);
     

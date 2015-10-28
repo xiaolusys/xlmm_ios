@@ -138,7 +138,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
-   // [self downloadData];
+
    
  
 }
@@ -313,7 +313,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGPoint point = scrollView.contentOffset;
     
-    NSLog(@"%f", point.y );
+    
     
     if (point.y > 260) {
         
@@ -408,13 +408,13 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     
     if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-        //  NSLog(@"没有集合页");
+          NSLog(@"没有集合页");
        
         model.picPath = [dic objectForKey:@"head_img"];
     } else{
         model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
         model.name = [model.productModel objectForKey:@"name"];
-        //  NSLog(@"----集合页----");
+          NSLog(@"----集合页----");
     }
     return model;
 }

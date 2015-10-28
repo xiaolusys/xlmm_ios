@@ -10,9 +10,9 @@
 
 @interface ModifyshenqingViewController : UIViewController
 
-@property (nonatomic, copy)NSString *oid;
-@property (nonatomic, copy)NSString *tid;
-@property (nonatomic, copy)NSString *itemid;
+@property (nonatomic, assign)NSInteger oid;
+@property (nonatomic, assign)NSInteger tid;
+@property (nonatomic, assign)NSInteger itemid;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;

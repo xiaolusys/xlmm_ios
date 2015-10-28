@@ -48,7 +48,7 @@
     
     [self createNavigationBarWithTitle:@"修改申请退货(款)" selecotr:@selector(backBUttonClicked:)];
     
-    NSLog(@"tid = %@ and oid = %@", self.tid, self.oid);
+//    NSLog(@"tid = %@ and oid = %@", self.tid, self.oid);
     
     self.refund_or_pro = 0;
     
@@ -77,9 +77,9 @@
     
     
    
-    NSLog(@"item_id = %@", self.itemid);
+//    NSLog(@"item_id = %@", self.itemid);
     //  http://192.168.1.63:8000/rest/v1/products/421
-    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, self.itemid];
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, self.itemid];
     NSLog(@"url = %@", urlstring);
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
@@ -105,7 +105,7 @@
 - (void)downloadData{
     
     //  http://192.168.1.63:8000/rest/v1/trades/217/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, self.tid];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%ld/details", Root_URL, self.tid];
     
     NSLog(@"url = %@", urlString);
     
@@ -128,8 +128,8 @@
     NSArray *array = [json objectForKey:@"orders"];
     for (NSDictionary *dic in array) {
         
-        NSLog(@"%@  ->  %@", self.oid, [dic objectForKey:@"id"]);
-        if ([self.oid isEqual: [dic objectForKey:@"id"]]) {
+        
+        if (self.oid == [[dic objectForKey:@"id"] integerValue]) {
             NSLog(@"找到了");
             NSLog(@"%@", dic);
             jsondic = dic;
@@ -441,8 +441,8 @@
             
             NSLog(@"1111");
             
-            NSDictionary *parameters = @{@"id":self.oid,
-                                         @"tid":self.tid,
+            NSDictionary *parameters = @{@"id":[NSNumber numberWithInteger:self.oid],
+                                         @"tid":[NSNumber numberWithInteger:self.tid],
                                          @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
                                          @"num":self.number.text,
                                          @"sum_price":self.myTextField2.text,

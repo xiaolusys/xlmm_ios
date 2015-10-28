@@ -51,23 +51,23 @@
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
-        self.backView.hidden = NO;
         
         if ([model.isSaleout boolValue]) {
-            
+            self.backView.hidden = NO;
+            NSLog(@"已抢光");
         } else{
             self.backView.hidden = YES;
-            
+            NSLog(@"未抢光");
         }
     } else{
         self.backView.hidden = NO;
-        
+        NSLog(@"已下架");
     }
 }
 
 - (void)fillData:( PromoteModel*)model{
     [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        //image = [UIImage grayscale:image];
+       
 
     }] ;
     self.imageView.layer.borderWidth = 1;
@@ -91,12 +91,30 @@
     
     if ([model.isSaleopen boolValue]) {
         NSLog(@"已上架");
-        if ([model.isSaleout boolValue]) {
-            NSLog(@"已抢光\n\n");
+        if (model.productModel == nil) {
+            if ([model.isSaleout boolValue]) {
+                NSLog(@"已抢光\n\n");
+                
+                self.backView.hidden = NO;
+                
+            } else {
+                NSLog(@"未抢光\n\n");
+                self.backView.hidden = YES;
+            }
+
         } else {
-            NSLog(@"未抢光\n\n");
-            self.backView.hidden = YES;
+            if ([model.isSaleout boolValue] && [[model.productModel objectForKey:@"is_single_spec"] boolValue]) {
+                NSLog(@"已抢光\n\n");
+                
+                self.backView.hidden = NO;
+                
+            } else {
+                NSLog(@"未抢光\n\n");
+                self.backView.hidden = YES;
+            }
+
         }
+        
     } else {
         self.backView.hidden = NO;
         NSLog(@"已下架\n\n");

@@ -42,9 +42,15 @@
     if (islogin) {
         [self.navigationController popViewControllerAnimated:NO];
     }
+    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
     
     NSArray *array = [self.navigationController viewControllers];
     NSLog(@"array = %@", array);
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
 }
 
 
@@ -52,8 +58,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //[self setInfo];
-    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    
     [self createNavigationBarWithTitle:@"小鹿美美" selecotr:@selector(btnClicked:)];
     
     NSString *strings = @"noncestr=1442995986abcdef&secret=3c7b4e3eb5ae4c&timestamp=1442995986";
@@ -179,58 +184,33 @@
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+  //  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     //  [self showAlertWait];
-    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-        NSLog(@"response = %@", httpResponse);
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"dictionary = %@", dictionary);
-        
-        NSLog(@"dataString = %@", str);
-        
-        
-        
-        //提示用户输入手机号和密码：
-        
-        if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
-       
-            if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
-                NSLog(@"未绑定手机号码");
-                isBangding = NO;
-                NSLog(@"11isBangDing = %d", isBangding);
-                
-                
-            } else {
-                NSLog(@"22已绑定手机号码");
-                isBangding = YES;
-                NSLog(@"22isBangDing = %d", isBangding);
-                
-            }
-        } else{
-//            NSLog(@"取消微信登录");
-//            isBangding = YES;
+    
+  NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+    NSLog(@"data");
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+    NSLog(@"dictionary = %@", dictionary);
+    if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
+
+        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
+            NSLog(@"未绑定手机号码");
+            isBangding = NO;
+            NSLog(@"11isBangDing = %d", isBangding);
+
+
+        } else {
+            NSLog(@"22已绑定手机号码");
+            isBangding = YES;
+            NSLog(@"22isBangDing = %d", isBangding);
+
         }
-        
-       
-    }];
+    }
+
+
     
-    UIView *backView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:backView];
-    backView.backgroundColor = [UIColor whiteColor];
-    [UIView animateWithDuration:1 animations:^{
-        backView.frame = CGRectMake(0, 0, SCREENWIDTH +1, SCREENHEIGHT +1);
-    } completion:^(BOOL finished) {
-        [backView removeFromSuperview];
-    }];
-    
-    
-    
- 
-    [self performSelector:@selector(loginSuccessful) withObject:nil afterDelay:0.5];
+   
+    [self loginSuccessful];
     
    
 
@@ -250,8 +230,8 @@
     [userdefaults synchronize];
     
     
-    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-    [notificationCenter removeObserver:self name:@"login" object:nil];
+//    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+//    [notificationCenter removeObserver:self name:@"login" object:nil];
 }
 
 - (void) loginSuccessful {

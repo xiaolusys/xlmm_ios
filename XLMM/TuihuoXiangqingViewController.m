@@ -66,36 +66,36 @@
    // NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
         TuihuoModel *model = [TuihuoModel new];
-        model.ID = [dic objectForKey:@"id"];
+        model.ID = [[dic objectForKey:@"id"] integerValue];
         model.url = [dic objectForKey:@"url"];
         model.refund_no = [dic objectForKey:@"refund_no"];
-        model.trade_id = [dic objectForKey:@"trade_id"];
-        model.order_id = [dic objectForKey:@"order_id"];
-        model.buyer_id = [dic objectForKey:@"buyer_id"];
-        model.item_id = [dic objectForKey:@"item_id"];
+        model.trade_id = [[dic objectForKey:@"trade_id"] integerValue];
+        model.order_id = [[dic objectForKey:@"order_id"] integerValue];
+        model.buyer_id = [[dic objectForKey:@"buyer_id"] integerValue];
+        model.item_id = [[dic objectForKey:@"item_id"]integerValue];
         model.title = [dic objectForKey:@"title"];
-        model.sku_id = [dic objectForKey:@"sku_id"];
+        model.sku_id = [[dic objectForKey:@"sku_id"] integerValue];
         model.sku_name = [dic objectForKey:@"sku_name"];
-        model.refund_num = [dic objectForKey:@"refund_num"];
+        model.refund_num = [[dic objectForKey:@"refund_num"] integerValue];
         model.buyer_nick = [dic objectForKey:@"buyer_nick"];
         model.mobile = [dic objectForKey:@"mobile"];
         model.phone = [dic objectForKey:@"phone"];
-        model.total_fee = [dic objectForKey:@"total_fee"];
-        model.payment = [dic objectForKey:@"payment"];
+        model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
+        model.payment = [[dic objectForKey:@"payment"] floatValue];
         model.created = [dic objectForKey:@"created"];
         model.company_name = [dic objectForKey:@"company_name"];
         model.sid = [dic objectForKey:@"sid"];
         model.reason = [dic objectForKey:@"reason"];
         model.desc = [dic objectForKey:@"desc"];
         model.feedback = [dic objectForKey:@"feedback"];
-        model.has_good_return = [dic objectForKey:@"has_good_return"];
-        model.has_good_change = [dic objectForKey:@"has_good_change"];
-        model.good_status = [dic objectForKey:@"good_status"];
-        model.status = [dic objectForKey:@"status"];
-        model.refund_fee = [dic objectForKey:@"refund_fee"];
+        model.has_good_return = [[dic objectForKey:@"has_good_return"] boolValue];
+        model.has_good_change = [[dic objectForKey:@"has_good_change"] boolValue];
+        model.good_status = [[dic objectForKey:@"good_status"] integerValue];
+        model.status = [[dic objectForKey:@"status"] integerValue];
+        model.refund_fee = [[dic objectForKey:@"refund_fee"] floatValue];
         
         [self.dataArray addObject:model];
-        NSLog(@"orderid === %@", model.order_id);
+        NSLog(@"orderid === %ld", model.order_id);
     }
     
     
@@ -116,33 +116,33 @@
         NSArray *array = [dictionary objectForKey:@"results"];
         for (NSDictionary *dic in array) {
             TuihuoModel *model = [TuihuoModel new];
-            model.ID = [dic objectForKey:@"id"];
+            model.ID = [[dic objectForKey:@"id"] integerValue];
             model.url = [dic objectForKey:@"url"];
             model.refund_no = [dic objectForKey:@"refund_no"];
-            model.trade_id = [dic objectForKey:@"trade_id"];
-            model.order_id = [dic objectForKey:@"order_id"];
-            model.buyer_id = [dic objectForKey:@"buyer_id"];
-            model.item_id = [dic objectForKey:@"item_id"];
+            model.trade_id = [[dic objectForKey:@"trade_id"] integerValue];
+            model.order_id = [[dic objectForKey:@"order_id"] integerValue];
+            model.buyer_id = [[dic objectForKey:@"buyer_id"] integerValue];
+            model.item_id = [[dic objectForKey:@"item_id"]integerValue];
             model.title = [dic objectForKey:@"title"];
-            model.sku_id = [dic objectForKey:@"sku_id"];
+            model.sku_id = [[dic objectForKey:@"sku_id"] integerValue];
             model.sku_name = [dic objectForKey:@"sku_name"];
-            model.refund_num = [dic objectForKey:@"refund_num"];
+            model.refund_num = [[dic objectForKey:@"refund_num"] integerValue];
             model.buyer_nick = [dic objectForKey:@"buyer_nick"];
             model.mobile = [dic objectForKey:@"mobile"];
             model.phone = [dic objectForKey:@"phone"];
-            model.total_fee = [dic objectForKey:@"total_fee"];
-            model.payment = [dic objectForKey:@"payment"];
+            model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
+            model.payment = [[dic objectForKey:@"payment"] floatValue];
             model.created = [dic objectForKey:@"created"];
             model.company_name = [dic objectForKey:@"company_name"];
             model.sid = [dic objectForKey:@"sid"];
             model.reason = [dic objectForKey:@"reason"];
             model.desc = [dic objectForKey:@"desc"];
             model.feedback = [dic objectForKey:@"feedback"];
-            model.has_good_return = [dic objectForKey:@"has_good_return"];
-            model.has_good_change = [dic objectForKey:@"has_good_change"];
-            model.good_status = [dic objectForKey:@"good_status"];
-            model.status = [dic objectForKey:@"status"];
-            model.refund_fee = [dic objectForKey:@"refund_fee"];
+            model.has_good_return = [[dic objectForKey:@"has_good_return"] boolValue];
+            model.has_good_change = [[dic objectForKey:@"has_good_change"] boolValue];
+            model.good_status = [[dic objectForKey:@"good_status"] integerValue];
+            model.status = [[dic objectForKey:@"status"] integerValue];
+            model.refund_fee = [[dic objectForKey:@"refund_fee"] floatValue];
             
             [self.dataArray addObject:model];
 
@@ -163,8 +163,8 @@
     NSLog(@"oredrID = %ld", (long)self.orderID);
     
     for (TuihuoModel *model in self.dataArray) {
-        NSLog(@"model.orderID = %@", model.order_id);
-        if ([model.order_id integerValue] == self.orderID) {
+        NSLog(@"model.orderID = %ld", model.order_id);
+        if (model.order_id == self.orderID) {
             xiangqing = model;
             NSLog(@"匹配到对应的orderID");
             
@@ -181,7 +181,7 @@
             UIView *myview = [arrayViews objectAtIndex:0];
             
             UILabel *label1 = (UILabel *)[myview viewWithTag:11];
-            label1.text = [NSString stringWithFormat:@"¥%@", xiangqing.refund_fee];
+            label1.text = [NSString stringWithFormat:@"¥%.1f", xiangqing.refund_fee];
             //label1.text = @"111";
             UILabel *label2 = (UILabel *)[myview viewWithTag:22];
             NSMutableString *string =[[NSMutableString alloc] initWithString:xiangqing.created];
@@ -265,10 +265,10 @@
             textField1.delegate = self;
             textField2.borderStyle = UITextBorderStyleNone;
             textField2.delegate = self;
-           NSString *itemID = xiangqing.item_id;
-            NSLog(@"item_id = %@", itemID);
+           NSInteger itemID = xiangqing.item_id;
+            NSLog(@"item_id = %ld", itemID);
             //  http://192.168.1.63:8000/rest/v1/products/421
-            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%@", Root_URL, itemID];
+            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, itemID];
             NSLog(@"url = %@", urlstring);
             
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
@@ -341,7 +341,7 @@
             UIView *myView = [arrayViews objectAtIndex:0];
             
             UILabel *label1 = (UILabel *)[myView viewWithTag:91];
-            label1.text = [NSString stringWithFormat:@"￥%@", xiangqing.refund_fee];
+            label1.text = [NSString stringWithFormat:@"￥%.1f", xiangqing.refund_fee];
             UILabel *label2 = (UILabel *)[myView viewWithTag:92];
             UILabel *label3 = (UILabel *)[myView viewWithTag:93];
             label3.text = xiangqing.refund_no;
@@ -386,7 +386,7 @@
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             UILabel *label1 = (UILabel *)[myView viewWithTag:11];
-            label1.text = [NSString stringWithFormat:@"¥%@", xiangqing.refund_fee];
+            label1.text = [NSString stringWithFormat:@"¥%.1f", xiangqing.refund_fee];
            
             
             UILabel *label2 = (UILabel *)[myView viewWithTag:22];
@@ -453,10 +453,10 @@
     NSLog(@"urlstring = %@", urlString);
     
     NSString *refund_or_pro;
-    if ([xiangqing.status isEqual:@"已付款"]) {
+    if (xiangqing.status == 0) {
         refund_or_pro = @"0";
         
-    } else if ([xiangqing.status isEqual:@"已发货"]){
+    } else if (xiangqing.status ==1){
         refund_or_pro = @"1";
     }else{
         refund_or_pro = @"1";
@@ -464,22 +464,22 @@
     NSLog(@"1111");
     
     
-    NSLog(@"%@",xiangqing.order_id );
-    NSLog(@"%@", xiangqing.trade_id);
-    NSLog(@"%@", refund_or_pro);
-    NSLog(@"%@", xiangqing.refund_num);
-    NSLog(@"%@", xiangqing.refund_fee);
-    NSLog(@"%@", xiangqing.feedback);
-    NSLog(@"%@", xiangqing.reason);
-    NSLog(@"%@", @2);
-    NSLog(@"%@", textField1.text);
-    NSLog(@"%@", textField2.text);
+//    NSLog(@"%@",xiangqing.order_id );
+//    NSLog(@"%@", xiangqing.trade_id);
+//    NSLog(@"%@", refund_or_pro);
+//    NSLog(@"%@", xiangqing.refund_num);
+//    NSLog(@"%@", xiangqing.refund_fee);
+//    NSLog(@"%@", xiangqing.feedback);
+//    NSLog(@"%@", xiangqing.reason);
+//    NSLog(@"%@", @2);
+//    NSLog(@"%@", textField1.text);
+//    NSLog(@"%@", textField2.text);
     //  NSLog(@"%@", );
-    NSDictionary *parameters = @{@"id":xiangqing.order_id,
-                                 @"tid":xiangqing.trade_id,
+    NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", xiangqing.order_id],
+                                 @"tid":[NSString stringWithFormat:@"%ld", xiangqing.trade_id],
                                  @"refund_or_pro":refund_or_pro,
-                                 @"num":xiangqing.refund_num,
-                                 @"sum_price":xiangqing.refund_fee,
+                                 @"num":[NSString stringWithFormat:@"%ld", xiangqing.refund_num],
+                                 @"sum_price":[NSString stringWithFormat:@"%.1f", xiangqing.refund_fee],
                                  @"feedback":xiangqing.feedback,
                                  @"reason":xiangqing.reason,
                                  @"modify":@2,

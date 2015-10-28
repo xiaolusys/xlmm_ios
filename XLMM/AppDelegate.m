@@ -263,6 +263,10 @@
             NSDictionary *dic = @{@"code":code};
             NSLog(@"dic11111 = %@", dic);
             
+        }else {
+            NSLog(@"取消登录");
+            NSLog(@"88888888888");
+            return;
         }
         //获取token和openid；
         [self getAccess_token];
@@ -354,7 +358,7 @@
                 //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
                 NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
                 
-                NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object: self ];
+                NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object:self];
                 NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
                 [notificationCenter postNotification: broadcastMessage];
                 
