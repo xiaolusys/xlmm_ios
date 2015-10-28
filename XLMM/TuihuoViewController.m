@@ -13,6 +13,7 @@
 #import "OrderModel.h"
 #import "TuihuoXiangqingViewController.h"
 #import "UIViewController+NavigationBar.h"
+#import "UIImageView+WebCache.h"
 
 @interface TuihuoViewController ()
 
@@ -195,7 +196,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
     
     TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    cell.myImageView.image = [UIImage imagewithURLString:model.pic_path];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     cell.infoLabel.text = model.status_display;
     cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
     cell.zhuangtai.text = model.status_display;
