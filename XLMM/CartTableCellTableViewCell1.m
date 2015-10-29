@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 
-#import "CartTableCellTableViewCell.h"
+#import "CartTableCellTableViewCell1.h"
 #import "MMClass.h"
 
-@implementation CartTableCellTableViewCell
+@implementation CartTableCellTableViewCell1
 
 - (void)awakeFromNib {
     // Initialization code
@@ -22,7 +22,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         // Initialization code
-        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CartTableCellTableViewCell" owner:self options:nil];
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CartTableCellTableViewCell1" owner:self options:nil];
         if (arrayOfViews.count < 1) {
             return nil;
         }
@@ -37,7 +37,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -51,7 +51,7 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(deleteCartView:)]) {
             [self.delegate deleteCartView:_cartModel];
         }
-       
+        
     }else{
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(reduceNumber:)]) {

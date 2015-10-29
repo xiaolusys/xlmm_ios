@@ -7,7 +7,7 @@
 //
 
 #import "CartViewController.h"
-#import "CartTableCellTableViewCell.h"
+#import "CartTableCellTableViewCell1.h"
 #import "MMClass.h"
 #import "ShoppingCartModel.h"
 #import "AFNetworking.h"
@@ -63,6 +63,7 @@
     if (data == nil) {
         return;
     }
+    [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
@@ -178,6 +179,10 @@
         label.textAlignment = NSTextAlignmentLeft;
         label.text = [NSString stringWithFormat:@"总金额￥%.1f",allPrice];
         [cell.contentView addSubview:label];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 1)];
+        lineView.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+        [cell.contentView addSubview:lineView];
+        
         
         if (allPrice - 150 >= 0) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
@@ -212,12 +217,8 @@
     NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
     
   
-    CartTableCellTableViewCell *cell = (CartTableCellTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CartTableCellTableViewCell" owner:nil options:nil];
-        cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
+    CartTableCellTableViewCell1 *cell = (CartTableCellTableViewCell1 *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+   
     NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     cell.cartModel= model;
     cell.delegate = self;

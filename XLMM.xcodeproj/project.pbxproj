@@ -39,6 +39,8 @@
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; };
+		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
+		321EA39B1BE2279D009A45DE /* CartTableCellTableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
@@ -644,6 +646,9 @@
 		321C8D9E1BD8E22A0060FB62 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableCellTableViewCell1.h; sourceTree = "<group>"; };
+		321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableCellTableViewCell1.m; sourceTree = "<group>"; };
+		321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableCellTableViewCell1.xib; sourceTree = "<group>"; };
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
@@ -1319,6 +1324,9 @@
 				327FC2601B9AF1CD00F111B3 /* CartCollectionCell.h */,
 				327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */,
 				327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */,
+				321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */,
+				321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */,
+				321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */,
 				32891B5D1B81D1B7007E562A /* CartTableCellTableViewCell.h */,
 				32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */,
 				32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */,
@@ -2135,6 +2143,7 @@
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
+				321EA39B1BE2279D009A45DE /* CartTableCellTableViewCell1.xib in Resources */,
 				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2326,6 +2335,7 @@
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
+				321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
