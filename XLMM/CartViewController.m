@@ -172,7 +172,9 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 120, 24)];
-        label.font = [UIFont systemFontOfSize:14];
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+        
         label.textAlignment = NSTextAlignmentLeft;
         label.text = [NSString stringWithFormat:@"总金额￥%.1f",allPrice];
         [cell.contentView addSubview:label];
@@ -180,13 +182,15 @@
         if (allPrice - 150 >= 0) {
             
         } else {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(130, 8, 150, 24)];
-            label.font = [UIFont systemFontOfSize:14];
-            label.textAlignment = NSTextAlignmentLeft;
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
+            label.numberOfLines = 0;
+            label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentRight;
             label.text = [NSString stringWithFormat:@"还差%.1f元,可用优惠券", 150 - allPrice];
             [cell.contentView addSubview:label];
         
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, 8, 35, 20)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 40, 8, 35, 20)];
             imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
             [cell.contentView addSubview:imageView];
             
