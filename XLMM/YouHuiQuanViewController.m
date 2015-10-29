@@ -44,22 +44,115 @@ static NSString *ksimpleCell = @"youhuiCell";
    // self.containerView.hidden = YES;
     
     [self downLoadData];
+    if (self.isSelectedYHQ == YES) {
+        [self.myCollectionView reloadData];
+    } else {
+        [self downLoadOtherDate];
+        
+    }
+    
+    
+    
+    
+}
+- (void)downLoadOtherDate{
+    
+     //  http://192.168.1.31:9000/rest/v1/usercoupons/list_past_coupon.json
+    
+    NSString *urlString;
+    urlString = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/list_past_coupon", Root_URL];
+    NSLog(@"url = %@", urlString);
+    while (true) {
+       
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        NSLog(@"data = %@", data);
+        if (data == nil) {
+            NSLog(@"下载失败");
+            break;
+        } else{
+            NSLog(@"下载成功");
+        }
+    
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"json = %@", dictionary);
+        
+       urlString = [dictionary objectForKey:@"next"];
+        
+        
+        NSArray *array = [dictionary objectForKey:@"results"];
+        for (NSDictionary *dic in array) {
+            YHQModel *model1 = [YHQModel new];
+            model1.ID = [dic objectForKey:@"id"];
+            model1.coupon_no = [dic objectForKey:@"coupon_no"];
+            model1.coupon_type = [dic objectForKey:@"coupon_type"];
+            model1.coupon_value = [dic objectForKey:@"coupon_value"];
+            model1.created = [dic objectForKey:@"created"];
+            model1.customer = [dic objectForKey:@"customer"];
+            model1.deadline = [dic objectForKey:@"deadline"];
+            model1.poll_status = [dic objectForKey:@"poll_status"];
+            
+            model1.sale_trade = [dic objectForKey:@"sale_trade"];
+            model1.status = [dic objectForKey:@"status"];
+            model1.title = [dic objectForKey:@"title"];
+            model1.valid = [dic objectForKey:@"valid"];
+            [self.dataArray addObject:model1];
+        }
+        if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
+            NSLog(@"下页为空");
+            break;
+        }
+        
+    }
+    NSLog(@"dataArray = %ld", self.dataArray.count);
+    
+    
+    
+    
+    
+    
+    
+    [self.myCollectionView reloadData];
+
+    
+    
 }
 
 - (void)downLoadData{
     NSString *urlString = [NSString stringWithFormat:@"%@", KUserCoupins_URL];
     NSLog(@"url = %@", urlString);
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-    if (data == nil) {
-        return;
-    }
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"array = %@", array);
-    for (NSDictionary *dic in array) {
-        if (self.isSelectedYHQ == YES) {
-            if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ]!= 2) {
+    while (true) {
+        
+    
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        if (data == nil) {
+            return;
+        }
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"json = %@", dictionary);
+        NSArray *array = [dictionary objectForKey:@"results"];
+        for (NSDictionary *dic in array) {
+            if (self.isSelectedYHQ == YES) {
+                if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ]!= 2) {
+                    
+             
+                    YHQModel *model1 = [YHQModel new];
+                    model1.ID = [dic objectForKey:@"id"];
+                    model1.coupon_no = [dic objectForKey:@"coupon_no"];
+                    model1.coupon_type = [dic objectForKey:@"coupon_type"];
+                    model1.coupon_value = [dic objectForKey:@"coupon_value"];
+                    model1.created = [dic objectForKey:@"created"];
+                    model1.customer = [dic objectForKey:@"customer"];
+                    model1.deadline = [dic objectForKey:@"deadline"];
+                    model1.poll_status = [dic objectForKey:@"poll_status"];
+                    
+                    model1.sale_trade = [dic objectForKey:@"sale_trade"];
+                    model1.status = [dic objectForKey:@"status"];
+                    model1.title = [dic objectForKey:@"title"];
+                    model1.valid = [dic objectForKey:@"valid"];
+                    [self.dataArray addObject:model1];
+                }
                 
-         
+            } else {
                 YHQModel *model1 = [YHQModel new];
                 model1.ID = [dic objectForKey:@"id"];
                 model1.coupon_no = [dic objectForKey:@"coupon_no"];
@@ -76,45 +169,24 @@ static NSString *ksimpleCell = @"youhuiCell";
                 model1.valid = [dic objectForKey:@"valid"];
                 [self.dataArray addObject:model1];
             }
-            
-        } else {
-            YHQModel *model1 = [YHQModel new];
-            model1.ID = [dic objectForKey:@"id"];
-            model1.coupon_no = [dic objectForKey:@"coupon_no"];
-            model1.coupon_type = [dic objectForKey:@"coupon_type"];
-            model1.coupon_value = [dic objectForKey:@"coupon_value"];
-            model1.created = [dic objectForKey:@"created"];
-            model1.customer = [dic objectForKey:@"customer"];
-            model1.deadline = [dic objectForKey:@"deadline"];
-            model1.poll_status = [dic objectForKey:@"poll_status"];
-            
-            model1.sale_trade = [dic objectForKey:@"sale_trade"];
-            model1.status = [dic objectForKey:@"status"];
-            model1.title = [dic objectForKey:@"title"];
-            model1.valid = [dic objectForKey:@"valid"];
-            [self.dataArray addObject:model1];
-            
-           
-            for (int i = 0, j = 0; j<self.dataArray.count; i++, j++) {
-                YHQModel *model3 = [self.dataArray objectAtIndex:i];
-                if ([model3.poll_status integerValue] == 2) {
-                    [self.dataArray removeObjectAtIndex:i];
-                    [self.dataArray addObject:model3];
-                    i--;
-                    
-                }
-              
-                
-                
-                
-            }
-            
-            
+        }
+        urlString = [dictionary objectForKey:@"next"];
+        if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
+            NSLog(@"下页为空");
+            break;
         }
     }
-    [self.myCollectionView reloadData];
+    NSLog(@"self.dataArray = %@", self.dataArray);
+    
+    
+    
+    
+    
     
 }
+
+
+
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
@@ -157,11 +229,21 @@ static NSString *ksimpleCell = @"youhuiCell";
         cell.myimageView.image = [UIImage imageNamed:@"yhq_valid.jpg"];
     }
     cell.name1.text = model2.title;
-    if ([model2.poll_status integerValue] == 2) {
-         cell.name2.text = @"已过期";
-    }else{
-    cell.name2.text = @"";
+    if ([model2.status integerValue] == 1) {
+        //优惠券已使用
+        cell.name2.text = @"已使用";
+    } else {
+        //优惠券未使用
+        if ([model2.poll_status integerValue] == 2) {
+            //优惠券已过期
+            cell.name2.text = @"已过期";
+        }else{
+            //
+             cell.name2.text = @"";
+        }
     }
+   
+   
 //    cell.name2.text = @"";
     cell.time1.text = model2.created;
     cell.time2.text = model2.deadline;

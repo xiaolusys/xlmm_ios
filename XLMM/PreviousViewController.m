@@ -391,8 +391,10 @@ static NSString *khead2View = @"head2View";
         model.picPath = [dic objectForKey:@"head_img"];
 
     } else{
-        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-        model.name = [model.productModel objectForKey:@"name"];
+        if ([[model.productModel objectForKey:@"head_imgs"] count] != 0) {
+            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+            
+        }        model.name = [model.productModel objectForKey:@"name"];
         // NSLog(@"*************");
     }
     

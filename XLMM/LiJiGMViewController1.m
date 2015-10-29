@@ -47,7 +47,6 @@
 
     self.containterWidth.constant = [UIScreen mainScreen].bounds.size.width;
     [self downloadAddressData];
-    [self downloadYouhuiData];
 
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
@@ -133,32 +132,7 @@
         
     });
 }
-- (void)downloadYouhuiData{
-    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json", Root_URL];
-    NSURL *url = [NSURL URLWithString:urlstring];
-    NSLog(@"url = %@", urlstring);
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSError *error = nil;
-    if (data == nil) {
-        return;
-    }
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"youhuiquan = %@", array);
-    NSInteger number = 0;
-    for (NSDictionary *dic in array) {
-        NSLog(@"dic = %@", dic);
-        if ([[dic objectForKey:@"status"]integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue]!= 2) {
-            NSLog(@"可用优惠券");
-            number++;
-            
-            NSLog(@"可用优惠券(%ld)", (long)number);
-        }
-    }
-    self.usableNumber.text = [NSString stringWithFormat:@"可用优惠券（%ld）", (long)number];
-    
-    
-    // http://m.xiaolu.so/rest/v1/usercoupons
-}
+
 
 
 - (void)setDetailsInfo{

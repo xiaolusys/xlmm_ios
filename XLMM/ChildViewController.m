@@ -178,6 +178,8 @@ static NSString * ksimpleCell = @"simpleCell";
         NSLog(@"数据解析失败");
         return;
     }
+    NSLog(@"json = %@", json);
+    
     NSArray *array = [json objectForKey:@"results"];
     if (array.count == 0) {
         NSLog(@"数据解析失败");
@@ -413,7 +415,15 @@ static NSString * ksimpleCell = @"simpleCell";
        
         model.picPath = [dic objectForKey:@"head_img"];
     } else{
-        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+        if ([[model.productModel objectForKey:@"head_imgs"] count] != 0) {
+
+            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+
+        }
+        else {
+            model.picPath = [dic objectForKey:@"head_img"];
+
+        }
         model.name = [model.productModel objectForKey:@"name"];
           NSLog(@"----集合页----");
     }

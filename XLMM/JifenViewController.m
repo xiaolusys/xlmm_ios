@@ -80,7 +80,7 @@ static NSString * const reuseIdentifier = @"jifenCell";
     
     NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
-        if ([[dic objectForKey:@"log_status"] integerValue] == 1) {
+        if ([[dic objectForKey:@"log_status"] integerValue] == 0) {
         
             JiFenModel *model = [JiFenModel new];
             model.ID = [dic objectForKey:@"id"];
@@ -111,14 +111,7 @@ static NSString * const reuseIdentifier = @"jifenCell";
     
     [self.collectionView reloadData];
 
-//    array = (
-//             {
-//                 "order_id" = 149;
-//                 "order_status" = 2;
-//                 "pic_link" = "http://i00.c.aliimg.com/img/ibank/2014/153/943/1449349351_72023587.310x310.jpg";
-//                 "trade_id" = 234;
-//             }
-//             )
+
     
  
     

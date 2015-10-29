@@ -196,7 +196,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
     
     TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+    if (model.pic_path == nil) {
+        
+    } else {
+        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+        
+    }
     cell.infoLabel.text = model.status_display;
     cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
     cell.zhuangtai.text = model.status_display;

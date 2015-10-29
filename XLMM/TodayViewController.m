@@ -44,7 +44,6 @@ static NSString *khead2View = @"head2View";
 
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
-    
     BOOL _isFirst;
     BOOL step1;
     BOOL step2;
@@ -59,7 +58,6 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   // self.navigationController.navigationBarHidden = YES;
     
  
 }
@@ -67,13 +65,7 @@ static NSString *khead2View = @"head2View";
 - (void)viewDidAppear:(BOOL)animated
 {
     
-//    CGFloat topddistince =  self.myCollectionView.contentOffset.y ;
-//    NSLog(@"%f", topddistince);
-//    if (topddistince > 160) {
-//        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-//            [self.delegate hiddenNavigation];
-//        }
-//    }
+
     [super viewDidAppear:animated];
     if (_isFirst) {
         //集成刷新控件
@@ -152,9 +144,6 @@ static NSString *khead2View = @"head2View";
     [self createCollectionView];
  
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    
-
-    
 }
 
 
@@ -203,6 +192,7 @@ static NSString *khead2View = @"head2View";
     }
     childTimeLabel.text = string;
     ladyTimeLabel.text = string;
+    
 }
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -215,7 +205,6 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = NO;
     self.myCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
-   // self.myCollectionView.backgroundColor = [UIColor colorWithR:228 G:228 B:228 alpha:1];
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:kposterView];
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
@@ -265,10 +254,10 @@ static NSString *khead2View = @"head2View";
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     NSLog(@"childDic = %@", childDic);
-//    if (childDic == nil) {
-//        NSLog(@"海报为空");
-//        return;
-//    }
+    if (childDic == nil) {
+        NSLog(@"海报为空");
+        return;
+    }
     NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
@@ -341,6 +330,10 @@ static NSString *khead2View = @"head2View";
     
     
     NSArray *childArray = [promoteDic objectForKey:@"child_list"];
+    if (childArray.count == 0) {
+        NSLog(@"列表为空");
+        return;
+    }
     if (![childArray isKindOfClass:[NSArray class]]) {
         NSLog(@"数据失败");
         return;
@@ -405,8 +398,10 @@ static NSString *khead2View = @"head2View";
             model.picPath = [dic objectForKey:@"head_img"];
             
         } else{
-            
-            model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+            if ([[model.productModel objectForKey:@"head_imgs"] count] != 0) {
+                model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+                
+            }
             model.name = [model.productModel objectForKey:@"name"];
             
         }

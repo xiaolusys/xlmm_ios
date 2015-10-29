@@ -132,7 +132,7 @@
 }
 
 - (void)createDefaultView{
-    
+    singleton.cartsView.hidden = YES;
     
     UIImage *image = [UIImage imageNamed:@"logo.png"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];

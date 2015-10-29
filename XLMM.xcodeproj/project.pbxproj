@@ -24,7 +24,6 @@
 		32151C001B96EA4A003569D7 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */; };
 		32151C011B96EA4A003569D7 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32151BFD1B96EA4A003569D7 /* read_me.txt */; };
 		3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132B1BD76CCC00D3D036 /* NSArray+Log.m */; };
-		3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */; };
 		321813611BD7961700D3D036 /* MMSizeChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321813601BD7961700D3D036 /* MMSizeChartView.m */; };
 		321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */ = {isa = PBXBuildFile; fileRef = 321928BB1BDB7EB8004EA6A7 /* alltrades.png */; };
 		321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 321928BE1BDB7EB8004EA6A7 /* coupon.png */; };
@@ -624,8 +623,6 @@
 		32151BFF1B96EA4A003569D7 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		3218132A1BD76CCC00D3D036 /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
 		3218132B1BD76CCC00D3D036 /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
-		3218132D1BD76CF900D3D036 /* NSDictionary+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Log.h"; sourceTree = "<group>"; };
-		3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
 		3218135F1BD7961700D3D036 /* MMSizeChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSizeChartView.h; sourceTree = "<group>"; };
 		321813601BD7961700D3D036 /* MMSizeChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSizeChartView.m; sourceTree = "<group>"; };
 		321928BB1BDB7EB8004EA6A7 /* alltrades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alltrades.png; sourceTree = "<group>"; };
@@ -1818,8 +1815,6 @@
 				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
 				3218132A1BD76CCC00D3D036 /* NSArray+Log.h */,
 				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
-				3218132D1BD76CF900D3D036 /* NSDictionary+Log.h */,
-				3218132E1BD76CF900D3D036 /* NSDictionary+Log.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2375,7 +2370,6 @@
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
 				327FC2631B9AF1CD00F111B3 /* CartCollectionCell.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
-				3218132F1BD76CF900D3D036 /* NSDictionary+Log.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
