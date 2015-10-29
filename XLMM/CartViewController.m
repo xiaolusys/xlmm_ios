@@ -180,7 +180,17 @@
         [cell.contentView addSubview:label];
         
         if (allPrice - 150 >= 0) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
+            label.numberOfLines = 0;
+            label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentRight;
+            label.text = [NSString stringWithFormat:@"有可用优惠券"];
+            [cell.contentView addSubview:label];
             
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 40, 8, 35, 20)];
+            imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
+            [cell.contentView addSubview:imageView];
         } else {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
             label.numberOfLines = 0;
@@ -212,17 +222,18 @@
     cell.cartModel= model;
     cell.delegate = self;
     cell.myImageView.layer.borderWidth = 0.5;
-    cell.myImageView.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
-    cell.myImageView.layer.cornerRadius = 10;
+    cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    cell.myImageView.layer.cornerRadius = 5;
     cell.myImageView.layer.masksToBounds = YES;
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
     
     cell.nameLabel.text = model.title;
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
 
-    
+//    cell.contentView.backgroundColor = [UIColor redColor];
     cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
     cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+
     cell.sizeLabel.text = model.sku_name;
     
     return cell;
@@ -230,7 +241,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == self.dataArray.count) {
-        return 300;
+        return 60;
     }
     return 110;
 }

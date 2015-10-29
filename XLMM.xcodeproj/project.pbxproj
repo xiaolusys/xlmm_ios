@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32088DD61BE20A7300A33FC9 /* back_image2.png */; };
 		320AC9381B6F6CFE003EABB6 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */; };
 		320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */; };
 		320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 320B30061BB90002006C4FC4 /* LiJiGMViewController1.m */; };
@@ -596,6 +597,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32088DD61BE20A7300A33FC9 /* back_image2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_image2.png; sourceTree = "<group>"; };
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController.xib; sourceTree = "<group>"; };
@@ -1127,6 +1129,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32088DD61BE20A7300A33FC9 /* back_image2.png */,
 				3286F2FC1BE0BEAA00C8A775 /* childImage.png */,
 				3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */,
 				32D2B7911BDDF59100603FCE /* rightArrow.png */,
@@ -2095,6 +2098,7 @@
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
+				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
@@ -2591,7 +2595,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "0f2c0509-efd7-4b3b-9fe2-87cf53370b69";
@@ -2629,7 +2633,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "0f2c0509-efd7-4b3b-9fe2-87cf53370b69";
 				SDKROOT = iphoneos;
@@ -2649,7 +2653,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2688,7 +2692,7 @@
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

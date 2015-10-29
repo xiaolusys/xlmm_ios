@@ -23,7 +23,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
-                    <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="5qC-Iw-sDg"/>
                         <outlet property="delegate" destination="-1" id="Up7-me-wgg"/>
@@ -122,7 +121,7 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="WKd-7n-c8d" firstAttribute="leading" secondItem="vqG-3j-YB4" secondAttribute="trailing" constant="71" id="Dy5-HQ-1oC">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="u7N-le-ZFh" secondAttribute="bottom" id="EhV-KL-BBk">
                     <variation key="heightClass=regular-widthClass=compact" constant="90"/>
@@ -131,6 +130,9 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="90"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="tws-zf-Qgq" secondAttribute="bottom" constant="8" id="NVf-xQ-pVR"/>
+                <constraint firstItem="vqG-3j-YB4" firstAttribute="baseline" secondItem="WKd-7n-c8d" secondAttribute="baseline" id="Okz-aM-2JL">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-2"/>
+                </constraint>
                 <constraint firstItem="tws-zf-Qgq" firstAttribute="top" secondItem="Um7-cX-XnX" secondAttribute="bottom" constant="231" id="TkV-U5-s9L">
                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                 </constraint>
@@ -144,7 +146,6 @@
                 </constraint>
                 <constraint firstItem="tws-zf-Qgq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="ema-qN-JS3"/>
                 <constraint firstItem="Um7-cX-XnX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fKU-1U-q8S"/>
-                <constraint firstItem="WKd-7n-c8d" firstAttribute="bottom" secondItem="vqG-3j-YB4" secondAttribute="bottom" id="jM8-Gz-fA8"/>
                 <constraint firstAttribute="trailing" secondItem="u7N-le-ZFh" secondAttribute="trailing" id="k2j-GX-hUI"/>
                 <constraint firstItem="5xa-h8-S1m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="88" id="o84-zE-w8X">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -177,10 +178,10 @@
                     <exclude reference="M6Q-Qk-zQi"/>
                     <exclude reference="sLB-uK-Bkl"/>
                     <exclude reference="wbt-nZ-UnK"/>
+                    <exclude reference="Okz-aM-2JL"/>
                     <exclude reference="zWh-DI-v3k"/>
                     <exclude reference="5Uy-PN-5hX"/>
                     <exclude reference="Dy5-HQ-1oC"/>
-                    <exclude reference="jM8-Gz-fA8"/>
                     <exclude reference="NVf-xQ-pVR"/>
                     <exclude reference="TkV-U5-s9L"/>
                     <exclude reference="ZZp-dK-xbv"/>
@@ -212,10 +213,10 @@
                     <include reference="M6Q-Qk-zQi"/>
                     <include reference="sLB-uK-Bkl"/>
                     <include reference="wbt-nZ-UnK"/>
+                    <include reference="Okz-aM-2JL"/>
                     <include reference="zWh-DI-v3k"/>
                     <include reference="5Uy-PN-5hX"/>
                     <include reference="Dy5-HQ-1oC"/>
-                    <include reference="jM8-Gz-fA8"/>
                     <include reference="NVf-xQ-pVR"/>
                     <include reference="TkV-U5-s9L"/>
                     <include reference="ZZp-dK-xbv"/>

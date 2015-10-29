@@ -20,11 +20,21 @@
     self.navigationItem.titleView = label;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image.png"]];
-    imageView.frame = CGRectMake(-4, 14, 22, 22);
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
+    imageView.frame = CGRectMake(0, 14, 22, 22);
     [button addSubview:imageView];
     [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    button.backgroundColor = [UIColor orangeColor];
+    
+//    
+//    if(([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0?20:0)){
+//        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//        negativeSpacer.width = -16;
+//        self.navigationItem.leftBarButtonItems = @[negativeSpacer, leftItem];
+//    }else {
+//     self.navigationItem.leftBarButtonItem = leftItem;
+//    }
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 

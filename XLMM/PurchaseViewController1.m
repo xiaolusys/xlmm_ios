@@ -202,7 +202,7 @@
      
         cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
         cartOwner.myImageView.layer.masksToBounds = YES;
-        cartOwner.myImageView.layer.cornerRadius = 8;
+        cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;
         cartOwner.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
         
