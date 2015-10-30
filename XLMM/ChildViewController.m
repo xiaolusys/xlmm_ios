@@ -58,6 +58,7 @@ static NSString * ksimpleCell = @"simpleCell";
         NSLog(@"0000");
      //   [self.view addSubview:[views objectAtIndex:0]];
     }
+   
     return self;
 }
 
@@ -134,7 +135,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewDidLoad];
     
 
-    [self.tuijianButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//    [self.tuijianButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
@@ -144,7 +145,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
-    self.topdistant.constant = 64;
+    self.topdistant.constant = 0;
     NSLog(@"%ld",(long) self.topdistant.constant);
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
     
