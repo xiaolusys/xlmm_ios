@@ -25,12 +25,13 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
+//待收货订单。。。。。。
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"待收货订单";
      [self.collectionView registerClass:[ShouHuoCollectionViewCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
-    //[self createInfo];
     [self createNavigationBarWithTitle:@"待收货订单" selecotr:@selector(btnClicked:)];
     [self downlaodData];
     [self.view addSubview:[[UIView alloc] init]];
@@ -48,7 +49,10 @@
 //   http://192.168.1.79:8000/rest/v1/trades
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"wait send = %@", kWaitsend_List_URL);
+        
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
+        
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
         
         
@@ -58,10 +62,14 @@
 
 - (void)fetchedWaipayData:(NSData *)data{
     if (data == nil) {
+        NSLog(@"下载失败");
         return;
     }
-    
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"解析出错");
+    }
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"无待支付列表");
@@ -69,8 +77,10 @@
     }
     
     self.dataArray = [json objectForKey:@"results"];
+    
+    
     NSLog(@"dataArray = %@", self.dataArray);
-    //self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120*self.dataArray.count);
+   
     [self.collectionView reloadData];
     
     
@@ -78,47 +88,21 @@
 }
 
 
-
-
-
-
-- (void)createInfo{
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"待收货订单";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 12, 12, 22);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-    
-}
-
-
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark -----CollectionViewDelegate-----
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);
     
 }
+
+//定义Cell 的高度。。。。。
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(SCREENWIDTH, 140);
 }
+
+//返回列表的个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
@@ -127,7 +111,9 @@
     ShouHuoCollectionViewCell *cell = (ShouHuoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
+    
     NSString *status = [dic objectForKey:@"status_display"];
+    
     NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
     NSRange range = [string rangeOfString:@"T"];
     //    [string deleteCharactersInRange:range];
@@ -137,6 +123,7 @@
     [string replaceCharactersInRange:range withString:@"/"];
     range = [string rangeOfString:@"-"];
     [string replaceCharactersInRange:range withString:@"/"];
+    
     cell.xiadanshijianLabel.text = string;
     cell.zhuangtaiLabel.text = [dic objectForKey:@"status_display"];
     cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",[[dic objectForKey:@"payment"] floatValue]];
@@ -155,7 +142,8 @@
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         [cell.contentView addSubview:button];
     }
- return cell;
+    
+    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

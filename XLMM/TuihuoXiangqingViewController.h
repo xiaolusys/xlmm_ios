@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TuihuoModel.h"
 
 @interface TuihuoXiangqingViewController : UIViewController
 
-@property (nonatomic, assign) NSInteger status;
-@property (nonatomic, assign) NSInteger orderID;
+
+
+@property (nonatomic, strong) TuihuoModel *model;
 
 
 

@@ -21,6 +21,7 @@
 
 #define kSimpleCellIdentifier @"simpleCell"
 
+//全部订单界面
 
 @interface PersonCenterViewController3 ()
 
@@ -142,8 +143,11 @@
 
     [self.quanbuCollectionView registerClass:[QuanbuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     
-//    [self createInfo];
     [self downloadData];
+}
+
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)downloadData{
@@ -173,11 +177,11 @@
         model.dingdanTime = [dic objectForKey:@"created"];
         model.dingdanZhuangtai = [dic objectForKey:@"status_display"];
         model.dingdanJine = [dic objectForKey:@"total_fee"];
+        
         [dataArray addObject:model];
     }
     NSLog(@"dataArray = %@", dataArray);
-//    [activityView stopAnimating];
-//    [activityView removeFromSuperview];
+
     [self.quanbuCollectionView reloadData];
     
     
@@ -192,33 +196,6 @@
         [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
         
     });
-}
-
-- (void)createInfo{
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"全部订单";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 12, 12, 22);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-    
-}
-
-
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -251,10 +228,71 @@
     cell.zhuangtaiLabel.text = model.dingdanZhuangtai;
     cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",  [model.dingdanJine floatValue]];
     
-    
+    if ([model.dingdanZhuangtai isEqualToString:@"已发货"]) {
+        NSLog(@"已经发货");
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 66, 6, 60, 32)];
+        button.tag = indexPath.row +100;
+        
+        [button setTitle:@"确认签收" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor colorWithR:250 G:172 B:20 alpha:1];
+        button.layer.cornerRadius = 6;
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
+        [cell.contentView addSubview:button];
+    }
     return cell;
     
 }
+
+- (void)querenQianshou:(UIButton *)button{
+    NSLog(@"tag = %ld", (long)button.tag);
+    DingdanModel *model = [dataArray objectAtIndex:(button.tag - 100)];
+    NSLog(@"dic = %@", model.dingdanID);
+    //http://m.xiaolu.so/rest/v1/trades
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/confirm_sign", Root_URL, model.dingdanID];
+    
+    NSLog(@"urlString = %@", urlString);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+    
+}
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSLog(@"111 : %@", response);
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"222 : %@", dic);
+    
+    
+    NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    NSLog(@"3333 : %@", connection);
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"error");
+    
+}
+
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%@", indexPath);

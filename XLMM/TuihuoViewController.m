@@ -196,8 +196,8 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
     
     TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    if (model.pic_path == nil) {
-        
+    if (model.pic_path == nil || [model.pic_path class] == [NSNull class] || [model.pic_path isEqualToString:@""]) {
+        cell.myImageView.image = nil;
     } else {
         [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
         
@@ -230,15 +230,14 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    NSInteger status = model.status;
-    NSInteger orderid = model.order_id;
-    
-    NSLog(@"status = %ld", (long)status);
+   
     
     TuihuoXiangqingViewController *xiangqingVC = [[TuihuoXiangqingViewController alloc] init];
-    xiangqingVC.status = status;
-    xiangqingVC.orderID = orderid;
-    NSLog(@"status = %ld & id = %ld", (long)xiangqingVC.status, (long)xiangqingVC.orderID);
+
+    xiangqingVC.model = model;
+    
+    NSLog(@"refundmodel = %@", xiangqingVC.model);
+    
     
     [self.navigationController pushViewController:xiangqingVC animated:YES];
     

@@ -442,13 +442,12 @@
             NSLog(@"1111");
             
             NSDictionary *parameters = @{@"id":[NSNumber numberWithInteger:self.oid],
-                                         @"tid":[NSNumber numberWithInteger:self.tid],
-                                         @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
+                                         @"modify":@1,
+                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
                                          @"num":self.number.text,
                                          @"sum_price":self.myTextField2.text,
-                                         @"feedback":self.myTextView.text,
-                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-                                         @"modify":@1};
+                                         @"description":self.myTextView.text,
+                                         };
             
             NSLog(@"parameters = %@", parameters);
             

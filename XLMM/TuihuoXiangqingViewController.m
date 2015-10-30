@@ -22,24 +22,21 @@
 
 @implementation TuihuoXiangqingViewController{
     NSString *nibName;
+    
     TuihuoModel *xiangqing;
+    
     UITextField *textField1;
     UITextField *textField2;
-    
-    NSDictionary *dictionary;
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"退货(款)详情";
     [self createNavigationBarWithTitle:@"退货(款)详情" selecotr:@selector(backbuttonClicked:)];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-      [self downlaodData];
-    
+    xiangqing = self.model;
     
     [self createView];
   
@@ -49,133 +46,15 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)downlaodData{
-    
-    
-    NSLog(@"url = %@", kRefunds_URL);
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kRefunds_URL]];
-    if (data == nil) {
-        return;
-    }
-    dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"json = %@", dictionary);
-    NSArray *array = [dictionary objectForKey:@"results"];
-    if (array.count == 0) {
-        return;
-    }
-   // NSLog(@"array = %@", array);
-    for (NSDictionary *dic in array) {
-        TuihuoModel *model = [TuihuoModel new];
-        model.ID = [[dic objectForKey:@"id"] integerValue];
-        model.url = [dic objectForKey:@"url"];
-        model.refund_no = [dic objectForKey:@"refund_no"];
-        model.trade_id = [[dic objectForKey:@"trade_id"] integerValue];
-        model.order_id = [[dic objectForKey:@"order_id"] integerValue];
-        model.buyer_id = [[dic objectForKey:@"buyer_id"] integerValue];
-        model.item_id = [[dic objectForKey:@"item_id"]integerValue];
-        model.title = [dic objectForKey:@"title"];
-        model.sku_id = [[dic objectForKey:@"sku_id"] integerValue];
-        model.sku_name = [dic objectForKey:@"sku_name"];
-        model.refund_num = [[dic objectForKey:@"refund_num"] integerValue];
-        model.buyer_nick = [dic objectForKey:@"buyer_nick"];
-        model.mobile = [dic objectForKey:@"mobile"];
-        model.phone = [dic objectForKey:@"phone"];
-        model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
-        model.payment = [[dic objectForKey:@"payment"] floatValue];
-        model.created = [dic objectForKey:@"created"];
-        model.company_name = [dic objectForKey:@"company_name"];
-        model.sid = [dic objectForKey:@"sid"];
-        model.reason = [dic objectForKey:@"reason"];
-        model.desc = [dic objectForKey:@"desc"];
-        model.feedback = [dic objectForKey:@"feedback"];
-        model.has_good_return = [[dic objectForKey:@"has_good_return"] boolValue];
-        model.has_good_change = [[dic objectForKey:@"has_good_change"] boolValue];
-        model.good_status = [[dic objectForKey:@"good_status"] integerValue];
-        model.status = [[dic objectForKey:@"status"] integerValue];
-        model.refund_fee = [[dic objectForKey:@"refund_fee"] floatValue];
-        
-        [self.dataArray addObject:model];
-        NSLog(@"orderid === %ld", model.order_id);
-    }
-    
-    
-  
-    
-    while (true) {
-        NSString *string = [dictionary objectForKey:@"next"];
-        NSLog(@"url = %@", string);
-        
-        if ([string class] == [NSNull class]) {
-            NSLog(@"结束了");
-            break;
-        }
-        NSData *nextData = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    
-        dictionary = [NSJSONSerialization JSONObjectWithData:nextData options:kNilOptions error:nil];
-        // NSLog(@"dic = %@", dic);
-        NSArray *array = [dictionary objectForKey:@"results"];
-        for (NSDictionary *dic in array) {
-            TuihuoModel *model = [TuihuoModel new];
-            model.ID = [[dic objectForKey:@"id"] integerValue];
-            model.url = [dic objectForKey:@"url"];
-            model.refund_no = [dic objectForKey:@"refund_no"];
-            model.trade_id = [[dic objectForKey:@"trade_id"] integerValue];
-            model.order_id = [[dic objectForKey:@"order_id"] integerValue];
-            model.buyer_id = [[dic objectForKey:@"buyer_id"] integerValue];
-            model.item_id = [[dic objectForKey:@"item_id"]integerValue];
-            model.title = [dic objectForKey:@"title"];
-            model.sku_id = [[dic objectForKey:@"sku_id"] integerValue];
-            model.sku_name = [dic objectForKey:@"sku_name"];
-            model.refund_num = [[dic objectForKey:@"refund_num"] integerValue];
-            model.buyer_nick = [dic objectForKey:@"buyer_nick"];
-            model.mobile = [dic objectForKey:@"mobile"];
-            model.phone = [dic objectForKey:@"phone"];
-            model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
-            model.payment = [[dic objectForKey:@"payment"] floatValue];
-            model.created = [dic objectForKey:@"created"];
-            model.company_name = [dic objectForKey:@"company_name"];
-            model.sid = [dic objectForKey:@"sid"];
-            model.reason = [dic objectForKey:@"reason"];
-            model.desc = [dic objectForKey:@"desc"];
-            model.feedback = [dic objectForKey:@"feedback"];
-            model.has_good_return = [[dic objectForKey:@"has_good_return"] boolValue];
-            model.has_good_change = [[dic objectForKey:@"has_good_change"] boolValue];
-            model.good_status = [[dic objectForKey:@"good_status"] integerValue];
-            model.status = [[dic objectForKey:@"status"] integerValue];
-            model.refund_fee = [[dic objectForKey:@"refund_fee"] floatValue];
-            
-            [self.dataArray addObject:model];
-
-        }
-        
-    }
-    NSLog(@"dataArray = %@", self.dataArray);
-
-    
-
-    
-    
-    
-}
 - (void)createView{
-    NSLog(@"xiangqing = %ld",(long) self.status);
-    nibName = [NSString stringWithFormat:@"TuihuoXQ%ld",(long) self.status];
-    NSLog(@"oredrID = %ld", (long)self.orderID);
-    
-    for (TuihuoModel *model in self.dataArray) {
-        NSLog(@"model.orderID = %ld", model.order_id);
-        if (model.order_id == self.orderID) {
-            xiangqing = model;
-            NSLog(@"匹配到对应的orderID");
-            
-            break;
-        }
-    }
-    
+    nibName = [NSString stringWithFormat:@"TuihuoXQ%ld",(long) self.model.status];
+
     NSLog(@"nibName = %@", nibName);
-    switch (self.status) {
+    switch (self.model.status) {
         case 1:
         {
+            
+            //退款关闭
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             
             UIView *myview = [arrayViews objectAtIndex:0];
@@ -209,6 +88,7 @@
             break;
         case 2:
         {
+            //     卖家拒绝退款
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             UITextView *textView = (UITextView *)[myView viewWithTag:11];
@@ -233,6 +113,7 @@
             break;
         case 3:
         {
+            //买家已经申请退款 
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             
             UIView *myView = [arrayViews objectAtIndex:0];
@@ -246,6 +127,7 @@
             break;
         case 4:
         {
+            //卖家已经同意退款可以填写表单。。。。
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             myView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -304,7 +186,7 @@
                                    };
             NSArray *array = @[dic1, dic1, dic2];
             NSLog(@"array = %@", array);
-            NSDictionary *infoDic ;
+            NSDictionary *infoDic;
             if ([wear_by integerValue] == 0) {
                 infoDic = [array objectAtIndex:0];
             }else if ([wear_by integerValue] == 1){
@@ -337,6 +219,8 @@
             break;
         case 5:
         {
+            
+            //买家已经退货。。。。。
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             
@@ -369,6 +253,8 @@
             break;
         case 6:
         {
+            
+            //确认退款等待返款。。。
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             UIButton *button = (UIButton *)[myView viewWithTag:888];
@@ -383,6 +269,8 @@
             break;
         case 7:
         {
+            
+            //退款成功。。。。
             NSArray *arrayViews = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
             UIView *myView = [arrayViews objectAtIndex:0];
             UILabel *label1 = (UILabel *)[myView viewWithTag:11];
@@ -452,36 +340,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     NSLog(@"urlstring = %@", urlString);
     
-    NSString *refund_or_pro;
-    if (xiangqing.status == 0) {
-        refund_or_pro = @"0";
-        
-    } else if (xiangqing.status ==1){
-        refund_or_pro = @"1";
-    }else{
-        refund_or_pro = @"1";
-    }
-    NSLog(@"1111");
+   
     
-    
-//    NSLog(@"%@",xiangqing.order_id );
-//    NSLog(@"%@", xiangqing.trade_id);
-//    NSLog(@"%@", refund_or_pro);
-//    NSLog(@"%@", xiangqing.refund_num);
-//    NSLog(@"%@", xiangqing.refund_fee);
-//    NSLog(@"%@", xiangqing.feedback);
-//    NSLog(@"%@", xiangqing.reason);
-//    NSLog(@"%@", @2);
-//    NSLog(@"%@", textField1.text);
-//    NSLog(@"%@", textField2.text);
-    //  NSLog(@"%@", );
     NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", xiangqing.order_id],
-                                 @"tid":[NSString stringWithFormat:@"%ld", xiangqing.trade_id],
-                                 @"refund_or_pro":refund_or_pro,
-                                 @"num":[NSString stringWithFormat:@"%ld", xiangqing.refund_num],
-                                 @"sum_price":[NSString stringWithFormat:@"%.1f", xiangqing.refund_fee],
-                                 @"feedback":xiangqing.feedback,
-                                 @"reason":xiangqing.reason,
                                  @"modify":@2,
                                  @"company":textField1.text,
                                  @"sid":textField2.text

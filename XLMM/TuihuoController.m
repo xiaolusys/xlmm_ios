@@ -24,7 +24,7 @@
 @property (nonatomic, copy) NSArray *dataArray;
 
 @property (nonatomic, assign)NSInteger maxNumber;
-@property (nonatomic, assign)NSInteger maxPrice;
+@property (nonatomic, assign)float maxPrice;
 
 
 
@@ -67,7 +67,7 @@
     tuihuoNumber = self.maxNumber;
 
     
-    self.maxPrice = [self.dingdanModel.priceString integerValue] *[self.dingdanModel.numberString integerValue];
+    self.maxPrice = [self.dingdanModel.priceString floatValue] *[self.dingdanModel.numberString integerValue];
     if (self.maxNumber == 1) {
         NSLog(@"只有一件商品");
         self.jianbutton.userInteractionEnabled = NO;
@@ -77,8 +77,8 @@
 
     self.myImageView.image = [UIImage imagewithURLString:self.dingdanModel.urlString];
     
-    self.dingdanjine.text = [NSString stringWithFormat:@"￥%ld",  (long)self.maxPrice];
-    self.danjia.text = [NSString stringWithFormat:@"￥%@", self.dingdanModel.priceString];
+    self.dingdanjine.text = [NSString stringWithFormat:@"￥%.1f",  (float)self.maxPrice];
+    self.danjia.text = [NSString stringWithFormat:@"￥%.1f", [self.dingdanModel.priceString floatValue]];
     self.name.text = self.dingdanModel.nameString;
     self.number.text = [NSString stringWithFormat:@"%@", self.dingdanModel.numberString];
     
@@ -95,8 +95,7 @@
     self.myPickerView.dataSource = self;
     self.myPickerView.delegate = self;
     
-    //self.myPickerView.center = self.view.center;
-    //self.myPickerView.
+
     self.myPickerView.showsSelectionIndicator = YES;
     [self.view addSubview:self.myPickerView];
     
@@ -282,7 +281,7 @@
     if ([self.myTextField2.text isEqual:@""]) {
         NSLog(@"亲，您还没有填写退款金额");
         UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"亲，您还没有填写退款金额"
+                                                            message:@"请填写退款金额"
                                                            delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:@"确定"
@@ -304,7 +303,7 @@
     //申请退款 post上传。。。
     
     
-  myAlterView = [[UIAlertView alloc] initWithTitle:nil
+    myAlterView = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"确定要退货吗？"
                                                        delegate:nil
                                               cancelButtonTitle:@"取消"
@@ -345,15 +344,21 @@
                 self.refund_or_pro = 1;
             }
             NSLog(@"1111");
-            
+
             NSDictionary *parameters = @{@"id":self.oid,
-                                         @"tid":self.tid,
-                                         @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
+                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
                                          @"num":self.number.text,
                                          @"sum_price":self.myTextField2.text,
-                                         @"feedback":self.myTextView.text,
-                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-                                         @"modify":@0};
+                                         @"description":self.myTextView.text
+                                         };
+//            NSDictionary *parameters = @{@"id":self.oid,
+//                                         @"tid":self.tid,
+//                                         @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
+//                                         @"num":self.number.text,
+//                                         @"sum_price":self.myTextField2.text,
+//                                         @"feedback":self.myTextView.text,
+//                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
+//                                         @"modify":@0};
             
             NSLog(@"parameters = %@", parameters);
             
