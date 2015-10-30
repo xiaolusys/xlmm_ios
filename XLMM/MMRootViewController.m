@@ -93,6 +93,8 @@
     NSLog(@"DEMOFirstViewController will disappear");
     frame = self.view.frame;
     
+
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -104,10 +106,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+5+28, WIDTH, HEIGHT - 20 - 5 - 28)];
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+35, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     
