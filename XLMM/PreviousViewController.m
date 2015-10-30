@@ -498,9 +498,7 @@ static NSString *khead2View = @"head2View";
             
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
-            //cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
-//            cell.myImageView.layer.borderWidth = 1;
-//            cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+
             
            
         }

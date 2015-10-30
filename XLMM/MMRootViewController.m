@@ -179,12 +179,12 @@
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
     preVC.delegate = self;
     
-    ChildViewController *childVC = [[ChildViewController alloc] init];
+    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
     childVC.urlString = kCHILD_LIST_URL;
     childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
     childVC.delegate = self;
   
-    ChildViewController *womanVC = [[ChildViewController alloc] init];
+    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
     womanVC.urlString = kLADY_LIST_URL;
     womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
     womanVC.delegate = self;

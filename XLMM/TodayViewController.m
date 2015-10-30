@@ -511,17 +511,9 @@ static NSString *khead2View = @"head2View";
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//               NSLog(@"error = %@", error);
-//               NSLog(@"errorUserinfo = %@", error.userInfo);
-//               NSLog(@"errordescription = %@", error.description);
-//               NSLog(@"image = %@", image);
-//               NSLog(@"url = %@", imageURL);
-//               NSLog(@"cachetype = %d", (int)cacheType);
+
          }];
-        //  cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
-//            cell.myImageView.layer.borderWidth = 1;
-//            cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
-            
+
 
            
         }

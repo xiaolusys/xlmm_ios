@@ -44,6 +44,10 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    NSLog(@"self.tuijianButton : %@", self.tuijianButton);
+
+    NSLog(@"%@", self.view.subviews);
+
     
 }
 
@@ -132,7 +136,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
     [self.tuijianButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
-    
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _isFirst = YES;
@@ -151,7 +154,8 @@ static NSString * ksimpleCell = @"simpleCell";
    
     self.childCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
     
-   
+    [self.view addSubview:self.containerView];
+    
  
 }
 
