@@ -12,7 +12,7 @@
 #import "Head2View.h"
 #import "PosterCollectionCell.h"
 #import "PeopleCollectionCell.h"
-
+#import "PosterCollectionCell2.h"
 #import "PromoteModel.h"
 #import "PosterModel.h"
 #import "ChildViewController.h"
@@ -224,7 +224,7 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
-    [self.myCollectionView registerClass:[PosterCollectionCell class] forCellWithReuseIdentifier:kposterView];
+    [self.myCollectionView registerClass:[PosterCollectionCell2 class] forCellWithReuseIdentifier:kposterView];
     self.myCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
     
     
@@ -450,7 +450,7 @@ static NSString *khead2View = @"head2View";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618+24);
+        return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
         
     }
     return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
@@ -461,6 +461,9 @@ static NSString *khead2View = @"head2View";
     return 4;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    if (section == 0) {
+        return 8;
+    }
     return 4;
 }
 
@@ -488,7 +491,7 @@ static NSString *khead2View = @"head2View";
     if (indexPath.section == 0) {
         
         
-        PosterCollectionCell *cell = (PosterCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
+        PosterCollectionCell2 *cell = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
         
         if (posterDataArray.count != 0) {
             
@@ -496,9 +499,10 @@ static NSString *khead2View = @"head2View";
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
             //cell.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+//            cell.myImageView.layer.borderWidth = 1;
+//            cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
             
-            cell.titleLabel.text = model.firstName;
-            cell.subjectLabel.text = model.secondName;
+           
         }
         
         return cell;

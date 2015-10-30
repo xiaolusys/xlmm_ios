@@ -47,6 +47,16 @@ static NSString * ksimpleCell = @"simpleCell";
     
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+        NSLog(@"0000");
+     //   [self.view addSubview:[views objectAtIndex:0]];
+    }
+    return self;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -120,6 +130,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewDidLoad];
     
 
+    [self.tuijianButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
     
     // Do any additional setup after loading the view from its nib.

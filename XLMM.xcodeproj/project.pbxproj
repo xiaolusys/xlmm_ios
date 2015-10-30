@@ -90,6 +90,8 @@
 		3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
 		3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
 		3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3266A6DD1BE30B3F00C676A9 /* rightArrow.png */; };
+		3266A6E21BE35C4100C676A9 /* PosterCollectionCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */; };
+		3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */; };
 		326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E888F1B71FDD800D15973 /* PurchaseViewController.m */; };
 		326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 326E88901B71FDD800D15973 /* PurchaseViewController.xib */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
@@ -723,6 +725,9 @@
 		326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		3266762B1BB5200E00307EC4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		3266A6DD1BE30B3F00C676A9 /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightArrow.png; sourceTree = "<group>"; };
+		3266A6DF1BE35C4100C676A9 /* PosterCollectionCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell2.h; sourceTree = "<group>"; };
+		3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell2.m; sourceTree = "<group>"; };
+		3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell2.xib; sourceTree = "<group>"; };
 		326E888E1B71FDD800D15973 /* PurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController.h; sourceTree = "<group>"; };
 		326E888F1B71FDD800D15973 /* PurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController.m; sourceTree = "<group>"; };
 		326E88901B71FDD800D15973 /* PurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController.xib; sourceTree = "<group>"; };
@@ -1788,6 +1793,9 @@
 				32121B411B9481B900742E53 /* PosterCollectionCell.h */,
 				32121B421B9481B900742E53 /* PosterCollectionCell.m */,
 				32121B431B9481B900742E53 /* PosterCollectionCell.xib */,
+				3266A6DF1BE35C4100C676A9 /* PosterCollectionCell2.h */,
+				3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */,
+				3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */,
 				327F80BC1B9559F600EDDF5B /* PersonTableCell.h */,
 				327F80BD1B9559F600EDDF5B /* PersonTableCell.m */,
 				327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */,
@@ -2121,6 +2129,7 @@
 				3264EA1C1B6C59B700F36A8D /* ChildViewController.xib in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
+				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
@@ -2414,6 +2423,7 @@
 				32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */,
 				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
+				3266A6E21BE35C4100C676A9 /* PosterCollectionCell2.m in Sources */,
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,

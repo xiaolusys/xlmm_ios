@@ -9,7 +9,9 @@
             <connections>
                 <outlet property="childCollectionView" destination="9QH-ZB-iCK" id="jfl-rN-TUu"/>
                 <outlet property="containerView" destination="KPZ-fZ-AC8" id="DSa-fp-Ca7"/>
+                <outlet property="jiageButton" destination="DOa-nV-73Q" id="4EZ-rr-7zk"/>
                 <outlet property="topdistant" destination="S2t-Ko-kIB" id="5OS-xS-UZ4"/>
+                <outlet property="tuijianButton" destination="uFE-0Y-vvi" id="OhB-An-sP4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,21 +36,21 @@
                                         <color key="titleColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
-                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Ebl-es-9Xi"/>
+                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Fxl-C7-JRr"/>
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywo-eh-goW">
-                                    <rect key="frame" x="0.0" y="25" width="375" height="10"/>
+                                    <rect key="frame" x="0.0" y="34" width="375" height="1"/>
                                     <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="10" id="AFY-cU-XpC"/>
+                                        <constraint firstAttribute="height" constant="1" id="AFY-cU-XpC"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YmS-11-3H0">
-                                    <rect key="frame" x="183" y="6" width="10" height="24"/>
+                                    <rect key="frame" x="187" y="6" width="1" height="24"/>
                                     <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="10" id="S6k-RR-QKL"/>
+                                        <constraint firstAttribute="width" constant="1" id="S6k-RR-QKL"/>
                                         <constraint firstAttribute="height" constant="24" id="fJM-BR-e4f"/>
                                     </constraints>
                                 </view>
@@ -59,7 +61,7 @@
                                         <color key="titleColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
-                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="MjW-yM-OTG"/>
+                                        <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="VL6-lU-5Ge"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -115,7 +117,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="335.5" y="97.5"/>
+            <point key="canvasLocation" x="220.5" y="77.5"/>
         </view>
     </objects>
 </document>

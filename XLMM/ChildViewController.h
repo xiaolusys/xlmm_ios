@@ -30,7 +30,9 @@ UICollectionViewDelegate>{
 
 
 - (IBAction)btnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *jiageButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
 
 
 @end
