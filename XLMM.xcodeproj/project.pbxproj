@@ -65,6 +65,7 @@
 		325B1E7F1BE489C00027B3E3 /* barbackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B1E7E1BE489C00027B3E3 /* barbackImage.png */; };
 		325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B1E801BE48D390027B3E3 /* barbackImage2.png */; };
 		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
+		325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -682,6 +683,8 @@
 		3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "小鹿美美logo.jpg"; sourceTree = "<group>"; };
 		325B1E7E1BE489C00027B3E3 /* barbackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage.png; sourceTree = "<group>"; };
 		325B1E801BE48D390027B3E3 /* barbackImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage2.png; sourceTree = "<group>"; };
+		325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorImage.h"; sourceTree = "<group>"; };
+		325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorImage.m"; sourceTree = "<group>"; };
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA0F21B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1843,6 +1846,8 @@
 				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
 				3218132A1BD76CCC00D3D036 /* NSArray+Log.h */,
 				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
+				325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */,
+				325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2421,6 +2426,7 @@
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
+				325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
