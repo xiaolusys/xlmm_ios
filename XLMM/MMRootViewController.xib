@@ -21,9 +21,9 @@
                     <rect key="frame" x="0.0" y="64" width="320" height="35"/>
                     <subviews>
                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txg-z2-8ry">
-                            <rect key="frame" x="2" y="2" width="78" height="35"/>
+                            <rect key="frame" x="2" y="2" width="78" height="32"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="Cvx-bQ-7Xd"/>
+                                <constraint firstAttribute="height" constant="32" id="Cvx-bQ-7Xd"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                             <state key="normal" title="今日上新">
@@ -34,7 +34,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SID-Ch-Woe">
-                            <rect key="frame" x="82" y="2" width="77" height="35"/>
+                            <rect key="frame" x="82" y="2" width="77" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="昨日特卖">
                                 <color key="titleColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,7 +44,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcO-VZ-7Ct">
-                            <rect key="frame" x="161" y="2" width="78" height="35"/>
+                            <rect key="frame" x="161" y="2" width="78" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="潮童专区">
                                 <color key="titleColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,7 +54,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chf-aF-1bs">
-                            <rect key="frame" x="241" y="2" width="77" height="35"/>
+                            <rect key="frame" x="241" y="2" width="77" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="时尚女装">
                                 <color key="titleColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
