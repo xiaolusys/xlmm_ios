@@ -62,6 +62,15 @@
         // [self presentLeftMenuViewController:leftButton];
         
     }
+    self.navigationController.navigationBarHidden = NO;
+    self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    UIView *cartView = [_view viewWithTag:123];
+    cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+    if (self.navigationController.navigationBarHidden) {
+        NSLog(@"导航栏被隐藏了");
+    } else {
+        NSLog(@"显示导航栏");
+    }
     self.view.frame = frame;
     
     [self setLabelNumber];
