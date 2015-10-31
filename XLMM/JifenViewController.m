@@ -80,7 +80,7 @@ static NSString * const reuseIdentifier = @"jifenCell";
     
     NSLog(@"array = %@", array);
     for (NSDictionary *dic in array) {
-        if ([[dic objectForKey:@"log_status"] integerValue] == 0) {
+       // if ([[dic objectForKey:@"log_status"] integerValue] == 0) {
         
             JiFenModel *model = [JiFenModel new];
             model.ID = [dic objectForKey:@"id"];
@@ -102,7 +102,7 @@ static NSString * const reuseIdentifier = @"jifenCell";
             
             [mutableArray addObject:model];
        
-        }
+       // }
         
        
     }
@@ -181,7 +181,8 @@ static NSString * const reuseIdentifier = @"jifenCell";
     //cell.backgroundColor = [UIColor redColor];
     JiFenModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
-    cell.myImageView.image = [UIImage imagewithURLString:[model.order objectForKey:@"pic_link"]];
+   // cell.myImageView.image = [UIImage imagewithURLString:[model.order objectForKey:@"pic_link"]];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.order objectForKey:@"pic_link"]]];
     cell.bianhao.text = [model.order objectForKey:@"order_id"];
     cell.jine.text = [NSString stringWithFormat:@"¥%@", model.log_value];
     cell.jinfen.text = [NSString stringWithFormat:@"%@", model.log_value];

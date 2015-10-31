@@ -243,7 +243,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
-   NSLog(@"data = %@", data);
+//   NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
     if (data == nil) {
 
@@ -251,22 +251,22 @@ static NSString *khead2View = @"head2View";
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-   NSLog(@"poster data : %@", jsonDic);
+//   NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
-    NSLog(@"childDic = %@", childDic);
+//    NSLog(@"childDic = %@", childDic);
     if (childDic == nil) {
         NSLog(@"海报为空");
         return;
     }
-    NSLog(@"%@", childDic);
+//    NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
-    NSLog(@"%@", ladyDic);
+//    NSLog(@"%@", ladyDic);
     PosterModel *ladyModel = [PosterModel new];
     ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
@@ -298,7 +298,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-      NSLog(@"promote data = %@", promoteDic);
+    //  NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
    
     ladyListNumber = ladyArray.count;
@@ -306,7 +306,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
    
-    NSLog(@"%ld", (long)ladyArray.count);
+   // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
         PromoteModel *model = [self fillModel:ladyInfo];
         
@@ -314,12 +314,12 @@ static NSString *khead2View = @"head2View";
         [ladyDataArray addObject:model];
         
     }
-   NSLog(@"ladyDataArray = %@", ladyDataArray);
+  // NSLog(@"ladyDataArray = %@", ladyDataArray);
     
     PromoteModel *firstModel = [ladyDataArray objectAtIndex:0];
     NSString *string = firstModel.picPath;
     
-    NSLog(@"first image url = %@", string);
+   // NSLog(@"first image url = %@", string);
    // UIImage *image = [UIImage imagewithURLString:string];
     NSUserDefaults *defualt = [NSUserDefaults standardUserDefaults];
     
@@ -340,7 +340,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
      childListNumber = childArray.count;
-   NSLog(@"%ld", (long)childArray.count);
+ //  NSLog(@"%ld", (long)childArray.count);
    
     
     for (NSDictionary *childInfo in childArray) {
@@ -350,7 +350,7 @@ static NSString *khead2View = @"head2View";
         [childDataArray addObject:model];
         
     }
-    NSLog(@"childDataArray = %@", childDataArray);
+   // NSLog(@"childDataArray = %@", childDataArray);
     
     step2 = YES;
     
@@ -464,7 +464,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
         
     }
-      NSLog(@"%f,%f", (SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
+  //    NSLog(@"%f,%f", (SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
     return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 60);
   
     

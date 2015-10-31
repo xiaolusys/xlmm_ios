@@ -67,6 +67,7 @@
 		325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */; };
 		325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5A1B81C9E0007E562A /* CartViewController.xib */; };
 		325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */; };
+		325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -566,7 +567,6 @@
 		32D876311BB6C07B00D0C30F /* yhq_not_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */; };
 		32D876321BB6C07B00D0C30F /* yhq_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D876301BB6C07B00D0C30F /* yhq_valid.jpg */; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
-		32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E329971B70C70000A6F0BC /* DetailViewController.m */; };
@@ -2066,7 +2066,6 @@
 				32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
-				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
@@ -2096,6 +2095,7 @@
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */,
+				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				326091CD1B79ABFC00A763BA /* EnterViewController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
