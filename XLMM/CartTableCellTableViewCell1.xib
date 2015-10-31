@@ -9,9 +9,6 @@
     <customFonts key="customFonts">
         <mutableArray key="xiaolufont.ttf">
             <string>DFYuan-Lt-HKP-BF</string>
-            <string>DFYuan-Lt-HKP-BF</string>
-            <string>DFYuan-Lt-HKP-BF</string>
-            <string>DFYuan-Lt-HKP-BF</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -37,20 +34,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥46.9" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJe-Jt-wd5">
-                        <rect key="frame" x="125" y="84" width="53" height="20"/>
-                        <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="18"/>
+                        <rect key="frame" x="125" y="80" width="44" height="24"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                         <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTr-ui-pcZ">
-                        <rect key="frame" x="178" y="88" width="4" height="12"/>
+                        <rect key="frame" x="169" y="86" width="4" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥239" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPS-vm-4RG">
-                        <rect key="frame" x="182" y="89" width="27" height="11"/>
-                        <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="10"/>
+                        <rect key="frame" x="173" y="86" width="24" height="14"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                         <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -69,11 +66,11 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yb-zm-M6Z">
-                        <rect key="frame" x="289" y="84" width="50" height="20"/>
+                        <rect key="frame" x="289" y="82" width="50" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="UXQ-FV-HLw"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="18"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
                         <color key="textColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -144,6 +141,7 @@
                     <constraint firstItem="3LB-xs-GqB" firstAttribute="leading" secondItem="4yb-zm-M6Z" secondAttribute="trailing" id="SkX-fa-R2h"/>
                     <constraint firstAttribute="trailing" secondItem="3LB-xs-GqB" secondAttribute="trailing" constant="14" id="ZZx-71-qov"/>
                     <constraint firstItem="1Hu-nt-rsw" firstAttribute="leading" secondItem="8cQ-oh-NvR" secondAttribute="trailing" constant="12" id="dgs-kw-wb0"/>
+                    <constraint firstItem="4yb-zm-M6Z" firstAttribute="centerY" secondItem="NYQ-Vh-VAI" secondAttribute="centerY" id="egW-9k-lPL"/>
                     <constraint firstAttribute="bottomMargin" secondItem="QJe-Jt-wd5" secondAttribute="bottom" constant="7" id="foF-3L-OA7"/>
                     <constraint firstItem="QJe-Jt-wd5" firstAttribute="leading" secondItem="8cQ-oh-NvR" secondAttribute="trailing" constant="12" id="jSl-Bo-ntE"/>
                     <constraint firstItem="4a0-BB-D6J" firstAttribute="centerX" secondItem="3LB-xs-GqB" secondAttribute="centerX" id="k12-Dn-zKd"/>
@@ -151,15 +149,14 @@
                     <constraint firstAttribute="bottom" secondItem="3LB-xs-GqB" secondAttribute="bottom" constant="14" id="mxz-M4-OFJ"/>
                     <constraint firstItem="EPS-vm-4RG" firstAttribute="leading" secondItem="KTr-ui-pcZ" secondAttribute="trailing" id="nPD-VS-z01"/>
                     <constraint firstItem="l9b-bI-lkl" firstAttribute="leading" secondItem="QOY-lI-H4V" secondAttribute="leadingMargin" id="obJ-Nh-Btt"/>
-                    <constraint firstItem="QJe-Jt-wd5" firstAttribute="baseline" secondItem="KTr-ui-pcZ" secondAttribute="baseline" id="qdh-pB-IZ7"/>
+                    <constraint firstItem="QJe-Jt-wd5" firstAttribute="baseline" secondItem="KTr-ui-pcZ" secondAttribute="baseline" constant="1" id="qdh-pB-IZ7"/>
                     <constraint firstItem="uxe-fd-C2h" firstAttribute="leading" secondItem="8cQ-oh-NvR" secondAttribute="trailing" constant="12" id="rdV-Xg-3I6"/>
                     <constraint firstItem="uxe-fd-C2h" firstAttribute="top" secondItem="QOY-lI-H4V" secondAttribute="topMargin" constant="4" id="reI-dc-pJB"/>
                     <constraint firstAttribute="trailing" secondItem="l9b-bI-lkl" secondAttribute="trailing" id="uB8-00-9FA"/>
-                    <constraint firstAttribute="bottom" secondItem="4yb-zm-M6Z" secondAttribute="bottom" constant="15" id="vhB-zg-fCN"/>
                     <constraint firstAttribute="bottom" secondItem="oe7-zt-kFZ" secondAttribute="bottom" constant="14" id="xcy-oJ-5Uf"/>
                     <constraint firstItem="NYQ-Vh-VAI" firstAttribute="centerX" secondItem="oe7-zt-kFZ" secondAttribute="centerX" id="yB9-wd-C9p"/>
                     <constraint firstItem="NYQ-Vh-VAI" firstAttribute="centerY" secondItem="oe7-zt-kFZ" secondAttribute="centerY" id="zde-Pp-piD"/>
-                    <constraint firstItem="EPS-vm-4RG" firstAttribute="baseline" secondItem="KTr-ui-pcZ" secondAttribute="baseline" constant="-1" id="zxs-K9-7lk"/>
+                    <constraint firstItem="EPS-vm-4RG" firstAttribute="baseline" secondItem="KTr-ui-pcZ" secondAttribute="baseline" id="zxs-K9-7lk"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

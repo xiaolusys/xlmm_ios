@@ -39,7 +39,6 @@
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; };
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
-		321EA39B1BE2279D009A45DE /* CartTableCellTableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
@@ -66,6 +65,8 @@
 		325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B1E801BE48D390027B3E3 /* barbackImage2.png */; };
 		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
 		325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */; };
+		325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5A1B81C9E0007E562A /* CartViewController.xib */; };
+		325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -192,7 +193,6 @@
 		32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B4E1B81C152007E562A /* EmptyCartViewController.m */; };
 		32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B4F1B81C152007E562A /* EmptyCartViewController.xib */; };
 		32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B591B81C9E0007E562A /* CartViewController.m */; };
-		32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5A1B81C9E0007E562A /* CartViewController.xib */; };
 		32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B5E1B81D1B7007E562A /* CartTableCellTableViewCell.m */; };
 		32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32891B5F1B81D1B7007E562A /* CartTableCellTableViewCell.xib */; };
 		32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B631B81EA96007E562A /* ShoppingCartModel.m */; };
@@ -2065,7 +2065,6 @@
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
-				32891B5C1B81C9E0007E562A /* CartViewController.xib in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32E00C951BA8192D00A73390 /* YHQCollectionCell.xib in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
@@ -2140,11 +2139,13 @@
 				32746E331B74A22000816208 /* pro1.jpg in Resources */,
 				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
+				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
+				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
@@ -2169,7 +2170,6 @@
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
 				325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */,
-				321EA39B1BE2279D009A45DE /* CartTableCellTableViewCell1.xib in Resources */,
 				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,7 @@
 #import "WXLoginController.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -25,7 +26,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
     
 }
 
@@ -38,6 +39,7 @@
     
     
     self.title = @"微信登录";
+    [self createNavigationBarWithTitle:@"微信登录" selecotr:@selector(backClicked:)];
     NSLog(@"用户信息 = %@", self.userInfo);
     self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];
     self.nameLabel.text = [self.userInfo objectForKey:@"nickname"];
