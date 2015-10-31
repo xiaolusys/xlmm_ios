@@ -214,7 +214,7 @@ static NSString *khead2View = @"head2View";
 }
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
     
@@ -225,7 +225,7 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell2 class] forCellWithReuseIdentifier:kposterView];
-    self.myCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
+    self.myCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
     
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
@@ -453,7 +453,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
         
     }
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 60);
     
 }
 

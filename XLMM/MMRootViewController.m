@@ -75,8 +75,18 @@
     
     [self setLabelNumber];
     
+   // self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+  // [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+   // self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+//[self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     
+ //   self.navigationController.navigationBar.translucent = NO;
+ 
+  //  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"barbackImage2"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
     
 }
 - (void)viewDidAppear:(BOOL)animated{

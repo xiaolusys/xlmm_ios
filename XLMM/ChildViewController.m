@@ -153,7 +153,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
-    self.childCollectionView.backgroundColor = [UIColor colorWithR:249 G:249 B:249 alpha:1];
+    self.childCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
     [self.view addSubview:self.containerView];
     
@@ -162,8 +162,8 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2 + 52)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 50, 0);
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2 + 60)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 0, 0);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
@@ -234,7 +234,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 60);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{

@@ -40,8 +40,8 @@
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
     [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
-    self.imageView.layer.borderWidth = 1;
-    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+//    self.imageView.layer.borderWidth = 1;
+//    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     self.nameLabel.text = model.name;
     if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
@@ -72,8 +72,8 @@
        
 
     }] ;
-    self.imageView.layer.borderWidth = 1;
-    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+//    self.imageView.layer.borderWidth = 1;
+//    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     
     

@@ -45,13 +45,13 @@
                 </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="u8f-nQ-W4d" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="0hy-2M-duS"/>
-                <constraint firstAttribute="centerY" secondItem="v5C-GC-K2a" secondAttribute="centerY" id="1ZD-pN-0c9"/>
                 <constraint firstItem="u8f-nQ-W4d" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="8JR-Uj-ibg"/>
-                <constraint firstItem="FNe-Jl-yJj" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="FYz-xK-cal"/>
+                <constraint firstItem="FNe-Jl-yJj" firstAttribute="centerY" secondItem="v5C-GC-K2a" secondAttribute="centerY" id="Gtd-9c-ZjW"/>
                 <constraint firstAttribute="centerY" secondItem="WNR-sc-ka9" secondAttribute="centerY" id="HYP-vF-eep"/>
                 <constraint firstItem="v5C-GC-K2a" firstAttribute="leading" secondItem="u8f-nQ-W4d" secondAttribute="trailing" id="T5N-51-iZM"/>
                 <constraint firstItem="WNR-sc-ka9" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="140" id="tiC-wJ-E1P"/>
+                <constraint firstItem="u8f-nQ-W4d" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="un6-NN-uui"/>
+                <constraint firstItem="v5C-GC-K2a" firstAttribute="centerY" secondItem="u8f-nQ-W4d" secondAttribute="centerY" id="w86-hU-TV8"/>
                 <constraint firstAttribute="trailing" secondItem="FNe-Jl-yJj" secondAttribute="trailing" constant="8" id="xRV-gf-jH1"/>
             </constraints>
             <connections>

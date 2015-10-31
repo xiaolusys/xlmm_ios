@@ -59,8 +59,12 @@
 		3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */; };
 		3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */; };
 		3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */; };
-		325B1E791BE454460027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
 		325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */; };
+		325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
+		325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
+		325B1E7F1BE489C00027B3E3 /* barbackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B1E7E1BE489C00027B3E3 /* barbackImage.png */; };
+		325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B1E801BE48D390027B3E3 /* barbackImage2.png */; };
+		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -485,8 +489,6 @@
 		32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288361B93E1FC006DC949 /* LeftMenuViewController.xib */; };
 		32A2883C1B93E20F006DC949 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883A1B93E20F006DC949 /* RightMenuViewController.m */; };
 		32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A2883B1B93E20F006DC949 /* RightMenuViewController.xib */; };
-		32A288411B93E230006DC949 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
-		32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288451B93E2AC006DC949 /* RECommonFunctions.m */; };
 		32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288471B93E2AC006DC949 /* RESideMenu.m */; };
 		32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288491B93E2AC006DC949 /* UIViewController+RESideMenu.m */; };
@@ -678,6 +680,8 @@
 		3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouHuoCollectionViewCell.m; sourceTree = "<group>"; };
 		3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShouHuoCollectionViewCell.xib; sourceTree = "<group>"; };
 		3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "小鹿美美logo.jpg"; sourceTree = "<group>"; };
+		325B1E7E1BE489C00027B3E3 /* barbackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage.png; sourceTree = "<group>"; };
+		325B1E801BE48D390027B3E3 /* barbackImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage2.png; sourceTree = "<group>"; };
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA0F21B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1141,6 +1145,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				325B1E801BE48D390027B3E3 /* barbackImage2.png */,
+				325B1E7E1BE489C00027B3E3 /* barbackImage.png */,
 				3266A6DD1BE30B3F00C676A9 /* rightArrow.png */,
 				32088DD61BE20A7300A33FC9 /* back_image2.png */,
 				3286F2FC1BE0BEAA00C8A775 /* childImage.png */,
@@ -1995,10 +2001,10 @@
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
-				325B1E791BE454460027B3E3 /* Head2View.xib in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
+				325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
@@ -2029,6 +2035,7 @@
 				321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
+				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
@@ -2070,6 +2077,8 @@
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
+				325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */,
+				325B1E7F1BE489C00027B3E3 /* barbackImage.png in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
@@ -2125,7 +2134,6 @@
 				323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */,
 				32746E331B74A22000816208 /* pro1.jpg in Resources */,
 				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
-				32A288421B93E230006DC949 /* MMRootViewController.xib in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
@@ -2328,7 +2336,6 @@
 				321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */,
 				3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
-				32A288411B93E230006DC949 /* MMRootViewController.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
@@ -2361,6 +2368,7 @@
 				3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */,
 				320B300C1BB93E46006C4FC4 /* YHQModel.m in Sources */,
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
+				325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */,
 				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,

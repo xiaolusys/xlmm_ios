@@ -31,7 +31,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="36" id="pYd-wz-3dG"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="推荐排序">
                                         <color key="titleColor" red="0.9882352941176471" green="0.72549019607843135" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -56,7 +56,7 @@
                                 </view>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOa-nV-73Q">
                                     <rect key="frame" x="188" y="0.0" width="187" height="36"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="价格排序↑">
                                         <color key="titleColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>

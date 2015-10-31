@@ -33,9 +33,9 @@
                         <color key="backgroundColor" red="0.95691373999473672" green="0.94480950479736836" blue="0.95917525315263097" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" tag="24" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥168" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAl-eb-VKY">
-                        <rect key="frame" x="98" y="216" width="27" height="11"/>
+                        <rect key="frame" x="98" y="214" width="27" height="11"/>
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="10"/>
-                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWw-kK-fDJ">
@@ -53,7 +53,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="男童超薄透气款套装男童男童" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-Ul-A9W">
                         <rect key="frame" x="12" y="190" width="156" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.0" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
@@ -84,13 +84,14 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Rif-Ul-A9W" secondAttribute="trailing" constant="12" id="0ZH-wK-PDa"/>
                 <constraint firstItem="Rif-Ul-A9W" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="3n0-BT-B9p"/>
                 <constraint firstItem="dWw-kK-fDJ" firstAttribute="top" secondItem="Rif-Ul-A9W" secondAttribute="bottom" constant="8" id="6DC-eI-ms6"/>
                 <constraint firstItem="Rif-Ul-A9W" firstAttribute="top" secondItem="uhQ-WN-ROj" secondAttribute="bottom" constant="10" id="8g7-2G-aol"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GQH-Wc-KXm"/>
-                <constraint firstItem="CAl-eb-VKY" firstAttribute="baseline" secondItem="SQ1-Th-Bsz" secondAttribute="baseline" id="OEM-qP-nIr"/>
+                <constraint firstItem="CAl-eb-VKY" firstAttribute="baseline" secondItem="SQ1-Th-Bsz" secondAttribute="baseline" constant="-2" id="OEM-qP-nIr"/>
                 <constraint firstItem="WUt-wu-bjn" firstAttribute="centerY" secondItem="uhQ-WN-ROj" secondAttribute="centerY" id="ds4-Y3-4vG"/>
                 <constraint firstItem="uhQ-WN-ROj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ejb-YE-Y6j"/>
                 <constraint firstItem="SQ1-Th-Bsz" firstAttribute="centerY" secondItem="dWw-kK-fDJ" secondAttribute="centerY" id="lIi-r5-ID5"/>
