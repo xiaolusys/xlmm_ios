@@ -78,10 +78,7 @@
     
     //设置NavigationBar背景颜色
     [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
-    
-  
-
-    
+   // [self.navigationController.navigationBar setShadowImage:[UIImage imageWithColor:[UIColor redColor] size:CGSizeMake(SCREENWIDTH, 1)]];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

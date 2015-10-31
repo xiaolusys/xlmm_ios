@@ -63,13 +63,6 @@
                                 <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="USm-ED-PDL"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-Wm-bce">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                            <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="uir-CH-npP"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQa-JN-lWX">
                             <rect key="frame" x="0.0" y="34" width="320" height="1"/>
                             <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
@@ -80,9 +73,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="hzN-Wm-bce" firstAttribute="top" secondItem="qrf-17-OWC" secondAttribute="top" id="0RH-gy-y8N"/>
                         <constraint firstItem="xcO-VZ-7Ct" firstAttribute="leading" secondItem="SID-Ch-Woe" secondAttribute="trailing" constant="2" id="0eM-lc-7qq"/>
-                        <constraint firstAttribute="trailing" secondItem="hzN-Wm-bce" secondAttribute="trailing" id="4wd-Qv-stv"/>
                         <constraint firstAttribute="bottom" secondItem="bQa-JN-lWX" secondAttribute="bottom" id="6Qf-cb-2Hp"/>
                         <constraint firstItem="Chf-aF-1bs" firstAttribute="height" secondItem="SID-Ch-Woe" secondAttribute="height" id="FQK-54-GDt"/>
                         <constraint firstItem="Chf-aF-1bs" firstAttribute="top" secondItem="SID-Ch-Woe" secondAttribute="top" id="GTS-vY-BgV"/>
@@ -91,7 +82,6 @@
                         <constraint firstItem="Chf-aF-1bs" firstAttribute="top" secondItem="Txg-z2-8ry" secondAttribute="top" id="Isa-5r-3KA"/>
                         <constraint firstItem="Chf-aF-1bs" firstAttribute="height" secondItem="xcO-VZ-7Ct" secondAttribute="height" id="Krh-7l-CHq"/>
                         <constraint firstAttribute="trailing" secondItem="bQa-JN-lWX" secondAttribute="trailing" id="Q5s-71-L5B"/>
-                        <constraint firstItem="hzN-Wm-bce" firstAttribute="leading" secondItem="qrf-17-OWC" secondAttribute="leading" id="R7G-8a-NwE"/>
                         <constraint firstItem="Chf-aF-1bs" firstAttribute="top" secondItem="xcO-VZ-7Ct" secondAttribute="top" id="b3C-QE-3gd"/>
                         <constraint firstItem="Txg-z2-8ry" firstAttribute="top" secondItem="qrf-17-OWC" secondAttribute="top" constant="2" id="e8z-ac-DjJ"/>
                         <constraint firstItem="SID-Ch-Woe" firstAttribute="leading" secondItem="Txg-z2-8ry" secondAttribute="trailing" constant="2" id="fTm-3F-axS"/>
