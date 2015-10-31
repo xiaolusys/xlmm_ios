@@ -328,7 +328,7 @@
               NSLog(@"%@",str);
               UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
               view.backgroundColor = [UIColor blackColor];
-              view.layer.cornerRadius = 8;
+              view.layer.cornerRadius = 5;
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
               label.text = @"商品库存不足";
               label.textAlignment = NSTextAlignmentCenter;

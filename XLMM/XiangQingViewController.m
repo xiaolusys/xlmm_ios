@@ -109,7 +109,7 @@
     NSString *statusname = [dicJson objectForKey:@"status_display"];
     status = [dicJson objectForKey:@"status_display"];
     //判断在详情页是否显示取消订单和重新购买按钮。。。。。
-    if ([statusname isEqualToString:@"待支付"]) {
+    if ([statusname isEqualToString:@"待付款"]) {
         NSLog(@"待支付状态订单订单");
         self.quxiaoBtn.hidden = NO;
         self.buyBtn.hidden = NO;
@@ -223,8 +223,8 @@
         } else{
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(220, 75, 130, 32)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
-            if ([string isEqualToString:@"没有退款"]) {
-                string = @"没有退款";
+            if ([string isEqualToString:@"没有退款"] ) {
+                string = @"";
             }
             label.text = string;
             label.font = [UIFont systemFontOfSize:12];

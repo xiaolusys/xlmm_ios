@@ -82,7 +82,9 @@
                                 <constraint firstItem="dN7-ex-oov" firstAttribute="top" secondItem="j59-z6-XO0" secondAttribute="top" id="PHt-kn-gg0"/>
                                 <constraint firstItem="NFN-T3-kDP" firstAttribute="top" secondItem="j59-z6-XO0" secondAttribute="top" id="X0y-L7-gBs"/>
                                 <constraint firstItem="rjy-Bi-c9F" firstAttribute="top" secondItem="j59-z6-XO0" secondAttribute="top" constant="11" id="Zck-lX-4OO"/>
-                                <constraint firstAttribute="bottom" secondItem="f6a-5E-GdG" secondAttribute="bottom" constant="1" id="Ztg-Z3-cVq"/>
+                                <constraint firstAttribute="bottom" secondItem="f6a-5E-GdG" secondAttribute="bottom" constant="1" id="Ztg-Z3-cVq">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                </constraint>
                                 <constraint firstItem="NFN-T3-kDP" firstAttribute="height" secondItem="dN7-ex-oov" secondAttribute="height" id="h7y-aG-msC"/>
                                 <constraint firstAttribute="centerX" secondItem="rjy-Bi-c9F" secondAttribute="centerX" id="hvd-J8-VVY"/>
                                 <constraint firstItem="f6a-5E-GdG" firstAttribute="leading" secondItem="j59-z6-XO0" secondAttribute="leading" id="hxt-JN-zip"/>

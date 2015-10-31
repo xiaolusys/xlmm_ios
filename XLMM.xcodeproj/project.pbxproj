@@ -60,6 +60,7 @@
 		3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */; };
 		3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */; };
 		325B1E791BE454460027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
+		325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -164,7 +165,6 @@
 		327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */; };
 		327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
 		327FC2631B9AF1CD00F111B3 /* CartCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC2611B9AF1CD00F111B3 /* CartCollectionCell.m */; };
-		327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -2135,7 +2135,6 @@
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
-				327FC2641B9AF1CD00F111B3 /* CartCollectionCell.xib in Resources */,
 				32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,
 				32891B611B81D1B7007E562A /* CartTableCellTableViewCell.xib in Resources */,
@@ -2156,6 +2155,7 @@
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
+				325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */,
 				321EA39B1BE2279D009A45DE /* CartTableCellTableViewCell1.xib in Resources */,
 				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);

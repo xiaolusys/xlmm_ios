@@ -315,7 +315,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 10)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 50, 0);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
