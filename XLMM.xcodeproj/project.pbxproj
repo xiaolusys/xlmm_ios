@@ -59,6 +59,7 @@
 		3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */; };
 		3249B9BD1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */; };
 		3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */; };
+		325B1E791BE454460027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
@@ -492,7 +493,6 @@
 		32A288BE1B942F53006DC949 /* Head1View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288BC1B942F53006DC949 /* Head1View.m */; };
 		32A288BF1B942F53006DC949 /* Head1View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288BD1B942F53006DC949 /* Head1View.xib */; };
 		32A288C31B942F6B006DC949 /* Head2View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288C11B942F6B006DC949 /* Head2View.m */; };
-		32A288C41B942F6B006DC949 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
 		32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288D01B943EB4006DC949 /* PromoteModel.m */; };
 		32A81F911B8D963C009972B3 /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F901B8D963C009972B3 /* BuyModel.m */; };
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
@@ -1995,6 +1995,7 @@
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
+				325B1E791BE454460027B3E3 /* Head2View.xib in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
@@ -2024,7 +2025,6 @@
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
-				32A288C41B942F6B006DC949 /* Head2View.xib in Resources */,
 				3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */,
 				321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,

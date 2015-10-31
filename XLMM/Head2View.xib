@@ -31,16 +31,16 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="          " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5C-GC-K2a">
-                    <rect key="frame" x="44" y="15" width="43" height="20"/>
+                    <rect key="frame" x="32" y="15" width="43" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="childImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="u8f-nQ-W4d">
-                    <rect key="frame" x="8" y="7" width="36" height="36"/>
+                    <rect key="frame" x="8" y="13" width="24" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="2dt-My-ndP"/>
-                        <constraint firstAttribute="height" constant="36" id="WgP-LT-6sT"/>
+                        <constraint firstAttribute="width" constant="24" id="2dt-My-ndP"/>
+                        <constraint firstAttribute="height" constant="24" id="WgP-LT-6sT"/>
                     </constraints>
                 </imageView>
             </subviews>

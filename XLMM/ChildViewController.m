@@ -162,8 +162,8 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 10)/2 + 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2 + 52)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 50, 0);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
@@ -365,9 +365,17 @@ static NSString * ksimpleCell = @"simpleCell";
         NSLog(@"推荐排序");
         isOrder = NO;
         [self.childCollectionView reloadData];
+        [self.jiageButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        //self.jiageButton.titleLabel.font = [UIFont systemFontOfSize:18];
+        
+        
+        
     } else if (sender.tag == 2){
         NSLog(@"价格排序");
         isOrder = YES;
+        [self.tuijianButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
         
         [self downloadOrderData];
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

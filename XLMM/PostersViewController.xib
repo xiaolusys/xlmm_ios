@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostersViewController">
             <connections>
                 <outlet property="childCollectionView" destination="xZP-CB-ySy" id="QRP-1C-bdA"/>
+                <outlet property="jiageButton" destination="NFN-T3-kDP" id="6gd-Ls-MIt"/>
+                <outlet property="tuijianButton" destination="dN7-ex-oov" id="pu0-38-6UY"/>
                 <outlet property="view" destination="Tge-ST-Pvh" id="VT5-aN-WGr"/>
             </connections>
         </placeholder>
@@ -29,7 +31,7 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <state key="normal" title="推荐排序">
-                                        <color key="titleColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.9882352941176471" green="0.72549019607843135" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Thg-d9-rpx"/>
@@ -37,23 +39,25 @@
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7E-9n-qtb">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                                    <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="OOH-r5-LjS"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6a-5E-GdG">
                                     <rect key="frame" x="0.0" y="34" width="600" height="1"/>
-                                    <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="KpH-hT-60q"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rjy-Bi-c9F">
                                     <rect key="frame" x="300" y="11" width="1" height="22"/>
-                                    <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="22" id="cdT-dq-LPG"/>
+                                        <constraint firstAttribute="height" constant="22" id="cdT-dq-LPG">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="18"/>
+                                        </constraint>
                                         <constraint firstAttribute="width" constant="1" id="hOB-1O-kgS"/>
                                     </constraints>
                                 </view>

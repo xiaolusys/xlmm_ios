@@ -24,6 +24,8 @@ UICollectionViewDelegate>{
 
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
 
+@property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
+@property (weak, nonatomic) IBOutlet UIButton *jiageButton;
 
 - (IBAction)btnClicked:(UIButton *)sender;
 

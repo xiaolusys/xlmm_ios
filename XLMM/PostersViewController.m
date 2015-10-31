@@ -486,12 +486,23 @@ static NSString * ksimpleCell = @"simpleCell";
     if (sender.tag == 1) {
         NSLog(@"推荐排序");
         isOrder = NO;
+        [self.jiageButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        
         [self.childCollectionView reloadData];
+        
+        
+        
+        
     } else if (sender.tag == 2){
         NSLog(@"价格排序");
         isOrder = YES;
         
         [self downloadOrderData];
+        
+        [self.tuijianButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.backgroundColor = [UIColor clearColor];
         [activityIndicator startAnimating];

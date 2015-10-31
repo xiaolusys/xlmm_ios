@@ -64,7 +64,6 @@
     //self.view.backgroundColor = [UIColor redColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
-    
     [self createCollectionView];
     [self createInfo];
     
@@ -108,7 +107,8 @@
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.view addSubview:[[UIView alloc] init]];
-   
+    self.collectionView.backgroundColor = [UIColor colorWithR:245 G:245 B:245 alpha:1];
+
    // self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.collectionView];
 }

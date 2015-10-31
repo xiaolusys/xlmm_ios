@@ -33,14 +33,14 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <state key="normal" title="推荐排序">
-                                        <color key="titleColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.9882352941176471" green="0.72549019607843135" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="Fxl-C7-JRr"/>
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywo-eh-goW">
-                                    <rect key="frame" x="0.0" y="34" width="375" height="1"/>
+                                    <rect key="frame" x="0.0" y="35" width="375" height="1"/>
                                     <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="AFY-cU-XpC"/>
@@ -73,7 +73,7 @@
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="height" secondItem="uFE-0Y-vvi" secondAttribute="height" id="FDZ-jN-XXd"/>
                                 <constraint firstAttribute="centerX" secondItem="YmS-11-3H0" secondAttribute="centerX" id="MGX-Vd-Xo1"/>
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="top" secondItem="Dm4-DC-Z76" secondAttribute="top" id="Oe2-WQ-SmW"/>
-                                <constraint firstAttribute="bottom" secondItem="Ywo-eh-goW" secondAttribute="bottom" constant="1" id="gzD-Sw-lsI"/>
+                                <constraint firstAttribute="bottom" secondItem="Ywo-eh-goW" secondAttribute="bottom" id="gzD-Sw-lsI"/>
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="leading" secondItem="uFE-0Y-vvi" secondAttribute="trailing" id="oQy-xa-nsz"/>
                                 <constraint firstItem="YmS-11-3H0" firstAttribute="top" secondItem="Dm4-DC-Z76" secondAttribute="top" constant="6" id="pD8-m1-hPd"/>
                                 <constraint firstItem="DOa-nV-73Q" firstAttribute="width" secondItem="uFE-0Y-vvi" secondAttribute="width" id="taf-67-Spc"/>
