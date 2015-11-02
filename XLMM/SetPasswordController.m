@@ -99,6 +99,10 @@
     
 }
 
+
+
+
+
 - (IBAction)commitBtnClicked:(id)sender {
     NSLog(@"提交");
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile", Root_URL];

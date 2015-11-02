@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 #import "SetPasswordController.h"
+#import "AFNetworking.h"
 
 
 @interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>
@@ -156,6 +157,11 @@
     
 }
 
+// rest/v1/users/check_code
+
+// username  valid_code
+
+//
 
 - (IBAction)getCodeClicked:(id)sender {
     NSLog(@"验证码");
@@ -264,6 +270,59 @@
 
 - (IBAction)commitClicked:(id)sender {
     NSLog(@"下一步");
+    
+    
+    // rest/v1/users/check_code
+    
+    // username  valid_code
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/check_code", Root_URL];
+    NSLog(@"url = %@", urlString);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    NSDictionary *parameters = @{@"username": self.phoneTextField.text,
+                                 @"valid_code":self.codeTextField.text
+                                 };
+    NSLog(@"parameters = %@", parameters);
+    
+    
+    
+    //第一步，创建URL
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //第二步，创建请求
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    
+    NSString *str = [NSString stringWithFormat:@"username=%@&valid_code=%@", self.phoneTextField.text, self.codeTextField.text];//设置参数
+    NSLog(@"params = %@", str);
+    
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [request setHTTPBody:data];
+    
+    //第三步，连接服务器
+    
+    
+    
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    
+    
+    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSLog(@"%@",str1);
+  
+
+    
+    
     NSLog(@"%@ %@", self.phoneTextField.text, self.codeTextField.text);
     SetPasswordController *nextVC = [[SetPasswordController alloc] initWithNibName:@"SetPasswordController" bundle:nil phone:self.phoneTextField.text code:self.codeTextField.text];
     
