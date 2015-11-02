@@ -19,8 +19,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmTextField;
 @property (weak, nonatomic) IBOutlet UIButton *codeButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 - (IBAction)getCodeClicked:(id)sender;
 - (IBAction)commitClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *buttonLabel;
 
 @end

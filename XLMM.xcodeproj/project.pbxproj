@@ -533,6 +533,8 @@
 		32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32BE33931BDA0A720078C8B0 /* testImage.jpg */; };
 		32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; };
 		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; };
+		32C74C4B1BE7425E00E25A7C /* SetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C74C491BE7425E00E25A7C /* SetPasswordController.m */; };
+		32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */; };
 		32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CC3FE91BA282B30043764F /* tuihuo-ing.png */; };
 		32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C841B9FFF2F00475E2E /* OrderModel.m */; };
 		32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */; };
@@ -987,6 +989,9 @@
 		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
 		32BE33931BDA0A720078C8B0 /* testImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage.jpg; sourceTree = "<group>"; };
 		32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiaolufont.ttf; sourceTree = "<group>"; };
+		32C74C481BE7425E00E25A7C /* SetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPasswordController.h; sourceTree = "<group>"; };
+		32C74C491BE7425E00E25A7C /* SetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPasswordController.m; sourceTree = "<group>"; };
+		32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPasswordController.xib; sourceTree = "<group>"; };
 		32CC3FE91BA282B30043764F /* tuihuo-ing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tuihuo-ing.png"; path = "../tuihuo-ing.png"; sourceTree = "<group>"; };
 		32CC7C831B9FFF2F00475E2E /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		32CC7C841B9FFF2F00475E2E /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
@@ -1725,6 +1730,9 @@
 				329E8A911BB648A3008AA0B6 /* WXLoginController.h */,
 				329E8A921BB648A3008AA0B6 /* WXLoginController.m */,
 				329E8A931BB648A3008AA0B6 /* WXLoginController.xib */,
+				32C74C481BE7425E00E25A7C /* SetPasswordController.h */,
+				32C74C491BE7425E00E25A7C /* SetPasswordController.m */,
+				32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */,
 				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
 				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
 				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
@@ -2117,6 +2125,7 @@
 				32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */,
 				32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */,
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
+				32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
@@ -2419,6 +2428,7 @@
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
 				3282F2891B6B5B1300E73EB9 /* UIImage+GIF.m in Sources */,
 				326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */,
+				32C74C4B1BE7425E00E25A7C /* SetPasswordController.m in Sources */,
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
 				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,

@@ -15,5 +15,11 @@
     return [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1];
 }
 
++ (UIColor *)buttonBorderColor{
+    UIColor *color = [UIColor colorWithR:217 G:140 B:13 alpha:1];
+    return color;
+    
+}
+
 
 @end

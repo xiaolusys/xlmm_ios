@@ -12,5 +12,5 @@
 
 + (UIColor *)colorWithR:(CGFloat)red G:(CGFloat)green B:(CGFloat)blue alpha:(CGFloat)alpha;
 
-
++ (UIColor *)buttonBorderColor;
 @end

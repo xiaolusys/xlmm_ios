@@ -10,6 +10,8 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
+#import "SetPasswordController.h"
+
 
 @interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -20,16 +22,39 @@
     NSTimer *myTimer;
     NSInteger countdownSecond;
     UILabel *timeLabel;
-    
     NSInteger countSecond;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showKeyboard) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenKeyboard) name:UIKeyboardWillHideNotification object:nil];
+    
     
 }
 
+- (void)dealloc{
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    
+    
+}
+
+- (void)showKeyboard{
+    NSLog(@"show");
+    
+      self.view.frame = CGRectMake(0, -112, SCREENWIDTH, SCREENHEIGHT);
+    
+}
+
+- (void)hiddenKeyboard{
+    NSLog(@"Hidden");
+    
+      self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -38,28 +63,41 @@
     countdownSecond = countSecond;
     
     
-    self.title = @"微信登录";
+    self.title = @"手机绑定";
     [self createNavigationBarWithTitle:@"微信登录" selecotr:@selector(backClicked:)];
     NSLog(@"用户信息 = %@", self.userInfo);
     self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];
-    self.nameLabel.text = [self.userInfo objectForKey:@"nickname"];
+    
+//[NSString stringWithFormat:<#(nonnull NSString *), ...#>]
+    NSString *nameString = [NSString stringWithFormat:@"微信号:%@", [self.userInfo objectForKey:@"nickname"]];
+    self.nameLabel.text =  nameString;
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
-    self.psdTextField.delegate = self;
-    self.confirmTextField.delegate = self;
+  
+    self.phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.codeTextField.keyboardType = UIKeyboardTypeNumberPad;
     
-    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 7, 60, 30)];
-    timeLabel.font = [UIFont systemFontOfSize:14];
-    timeLabel.textColor = [UIColor grayColor];
-    timeLabel.textAlignment = NSTextAlignmentLeft;
-    timeLabel.text = @"";
-    [self.codeButton addSubview:timeLabel];
+    self.phoneTextField.borderStyle = UITextBorderStyleNone;
+    self.codeTextField.borderStyle = UITextBorderStyleNone;
     
-    self.myImageView.layer.cornerRadius = 30;
+  
+    
+    self.myImageView.layer.cornerRadius = 45;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 1;
     self.myImageView.layer.borderColor = [UIColor colorWithR:253 G:203 B:14 alpha:1].CGColor;
+    self.buttonLabel.text = @"获取验证码";
+    
+    self.codeButton.layer.cornerRadius = 16;
+    self.codeButton.layer.borderWidth = 1;
+    self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+    
+    self.nextButton.layer.cornerRadius = 20;
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    
+    
     
 }
 
@@ -89,28 +127,16 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    if (textField == self.psdTextField || textField == self.confirmTextField) {
-        [UIView animateWithDuration:0.3 animations:^{
-           CGRect rect = self.view.frame;
-            rect.origin.y -= 80;
-            self.view.frame = rect;
-            
-            
-        }];
-    }
+  
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-        
-    }];
+   
 }
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.phoneTextField resignFirstResponder];
     [self.codeTextField resignFirstResponder];
-    [self.psdTextField resignFirstResponder];
-    [self.confirmTextField resignFirstResponder];
+ 
     
 }
 
@@ -171,11 +197,10 @@
     
     //  094783
     
-    timeLabel.text = @"剩余60秒";
     
     NSLog(@"phoneNumber = %@", phoneStr);
     self.codeButton.enabled = NO;
-    [self.codeButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+   
     
     
     myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
@@ -184,16 +209,25 @@
 
 - (void)updateTime{
     countdownSecond--;
-    NSLog(@"countdownSecond = %ld", (long)countdownSecond);
+  //  NSLog(@"countdownSecond = %ld", (long)countdownSecond);
     
-    NSString *text = [NSString stringWithFormat:@"剩余%ld秒", (long)countdownSecond];
-    timeLabel.text = text;
-    if (countdownSecond == 0) {
+    NSString *text = [NSString stringWithFormat:@"%ld秒", (long)countdownSecond];
+ //   timeLabel.text = text;
+    self.buttonLabel.text = text;
+    self.buttonLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    self.codeButton.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+    
+#warning change timeLabel
+    
+    if (countdownSecond == 55) {
         countdownSecond = countSecond;
         [myTimer invalidate];
         self.codeButton.enabled = YES;
-        [self.codeButton setTitleColor:[UIColor blueColor] forState:UIControlStateDisabled];
-        timeLabel.text = @"";
+        self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+        self.buttonLabel.textColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+        self.buttonLabel.text = @"获取验证码";
+        
+      
         
     }
 }
@@ -213,93 +247,26 @@
 
 
 - (IBAction)commitClicked:(id)sender {
-    NSLog(@"提交");
+    NSLog(@"下一步");
+    NSLog(@"%@ %@", self.phoneTextField.text, self.codeTextField.text);
+    SetPasswordController *nextVC = [[SetPasswordController alloc] initWithNibName:@"SetPasswordController" bundle:nil phone:self.phoneTextField.text code:self.codeTextField.text];
+    
+    NSLog(@"%@  %@", nextVC.phone, nextVC.code);
+    
+    [self.navigationController pushViewController:nextVC animated:YES];
     
     
+   /*
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile", Root_URL];
-    NSLog(@"url = %@", urlString);
-    
-    
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
-    NSDictionary *parameters = @{@"username": self.phoneTextField.text,
-                                 @"password1": self.psdTextField.text,
-                                 @"password2": self.confirmTextField.text,
-                                 @"valid_code":self.codeTextField.text
-                        };
-    NSLog(@"parameters = %@", parameters);
-    
-    
-    
-    
-    
-    [manager POST:urlString parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"result"];
-              NSLog(@"result = %@", string);
-            //  string = @"0";
-              if ([string isEqualToString:@"0"]) {
-                  
-                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已成功绑定手机号" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                  [alertView show];
-                  
-                  [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.0];
-//                  [self.navigationController popViewControllerAnimated:YES];
-              }
-              if ([string isEqualToString:@"1"]) {
-                  
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"2"]) {
-                  
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"参数错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"3"]) {
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"4"]) {
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码过期" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"5"]) {
-                  [self.navigationController popViewControllerAnimated:YES];
-              }
-              
-              
-              
-              
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
+   
     
 
     
+    */
     
     
 }
 
-- (void) dimissAlert:(UIAlertView *)alert {
-    if(alert)     {
-        [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
-    }
-    [self.navigationController popToRootViewControllerAnimated:YES];
-
-}
 
 
 //- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
