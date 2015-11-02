@@ -64,7 +64,7 @@
     
     
     self.title = @"手机绑定";
-    [self createNavigationBarWithTitle:@"手机绑定349" selecotr:@selector(backClicked:)];
+    [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClicked:)];
     NSLog(@"用户信息 = %@", self.userInfo);
     self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];
     
@@ -124,6 +124,22 @@
     }
     return NO;
    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (textField == self.codeTextField) {
+        NSLog(@"%@", textField.text);
+        NSLog(@"%ld ", (long)textField.text.length);
+        NSLog(@"%@", NSStringFromRange(range));
+        NSLog(@"%@", string);
+        if (textField.text.length == 6) {
+            return NO;
+        }
+        
+    }
+   
+    return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

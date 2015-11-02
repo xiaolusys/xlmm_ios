@@ -364,7 +364,7 @@ static NSString *khead2View = @"head2View";
     
     // model.picPath = [childInfo objectForKey:@"pic_path"];
     model.Url = [dic objectForKey:@"url"];
-    model.agentPrice = [dic objectForKey:@"agent_price"];
+    model.agentPrice = [dic objectForKey:@"lowest_price"];
     model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
     model.outerID = [dic objectForKey:@"outer_id"];
     model.isNewgood = [dic objectForKey:@"is_newgood"];

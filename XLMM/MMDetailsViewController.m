@@ -242,10 +242,10 @@
     
     NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
     self.nameLabel.text = [dic objectForKey:@"name"];
-    if ([[dic objectForKey:@"agent_price"] integerValue] != [[dic objectForKey:@"agent_price"] floatValue]) {
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dic objectForKey:@"agent_price"] floatValue]];
+    if ([[dic objectForKey:@"lowest_price"] integerValue] != [[dic objectForKey:@"lowest_price"] floatValue]) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dic objectForKey:@"lowest_price"] floatValue]];
     } else {
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", [dic objectForKey:@"agent_price"]];
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", [dic objectForKey:@"lowest_price"]];
     }
    // self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];

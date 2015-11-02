@@ -146,7 +146,7 @@
     for (NSDictionary *dic in collections) {
         CollectionModel *model = [CollectionModel new];
         
-        model.agentPrice = [dic objectForKey:@"agent_price"];
+        model.agentPrice = [dic objectForKey:@"product_lowest_price"];
         model.category = [dic objectForKey:@"category"];
         model.ID = [dic objectForKey:@"id"];
         model.isNewgood = [dic objectForKey:@"is_newgood"];

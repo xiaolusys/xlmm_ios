@@ -541,7 +541,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     model.name = [dic objectForKey:@"name"];
     model.Url = [dic objectForKey:@"url"];
-    model.agentPrice = [dic objectForKey:@"agent_price"];
+    model.agentPrice = [dic objectForKey:@"lowest_price"];
     model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
     model.outerID = [dic objectForKey:@"outer_id"];
     model.isSaleopen = [dic objectForKey:@"is_saleopen"];
