@@ -8,10 +8,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LiJiGMViewController1">
             <connections>
+                <outlet property="addressZeroLabel" destination="cfZ-We-qlV" id="QUF-7F-2XP"/>
                 <outlet property="allPaymentLabel" destination="LHD-V6-0U6" id="lpO-MB-X17"/>
                 <outlet property="allPriceLabel" destination="NAc-im-GcD" id="IU4-Kp-6Wu"/>
                 <outlet property="buyButton" destination="dse-Zb-fyN" id="YWm-xc-icw"/>
                 <outlet property="containterWidth" destination="khj-6y-j08" id="isG-WK-GIu"/>
+                <outlet property="couponButton" destination="nbu-Gb-wAb" id="rg0-Pl-Hey"/>
+                <outlet property="couponImageView" destination="ZfS-mN-eiR" id="otM-ai-xCl"/>
+                <outlet property="couponLabel" destination="SnO-c3-YaF" id="pQw-rF-fWt"/>
                 <outlet property="myimageView" destination="Np3-CL-bNG" id="11Q-Kb-MdA"/>
                 <outlet property="nameLabel" destination="xkN-kf-ejl" id="aKC-DH-VZ7"/>
                 <outlet property="numberLabel" destination="hay-ES-miX" id="AUf-fZ-8us"/>
@@ -108,6 +112,12 @@
                                                 <action selector="addAddressClicked:" destination="-1" eventType="touchUpInside" id="aAc-GU-95R"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="填写收货地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfZ-We-qlV">
+                                            <rect key="frame" x="40" y="30" width="84" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -115,12 +125,14 @@
                                         <constraint firstAttribute="trailing" secondItem="f8y-dG-nyU" secondAttribute="trailing" constant="8" id="9yH-WU-WMy"/>
                                         <constraint firstAttribute="trailing" secondItem="Tfv-z8-q1k" secondAttribute="trailing" constant="8" id="Cm7-kT-bxZ"/>
                                         <constraint firstItem="Blb-0T-Zgl" firstAttribute="top" secondItem="O3q-4C-hbe" secondAttribute="bottom" constant="12" id="H8R-Cc-g1i"/>
+                                        <constraint firstItem="cfZ-We-qlV" firstAttribute="leading" secondItem="F4X-Ma-4DX" secondAttribute="trailing" constant="8" id="II1-67-U0N"/>
                                         <constraint firstItem="23r-G3-pFk" firstAttribute="leading" secondItem="Ipe-NF-yAj" secondAttribute="leading" id="KiH-5z-K8X"/>
                                         <constraint firstItem="Tfv-z8-q1k" firstAttribute="leading" secondItem="Ipe-NF-yAj" secondAttribute="leading" constant="8" id="TAF-iz-PgG"/>
                                         <constraint firstAttribute="height" constant="100" id="Wqb-Gl-uwl"/>
                                         <constraint firstItem="F4X-Ma-4DX" firstAttribute="leading" secondItem="Ipe-NF-yAj" secondAttribute="leading" constant="12" id="avA-gn-Pux"/>
                                         <constraint firstAttribute="trailing" secondItem="23r-G3-pFk" secondAttribute="trailing" id="d1v-XZ-91A"/>
                                         <constraint firstItem="O3q-4C-hbe" firstAttribute="leading" secondItem="Ipe-NF-yAj" secondAttribute="leading" constant="40" id="eam-UV-oUa"/>
+                                        <constraint firstItem="cfZ-We-qlV" firstAttribute="centerY" secondItem="F4X-Ma-4DX" secondAttribute="centerY" id="feN-jN-Vn1"/>
                                         <constraint firstAttribute="bottom" secondItem="23r-G3-pFk" secondAttribute="bottom" id="gCr-Il-T1Z"/>
                                         <constraint firstItem="Tfv-z8-q1k" firstAttribute="top" secondItem="Ipe-NF-yAj" secondAttribute="top" constant="8" id="jyA-uf-HdK"/>
                                         <constraint firstItem="Blb-0T-Zgl" firstAttribute="leading" secondItem="O3q-4C-hbe" secondAttribute="leading" id="lZT-tu-ASi"/>
@@ -314,6 +326,12 @@
                                                 <action selector="selectYouhuiClicked:" destination="-1" eventType="touchUpInside" id="oKy-8T-ULw"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无可用优惠券" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnO-c3-YaF">
+                                            <rect key="frame" x="210" y="30" width="84" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -326,10 +344,12 @@
                                         <constraint firstItem="LWR-eX-FVR" firstAttribute="leading" secondItem="TF9-0T-11e" secondAttribute="leading" id="KbA-Kn-ynA"/>
                                         <constraint firstItem="ZfS-mN-eiR" firstAttribute="centerY" secondItem="te4-I7-Vo4" secondAttribute="centerY" id="M9j-LT-ziQ"/>
                                         <constraint firstItem="TF9-0T-11e" firstAttribute="top" secondItem="eiS-g3-igR" secondAttribute="bottom" constant="14" id="R0d-1d-QFg"/>
+                                        <constraint firstItem="SnO-c3-YaF" firstAttribute="centerY" secondItem="te4-I7-Vo4" secondAttribute="centerY" id="RyA-2j-hJx"/>
                                         <constraint firstAttribute="trailing" secondItem="RRQ-Iq-cYu" secondAttribute="trailing" constant="12" id="V36-ST-kxF"/>
                                         <constraint firstItem="te4-I7-Vo4" firstAttribute="centerY" secondItem="TF9-0T-11e" secondAttribute="centerY" id="WLD-61-mfQ"/>
                                         <constraint firstItem="te4-I7-Vo4" firstAttribute="leading" secondItem="ZfS-mN-eiR" secondAttribute="trailing" id="Xjb-a3-sTD"/>
                                         <constraint firstAttribute="trailing" secondItem="eiS-g3-igR" secondAttribute="trailing" id="ccW-E1-zrN"/>
+                                        <constraint firstItem="te4-I7-Vo4" firstAttribute="leading" secondItem="SnO-c3-YaF" secondAttribute="trailing" constant="-2" id="ebF-o5-aGh"/>
                                         <constraint firstItem="dok-R5-VwT" firstAttribute="leading" secondItem="HS7-Hl-PLU" secondAttribute="leading" id="hHH-e8-a1e"/>
                                         <constraint firstItem="LWR-eX-FVR" firstAttribute="top" secondItem="TF9-0T-11e" secondAttribute="bottom" constant="24" id="heM-wi-GaT"/>
                                         <constraint firstItem="TF9-0T-11e" firstAttribute="leading" secondItem="HS7-Hl-PLU" secondAttribute="leading" constant="12" id="hhi-xi-3P0"/>

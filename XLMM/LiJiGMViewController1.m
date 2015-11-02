@@ -18,6 +18,8 @@
 #import "WXApi.h"
 #import "UIViewController+NavigationBar.h"
 #import "PersonCenterViewController1.h"
+#import "MMUserCoupons.h"
+
 
 #define kUrlScheme @"wx25fcb32689872499"
 @interface LiJiGMViewController1 ()<YouhuiquanDelegate>
@@ -113,6 +115,18 @@
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     self.buyButton.layer.cornerRadius = 20;
  
+    MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
+    if (coupons.couponValue == 0) {
+       // self.couponButton.enabled = NO;
+        self.couponLabel.hidden = NO;
+        self.couponImageView.hidden = YES;
+    } else {
+     //   self.couponButton.enabled = YES;
+        self.couponLabel.hidden = YES;
+        self.couponImageView.hidden = NO;
+        
+        
+    }
   
     
     
@@ -199,10 +213,12 @@
         NSLog(@"地址为空");
         self.shouhuodizhi.text = @"";
         self.shouhuoren.text = @"";
+        self.addressZeroLabel.hidden = NO;
         self.modifyButton.userInteractionEnabled = NO;
         return;
         
     } else {
+        self.addressZeroLabel.hidden = YES;
         self.modifyButton.userInteractionEnabled = YES;
     }
     NSDictionary *dic = [array firstObject];

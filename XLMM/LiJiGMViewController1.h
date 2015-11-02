@@ -45,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *weixinImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (weak, nonatomic) IBOutlet UILabel *addressZeroLabel;
 
 - (IBAction)addAddressClicked:(id)sender;
 - (IBAction)modifyAddressClicked:(id)sender;
@@ -54,5 +55,13 @@
 - (IBAction)zhifubaoClicked:(id)sender;
 - (IBAction)weixinClicked:(id)sender;
 - (IBAction)buyClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *couponButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *couponLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *couponImageView;
+
+
+
 
 @end

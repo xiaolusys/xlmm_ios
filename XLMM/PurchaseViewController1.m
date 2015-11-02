@@ -18,6 +18,8 @@
 #import "BuyModel.h"
 #import "YouHuiQuanViewController.h"
 #import "YHQModel.h"
+#import "MMUserCoupons.h"
+
 #import "AFNetworking.h"
 #import "Pingpp.h"
 #import "WXApi.h"
@@ -92,6 +94,19 @@
     [self downloadCartsData];
     
     payMethod = @"alipay";
+    
+    
+    MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
+    if (coupons.couponValue == 0) {
+        self.couponLabel.hidden = NO;
+        self.couponImageView.hidden = YES;
+        
+        
+    } else {
+        
+        self.couponImageView.hidden = NO;
+        self.couponLabel.hidden = YES;
+    }
     
     
 }
@@ -232,9 +247,12 @@
         return;
     }
     if (addressArray.count == 0) {
-        self.peopleLabel.text = @"新增收货地址";
+        self.peopleLabel.text = @"";
         self.addressLabel.text = @"";
+        self.addressZeroLabel.hidden = NO;
         return;
+    } else {
+        self.addressZeroLabel.hidden = YES;
     }
     NSDictionary *dic = [addressArray objectAtIndex:0];
     NSLog(@"dic = %@", dic);

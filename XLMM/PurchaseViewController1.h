@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *allPayLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailsViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewWidth;
+@property (weak, nonatomic) IBOutlet UILabel *addressZeroLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 
@@ -29,5 +30,10 @@
 - (IBAction)zhifubaoClicked:(id)sender;
 - (IBAction)weixinZhifuClicked:(id)sender;
 - (IBAction)buyClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *couponImageView;
+@property (weak, nonatomic) IBOutlet UIButton *couponButton;
+@property (weak, nonatomic) IBOutlet UILabel *couponLabel;
+
 
 @end
