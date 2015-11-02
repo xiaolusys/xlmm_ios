@@ -515,6 +515,7 @@
 		32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */; };
 		32B5DE8A1BC8D53700AEE6B3 /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
+		32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BA54051BE6F5E400A597DB /* MMUserCoupons.m */; };
 		32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA51BD4BB70008ADAA2 /* ios7.png */; };
 		32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */; };
 		32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */; };
@@ -962,6 +963,8 @@
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
 		32B5DE891BC8D53700AEE6B3 /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lingquyouhuiquan.png; path = ../../../lingquyouhuiquan.png; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
+		32BA54041BE6F5E400A597DB /* MMUserCoupons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMUserCoupons.h; sourceTree = "<group>"; };
+		32BA54051BE6F5E400A597DB /* MMUserCoupons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMUserCoupons.m; sourceTree = "<group>"; };
 		32BC3CA51BD4BB70008ADAA2 /* ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7.png; sourceTree = "<group>"; };
 		32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios8_retina_HD5.5.png; sourceTree = "<group>"; };
 		32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina_HD4.7.png; sourceTree = "<group>"; };
@@ -1848,6 +1851,8 @@
 				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
 				325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */,
 				325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */,
+				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
+				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2377,6 +2382,7 @@
 				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
+				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,

@@ -444,9 +444,9 @@
     NSStringDrawingOptions option = NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
     CGSize size = CGSizeMake(SCREENWIDTH - 76, 1024);
     CGRect rect = CGRectZero;
-    UILabel *label1 = nil;
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 76)];
      int margin = 8;
-    if (caizhi != nil) {
+    if (caizhi != nil && [caizhi class] != [NSNull class]) {
     
         rect = [caizhi boundingRectWithSize:size
                                            options:option
@@ -468,7 +468,7 @@
         
     }
  
-    if (yanse != nil) {
+    if (yanse != nil && [caizhi class] != [NSNull class]) {
         rect = [yanse boundingRectWithSize:size
                                    options:option
                                 attributes:attributes
@@ -496,7 +496,7 @@
         [self.canshuView addSubview:label];
 
     }
-    if (beizhu != nil) {
+    if (beizhu != nil && [caizhi class] != [NSNull class]) {
         rect = [beizhu boundingRectWithSize:size
                                     options:option
                                  attributes:attributes
@@ -522,7 +522,7 @@
         
         [self.canshuView addSubview:label];
     }
-    if (shuoming != nil) {
+    if (shuoming != nil && [caizhi class] != [NSNull class]) {
         rect = [shuoming boundingRectWithSize:size
                                       options:option
                                    attributes:attributes

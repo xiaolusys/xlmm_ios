@@ -18,6 +18,9 @@
 #import "JifenViewController.h"
 #import "YouHuiQuanViewController.h"
 #import "UIImageView+WebCache.h"
+#import "MMUserCoupons.h"
+
+
 
 
 
@@ -47,6 +50,7 @@
     NSLog(@"phone number longin");
     self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [self setJifenInfo];
+    [self setYHQInfo];
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
@@ -65,7 +69,14 @@
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
     self.nameLabel.text = [userInfo objectForKey:@"nickname"];
     [self setJifenInfo];
+    [self setYHQInfo];
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
+}
+
+- (void)setYHQInfo{
+    MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
+    self.youhuiquanLabel.text = [NSString stringWithFormat:@"%ld", (long)coupons.couponValue];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -119,6 +130,8 @@
     NSLog(@"jifen Url = %@", string);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     if (data == nil) {
+        self.jifenLabel.text = @"0";
+        
         return;
     }
     NSError *error = nil;
