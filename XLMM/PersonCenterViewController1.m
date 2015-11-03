@@ -43,6 +43,9 @@
         [theTimer invalidate];
     } 
 }
+
+//待支付界面 。。。。
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"待支付订单";
@@ -54,6 +57,7 @@
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     //self.dataArray = [[NSMutableArray alloc] init];
     [self.view addSubview:[[UIView alloc] init]];
+    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
 }
 
@@ -244,8 +248,10 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 120);
+    return CGSizeMake(SCREENWIDTH, 117);
 }
+
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
@@ -254,6 +260,12 @@
     ZhiFuCollectionCell *cell = (ZhiFuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
+    
+    cell.myimageView.layer.masksToBounds = YES;
+    cell.myimageView.layer.cornerRadius = 5;
+    cell.myimageView.layer.borderWidth = 1;
+    cell.myimageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    
     NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
     NSRange range = [string rangeOfString:@"T"];
 //    [string deleteCharactersInRange:range];

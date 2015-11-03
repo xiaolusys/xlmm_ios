@@ -83,6 +83,8 @@
     randomstring = [[NSMutableString alloc] init];
     
     
+    self.wxButton.layer.cornerRadius = 20;
+    self.zhanghaoButton.layer.cornerRadius = 20;
     
     
 }

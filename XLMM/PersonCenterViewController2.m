@@ -36,7 +36,8 @@
     [self downlaodData];
     [self.view addSubview:[[UIView alloc] init]];
     
-    
+    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -111,6 +112,12 @@
     ShouHuoCollectionViewCell *cell = (ShouHuoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
+    cell.myimageView.layer.masksToBounds = YES;
+    cell.myimageView.layer.cornerRadius = 5;
+    cell.myimageView.layer.borderWidth = 1;
+    cell.myimageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    
+    
     
     NSString *status = [dic objectForKey:@"status_display"];
     
