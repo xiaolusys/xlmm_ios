@@ -502,7 +502,6 @@
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
 		32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A81F951B8D9C08009972B3 /* BuyCartsView.xib */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
-		32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		32A88E121B86BD8C003501EF /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
 		32A88E151B86C840003501EF /* DingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E141B86C840003501EF /* DingdanModel.m */; };
@@ -576,6 +575,7 @@
 		32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
 		32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */; };
 		32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
+		32EC42581BE880D3009E5FA2 /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -2022,6 +2022,7 @@
 				32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,
+				32EC42581BE880D3009E5FA2 /* QuanbuCollectionCell.xib in Resources */,
 				32121B401B9461BF00742E53 /* icon.png in Resources */,
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
@@ -2106,7 +2107,6 @@
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
-				32A88E0D1B86B2D8003501EF /* QuanbuCollectionCell.xib in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,

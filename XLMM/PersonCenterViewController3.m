@@ -143,6 +143,7 @@
 
     [self.quanbuCollectionView registerClass:[QuanbuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     
+    self.quanbuCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     [self downloadData];
 }
 
@@ -205,9 +206,16 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
     
 }
+
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 15;
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 140);
+    return CGSizeMake(SCREENWIDTH, 117);
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return dataArray.count;
@@ -224,6 +232,10 @@
     [string insertString:@"  " atIndex:range.location];
     cell.timeLabel.text = string;
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURLString]];
+    cell.myImageView.layer.masksToBounds = YES;
+    cell.myImageView.layer.borderWidth = 1;
+    cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    cell.myImageView.layer.cornerRadius = 5;
     cell.bianhaoLabel.text = model.dingdanbianhao;
     cell.zhuangtaiLabel.text = model.dingdanZhuangtai;
     cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",  [model.dingdanJine floatValue]];
