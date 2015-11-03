@@ -18,7 +18,12 @@
 
 @end
 
-@implementation AddAdressViewController
+@implementation AddAdressViewController{
+    NSString *province;
+    NSString *city;
+    NSString *county;
+    
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -40,14 +45,27 @@
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
         self.numberTextField.text = _addressModel.phoneNumber;
-       
+        self.detailsAddressTF.hidden = YES;
         
-        self.provinceTextField.text = _addressModel.provinceName;
+        province = _addressModel.provinceName;
+        city = _addressModel.cityName;
+        county = _addressModel.countyName;
+        
+        self.provinceTextField.text = [NSString stringWithFormat:@"%@%@%@", _addressModel.provinceName, _addressModel.cityName, _addressModel.countyName];
+        //_addressModel.provinceName;
         self.cityTextField.text = _addressModel.cityName;
         self.countyTextField.text = _addressModel.countyName;
     }
     
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.numberTextField.borderStyle = UITextBorderStyleNone;
+    self.nameTextField.borderStyle = UITextBorderStyleNone;
+    self.provinceTextField.borderStyle = UITextBorderStyleNone;
+    self.detailsAddressTF.borderStyle = UITextBorderStyleNone;
+    self.detailsAddressTF.userInteractionEnabled = NO;
+    self.saveButton.layer.cornerRadius = 20;
+    self.saveButton.layer.borderWidth = 1;
+    self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
 }
 
@@ -73,19 +91,14 @@
 
 
 - (void)pickerDidChangeStatus:(AddressPickerView *)picker{
- //   self.areaValue = [NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district];
-//    
-//    NSLog(@"chen");
-//    
-//    NSLog(@"%@", picker.address.provinceName);
-//    NSLog(@"%@", picker.address.cityName);
-//
-//    NSLog(@"%@", picker.address.countyName);
 
-    self.provinceTextField.text = picker.address.provinceName;
-    self.cityTextField.text = picker.address.cityName;
-    self.countyTextField.text = picker.address.countyName;
-//    NSLog(@"dddadf");
+
+    province = picker.address.provinceName;
+    city = picker.address.cityName;
+    county = picker.address.countyName;
+
+    NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
+    self.provinceTextField.text = string;
     
 }
 
@@ -96,7 +109,9 @@
     self.addressPicker = nil;
 }
 
-
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    self.detailsAddressTF.hidden = YES;
+}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -130,29 +145,29 @@
 
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    CGRect rect = self.view.frame;
-    rect.origin.y = -[UIScreen mainScreen].bounds.size.height + 400;
-    if ([UIScreen mainScreen].bounds.size.width == 320) {
-        
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.view.frame = rect;
-
-    } completion:^(BOOL finished) {
-        
-    }];
-    }
+//    CGRect rect = self.view.frame;
+//    rect.origin.y = -[UIScreen mainScreen].bounds.size.height + 400;
+//    if ([UIScreen mainScreen].bounds.size.width == 320) {
+//        
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.view.frame = rect;
+//
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+//    }
     
     
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
-    [UIView animateWithDuration:0.3 animations:^{
-            self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-    } completion:^(BOOL finished) {
-        
-    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//            self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+//    } completion:^(BOOL finished) {
+//        
+//    }];
 
     
 }
@@ -161,6 +176,7 @@
     [textField resignFirstResponder];
     return YES;
 }
+
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
@@ -188,7 +204,7 @@
 - (IBAction)saveBtnClicked:(id)sender {
 
     if ([self.provinceTextField.text isEqualToString: @""]) {
-        self.infoLabel.text = @"请选择省";
+        self.infoLabel.text = @"请选择所在地区";
         return;
         
     }
@@ -220,9 +236,9 @@
   
     if (_isAdd == YES) {
         NSDictionary *parameters = @{
-                                     @"receiver_state": _provinceTextField.text,
-                                     @"receiver_city": _cityTextField.text,
-                                     @"receiver_district": _countyTextField.text,
+                                     @"receiver_state": province,
+                                     @"receiver_city": city,
+                                     @"receiver_district": county,
                                      @"receiver_address": _streetTextView.text,
                                      @"receiver_name": _nameTextField.text,
                                      @"receiver_mobile": _numberTextField.text,
@@ -250,9 +266,9 @@
         NSLog(@"修改地址");
         NSDictionary *parameters = @{
                                      @"id":_addressModel.addressID,
-                                     @"receiver_state": _provinceTextField.text,
-                                     @"receiver_city": _cityTextField.text,
-                                     @"receiver_district": _countyTextField.text,
+                                     @"receiver_state": province,
+                                     @"receiver_city": city,
+                                     @"receiver_district": county,
                                      @"receiver_address": _streetTextView.text,
                                      @"receiver_name": _nameTextField.text,
                                      @"receiver_mobile": _numberTextField.text,

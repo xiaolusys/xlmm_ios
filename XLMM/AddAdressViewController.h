@@ -35,6 +35,9 @@
 @property (strong, nonatomic) AddressPickerView *addressPicker;
 @property (assign, nonatomic)BOOL isAdd;
 @property (strong, nonatomic) AddressModel *addressModel;
+@property (weak, nonatomic) IBOutlet UITextField *detailsAddressTF;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+
 
 - (IBAction)saveBtnClicked:(id)sender;
 

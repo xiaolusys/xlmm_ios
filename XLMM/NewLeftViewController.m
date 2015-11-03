@@ -20,7 +20,7 @@
 #import "UIImageView+WebCache.h"
 #import "MMUserCoupons.h"
 
-
+#import "AddressViewController.h"
 
 
 
@@ -222,6 +222,24 @@
 
 - (IBAction)settingClicked:(id)sender {
     NSLog(@"设置");
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:addressVC];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
 }
 
 - (IBAction)suggestionClicked:(id)sender {

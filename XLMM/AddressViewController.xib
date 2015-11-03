@@ -14,24 +14,7 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4N-EM-hDy">
-                    <rect key="frame" x="8" y="520" width="304" height="40"/>
-                    <color key="backgroundColor" red="0.96078431369999995" green="0.69411764710000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="m0u-Wn-fbO"/>
-                    </constraints>
-                    <state key="normal" title="添加地址">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="U4N-EM-hDy" secondAttribute="bottom" constant="8" id="Fc2-1j-cat"/>
-                <constraint firstItem="U4N-EM-hDy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="ZR4-gR-vsf"/>
-                <constraint firstAttribute="trailing" secondItem="U4N-EM-hDy" secondAttribute="trailing" constant="8" id="sbf-PM-2Nh"/>
-            </constraints>
             <point key="canvasLocation" x="252" y="268"/>
         </view>
     </objects>

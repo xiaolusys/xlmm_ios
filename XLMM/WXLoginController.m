@@ -242,9 +242,9 @@
     self.buttonLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
     self.codeButton.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
     
-#warning change timeLabel
+//#warning change timeLabel
     
-    if (countdownSecond == 55) {
+    if (countdownSecond == 0) {
         countdownSecond = countSecond;
         [myTimer invalidate];
         self.codeButton.enabled = YES;
@@ -282,7 +282,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/check_code", Root_URL];
     NSLog(@"url = %@", urlString);
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+   // AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     
     NSDictionary *parameters = @{@"username": self.phoneTextField.text,

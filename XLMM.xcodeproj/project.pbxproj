@@ -552,7 +552,6 @@
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
 		32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
-		32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
 		32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C31B7C491E00CA67C3 /* AddressModel.m */; };
 		32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */; };
 		32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */; };
@@ -576,6 +575,7 @@
 		32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E329981B70C70000A6F0BC /* DetailViewController.xib */; };
 		32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
 		32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */; };
+		32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -2035,7 +2035,6 @@
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
-				32CE91C11B7C37D100CA67C3 /* AddAdressViewController.xib in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
@@ -2122,6 +2121,7 @@
 				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
+				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
 				32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */,
 				32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */,
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
