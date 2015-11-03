@@ -161,7 +161,7 @@
     
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
-    self.youhuijineLabel.text = [NSString stringWithFormat:@"已优惠¥%.1f", discountfee];
+    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
     
     

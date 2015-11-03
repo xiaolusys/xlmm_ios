@@ -48,7 +48,7 @@
     NSString *beizhu;
     NSString *shuoming;
     NSArray *allSizeKeys;
-    
+    UIView *view0;
     MMSizeChartView *mmSizeChart;
     int theNumberOfSizeCanSelected;
 }
@@ -101,6 +101,14 @@
             NSLog(@"%ld", (long)goodsCount);
             NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
             countLabel.text = strNum;
+            countLabel.frame = CGRectMake(76, 0, 12, 12);
+            countLabel.layer.masksToBounds = YES;
+            countLabel.layer.cornerRadius = 6;
+            countLabel.font = [UIFont systemFontOfSize:6];
+            countLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+          //  countLabel.hidden = NO;\
+            
+            [cartsButton bringSubviewToFront:countLabel];
         }
         
     } else{
@@ -269,13 +277,16 @@
 }
 
 - (void)createCartView{
-    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 90, 44, 44)];
-    cartsButton.layer.cornerRadius = 22;
+    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(4, SCREENHEIGHT - 40, 36, 36)];
+    cartsButton.layer.cornerRadius = 18;
     [self.view addSubview:cartsButton];
-    //[cartsButton setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
-    cartsButton.backgroundColor = [UIColor blackColor];
+  
+    cartsButton.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+   // cartsButton.layer.borderWidth = 1;
+   // cartsButton.layer.borderColor = [UIColor colorWithR:38 G:38 B:46 alpha:1].CGColor;
     
-    shengyutimeLabel  = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 44, 44)];
+    
+    shengyutimeLabel  = [[UILabel alloc] initWithFrame:CGRectMake(36, 2, 44, 30)];
     shengyutimeLabel.text = @"20:00";
     shengyutimeLabel.textColor = [UIColor whiteColor];
     shengyutimeLabel.textAlignment = NSTextAlignmentCenter;
@@ -284,16 +295,17 @@
     shengyutimeLabel.hidden = YES;
     [cartsButton addSubview:shengyutimeLabel];
     
-    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gouwuche.png"]];
-    imageview.frame = CGRectMake(0, 0, 44, 44);
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gouwucheicon2.png"]];
+    imageview.frame = CGRectMake(6, 8, 20, 20);
     [cartsButton addSubview:imageview];
     [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view bringSubviewToFront:cartsButton];
-    cartsButton.alpha = 0.5;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20, 6, 18, 18)];
-    view.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
-    view.userInteractionEnabled = NO;
-    view.layer.cornerRadius = 10;
+    view0 = [[UIView alloc] initWithFrame:CGRectMake(26, 6, 4, 4)];
+    view0.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    view0.userInteractionEnabled = NO;
+    view0.layer.cornerRadius = 2;
+     [cartsButton addSubview:view0];
+
     countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
     countLabel.layer.cornerRadius = 9;
     countLabel.userInteractionEnabled = NO;
@@ -302,8 +314,10 @@
     countLabel.textColor = [UIColor whiteColor];
     countLabel.text = @"0";
     countLabel.font = [UIFont systemFontOfSize:14];
-    [view addSubview:countLabel];
-    [cartsButton addSubview:view];
+    countLabel.hidden = YES;
+    [cartsButton addSubview:countLabel];
+    [cartsButton bringSubviewToFront:countLabel];
+    
     cartsButton.hidden = YES;
 }
 - (void)cartClicked:(UIButton *)btn{
@@ -562,7 +576,7 @@
     CGFloat buttonwidth = (SCREENWIDTH-60)/3;
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 60 + i/3 * 50, buttonwidth, 35)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 50 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
         [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
@@ -862,9 +876,9 @@
     //动画起始点
     CGPathMoveToPoint(aPath, nil, width/2, height - 50);
     CGPathAddCurveToPoint(aPath, nil,
-                          width/2 - 50 , height - 140,//控制点
-                          width/2  - 140, height - 80,//控制点
-                          20, height - 60
+                          width/2 - 50 , height - 120,//控制点
+                          width/2  - 140, height - 10,//控制点
+                          0, height
                           );//控制点
     
     ani.path=aPath;
@@ -909,11 +923,17 @@
             countLabel.text = strNum;
         }
     }
+    
+    //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
     [UIView animateWithDuration:0.5 animations:^{
-        cartsButton.frame = CGRectMake(2, SCREENHEIGHT - 90, 100, 44);
+        cartsButton.frame = CGRectMake(4, SCREENHEIGHT - 40, 88, 36);
     } completion:^(BOOL finished) {
         NSLog(@"显示剩余时间");
         [self createTimeLabel];
+        countLabel.hidden = NO;
+        view0.hidden = YES;
+        [cartsButton bringSubviewToFront:countLabel];
+
     }];
 }
 - (void)createTimeLabel{

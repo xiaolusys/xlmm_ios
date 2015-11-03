@@ -188,7 +188,7 @@
     yunfeifee = [[dic objectForKey:@"post_fee"]floatValue];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"¥%.0f", [[dic objectForKey:@"post_fee"] floatValue]];
     youhuifee = [[dic objectForKey:@"discount_fee"] floatValue];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"已优惠¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"已节省¥%.0f", [[dic objectForKey:@"discount_fee"] floatValue]];
     allpay = [[dic objectForKey:@"total_payment"] floatValue];
     self.allPaymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"total_payment"] floatValue]];
     self.numberLabel.text = @"1";
