@@ -127,21 +127,6 @@
    
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-    if (textField == self.codeTextField) {
-        NSLog(@"%@", textField.text);
-        NSLog(@"%ld ", (long)textField.text.length);
-        NSLog(@"%@", NSStringFromRange(range));
-        NSLog(@"%@", string);
-        if (textField.text.length == 6) {
-            return NO;
-        }
-        
-    }
-   
-    return YES;
-}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
   
@@ -203,6 +188,24 @@
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"result"];
               NSLog(@"result = %@", string);
+              UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+              
+              if ([string isEqualToString:@"ok"]) {
+                  
+              } else if ([string isEqualToString:@"1"]){
+                  alterView.message = @"该手机已绑定,请使用其他手机号";
+                  [alterView show];
+              } else if ([string isEqualToString:@"false"]){
+                  alterView.message = @"手机号错误,请重新输入";
+                  [alterView show];
+              } else if ([string isEqualToString:@"2"]){
+                  alterView.message = @"超过当日获取验证码次数";
+                  [alterView show];
+                  
+              } else if ([string isEqualToString:@"3"]){
+                  alterView.message = @"验证码依然有效,无须重新获取";
+                  [alterView show];
+              }
               
               
               
@@ -316,9 +319,38 @@
     
     NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
-    
-    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions
+                                                           error:nil];
+    NSString *result = [json objectForKey:@"result"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     NSLog(@"%@",str1);
+    if ([result isEqualToString:@"ok"]) {
+        NSLog(@"the result is ok");
+        alertView.message = result;
+        [alertView show];
+        
+    } else if ([result isEqualToString:@"4"]){
+        NSLog(@"the result is 4");
+        
+        alertView.message = @"验证码已过期";
+        [alertView show];
+        return;
+        
+    
+    } else if ([result isEqualToString:@"3"]){
+        alertView.message = @"验证码输入错误";
+        [alertView show];
+        return;
+    } else if ([result isEqualToString:@"0"]){
+        alertView.message = @"该手机已绑定,请使用其他手机号";
+        [alertView show];
+        return;
+    } else if ([result isEqualToString:@"2"]){
+        alertView.message = @"参数错误";
+        [alertView show];
+        return;
+        
+    }
   
 
     

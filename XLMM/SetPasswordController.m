@@ -105,6 +105,11 @@
 
 - (IBAction)commitBtnClicked:(id)sender {
     NSLog(@"提交");
+    if (![self.passwordTF.text isEqualToString:self.confirmTextField.text]) {
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"两次密码输入不一致,请重新输入" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+        return;
+    }
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile", Root_URL];
     NSLog(@"url = %@", urlString);
     
@@ -142,7 +147,7 @@
               }
               if ([string isEqualToString:@"1"]) {
                   
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机号已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
                   [alterView show];
               }
               if ([string isEqualToString:@"2"]) {
