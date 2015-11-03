@@ -576,6 +576,10 @@
 		32EC425A1BE8931B009E5FA2 /* EnterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 326091CB1B79ABFC00A763BA /* EnterViewController.xib */; };
 		32EC425C1BE89373009E5FA2 /* ShouHuoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */; };
 		32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9B61B6F3EE60086D030 /* ZhiFuCollectionCell.xib */; };
+		32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC425F1BE8A8C1009E5FA2 /* qitiantuihuo.png */; };
+		32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42601BE8A8C1009E5FA2 /* quabguobaoyou.png */; };
+		32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42611BE8A8C1009E5FA2 /* tiantian.png */; };
+		32EC42661BE8A8C1009E5FA2 /* zhengpin.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42621BE8A8C1009E5FA2 /* zhengpin.png */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -1046,6 +1050,10 @@
 		32E4D5321B9FCFB1001230F4 /* JiFenCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenCollectionCell.h; sourceTree = "<group>"; };
 		32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenCollectionCell.m; sourceTree = "<group>"; };
 		32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JiFenCollectionCell.xib; sourceTree = "<group>"; };
+		32EC425F1BE8A8C1009E5FA2 /* qitiantuihuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qitiantuihuo.png; sourceTree = "<group>"; };
+		32EC42601BE8A8C1009E5FA2 /* quabguobaoyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quabguobaoyou.png; sourceTree = "<group>"; };
+		32EC42611BE8A8C1009E5FA2 /* tiantian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiantian.png; sourceTree = "<group>"; };
+		32EC42621BE8A8C1009E5FA2 /* zhengpin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhengpin.png; sourceTree = "<group>"; };
 		32F3D9501B6CCA41008530BA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		32F3D9521B6CCA41008530BA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1156,6 +1164,10 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32EC425F1BE8A8C1009E5FA2 /* qitiantuihuo.png */,
+				32EC42601BE8A8C1009E5FA2 /* quabguobaoyou.png */,
+				32EC42611BE8A8C1009E5FA2 /* tiantian.png */,
+				32EC42621BE8A8C1009E5FA2 /* zhengpin.png */,
 				325B1E801BE48D390027B3E3 /* barbackImage2.png */,
 				325B1E7E1BE489C00027B3E3 /* barbackImage.png */,
 				3266A6DD1BE30B3F00C676A9 /* rightArrow.png */,
@@ -2031,6 +2043,7 @@
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
+				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
@@ -2104,6 +2117,7 @@
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
 				325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */,
 				325B1E7F1BE489C00027B3E3 /* barbackImage.png in Resources */,
+				32EC42661BE8A8C1009E5FA2 /* zhengpin.png in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
@@ -2138,6 +2152,7 @@
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
+				32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
 				32CDC9471BD2028F00EF5FA6 /* profiles.png in Resources */,
@@ -2149,6 +2164,7 @@
 				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
 				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
+				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,

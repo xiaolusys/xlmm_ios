@@ -365,7 +365,7 @@
     //用来得到具体的时差
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
-    string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+    string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
   self.timeLabel.text = string;
     if ([d hour] < 0 || [d minute] < 0 || [d second] < 0) {
         self.timeLabel.text = @"00:00:00";
@@ -557,20 +557,21 @@
     if (sizeCount%3 == 0) {
         height = 8;
     }
-    self.sizeViewHeight.constant = 20 + 60 + 44*(int)(sizeCount/3)+height;
+    self.sizeViewHeight.constant =  50 + 50*(int)(sizeCount/3)+height;
     NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
-    CGFloat buttonwidth = (SCREENWIDTH-20)/3;
+    CGFloat buttonwidth = (SCREENWIDTH-60)/3;
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 *(buttonwidth+5)+5,20 +60 + i/3 *48, buttonwidth, 44)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 60 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
         [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
        // button settit
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
-        [button.layer setBorderColor:[UIColor grayColor].CGColor];
+        button.layer.cornerRadius = 3;
+        [button.layer setBorderColor:[UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor];
         //[button.layer setCornerRadius:8];
         
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -733,7 +734,7 @@
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
-                [btn.layer setBorderColor:[UIColor grayColor].CGColor];
+                [btn.layer setBorderColor:[UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor];
                 [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 //                ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
 //                popView.hidden = YES;
