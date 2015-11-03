@@ -67,6 +67,43 @@
     self.saveButton.layer.borderWidth = 1;
     self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
+    
+    self.addressSwitch.tintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    
+//    self.addressSwitch.backgroundColor=[UIColor redColor];
+//  //on 时颜色
+//    self.addressSwitch.onTintColor=[UIColor yellowColor];
+//   //off 时边框颜色
+//    self.addressSwitch.tintColor=[UIColor purpleColor];
+//  //滑块颜色
+//    self.addressSwitch.thumbTintColor=[UIColor greenColor];
+    [self.addressSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    //
+ //   UITextView
+    
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        //在这里做你响应return键的代码
+        [textView resignFirstResponder];
+        
+        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+    }
+    
+    return YES;
+}
+
+
+
+
+- (void)valueChanged:(id)sender{
+    UISwitch *switch2 = (UISwitch *)sender;
+    if (switch2.isOn) {
+        NSLog(@"设置为默认地址");
+    } else {
+        NSLog(@"取消默认地址");
+    }
 }
 
 - (void)setInfo{

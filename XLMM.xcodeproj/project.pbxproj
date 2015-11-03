@@ -1231,6 +1231,7 @@
 				32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */,
 				32CC7C971BA0185A00475E2E /* TuihuoXQ2.xib */,
 				32CC7C991BA0186700475E2E /* TuihuoXQ3.xib */,
+				32EC42571BE87A6A009E5FA2 /* New Group */,
 				32CC7C9B1BA0186C00475E2E /* TuihuoXQ4.xib */,
 				32CC7C9D1BA0187300475E2E /* TuihuoXQ5.xib */,
 				32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */,
@@ -1878,6 +1879,13 @@
 				32746DD41B74A22000816208 /* images */,
 			);
 			name = "The Third";
+			sourceTree = "<group>";
+		};
+		32EC42571BE87A6A009E5FA2 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {

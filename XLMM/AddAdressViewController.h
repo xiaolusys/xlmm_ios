@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *detailsAddressTF;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
+@property (weak, nonatomic) IBOutlet UISwitch *addressSwitch;
 
 - (IBAction)saveBtnClicked:(id)sender;
 
