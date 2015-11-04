@@ -51,6 +51,8 @@
     UIView *view0;
     MMSizeChartView *mmSizeChart;
     int theNumberOfSizeCanSelected;
+    NSMutableArray *agentPriceArray;
+    NSMutableArray *salePriceArray;
 }
 
 
@@ -131,6 +133,8 @@
     [self.view addSubview:self.scrollerView];
     [self.view addSubview:self.backView];
     self.popViewArray = [[NSMutableArray alloc] initWithCapacity:0];
+    agentPriceArray = [[NSMutableArray alloc] init];
+    salePriceArray = [[NSMutableArray alloc] init];
     self.scrollerView.delegate = self;
     contentCount = 0;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -251,9 +255,9 @@
     NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
     self.nameLabel.text = [dic objectForKey:@"name"];
     if ([[dic objectForKey:@"lowest_price"] integerValue] != [[dic objectForKey:@"lowest_price"] floatValue]) {
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dic objectForKey:@"lowest_price"] floatValue]];
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"lowest_price"] floatValue]];
     } else {
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%@", [dic objectForKey:@"lowest_price"]];
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"lowest_price"]];
     }
    // self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"agent_price"]];
     self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
@@ -379,8 +383,13 @@
     //用来得到具体的时差
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
-    string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
-  self.timeLabel.text = string;
+    if ((long)[d day] == 0) {
+        string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+    }
+    else{
+        string = [NSString stringWithFormat:@"剩余%02ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+        
+    }  self.timeLabel.text = string;
     if ([d hour] < 0 || [d minute] < 0 || [d second] < 0) {
         self.timeLabel.text = @"00:00:00";
     }
@@ -591,13 +600,18 @@
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor whiteColor];
         [self.sizeView addSubview:button];
+        
 //        self.sizeView.backgroundColor = [UIColor whiteColor];
     }
     for (int i = 0; i<sizeCount; i++) {
         UIButton *button = (UIButton *)[self.sizeView viewWithTag:i + 100];
         NSDictionary *dic = [normalSkus objectAtIndex:i];
+        
         NSLog(@"%@", dic);
         NSLog(@"%d", (int)button.tag);
+        agentPriceArray[i] = [NSNumber numberWithFloat:[[dic objectForKey:@"agent_price"] floatValue]];
+        salePriceArray[i] = [NSNumber numberWithFloat:[[dic objectForKey:@"std_sale_price"] floatValue]];
+        
         [button setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
         
         NSLog(@"button.frame = %@", NSStringFromCGRect(button.frame));
@@ -619,6 +633,9 @@
         }
         
     }
+    NSLog(@"agentPrice = %@", agentPriceArray);
+    NSLog(@"salePrice = %@", salePriceArray);
+    
     if (theNumberOfSizeCanSelected == 0) {
         NSLog(@"已抢光");
         [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
@@ -743,6 +760,9 @@
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
 //            ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
 //            popView.hidden = !popView.hidden;
+            
+            self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [agentPriceArray[i - 100] floatValue]];
+            self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [salePriceArray[i - 100] floatValue]];
             
             
         }else{
@@ -964,6 +984,9 @@
             
         }
     }
+    
+    
+    
     shengyutimeLabel.text = string;
     
 }

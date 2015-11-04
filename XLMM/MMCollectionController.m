@@ -187,12 +187,7 @@
     formatter.dateFormat = @"YYYY-MM-dd";
     
     NSDate *toDate = [formatter dateFromString:saleTime];
-    
-   
-    
-    
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
-    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
    // NSDateComponents *comps =
     NSInteger unitFlags = NSCalendarUnitYear |
@@ -202,7 +197,7 @@
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDateComponents * comps = [calendar components:unitFlags fromDate:toDate];
-  //  NSLog(@"comps = %@", comps);
+    NSLog(@"comps = %@", comps);
     
     int year=(int)[comps year];
     int month =(int) [comps month];
@@ -217,7 +212,7 @@
     [endTime setHour:14];
     [endTime setMinute:0];
     [endTime setSecond:0];
- //   NSLog(@" end time = %@", endTime);
+    NSLog(@" end time = %@", endTime);
     NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
@@ -228,7 +223,15 @@
         titleLabel.text = @"已下架";
      //   NSLog(@"已下架");
     } else{
-        NSString * string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+        NSString *string;
+        if ((long)[d day] == 0) {
+            string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
+        }
+        else{
+            string = [NSString stringWithFormat:@"剩余%02ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+            
+        }
+      //  NSString * string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
     //    NSLog(@"string = %@", string);
         titleLabel.text = string;
     }
@@ -287,10 +290,6 @@
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
     detailsVC.urlString = string;
     [self.navigationController pushViewController:detailsVC animated:YES];
-    
-    
-    //NSString *urlString = [];
-
 }
 
 

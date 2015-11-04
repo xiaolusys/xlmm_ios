@@ -30,34 +30,21 @@ static NSString *khead2View = @"head2View";
 
 @interface PreviousViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
-    
     UIView *ladyPoster;
     UIView *childPoster;
-    
     NSMutableArray *childDataArray;
     NSMutableArray *ladyDataArray;
     NSMutableArray *posterDataArray;
-    
     UIView *frontView;
     NSInteger childListNumber;
     NSInteger ladyListNumber;
-    
-    
-    
     BOOL step1;
     BOOL step2;
-    
-    
     NSTimer *theTimer;
-    
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
-    
     BOOL _isFirst;
-    
     BOOL isqiangGuang;
-    
-    
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -152,11 +139,6 @@ static NSString *khead2View = @"head2View";
     // [self downloadData];
     
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    
-
-    
-    
-    
 }
 
 
@@ -182,6 +164,8 @@ static NSString *khead2View = @"head2View";
     //int hour = (int)[comps hour];
    
     // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    
+    
     NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
     [endTime setYear:year];
     [endTime setMonth:month];

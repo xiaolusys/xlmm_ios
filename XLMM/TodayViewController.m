@@ -13,7 +13,6 @@
 #import "PosterCollectionCell.h"
 #import "PeopleCollectionCell.h"
 #import "PosterCollectionCell2.h"
-
 #import "PromoteModel.h"
 #import "PosterModel.h"
 #import "ChildViewController.h"
@@ -59,14 +58,10 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
- 
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
-
     [super viewDidAppear:animated];
     if (_isFirst) {
         //集成刷新控件
@@ -164,6 +159,7 @@ static NSString *khead2View = @"head2View";
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+    NSLog(@"coms = %@", comps);
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];
@@ -184,6 +180,8 @@ static NSString *khead2View = @"head2View";
     
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
+    
+    
     if ((long)[d day] == 0) {
         string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
     }

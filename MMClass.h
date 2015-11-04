@@ -121,6 +121,10 @@ BOOL fl = [addressArray writeToFile:filename atomically:YES]; //写入
 
 NSLog(@"ls = %d", fl);
 
+NSDate;
+NSDateComponents;
+NSDateFormatter;
+NSCalendar;
 
 
 #endif
