@@ -25,6 +25,12 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+
 //待收货订单。。。。。。
 
 - (void)viewDidLoad {

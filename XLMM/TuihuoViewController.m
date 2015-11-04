@@ -39,6 +39,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
    // self.title = @"我的退货(款)";

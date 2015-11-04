@@ -31,6 +31,12 @@ static NSString *ksimpleCell = @"youhuiCell";
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
