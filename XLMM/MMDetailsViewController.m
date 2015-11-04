@@ -145,6 +145,7 @@
     salePriceArray = [[NSMutableArray alloc] init];
     self.scrollerView.delegate = self;
     contentCount = 0;
+
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     theNumberOfSizeCanSelected = 0;
@@ -162,7 +163,7 @@
     
     self.bottomImageViewHeight.constant = SCREENWIDTH;
     self.headViewwidth.constant = SCREENWIDTH;
-    self.headViewHeitht.constant = SCREENWIDTH + 60;
+    self.headViewHeitht.constant = SCREENWIDTH + 175;
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -279,7 +280,7 @@
   [frontView removeFromSuperview];
     self.caizhiLabel.text = [[dic objectForKey:@"details"] objectForKey:@"material"];
     self.yanseLabel.text = [[dic objectForKey:@"details"] objectForKey:@"color"];
-    
+    self.beizhuLabel.text = [[dic objectForKey:@"details"] objectForKey:@"note"];
     [self createSizeView];
     [self createDetailsView];
     [self createContentView];
@@ -497,12 +498,12 @@
     if (sizeCount%3 == 0) {
         height = 8;
     }
-    self.sizeViewHeight.constant =  50 + 50*(int)(sizeCount/3)+height;
+    self.sizeViewHeight.constant =  15 + 50*(int)(sizeCount/3)+height;
     NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
     CGFloat buttonwidth = (SCREENWIDTH-60)/3;
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 50 + i/3 * 50, buttonwidth, 35)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 15 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
         [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];

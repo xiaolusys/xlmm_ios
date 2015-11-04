@@ -52,5 +52,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *lijiBuyButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuHeight;
+@property (weak, nonatomic) IBOutlet UILabel *beizhuLabel;
 
 @end
