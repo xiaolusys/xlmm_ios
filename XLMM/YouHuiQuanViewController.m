@@ -103,7 +103,7 @@ static NSString *ksimpleCell = @"youhuiCell";
         }
         
     }
-    NSLog(@"dataArray = %ld", self.dataArray.count);
+    NSLog(@"dataArray = %ld", (long)self.dataArray.count);
     
     
     

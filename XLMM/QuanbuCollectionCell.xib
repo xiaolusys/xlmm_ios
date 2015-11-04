@@ -100,7 +100,7 @@
                 <outlet property="myImageView" destination="169-Jw-95H" id="NR8-g5-mEX"/>
                 <outlet property="zhuangtaiLabel" destination="HGW-Jl-pXG" id="xmv-nn-nMW"/>
             </connections>
-            <point key="canvasLocation" x="52.5" y="335.5"/>
+            <point key="canvasLocation" x="-262.5" y="314.5"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -79,7 +79,7 @@
    
 //    NSLog(@"item_id = %@", self.itemid);
     //  http://192.168.1.63:8000/rest/v1/products/421
-    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, self.itemid];
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.itemid];
     NSLog(@"url = %@", urlstring);
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
@@ -105,7 +105,7 @@
 - (void)downloadData{
     
     //  http://192.168.1.63:8000/rest/v1/trades/217/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%ld/details", Root_URL, self.tid];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%ld/details", Root_URL, (long)self.tid];
     
     NSLog(@"url = %@", urlString);
     

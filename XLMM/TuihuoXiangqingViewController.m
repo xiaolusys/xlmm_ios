@@ -148,9 +148,9 @@
             textField2.borderStyle = UITextBorderStyleNone;
             textField2.delegate = self;
            NSInteger itemID = xiangqing.item_id;
-            NSLog(@"item_id = %ld", itemID);
+            NSLog(@"item_id = %ld", (long)itemID);
             //  http://192.168.1.63:8000/rest/v1/products/421
-            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, itemID];
+            NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)itemID];
             NSLog(@"url = %@", urlstring);
             
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
@@ -342,7 +342,7 @@
     
    
     
-    NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", xiangqing.order_id],
+    NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)xiangqing.order_id],
                                  @"modify":@2,
                                  @"company":textField1.text,
                                  @"sid":textField2.text
