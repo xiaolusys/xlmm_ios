@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeViewHeight;
 @property (weak, nonatomic) IBOutlet UILabel *mingcheng;
 @property (weak, nonatomic) IBOutlet UILabel *bianhao;
+- (IBAction)washshuomingClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *canshuView;
 

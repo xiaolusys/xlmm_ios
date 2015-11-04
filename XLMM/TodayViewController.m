@@ -161,7 +161,7 @@ static NSString *khead2View = @"head2View";
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
-    NSLog(@"coms = %@", comps);
+   // NSLog(@"coms = %@", comps);
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];
