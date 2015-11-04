@@ -23,6 +23,7 @@
 @implementation MMCollectionController{
     NSTimer *theTimer;
     UILabel *titleLabel;
+    NSString *offSheltTime;
     
 }
 
@@ -162,6 +163,7 @@
         model.url = [dic objectForKey:@"url"];
         model.wareBy = [dic objectForKey:@"ware_by"];
         model.productModel = [dic objectForKey:@"product_model"];
+        model.offShelfTime = [dic objectForKey:@"offshelf_time"];
         
         [self.dataArray addObject:model];
         
@@ -170,6 +172,10 @@
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
+    CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
+    
+    offSheltTime = tempModel.offShelfTime;
+    
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];
     NSLog(@"dataArray = %@", _dataArray);
@@ -204,18 +210,44 @@
     int day = (int)[comps day];
     int nextday = day + 1;
     
-    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
-    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
-    [endTime setYear:year];
-    [endTime setMonth:month];
-    [endTime setDay:nextday];
-    [endTime setHour:14];
-    [endTime setMinute:0];
-    [endTime setSecond:0];
-    NSLog(@" end time = %@", endTime);
-    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+//    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+//    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+//    [endTime setYear:year];
+//    [endTime setMonth:month];
+//    [endTime setDay:nextday];
+//    [endTime setHour:14];
+//    [endTime setMinute:0];
+//    [endTime setSecond:0];
+//    NSLog(@" end time = %@", endTime);
+//    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
+    NSDate *todate;
+    if ([offSheltTime class] == [NSNull class]) {
+        NSLog(@"默认下架时间");
+        NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+        [endTime setYear:year];
+        [endTime setMonth:month];
+        [endTime setDay:nextday];
+        [endTime setHour:14];
+        [endTime setMinute:0];
+        [endTime setSecond:0];
+        
+        todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+        
+        //用来得到具体的时差
+        
+        
+    } else{
+        NSLog(@"特定下架时间");
+        NSMutableString *string = [NSMutableString stringWithString:offSheltTime];
+        NSRange range = [string rangeOfString:@"T"];
+        [string replaceCharactersInRange:range withString:@" "];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+        dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+        todate = [dateformatter dateFromString:string];
+    }
+
     
     NSDate *date = [NSDate date];
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];

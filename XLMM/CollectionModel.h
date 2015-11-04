@@ -38,7 +38,7 @@
 @property (nonatomic, copy)NSArray *headImageURLArray;
 @property (nonatomic, copy)NSArray *contentImageURLArray;
 
-
+@property (nonatomic, copy)NSString *offShelfTime;
 
 
 @end

@@ -75,6 +75,8 @@ static NSString *khead2View = @"head2View";
     
 }
 
+
+
 - (void)setupRefresh{
     [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
     [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];

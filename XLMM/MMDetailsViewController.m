@@ -53,6 +53,10 @@
     int theNumberOfSizeCanSelected;
     NSMutableArray *agentPriceArray;
     NSMutableArray *salePriceArray;
+    
+    NSString *offShelfTime;
+    
+    
 }
 
 
@@ -267,7 +271,7 @@
     normalSkus = [dic objectForKey:@"normal_skus"];
     details = [dic objectForKey:@"details"];
     saleTime = [dic objectForKey:@"sale_time"];
-    
+    offShelfTime = [dic objectForKey:@"offshelf_time"];
   [frontView removeFromSuperview];
     
     
@@ -369,16 +373,42 @@
  
    
     
-    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
-    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
-    [endTime setYear:year];
-    [endTime setMonth:month];
-    [endTime setDay:day + 1];
-    [endTime setHour:14];
-    [endTime setMinute:0];
-    [endTime setSecond:0];
+//    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+//    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+//    [endTime setYear:year];
+//    [endTime setMonth:month];
+//    [endTime setDay:day + 1];
+//    [endTime setHour:14];
+//    [endTime setMinute:0];
+//    [endTime setSecond:0];
+//    
+//    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+    NSDate *todate;
+    if ([offShelfTime class] == [NSNull class]) {
+        NSLog(@"默认下架时间");
+        NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+        [endTime setYear:year];
+        [endTime setMonth:month];
+        [endTime setDay:day + 1];
+        [endTime setHour:14];
+        [endTime setMinute:0];
+        [endTime setSecond:0];
+        
+        todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+        
+        //用来得到具体的时差
+        
+        
+    } else{
+        NSLog(@"特定下架时间");
+        NSMutableString *string = [NSMutableString stringWithString:offShelfTime];
+        NSRange range = [string rangeOfString:@"T"];
+        [string replaceCharactersInRange:range withString:@" "];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+        dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+        todate = [dateformatter dateFromString:string];
+    }
     
-    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
     
     //用来得到具体的时差
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];

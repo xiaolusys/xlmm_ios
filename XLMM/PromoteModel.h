@@ -26,6 +26,7 @@
 @property (nonatomic, strong)NSDictionary *productModel;
 @property (nonatomic, copy)NSString *saleTime;
 @property (nonatomic, copy)NSString *memo;
+@property (nonatomic, copy)NSString *offshelfTime;
 
 
 @end

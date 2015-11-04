@@ -45,6 +45,8 @@ static NSString *khead2View = @"head2View";
     UILabel *ladyTimeLabel;
     BOOL _isFirst;
     BOOL isqiangGuang;
+    NSString *offSheltTime;
+    
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -121,6 +123,8 @@ static NSString *khead2View = @"head2View";
 }
 
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -138,7 +142,6 @@ static NSString *khead2View = @"head2View";
     
     // [self downloadData];
     
-    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
 }
 
 
@@ -164,22 +167,35 @@ static NSString *khead2View = @"head2View";
     //int hour = (int)[comps hour];
    
     // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
-    
-    
-    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
-    [endTime setYear:year];
-    [endTime setMonth:month];
-    [endTime setDay:day];
-    [endTime setHour:14];
-    [endTime setMinute:0];
-    [endTime setSecond:0];
-    
-    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
-    
-    //用来得到具体的时差
-    
-    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
+    NSDate *todate;
+    
+    if ([offSheltTime class] == [NSNull class]) {
+        NSLog(@"默认下架时间");
+        NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+        [endTime setYear:year];
+        [endTime setMonth:month];
+        [endTime setDay:day];
+        [endTime setHour:14];
+        [endTime setMinute:0];
+        [endTime setSecond:0];
+        
+        todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+        
+        //用来得到具体的时差
+        
+       
+    } else{
+        NSLog(@"特定下架时间");
+        NSMutableString *string = [NSMutableString stringWithString:offSheltTime];
+        NSRange range = [string rangeOfString:@"T"];
+        [string replaceCharactersInRange:range withString:@" "];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+        dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+        todate = [dateformatter dateFromString:string];
+    }
+   
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     if ((long)[d day] == 0) {
         string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
     }
@@ -327,6 +343,18 @@ static NSString *khead2View = @"head2View";
     }
     //  NSLog(@"childDataArray = %@", childDataArray);
     
+    PromoteModel *tempModel = [childDataArray objectAtIndex:0];
+    offSheltTime = tempModel.offshelfTime;
+    NSLog(@"offTime = %@", offSheltTime);
+    
+    //倒计时。。。。。。
+    
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    
+
+    
+    
+    
     step2 = YES;
     
     if (step1 && step2) {
@@ -360,6 +388,7 @@ static NSString *khead2View = @"head2View";
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
+    model.offshelfTime = [dic objectForKey:@"offshelf_time"];
     
     if ([model.productModel class] == [NSNull class]) {
          model.picPath = [dic objectForKey:@"head_img"];
