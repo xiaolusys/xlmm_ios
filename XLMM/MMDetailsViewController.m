@@ -192,6 +192,10 @@
      [self createCartView];
     
      [self downloadDetailsData];
+    self.addCartButton.layer.cornerRadius = 20;
+    self.addCartButton.layer.borderWidth = 1;
+    self.addCartButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
     
 }
 
@@ -291,8 +295,9 @@
 }
 
 - (void)createCartView{
-    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(4, SCREENHEIGHT - 40, 36, 36)];
-    cartsButton.layer.cornerRadius = 18;
+    cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(15, SCREENHEIGHT - 48, 40, 40)];
+    
+    cartsButton.layer.cornerRadius = 20;
     [self.view addSubview:cartsButton];
   
     cartsButton.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
@@ -849,7 +854,7 @@
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
                 [btn.layer setBorderColor:[UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor];
-                [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
 //                ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
 //                popView.hidden = YES;
             }
@@ -1026,7 +1031,11 @@
     
     //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
     [UIView animateWithDuration:0.5 animations:^{
-        cartsButton.frame = CGRectMake(4, SCREENHEIGHT - 40, 88, 36);
+        cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
+        self.leftWidth.constant = 118;
+//        CGRect frame = self.addCartButton.frame;
+//        frame.origin.x += 48;
+     //   self.addCartButton.frame = frame;
     } completion:^(BOOL finished) {
         NSLog(@"显示剩余时间");
         [self createTimeLabel];

@@ -53,5 +53,6 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuHeight;
 @property (weak, nonatomic) IBOutlet UILabel *beizhuLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftWidth;
 
 @end

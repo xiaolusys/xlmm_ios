@@ -34,7 +34,7 @@
                 <outlet property="imageTrailing" destination="b41-l2-Iwx" id="fRm-TB-x3p"/>
                 <outlet property="imageViewTop" destination="UJz-mj-9D6" id="Vdn-jo-DAf"/>
                 <outlet property="imageleading" destination="veK-Da-HhU" id="gr5-x0-tNm"/>
-                <outlet property="lijiBuyButton" destination="JjY-IA-xjG" id="e59-xB-VPG"/>
+                <outlet property="leftWidth" destination="QiV-F9-KEX" id="iuH-gc-W7M"/>
                 <outlet property="nameLabel" destination="vuM-N0-go3" id="FUw-bn-ROc"/>
                 <outlet property="priceLabel" destination="gnV-T6-k8Y" id="eUL-fY-oCf"/>
                 <outlet property="scrollerView" destination="fwi-hO-blm" id="gJF-SN-PnG"/>
@@ -69,7 +69,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwi-hO-blm">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="997"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="985"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cOc-Z1-tUM" userLabel="containtView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="863"/>
@@ -671,53 +671,36 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enP-cv-za9">
-                    <rect key="frame" x="0.0" y="997" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="985" width="320" height="56"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMb-XB-aHO">
-                            <rect key="frame" x="0.0" y="0.0" width="107" height="44"/>
-                            <color key="backgroundColor" red="0.62352941176470589" green="0.62352941176470589" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="b51-6c-SOt"/>
-                            </constraints>
-                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7OT-9i-gjk">
-                            <rect key="frame" x="107" y="0.0" width="106" height="44"/>
-                            <color key="backgroundColor" red="0.98039215686274506" green="0.67450980392156867" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
+                            <rect key="frame" x="70" y="8" width="242" height="40"/>
+                            <color key="backgroundColor" red="0.96078431369999995" green="0.69411764710000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <state key="normal" title="加入购物车">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="addCartBtnClicked:" destination="-1" eventType="touchUpInside" id="yWk-Tb-gjA"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjY-IA-xjG">
-                            <rect key="frame" x="213" y="0.0" width="107" height="44"/>
-                            <color key="backgroundColor" red="0.87058823529411766" green="0.29803921568627451" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="18"/>
-                            <state key="normal" title="立即购买">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="buyBtnClicked:" destination="-1" eventType="touchUpInside" id="diZ-18-Em3"/>
-                            </connections>
-                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GX6-23-hTx">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529411766" green="0.87450980392156863" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="7ph-KK-y1u"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="width" secondItem="JjY-IA-xjG" secondAttribute="width" id="8ZJ-TA-0Py"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="height" secondItem="JjY-IA-xjG" secondAttribute="height" id="9AQ-b9-gNT"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="bottom" secondItem="JjY-IA-xjG" secondAttribute="bottom" id="H3I-XB-WnO"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="height" secondItem="oMb-XB-aHO" secondAttribute="height" id="OTn-Y2-E1T"/>
-                        <constraint firstItem="oMb-XB-aHO" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" id="Q1G-ON-pAw"/>
-                        <constraint firstAttribute="trailing" secondItem="JjY-IA-xjG" secondAttribute="trailing" id="gQi-CW-YXh"/>
-                        <constraint firstAttribute="bottom" secondItem="oMb-XB-aHO" secondAttribute="bottom" id="iSJ-Ae-2Us"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="bottom" secondItem="oMb-XB-aHO" secondAttribute="bottom" id="jFQ-HB-SOE"/>
-                        <constraint firstAttribute="height" constant="44" id="lEQ-W3-wbR"/>
-                        <constraint firstItem="JjY-IA-xjG" firstAttribute="leading" secondItem="7OT-9i-gjk" secondAttribute="trailing" id="nAM-CC-sAf"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="leading" secondItem="oMb-XB-aHO" secondAttribute="trailing" id="uS1-0P-QLj"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="width" secondItem="oMb-XB-aHO" secondAttribute="width" id="zKP-y9-bcv"/>
+                        <constraint firstAttribute="trailing" secondItem="7OT-9i-gjk" secondAttribute="trailing" constant="8" id="8li-JK-Ds5"/>
+                        <constraint firstItem="GX6-23-hTx" firstAttribute="top" secondItem="enP-cv-za9" secondAttribute="top" id="QNE-zM-vYh"/>
+                        <constraint firstItem="7OT-9i-gjk" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" constant="70" id="QiV-F9-KEX"/>
+                        <constraint firstAttribute="bottom" secondItem="7OT-9i-gjk" secondAttribute="bottom" constant="8" id="UAk-WL-ToY"/>
+                        <constraint firstItem="7OT-9i-gjk" firstAttribute="top" secondItem="enP-cv-za9" secondAttribute="top" constant="8" id="XLm-6n-bAa"/>
+                        <constraint firstAttribute="height" constant="56" id="lEQ-W3-wbR"/>
+                        <constraint firstItem="GX6-23-hTx" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" id="rFX-wR-GQK"/>
+                        <constraint firstAttribute="trailing" secondItem="GX6-23-hTx" secondAttribute="trailing" id="wYg-9n-6sL"/>
                     </constraints>
                 </view>
             </subviews>
@@ -726,7 +709,7 @@
                 <constraint firstItem="2r3-Zh-kCF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0ev-Ef-JFi"/>
                 <constraint firstAttribute="trailing" secondItem="cYX-qE-1cH" secondAttribute="trailing" constant="1" id="4k4-fL-lIM"/>
                 <constraint firstItem="2r3-Zh-kCF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="6eI-VV-Gwc"/>
-                <constraint firstAttribute="bottom" secondItem="fwi-hO-blm" secondAttribute="bottom" constant="44" id="9Po-Zl-sNl"/>
+                <constraint firstAttribute="bottom" secondItem="fwi-hO-blm" secondAttribute="bottom" constant="56" id="9Po-Zl-sNl"/>
                 <constraint firstItem="fwi-hO-blm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ASd-NJ-lky"/>
                 <constraint firstItem="enP-cv-za9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Cnk-ZG-5gp"/>
                 <constraint firstItem="fwi-hO-blm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="RPv-A8-F31"/>
