@@ -34,7 +34,7 @@
                 <outlet property="imageTrailing" destination="b41-l2-Iwx" id="fRm-TB-x3p"/>
                 <outlet property="imageViewTop" destination="UJz-mj-9D6" id="Vdn-jo-DAf"/>
                 <outlet property="imageleading" destination="veK-Da-HhU" id="gr5-x0-tNm"/>
-                <outlet property="leftWidth" destination="QiV-F9-KEX" id="iuH-gc-W7M"/>
+                <outlet property="leftWidth" destination="r46-Om-XCG" id="qij-by-g2i"/>
                 <outlet property="nameLabel" destination="vuM-N0-go3" id="FUw-bn-ROc"/>
                 <outlet property="priceLabel" destination="gnV-T6-k8Y" id="eUL-fY-oCf"/>
                 <outlet property="scrollerView" destination="fwi-hO-blm" id="gJF-SN-PnG"/>
@@ -693,12 +693,12 @@
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="7OT-9i-gjk" secondAttribute="trailing" constant="8" id="8li-JK-Ds5"/>
                         <constraint firstItem="GX6-23-hTx" firstAttribute="top" secondItem="enP-cv-za9" secondAttribute="top" id="QNE-zM-vYh"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" constant="70" id="QiV-F9-KEX"/>
-                        <constraint firstAttribute="bottom" secondItem="7OT-9i-gjk" secondAttribute="bottom" constant="8" id="UAk-WL-ToY"/>
-                        <constraint firstItem="7OT-9i-gjk" firstAttribute="top" secondItem="enP-cv-za9" secondAttribute="top" constant="8" id="XLm-6n-bAa"/>
+                        <constraint firstAttribute="bottom" secondItem="7OT-9i-gjk" secondAttribute="bottom" constant="8" id="d39-IO-qa1"/>
+                        <constraint firstItem="7OT-9i-gjk" firstAttribute="top" secondItem="GX6-23-hTx" secondAttribute="bottom" constant="7" id="h3d-4m-O8E"/>
                         <constraint firstAttribute="height" constant="56" id="lEQ-W3-wbR"/>
+                        <constraint firstAttribute="trailing" secondItem="7OT-9i-gjk" secondAttribute="trailing" constant="8" id="q5b-Cu-hI0"/>
+                        <constraint firstItem="7OT-9i-gjk" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" constant="70" id="r46-Om-XCG"/>
                         <constraint firstItem="GX6-23-hTx" firstAttribute="leading" secondItem="enP-cv-za9" secondAttribute="leading" id="rFX-wR-GQK"/>
                         <constraint firstAttribute="trailing" secondItem="GX6-23-hTx" secondAttribute="trailing" id="wYg-9n-6sL"/>
                     </constraints>

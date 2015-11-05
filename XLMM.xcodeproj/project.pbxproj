@@ -105,6 +105,14 @@
 		326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E888F1B71FDD800D15973 /* PurchaseViewController.m */; };
 		326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 326E88901B71FDD800D15973 /* PurchaseViewController.xib */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
+		32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F131BEB5D39002AFC6D /* Icon-29.png */; };
+		32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F141BEB5D39002AFC6D /* Icon-29@2x.png */; };
+		32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F151BEB5D39002AFC6D /* Icon-40.png */; };
+		32703F1C1BEB5D39002AFC6D /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F161BEB5D39002AFC6D /* Icon-40@2x.png */; };
+		32703F1D1BEB5D39002AFC6D /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F171BEB5D39002AFC6D /* Icon-60@2x.png */; };
+		32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F181BEB5D39002AFC6D /* Icon-76@2x.png */; };
+		32703F211BEB5EB5002AFC6D /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F1F1BEB5EB5002AFC6D /* icon@3x.png */; };
+		32703F221BEB5EB5002AFC6D /* icon29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F201BEB5EB5002AFC6D /* icon29@3x.png */; };
 		32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
 		32746DD31B74884B00816208 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		32746E091B74A22000816208 /* btn-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD51B74A22000816208 /* btn-plus.png */; };
@@ -758,6 +766,14 @@
 		326E88901B71FDD800D15973 /* PurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController.xib; sourceTree = "<group>"; };
 		326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageWithUrl.h"; path = "../UIImage+ImageWithUrl.h"; sourceTree = "<group>"; };
 		326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageWithUrl.m"; path = "../UIImage+ImageWithUrl.m"; sourceTree = "<group>"; };
+		32703F131BEB5D39002AFC6D /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
+		32703F141BEB5D39002AFC6D /* Icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@2x.png"; sourceTree = "<group>"; };
+		32703F151BEB5D39002AFC6D /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
+		32703F161BEB5D39002AFC6D /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
+		32703F171BEB5D39002AFC6D /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		32703F181BEB5D39002AFC6D /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
+		32703F1F1BEB5EB5002AFC6D /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = "<group>"; };
+		32703F201BEB5EB5002AFC6D /* icon29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon29@3x.png"; sourceTree = "<group>"; };
 		32746DC91B7438FC00816208 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		32746DCA1B7438FC00816208 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		32746DD11B74884B00816208 /* DetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsModel.h; sourceTree = "<group>"; };
@@ -1176,6 +1192,14 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32703F1F1BEB5EB5002AFC6D /* icon@3x.png */,
+				32703F201BEB5EB5002AFC6D /* icon29@3x.png */,
+				32703F131BEB5D39002AFC6D /* Icon-29.png */,
+				32703F141BEB5D39002AFC6D /* Icon-29@2x.png */,
+				32703F151BEB5D39002AFC6D /* Icon-40.png */,
+				32703F161BEB5D39002AFC6D /* Icon-40@2x.png */,
+				32703F171BEB5D39002AFC6D /* Icon-60@2x.png */,
+				32703F181BEB5D39002AFC6D /* Icon-76@2x.png */,
 				3247EAA81BE9E07300A5CC1C /* wash01.png */,
 				3247EAA91BE9E07300A5CC1C /* wash02.png */,
 				3247EAAA1BE9E07300A5CC1C /* wash03.png */,
@@ -2112,12 +2136,16 @@
 				32D2B7921BDDF59100603FCE /* rightArrow.png in Resources */,
 				32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
+				32703F211BEB5EB5002AFC6D /* icon@3x.png in Resources */,
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
+				32703F221BEB5EB5002AFC6D /* icon29@3x.png in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
 				328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */,
 				3290C88C1B886B2600CFAFA0 /* AddressView.xib in Resources */,
+				32703F1D1BEB5D39002AFC6D /* Icon-60@2x.png in Resources */,
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
+				32703F1C1BEB5D39002AFC6D /* Icon-40@2x.png in Resources */,
 				32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
@@ -2140,6 +2168,7 @@
 				32EC42661BE8A8C1009E5FA2 /* zhengpin.png in Resources */,
 				32746E3B1B74A22000816208 /* youhuiquan3.png in Resources */,
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
+				32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
@@ -2154,6 +2183,7 @@
 				32EC425C1BE89373009E5FA2 /* ShouHuoCollectionViewCell.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
+				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
@@ -2200,6 +2230,7 @@
 				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
+				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
@@ -2217,6 +2248,7 @@
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				321928EE1BDB8599004EA6A7 /* refund.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
+				32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */,
 				32CC7C961BA0185000475E2E /* TuihuoXQ1.xib in Resources */,
 				32CC7C981BA0185A00475E2E /* TuihuoXQ2.xib in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
@@ -2700,7 +2732,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
+				PROVISIONING_PROFILE = "00e8653f-c710-425d-9859-3dddd945f8f1";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2737,7 +2769,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
+				PROVISIONING_PROFILE = "00e8653f-c710-425d-9859-3dddd945f8f1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2748,8 +2780,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -2778,7 +2810,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2787,8 +2819,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -2817,7 +2849,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5c151135-25e0-4beb-bf4d-1c9813f8e3f2";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

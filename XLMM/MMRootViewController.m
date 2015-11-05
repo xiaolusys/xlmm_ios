@@ -122,7 +122,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+35, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     

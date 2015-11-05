@@ -893,7 +893,7 @@
     }
         if (skusID == nil) {
             [UIView animateWithDuration:.5f animations:^{
-                self.scrollerView.contentOffset = CGPointMake(0, 0);
+                self.scrollerView.contentOffset = CGPointMake(0, SCREENWIDTH);
                 
             } completion:^(BOOL finished) {
                 NSLog(@"top");
@@ -1030,12 +1030,11 @@
     }
     
     //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
-        self.leftWidth.constant = 118;
 //        CGRect frame = self.addCartButton.frame;
-//        frame.origin.x += 48;
-     //   self.addCartButton.frame = frame;
+//        frame.origin.x = 118;
+//        frame.size.width = SCREENWIDTH - 126;
     } completion:^(BOOL finished) {
         NSLog(@"显示剩余时间");
         [self createTimeLabel];
@@ -1044,6 +1043,11 @@
         [cartsButton bringSubviewToFront:countLabel];
 
     }];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.leftWidth.constant = 118;
+
+    }];
+   
 }
 - (void)createTimeLabel{
     shengyutimeLabel.hidden = NO;
