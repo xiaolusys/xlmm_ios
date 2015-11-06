@@ -9,6 +9,8 @@
 #import "SettingPsdViewController.h"
 #import "UIColor+RGBColor.h"
 #import "UIViewController+NavigationBar.h"
+#import "MMClass.h"
+#import "AFNetworking.h"
 
 @interface SettingPsdViewController ()<UITextFieldDelegate>
 
@@ -29,8 +31,18 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification{
     NSLog(@"show");
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, -120, SCREENWIDTH, SCREENHEIGHT + 120);
+        
+    }];
 }
 - (void)keyboardDidHide:(NSNotification *)notification{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        
+    }];
+    
+
     NSLog(@"hide");
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -89,5 +101,36 @@
 */
 
 - (IBAction)querenClicked:(id)sender {
+    //  http://m.xiaolu.so/rest/v1/users   passwd_set
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/passwd_set",Root_URL];
+    NSLog(@"string = %@", string);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+  //  NSLog(@"phoneNumber = %@\n", _numberTextField.text);
+    NSDictionary *parameters = @{@"password1": self.confirmTF.text,
+                                 @"password2":self.passwordTF.text};
+    NSLog(@"parameters = %@", parameters);
+    if (![self.confirmTF.text isEqualToString:self.passwordTF.text]) {
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"两次密码输入不一致" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+        return;
+        
+    }
+    
+    [manager POST:string parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              [self.navigationController popToRootViewControllerAnimated:YES];
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+    
 }
 @end

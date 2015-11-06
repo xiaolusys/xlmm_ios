@@ -227,7 +227,7 @@
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
             NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSLog(@"%@", result);
-            if ([[result objectForKey:@"result"] isEqualToString:@"no"]) {
+            if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
                // isBangding = NO;
                 isSettingPsd = NO;
             } else {
