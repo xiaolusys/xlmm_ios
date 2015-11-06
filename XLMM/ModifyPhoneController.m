@@ -7,16 +7,50 @@
 //
 
 #import "ModifyPhoneController.h"
+#import "UIColor+RGBColor.h"
+#import "BoundingNewPhoneController.h"
+#import "UIViewController+NavigationBar.h"
 
-@interface ModifyPhoneController ()
+@interface ModifyPhoneController ()<UITextFieldDelegate>
 
 @end
 
+
+
 @implementation ModifyPhoneController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.codeButton.layer.cornerRadius = 16;
+    self.codeButton.layer.borderWidth = 1;
+    self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+    
+    self.nextButton.layer.cornerRadius = 20;
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    self.codeTextField.delegate = self;
+    self.codeTextField.borderStyle = UITextBorderStyleNone;
+    self.codeTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [self createNavigationBarWithTitle:@"身份验证" selecotr:@selector(backClicked:)];
+    
+    
+}
+
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +68,12 @@
 }
 */
 
+- (IBAction)getCodeClicked:(id)sender {
+}
+
+- (IBAction)nextClicked:(id)sender {
+    BoundingNewPhoneController *boundVC = [[BoundingNewPhoneController alloc] initWithNibName:@"BoundingNewPhoneController" bundle:nil];
+    [self.navigationController pushViewController:boundVC animated:YES];
+    
+}
 @end

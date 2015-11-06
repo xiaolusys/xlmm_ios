@@ -172,6 +172,11 @@
         cell.leadingWidth.constant = 8;
         cell.addressImageView.hidden = YES;
         cell.lineView.hidden = YES;
+        if (indexPath.row == 0) {
+            cell.morenLabel.hidden = NO;
+        } else {
+            cell.morenLabel.hidden = YES;
+        }
     }
   
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];

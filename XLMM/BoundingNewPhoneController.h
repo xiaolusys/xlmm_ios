@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface BoundingNewPhoneController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumberTF;
+@property (weak, nonatomic) IBOutlet UITextField *codeTF;
+@property (weak, nonatomic) IBOutlet UIButton *codeButton;
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
+- (IBAction)getCodeClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *commitClicked;
 
 @end

@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *addressImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet UILabel *morenLabel;
 
 
 @end

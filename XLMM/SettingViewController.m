@@ -11,7 +11,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "AddressViewController.h"
 #import "ModifyPasswordViewController.h"
-
+#import "ModifyPhoneController.h"
 
 @interface SettingViewController ()
 
@@ -79,6 +79,10 @@
 
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
+    ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
+    [self.navigationController pushViewController:modifyVC animated:YES];
+    
+    
 
 }
 
