@@ -44,7 +44,7 @@
     [self createNavigationBarWithTitle:@"设置" selecotr:@selector(backClicked:)];
     self.deleteButton.layer.borderWidth = 1;
     self.deleteButton.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
-    self.deleteButton.layer.cornerRadius = 16;
+    self.deleteButton.layer.cornerRadius = 13;
     self.quitBUtton.layer.cornerRadius = 20;
     self.quitBUtton.layer.borderWidth = 1;
     self.quitBUtton.layer.borderColor = [UIColor buttonBorderColor].CGColor;

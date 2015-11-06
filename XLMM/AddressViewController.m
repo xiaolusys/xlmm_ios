@@ -163,11 +163,12 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
     AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (indexPath.row == 0) {
+    if (indexPath.row == -1) {
         cell.leadingWidth.constant = 40;
         cell.addressImageView.hidden = NO;
         cell.lineView.hidden = NO;
     } else {
+        
         cell.leadingWidth.constant = 8;
         cell.addressImageView.hidden = YES;
         cell.lineView.hidden = YES;
