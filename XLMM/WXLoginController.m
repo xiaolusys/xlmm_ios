@@ -56,6 +56,16 @@
       self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     
 }
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil phoneNumber:(NSString *)phone{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+    
+        self.phoneTextField.text = phone;
+    }
+    
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -83,7 +93,7 @@
     self.codeTextField.borderStyle = UITextBorderStyleNone;
     
   
-    
+    self.phoneTextField.text = self.phoneNumber;
     self.myImageView.layer.cornerRadius = 45;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 1;

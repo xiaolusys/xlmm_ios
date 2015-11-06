@@ -14,6 +14,8 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "NSString+Encrypto.h"
 #import "UIViewController+NavigationBar.h"
+#import "SettingPsdViewController.h"
+
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -23,7 +25,10 @@
     NSMutableString *randomstring;
     
     BOOL isBangding;
+    BOOL isSettingPsd;
+    
     NSDictionary *dic;
+    NSString *phoneNumber;
 }
 
 @property (nonatomic, copy)NSString *access_token;
@@ -34,6 +39,7 @@
 @end
 
 @implementation EnterViewController
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -192,20 +198,42 @@
   NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
     NSLog(@"data");
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+    
+    
     NSLog(@"dictionary = %@", dictionary);
+    
+     //   http://m.xiaolu.so/rest/v1/users/need_set_info
+    
     if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
 
         if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
             NSLog(@"未绑定手机号码");
             isBangding = NO;
+            
+            NSLog(@"%@", [dictionary objectForKey:@"info"]);
             NSLog(@"11isBangDing = %d", isBangding);
-
-
+            
+            
         } else {
             NSLog(@"22已绑定手机号码");
             isBangding = YES;
+            
+            phoneNumber = [[dictionary objectForKey:@"info"] objectForKey:@"mobile"];
+            NSLog(@"%@", phoneNumber);
             NSLog(@"22isBangDing = %d", isBangding);
-
+            //  http://m.xiaolu.so/rest/v1/users/need_set_info
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/need_set_info", Root_URL];
+            NSLog(@"string = %@", string);
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSLog(@"%@", result);
+            if ([[result objectForKey:@"result"] isEqualToString:@"no"]) {
+               // isBangding = NO;
+                isSettingPsd = NO;
+            } else {
+                isSettingPsd = YES;
+            }
+            
         }
     }
 
@@ -241,7 +269,20 @@
     
     if (isBangding) {
         NSLog(@"跳转首页");
-        [self.navigationController popViewControllerAnimated:YES];
+        if (isSettingPsd == YES) {
+
+            [self.navigationController popViewControllerAnimated:YES];
+
+        } else {
+            SettingPsdViewController *passVC = [[SettingPsdViewController alloc] initWithNibName:@"SettingPsdViewController" bundle:nil];
+            passVC.phoneNumber = phoneNumber;
+            passVC.info = dic;
+            [self.navigationController pushViewController:passVC animated:YES];
+            
+            
+        }
+        
+      
         
     } else {
         NSLog(@"请绑定手机");

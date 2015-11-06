@@ -104,7 +104,7 @@
         NSLog(@"设置为默认地址");
         if (self.addressModel.addressID == nil) {
             NSLog(@"添加地址情况下设置为常用地址");//
-#warning set default address
+//#warning set default address
         } else {
             NSLog(@"修改地址情况下设置为常用地址");
             

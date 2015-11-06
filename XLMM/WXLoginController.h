@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong)NSDictionary *userInfo;
 
+@property (nonatomic, copy) NSString *phoneNumber;
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
@@ -24,5 +25,7 @@
 - (IBAction)commitClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *buttonLabel;
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil phoneNumber:(NSString *)phone;
 
 @end

@@ -40,6 +40,8 @@
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
+		3236E3301BECD08D00A1036B /* SettingPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236E32E1BECD08D00A1036B /* SettingPsdViewController.m */; };
+		3236E3311BECD08D00A1036B /* SettingPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3236E32F1BECD08D00A1036B /* SettingPsdViewController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
 		323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */; };
 		323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */; };
@@ -683,6 +685,9 @@
 		3220A2191B9D70010019443F /* TuihuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoController.h; sourceTree = "<group>"; };
 		3220A21A1B9D70010019443F /* TuihuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoController.m; sourceTree = "<group>"; };
 		3220A21B1B9D70010019443F /* TuihuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoController.xib; sourceTree = "<group>"; };
+		3236E32D1BECD08D00A1036B /* SettingPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPsdViewController.h; sourceTree = "<group>"; };
+		3236E32E1BECD08D00A1036B /* SettingPsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPsdViewController.m; sourceTree = "<group>"; };
+		3236E32F1BECD08D00A1036B /* SettingPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingPsdViewController.xib; sourceTree = "<group>"; };
 		323B9C5F1BDDB5FC0060BFC1 /* back_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_image.png; sourceTree = "<group>"; };
 		323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_cart_add.png; sourceTree = "<group>"; };
 		323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_coupon.png; sourceTree = "<group>"; };
@@ -1797,6 +1802,9 @@
 				329E8A911BB648A3008AA0B6 /* WXLoginController.h */,
 				329E8A921BB648A3008AA0B6 /* WXLoginController.m */,
 				329E8A931BB648A3008AA0B6 /* WXLoginController.xib */,
+				3236E32D1BECD08D00A1036B /* SettingPsdViewController.h */,
+				3236E32E1BECD08D00A1036B /* SettingPsdViewController.m */,
+				3236E32F1BECD08D00A1036B /* SettingPsdViewController.xib */,
 				32C74C481BE7425E00E25A7C /* SetPasswordController.h */,
 				32C74C491BE7425E00E25A7C /* SetPasswordController.m */,
 				32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */,
@@ -2142,6 +2150,7 @@
 				32EC425A1BE8931B009E5FA2 /* EnterViewController.xib in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
 				32746E0C1B74A22000816208 /* font-xinpin.png in Resources */,
+				3236E3311BECD08D00A1036B /* SettingPsdViewController.xib in Resources */,
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
 				321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */,
 				3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */,
@@ -2552,6 +2561,7 @@
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */,
+				3236E3301BECD08D00A1036B /* SettingPsdViewController.m in Sources */,
 				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				3266A6E21BE35C4100C676A9 /* PosterCollectionCell2.m in Sources */,
