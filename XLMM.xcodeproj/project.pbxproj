@@ -229,7 +229,6 @@
 		3299D88C1B8C7FAA000AA744 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */; };
 		3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */; };
 		3299D88E1B8C7FAA000AA744 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8841B8C7FAA000AA744 /* libpingpp.a */; };
-		3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8851B8C7FAA000AA744 /* Pingpp.bundle */; };
 		329E89841BB574B0008AA0B6 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		329E89851BB574B0008AA0B6 /* LiJiGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290C8841B88232F00CFAFA0 /* LiJiGMViewController.m */; };
 		329E89861BB574B0008AA0B6 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2781B6B5B1300E73EB9 /* UIImage+WebP.m */; };
@@ -470,7 +469,6 @@
 		329E8A741BB574B0008AA0B6 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		329E8A751BB574B0008AA0B6 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
 		329E8A761BB574B0008AA0B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
-		329E8A771BB574B0008AA0B6 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8851B8C7FAA000AA744 /* Pingpp.bundle */; };
 		329E8A781BB574B0008AA0B6 /* icon-jia2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DE61B74A22000816208 /* icon-jia2.png */; };
 		329E8A791BB574B0008AA0B6 /* tuihuo-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B801BA117AE0045ADB9 /* tuihuo-warning.png */; };
 		329E8A7A1BB574B0008AA0B6 /* GoodsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF9491B69BD9D00351ACA /* GoodsView.xib */; };
@@ -935,7 +933,6 @@
 		3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+wx.a"; sourceTree = "<group>"; };
 		3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		3299D8841B8C7FAA000AA744 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
-		3299D8851B8C7FAA000AA744 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
 		3299D8861B8C7FAA000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		329E8A8F1BB574B0008AA0B6 /* XLMM copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XLMM copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XLMM copy-Info.plist"; path = "/Users/younishijie/Desktop/xlmm/XLMM/XLMM copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -1677,7 +1674,6 @@
 			children = (
 				3299D8711B8C7FAA000AA744 /* Channels */,
 				3299D8841B8C7FAA000AA744 /* libpingpp.a */,
-				3299D8851B8C7FAA000AA744 /* Pingpp.bundle */,
 				3299D8861B8C7FAA000AA744 /* Pingpp.h */,
 			);
 			path = lib;
@@ -2239,7 +2235,6 @@
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
-				3299D88F1B8C7FAA000AA744 /* Pingpp.bundle in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
@@ -2398,7 +2393,6 @@
 				329E8A741BB574B0008AA0B6 /* MMRootViewController.xib in Resources */,
 				329E8A751BB574B0008AA0B6 /* ChildViewController.xib in Resources */,
 				329E8A761BB574B0008AA0B6 /* Images.xcassets in Resources */,
-				329E8A771BB574B0008AA0B6 /* Pingpp.bundle in Resources */,
 				329E8A781BB574B0008AA0B6 /* icon-jia2.png in Resources */,
 				329E8A791BB574B0008AA0B6 /* tuihuo-warning.png in Resources */,
 				329E8A7A1BB574B0008AA0B6 /* GoodsView.xib in Resources */,

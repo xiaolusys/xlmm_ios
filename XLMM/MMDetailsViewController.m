@@ -153,7 +153,7 @@
     allSizeKeys = @[@"领围",@"肩宽",@"胸围",@"袖长",
                     @"插肩袖",@"袖口",@"腰围",
                     @"衣长",@"裙腰",@"裤腰",
-                    @"臀围",@"下摆围",@"前档",
+                    @"臀围",@"下摆围",@"下摆宽",@"前档",
                     @"后档",@"大腿围",@"小腿围",
                     @"脚口",@"裙长",@"裤长",
                     @"建议身高"];
@@ -196,6 +196,19 @@
     self.addCartButton.layer.borderWidth = 1;
     self.addCartButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
+    
+    
+    self.line1Height.constant = 0.5;
+    self.line2Height.constant = 0.5;
+
+    self.line3Height.constant = 0.5;
+
+  //  self.line4Height.constant = 0.5;
+
+    self.line5Height.constant = 0.5;
+    self.line6height .constant = 0.5;
+  //  self.line1Height.constant = 0.5;
+
     
 }
 
@@ -285,6 +298,16 @@
     self.caizhiLabel.text = [[dic objectForKey:@"details"] objectForKey:@"material"];
     self.yanseLabel.text = [[dic objectForKey:@"details"] objectForKey:@"color"];
     self.beizhuLabel.text = [[dic objectForKey:@"details"] objectForKey:@"note"];
+    NSLog(@"%@", NSStringFromCGRect(self.beizhuLabel.frame));
+    NSLog(@"%ld", (self.beizhuLabel.text.length));
+    NSInteger lines = self.beizhuLabel.text.length/23;
+    
+        self.headViewHeitht.constant = SCREENWIDTH + 150 + 15 * lines;
+        self.bottomHeight.constant = 150 + 15 * lines;
+    
+    
+    self.xidishuomingLabel.text = [[dic objectForKey:@"details"] objectForKey:@"wash_instructions"];
+    self.xidishuomingLabel.hidden = YES;
     [self createSizeView];
     [self createDetailsView];
     [self createContentView];
@@ -411,7 +434,7 @@
         
         
     } else{
-        NSLog(@"特定下架时间");
+       // NSLog(@"特定下架时间");
         NSMutableString *string = [NSMutableString stringWithString:offShelfTime];
         NSRange range = [string rangeOfString:@"T"];
         [string replaceCharactersInRange:range withString:@" "];
@@ -1150,5 +1173,17 @@
 }
 - (IBAction)washshuomingClicked:(id)sender {
     NSLog(@"查看洗涤说明");
+    
+    static BOOL isShow = YES;
+    if (isShow) {
+        isShow = NO;
+        self.canshuHeight.constant = 300;
+        self.xidishuomingLabel.hidden = NO;
+        
+    } else {
+        isShow = YES;
+        self.canshuHeight.constant = 256;
+        self.xidishuomingLabel.hidden = YES;
+    }
 }
 @end

@@ -203,7 +203,7 @@
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDateComponents * comps = [calendar components:unitFlags fromDate:toDate];
-    NSLog(@"comps = %@", comps);
+  //NSLog(@"comps = %@", comps);
     
     int year=(int)[comps year];
     int month =(int) [comps month];
@@ -224,7 +224,7 @@
     //用来得到具体的时差
     NSDate *todate;
     if ([offSheltTime class] == [NSNull class]) {
-        NSLog(@"默认下架时间");
+       // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
         [endTime setMonth:month];
