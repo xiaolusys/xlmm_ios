@@ -10,4 +10,8 @@
 
 @interface AddressViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
+
+- (IBAction)addButtonClicked:(id)sender;
+
 @end

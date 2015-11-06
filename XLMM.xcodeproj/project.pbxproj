@@ -37,7 +37,6 @@
 		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; };
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
-		321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; };
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
 		3220A21C1B9D70010019443F /* TuihuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3220A21A1B9D70010019443F /* TuihuoController.m */; };
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
@@ -557,7 +556,6 @@
 		32CDC9461BD2028F00EF5FA6 /* category.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9441BD2028F00EF5FA6 /* category.png */; };
 		32CDC9471BD2028F00EF5FA6 /* profiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CDC9451BD2028F00EF5FA6 /* profiles.png */; };
 		32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
-		32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
 		32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
 		32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C31B7C491E00CA67C3 /* AddressModel.m */; };
 		32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */; };
@@ -582,6 +580,8 @@
 		32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E329981B70C70000A6F0BC /* DetailViewController.xib */; };
 		32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
 		32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E4D5341B9FCFB1001230F4 /* JiFenCollectionCell.xib */; };
+		32E6BC141BEC762B0036F338 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8DA01BD8E22A0060FB62 /* SettingViewController.xib */; };
+		32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BA1B7C2A4D00CA67C3 /* AddressViewController.xib */; };
 		32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
 		32EC42581BE880D3009E5FA2 /* QuanbuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E0B1B86B2D8003501EF /* QuanbuCollectionCell.xib */; };
 		32EC42591BE89307009E5FA2 /* EnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 326091CA1B79ABFC00A763BA /* EnterViewController.m */; };
@@ -2116,7 +2116,6 @@
 				32EC42681BE8AF10009E5FA2 /* gouwucheIcon.png in Resources */,
 				3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */,
 				3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */,
-				321C8DA21BD8E22A0060FB62 /* SettingViewController.xib in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
@@ -2164,6 +2163,7 @@
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
+				32E6BC141BEC762B0036F338 /* SettingViewController.xib in Resources */,
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
 				325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */,
 				325B1E7F1BE489C00027B3E3 /* barbackImage.png in Resources */,
@@ -2217,9 +2217,9 @@
 				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */,
 				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
-				32CE91BC1B7C2A4D00CA67C3 /* AddressViewController.xib in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
+				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,

@@ -21,6 +21,8 @@
 #import "MMUserCoupons.h"
 
 #import "AddressViewController.h"
+#import "SettingViewController.h"
+
 
 
 
@@ -223,7 +225,7 @@
 - (IBAction)settingClicked:(id)sender {
     NSLog(@"设置");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:addressVC];
         }

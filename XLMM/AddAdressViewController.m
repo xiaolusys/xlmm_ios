@@ -102,8 +102,49 @@
     UISwitch *switch2 = (UISwitch *)sender;
     if (switch2.isOn) {
         NSLog(@"设置为默认地址");
+        if (self.addressModel.addressID == nil) {
+            NSLog(@"添加地址情况下设置为常用地址");//
+#warning set default address
+        } else {
+            NSLog(@"修改地址情况下设置为常用地址");
+            
+        //    http://m.xiaolu.so/rest/v1/address
+                //  - /{id}/change_default：
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_default", Root_URL, self.addressModel.addressID];
+            NSLog(@"string = %@", string);
+            
+      
+            
+            
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+        
+            
+            [manager POST:string parameters:nil
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      
+                      NSLog(@"JSON: %@", responseObject);
+                      
+                      
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      
+                      NSLog(@"Error: %@", error);
+                      
+                  }];
+        }
+        
+        
+        NSLog(@"%@", self.addressModel.addressID);
+        
+        
+        
     } else {
         NSLog(@"取消默认地址");
+        
+        
+        
+        
     }
 }
 

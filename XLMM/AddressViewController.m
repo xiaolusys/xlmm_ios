@@ -67,11 +67,18 @@
     [self createNavigationBarWithTitle:@"收货地址" selecotr:@selector(backBtnClicked:)];
     dataArray = [[NSMutableArray alloc] init];
     
-    self.addressTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) style:UITableViewStylePlain];
+    self.addressTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 120) style:UITableViewStylePlain];
     self.addressTableView.delegate = self;
     self.addressTableView.dataSource = self;
-    [self.view addSubview:_addressTableView];
-   
+    [self.view addSubview:self.addressTableView];
+    self.addButton.layer.cornerRadius = 20;
+    self.addButton.layer.borderWidth = 1;
+    self.addButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    
+    self.addressTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.addressTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    //self.addressTableView.d
 }
 
 
@@ -136,172 +143,59 @@
 
 
 
-- (UIView *)createHeadView{
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAINSCREENWIDTH, 80)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 140, 40)];
-    label.text = @"收货地址";
-    label.font = [UIFont systemFontOfSize:16];
-    [headView addSubview:label];
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(8, 40, 180, 40)];
-    label2.text = @"新增收货地址";
-    label2.font = [UIFont systemFontOfSize:16];
-    [headView addSubview:label2];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    
-    UIImageView *btnImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia.png"]];
-    btnImage.frame = CGRectMake(16, 16, 16, 16);
-    
-    [button addSubview:btnImage];
-    [button addTarget:self action:@selector(addAdress) forControlEvents:UIControlEventTouchUpInside];
-    button.frame = CGRectMake(MAINSCREENWIDTH - 50, 36, 44, 44);
-    [headView addSubview:button];
-    return headView;
-}
-
-- (void)addAdress{
-    NSLog(@"新增地址");
-    AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
-    addAdVC.isAdd = YES;
-    [self.navigationController pushViewController:addAdVC animated:YES];
-    
-    
-}
 
 #pragma mark --UITableViewDelegate--
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return dataArray.count + 1;
+    return dataArray.count;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return 80;
-        
-    }
-    else
-    {
-        return 96;
-    }
+    return 90;
 }
 
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
   //  static NSString *CellIdentifier = @"CellIdentifier";
-    if (indexPath.row == 0) {
-        
-        UITableViewCell *cell =(UITableViewCell *) [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
-        [cell.contentView addSubview:[self createHeadView]];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-        return cell;
-    }
+   
  
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
-      AddressTableCell *cell = [array objectAtIndex:0];
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
+    AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    if (indexPath.row == 0) {
+        cell.leadingWidth.constant = 40;
+        cell.addressImageView.hidden = NO;
+        cell.lineView.hidden = NO;
+    } else {
+        cell.leadingWidth.constant = 8;
+        cell.addressImageView.hidden = YES;
+        cell.lineView.hidden = YES;
+    }
   
-    AddressModel *model = [dataArray objectAtIndex:indexPath.row -1];
-    NSString *address = [NSString stringWithFormat:@"%@-%@-%@-%@", model.provinceName, model.cityName, model.countyName, model.streetName];
+    AddressModel *model = [dataArray objectAtIndex:indexPath.row];
+    NSString *address = [NSString stringWithFormat:@"%@%@%@%@", model.provinceName, model.cityName, model.countyName, model.streetName];
     
     cell.secondLabel.text = address;
-    NSLog(@"%@", address);
     cell.delegate = self;
     cell.addressModel = model;
     
-    NSString *buyerInfo = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
+    NSString *buyerInfo = [NSString stringWithFormat:@"%@    %@", model.buyerName, model.phoneNumber];
     cell.firstLabel.text = buyerInfo;
-    cell.firstLabel.userInteractionEnabled = NO;
-    cell.secondLabel.userInteractionEnabled = NO;
-    cell.frontImageView.userInteractionEnabled = NO;
-    cell.firstLabel.textColor = [UIColor blackColor];
-    cell.backgroundView.backgroundColor = [UIColor whiteColor];
-
-    if (indexPath.row == 1) {
-        cell.frontImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-        //cell.bgView.backgroundColor = [UIColor redColor];
-        cell.firstLabel.textColor = [UIColor redColor];
-    }
-    
-    
+   
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld", (long)indexPath.row);
-    if (indexPath.row == 0) {
-        
-        
-        return;
-    }
-    
-    
-    AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.frontImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-    cell.bgView.backgroundColor = [UIColor whiteColor];
-    cell.firstLabel.textColor = [UIColor blackColor];
-    
-    
-
-    
-}
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
+  
+    NSLog(@"%ld", (long)indexPath.row);
 
-        [self addAdress];
-        return;
-    }
-    NSIndexPath *indexpathDefaule = [NSIndexPath indexPathForRow:1 inSection:0];
-    
-    if (indexPath.row != 1) {
-        AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexpathDefaule];
-        cell.frontImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-        cell.bgView.backgroundColor = [UIColor whiteColor];
-        cell.firstLabel.textColor = [UIColor blackColor];
-    }
-    
-    AddressTableCell *cell = (AddressTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    
-    //  selected_icon.png
-    //  unselected_icon.png
-    cell.frontImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-    //cell.bgView.backgroundColor = [UIColor redColor];
-    cell.firstLabel.textColor = [UIColor redColor];
-    selectCell = cell;
-
-    
-  //  http://192.168.1.61:8000/rest/v1/address/%@/change_default
-    
-    
-    NSString *addID = [[dataArray objectAtIndex:indexPath.row-1] addressID];
-    NSLog(@"addid = %@", addID);
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_default", Root_URL, addID];
-    NSLog(@"url = %@", urlString);
-    
-   
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    
-    [manager POST:urlString parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-
-    
+    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+    addVC.isAdd = NO;
+    addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:addVC animated:YES];
     
     
 }
@@ -322,8 +216,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        deleteModel = [dataArray objectAtIndex:indexPath.row - 1];
-        [dataArray removeObjectAtIndex:indexPath.row - 1];
+        deleteModel = [dataArray objectAtIndex:indexPath.row];
+        [dataArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         //调用删除接口。。。。。。
         
@@ -389,4 +283,10 @@
 }
 */
 
+- (IBAction)addButtonClicked:(id)sender {
+    
+    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+    addVC.isAdd = YES;
+    [self.navigationController pushViewController:addVC animated:YES];
+}
 @end

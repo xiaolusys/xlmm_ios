@@ -10,4 +10,25 @@
 
 @interface SettingViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *cacheLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
+
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *quitBUtton;
+
+
+- (IBAction)nickButtonClicked:(id)sender;
+- (IBAction)phoneButtonClicked:(id)sender;
+- (IBAction)modifyButtonClicked:(id)sender;
+- (IBAction)addressButtonClicked:(id)sender;
+- (IBAction)versionButtonClicked:(id)sender;
+- (IBAction)deleteButtonClicked:(id)sender;
+- (IBAction)quitButtonClicked:(id)sender;
+
 @end

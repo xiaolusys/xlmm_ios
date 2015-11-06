@@ -29,5 +29,10 @@
 
 @property (strong, nonatomic)AddressModel *addressModel;
 @property (assign, nonatomic)id<AddressDelegate>delegate;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingWidth;
+@property (weak, nonatomic) IBOutlet UIImageView *addressImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 
 @end
