@@ -61,8 +61,10 @@
 @property (nonatomic, strong)DingdanModel *dingdanModel;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *headdingdanzhuangtai;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 
 
 

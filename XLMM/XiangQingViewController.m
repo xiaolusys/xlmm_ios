@@ -80,6 +80,15 @@
     [frontView addSubview:activityView];
     [self.view addSubview:frontView];
     
+    self.quxiaoBtn.layer.cornerRadius = 20;
+    self.quxiaoBtn.layer.borderWidth = 1;
+    self.quxiaoBtn.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
+    
+    
+    self.buyBtn.layer.cornerRadius = 20;
+    self.buyBtn.layer.borderWidth = 1;
+    self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -123,7 +132,16 @@
         self.buyBtn.hidden = YES;
     }
 
-    self.zhuangtaiLabel.text = [dicJson objectForKey:@"status_display"];//订单编号和状态
+    //订单编号和状态
+    NSString *statusDisplay = [dicJson objectForKey:@"status_display"];
+    if (![statusDisplay isEqualToString:@"status_display"]) {
+        NSLog(@"订单不是待付款状态");
+    }
+    if ([statusDisplay isEqualToString:@"待付款"]) {
+        self.zhuangtaiLabel.text = @"订单创建成功";
+
+    }
+    
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
     
     tid = [dicJson objectForKey:@"id"]; //交易id号
@@ -149,10 +167,10 @@
                             [dicJson objectForKey:@"receiver_address"]];
     self.addressLabel.text = addressStr;
     
-    self.allPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"total_fee"] floatValue]];
-    self.yunfeiLabel.text = [NSString stringWithFormat:@"￥%@", [dicJson objectForKey:@"post_fee"]];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"￥-%@", [dicJson objectForKey:@"discount_fee"]];
-    self.yingfuLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"total_fee"] floatValue]];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%@", [dicJson objectForKey:@"post_fee"]];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%@", [dicJson objectForKey:@"discount_fee"]];
+    self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
     
     
     
@@ -209,7 +227,7 @@
         
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
-        owner.numberLabel.text = [NSString stringWithFormat:@"%@", model.numberString];
+        owner.numberLabel.text = [NSString stringWithFormat:@"x%@", model.numberString];
         owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
        
         if (([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已支付"] ||

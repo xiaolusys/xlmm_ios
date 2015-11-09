@@ -10,10 +10,12 @@
                 <outlet property="addressLabel" destination="Bku-uc-mKg" id="r2R-rM-qPm"/>
                 <outlet property="bianhaoLabel" destination="Eyg-WK-tnr" id="VOD-Ac-ku7"/>
                 <outlet property="buyBtn" destination="a13-t7-O8u" id="UUu-aM-1by"/>
+                <outlet property="headdingdanzhuangtai" destination="tE8-en-lXx" id="gwF-Se-QjD"/>
                 <outlet property="myViewHeight" destination="HT2-jl-b8c" id="INJ-Dn-zTz"/>
                 <outlet property="myXiangQingView" destination="56K-Ao-5f7" id="bae-kI-igo"/>
                 <outlet property="nameLabel" destination="BqH-2s-62X" id="QHQ-eT-Thc"/>
                 <outlet property="quxiaoBtn" destination="2yd-kz-TxL" id="Tfi-TJ-hsc"/>
+                <outlet property="remainTimeLabel" destination="Jo9-Bd-eZR" id="lU0-bq-Zif"/>
                 <outlet property="screenWidth" destination="cN9-fJ-Ql2" id="rrf-R1-5Ux"/>
                 <outlet property="timeLabel" destination="akg-sF-yYd" id="Cqb-hz-2hw"/>
                 <outlet property="view" destination="pKX-W9-8fM" id="mz4-IW-WtP"/>
