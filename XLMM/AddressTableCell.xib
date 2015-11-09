@@ -43,10 +43,10 @@
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sbc-bE-gnd">
-                                        <rect key="frame" x="296" y="33" width="16" height="24"/>
+                                        <rect key="frame" x="300" y="36" width="12" height="18"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="c71-3F-TX9"/>
-                                            <constraint firstAttribute="width" constant="16" id="hqv-Pc-Hmr"/>
+                                            <constraint firstAttribute="height" constant="18" id="c71-3F-TX9"/>
+                                            <constraint firstAttribute="width" constant="12" id="hqv-Pc-Hmr"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jRa-Mp-pVA">
@@ -63,7 +63,7 @@
                                             <constraint firstAttribute="height" constant="2" id="J76-fm-imI"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="默认地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3K5-hY-f0i">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="默认地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3K5-hY-f0i">
                                         <rect key="frame" x="249" y="15" width="56" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.96078431369999995" green="0.69411764710000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>

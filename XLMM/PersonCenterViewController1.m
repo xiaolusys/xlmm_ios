@@ -49,14 +49,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"待支付订单";
+    
     [self createNavigationBarWithTitle:@"待支付订单" selecotr:@selector(btnClicked:)];
     
     self.labelArray = [[NSMutableArray alloc] init];
-   // [self createInfo];
     // Do any additional setup after loading the view from its nib.
     [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
-    //self.dataArray = [[NSMutableArray alloc] init];
     [self.view addSubview:[[UIView alloc] init]];
     self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
@@ -87,8 +85,18 @@
     
     self.dataArray = [json objectForKey:@"results"];
     NSLog(@"dataArray = %@", self.dataArray);
+    if ([[json objectForKey:@"next"] class] == [NSNull class]) {
+        NSLog(@"没有第二页");
+        
+        
+    } else {
+        
+#warning 支付列表有分页
+        
+        NSLog(@"有第二页");
+    }
     
-    self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120*self.dataArray.count);
+    self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120 * self.dataArray.count);
     [self.collectionView reloadData];
     
     [self createTimeLabels];
@@ -108,10 +116,10 @@
 - (void)createTimeLabels{
     for (int i = 0; i<self.dataArray.count; i++) {
        
-        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(256, 8, 60, 15)];
-        label.textAlignment = NSTextAlignmentLeft;
+        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 80 - 100, 0, 100, 35)];
+        label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:229 G:49 B:120 alpha:1];
+        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
         [self.labelArray addObject:label];
     }
     NSLog(@"label = %@", self.labelArray);
@@ -193,46 +201,7 @@
     NSLog(@"首页观光");
     
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    
-    
 }
-
-
-
-
-- (void)createInfo{
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"待支付订单";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 12, 12, 22);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-    
-}
-
-
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    NSLog(@"back to root");
-    
-}
-
-
-
 
 #pragma mark ----CollectionViewDelegate-----
 
@@ -285,23 +254,44 @@
         [label removeFromSuperview];
         
     }
-    
-    
-    
-    
-     UILabel *label = (UILabel *)[self.labelArray objectAtIndex:indexPath.row];
+    UILabel *label = (UILabel *)[self.labelArray objectAtIndex:indexPath.row];
     NSLog(@"label = %@ and index.row = %ld", label, (long)indexPath.row);
     label.tag = indexPath.row +100;
-    
     [cell.contentView addSubview:label];
     
     
+    
+    for (int i = 0; i<self.dataArray.count; i++) {
+        UIButton *btn = [cell.contentView viewWithTag:i + 1000];
+        [btn removeFromSuperview];
+        
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+    button.tag = indexPath.row +1000;
+    
+    [button setTitle:@"立即支付" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+    button.layer.cornerRadius = 12.5;
+    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    button.layer.borderWidth = 0.5;
+    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    button.userInteractionEnabled = NO;
+    [cell.contentView addSubview:button];
     
     cell.statusLabel.text = [dic objectForKey:@"status_display"];
     cell.paymentLable.text = [NSString stringWithFormat:@"¥%.1f",[[dic objectForKey:@"payment"] floatValue]];
     cell.idLabel.text = [dic objectForKey:@"tid"];
     
     return cell;
+    
+}
+
+- (void)lijizhifu:(UIButton *)button{
+    NSLog(@"立即支付");
+    NSLog(@"tag = %lu", (unsigned long)button.tag);
     
 }
 
@@ -345,7 +335,7 @@
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
 
         //  2015-09-06T16:35:25
-        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss"; 
+        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
         NSDate *date = [formatter dateFromString:string];
         
        // NSLog(@"%@", date);
@@ -362,10 +352,10 @@
         NSCalendarUnitSecond;
           NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:endDate options:0];
 
-        shengyushijian = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+        shengyushijian = [NSString stringWithFormat:@"剩余时间%02ld:%02ld", (long)[d minute], (long)[d second]];
      //   NSLog(@"shengyu shijian = %@" , shengyushijian);
         if ([d minute] < 0 || [d second] < 0) {
-            shengyushijian = @"00:00";
+            shengyushijian = @"剩余时间00:00";
         }
 #pragma mark 设置倒计时
         UILabel *label = (UILabel *)[self.labelArray objectAtIndex:i];

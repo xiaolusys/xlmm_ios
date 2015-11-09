@@ -392,23 +392,17 @@
        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     if ([[dic objectForKey:@"ok"]boolValue] == YES) {
         alterView.message = @"签收成功";
-        [self downloadData];
+
         
         
     } else {
         alterView.message = @"签收失败";
     }
     [alterView show];
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
     
-    
- //   NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
-    
-    
-    
-    //NSLog(@"%@",str1);
+ 
     
 }
 - (void)tuihuotuikuan:(UIButton *)button{

@@ -23,6 +23,9 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+    [self downlaodData];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -39,7 +42,6 @@
     self.title = @"待收货订单";
      [self.collectionView registerClass:[ShouHuoCollectionViewCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     [self createNavigationBarWithTitle:@"待收货订单" selecotr:@selector(btnClicked:)];
-    [self downlaodData];
     [self.view addSubview:[[UIView alloc] init]];
     
     self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
@@ -106,7 +108,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 140);
+    return CGSizeMake(SCREENWIDTH, 117);
 }
 
 //返回列表的个数
@@ -149,7 +151,7 @@
     
     if ([status isEqualToString:@"已发货"]) {
         NSLog(@"已经发货");
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 5, 80, 25)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
         button.tag = indexPath.row +100;
         
         [button setTitle:@"确认收货" forState:UIControlStateNormal];
@@ -160,11 +162,11 @@
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         button.layer.borderWidth = 0.5;
         button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-        
+        button.userInteractionEnabled = NO;
         [cell.contentView addSubview:button];
     } else if ([status isEqualToString:@"已付款"]){
         NSLog(@"没有发货");
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 5, 80, 25)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
         button.tag = indexPath.row +100;
         
         [button setTitle:@"申请退款" forState:UIControlStateNormal];
@@ -175,7 +177,7 @@
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         button.layer.borderWidth = 0.5;
         button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-        
+        button.userInteractionEnabled = NO;
         [cell.contentView addSubview:button];
     }
     
@@ -213,25 +215,6 @@
 - (void)querenQianshou:(UIButton *)button{
     
     NSLog(@"确认收货");
-//    NSLog(@"tag = %ld", (long)button.tag);
-//    NSDictionary *dic = [self.dataArray objectAtIndex:(button.tag - 100)];
-//    NSLog(@"dic = %@", dic);
-//    //http://m.xiaolu.so/rest/v1/trades
-//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/confirm_sign", Root_URL, [dic objectForKey:@"id"]];
-//    NSLog(@"urlString = %@", urlString);
-//    
-//    
-//    
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    
-//    
-//  
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"POST"];
-//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [connection start];
-//    
-    
 }
 
 

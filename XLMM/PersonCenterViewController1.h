@@ -12,6 +12,7 @@
 @interface PersonCenterViewController1 : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 @property (assign, nonatomic) id<MenuVCPushSideDelegate>menuDelegate;
 
 @end
