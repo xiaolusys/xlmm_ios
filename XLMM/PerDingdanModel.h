@@ -15,6 +15,7 @@
 @property (nonatomic, copy)NSString *numberString;
 @property (nonatomic, copy)NSString *priceString;
 @property (nonatomic, copy)NSString *urlString;
+@property (nonatomic, copy)NSString *orderID;
 
 
 @end

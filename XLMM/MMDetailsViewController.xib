@@ -122,13 +122,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuM-N0-go3">
-                                                    <rect key="frame" x="140" y="54" width="40" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <rect key="frame" x="142" y="54" width="36" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEs-pU-QAZ">
-                                                    <rect key="frame" x="20" y="82" width="280" height="15"/>
+                                                    <rect key="frame" x="20" y="76" width="280" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="280" id="8rp-wn-AVF"/>
                                                     </constraints>
@@ -158,7 +158,7 @@
                                                 <constraint firstItem="jng-N0-5RW" firstAttribute="baseline" secondItem="gnV-T6-k8Y" secondAttribute="baseline" constant="-2" id="OE1-vB-gmj"/>
                                                 <constraint firstItem="Gbe-eb-1Xd" firstAttribute="leading" secondItem="jng-N0-5RW" secondAttribute="trailing" id="Pxh-1x-tlG"/>
                                                 <constraint firstItem="Gbe-eb-1Xd" firstAttribute="baseline" secondItem="jng-N0-5RW" secondAttribute="baseline" constant="-1" id="TYo-zX-gY6"/>
-                                                <constraint firstItem="fEs-pU-QAZ" firstAttribute="top" secondItem="vuM-N0-go3" secondAttribute="bottom" constant="8" id="UD5-E9-OxD"/>
+                                                <constraint firstItem="fEs-pU-QAZ" firstAttribute="top" secondItem="vuM-N0-go3" secondAttribute="bottom" constant="5" id="UD5-E9-OxD"/>
                                                 <constraint firstItem="fEs-pU-QAZ" firstAttribute="centerX" secondItem="ZaG-6v-WYj" secondAttribute="centerX" id="bCF-rt-kZb"/>
                                                 <constraint firstItem="vuM-N0-go3" firstAttribute="centerX" secondItem="ZaG-6v-WYj" secondAttribute="centerX" id="elr-4r-f9P"/>
                                                 <constraint firstItem="jng-N0-5RW" firstAttribute="leading" secondItem="gnV-T6-k8Y" secondAttribute="trailing" id="ere-BM-059"/>

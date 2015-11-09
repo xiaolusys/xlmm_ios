@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="addressLabel" destination="Bku-uc-mKg" id="r2R-rM-qPm"/>
                 <outlet property="bianhaoLabel" destination="Eyg-WK-tnr" id="VOD-Ac-ku7"/>
+                <outlet property="bottomView" destination="5aH-SQ-54L" id="Ugo-IA-64M"/>
+                <outlet property="bottomViewHeight" destination="VOG-M6-RlU" id="fwA-dL-ZUB"/>
                 <outlet property="buyBtn" destination="a13-t7-O8u" id="UUu-aM-1by"/>
                 <outlet property="headdingdanzhuangtai" destination="tE8-en-lXx" id="gwF-Se-QjD"/>
                 <outlet property="myViewHeight" destination="HT2-jl-b8c" id="INJ-Dn-zTz"/>
@@ -859,7 +861,9 @@
                 <constraint firstAttribute="trailing" secondItem="5aH-SQ-54L" secondAttribute="trailing" id="Iwq-fr-G54"/>
                 <constraint firstItem="chS-yz-c6e" firstAttribute="leading" secondItem="pKX-W9-8fM" secondAttribute="leading" id="L7g-ZG-nAk"/>
                 <constraint firstAttribute="bottom" secondItem="5aH-SQ-54L" secondAttribute="bottom" id="OhQ-EZ-tqe"/>
-                <constraint firstItem="5aH-SQ-54L" firstAttribute="top" secondItem="chS-yz-c6e" secondAttribute="bottom" id="VOG-M6-RlU"/>
+                <constraint firstItem="5aH-SQ-54L" firstAttribute="top" secondItem="chS-yz-c6e" secondAttribute="bottom" id="VOG-M6-RlU">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="chS-yz-c6e" secondAttribute="trailing" id="XXD-7F-u92"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

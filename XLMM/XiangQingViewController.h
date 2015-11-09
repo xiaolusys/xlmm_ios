@@ -66,6 +66,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 @end

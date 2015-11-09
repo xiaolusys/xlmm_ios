@@ -133,12 +133,35 @@
     }
 
     //订单编号和状态
+    
+    
+   // self.headdingdanzhuangtai.text = [dicJson objectForKey:@"status_display"];
+    
+    
     NSString *statusDisplay = [dicJson objectForKey:@"status_display"];
-    if (![statusDisplay isEqualToString:@"status_display"]) {
+    if (![statusDisplay isEqualToString:@"待付款"]) {
         NSLog(@"订单不是待付款状态");
+        self.bottomViewHeight.constant = -60;
+        
+        self.bottomView.hidden = YES;
     }
+    
     if ([statusDisplay isEqualToString:@"待付款"]) {
         self.zhuangtaiLabel.text = @"订单创建成功";
+
+    } else if ([statusDisplay isEqualToString:@"已付款"]){
+        self.zhuangtaiLabel.text = @"您已提交了订单，请等待系统确认";
+        self.headdingdanzhuangtai.text = @"待发货";
+    } else if (([statusDisplay isEqualToString:@"已发货"])){
+        self.zhuangtaiLabel.text = @"到达目的地网点上海杨浦区公司";
+        self.headdingdanzhuangtai.text = @"待收货";
+    } else if (([statusDisplay isEqualToString:@"交易成功"])){
+        self.zhuangtaiLabel.text = @"已签收";
+        self.headdingdanzhuangtai.text = @"交易成功";
+
+    } else if (([statusDisplay isEqualToString:@"交易关闭"])){
+        self.zhuangtaiLabel.text = @"交易关闭";
+        self.headdingdanzhuangtai.text = @"交易关闭";
 
     }
     
@@ -186,6 +209,7 @@
         model.numberString = [dic objectForKey:@"num"];
         model.priceString = [dic objectForKey:@"total_fee"];
         model.nameString = [dic objectForKey:@"title"];
+        model.orderID = [dic objectForKey:@"id"];
         [dataArray addObject:model];
         
         [refund_status_displayArray addObject:[dic objectForKey:@"refund_status_display"]];
@@ -230,30 +254,89 @@
         owner.numberLabel.text = [NSString stringWithFormat:@"x%@", model.numberString];
         owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
        
-        if (([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已支付"] ||
-            [[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已发货"]) &&
-            [[refund_statusArray objectAtIndex:i] integerValue] == 0) {
+        if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已付款"]) {
+            if ([[refund_statusArray objectAtIndex:i] integerValue] == 0) {
+                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
+                [button addTarget:self action:@selector(tuikuan:) forControlEvents:UIControlEventTouchUpInside];
+                [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+                button.backgroundColor = [UIColor whiteColor];
+                [button setTitle:@"申请退款" forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont systemFontOfSize:12];
+                [button.layer setBorderWidth:0.5];
+                button.tag = 200+i;
+                button.layer.cornerRadius = 12.5;
+                [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+                [owner.myView addSubview:button];
+            } else {
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
+                NSString *string = [refund_status_displayArray objectAtIndex:i];
+                label.text = string;
+                label.numberOfLines = 0;
+                label.font = [UIFont systemFontOfSize:12];
+                label.textAlignment = NSTextAlignmentLeft;
+                label.textColor = [UIColor darkGrayColor];
+                [owner.myView addSubview:label];
+            }
             
-            
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(240, 75, 60, 32)];
-            [button addTarget:self action:@selector(tuihuo:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-            button.backgroundColor = [UIColor whiteColor];
-            [button setTitle:@"我要退" forState:UIControlStateNormal];
-            [button.layer setMasksToBounds:YES];
-            [button.layer setBorderWidth:1];
-            button.tag = 200+i;
-            button.layer.cornerRadius = 6;
-            [button.layer setBorderColor:[UIColor darkGrayColor].CGColor];
-            [owner.myView addSubview:button];
+           
         
-        } else{
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(220, 75, 130, 32)];
+        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已发货"]){
+            
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
+            [button addTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"确认收货" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            [button.layer setBorderWidth:0.5];
+            button.tag = 200+i;
+            button.layer.cornerRadius = 12.5;
+            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [owner.myView addSubview:button];
+        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"交易成功"]){
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
+            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            [button.layer setBorderWidth:0.5];
+            button.tag = 200+i;
+            button.layer.cornerRadius = 12.5;
+            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [owner.myView addSubview:button];
+        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"]){
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
+//            // NSString *string = [orderStatusDisplay objectAtIndex:i];
+//            label.text = @"已签收";
+//            label.numberOfLines = 0;
+//            label.font = [UIFont systemFontOfSize:12];
+//            label.textAlignment = NSTextAlignmentLeft;
+//            label.textColor = [UIColor darkGrayColor];
+//            [owner.myView addSubview:label];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
+            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            [button.layer setBorderWidth:0.5];
+            button.tag = 200+i;
+            button.layer.cornerRadius = 12.5;
+            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [owner.myView addSubview:button];
+        }
+        
+        
+        else{
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
             if ([string isEqualToString:@"没有退款"] ) {
                 string = @"";
             }
             label.text = string;
+            label.numberOfLines = 0;
+            
             label.font = [UIFont systemFontOfSize:12];
             label.textAlignment = NSTextAlignmentLeft;
             label.textColor = [UIColor darkGrayColor];
@@ -261,9 +344,6 @@
             
             
         }
-        
-        
-        
         [self.myXiangQingView addSubview:owner.myView];
         
     }
@@ -273,9 +353,68 @@
 
 }
 
+
+
+
 #pragma mark -- 退货--
 
-- (void)tuihuo:(UIButton *)button{
+- (void)qianshou:(UIButton *)button{
+    NSLog(@"确认签收");
+    
+ //   192.168.1.31:9000/rest/v1/order/id/confirm_sign ;
+    //  同步post
+    PerDingdanModel *model = [dataArray objectAtIndex:button.tag - 200];
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderID];
+    NSLog(@"url string = %@", string);
+    NSURL *url = [NSURL URLWithString:string];
+    
+    //第二步，创建请求
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    
+//    NSString *str = @"type=focus-c";//设置参数
+//    
+//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+//    
+//    [request setHTTPBody:data];
+    
+    //第三步，连接服务器
+    
+    
+    
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+       UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    if ([[dic objectForKey:@"ok"]boolValue] == YES) {
+        alterView.message = @"签收成功";
+        [self downloadData];
+        
+        
+    } else {
+        alterView.message = @"签收失败";
+    }
+    [alterView show];
+    //[self.navigationController popViewControllerAnimated:YES];
+    
+    
+    
+ //   NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    
+    
+    
+    //NSLog(@"%@",str1);
+    
+}
+- (void)tuihuotuikuan:(UIButton *)button{
+    NSLog(@"退货退款");
+}
+- (void)tuikuan:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);
     //进入退货界面；
     NSInteger i = button.tag - 200;

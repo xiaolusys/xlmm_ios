@@ -287,6 +287,8 @@
     }
     
     
+    
+    
      UILabel *label = (UILabel *)[self.labelArray objectAtIndex:indexPath.row];
     NSLog(@"label = %@ and index.row = %ld", label, (long)indexPath.row);
     label.tag = indexPath.row +100;
@@ -343,7 +345,7 @@
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
 
         //  2015-09-06T16:35:25
-        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
+        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss"; 
         NSDate *date = [formatter dateFromString:string];
         
        // NSLog(@"%@", date);
@@ -365,6 +367,7 @@
         if ([d minute] < 0 || [d second] < 0) {
             shengyushijian = @"00:00";
         }
+#pragma mark 设置倒计时
         UILabel *label = (UILabel *)[self.labelArray objectAtIndex:i];
         label.text = shengyushijian;
     }
