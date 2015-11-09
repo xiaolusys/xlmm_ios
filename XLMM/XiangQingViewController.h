@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 @class DingdanModel;
 
+
+//   http://192.168.1.31:9000/rest/v1/trades/301/details
+//  http://192.168.1.31:9000/rest/v1/trades/217/details
+
+
+
+
 @interface XiangQingViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;

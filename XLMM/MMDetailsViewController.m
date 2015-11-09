@@ -299,7 +299,7 @@
     self.yanseLabel.text = [[dic objectForKey:@"details"] objectForKey:@"color"];
     self.beizhuLabel.text = [[dic objectForKey:@"details"] objectForKey:@"note"];
     NSLog(@"%@", NSStringFromCGRect(self.beizhuLabel.frame));
-    NSLog(@"%lu", (self.beizhuLabel.text.length));
+   // NSLog(@"%lu", (self.beizhuLabel.text.length));
     NSInteger lines = self.beizhuLabel.text.length/23;
     
         self.headViewHeitht.constant = SCREENWIDTH + 150 + 15 * lines;

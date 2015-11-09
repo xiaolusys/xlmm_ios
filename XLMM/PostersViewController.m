@@ -233,6 +233,11 @@ static NSString * ksimpleCell = @"simpleCell";
 //    }
 // 
 
+    
+#pragma mark -- weixin share
+    
+    //修改分享图片，标题， 链接 ， 
+    
   //  kLinkURL = @"http://xiaolu.so/m/18807/";
    //NSString *kLinkTagName = @"xiaolumeimei";
     NSString *shareTitle = [shareDic objectForKey:@"title"];
@@ -240,10 +245,13 @@ static NSString * ksimpleCell = @"simpleCell";
      NSString *kLinkTitle = shareTitle;
     NSString *kLinkDescription = shareDesc;
     
+    
+    
     WXWebpageObject *ext = [WXWebpageObject object];
     NSString *shareLink = [shareDic objectForKey:@"share_link"];
-    ext.webpageUrl = shareLink;
-    
+   // ext.webpageUrl = shareLink;
+    //http://m.xiaolu.so/pages/shangpinxq.html?id=24454
+    ext.webpageUrl = @"http://m.xiaolu.so/pages/shangpinxq.html?id=24454";
     NSLog(@"title = %@", shareTitle);
     NSLog(@"desc = %@", shareDesc);
     NSLog(@"shareLink = %@", shareLink);

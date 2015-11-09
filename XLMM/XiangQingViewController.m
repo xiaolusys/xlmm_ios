@@ -25,6 +25,10 @@
 
 @end
 
+
+//订单详情页
+
+
 @implementation XiangQingViewController{
     NSMutableArray *dataArray;
     UIActivityIndicatorView *activityView;
@@ -187,17 +191,22 @@
 
 - (void)createXiangQing{
     NSUInteger number = dataArray.count;
-    self.myViewHeight.constant = number * 120;
+    self.myViewHeight.constant = number * 90;
     XiangQingView *owner = [XiangQingView new];
     PerDingdanModel *model = nil;
     for (int i = 0; i<number ; i++) {
         
         
         [[NSBundle mainBundle] loadNibNamed:@"XiangQingView" owner:owner options:nil];
-        owner.myView.frame = CGRectMake(0, 0 + 120 * i, SCREENWIDTH, 120);
+        owner.myView.frame = CGRectMake(0, 0 + 90 * i, SCREENWIDTH, 90);
         
         model = [dataArray objectAtIndex:i];
         [owner.frontView sd_setImageWithURL:[NSURL URLWithString:model.urlString]];
+        owner.frontView.layer.masksToBounds = YES;
+        owner.frontView.layer.borderWidth = 0.5;
+        owner.frontView.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;
+        owner.frontView.layer.cornerRadius = 5;
+        
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
         owner.numberLabel.text = [NSString stringWithFormat:@"%@", model.numberString];
