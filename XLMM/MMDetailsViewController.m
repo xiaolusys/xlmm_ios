@@ -22,6 +22,8 @@
 #import "MMSizeChartView.h"
 #import "ChiMaBiaoViewController.h"
 #import "XidiShuomingViewController.h"
+#import "WXApi.h"
+#import "UIImage+UIImageExt.h"
 
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
@@ -143,6 +145,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:self.scrollerView];
     [self.view addSubview:self.backView];
+    [self.view addSubview:self.shareView];
     self.popViewArray = [[NSMutableArray alloc] initWithCapacity:0];
     agentPriceArray = [[NSMutableArray alloc] init];
     salePriceArray = [[NSMutableArray alloc] init];
@@ -1191,5 +1194,100 @@
     sizeVC.sizeArray = normalSkus;
     
     [self.navigationController pushViewController:sizeVC animated:YES];
+}
+- (IBAction)shareClicked:(id)sender {
+
+        NSLog(@"分享");
+        
+        //  http://m.xiaolu.so/rest/v1/share/today
+    
+    NSLog(@"%@", json);
+    
+//        
+//        NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
+//        NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
+//        NSError *shareError = nil;
+//        NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
+//        NSLog(@"shareDic = %@", shareDic);
+//        
+    
+        
+        
+#pragma mark -- weixin share
+        
+        //修改分享图片，标题， 链接 ，
+        
+        //  kLinkURL = @"http://xiaolu.so/m/18807/";
+        //NSString *kLinkTagName = @"xiaolumeimei";
+        NSString *shareTitle = [json objectForKey:@"name"];
+        NSString *shareDesc = [[json objectForKey:@"details"] objectForKey:@"note"];
+        NSString *kLinkTitle = shareTitle;
+        NSString *kLinkDescription = shareDesc;
+        
+        
+        
+        WXWebpageObject *ext = [WXWebpageObject object];
+        NSString *shareLink = [NSString stringWithFormat:@"http://m.xiaolu.so/pages/shangpinxq.html?id=%@", [json objectForKey:@"id"]];
+    
+    
+        ext.webpageUrl = shareLink;
+        //  http://m.xiaolu.so/pages/shangpinxq.html?id=24454
+        NSLog(@"title = %@", shareTitle);
+        NSLog(@"desc = %@", shareDesc);
+        NSLog(@"shareLink = %@", shareLink);
+        
+        
+        
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.title = kLinkTitle;
+        message.description = kLinkDescription;
+        message.mediaObject = ext;
+        message.messageExt = nil;
+        message.messageAction = nil;
+        message.mediaTagName = nil;
+        NSString *imageUrlString = [json objectForKey:@"head_img"];
+        NSLog(@"imageUrl = %@", imageUrlString);
+        NSData *imageData = nil;
+        
+        do {
+            NSLog(@"下载图片");
+            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlString]];
+            if (imageData != nil) {
+                
+                NSLog(@"图片下载成功");
+                break;
+            }
+            NSLog(@"图片下载失败，重新下载！");
+            
+        } while (YES);
+        
+        UIImage *image = [UIImage imageWithData:imageData];
+    NSLog(@"image = %@", image);
+    
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(100, 100)];
+    NSLog(@"image = %@", image);
+    NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+    UIImage *newImage = [UIImage imageWithData:imagedata];
+    NSLog(@"newImage = %@", newImage);
+    
+        [message setThumbImage:newImage];
+    
+        
+        
+        
+        
+        
+        
+        SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+        req.bText = NO;
+        req.scene = 1;
+        if (/* DISABLES CODE */ (NO))
+            req.text = nil;
+        else
+            req.message = message;
+        
+        [WXApi sendReq:req];
+        
+
 }
 @end

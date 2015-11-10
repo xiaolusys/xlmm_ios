@@ -583,6 +583,7 @@
 		32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C11BF1BD7F00999ECA /* XidiShuomingViewController.xib */; };
 		32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */; };
 		32DE21C71BF1DE2A00999ECA /* shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C51BF1DE2A00999ECA /* shareIcon.png */; };
+		32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
@@ -1093,6 +1094,8 @@
 		32DE21C11BF1BD7F00999ECA /* XidiShuomingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XidiShuomingViewController.xib; sourceTree = "<group>"; };
 		32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftArrowIcon.png; sourceTree = "<group>"; };
 		32DE21C51BF1DE2A00999ECA /* shareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareIcon.png; sourceTree = "<group>"; };
+		32DE21C81BF1E62600999ECA /* UIImage+UIImageExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageExt.h"; sourceTree = "<group>"; };
+		32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageExt.m"; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
 		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
@@ -1970,6 +1973,8 @@
 				325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */,
 				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
 				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
+				32DE21C81BF1E62600999ECA /* UIImage+UIImageExt.h */,
+				32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2516,6 +2521,7 @@
 				32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
+				32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */,
 				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */,

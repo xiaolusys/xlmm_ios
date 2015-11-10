@@ -64,5 +64,7 @@
 - (IBAction)sizeViewBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *canshulabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuViewHeight;
+- (IBAction)shareClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 
 @end

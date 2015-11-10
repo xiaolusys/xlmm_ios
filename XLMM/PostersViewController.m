@@ -249,9 +249,9 @@ static NSString * ksimpleCell = @"simpleCell";
     
     WXWebpageObject *ext = [WXWebpageObject object];
     NSString *shareLink = [shareDic objectForKey:@"share_link"];
-   // ext.webpageUrl = shareLink;
+    ext.webpageUrl = shareLink;
     //http://m.xiaolu.so/pages/shangpinxq.html?id=24454
-    ext.webpageUrl = @"http://m.xiaolu.so/pages/shangpinxq.html?id=24454";
+   // ext.webpageUrl = @"http://m.xiaolu.so/pages/shangpinxq.html?id=24454";
     NSLog(@"title = %@", shareTitle);
     NSLog(@"desc = %@", shareDesc);
     NSLog(@"shareLink = %@", shareLink);
