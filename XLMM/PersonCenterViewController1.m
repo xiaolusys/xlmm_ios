@@ -19,6 +19,8 @@
     NSTimer *theTimer;
     NSString *shengyushijian;
     UILabel *shengyuTimeLabel[10];
+    NSString *createdString;
+    
 }
 
 @property (nonatomic ,strong)NSArray *dataArray;
@@ -306,6 +308,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
     NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
+    xiangqingVC.createString = createdString;
     [self.navigationController pushViewController:xiangqingVC animated:YES];
     
     
@@ -329,18 +332,19 @@
         range = [string rangeOfString:@"-"];
         [string replaceCharactersInRange:range withString:@"/"];
         
-      
         
       //  NSLog(@"string  = %@", string);
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
 
         //  2015-09-06T16:35:25
         formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
+        string = [NSMutableString stringWithString: @"2015/11/09 18:55:55"];
         NSDate *date = [formatter dateFromString:string];
-        
+        createdString = string;
+
        // NSLog(@"%@", date);
         
-        NSDate *endDate = [NSDate dateWithTimeInterval:20*60 sinceDate:date ];
+        NSDate *endDate = [NSDate dateWithTimeInterval:20*60 sinceDate:date];
       //  NSLog(@"endDate = %@",endDate);
         
       

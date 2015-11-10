@@ -331,68 +331,99 @@
             NSLog(@"0000");
         } else if (buttonIndex == 1)
         {
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+          //  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
             
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
             NSLog(@"urlstring = %@", urlString);
             
             
-            if ([self.status isEqual:@"已付款"]) {
-                self.refund_or_pro = 0;
-                
-            } else if ([self.status isEqual:@"已发货"]){
-                self.refund_or_pro = 1;
-            }
-            NSLog(@"1111");
-
-            NSDictionary *parameters = @{@"id":self.oid,
-                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-                                         @"num":self.number.text,
-                                         @"sum_price":self.myTextField2.text,
-                                         @"description":self.myTextView.text
-                                         };
-//            NSDictionary *parameters = @{@"id":self.oid,
-//                                         @"tid":self.tid,
-//                                         @"refund_or_pro":[NSNumber numberWithInt:(int)self.refund_or_pro],
+            NSURL *url = [NSURL URLWithString:urlString];
+            
+            //第二步，创建请求
+            
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+            
+            [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+            
+       //     NSDictionary *parameters = @{@"id":self.oid,
+//                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
 //                                         @"num":self.number.text,
 //                                         @"sum_price":self.myTextField2.text,
-//                                         @"feedback":self.myTextView.text,
+//                                         @"description":self.myTextView.text
+//                                         };
+            //[NSString stringWithFormat:@"",]
+            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@",self.oid, [NSNumber numberWithInt:(int)self.reasonnumber], self.number.text, self.myTextField2.text, self.myTextView.text];//设置参数
+            
+            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+            
+            [request setHTTPBody:data];
+            
+            //第三步，连接服务器
+            
+            
+            
+            NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+            NSError *error = nil;
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:&error];
+            if (error != nil) {
+                NSLog(@"%@", error);
+            } else{
+                NSLog(@"dic = %@", dic);
+            }
+            
+            
+            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }
+            
+            NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+            
+            
+            
+            NSLog(@"000000%@",str1);
+//
+//            NSDictionary *parameters = @{@"id":self.oid,
 //                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-//                                         @"modify":@0};
-            
-            NSLog(@"parameters = %@", parameters);
-            
-            [manager POST:urlString parameters:parameters
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      
-                      NSLog(@"JSON: %@", responseObject);
-                      
-                      NSDictionary *dic = responseObject;
-                      NSString * result = [dic objectForKey:@"res"];
-                      if ([result isEqualToString:@"ok"]) {
-                          NSLog(@"申请成功了， 恭喜你哦");
-                          
-                          NSArray *viewControllers = self.navigationController.viewControllers;
-                          
-                          UIViewController *controller = [viewControllers objectAtIndex:viewControllers.count-3];
-                          
-                          [self.navigationController popToViewController:controller animated:YES];
-                          
-                          
-                      }
-                      NSLog(@"perration = %@", operation);
-                      
-                  }
-             
-             // xd15091555f787581f093
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      
-                      NSLog(@"Error: %@", error);
-                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-                      NSLog(@"perration = %@", operation);
-                      
-                      
-                  }];
+//                                         @"num":self.number.text,
+//                                         @"sum_price":self.myTextField2.text,
+//                                         @"description":self.myTextView.text
+//                                         };
+//
+//            
+//            NSLog(@"parameters = %@", parameters);
+//            
+//            [manager POST:urlString parameters:parameters
+//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                      
+//                      NSLog(@"JSON: %@", responseObject);
+//                      
+//                      NSDictionary *dic = responseObject;
+//                      NSString * result = [dic objectForKey:@"res"];
+//                      if ([result isEqualToString:@"ok"]) {
+//                          NSLog(@"申请成功了， 恭喜你哦");
+//                          
+//                          NSArray *viewControllers = self.navigationController.viewControllers;
+//                          
+//                          UIViewController *controller = [viewControllers objectAtIndex:viewControllers.count-3];
+//                          
+//                          [self.navigationController popToViewController:controller animated:YES];
+//                          
+//                          
+//                      }
+//                      NSLog(@"perration = %@", operation);
+//                      
+//                  }
+//             
+//             // xd15091555f787581f093
+//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                      
+//                      NSLog(@"Error: %@", error);
+//                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
+//                      NSLog(@"perration = %@", operation);
+//                      
+//                      
+//                  }];
             
         }
     }

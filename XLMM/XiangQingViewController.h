@@ -59,6 +59,7 @@
 @property (nonatomic, copy) NSString *urlString;
 
 @property (nonatomic, strong)DingdanModel *dingdanModel;
+@property (nonatomic, copy) NSString *createString;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *headdingdanzhuangtai;

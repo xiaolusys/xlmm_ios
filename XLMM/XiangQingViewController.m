@@ -41,6 +41,7 @@
     NSMutableArray *refund_status_displayArray;// 退款状态描述
     NSMutableArray *orderStatusDisplay;
     NSMutableArray *orderStatus;
+    NSTimer *theTimer;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -126,6 +127,11 @@
         NSLog(@"待支付状态订单订单");
         self.quxiaoBtn.hidden = NO;
         self.buyBtn.hidden = NO;
+        
+        
+    //    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(aa) userInfo:nil repeats:YES];
+        
+        
     } else {
         NSLog(@"其他状态订单");
         self.quxiaoBtn.hidden = YES;
@@ -227,7 +233,7 @@
     NSLog(@"oids = %@", oidArray);
     NSLog(@"tid = %@", tid);
     [self createXiangQing];
-    NSLog(@"finished!");
+
     
 }
 
@@ -306,14 +312,6 @@
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
         } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"]){
-//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
-//            // NSString *string = [orderStatusDisplay objectAtIndex:i];
-//            label.text = @"已签收";
-//            label.numberOfLines = 0;
-//            label.font = [UIFont systemFontOfSize:12];
-//            label.textAlignment = NSTextAlignmentLeft;
-//            label.textColor = [UIColor darkGrayColor];
-//            [owner.myView addSubview:label];
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
@@ -332,7 +330,7 @@
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
             if ([string isEqualToString:@"没有退款"] ) {
-                string = @"";
+               // string = @"";
             }
             label.text = string;
             label.numberOfLines = 0;
@@ -392,14 +390,16 @@
        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     if ([[dic objectForKey:@"ok"]boolValue] == YES) {
         alterView.message = @"签收成功";
-
+        [button setTitle:@"退货退款" forState:UIControlStateNormal];
+        [button removeTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
         
         
     } else {
         alterView.message = @"签收失败";
     }
     [alterView show];
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
     
     
  
