@@ -20,6 +20,9 @@
 #import "LiJiGMViewController1.h"
 #import "ArrowView.h"
 #import "MMSizeChartView.h"
+#import "ChiMaBiaoViewController.h"
+#import "XidiShuomingViewController.h"
+
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
@@ -111,7 +114,7 @@
             NSLog(@"%ld", (long)goodsCount);
             NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
             countLabel.text = strNum;
-            countLabel.frame = CGRectMake(76, 0, 12, 12);
+            countLabel.frame = CGRectMake(88, SCREENHEIGHT - 48, 12, 12);
             countLabel.layer.masksToBounds = YES;
             countLabel.layer.cornerRadius = 6;
             countLabel.font = [UIFont systemFontOfSize:6];
@@ -163,7 +166,7 @@
     
     self.bottomImageViewHeight.constant = SCREENWIDTH;
     self.headViewwidth.constant = SCREENWIDTH;
-    self.headViewHeitht.constant = SCREENWIDTH + 175;
+    self.headViewHeitht.constant = SCREENWIDTH + 108;
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -295,21 +298,28 @@
     saleTime = [dic objectForKey:@"sale_time"];
     offShelfTime = [dic objectForKey:@"offshelf_time"];
   [frontView removeFromSuperview];
-    self.caizhiLabel.text = [[dic objectForKey:@"details"] objectForKey:@"material"];
-    self.yanseLabel.text = [[dic objectForKey:@"details"] objectForKey:@"color"];
-    self.beizhuLabel.text = [[dic objectForKey:@"details"] objectForKey:@"note"];
-    NSLog(@"%@", NSStringFromCGRect(self.beizhuLabel.frame));
-   // NSLog(@"%lu", (self.beizhuLabel.text.length));
-    NSInteger lines = self.beizhuLabel.text.length/23;
-    
-        self.headViewHeitht.constant = SCREENWIDTH + 150 + 15 * lines;
-        self.bottomHeight.constant = 150 + 15 * lines;
-    
-    
-    self.xidishuomingLabel.text = [[dic objectForKey:@"details"] objectForKey:@"wash_instructions"];
-    self.xidishuomingLabel.hidden = YES;
+    if ([[details objectForKey:@"material"] isKindOfClass:[NSString class]]) {
+         self.caizhiLabel.text = [[dic objectForKey:@"details"] objectForKey:@"material"];
+    } else {
+         self.caizhiLabel.text = @"无";
+    }
+    if ([[details objectForKey:@"color"] isKindOfClass:[NSString class]]) {
+         self.yanseLabel.text = [[dic objectForKey:@"details"] objectForKey:@"color"];
+    } else {
+        self.yanseLabel.text = @"无";
+    }
+    if ([[details objectForKey:@"note"] isKindOfClass:[NSString class]]) {
+        self.canshulabel.text = [details objectForKey:@"note"];
+        NSString *string = [details objectForKey:@"note"];
+        NSInteger length = string.length;
+        self.canshuViewHeight.constant = 140 + length/16*15;
+        
+    } else{
+        self.canshulabel.text = @"无";
+    }
+   
+
     [self createSizeView];
-    [self createDetailsView];
     [self createContentView];
     
     cartsButton.hidden = NO;
@@ -321,6 +331,9 @@
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(15, SCREENHEIGHT - 48, 40, 40)];
     
     cartsButton.layer.cornerRadius = 20;
+    cartsButton.layer.borderWidth = 1;
+    cartsButton.layer.borderColor = [UIColor colorWithR:38 G:38 B:46 alpha:1].CGColor;
+    
     [self.view addSubview:cartsButton];
   
     cartsButton.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
@@ -338,17 +351,17 @@
     [cartsButton addSubview:shengyutimeLabel];
     
     UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gouwucheicon2.png"]];
-    imageview.frame = CGRectMake(6, 8, 20, 20);
+    imageview.frame = CGRectMake(10, 10, 20, 20);
     [cartsButton addSubview:imageview];
     [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view bringSubviewToFront:cartsButton];
     view0 = [[UIView alloc] initWithFrame:CGRectMake(26, 6, 4, 4)];
-    view0.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    view0.backgroundColor = [UIColor clearColor];
     view0.userInteractionEnabled = NO;
     view0.layer.cornerRadius = 2;
      [cartsButton addSubview:view0];
 
-    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 40, 16, 16)];
     countLabel.layer.cornerRadius = 9;
     countLabel.userInteractionEnabled = NO;
     countLabel.font = [UIFont systemFontOfSize:10];
@@ -357,8 +370,8 @@
     countLabel.text = @"0";
     countLabel.font = [UIFont systemFontOfSize:14];
     countLabel.hidden = YES;
-    [cartsButton addSubview:countLabel];
-    [cartsButton bringSubviewToFront:countLabel];
+    [self.view addSubview:countLabel];
+    //[cartsButton bringSubviewToFront:countLabel];
     
     cartsButton.hidden = YES;
 }
@@ -515,10 +528,7 @@
     }
 }
 
-- (void)createDetailsView{
 
-   
-}
 // 可选尺码。。。
 - (void)createSizeView{
     int sizeCount = (int)normalSkus.count;
@@ -526,17 +536,17 @@
     if (sizeCount%3 == 0) {
         height = 8;
     }
-    self.sizeViewHeight.constant =  15 + 50*(int)(sizeCount/3)+height;
+    self.sizeViewHeight.constant =  30 + 15 + 50*(int)(sizeCount/3)+height;
     NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
     CGFloat buttonwidth = (SCREENWIDTH-60)/3;
     for (int i = 0; i<sizeCount; i++) {
         NSLog(@"%D", i);
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 15 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
-        [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
+//        [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
        // button settit
-        button.titleLabel.font = [UIFont systemFontOfSize:12];
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
         button.layer.cornerRadius = 3;
@@ -566,11 +576,11 @@
 //        [self createInfoViewWithFrame:rect];
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
-            [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
+            [button setBackgroundColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1]];
             button.userInteractionEnabled = NO;
         } else {
             if ([[dic objectForKey:@"is_saleout"]boolValue]) {
-                [button setBackgroundColor:[UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]];
+                [button setBackgroundColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1]];
                 button.userInteractionEnabled = NO;
             } else {
                 theNumberOfSizeCanSelected++;
@@ -601,8 +611,8 @@
             
             
             if (![[dic objectForKey:@"is_saleout"]boolValue]) {
-                [button.layer setBorderColor:[UIColor redColor].CGColor];
-                [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
+                [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
                 skusID = [[normalSkus objectAtIndex:i] objectForKey:@"id"];
                 NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             }
@@ -648,163 +658,155 @@
 }
 
 - (void)createSizeTable{
-    NSInteger width = 0;
-    NSInteger height;
-    mutableSize = [[NSMutableArray alloc] initWithCapacity:5];
-    mutableSizeName = [[NSMutableArray alloc] initWithCapacity:5];
-    if (normalSkus.count != 0) {
-        
-        
-        height = normalSkus.count;
-        self.sizeTableHeight.constant = (height + 1)*31;
-    }
-    for (NSDictionary *dic in normalSkus) {
-        // NSLog(@"dic = %@", dic);
-        
-        id object = [[dic objectForKey:@"size_of_sku"] objectForKey:@"result"];
-        if ([object isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dic2 = (NSDictionary *)object;
-            [mutableSize addObject:dic2];
-            [mutableSizeName addObject:[dic objectForKey:@"name"]];
-            NSInteger result = dic2.count;
-            NSInteger max = 10;
-            if (result > max) {
-                result = max;
-            }
-            
-            width = result;
-            
-            NSLog(@"result = %ld", (long)result);
-        } else {
-            self.sizeTableHeight.constant = 0;
+    
+       self.sizeTableHeight.constant = 0;
 
-        }
-    
-    }
-   labelWidth = SCREENWIDTH / (width + 1);
-    CGFloat labelHeight = 30.0;
-    NSArray *keysArray;
-    if (mutableSize.count != 0) {
-        NSDictionary *result = [mutableSize objectAtIndex:0];
-        keysArray = [result allKeys];
-    }
-    NSLog(@"keysArray = %@", keysArray);
-    orderKeyArray  = [[NSMutableArray alloc] init];
-    for (NSString *key1 in allSizeKeys) {
-        for (NSString *key2 in keysArray) {
-            if ([key1 isEqualToString:key2]) {
-                [orderKeyArray addObject:key2];
-            }
-        }
-    }
-    NSLog(@"orderKey = %@", orderKeyArray);
-        
-    
-    NSLog(@"mutable = %@", mutableSize);
-    
-    NSLog(@"mutable = %@", mutableSizeName);
-  
-    
-    
-    
-    UIView *headview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 31)];
-    [self.sizeTableView addSubview:headview];
-    
-    
-    headview.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, labelWidth, labelHeight)];
-    //[label sizeToFit];
-  //  label.backgroundColor = [UIColor redColor];
-    label.text = @"尺码";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:12];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.numberOfLines = 0;
-    [headview addSubview:label];
-    for (int i = 0; i< width; i++) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelWidth * i + labelWidth, 0, labelWidth, labelHeight)];
-        //[label sizeToFit];
-        //  label.backgroundColor = [UIColor redColor];
-        label.text = [orderKeyArray objectAtIndex:i];
-        label.textColor = [UIColor whiteColor];
-        label.font = [UIFont systemFontOfSize:12];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.numberOfLines = 0;
-        
-        [headview addSubview:label];
-    }
- //   CGFloat sizeViewWidth;
-    CGFloat sizeViewHeight = 31;
-    
-    
-    for (int i = 0; i < mutableSize.count; i++) {
-        UIView *sizeView = [[UIView alloc] initWithFrame:CGRectMake(0, sizeViewHeight *i + sizeViewHeight, SCREENWIDTH, sizeViewHeight)];
-        sizeView.tag = 600 + i;
-        sizeView.backgroundColor = [UIColor colorWithR:240 G:240 B:241 alpha:1];
-        
-        if (i == mutableSize.count -1) {
-            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeViewHeight - 1, SCREENWIDTH, 1)];
-            line.backgroundColor = [UIColor colorWithR:222 G:223 B:223 alpha:1];
-            [sizeView addSubview:line];
-        } else {
-            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(8, sizeViewHeight - 1, SCREENWIDTH - 16, 1)];
-            line.backgroundColor = [UIColor colorWithR:222 G:223 B:223 alpha:1];
-            [sizeView addSubview:line];
-        }
-       
-        
-        
-        [self.sizeTableView addSubview:sizeView];
-    }
-    for (int i = 0; i < mutableSize.count; i++) {
-        UIView *sizeView = [self.sizeTableView viewWithTag:(i + 600)];
-        
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, labelWidth, labelHeight)];
-        //[label sizeToFit];
-        //  label.backgroundColor = [UIColor redColor];
-        label.text = [mutableSizeName objectAtIndex:i];
-        label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
-        label.font = [UIFont systemFontOfSize:12];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.numberOfLines = 0;
-        [sizeView addSubview:label];
-        for (int j = 0; j< width; j++) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelWidth * j + labelWidth, 0, labelWidth, labelHeight)];
-            //[label sizeToFit];
-            //  label.backgroundColor = [UIColor redColor];
-            label.text = [[mutableSize objectAtIndex:i] objectForKey:[orderKeyArray objectAtIndex:j]];
-            label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
-            label.font = [UIFont systemFontOfSize:9];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.numberOfLines = 0;
-            
-            [sizeView addSubview:label];
-        }
-        
-        
-    }
-    
-//    for (int i = 0; i < width; i ++) {
-//        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-//        button.frame = CGRectMake(labelWidth + labelWidth * i, 0, labelWidth, 280);
-//    
-//        button.tag = 8000 + i;
-//        [button addTarget:self action:@selector(showSizeDetails:) forControlEvents:UIControlEventTouchUpInside];
+//    NSInteger width = 0;
+//    NSInteger height;
+//    mutableSize = [[NSMutableArray alloc] initWithCapacity:5];
+//    mutableSizeName = [[NSMutableArray alloc] initWithCapacity:5];
+//    if (normalSkus.count != 0) {
 //        
-//        [self.sizeTableView addSubview:button];
+//        
+//        height = normalSkus.count;
 //    }
-    
-    
-    
-
- 
-    
-   
-    
-  
-    
-    
+//    for (NSDictionary *dic in normalSkus) {
+//        // NSLog(@"dic = %@", dic);
+//        
+//        id object = [[dic objectForKey:@"size_of_sku"] objectForKey:@"result"];
+//        if ([object isKindOfClass:[NSDictionary class]]) {
+//            NSDictionary *dic2 = (NSDictionary *)object;
+//            [mutableSize addObject:dic2];
+//            [mutableSizeName addObject:[dic objectForKey:@"name"]];
+//            NSInteger result = dic2.count;
+//            NSInteger max = 10;
+//            if (result > max) {
+//                result = max;
+//            }
+//            
+//            width = result;
+//            
+//            NSLog(@"result = %ld", (long)result);
+//        } else {
+//            self.sizeTableHeight.constant = 0;
+//
+//        }
+//    
+//    }
+//   labelWidth = SCREENWIDTH / (width + 1);
+//    CGFloat labelHeight = 30.0;
+//    NSArray *keysArray;
+//    if (mutableSize.count != 0) {
+//        NSDictionary *result = [mutableSize objectAtIndex:0];
+//        keysArray = [result allKeys];
+//    }
+//    NSLog(@"keysArray = %@", keysArray);
+//    orderKeyArray  = [[NSMutableArray alloc] init];
+//    for (NSString *key1 in allSizeKeys) {
+//        for (NSString *key2 in keysArray) {
+//            if ([key1 isEqualToString:key2]) {
+//                [orderKeyArray addObject:key2];
+//            }
+//        }
+//    }
+//    NSLog(@"orderKey = %@", orderKeyArray);
+//        
+//    
+//    NSLog(@"mutable = %@", mutableSize);
+//    
+//    NSLog(@"mutable = %@", mutableSizeName);
+//  
+//    
+//    
+//    
+//    UIView *headview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 31)];
+//    [self.sizeTableView addSubview:headview];
+//    
+//    
+//    headview.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, labelWidth, labelHeight)];
+//    //[label sizeToFit];
+//  //  label.backgroundColor = [UIColor redColor];
+//    label.text = @"尺码";
+//    label.textColor = [UIColor whiteColor];
+//    label.font = [UIFont systemFontOfSize:12];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.numberOfLines = 0;
+//    [headview addSubview:label];
+//    for (int i = 0; i< width; i++) {
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelWidth * i + labelWidth, 0, labelWidth, labelHeight)];
+//        //[label sizeToFit];
+//        //  label.backgroundColor = [UIColor redColor];
+//        label.text = [orderKeyArray objectAtIndex:i];
+//        label.textColor = [UIColor whiteColor];
+//        label.font = [UIFont systemFontOfSize:12];
+//        label.textAlignment = NSTextAlignmentCenter;
+//        label.numberOfLines = 0;
+//        
+//        [headview addSubview:label];
+//    }
+// //   CGFloat sizeViewWidth;
+//    CGFloat sizeViewHeight = 31;
+//    
+//    
+//    for (int i = 0; i < mutableSize.count; i++) {
+//        UIView *sizeView = [[UIView alloc] initWithFrame:CGRectMake(0, sizeViewHeight *i + sizeViewHeight, SCREENWIDTH, sizeViewHeight)];
+//        sizeView.tag = 600 + i;
+//        sizeView.backgroundColor = [UIColor colorWithR:240 G:240 B:241 alpha:1];
+//        
+//        if (i == mutableSize.count -1) {
+//            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeViewHeight - 1, SCREENWIDTH, 1)];
+//            line.backgroundColor = [UIColor colorWithR:222 G:223 B:223 alpha:1];
+//            [sizeView addSubview:line];
+//        } else {
+//            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(8, sizeViewHeight - 1, SCREENWIDTH - 16, 1)];
+//            line.backgroundColor = [UIColor colorWithR:222 G:223 B:223 alpha:1];
+//            [sizeView addSubview:line];
+//        }
+//       
+//        
+//        
+//        [self.sizeTableView addSubview:sizeView];
+//    }
+//    for (int i = 0; i < mutableSize.count; i++) {
+//        UIView *sizeView = [self.sizeTableView viewWithTag:(i + 600)];
+//        
+//        
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, labelWidth, labelHeight)];
+//        //[label sizeToFit];
+//        //  label.backgroundColor = [UIColor redColor];
+//        label.text = [mutableSizeName objectAtIndex:i];
+//        label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+//        label.font = [UIFont systemFontOfSize:12];
+//        label.textAlignment = NSTextAlignmentCenter;
+//        label.numberOfLines = 0;
+//        [sizeView addSubview:label];
+//        for (int j = 0; j< width; j++) {
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(labelWidth * j + labelWidth, 0, labelWidth, labelHeight)];
+//            //[label sizeToFit];
+//            //  label.backgroundColor = [UIColor redColor];
+//            label.text = [[mutableSize objectAtIndex:i] objectForKey:[orderKeyArray objectAtIndex:j]];
+//            label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+//            label.font = [UIFont systemFontOfSize:9];
+//            label.textAlignment = NSTextAlignmentCenter;
+//            label.numberOfLines = 0;
+//            
+//            [sizeView addSubview:label];
+//        }
+//        
+//        
+//    }
+//    
+////    for (int i = 0; i < width; i ++) {
+////        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+////        button.frame = CGRectMake(labelWidth + labelWidth * i, 0, labelWidth, 280);
+////    
+////        button.tag = 8000 + i;
+////        [button addTarget:self action:@selector(showSizeDetails:) forControlEvents:UIControlEventTouchUpInside];
+////        
+////        [self.sizeTableView addSubview:button];
+////    }
+//    
 }
 
 - (void)showSizeDetails:(UIButton *)button{
@@ -862,8 +864,8 @@
     for (int i = 100; i<100+normalSkus.count; i++) {
         
         if (button.tag == i) {
-            [button.layer setBorderColor:[UIColor redColor].CGColor];
-            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
+            [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
             NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
 //            ArrowView *popView = [self.popViewArray objectAtIndex:i - 100];
@@ -1173,17 +1175,21 @@
 }
 - (IBAction)washshuomingClicked:(id)sender {
     NSLog(@"查看洗涤说明");
+    XidiShuomingViewController *xdVC = [[XidiShuomingViewController alloc] initWithNibName:@"XidiShuomingViewController" bundle:nil];
     
-    static BOOL isShow = YES;
-    if (isShow) {
-        isShow = NO;
-        self.canshuHeight.constant = 300;
-        self.xidishuomingLabel.hidden = NO;
-        
-    } else {
-        isShow = YES;
-        self.canshuHeight.constant = 256;
-        self.xidishuomingLabel.hidden = YES;
-    }
+    
+    [self.navigationController pushViewController:xdVC animated:YES];
+    
+  
+}
+- (IBAction)sizeViewBtnClicked:(id)sender {
+    
+    NSLog(@"尺码表");
+    
+    ChiMaBiaoViewController *sizeVC = [[ChiMaBiaoViewController alloc] initWithNibName:@"ChiMaBiaoViewController" bundle:nil];
+    
+    sizeVC.sizeArray = normalSkus;
+    
+    [self.navigationController pushViewController:sizeVC animated:YES];
 }
 @end

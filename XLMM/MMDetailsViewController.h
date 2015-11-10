@@ -53,7 +53,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuHeight;
-@property (weak, nonatomic) IBOutlet UILabel *beizhuLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftWidth;
 @property (weak, nonatomic) IBOutlet UILabel *xidishuomingLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *line1Height;
@@ -62,5 +61,8 @@
 @property (weak, nonatomic) IBOutlet UIView *line4Height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *line5Height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *line6height;
+- (IBAction)sizeViewBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *canshulabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *canshuViewHeight;
 
 @end

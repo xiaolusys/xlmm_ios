@@ -65,7 +65,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
     if (self.navigationController.navigationBarHidden) {
         NSLog(@"导航栏被隐藏了");
     } else {
@@ -214,32 +214,45 @@
 }
 
 - (void)createCartsView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(2, SCREENHEIGHT - 166, 44, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, SCREENHEIGHT - 156, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
-    view.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    view.layer.cornerRadius = 22;
+    view.layer.borderWidth = 1;
+    view.layer.borderColor = [UIColor colorWithR:38 G:38 B:46 alpha:1].CGColor;
+    
     
     UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
     [button addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundImage:[UIImage imageNamed:@"icon-gouwuche.png"] forState:UIControlStateNormal];
     [view addSubview:button];
-    
-    UIView *litleView = [[UIView alloc] initWithFrame:CGRectMake(22, 6, 16, 16)];
-    litleView.layer.cornerRadius = 8;
-    litleView.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
-    litleView.userInteractionEnabled = NO;
-    litleView.alpha = 0.7;
-    
-    [button addSubview:litleView];
-    label = [[UILabel alloc] initWithFrame:litleView.bounds];
-    label.text = @"12";
-    label.font = [UIFont boldSystemFontOfSize:12.0f];
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    [litleView addSubview:label];
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
+    iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
+    iconView.userInteractionEnabled = NO;
+    [button addSubview:iconView];
     
     
-    [self setLabelNumber];
+    
+    
+    
+    
+//    
+//    UIView *litleView = [[UIView alloc] initWithFrame:CGRectMake(22, 6, 16, 16)];
+//    litleView.layer.cornerRadius = 8;
+//    litleView.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
+//    litleView.userInteractionEnabled = NO;
+//    litleView.alpha = 0.7;
+//    
+//    [button addSubview:litleView];
+//    label = [[UILabel alloc] initWithFrame:litleView.bounds];
+//    label.text = @"12";
+//    label.font = [UIFont boldSystemFontOfSize:12.0f];
+//    label.textColor = [UIColor whiteColor];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    [litleView addSubview:label];
+//    
+//    
+//    [self setLabelNumber];
     
     //  http://m.xiaolu.so/rest/v1/carts/show_carts_num
   
@@ -456,7 +469,7 @@
     self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(2, SCREENHEIGHT - 122, 44, 44);
+    cartView.frame = CGRectMake(15, SCREENHEIGHT - 112, 44, 44);
 }
 
 - (void)showNavigation{
@@ -464,7 +477,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156, 44, 44);
 }
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc{

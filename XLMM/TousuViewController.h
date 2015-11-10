@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *tousuTextView;
 @property (weak, nonatomic) IBOutlet UILabel *tipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *tijiaoButton;
 
 - (IBAction)tijiaoClicked:(id)sender;
 

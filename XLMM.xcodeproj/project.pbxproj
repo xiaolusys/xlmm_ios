@@ -575,6 +575,14 @@
 		32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */; };
 		32D876311BB6C07B00D0C30F /* yhq_not_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */; };
 		32D876321BB6C07B00D0C30F /* yhq_valid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D876301BB6C07B00D0C30F /* yhq_valid.jpg */; };
+		32DE21B81BF184A200999ECA /* childIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21B61BF184A200999ECA /* childIcon.png */; };
+		32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21B71BF184A200999ECA /* ladyIcon.png */; };
+		32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE21BB1BF1BD5E00999ECA /* ChiMaBiaoViewController.m */; };
+		32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21BC1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib */; };
+		32DE21C21BF1BD7F00999ECA /* XidiShuomingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE21C01BF1BD7F00999ECA /* XidiShuomingViewController.m */; };
+		32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C11BF1BD7F00999ECA /* XidiShuomingViewController.xib */; };
+		32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */; };
+		32DE21C71BF1DE2A00999ECA /* shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21C51BF1DE2A00999ECA /* shareIcon.png */; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
@@ -1075,6 +1083,16 @@
 		32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ChangeGray.m"; sourceTree = "<group>"; };
 		32D8762F1BB6C07B00D0C30F /* yhq_not_valid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yhq_not_valid.jpg; sourceTree = "<group>"; };
 		32D876301BB6C07B00D0C30F /* yhq_valid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yhq_valid.jpg; sourceTree = "<group>"; };
+		32DE21B61BF184A200999ECA /* childIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childIcon.png; sourceTree = "<group>"; };
+		32DE21B71BF184A200999ECA /* ladyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladyIcon.png; sourceTree = "<group>"; };
+		32DE21BA1BF1BD5E00999ECA /* ChiMaBiaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChiMaBiaoViewController.h; sourceTree = "<group>"; };
+		32DE21BB1BF1BD5E00999ECA /* ChiMaBiaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChiMaBiaoViewController.m; sourceTree = "<group>"; };
+		32DE21BC1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChiMaBiaoViewController.xib; sourceTree = "<group>"; };
+		32DE21BF1BF1BD7F00999ECA /* XidiShuomingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XidiShuomingViewController.h; sourceTree = "<group>"; };
+		32DE21C01BF1BD7F00999ECA /* XidiShuomingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XidiShuomingViewController.m; sourceTree = "<group>"; };
+		32DE21C11BF1BD7F00999ECA /* XidiShuomingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XidiShuomingViewController.xib; sourceTree = "<group>"; };
+		32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftArrowIcon.png; sourceTree = "<group>"; };
+		32DE21C51BF1DE2A00999ECA /* shareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareIcon.png; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
 		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
@@ -1208,6 +1226,10 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */,
+				32DE21C51BF1DE2A00999ECA /* shareIcon.png */,
+				32DE21B61BF184A200999ECA /* childIcon.png */,
+				32DE21B71BF184A200999ECA /* ladyIcon.png */,
 				32703F231BEB60D3002AFC6D /* Icon-29@3x.png */,
 				32703F241BEB60D3002AFC6D /* Icon-60@3x.png */,
 				32703F1F1BEB5EB5002AFC6D /* icon@3x.png */,
@@ -1844,6 +1866,12 @@
 				32151BF61B96CFD4003569D7 /* MMDetailsViewController.h */,
 				32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */,
 				32151BF81B96CFD4003569D7 /* MMDetailsViewController.xib */,
+				32DE21BA1BF1BD5E00999ECA /* ChiMaBiaoViewController.h */,
+				32DE21BB1BF1BD5E00999ECA /* ChiMaBiaoViewController.m */,
+				32DE21BC1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib */,
+				32DE21BF1BF1BD7F00999ECA /* XidiShuomingViewController.h */,
+				32DE21C01BF1BD7F00999ECA /* XidiShuomingViewController.m */,
+				32DE21C11BF1BD7F00999ECA /* XidiShuomingViewController.xib */,
 				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
@@ -2125,10 +2153,12 @@
 				32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
+				32DE21B81BF184A200999ECA /* childIcon.png in Resources */,
 				32746E0D1B74A22000816208 /* goods-img.png in Resources */,
 				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				32746E391B74A22000816208 /* youhuiquan1.png in Resources */,
 				321928DF1BDB7EB8004EA6A7 /* setting.png in Resources */,
+				32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */,
 				32D2B78D1BDDF41C00603FCE /* selected_icon.png in Resources */,
 				325DF94F1B69D96800351ACA /* LadyView.xib in Resources */,
 				321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */,
@@ -2141,6 +2171,7 @@
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
+				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
@@ -2171,6 +2202,7 @@
 				325DF9441B69B38900351ACA /* poster2.png in Resources */,
 				32703F1C1BEB5D39002AFC6D /* Icon-40@2x.png in Resources */,
 				32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */,
+				32DE21C71BF1DE2A00999ECA /* shareIcon.png in Resources */,
 				325BA11D1B68BA1B006D64BD /* goodsthumb.png in Resources */,
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
@@ -2210,6 +2242,7 @@
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
 				32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */,
+				32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */,
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
@@ -2243,6 +2276,7 @@
 				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */,
 				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
+				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
@@ -2520,6 +2554,7 @@
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
+				32DE21C21BF1BD7F00999ECA /* XidiShuomingViewController.m in Sources */,
 				32A288BE1B942F53006DC949 /* Head1View.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -2581,6 +2616,7 @@
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
 				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
 				32E6BC191BEC95CF0036F338 /* ModifyPhoneController.m in Sources */,
+				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
 				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,

@@ -48,6 +48,9 @@
    // [self createComplaintLists];
     
     
+    self.tijiaoButton.layer.cornerRadius = 20;
+    self.tijiaoButton.layer.borderWidth = 1;
+    self.tijiaoButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
     
     

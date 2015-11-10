@@ -188,7 +188,7 @@ static NSString *khead2View = @"head2View";
         string = [NSString stringWithFormat:@"剩余%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
     }
     else{
-        string = [NSString stringWithFormat:@"剩余%02ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
+        string = [NSString stringWithFormat:@"剩余%ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
     
     }
     childTimeLabel.text = string;
@@ -197,7 +197,7 @@ static NSString *khead2View = @"head2View";
 }
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
     
@@ -447,13 +447,11 @@ static NSString *khead2View = @"head2View";
         return 2;
     } else if (section == 1){
         return ladyDataArray.count;
-        //return 4;
-       // return childDataArray.count;
+   
     } else if (section == 2){
         return childDataArray.count;
         
-       // return 4;
-        //return ladyDataArray.count;
+    
     }
     return 0;
     
@@ -465,19 +463,19 @@ static NSString *khead2View = @"head2View";
         
     }
   //    NSLog(@"%f,%f", (SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 + 60);
   
     
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 4;
+    return 0;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     if (section == 0) {
         return 8;
     }
-    return 4;
+    return 5;
 }
 
 
@@ -488,10 +486,10 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, 0);
         
     } else if (section == 1){
-        return CGSizeMake(SCREENWIDTH, 40);
+        return CGSizeMake(SCREENWIDTH, 60);
     }
     else if (section == 2){
-        return CGSizeMake(SCREENWIDTH, 40);
+        return CGSizeMake(SCREENWIDTH, 60);
     }
     return CGSizeZero;
     
@@ -560,15 +558,15 @@ static NSString *khead2View = @"head2View";
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
         headerView.nameLabel.text = @"潮童专区";
         childTimeLabel = headerView.timeLabel;
-        headerView.headImageView.image = [UIImage imageNamed:@"childImage.png"];
-        NSLog(@"asdfasdfasdfasdfasdf%@",[UIImage imageNamed:@"childImage.png"]);
+        headerView.headImageView.image = [UIImage imageNamed:@"childIcon.png"];
+        NSLog(@"asdfasdfasdfasdfasdf%@",[UIImage imageNamed:@"childIcon.png"]);
         return headerView;
     } else if (indexPath.section == 1){
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
         headerView.nameLabel.text = @"时尚女装";
         childTimeLabel = headerView.timeLabel;
 
-        headerView.headImageView.image = [UIImage imageNamed:@"ladyImage.png"];
+        headerView.headImageView.image = [UIImage imageNamed:@"ladyIcon.png"];
         return headerView;
     }
     
