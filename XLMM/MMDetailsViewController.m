@@ -1221,9 +1221,15 @@
         //NSString *kLinkTagName = @"xiaolumeimei";
         NSString *shareTitle = [json objectForKey:@"name"];
         NSString *shareDesc = [[json objectForKey:@"details"] objectForKey:@"note"];
+    NSString *kLinkDescription;
+    if ([[[json objectForKey:@"details"] objectForKey:@"note"] isKindOfClass:[NSString class]]) {
+       kLinkDescription = shareDesc;
+
+    } else{
+        kLinkDescription = @"小鹿妹妹";
+    }
         NSString *kLinkTitle = shareTitle;
-        NSString *kLinkDescription = shareDesc;
-        
+    
         
         
         WXWebpageObject *ext = [WXWebpageObject object];
@@ -1245,7 +1251,7 @@
         message.messageExt = nil;
         message.messageAction = nil;
         message.mediaTagName = nil;
-        NSString *imageUrlString = [json objectForKey:@"head_img"];
+        NSString *imageUrlString = [json objectForKey:@"pic_path"];
         NSLog(@"imageUrl = %@", imageUrlString);
         NSData *imageData = nil;
         

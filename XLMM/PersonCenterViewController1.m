@@ -93,7 +93,7 @@
         
     } else {
         
-#warning 支付列表有分页
+//#warning 支付列表有分页
         
         NSLog(@"有第二页");
     }
