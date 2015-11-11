@@ -194,7 +194,7 @@
         model.imageURLString = [dic objectForKey:@"order_pic"];
         model.dingdanTime = [dic objectForKey:@"created"];
         model.dingdanZhuangtai = [dic objectForKey:@"status_display"];
-        model.dingdanJine = [dic objectForKey:@"total_fee"];
+        model.dingdanJine = [dic objectForKey:@"payment"];
         model.ordersArray = [dic objectForKey:@"orders"];
         
         
@@ -254,23 +254,28 @@
        
         cell.nameLabel.text = [details objectForKey:@"title"];
         cell.sizeLabel.text = [details objectForKey:@"sku_name"];
-        cell.numberLabel.text = [NSString stringWithFormat:@"%@", [details objectForKey:@"num"]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"%.1f", [[details objectForKey:@"total_fee"] floatValue]];
-        cell.paymentLabel.text = [NSString stringWithFormat:@"%.1f", [[details objectForKey:@"payment"] floatValue]];
+        cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
+        NSString *string = [details objectForKey:@"status_display"];
         
-        if ([[details objectForKey:@"status_display"] isEqualToString:@"待付款"]) {
+        if ([string isEqualToString:@"待付款"]) {
             cell.statusLabel.text = @"待支付";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
+        } else if ([string isEqualToString:@"已付款"]){
             cell.statusLabel.text = @"商品准备中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已发货"]){
+        } else if ([string isEqualToString:@"已发货"]){
             cell.statusLabel.text = @"配送中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
+        } else if ([string isEqualToString:@"交易关闭"]){
             cell.statusLabel.text = @"交易关闭";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
+        } else if ([string isEqualToString:@"交易成功"]){
             cell.statusLabel.text = @"已完成";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"创建订单"]){
-            cell.statusLabel.text = @"创建订单";
+        } else if ([string isEqualToString:@"订单创建"]){
+            cell.statusLabel.text = @"订单创建";
     
+        } else if ([string isEqualToString:@"确认签收"]){
+            cell.statusLabel.text = @"已签收";
+        } else if ([string isEqualToString:@"退款关闭"]){
+            cell.statusLabel.text = @"退款关闭";
         }
         
         
@@ -280,7 +285,7 @@
         }
     
     
-        if ([model.dingdanZhuangtai isEqualToString:@"已发货"]) {
+        if ([string isEqualToString:@"已发货"]) {
             NSLog(@"已经发货");
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
             button.tag = indexPath.row +100;
@@ -333,17 +338,12 @@
             button.layer.borderWidth = 0.5;
             button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
             [cell.contentView addSubview:button];
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
-            
-        } else {
-            
         }
-        
         return cell;
         
     } else {
         MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
-        
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.dingdanJine floatValue]];
         for (int i = 1101; i < model.ordersArray.count + 1101; i++) {
             NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
@@ -366,11 +366,13 @@
             cell.statusLabel.text = @"交易关闭";
         } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
             cell.statusLabel.text = @"已完成";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"创建订单"]){
-            cell.statusLabel.text = @"创建订单";
+        } else if ([model.dingdanZhuangtai isEqualToString:@"订单创建"]){
+            cell.statusLabel.text = @"订单创建";
             
-        } else {
-            cell.statusLabel.text = @"交易关闭";
+        } else if ([model.dingdanZhuangtai isEqualToString:@"退款关闭"]){
+            cell.statusLabel.text = @"退款关闭";
+        } else if ([model.dingdanZhuangtai isEqualToString:@"确认签收"]){
+            cell.statusLabel.text = @"已签收";
         }
         
         
@@ -433,37 +435,7 @@
             button.layer.borderWidth = 0.5;
             button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
             [cell.contentView addSubview:button];
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-            button.tag = indexPath.row +100;
-            
-            [button setTitle:@"交易关闭" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
-            button.layer.cornerRadius = 12.5;
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-            [cell.contentView addSubview:button];
-        } else {
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-            button.tag = indexPath.row +100;
-            
-            [button setTitle:@"交易关闭" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
-            button.layer.cornerRadius = 12.5;
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-            [cell.contentView addSubview:button];
         }
-        
-        
-        
-        
         return cell;
         
     }
