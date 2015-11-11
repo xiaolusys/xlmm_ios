@@ -523,6 +523,10 @@
 		32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B5DE3B1BC7B1E500AEE6B3 /* CartsCell.m */; };
 		32B5DE3E1BC7B1E500AEE6B3 /* CartsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
+		32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */; };
+		32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BA1B251BF2F1FA0000A0F2 /* SingleOrderViewCell.xib */; };
+		32BA1B2B1BF2F21B0000A0F2 /* MoreOrdersViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BA1B291BF2F21B0000A0F2 /* MoreOrdersViewCell.m */; };
+		32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BA1B2A1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib */; };
 		32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BA54051BE6F5E400A597DB /* MMUserCoupons.m */; };
 		32BC3CA91BD4BB70008ADAA2 /* ios7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA51BD4BB70008ADAA2 /* ios7.png */; };
 		32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */; };
@@ -1014,6 +1018,12 @@
 		32B5DE3C1BC7B1E500AEE6B3 /* CartsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartsCell.xib; sourceTree = "<group>"; };
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
+		32BA1B231BF2F1FA0000A0F2 /* SingleOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleOrderViewCell.h; sourceTree = "<group>"; };
+		32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleOrderViewCell.m; sourceTree = "<group>"; };
+		32BA1B251BF2F1FA0000A0F2 /* SingleOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleOrderViewCell.xib; sourceTree = "<group>"; };
+		32BA1B281BF2F21B0000A0F2 /* MoreOrdersViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreOrdersViewCell.h; sourceTree = "<group>"; };
+		32BA1B291BF2F21B0000A0F2 /* MoreOrdersViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreOrdersViewCell.m; sourceTree = "<group>"; };
+		32BA1B2A1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreOrdersViewCell.xib; sourceTree = "<group>"; };
 		32BA54041BE6F5E400A597DB /* MMUserCoupons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMUserCoupons.h; sourceTree = "<group>"; };
 		32BA54051BE6F5E400A597DB /* MMUserCoupons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMUserCoupons.m; sourceTree = "<group>"; };
 		32BC3CA51BD4BB70008ADAA2 /* ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7.png; sourceTree = "<group>"; };
@@ -1899,6 +1909,12 @@
 		32CECF8A1BA665A100FF3BD3 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				32BA1B231BF2F1FA0000A0F2 /* SingleOrderViewCell.h */,
+				32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */,
+				32BA1B251BF2F1FA0000A0F2 /* SingleOrderViewCell.xib */,
+				32BA1B281BF2F21B0000A0F2 /* MoreOrdersViewCell.h */,
+				32BA1B291BF2F21B0000A0F2 /* MoreOrdersViewCell.m */,
+				32BA1B2A1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib */,
 				3218135F1BD7961700D3D036 /* MMSizeChartView.h */,
 				321813601BD7961700D3D036 /* MMSizeChartView.m */,
 				3249B9B41B6F3EE60086D030 /* ZhiFuCollectionCell.h */,
@@ -2284,6 +2300,7 @@
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
+				32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
@@ -2292,6 +2309,7 @@
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
 				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
+				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
 				323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */,
@@ -2504,6 +2522,7 @@
 				3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */,
 				325DF9481B69BD8B00351ACA /* GoodsView.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
+				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
 				32B5DE3D1BC7B1E500AEE6B3 /* CartsCell.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
@@ -2561,6 +2580,7 @@
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				32DE21C21BF1BD7F00999ECA /* XidiShuomingViewController.m in Sources */,
+				32BA1B2B1BF2F21B0000A0F2 /* MoreOrdersViewCell.m in Sources */,
 				32A288BE1B942F53006DC949 /* Head1View.m in Sources */,
 				3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */,
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
