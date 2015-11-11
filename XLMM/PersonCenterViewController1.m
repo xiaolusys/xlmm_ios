@@ -14,6 +14,11 @@
 
 #define kSimpleCellIdentifier @"simpleCell"
 
+#import "SingleOrderViewCell.h"
+#import "MoreOrdersViewCell.h"
+
+
+
 
 @interface PersonCenterViewController1 (){
     NSTimer *theTimer;
@@ -60,6 +65,8 @@
     [self.view addSubview:[[UIView alloc] init]];
     self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
+    [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
+    [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -220,7 +227,7 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 117);
+    return CGSizeMake(SCREENWIDTH, 118);
 }
 
 
@@ -229,103 +236,103 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ZhiFuCollectionCell *cell = (ZhiFuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
-    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSArray *ordersArray = [dic objectForKey:@"orders"];
+    NSDictionary *diction = [self.dataArray objectAtIndex:indexPath.row];
+    NSArray *orderArray = [diction objectForKey:@"orders"];
     
-    if (ordersArray.count == 1) {
-    
+    if (orderArray.count == 1) {
+        SingleOrderViewCell *cell = (SingleOrderViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"SingleOrderCell" forIndexPath:indexPath];
+        
+        NSDictionary *details = [orderArray objectAtIndex:0];
+        
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+        
+        cell.nameLabel.text = [details objectForKey:@"title"];
+        cell.sizeLabel.text = [details objectForKey:@"sku_name"];
+        cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
+        NSString *string = [details objectForKey:@"status_display"];
+        
+            cell.statusLabel.text = @"待支付";
+       
         
         
+        for (int i = 0; i < self.dataArray.count; i++) {
+            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+            [btn removeFromSuperview];
+        }
         
-    } else if (ordersArray.count == 0){
-     
         
+        if ([string isEqualToString:@"待付款"]) {
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+            button.tag = indexPath.row +100;
+            
+            [button setTitle:@"立即支付" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.layer.cornerRadius = 12.5;
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+            [cell.contentView addSubview:button];
+            button.userInteractionEnabled = NO;
+        }
+        return cell;
     }
-    else
-    {
-//        cell.detailsView.hidden = YES;
-//        int number = 1102;
-//        
-//        for (int i = 1; i < model.ordersArray.count; i++) {
-//            NSDictionary *details = [model.ordersArray objectAtIndex:i];
-//            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:number++];
-//            imageView.hidden = NO;
-//            imageView.layer.masksToBounds = YES;
-//            imageView.layer.cornerRadius = 5;
-//            imageView.layer.borderWidth = 1;
-//            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
-//            
-//            [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
-//        }
-//        
+    else{
+        MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
+      //  cell.paymentLabel.text = [[NSString stringWithFormat:@"¥%.1f", [[diction objectForKey:@"payment"]floatValue]];
         
+        cell.paymentLabel.text = [NSString stringWithFormat:@"%.1f", [[diction objectForKey:@"payment"] floatValue]];
+        for (int i = 1101; i <= 1106; i++) {
+            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
+            imageView.hidden = YES;
+        }
+        for (int i = 1101; i < orderArray.count + 1101; i++) {
+            NSDictionary *details = [orderArray objectAtIndex:i - 1101];
+            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
+            NSLog(@"imageView = %@", imageView);
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+            imageView.layer.cornerRadius = 5;
+            imageView.layer.masksToBounds = YES;
+            imageView.layer.borderWidth = 1;
+            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+            imageView.hidden = NO;
+            
+        }
+        for (int i = 0; i < self.dataArray.count; i++) {
+            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+            [btn removeFromSuperview];
+        }
+        cell.statusLabel.text = @"待支付";
+        NSString *string = [diction objectForKey:@"status_display"];
         
-        
-        
-        
+        if ([string isEqualToString:@"待付款"]) {
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+            button.tag = indexPath.row +100;
+            
+            [button setTitle:@"立即支付" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.layer.cornerRadius = 12.5;
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+            
+            button.userInteractionEnabled = NO;
+            [cell.contentView addSubview:button];
+        }
+        return cell;
     }
-    
-    [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
-    
-    cell.myimageView.layer.masksToBounds = YES;
-    cell.myimageView.layer.cornerRadius = 5;
-    cell.myimageView.layer.borderWidth = 1;
-    cell.myimageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
-    
-    NSMutableString *string = [[NSMutableString alloc]initWithString:[dic objectForKey:@"created"]];
-    NSRange range = [string rangeOfString:@"T"];
-//    [string deleteCharactersInRange:range];
-//    [string insertString:@" " atIndex:range.location];
-    [string replaceCharactersInRange:range withString:@" "];
-    range = [string rangeOfString:@"-"];
-    [string replaceCharactersInRange:range withString:@"/"];
-    range = [string rangeOfString:@"-"];
-    [string replaceCharactersInRange:range withString:@"/"];
-    cell.createLabel.text = string;
-    
-    
-    for (int i = 0; i<self.labelArray.count; i++) {
-        UILabel *label = (UILabel *)[cell.contentView viewWithTag:i +100];
-        NSLog(@"label = %@", label);
-        [label removeFromSuperview];
-        
-    }
-    UILabel *label = (UILabel *)[self.labelArray objectAtIndex:indexPath.row];
-    NSLog(@"label = %@ and index.row = %ld", label, (long)indexPath.row);
-    label.tag = indexPath.row +100;
-    [cell.contentView addSubview:label];
-    
-    
-    
-    for (int i = 0; i<self.dataArray.count; i++) {
-        UIButton *btn = [cell.contentView viewWithTag:i + 1000];
-        [btn removeFromSuperview];
-        
-    }
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-    button.tag = indexPath.row +1000;
-    
-    [button setTitle:@"立即支付" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
-    button.layer.cornerRadius = 12.5;
-    button.titleLabel.font = [UIFont systemFontOfSize:12];
-    button.layer.borderWidth = 0.5;
-    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-    button.userInteractionEnabled = NO;
-    [cell.contentView addSubview:button];
-    
-    cell.statusLabel.text = [dic objectForKey:@"status_display"];
-    cell.paymentLable.text = [NSString stringWithFormat:@"¥%.1f",[[dic objectForKey:@"payment"] floatValue]];
-    cell.idLabel.text = [dic objectForKey:@"tid"];
-    
-    return cell;
-    
 }
+
+
+
+    
+
 
 - (void)lijizhifu:(UIButton *)button{
     NSLog(@"立即支付");

@@ -299,7 +299,7 @@
             button.layer.borderWidth = 0.5;
             button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
             [cell.contentView addSubview:button];
-        } else if ([model.dingdanZhuangtai isEqualToString:@"待付款"]){
+        } else if ([string isEqualToString:@"待付款"]){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
             button.tag = indexPath.row +100;
     
@@ -312,7 +312,7 @@
             button.layer.borderWidth = 0.5;
             button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
             [cell.contentView addSubview:button];
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
+        } else if ([string isEqualToString:@"已付款"]){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
             button.tag = indexPath.row +100;
     
@@ -325,7 +325,7 @@
             button.layer.borderWidth = 0.5;
             button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
             [cell.contentView addSubview:button];
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
+        } else if ([string isEqualToString:@"交易成功"]){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
             button.tag = indexPath.row +100;
     
