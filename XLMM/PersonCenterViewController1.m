@@ -118,7 +118,7 @@
 - (void)createTimeLabels{
     for (int i = 0; i<self.dataArray.count; i++) {
        
-        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 80 - 100, 0, 100, 35)];
+        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 222, 0, 100, 35)];
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont systemFontOfSize:12];
         label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
@@ -231,6 +231,42 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ZhiFuCollectionCell *cell = (ZhiFuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSArray *ordersArray = [dic objectForKey:@"orders"];
+    
+    if (ordersArray.count == 1) {
+    
+        
+        
+        
+    } else if (ordersArray.count == 0){
+     
+        
+    }
+    else
+    {
+//        cell.detailsView.hidden = YES;
+//        int number = 1102;
+//        
+//        for (int i = 1; i < model.ordersArray.count; i++) {
+//            NSDictionary *details = [model.ordersArray objectAtIndex:i];
+//            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:number++];
+//            imageView.hidden = NO;
+//            imageView.layer.masksToBounds = YES;
+//            imageView.layer.cornerRadius = 5;
+//            imageView.layer.borderWidth = 1;
+//            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+//            
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+//        }
+//        
+        
+        
+        
+        
+        
+    }
+    
     [cell.myimageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"order_pic"]]];
     
     cell.myimageView.layer.masksToBounds = YES;

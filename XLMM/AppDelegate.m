@@ -64,8 +64,8 @@
         NSLog(@"自动登录");
         
         
-       // [self autoLoginWithUsername:username andPassword:password];
-       // [userDefualts setBool:YES forKey:login];
+        [self autoLoginWithUsername:username andPassword:password];
+        [userDefualts setBool:YES forKey:login];
         
     }
     else{
@@ -157,6 +157,8 @@
               
               NSLog(@"JSON: %@", responseObject);
               
+              
+              [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
               //登录成功
               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
               [[NSUserDefaults standardUserDefaults] synchronize];

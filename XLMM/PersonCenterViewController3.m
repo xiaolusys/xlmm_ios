@@ -32,6 +32,8 @@
     BOOL _isFirst;
     NSDictionary *diciontary;
     UIAlertView *alterView;
+    NSArray *ordersArray;
+    
 }
 
 
@@ -93,7 +95,7 @@
 - (void)reload
 {
     NSLog(@"reload");
-    //[self downloadData];
+  
     
 }
 
@@ -183,6 +185,8 @@
         model.dingdanTime = [dic objectForKey:@"created"];
         model.dingdanZhuangtai = [dic objectForKey:@"status_display"];
         model.dingdanJine = [dic objectForKey:@"total_fee"];
+        model.ordersArray = [dic objectForKey:@"orders"];
+        
         
         [dataArray addObject:model];
     }
@@ -235,15 +239,67 @@
     NSLog(@"%d", (int)range.location);
     [string deleteCharactersInRange:range];
     [string insertString:@"  " atIndex:range.location];
-    cell.timeLabel.text = string;
+    cell.timeLabel.text = @"";
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURLString]];
     cell.myImageView.layer.masksToBounds = YES;
     cell.myImageView.layer.borderWidth = 1;
-    cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    cell.myImageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
     cell.myImageView.layer.cornerRadius = 5;
     cell.bianhaoLabel.text = model.dingdanbianhao;
     cell.zhuangtaiLabel.text = model.dingdanZhuangtai;
+    if ([model.dingdanZhuangtai isEqualToString:@"待付款"]) {
+        cell.zhuangtaiLabel.text = @"待支付";
+    } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
+        cell.zhuangtaiLabel.text = @"商品准备中";
+    } else if ([model.dingdanZhuangtai isEqualToString:@"已发货"]){
+        cell.zhuangtaiLabel.text = @"配送中";
+    } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
+        cell.zhuangtaiLabel.text = @"交易关闭";
+    } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
+        cell.zhuangtaiLabel.text = @"已完成";
+    } else if ([model.dingdanZhuangtai isEqualToString:@"创建订单"]){
+        cell.zhuangtaiLabel.text = @"创建订单";
+
+    }
     cell.jineLabel.text = [NSString stringWithFormat:@"¥%.1f",  [model.dingdanJine floatValue]];
+    //cell.timeLabel
+    if (model.ordersArray.count == 1) {
+        cell.detailsView.hidden = NO;
+        NSDictionary *details = [model.ordersArray objectAtIndex:0];
+        cell.nameLabel.text = [details objectForKey:@"title"];
+        cell.sizeLabel.text = [details objectForKey:@"sku_name"];
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
+        cell.numberLabel.text = [NSString stringWithFormat:@"x%ld", (long)[[details objectForKey:@"num"] integerValue]];
+        
+        
+        
+    } else if (model.ordersArray.count == 0){
+        cell.detailsView.hidden = NO;
+        
+    }
+    else
+    {
+        cell.detailsView.hidden = YES;
+        int number = 1102;
+        
+        for (int i = 1; i < model.ordersArray.count; i++) {
+            NSDictionary *details = [model.ordersArray objectAtIndex:i];
+            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:number++];
+            imageView.hidden = NO;
+            imageView.layer.masksToBounds = YES;
+            imageView.layer.cornerRadius = 5;
+            imageView.layer.borderWidth = 1;
+            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+            
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+        }
+   
+        
+        
+        
+        
+        
+    }
     for (int i = 0; i < dataArray.count; i++) {
         UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
         [btn removeFromSuperview];
@@ -314,65 +370,25 @@
 
 - (void)lijizhifu:(UIButton *)button{
     NSLog(@"立即支付");
+    
 }
 
 - (void)shenqingtuikuan:(UIButton *)button{
     NSLog(@"申请退款");
+    
 }
 
 - (void)tuihuotuikuan:(UIButton *)button{
     NSLog(@"退货退款");
+    
 }
 
 - (void)querenQianshou:(UIButton *)button{
     NSLog(@"确认收货");
-//    NSLog(@"tag = %ld", (long)button.tag);
-//    DingdanModel *model = [dataArray objectAtIndex:(button.tag - 100)];
-//    NSLog(@"dic = %@", model.dingdanID);
-//    //http://m.xiaolu.so/rest/v1/trades
-//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/confirm_sign", Root_URL, model.dingdanID];
-//    
-//    NSLog(@"urlString = %@", urlString);
-//    
-//    
-//    
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    
-//    
-//    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"POST"];
-//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [connection start];
+
     
     
 }
-
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    NSLog(@"111 : %@", response);
-}
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"222 : %@", dic);
-    
-    
-    NSLog(@"string = %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSLog(@"3333 : %@", connection);
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"error");
-    
-}
-
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%@", indexPath);
