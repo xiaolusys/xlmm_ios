@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MoreOrdersViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UILabel *paymentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

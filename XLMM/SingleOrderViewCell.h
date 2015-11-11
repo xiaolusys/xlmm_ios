@@ -10,4 +10,16 @@
 
 @interface SingleOrderViewCell : UICollectionViewCell
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *orderImageView;
+@property (weak, nonatomic) IBOutlet UILabel *paymentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+
+
+
+
 @end
