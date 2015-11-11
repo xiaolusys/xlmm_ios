@@ -344,6 +344,10 @@
     } else {
         MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.dingdanJine floatValue]];
+        for (int i = 1101; i <= 1106; i++) {
+            UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
+            imageView.hidden = YES;
+        }
         for (int i = 1101; i < model.ordersArray.count + 1101; i++) {
             NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
@@ -353,7 +357,7 @@
             imageView.layer.masksToBounds = YES;
             imageView.layer.borderWidth = 1;
             imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
-            
+            imageView.hidden = NO;
             
         }
         if ([model.dingdanZhuangtai isEqualToString:@"待付款"]) {
