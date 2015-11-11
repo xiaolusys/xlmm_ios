@@ -16,6 +16,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "NewCartsModel.h"
 #import "PurchaseViewController1.h"
+#import "HistoryCartsView.h"
 
 
 @interface CartViewController ()<CartViewDelegate>{
@@ -68,15 +69,20 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
   
-    if ([[json objectForKey:@"result"] integerValue] == 0) {
-        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-        [self.navigationController pushViewController:emptyVC animated:YES];
-        return;
-    }
     
     
-    self.totalPricelabel.text =[NSString stringWithFormat:@" "] ;
+    self.totalPricelabel.text =[NSString stringWithFormat:@" "];
+//    NSLog(@"tableView = %@", self.myTableView);
+//    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, 300)];
+//    scrollView.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:scrollView];
+//    
 
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+    view.backgroundColor = [UIColor orangeColor];
+    HistoryCartsView *oldcartsView = [[HistoryCartsView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
+    oldcartsView.backgroundColor = [UIColor whiteColor];
+    [self.historycartsView addSubview:oldcartsView];
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -307,13 +313,9 @@
         
         NSInteger count = [[dic objectForKey:@"result"] integerValue];
         NSLog(@"count = %ld", (long)count);
-        if (count == 0) {
-            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-            [self.navigationController pushViewController:emptyVC animated:YES];
-        }
+       
     } else{
-        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-        [self.navigationController pushViewController:emptyVC animated:YES];
+     
     }
     
 
@@ -471,12 +473,10 @@
         NSInteger count = [[dic objectForKey:@"result"] integerValue];
         NSLog(@"count = %ld", (long)count);
         if (count == 0) {
-            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-            [self.navigationController pushViewController:emptyVC animated:YES];
+       
         }
     } else{
-        EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-        [self.navigationController pushViewController:emptyVC animated:YES];
+     
     }
 }
 

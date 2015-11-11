@@ -10,10 +10,10 @@
 #import "AddressModel.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-
+#import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 
-@interface AddAdressViewController ()
+@interface AddAdressViewController ()<UIAlertViewDelegate>
 
 
 @end
@@ -56,6 +56,21 @@
         //_addressModel.provinceName;
         self.cityTextField.text = _addressModel.cityName;
         self.countyTextField.text = _addressModel.countyName;
+        
+        
+        UIButton *itemButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+       
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        label.text = @"删除";
+        label.textAlignment = NSTextAlignmentRight;
+        label.textColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+        [itemButton addSubview:label];
+        label.font = [UIFont systemFontOfSize:14];
+        [itemButton addTarget:self action:@selector(addressDelete:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:itemButton];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        
     }
     
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -84,6 +99,47 @@
     
 }
 
+- (void)addressDelete:(UIButton *)button{
+    NSLog(@"delete");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确定要删除吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSLog(@"取消");
+    } else if (buttonIndex == 1){
+        [self deleteAddress];
+    }
+}
+
+- (void)deleteAddress{
+    NSLog(@"%@", self.addressModel.addressID);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //  http://m.xiaolu.so/rest/v1/address
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL, self.addressModel.addressID];
+    NSLog(@"string = %@",  string);
+    
+//    NSLog(@"phoneNumber = %@\n", _numberTextField.text);
+//    NSDictionary *parameters = @{@"vmobile": phoneNumber};
+    
+    [manager POST:string parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              NSLog(@"JSON: %@", responseObject);
+              [self.navigationController popViewControllerAnimated:YES];
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+
+}
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         //在这里做你响应return键的代码

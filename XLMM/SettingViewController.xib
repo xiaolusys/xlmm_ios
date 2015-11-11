@@ -11,7 +11,6 @@
                 <outlet property="deleteButton" destination="cz5-2H-nx8" id="bNT-nS-ovy"/>
                 <outlet property="nameLabel" destination="Wga-Nm-hne" id="3kY-xx-xj2"/>
                 <outlet property="phoneLabel" destination="Y47-pU-h89" id="22r-EZ-Jg2"/>
-                <outlet property="quitBUtton" destination="Agn-sw-gpo" id="rt5-zN-z4i"/>
                 <outlet property="versionLabel" destination="TQW-da-d0c" id="59S-tw-FBI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -789,44 +788,17 @@
                         </mask>
                     </variation>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agn-sw-gpo">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.96078431372549022" green="0.65098039215686276" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="fui-kh-tGN"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="退出">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="fui-kh-tGN"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="fui-kh-tGN"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="quitButtonClicked:" destination="-1" eventType="touchUpInside" id="e8K-5c-ypl"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Agn-sw-gpo" secondAttribute="trailing" constant="15" id="0yh-nM-mAj"/>
                 <constraint firstAttribute="trailing" secondItem="sJN-G2-5kl" secondAttribute="trailing" id="70M-dP-2Ue"/>
                 <constraint firstItem="FAn-62-FWV" firstAttribute="top" secondItem="1US-gZ-QcI" secondAttribute="bottom" constant="15" id="C1p-aD-2AC"/>
                 <constraint firstItem="1US-gZ-QcI" firstAttribute="top" secondItem="sJN-G2-5kl" secondAttribute="bottom" constant="15" id="QAf-86-qqP"/>
                 <constraint firstItem="FAn-62-FWV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="R8E-yO-cf1"/>
                 <constraint firstItem="lI6-SK-5Sz" firstAttribute="leading" secondItem="cpU-dS-AhS" secondAttribute="leading" id="UUe-wc-yux"/>
                 <constraint firstItem="sJN-G2-5kl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xvd-Zo-5HE"/>
-                <constraint firstItem="Agn-sw-gpo" firstAttribute="top" secondItem="FAn-62-FWV" secondAttribute="bottom" constant="30" id="cVD-nB-mLU"/>
                 <constraint firstItem="nq1-Mh-DpU" firstAttribute="trailing" secondItem="a3H-qd-9Yn" secondAttribute="trailing" id="g3y-Bh-Sqw"/>
                 <constraint firstItem="1US-gZ-QcI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gAI-yd-khq"/>
-                <constraint firstItem="Agn-sw-gpo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="geR-5p-gha"/>
                 <constraint firstItem="VSy-qz-wUC" firstAttribute="leading" secondItem="lI6-SK-5Sz" secondAttribute="leading" id="jha-yk-rFE"/>
                 <constraint firstAttribute="trailing" secondItem="FAn-62-FWV" secondAttribute="trailing" id="laM-ZY-9We"/>
                 <constraint firstItem="sJN-G2-5kl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="tde-0G-YkL"/>
@@ -838,12 +810,8 @@
                     <exclude reference="sJN-G2-5kl"/>
                     <exclude reference="1US-gZ-QcI"/>
                     <exclude reference="FAn-62-FWV"/>
-                    <exclude reference="Agn-sw-gpo"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="0yh-nM-mAj"/>
-                    <exclude reference="cVD-nB-mLU"/>
-                    <exclude reference="geR-5p-gha"/>
                     <exclude reference="jha-yk-rFE"/>
                     <exclude reference="UUe-wc-yux"/>
                     <exclude reference="QAf-86-qqP"/>
@@ -863,12 +831,8 @@
                     <include reference="sJN-G2-5kl"/>
                     <include reference="1US-gZ-QcI"/>
                     <include reference="FAn-62-FWV"/>
-                    <include reference="Agn-sw-gpo"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="0yh-nM-mAj"/>
-                    <include reference="cVD-nB-mLU"/>
-                    <include reference="geR-5p-gha"/>
                     <include reference="jha-yk-rFE"/>
                     <include reference="UUe-wc-yux"/>
                     <include reference="QAf-86-qqP"/>

@@ -173,9 +173,14 @@
         cell.addressImageView.hidden = YES;
         cell.lineView.hidden = YES;
         if (indexPath.row == 0) {
+            cell.leadingWidth.constant = 60;
             cell.morenLabel.hidden = NO;
+            cell.morenLabel.layer.borderWidth = 0.5;
+            cell.morenLabel.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+            
         } else {
             cell.morenLabel.hidden = YES;
+            cell.leadingWidth.constant = 8;
         }
     }
   

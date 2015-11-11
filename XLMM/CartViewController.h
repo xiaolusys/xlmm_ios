@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *cartTableView;
 @property (weak, nonatomic) IBOutlet UILabel *totalPricelabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *historycartsView;
 
 - (IBAction)purchaseClicked:(id)sender;
 @end

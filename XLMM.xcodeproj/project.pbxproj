@@ -627,6 +627,8 @@
 		32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
 		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
+		32FE08791BF377CB0072CCEC /* HistoryCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08781BF377CB0072CCEC /* HistoryCartsView.m */; };
+		32FE087B1BF377E30072CCEC /* HistoryCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */; };
 		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
 		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
@@ -1154,6 +1156,9 @@
 		32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		32FE08771BF377CB0072CCEC /* HistoryCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCartsView.h; sourceTree = "<group>"; };
+		32FE08781BF377CB0072CCEC /* HistoryCartsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCartsView.m; sourceTree = "<group>"; };
+		32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryCartsView.xib; sourceTree = "<group>"; };
 		32FF9A231B9FDB870001F314 /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		32FF9A241B9FDB870001F314 /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
@@ -1950,6 +1955,9 @@
 				32E00C911BA8192D00A73390 /* YHQCollectionCell.h */,
 				32E00C921BA8192D00A73390 /* YHQCollectionCell.m */,
 				32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */,
+				32FE08771BF377CB0072CCEC /* HistoryCartsView.h */,
+				32FE08781BF377CB0072CCEC /* HistoryCartsView.m */,
+				32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -2192,6 +2200,7 @@
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
 				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
+				32FE087B1BF377E30072CCEC /* HistoryCartsView.xib in Resources */,
 				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
@@ -2614,6 +2623,7 @@
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
 				325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */,
+				32FE08791BF377CB0072CCEC /* HistoryCartsView.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
@@ -2826,7 +2836,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7dbdce36-9ba3-40f6-8ee8-1990273ac680";
+				PROVISIONING_PROFILE = "8a924f6c-4983-44f4-841d-2ddaca76b7c0";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2863,7 +2873,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "7dbdce36-9ba3-40f6-8ee8-1990273ac680";
+				PROVISIONING_PROFILE = "8a924f6c-4983-44f4-841d-2ddaca76b7c0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2904,7 +2914,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8a924f6c-4983-44f4-841d-2ddaca76b7c0";
 			};
 			name = Debug;
 		};
@@ -2943,7 +2953,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8a924f6c-4983-44f4-841d-2ddaca76b7c0";
 			};
 			name = Release;
 		};
