@@ -24,6 +24,7 @@
 #import "XidiShuomingViewController.h"
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
+#import "NSString+URL.h"
 
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
@@ -281,7 +282,7 @@
     NSLog(@"details data = %@", dic);
     
     
-    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"pic_path"]]];
+    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]]];
     
     
     NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
@@ -498,7 +499,7 @@
         
         UIImageView *imageview = [[UIImageView alloc] init];
         
-        [imageview sd_setImageWithURL:[NSURL URLWithString:[imageArray objectAtIndex:i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [imageview sd_setImageWithURL:[NSURL URLWithString:[[imageArray objectAtIndex:i] URLEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
             imagewidth = SCREENWIDTH;
             
@@ -1257,7 +1258,7 @@
         
         do {
             NSLog(@"下载图片");
-            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlString]];
+            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
             if (imageData != nil) {
                 
                 NSLog(@"图片下载成功");

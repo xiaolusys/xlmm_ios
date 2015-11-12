@@ -17,6 +17,7 @@
 #import "NewCartsModel.h"
 #import "PurchaseViewController1.h"
 #import "HistoryCartsView.h"
+#import "NSString+URL.h"
 
 
 @interface CartViewController ()<CartViewDelegate>{
@@ -130,7 +131,7 @@
     if (self.historyCarts.count > 0) {
         NewCartsModel *model = [self.historyCarts objectAtIndex:0];
         
-        [oldcartsView.headImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+        [oldcartsView.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
         oldcartsView.nameLabel.text = model.title;
         oldcartsView.sizeLabel.text  = model.sku_name;
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100, 66, 88, 32)];
@@ -298,7 +299,7 @@
     cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     cell.myImageView.layer.cornerRadius = 5;
     cell.myImageView.layer.masksToBounds = YES;
-    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
     
     cell.nameLabel.text = model.title;
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];

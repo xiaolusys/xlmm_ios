@@ -11,7 +11,7 @@
 #import "MMClass.h"
 #import "CollectionModel.h"
 #import "UIImage+ChangeGray.h"
-
+#import "NSString+URL.h"
 
 
 @implementation PeopleCollectionCell
@@ -39,7 +39,12 @@
 }
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
-    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
+  //  NSString *string = [model.picPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *string = [model.picPath URLEncodedString];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
+    
+    
+//    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
 //    self.imageView.layer.borderWidth = 1;
 //    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
@@ -68,10 +73,15 @@
 }
 
 - (void)fillData:( PromoteModel*)model{
-    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       
-
-    }] ;
+    NSString *string = [model.picPath URLEncodedString];
+    
+    NSLog(@"%@ image url string = %@",model.name, string);
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
+    
+//    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//       
+//
+//    }] ;
 //    self.imageView.layer.borderWidth = 1;
 //    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     

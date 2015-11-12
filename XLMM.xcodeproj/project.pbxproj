@@ -629,6 +629,7 @@
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
 		32FE08791BF377CB0072CCEC /* HistoryCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08781BF377CB0072CCEC /* HistoryCartsView.m */; };
 		32FE087B1BF377E30072CCEC /* HistoryCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */; };
+		32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE087D1BF4398A0072CCEC /* NSString+URL.m */; };
 		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
 		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
@@ -1159,6 +1160,8 @@
 		32FE08771BF377CB0072CCEC /* HistoryCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCartsView.h; sourceTree = "<group>"; };
 		32FE08781BF377CB0072CCEC /* HistoryCartsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCartsView.m; sourceTree = "<group>"; };
 		32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryCartsView.xib; sourceTree = "<group>"; };
+		32FE087C1BF4398A0072CCEC /* NSString+URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URL.h"; sourceTree = "<group>"; };
+		32FE087D1BF4398A0072CCEC /* NSString+URL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
 		32FF9A231B9FDB870001F314 /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		32FF9A241B9FDB870001F314 /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
@@ -1999,6 +2002,8 @@
 				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
 				32DE21C81BF1E62600999ECA /* UIImage+UIImageExt.h */,
 				32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */,
+				32FE087C1BF4398A0072CCEC /* NSString+URL.h */,
+				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -2637,6 +2642,7 @@
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
 				3266A6E21BE35C4100C676A9 /* PosterCollectionCell2.m in Sources */,
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
+				32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
