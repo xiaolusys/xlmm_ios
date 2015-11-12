@@ -14,7 +14,7 @@
 @property (nonatomic, copy)NSString * sku_id;
 @property (nonatomic, copy)NSString * title;
 @property (nonatomic, assign)float price;
-
+@property (nonatomic, assign)BOOL is_sale_out;
 @property (nonatomic, copy)NSString * buyer_nick;
 @property (nonatomic, assign)int num;
 @property (nonatomic, copy)NSString * remain_time;

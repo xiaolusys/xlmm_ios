@@ -23,7 +23,7 @@
     float allPrice;
     NewCartsModel *deleteModel;
 }
-
+@property (nonatomic, strong)NSMutableArray *historyCarts;
 
 
 @end
@@ -35,7 +35,46 @@
     
     self.navigationController.navigationBarHidden = NO;
     [self downloadData];
+    [self downloadHistoryData];
 
+    
+}
+
+- (void)downloadHistoryData{
+    NSLog(@"cart Url = %@", kCart_History_URL);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
+        if (data == nil) {
+            NSLog(@"下载失败");
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)fetchedHistoryCartData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"array = %@", array);
+    [self.historyCarts removeAllObjects];
+    for (NSDictionary *dic in array) {
+        NewCartsModel *model = [NewCartsModel new];
+        model.pic_path = [dic objectForKey:@"pic_path"];
+        model.title = [dic objectForKey:@"title"];
+        model.sku_name = [dic objectForKey:@"sku_name"];
+        model.price = [[dic objectForKey:@"price"] floatValue];
+        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
+        model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
+        [self.historyCarts addObject:model];
+        
+    }
+    NSLog(@"history Carts = %@", self.historyCarts);
+    [self createHistoryView];
+    
     
 }
 
@@ -47,6 +86,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [[NSMutableArray alloc] init];
+    self.historyCarts = [[NSMutableArray alloc] init];
+    
     allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
     self.myTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
@@ -78,15 +119,40 @@
 //    [self.view addSubview:scrollView];
 //    
 
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
-    view.backgroundColor = [UIColor orangeColor];
-    HistoryCartsView *oldcartsView = [[HistoryCartsView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
-    oldcartsView.backgroundColor = [UIColor whiteColor];
-    [self.historycartsView addSubview:oldcartsView];
+  
     
     // Do any additional setup after loading the view from its nib.
 }
+- (void)createHistoryView{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+    view.backgroundColor = [UIColor orangeColor];
+    HistoryCartsView *oldcartsView = [[HistoryCartsView alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 110)];
+    if (self.historyCarts.count > 0) {
+        NewCartsModel *model = [self.historyCarts objectAtIndex:0];
+        
+        [oldcartsView.headImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+        oldcartsView.nameLabel.text = model.title;
+        oldcartsView.sizeLabel.text  = model.sku_name;
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100, 66, 88, 32)];
+        [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
+        [button setTitle:@"重新购买" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(reBuyClicked:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.font = [UIFont systemFontOfSize:12];
+        
+        button.layer.cornerRadius = 16;
+        button.layer.borderWidth = 0.5;
+        button.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+        [oldcartsView addSubview:button];
+        
+    }
+    
+  //  oldcartsView.backgroundColor = [UIColor whiteColor];
+    [self.historycartsView addSubview:oldcartsView];
+}
 
+- (void)reBuyClicked:(UIButton *)button{
+    NSLog(@"重新购买");
+}
 
 
 - (void)downloadData{

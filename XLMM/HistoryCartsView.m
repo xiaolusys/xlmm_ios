@@ -18,13 +18,16 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        
        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"HistoryCartsView" owner:nil options:nil];
         NSLog(@"views = %@", views);
         self = [views objectAtIndex:0];
+        self.frame = frame;
+        
     }
     return self;
 }
+
+
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     

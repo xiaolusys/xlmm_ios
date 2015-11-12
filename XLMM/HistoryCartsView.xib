@@ -65,7 +65,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="c9Q-0X-8sn" firstAttribute="top" secondItem="rZc-rt-JJ2" secondAttribute="bottom" constant="6" id="A0t-qJ-pqj">
                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
@@ -108,21 +108,21 @@
                     <exclude reference="wef-Db-wSi"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="E1S-Vl-UdI"/>
+                    <exclude reference="tnr-vr-qgm"/>
+                    <exclude reference="U6u-00-7Y2"/>
+                    <exclude reference="pRE-KH-34Q"/>
+                    <exclude reference="IL4-LS-IaM"/>
+                    <exclude reference="kvK-GE-h5D"/>
+                    <exclude reference="A0t-qJ-pqj"/>
+                    <exclude reference="QJx-nW-VCz"/>
+                    <exclude reference="fTh-q0-WUu"/>
+                    <exclude reference="qw0-Z1-MKl"/>
+                    <exclude reference="Seb-nK-8R3"/>
+                    <exclude reference="zhu-7z-0OT"/>
                     <exclude reference="Ei5-uZ-4a3"/>
                     <exclude reference="iNo-Wm-bqQ"/>
                     <exclude reference="wgt-Ty-h4f"/>
-                    <exclude reference="fTh-q0-WUu"/>
-                    <exclude reference="qw0-Z1-MKl"/>
-                    <exclude reference="A0t-qJ-pqj"/>
-                    <exclude reference="QJx-nW-VCz"/>
-                    <exclude reference="IL4-LS-IaM"/>
-                    <exclude reference="kvK-GE-h5D"/>
-                    <exclude reference="U6u-00-7Y2"/>
-                    <exclude reference="pRE-KH-34Q"/>
-                    <exclude reference="Seb-nK-8R3"/>
-                    <exclude reference="zhu-7z-0OT"/>
-                    <exclude reference="E1S-Vl-UdI"/>
-                    <exclude reference="tnr-vr-qgm"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -136,21 +136,21 @@
                     <include reference="wef-Db-wSi"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="E1S-Vl-UdI"/>
+                    <include reference="tnr-vr-qgm"/>
+                    <include reference="U6u-00-7Y2"/>
+                    <include reference="pRE-KH-34Q"/>
+                    <include reference="IL4-LS-IaM"/>
+                    <include reference="kvK-GE-h5D"/>
+                    <include reference="A0t-qJ-pqj"/>
+                    <include reference="QJx-nW-VCz"/>
+                    <include reference="fTh-q0-WUu"/>
+                    <include reference="qw0-Z1-MKl"/>
+                    <include reference="Seb-nK-8R3"/>
+                    <include reference="zhu-7z-0OT"/>
                     <include reference="Ei5-uZ-4a3"/>
                     <include reference="iNo-Wm-bqQ"/>
                     <include reference="wgt-Ty-h4f"/>
-                    <include reference="fTh-q0-WUu"/>
-                    <include reference="qw0-Z1-MKl"/>
-                    <include reference="A0t-qJ-pqj"/>
-                    <include reference="QJx-nW-VCz"/>
-                    <include reference="IL4-LS-IaM"/>
-                    <include reference="kvK-GE-h5D"/>
-                    <include reference="U6u-00-7Y2"/>
-                    <include reference="pRE-KH-34Q"/>
-                    <include reference="Seb-nK-8R3"/>
-                    <include reference="zhu-7z-0OT"/>
-                    <include reference="E1S-Vl-UdI"/>
-                    <include reference="tnr-vr-qgm"/>
                 </mask>
             </variation>
             <connections>
