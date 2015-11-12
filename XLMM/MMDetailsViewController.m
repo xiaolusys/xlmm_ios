@@ -135,9 +135,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if ([theTimer isValid]) {
-        [theTimer invalidate];
-    }
+//    if ([theTimer isValid]) {
+//        [theTimer invalidate];
+//    }
 }
 
 
@@ -168,9 +168,9 @@
     isInfoHidden = YES;
     
     
-    self.bottomImageViewHeight.constant = SCREENWIDTH;
+    self.bottomImageViewHeight.constant = SCREENWIDTH * 82 / 75;
     self.headViewwidth.constant = SCREENWIDTH;
-    self.headViewHeitht.constant = SCREENWIDTH + 108;
+    self.headViewHeitht.constant = SCREENWIDTH * 82 / 75 + 106;
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -225,15 +225,15 @@
     CGPoint contentOffset = scrollView.contentOffset;
   
     
-    self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , SCREENWIDTH);
+    self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , SCREENWIDTH * 82 / 75);
 
     if (contentOffset.y<0) {
-        CGFloat sizeheight = SCREENWIDTH - contentOffset.y;
+        CGFloat sizeheight = SCREENWIDTH * 82 / 75 - contentOffset.y;
         self.bottomImageViewHeight.constant = sizeheight;
         self.imageleading.constant = contentOffset.y/2;
         self.imageTrailing.constant = contentOffset.y/2;
     }
-    if (contentOffset.y >= 0 && contentOffset.y < SCREENWIDTH) {
+    if (contentOffset.y >= 0 && contentOffset.y < SCREENWIDTH * 82 / 75) {
         NSLog(@"");
         //上拉 headImageView
         

@@ -10,7 +10,6 @@
                 <outlet property="buyButton" destination="tws-zf-Qgq" id="AeZ-ek-ZjX"/>
                 <outlet property="cartTableView" destination="u7N-le-ZFh" id="Zj1-ZD-KGq"/>
                 <outlet property="frontView" destination="5xa-h8-S1m" id="lNC-gw-ehS"/>
-                <outlet property="historycartsView" destination="Srb-tF-aLB" id="VZh-l7-RPg"/>
                 <outlet property="myTableView" destination="u7N-le-ZFh" id="7XI-yw-U0g"/>
                 <outlet property="totalPricelabel" destination="WKd-7n-c8d" id="uCF-Pt-6iT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,9 +24,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="u7N-le-ZFh">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="u7N-le-ZFh">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <color key="separatorColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="5qC-Iw-sDg"/>
@@ -109,10 +108,6 @@
                         </mask>
                     </variation>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Srb-tF-aLB">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
-                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -122,13 +117,7 @@
                 <constraint firstAttribute="trailing" secondItem="5xa-h8-S1m" secondAttribute="trailing" constant="99" id="8mn-JR-fbU">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
-                <constraint firstItem="Srb-tF-aLB" firstAttribute="top" secondItem="u7N-le-ZFh" secondAttribute="bottom" constant="-50" id="9Bi-bI-WWs">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                </constraint>
                 <constraint firstItem="Um7-cX-XnX" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="9hy-2K-tvr"/>
-                <constraint firstItem="oI4-Zp-Ojz" firstAttribute="top" secondItem="Srb-tF-aLB" secondAttribute="bottom" constant="91" id="CPG-Vm-N21">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                </constraint>
                 <constraint firstAttribute="bottom" secondItem="5xa-h8-S1m" secondAttribute="bottom" constant="229" id="Cqy-f0-c4k">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
@@ -136,7 +125,7 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="u7N-le-ZFh" secondAttribute="bottom" id="EhV-KL-BBk">
-                    <variation key="heightClass=regular-widthClass=compact" constant="260"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="90"/>
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="oI4-Zp-Ojz" secondAttribute="bottom" constant="14" id="M6Q-Qk-zQi">
                     <variation key="heightClass=regular-widthClass=compact" constant="90"/>
@@ -145,14 +134,8 @@
                 <constraint firstItem="vqG-3j-YB4" firstAttribute="baseline" secondItem="WKd-7n-c8d" secondAttribute="baseline" id="Okz-aM-2JL">
                     <variation key="heightClass=regular-widthClass=compact" constant="-2"/>
                 </constraint>
-                <constraint firstItem="Srb-tF-aLB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="39" id="T11-KY-mBA">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                </constraint>
                 <constraint firstItem="tws-zf-Qgq" firstAttribute="top" secondItem="Um7-cX-XnX" secondAttribute="bottom" constant="231" id="TkV-U5-s9L">
                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                </constraint>
-                <constraint firstAttribute="trailing" secondItem="Srb-tF-aLB" secondAttribute="trailing" constant="41" id="Xsh-nC-lqi">
-                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstAttribute="centerX" secondItem="tws-zf-Qgq" secondAttribute="centerX" id="ZZp-dK-xbv"/>
                 <constraint firstItem="u7N-le-ZFh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dIN-3k-mJM">
@@ -183,7 +166,6 @@
                     <exclude reference="WKd-7n-c8d"/>
                     <exclude reference="Um7-cX-XnX"/>
                     <exclude reference="oI4-Zp-Ojz"/>
-                    <exclude reference="Srb-tF-aLB"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="NVf-xQ-pVR"/>
@@ -195,12 +177,8 @@
                     <exclude reference="Dy5-HQ-1oC"/>
                     <exclude reference="Okz-aM-2JL"/>
                     <exclude reference="zWh-DI-v3k"/>
-                    <exclude reference="9Bi-bI-WWs"/>
-                    <exclude reference="T11-KY-mBA"/>
-                    <exclude reference="Xsh-nC-lqi"/>
                     <exclude reference="9hy-2K-tvr"/>
                     <exclude reference="fKU-1U-q8S"/>
-                    <exclude reference="CPG-Vm-N21"/>
                     <exclude reference="M6Q-Qk-zQi"/>
                     <exclude reference="sLB-uK-Bkl"/>
                     <exclude reference="wbt-nZ-UnK"/>
@@ -223,7 +201,6 @@
                     <include reference="WKd-7n-c8d"/>
                     <include reference="Um7-cX-XnX"/>
                     <include reference="oI4-Zp-Ojz"/>
-                    <include reference="Srb-tF-aLB"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="NVf-xQ-pVR"/>
@@ -235,12 +212,8 @@
                     <include reference="Dy5-HQ-1oC"/>
                     <include reference="Okz-aM-2JL"/>
                     <include reference="zWh-DI-v3k"/>
-                    <include reference="9Bi-bI-WWs"/>
-                    <include reference="T11-KY-mBA"/>
-                    <include reference="Xsh-nC-lqi"/>
                     <exclude reference="9hy-2K-tvr"/>
                     <include reference="fKU-1U-q8S"/>
-                    <include reference="CPG-Vm-N21"/>
                     <include reference="M6Q-Qk-zQi"/>
                     <include reference="sLB-uK-Bkl"/>
                     <include reference="wbt-nZ-UnK"/>

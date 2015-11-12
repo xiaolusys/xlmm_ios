@@ -19,7 +19,7 @@
 #import "YouHuiQuanViewController.h"
 #import "YHQModel.h"
 #import "MMUserCoupons.h"
-
+#import "NSString+URL.h"
 #import "AFNetworking.h"
 #import "Pingpp.h"
 #import "WXApi.h"
@@ -215,7 +215,9 @@
         
         cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
      
-        cartOwner.myImageView.image = [UIImage imagewithURLString:model.imageURL];
+       // cartOwner.myImageView.image = [UIImage imagewithURLString:[model.imageURL URLEncodedString]];
+        [cartOwner.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL URLEncodedString]]];
+        
         cartOwner.myImageView.layer.masksToBounds = YES;
         cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;

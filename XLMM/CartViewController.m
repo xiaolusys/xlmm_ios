@@ -18,13 +18,17 @@
 #import "PurchaseViewController1.h"
 #import "HistoryCartsView.h"
 #import "NSString+URL.h"
+#import "ReBuyTableViewCell.h"
 
 
-@interface CartViewController ()<CartViewDelegate>{
+
+@interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate>{
     float allPrice;
     NewCartsModel *deleteModel;
 }
 @property (nonatomic, strong)NSMutableArray *historyCarts;
+@property (strong, nonatomic)NSMutableArray *dataArray;
+
 
 
 @end
@@ -35,47 +39,10 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
+    
     [self downloadData];
     [self downloadHistoryData];
 
-    
-}
-
-- (void)downloadHistoryData{
-    NSLog(@"cart Url = %@", kCart_History_URL);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
-        if (data == nil) {
-            NSLog(@"下载失败");
-            return ;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
-        
-    });
-}
-
-- (void)fetchedHistoryCartData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"array = %@", array);
-    [self.historyCarts removeAllObjects];
-    for (NSDictionary *dic in array) {
-        NewCartsModel *model = [NewCartsModel new];
-        model.pic_path = [dic objectForKey:@"pic_path"];
-        model.title = [dic objectForKey:@"title"];
-        model.sku_name = [dic objectForKey:@"sku_name"];
-        model.price = [[dic objectForKey:@"price"] floatValue];
-        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
-        model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
-        [self.historyCarts addObject:model];
-        
-    }
-    NSLog(@"history Carts = %@", self.historyCarts);
-    [self createHistoryView];
-    
     
 }
 
@@ -86,6 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.dataArray = [[NSMutableArray alloc] init];
     self.historyCarts = [[NSMutableArray alloc] init];
     
@@ -94,7 +62,7 @@
     self.myTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self createNavigationBarWithTitle:@"购物袋" selecotr:@selector(backBtnClicked:)];
+    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backBtnClicked:)];
     self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
     self.buyButton.layer.borderWidth = 1;
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
@@ -107,6 +75,7 @@
         return;
     }
     [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
+    [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
@@ -114,46 +83,10 @@
     
     
     self.totalPricelabel.text =[NSString stringWithFormat:@" "];
-//    NSLog(@"tableView = %@", self.myTableView);
-//    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, 300)];
-//    scrollView.backgroundColor = [UIColor redColor];
-//    [self.view addSubview:scrollView];
-//    
 
-  
-    
-    // Do any additional setup after loading the view from its nib.
-}
-- (void)createHistoryView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
-    view.backgroundColor = [UIColor orangeColor];
-    HistoryCartsView *oldcartsView = [[HistoryCartsView alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 110)];
-    if (self.historyCarts.count > 0) {
-        NewCartsModel *model = [self.historyCarts objectAtIndex:0];
-        
-        [oldcartsView.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
-        oldcartsView.nameLabel.text = model.title;
-        oldcartsView.sizeLabel.text  = model.sku_name;
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100, 66, 88, 32)];
-        [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
-        [button setTitle:@"重新购买" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(reBuyClicked:) forControlEvents:UIControlEventTouchUpInside];
-        button.titleLabel.font = [UIFont systemFontOfSize:12];
-        
-        button.layer.cornerRadius = 16;
-        button.layer.borderWidth = 0.5;
-        button.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
-        [oldcartsView addSubview:button];
-        
-    }
-    
-  //  oldcartsView.backgroundColor = [UIColor whiteColor];
-    [self.historycartsView addSubview:oldcartsView];
+
 }
 
-- (void)reBuyClicked:(UIButton *)button{
-    NSLog(@"重新购买");
-}
 
 
 - (void)downloadData{
@@ -214,6 +147,48 @@
     
 }
 
+- (void)downloadHistoryData{
+    NSLog(@"cart Url = %@", kCart_History_URL);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
+        if (data == nil) {
+            NSLog(@"下载失败");
+            return ;
+        }
+        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
+        
+    });
+}
+
+- (void)fetchedHistoryCartData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"array = %@", array);
+    [self.historyCarts removeAllObjects];
+    for (NSDictionary *dic in array) {
+        NewCartsModel *model = [NewCartsModel new];
+        model.pic_path = [dic objectForKey:@"pic_path"];
+        model.title = [dic objectForKey:@"title"];
+        model.sku_name = [dic objectForKey:@"sku_name"];
+        model.price = [[dic objectForKey:@"price"] floatValue];
+        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
+        model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
+        model.ID = [[dic objectForKey:@"id"] intValue];
+        model.sku_id = [dic objectForKey:@"sku_id"];
+        model.item_id = [dic objectForKey:@"item_id"];
+        [self.historyCarts addObject:model];
+        
+    }
+    NSLog(@"history Carts = %@", self.historyCarts);
+    
+    [self.myTableView reloadData];
+    
+    
+}
+
 
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -229,100 +204,102 @@
 #pragma mark --UITableViewDelegate--
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return [self.dataArray count] + 1;
+    if (section == 0) {
+        return self.dataArray.count;
+    } else if (section == 1){
+        return self.historyCarts.count;
+        
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"simpleCellID";
-    if (self.dataArray.count == indexPath.row) {
-        NSLog(@"最后一个");
-        UITableViewCell *cell = [[UITableViewCell alloc] init];
-        cell.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 8, 120, 24)];
-        label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
-        
-        label.textAlignment = NSTextAlignmentLeft;
-        label.text = [NSString stringWithFormat:@"总金额￥%.1f",allPrice];
-        [cell.contentView addSubview:label];
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 1)];
-        lineView.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
-        [cell.contentView addSubview:lineView];
+    if (indexPath.section == 0) {
+        static NSString *CellIdentifier = @"simpleCellID";
+        NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
         
         
-        if (allPrice - 150 >= 0) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
-            label.numberOfLines = 0;
-            label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
-            label.font = [UIFont systemFontOfSize:12];
-            label.textAlignment = NSTextAlignmentRight;
-            label.text = [NSString stringWithFormat:@"有可用优惠券"];
-            [cell.contentView addSubview:label];
+        CartTableCellTableViewCell1 *cell = (CartTableCellTableViewCell1 *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (self.dataArray.count == 0) {
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 40, 8, 35, 20)];
-            imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
-            [cell.contentView addSubview:imageView];
-        } else {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 216, 8, 170, 24)];
-            label.numberOfLines = 0;
-            label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
-            label.font = [UIFont systemFontOfSize:12];
-            label.textAlignment = NSTextAlignmentRight;
-            label.text = [NSString stringWithFormat:@"还差%.1f元,可用优惠券", 150 - allPrice];
-            [cell.contentView addSubview:label];
-        
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 40, 8, 35, 20)];
-            imageView.image = [UIImage imageNamed:@"shopping_coupon.png"];
-            [cell.contentView addSubview:imageView];
+        } else{
             
+            NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+            cell.cartModel= model;
+            cell.delegate = self;
+            cell.myImageView.layer.borderWidth = 0.5;
+            cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+            cell.myImageView.layer.cornerRadius = 5;
+            cell.myImageView.layer.masksToBounds = YES;
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.nameLabel.text = model.title;
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
+            
+            //    cell.contentView.backgroundColor = [UIColor redColor];
+            cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
+            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+            
+            cell.sizeLabel.text = model.sku_name;
         }
         
         
         return cell;
+    } else if (indexPath.section == 1)
+    {
+        static NSString *CellIdentifier = @"ReBuyTableCell";
+        
+        
+        ReBuyTableViewCell *cell = (ReBuyTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (self.historyCarts.count == 0) {
+            
+        } else{
+            
+            NewCartsModel *model = [self.historyCarts objectAtIndex:indexPath.row];
+            cell.cartModel= model;
+            cell.delegate = self;
+            cell.headImageView.layer.borderWidth = 0.5;
+            cell.headImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+            cell.headImageView.layer.cornerRadius = 5;
+            cell.headImageView.layer.masksToBounds = YES;
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            cell.delegate = self;
+            cell.cartModel = model;
+            cell.nameLabel.text = model.title;
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
+            
+            cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+            
+            cell.sizeLabel.text = model.sku_name;
+        }
+        
+        
+        return cell;
+        
     }
-    NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
-    
-  
-    CartTableCellTableViewCell1 *cell = (CartTableCellTableViewCell1 *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    return nil;
    
-    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    cell.cartModel= model;
-    cell.delegate = self;
-    cell.myImageView.layer.borderWidth = 0.5;
-    cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
-    cell.myImageView.layer.cornerRadius = 5;
-    cell.myImageView.layer.masksToBounds = YES;
-    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
-    
-    cell.nameLabel.text = model.title;
-    cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
-
-//    cell.contentView.backgroundColor = [UIColor redColor];
-    cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
-    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
-
-    cell.sizeLabel.text = model.sku_name;
-    
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == self.dataArray.count) {
-        return 60;
-    }
+   
     return 110;
 }
 
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == self.dataArray.count) {
+        return 0;
+    }
+    if (indexPath.section == 1) {
         return 0;
     }
     return UITableViewCellEditingStyleDelete;
@@ -333,6 +310,72 @@
     [self.myTableView setEditing:editing animated:animated];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        return 50;
+    }
+    return 0.1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return 44;
+    }
+    return 0.1;
+    
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        
+//        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"BlueView" owner:nil options:nil];
+//        self.blueView = views[0];
+        
+        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FooterView" owner:nil options:nil];
+        
+        UIView *footerView = views[0];
+        UILabel *pricelabel = (UILabel *)[footerView viewWithTag:100];
+        UILabel *nameLabel = (UILabel *)[footerView viewWithTag:200];
+        UIImageView *imageView = (UIImageView *)[footerView viewWithTag:300];
+        pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+        
+        if (allPrice >= 150) {
+            nameLabel.text = @"有可用优惠券";
+        }  else {
+            nameLabel.text = [NSString stringWithFormat:@"还差%.1f元可用优惠券", 150 - allPrice];
+            
+        }
+        imageView.hidden = NO;
+        
+        footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
+        footerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+        
+        return footerView;
+    }
+    return [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44)];
+        headerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+        
+        
+        
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 34)];
+        label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+        label.font = [UIFont systemFontOfSize:12];
+        label.text = @"支付超时";
+        [headerView addSubview:label];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 43, SCREENWIDTH, 1)];
+        lineView.backgroundColor= [UIColor colorWithR:218 G:218 B:218 alpha:1];
+        [headerView addSubview:lineView];
+        
+        return headerView;
+        
+    
+    }
+    return [[UIView alloc] initWithFrame:CGRectZero];
+}
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除";
@@ -370,6 +413,7 @@
     
     
     [self downloadData];
+    [self downloadHistoryData];
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     NSLog(@"data = %@", data);
@@ -530,6 +574,7 @@
     NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     NSLog(@"%@",str1);
     [self downloadData];
+    [self downloadHistoryData];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     NSLog(@"data = %@", data);
     if (data != nil) {
@@ -566,6 +611,66 @@
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 
+
+- (void)reBuyAddCarts:(NewCartsModel *)model{
+    NSLog(@"%d", (int)model.ID);
+ 
+    
+ 
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *parameters = @{@"item_id": model.item_id,
+                                 @"sku_id":model.sku_id,
+                                 @"cart_id":[NSNumber numberWithInt:model.ID]                                 };
+    //            self.detailsModel.skuID = selectskuID;
+    NSLog(@"skuID = %@, itemID = %@", model.sku_id, model.item_id);
+    
+    [manager POST:kCart_URL parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+              //[self myAnimation];
+              [self downloadData];
+              [self downloadHistoryData];
+              if (self.dataArray.count >= 18) {
+                  NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
+                  
+                  [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+              }
+            
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              NSLog(@"error:, --.>>>%@", error.description);
+              NSDictionary *dic = [error userInfo];
+              NSLog(@"dic = %@", dic);
+              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+              
+              NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+              NSLog(@"%@",str);
+              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
+              view.backgroundColor = [UIColor blackColor];
+              view.layer.cornerRadius = 8;
+              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+              label.text = @"商品库存不足";
+              label.textAlignment = NSTextAlignmentCenter;
+              label.textColor = [UIColor whiteColor];
+              label.font = [UIFont systemFontOfSize:24];
+              [view addSubview:label];
+              [self.view addSubview:view];
+              
+              
+              [UIView animateWithDuration:1.0 animations:^{
+                  view.alpha = 0;
+              } completion:^(BOOL finished) {
+                  [view removeFromSuperview];
+              }];
+          }];
+
+
+
+
+    NSLog(@"重新购买了");
+}
 
 
 @end
