@@ -16,6 +16,8 @@
 #import "TuihuoController.h"
 #import "Pingpp.h"
 #import "UIViewController+NavigationBar.h"
+#import "ShenQingTuikuanController.h"
+
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -414,7 +416,7 @@
     NSInteger i = button.tag - 200;
     tuihuoModel = [dataArray objectAtIndex:i];
     
-    TuihuoController *tuiHuoVC = [[TuihuoController alloc] initWithNibName:@"TuihuoController" bundle:nil];
+    ShenQingTuikuanController *tuiHuoVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
     
     tuiHuoVC.dingdanModel = tuihuoModel;
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.urlString);

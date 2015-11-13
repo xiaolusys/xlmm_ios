@@ -633,6 +633,8 @@
 		32FE08821BF47E380072CCEC /* ReBuyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08801BF47E380072CCEC /* ReBuyTableViewCell.m */; };
 		32FE08831BF47E380072CCEC /* ReBuyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */; };
 		32FE08851BF492C50072CCEC /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08841BF492C50072CCEC /* FooterView.xib */; };
+		32FE08891BF5AC750072CCEC /* ShenQingTuikuanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */; };
+		32FE088A1BF5AC750072CCEC /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */; };
 		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
 		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
@@ -1169,6 +1171,9 @@
 		32FE08801BF47E380072CCEC /* ReBuyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReBuyTableViewCell.m; sourceTree = "<group>"; };
 		32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReBuyTableViewCell.xib; sourceTree = "<group>"; };
 		32FE08841BF492C50072CCEC /* FooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
+		32FE08861BF5AC750072CCEC /* ShenQingTuikuanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingTuikuanController.h; sourceTree = "<group>"; };
+		32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingTuikuanController.m; sourceTree = "<group>"; };
+		32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShenQingTuikuanController.xib; sourceTree = "<group>"; };
 		32FF9A231B9FDB870001F314 /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		32FF9A241B9FDB870001F314 /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
@@ -1908,6 +1913,9 @@
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
 				32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */,
+				32FE08861BF5AC750072CCEC /* ShenQingTuikuanController.h */,
+				32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */,
+				32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2274,6 +2282,7 @@
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
+				32FE088A1BF5AC750072CCEC /* ShenQingTuikuanController.xib in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
@@ -2644,6 +2653,7 @@
 				32FE08791BF377CB0072CCEC /* HistoryCartsView.m in Sources */,
 				32E329991B70C70000A6F0BC /* DetailViewController.m in Sources */,
 				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,
+				32FE08891BF5AC750072CCEC /* ShenQingTuikuanController.m in Sources */,
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,

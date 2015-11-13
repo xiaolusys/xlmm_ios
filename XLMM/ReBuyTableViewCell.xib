@@ -62,10 +62,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fbh-5Z-7lt">
-                        <rect key="frame" x="220" y="67" width="88" height="32"/>
+                        <rect key="frame" x="220" y="71" width="88" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="88" id="Bxa-2c-OXw"/>
-                            <constraint firstAttribute="height" constant="32" id="ppp-4y-k1w"/>
+                            <constraint firstAttribute="height" constant="28" id="ppp-4y-k1w"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="重新购买">
