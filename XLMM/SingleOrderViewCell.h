@@ -18,8 +18,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *midHeight;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
 
 
 @end

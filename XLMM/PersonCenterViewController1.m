@@ -297,7 +297,7 @@
             [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
-            imageView.layer.borderWidth = 1;
+            imageView.layer.borderWidth = 0.5;
             imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
             imageView.hidden = NO;
             

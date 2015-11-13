@@ -34,6 +34,11 @@
         // 加载nib
         self = [arrayOfViews objectAtIndex:0];
     }
+    
+    self.topHeight.constant = 0.5;
+    self.midHeight.constant = 0.5;
+    self.bottomHeight.constant = 0.5;
+    
     return self;
 }
 

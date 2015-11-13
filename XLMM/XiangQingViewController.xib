@@ -590,7 +590,9 @@
                                 <constraint firstAttribute="trailing" secondItem="4dW-IF-hbt" secondAttribute="trailing" id="f44-4e-pkF"/>
                                 <constraint firstItem="x9f-4k-epo" firstAttribute="top" secondItem="PaI-tH-2Qk" secondAttribute="bottom" constant="1" id="sQM-Zu-Mw1"/>
                                 <constraint firstAttribute="height" constant="204" id="t3N-Ua-RB2"/>
-                                <constraint firstItem="4dW-IF-hbt" firstAttribute="top" secondItem="x9f-4k-epo" secondAttribute="bottom" constant="1" id="tmT-yY-IgG"/>
+                                <constraint firstItem="4dW-IF-hbt" firstAttribute="top" secondItem="x9f-4k-epo" secondAttribute="bottom" constant="1" id="tmT-yY-IgG">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                                </constraint>
                                 <constraint firstAttribute="bottom" secondItem="4dW-IF-hbt" secondAttribute="bottom" id="xHa-Cj-6h7">
                                     <variation key="heightClass=regular-widthClass=compact" constant="1"/>
                                 </constraint>

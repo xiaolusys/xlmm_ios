@@ -121,6 +121,8 @@
                 <constraint firstAttribute="bottom" secondItem="m8V-Iz-lWI" secondAttribute="bottom" constant="1" id="epb-km-xLc"/>
             </constraints>
             <connections>
+                <outlet property="bottomHeight" destination="epb-km-xLc" id="xo8-fd-iEN"/>
+                <outlet property="midHeight" destination="Tuc-di-SAQ" id="aqy-EK-I8J"/>
                 <outlet property="nameLabel" destination="gmS-Tt-gzn" id="haP-9e-ASb"/>
                 <outlet property="numberLabel" destination="gDb-ex-0sM" id="VKc-UO-mBJ"/>
                 <outlet property="orderImageView" destination="xcy-qR-qTg" id="leE-Rc-KpC"/>
@@ -128,6 +130,7 @@
                 <outlet property="priceLabel" destination="3Um-dr-Lie" id="OJY-Wz-6a7"/>
                 <outlet property="sizeLabel" destination="lXi-jU-0BV" id="TdY-J4-FhX"/>
                 <outlet property="statusLabel" destination="7T6-B8-gMg" id="WX3-vf-WA4"/>
+                <outlet property="topHeight" destination="8bS-wf-ZRz" id="z4T-X9-jFh"/>
             </connections>
         </collectionViewCell>
     </objects>

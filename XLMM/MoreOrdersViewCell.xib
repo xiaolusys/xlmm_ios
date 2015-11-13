@@ -124,10 +124,13 @@
             </constraints>
             <size key="customSize" width="50" height="104"/>
             <connections>
+                <outlet property="bottomHeight" destination="eCh-D0-Npb" id="vce-Qk-JRU"/>
+                <outlet property="midHeight" destination="Jcx-CB-9KK" id="Tmr-Pc-Okx"/>
                 <outlet property="paymentLabel" destination="XaX-z7-EkR" id="cm2-KR-ALL"/>
                 <outlet property="statusLabel" destination="49t-MT-lfr" id="h3J-0x-4B1"/>
+                <outlet property="topHeight" destination="tUJ-B0-58g" id="cOD-kc-nBd"/>
             </connections>
-            <point key="canvasLocation" x="-169.5" y="218"/>
+            <point key="canvasLocation" x="-338.5" y="209"/>
         </collectionViewCell>
     </objects>
 </document>

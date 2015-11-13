@@ -37,7 +37,11 @@
         self.orderImageView.layer.masksToBounds = YES;
         self.orderImageView.layer.cornerRadius = 5;
         self.orderImageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
-        self.orderImageView.layer.borderWidth = 1;
+        self.orderImageView.layer.borderWidth = 0.5;
+        self.topHeight.constant = 0.5;
+        self.midHeight.constant = 0.5;
+        self.bottomHeight.constant = 0.5;
+        
     }
     return self;
 }
