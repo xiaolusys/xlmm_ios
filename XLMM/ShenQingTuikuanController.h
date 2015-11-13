@@ -36,5 +36,9 @@
 - (IBAction)reduceButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *addButtonClicked;
 - (IBAction)addBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *selectedReason;
+@property (weak, nonatomic) IBOutlet UITextView *inputTextView;
+- (IBAction)yuanyinClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @end

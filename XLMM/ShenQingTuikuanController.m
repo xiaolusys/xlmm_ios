@@ -17,7 +17,7 @@
 
 
 
-@interface ShenQingTuikuanController ()
+@interface ShenQingTuikuanController ()<UITextViewDelegate>
 
 
 @end
@@ -33,14 +33,33 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHiden:) name:UIKeyboardDidHideNotification object:nil];
     
 }
+
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    
     
 }
+
+- (void)keyboardDidShow:(NSNotification *)notification{
+    NSLog(@"show");
+    self.view.frame = CGRectMake(0, -120, SCREENWIDTH, 120 + SCREENHEIGHT);
+}
+- (void)keyboardDidHiden:(NSNotification *)notification{
+
+    NSLog(@"hiden");
+    self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+
+}
+
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -75,7 +94,14 @@
     self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", [self.dingdanModel.priceString floatValue]];
     self.refundNumLabel.text = [NSString stringWithFormat:@"%i", maxNumber];
     
+    self.selectedReason.layer.cornerRadius = 4;
+    self.selectedReason.layer.borderWidth = 0.5;
+    self.selectedReason.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.inputTextView.layer.cornerRadius = 4;
+    self.inputTextView.layer.borderWidth = 0.5;
+    self.inputTextView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     
+    self.inputTextView.clearsContextBeforeDrawing = YES;
     
 }
 
@@ -140,8 +166,47 @@
     
     
 }
+
+#pragma mark --TextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+   // textView.text = @" ";
+    self.infoLabel.hidden = YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView.text.length==0) {
+        self.infoLabel.hidden = NO;
+    }
+    
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+    //return YES;
+    
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    return YES;
+}
+
+
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.inputTextView resignFirstResponder];
+    
+}
 - (IBAction)addBtnClicked:(id)sender {
-    NSLog(@"加一件                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ");
+  
     if (number++ > maxNumber - 1) {
         number--;
         return;
@@ -179,5 +244,9 @@
               
           }];
 
+}
+- (IBAction)yuanyinClicked:(id)sender {
+    
+    NSLog(@"选择退款原因");
 }
 @end

@@ -17,6 +17,7 @@
 #import "Pingpp.h"
 #import "UIViewController+NavigationBar.h"
 #import "ShenQingTuikuanController.h"
+#import "ShenQingTuiHuoController.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -407,8 +408,18 @@
  
     
 }
+
+#pragma mark
 - (void)tuihuotuikuan:(UIButton *)button{
     NSLog(@"退货退款");
+    ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
+    
+    
+    [self.navigationController pushViewController:tuikuanVC animated:YES];
+    
+    
+    
+    
 }
 - (void)tuikuan:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);

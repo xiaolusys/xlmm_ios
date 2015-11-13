@@ -64,6 +64,8 @@
 		3249B9B71B6F3EE60086D030 /* ZhiFuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9B51B6F3EE60086D030 /* ZhiFuCollectionCell.m */; };
 		3249B9BC1B6F49A20086D030 /* ShouHuoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */; };
 		3249D4971B78554900DF1D9A /* 小鹿美美logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */; };
+		32558A9F1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */; };
+		32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */; };
 		325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327FC2621B9AF1CD00F111B3 /* CartCollectionCell.xib */; };
 		325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
 		325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
@@ -635,6 +637,7 @@
 		32FE08851BF492C50072CCEC /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08841BF492C50072CCEC /* FooterView.xib */; };
 		32FE08891BF5AC750072CCEC /* ShenQingTuikuanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */; };
 		32FE088A1BF5AC750072CCEC /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */; };
+		32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FE088B1BF5CB940072CCEC /* downArrow1.png */; };
 		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
 		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
@@ -737,6 +740,9 @@
 		3249B9BA1B6F49A20086D030 /* ShouHuoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouHuoCollectionViewCell.m; sourceTree = "<group>"; };
 		3249B9BB1B6F49A20086D030 /* ShouHuoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShouHuoCollectionViewCell.xib; sourceTree = "<group>"; };
 		3249D4961B78554900DF1D9A /* 小鹿美美logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "小鹿美美logo.jpg"; sourceTree = "<group>"; };
+		32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingTuiHuoController.h; sourceTree = "<group>"; };
+		32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingTuiHuoController.m; sourceTree = "<group>"; };
+		32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShenQingTuiHuoController.xib; sourceTree = "<group>"; };
 		325B1E7E1BE489C00027B3E3 /* barbackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage.png; sourceTree = "<group>"; };
 		325B1E801BE48D390027B3E3 /* barbackImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barbackImage2.png; sourceTree = "<group>"; };
 		325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorImage.h"; sourceTree = "<group>"; };
@@ -1174,6 +1180,7 @@
 		32FE08861BF5AC750072CCEC /* ShenQingTuikuanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingTuikuanController.h; sourceTree = "<group>"; };
 		32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingTuikuanController.m; sourceTree = "<group>"; };
 		32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShenQingTuikuanController.xib; sourceTree = "<group>"; };
+		32FE088B1BF5CB940072CCEC /* downArrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow1.png; sourceTree = "<group>"; };
 		32FF9A231B9FDB870001F314 /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		32FF9A241B9FDB870001F314 /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
@@ -1259,6 +1266,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32FE088B1BF5CB940072CCEC /* downArrow1.png */,
 				32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */,
 				32DE21C51BF1DE2A00999ECA /* shareIcon.png */,
 				32DE21B61BF184A200999ECA /* childIcon.png */,
@@ -1916,6 +1924,9 @@
 				32FE08861BF5AC750072CCEC /* ShenQingTuikuanController.h */,
 				32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */,
 				32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */,
+				32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */,
+				32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */,
+				32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2292,6 +2303,7 @@
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
+				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
 				32121B451B9481B900742E53 /* PosterCollectionCell.xib in Resources */,
 				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				32EC425C1BE89373009E5FA2 /* ShouHuoCollectionViewCell.xib in Resources */,
@@ -2338,6 +2350,7 @@
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
 				32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
+				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,
@@ -2579,6 +2592,7 @@
 				32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */,
 				32CC7C881BA0109500475E2E /* TuihuoXiangqingViewController.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
+				32558A9F1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m in Sources */,
 				321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
