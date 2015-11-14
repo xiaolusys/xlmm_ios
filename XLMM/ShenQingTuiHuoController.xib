@@ -8,6 +8,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShenQingTuiHuoController">
             <connections>
+                <outlet property="commitButton" destination="9z6-SF-cVH" id="hqX-yM-qAB"/>
+                <outlet property="infoLabel" destination="EH1-MO-dxB" id="H3g-a9-bh4"/>
+                <outlet property="inputTextView" destination="Bmk-EG-JBV" id="8K7-CL-G7R"/>
+                <outlet property="myImageView" destination="nP4-pE-0Eb" id="ZxF-rB-n4p"/>
+                <outlet property="nameLabel" destination="4BL-aS-9NB" id="T6f-1R-H3D"/>
+                <outlet property="numberLabel" destination="APh-g1-ezb" id="lVK-iK-8cG"/>
+                <outlet property="priceLabel" destination="PIz-LJ-bZf" id="dMz-A3-FIN"/>
+                <outlet property="reasonLabel" destination="6vU-At-0P5" id="ZQb-38-cKq"/>
+                <outlet property="refundNumLabel" destination="73o-gG-LMR" id="O6r-MX-spf"/>
+                <outlet property="refundPriceLabel" destination="Z3E-vJ-Gta" id="Krz-Uj-SpQ"/>
+                <outlet property="selectedReason" destination="VLg-1o-Nik" id="0A0-gU-JNf"/>
+                <outlet property="sizeNameLabel" destination="Hmd-zB-0fI" id="BNO-rK-RLT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -118,6 +130,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="6mf-oD-mfF"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="addBtnClicked:" destination="-1" eventType="touchUpInside" id="8W4-mD-8GT"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRi-UP-h0J">
                                                     <rect key="frame" x="222" y="0.0" width="46" height="45"/>
@@ -125,6 +140,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="RDX-Rs-vRE"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="reduceButtonClicked:" destination="-1" eventType="touchUpInside" id="AKa-gR-shN"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -199,9 +217,38 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wlB-BF-IGw">
                                     <rect key="frame" x="0.0" y="503" width="320" height="61"/>
-                                    <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjU-QB-N6K">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                            <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="Tap-HA-Io0"/>
+                                            </constraints>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9z6-SF-cVH">
+                                            <rect key="frame" x="15" y="11" width="290" height="40"/>
+                                            <color key="backgroundColor" red="0.96078431372549022" green="0.69411764705882351" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="dns-dS-Rye"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <state key="normal" title="提交申请">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="commitClicked:" destination="-1" eventType="touchUpInside" id="WuF-5l-fyV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="jjU-QB-N6K" firstAttribute="leading" secondItem="wlB-BF-IGw" secondAttribute="leading" id="VWP-aP-ruW"/>
+                                        <constraint firstAttribute="trailing" secondItem="jjU-QB-N6K" secondAttribute="trailing" id="ape-wy-QSO"/>
+                                        <constraint firstAttribute="trailing" secondItem="9z6-SF-cVH" secondAttribute="trailing" constant="15" id="ceV-Zi-3bz"/>
+                                        <constraint firstItem="9z6-SF-cVH" firstAttribute="leading" secondItem="wlB-BF-IGw" secondAttribute="leading" constant="15" id="fwp-sH-Vhe"/>
                                         <constraint firstAttribute="height" constant="61" id="qE1-R3-R4e"/>
+                                        <constraint firstItem="9z6-SF-cVH" firstAttribute="top" secondItem="jjU-QB-N6K" secondAttribute="bottom" constant="10" id="sOY-31-nLI"/>
+                                        <constraint firstItem="jjU-QB-N6K" firstAttribute="top" secondItem="wlB-BF-IGw" secondAttribute="top" id="sja-hF-6je"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KLq-3W-0e7">
@@ -234,6 +281,9 @@
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YG3-Rs-cyl">
                                                             <rect key="frame" x="8" y="1" width="284" height="33"/>
+                                                            <connections>
+                                                                <action selector="yuanyinClicked:" destination="-1" eventType="touchUpInside" id="zR5-rh-Qzk"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -255,6 +305,9 @@
                                                     <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="-1" id="7FS-yy-R7G"/>
+                                                    </connections>
                                                 </textView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入退款说明" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EH1-MO-dxB">
                                                     <rect key="frame" x="18" y="78" width="98" height="17"/>

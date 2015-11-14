@@ -412,9 +412,22 @@
 #pragma mark
 - (void)tuihuotuikuan:(UIButton *)button{
     NSLog(@"退货退款");
+    
+    NSInteger i = button.tag - 200;
+    tuihuoModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
     
+    tuikuanVC.dingdanModel = tuihuoModel;
+    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
+    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.priceString);
+    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);
+    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.sizeString);
+    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.nameString);
+    tuikuanVC.tid = tid;
+    tuikuanVC.oid = [oidArray objectAtIndex:i];
+    tuikuanVC.status = self.zhuangtaiLabel.text;
     
+    NSLog(@"tid = %@, \noid = %@ \nstatus = %@", tuikuanVC.tid, tuikuanVC.oid, tuikuanVC.status);
     [self.navigationController pushViewController:tuikuanVC animated:YES];
     
     
