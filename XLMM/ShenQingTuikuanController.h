@@ -40,5 +40,11 @@
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 - (IBAction)yuanyinClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
+- (IBAction)commitClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
+
+
+
 
 @end

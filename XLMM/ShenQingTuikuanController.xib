@@ -10,12 +10,14 @@
             <connections>
                 <outlet property="addButton" destination="ahD-VO-bdT" id="qle-88-9LD"/>
                 <outlet property="addButtonClicked" destination="ahD-VO-bdT" id="bC0-JK-AO7"/>
+                <outlet property="commitButton" destination="mz5-NN-eNZ" id="3iU-SL-adv"/>
                 <outlet property="infoLabel" destination="ZM3-U8-2Z0" id="VcL-Zb-ZWp"/>
                 <outlet property="inputTextView" destination="y6Z-I9-VjJ" id="nG2-rL-mvh"/>
                 <outlet property="myImageView" destination="09q-EC-js5" id="lIK-E4-V3B"/>
                 <outlet property="nameLabel" destination="UFP-6S-e9L" id="urr-1J-9kt"/>
                 <outlet property="numberLabel" destination="bOM-hR-IUl" id="yq5-BY-O3b"/>
                 <outlet property="priceLabel" destination="kyj-m0-RUM" id="pew-Yc-OJv"/>
+                <outlet property="reasonLabel" destination="kXS-2P-mQw" id="KZ3-Nt-FEf"/>
                 <outlet property="refundNumLabel" destination="ZHN-lY-d7X" id="XZN-02-Ohh"/>
                 <outlet property="refundPriceLabel" destination="MNp-EV-Y8f" id="Msn-cx-S9R"/>
                 <outlet property="selectedReason" destination="Vt0-u7-g7v" id="4Gd-DF-Trj"/>
@@ -319,6 +321,9 @@
                             <state key="normal" title="提交申请">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="commitClicked:" destination="-1" eventType="touchUpInside" id="dt1-i8-oxr"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -346,7 +351,7 @@
                 <constraint firstItem="7Si-3k-qeZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ynP-BL-6bT"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="12" y="17"/>
+            <point key="canvasLocation" x="-380" y="-1"/>
         </view>
     </objects>
     <resources>

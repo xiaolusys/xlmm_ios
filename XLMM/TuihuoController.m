@@ -382,48 +382,7 @@
             
             
             NSLog(@"000000%@",str1);
-//
-//            NSDictionary *parameters = @{@"id":self.oid,
-//                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-//                                         @"num":self.number.text,
-//                                         @"sum_price":self.myTextField2.text,
-//                                         @"description":self.myTextView.text
-//                                         };
-//
-//            
-//            NSLog(@"parameters = %@", parameters);
-//            
-//            [manager POST:urlString parameters:parameters
-//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                      
-//                      NSLog(@"JSON: %@", responseObject);
-//                      
-//                      NSDictionary *dic = responseObject;
-//                      NSString * result = [dic objectForKey:@"res"];
-//                      if ([result isEqualToString:@"ok"]) {
-//                          NSLog(@"申请成功了， 恭喜你哦");
-//                          
-//                          NSArray *viewControllers = self.navigationController.viewControllers;
-//                          
-//                          UIViewController *controller = [viewControllers objectAtIndex:viewControllers.count-3];
-//                          
-//                          [self.navigationController popToViewController:controller animated:YES];
-//                          
-//                          
-//                      }
-//                      NSLog(@"perration = %@", operation);
-//                      
-//                  }
-//             
-//             // xd15091555f787581f093
-//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                      
-//                      NSLog(@"Error: %@", error);
-//                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-//                      NSLog(@"perration = %@", operation);
-//                      
-//                      
-//                  }];
+
             
         }
     }
