@@ -14,7 +14,6 @@
 #import "UIImageView+WebCache.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-#import <QiniuSDK.h>
 
 
 

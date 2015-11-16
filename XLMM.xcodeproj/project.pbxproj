@@ -643,7 +643,6 @@
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
 		32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */; };
 		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
-		D2DBDBDB7846A04E13641F7B /* libPods-XLMM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085851412929573E4EF8F39E /* libPods-XLMM.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -657,8 +656,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		085851412929573E4EF8F39E /* libPods-XLMM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XLMM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2560ED3A3305EA6FA74ECEAF /* Pods-XLMM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLMM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLMM/Pods-XLMM.debug.xcconfig"; sourceTree = "<group>"; };
 		32088DD61BE20A7300A33FC9 /* back_image2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_image2.png; sourceTree = "<group>"; };
 		320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
@@ -1192,7 +1189,6 @@
 		32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoCollectionCell.xib; sourceTree = "<group>"; };
 		32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoModel.h; sourceTree = "<group>"; };
 		32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoModel.m; sourceTree = "<group>"; };
-		361D1FC849B1D8D72BA52986 /* Pods-XLMM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLMM.release.xcconfig"; path = "Pods/Target Support Files/Pods-XLMM/Pods-XLMM.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1218,7 +1214,6 @@
 				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
 				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
 				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
-				D2DBDBDB7846A04E13641F7B /* libPods-XLMM.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1402,8 +1397,6 @@
 				325BA0EF1B68B18A006D64BD /* Products */,
 				328422B81B84217100C4EA76 /* framework */,
 				329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */,
-				B427C777440EDD7516484A2F /* Pods */,
-				8909EEEE013F614A8ADB3AE0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2095,23 +2088,6 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		8909EEEE013F614A8ADB3AE0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				085851412929573E4EF8F39E /* libPods-XLMM.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B427C777440EDD7516484A2F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2560ED3A3305EA6FA74ECEAF /* Pods-XLMM.debug.xcconfig */,
-				361D1FC849B1D8D72BA52986 /* Pods-XLMM.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2119,12 +2095,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 325BA1111B68B18A006D64BD /* Build configuration list for PBXNativeTarget "XLMM" */;
 			buildPhases = (
-				51C9DB1FEF3BE51A797C088F /* Check Pods Manifest.lock */,
 				325BA0EA1B68B18A006D64BD /* Sources */,
 				325BA0EB1B68B18A006D64BD /* Frameworks */,
 				325BA0EC1B68B18A006D64BD /* Resources */,
-				747886DE493D2CB4D44B9494 /* Embed Pods Frameworks */,
-				73E979C367E3F9757405FE40 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2578,54 +2551,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		51C9DB1FEF3BE51A797C088F /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		73E979C367E3F9757405FE40 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLMM/Pods-XLMM-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		747886DE493D2CB4D44B9494 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLMM/Pods-XLMM-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		325BA0EA1B68B18A006D64BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -3000,7 +2925,6 @@
 		};
 		325BA1121B68B18A006D64BD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2560ED3A3305EA6FA74ECEAF /* Pods-XLMM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3040,7 +2964,6 @@
 		};
 		325BA1131B68B18A006D64BD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 361D1FC849B1D8D72BA52986 /* Pods-XLMM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
