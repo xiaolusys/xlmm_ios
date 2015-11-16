@@ -53,6 +53,7 @@
     self.tijiaoButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
     // zifei is going to get started.
+    // ok i c
     
 }
 
