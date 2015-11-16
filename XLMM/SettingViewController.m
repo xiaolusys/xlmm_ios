@@ -125,7 +125,7 @@
     if([fm fileExistsAtPath:filePath]){
         //取得一个目录下得所有文件名
         NSArray *files = [fm subpathsAtPath:filePath];
-        NSLog(@"files1111111%@ == %ld",files,files.count);
+        NSLog(@"files1111111%@ == %ld",files,(unsigned long)files.count);
         
         // 获得文件名（不带后缀）
         NSString * exestr = [[files objectAtIndex:1] stringByDeletingPathExtension];

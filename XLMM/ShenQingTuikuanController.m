@@ -300,48 +300,48 @@
     NSLog(@"选择");
     switch (buttonIndex) {
         case 1:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 2;
             break;
         case 2:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 3;
             break;
         case 3:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 4;
             break;
         case 4:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             
             reasonCode = 5;
             break;
         case 5:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 6;
             break;
         case 6:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 7;
             break;
         case 7:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 8;
             break;
         case 8:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 9;
             break;
         case 9:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 10;
             break;
         case 10:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 0;
             break;
         case 0:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
             reasonCode = 1;
             break;
       
@@ -349,7 +349,7 @@
     
             
         default:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
 
             break;
     }
