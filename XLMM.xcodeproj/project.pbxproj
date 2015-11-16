@@ -543,7 +543,6 @@
 		32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE48B1B85B12D00FBEC25 /* AddYouhuiquanViewController.m */; };
 		32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE48C1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib */; };
 		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
-		32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
 		32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32BE33931BDA0A720078C8B0 /* testImage.jpg */; };
 		32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; };
 		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; };
@@ -643,6 +642,7 @@
 		32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A291B9FDBEC0001F314 /* TuihuoCollectionCell.m */; };
 		32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */; };
 		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
+		8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2234,6 +2234,7 @@
 				3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
+				8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */,
 				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
 				32FE087B1BF377E30072CCEC /* HistoryCartsView.xib in Resources */,
 				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
@@ -2319,7 +2320,6 @@
 				32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
 				323B9C681BDDB6690060BFC1 /* shopping_cart_jian.png in Resources */,
-				32BDE4931B85CD1100FBEC25 /* TousuViewController.xib in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
