@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *tijiaoButton;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 - (IBAction)tijiaoClicked:(id)sender;
 
