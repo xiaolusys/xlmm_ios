@@ -14,6 +14,8 @@
 #import "UIImageView+WebCache.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import <QiniuSDK.h>
+
 
 
 
@@ -323,6 +325,7 @@
     UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
     
     [self.sendImageView setImage:savedImage];
+    
     
     self.sendImageView.tag = 100;
     
