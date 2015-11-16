@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
+#define TEXT_LIMIT 80
 
 @interface TousuViewController ()<UIAlertViewDelegate>{
     NSMutableArray *dataArray;
@@ -50,8 +51,10 @@
     
     self.tijiaoButton.layer.cornerRadius = 20;
     self.tijiaoButton.layer.borderWidth = 1;
-    self.tijiaoButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.tijiaoButton.enabled = NO;
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // zifei is going to get started.
     // ok i c
     
@@ -126,32 +129,6 @@
     NSLog(@"ls = %d", fl);
 }
 
-- (void)setInfo{
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"投诉建议";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-gerenzhongxin.png"]];
-    imageView2.frame = CGRectMake(8, 8, 29, 33);
-    [button2 addSubview:imageView2];
-    [button2 addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button2];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
-}
-
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -175,54 +152,44 @@
 - (IBAction)tijiaoClicked:(id)sender {
     NSString *text = self.tousuTextView.text;
     NSUInteger length = text.length;
-    if (length<5 || length>500) {
-        self.tipsLabel.hidden = NO;
-        self.tipsLabel.text = @"您的意见<5个字符，或>500个字符，请核实后再提交~";
-        [self performSelector:@selector(hiddenLabel) withObject:nil afterDelay:4];
-        
-    } else{
-        
-        [self performSelector:@selector(successCommit) withObject:nil afterDelay:0.5];
-        
-        NSLog(@"投诉内容：%@", self.tousuTextView.text);
-        // com_content 
-        //  http://m.xiaolu.so/rest/v1/complain
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/complain", Root_URL];
-        NSLog(@"urlString = %@", urlString);
-        
-        
-        
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        //第二步，创建请求
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-        
-        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-        
-        NSString *str = [NSString stringWithFormat:@"com_content=%@", self.tousuTextView.text];//设置参数
-        
-        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-        
-        [request setHTTPBody:data];
-        
-        //第三步，连接服务器
-        
-        
-        
-        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        
-        
-        
-        NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-        
-        
-        
-        NSLog(@"%@",str1);
-        
-        
+    if (length <= 0) {
+        return;
     }
     
+    
+    //[self performSelector:@selector(successCommit) withObject:nil afterDelay:0.5];
+        
+    NSLog(@"投诉内容：%@", self.tousuTextView.text);
+    // com_content 
+    //  http://m.xiaolu.so/rest/v1/complain
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/complain", Root_URL];
+    NSLog(@"urlString = %@", urlString);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //第二步，创建请求
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    
+    NSString *str = [NSString stringWithFormat:@"com_content=%@", self.tousuTextView.text];//设置参数
+    
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [request setHTTPBody:data];
+    
+    //第三步，连接服务器
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    
+    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    //NSLog(@"%@",str1);
+    if ([str1 isEqualToString:@"\"OK\""]){
+        [self successCommit];
+    }
 }
 
 - (void)hiddenLabel{
@@ -245,17 +212,42 @@
 #pragma mark --UITextFieldDelegate--
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
- 
-    
+    self.infoLabel.hidden = YES;
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-//    NSString *text = self.tousuTextView.text;
-//    NSString *string = [NSString stringWithFormat:@"最少输入5个字符，最多输入500个字符，您已输入%lu个字符。", (unsigned long)[text length]];
+    if (textView.text.length > 0 && self.tijiaoButton.enabled == NO) {
+        [self enableTijiaoButton];
+    }
+    if (textView.text.length <= 0 && self.tijiaoButton.enabled == YES) {
+        [self disableTijiaoButton];
+    }
+    if (textView.text.length > TEXT_LIMIT)
+    {
+        textView.text = [textView.text substringToIndex:TEXT_LIMIT];
+    }
+    NSString *count = [NSString stringWithFormat:@"%lu",(unsigned long)textView.text.length];
+    self.countLabel.text = count;
 }
 
+
+
 - (void)textViewDidEndEditing:(UITextView *)textView{
-   
+    if (textView.text.length <= 0) {
+        self.infoLabel.hidden = NO;
+    }
+}
+
+- (void)enableTijiaoButton{
+    self.tijiaoButton.enabled = YES;
+    self.tijiaoButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.tijiaoButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+}
+
+- (void)disableTijiaoButton{
+    self.tijiaoButton.enabled = NO;
+    self.tijiaoButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
+    self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
 }
 
 
