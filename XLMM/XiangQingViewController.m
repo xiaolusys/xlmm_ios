@@ -18,6 +18,8 @@
 #import "UIViewController+NavigationBar.h"
 #import "ShenQingTuikuanController.h"
 #import "ShenQingTuiHuoController.h"
+#import "NSString+URL.h"
+
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -252,7 +254,7 @@
         owner.myView.frame = CGRectMake(0, 0 + 90 * i, SCREENWIDTH, 90);
         
         model = [dataArray objectAtIndex:i];
-        [owner.frontView sd_setImageWithURL:[NSURL URLWithString:model.urlString]];
+        [owner.frontView sd_setImageWithURL:[NSURL URLWithString:[model.urlString URLEncodedString]]];
         owner.frontView.layer.masksToBounds = YES;
         owner.frontView.layer.borderWidth = 0.5;
         owner.frontView.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;

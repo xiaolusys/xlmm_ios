@@ -14,6 +14,8 @@
 #import "TuihuoXiangqingViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
+#import "NSString+URL.h"
+
 
 @interface TuihuoViewController ()
 
@@ -205,7 +207,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (model.pic_path == nil || [model.pic_path class] == [NSNull class] || [model.pic_path isEqualToString:@""]) {
         cell.myImageView.image = nil;
     } else {
-        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path]];
+        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
         
     }
     cell.infoLabel.text = model.status_display;

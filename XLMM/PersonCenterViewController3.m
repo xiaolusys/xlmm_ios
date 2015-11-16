@@ -18,6 +18,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
+#import "NSString+URL.h"
 
 
 
@@ -250,7 +251,7 @@
         
         NSDictionary *details = [model.ordersArray objectAtIndex:0];
         
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
        
         cell.nameLabel.text = [details objectForKey:@"title"];
         cell.sizeLabel.text = [details objectForKey:@"sku_name"];
@@ -352,7 +353,7 @@
             NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             NSLog(@"imageView = %@", imageView);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[details objectForKey:@"pic_path"]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
             imageView.layer.borderWidth = 0.5;
