@@ -322,7 +322,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2 + 60)];
+    [flowLayout setItemSize:CGSizeMake((SCREENWIDTH - 4)/2, (SCREENWIDTH - 4)/2*7/6 + 60)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical]; flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 0, 0);
     [self.childCollectionView setCollectionViewLayout:flowLayout];
     self.childCollectionView.showsVerticalScrollIndicator = NO;
@@ -392,7 +392,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 60);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 *7/6+ 60);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{

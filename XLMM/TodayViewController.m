@@ -463,7 +463,7 @@ static NSString *khead2View = @"head2View";
         
     }
   //    NSLog(@"%f,%f", (SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *7/6 + 60);
   
     
 }
@@ -525,6 +525,8 @@ static NSString *khead2View = @"head2View";
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
+            //cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+
             return cell;
         }
         
@@ -537,6 +539,8 @@ static NSString *khead2View = @"head2View";
         if (ladyDataArray.count != 0) {
             PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
+           // cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+
             return cell;
         }
         

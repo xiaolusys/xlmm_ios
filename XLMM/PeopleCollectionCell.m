@@ -35,6 +35,7 @@
 //    self.layer.borderWidth = 0.5;
 //    self.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     
+    
     return self;
 }
 
@@ -49,6 +50,9 @@
 //    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     
     self.nameLabel.text = model.name;
+    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+
+    
     if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
         self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
     } else {
@@ -74,6 +78,8 @@
 
 - (void)fillData:( PromoteModel*)model{
     NSString *string = [model.picPath URLEncodedString];
+    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+
     
     NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
