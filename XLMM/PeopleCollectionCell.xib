@@ -28,10 +28,6 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="180" height="238"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paa-sZ-unt">
-                        <rect key="frame" x="92" y="259" width="31" height="10"/>
-                        <color key="backgroundColor" red="0.95691373999473672" green="0.94480950479736836" blue="0.95917525315263097" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWw-kK-fDJ">
                         <rect key="frame" x="101" y="213" width="4" height="12"/>
                         <fontDescription key="fontDescription" name="DFYuan-Lt-HKP-BF" family="DFPYuanLight-B5" pointSize="11"/>
@@ -104,12 +100,13 @@
             <size key="customSize" width="180" height="238"/>
             <connections>
                 <outlet property="backView" destination="WUt-wu-bjn" id="y0q-PD-AKU"/>
+                <outlet property="headImageViewHeight" destination="dgF-kR-Hde" id="LYA-Jn-4g1"/>
                 <outlet property="imageView" destination="uhQ-WN-ROj" id="ofb-oQ-Aaa"/>
                 <outlet property="nameLabel" destination="Rif-Ul-A9W" id="Ndw-xA-ZIx"/>
                 <outlet property="oldPriceLabel" destination="CAl-eb-VKY" id="HlJ-TV-C1E"/>
                 <outlet property="priceLabel" destination="SQ1-Th-Bsz" id="tT1-t9-MI3"/>
             </connections>
-            <point key="canvasLocation" x="308" y="152"/>
+            <point key="canvasLocation" x="70" y="93"/>
         </collectionViewCell>
     </objects>
     <resources>

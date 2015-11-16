@@ -31,6 +31,7 @@
             return nil;
         }
         self = [arrayOfViews objectAtIndex:0];
+       
     }
 //    self.layer.borderWidth = 0.5;
 //    self.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
@@ -78,12 +79,11 @@
 
 - (void)fillData:( PromoteModel*)model{
     NSString *string = [model.picPath URLEncodedString];
-    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
 
     
     NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
-    
+    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
 //    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 //       
 //

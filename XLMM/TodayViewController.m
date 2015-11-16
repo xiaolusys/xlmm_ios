@@ -525,8 +525,8 @@ static NSString *khead2View = @"head2View";
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
-            //cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
-
+            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+            NSLog(@"%f", cell.headImageViewHeight.constant);
             return cell;
         }
         
@@ -541,6 +541,8 @@ static NSString *khead2View = @"head2View";
             [cell fillData:model];
            // cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
 
+            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+            NSLog(@"%f", cell.headImageViewHeight.constant);
             return cell;
         }
         
