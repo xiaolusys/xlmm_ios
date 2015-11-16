@@ -44,6 +44,7 @@
 - (IBAction)commitClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *sendImageView;
 
 - (IBAction)sendImages:(id)sender;
 

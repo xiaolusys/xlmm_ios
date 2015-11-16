@@ -18,7 +18,7 @@
 
 
 
-@interface ShenQingTuiHuoController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface ShenQingTuiHuoController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 
 @property (nonatomic, strong) NSArray *dataArray;
@@ -295,66 +295,149 @@
     
 }
 
+#pragma mark - 保存图片至沙盒
+- (void) saveImage:(UIImage *)currentImage withName:(NSString *)imageName
+{
+    
+    NSData *imageData = UIImageJPEGRepresentation(currentImage, 0.5);
+    // 获取沙盒目录
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    
+    // 将图片写入文件
+    
+    [imageData writeToFile:fullPath atomically:NO];
+}
+
+#pragma mark - image picker delegte
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [self saveImage:image withName:@"currentImage.png"];
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+    
+    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+    
+    [self.sendImageView setImage:savedImage];
+    
+    self.sendImageView.tag = 100;
+    
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
 #pragma mark actionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"选择");
-    switch (buttonIndex) {
-        case 1:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 2;
-            break;
-        case 2:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 3;
-            break;
-        case 3:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 4;
-            break;
-        case 4:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
+    if (actionSheet.tag == 255) {
+        
+        NSUInteger sourceType = 0;
+        
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             
-            reasonCode = 5;
-            break;
-        case 5:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 6;
-            break;
-        case 6:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 7;
-            break;
-        case 7:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 8;
-            break;
-        case 8:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 9;
-            break;
-        case 9:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 10;
-            break;
-        case 10:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 0;
-            break;
-        case 0:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            reasonCode = 1;
-            break;
-            
-            
-            
-            
-        default:
-            NSLog(@"buttonIndex = %ld", buttonIndex);
-            
-            break;
+            switch (buttonIndex) {
+                case 0:
+                    // 取消
+                    return;
+                case 1:
+                    // 相机
+                    sourceType = UIImagePickerControllerSourceTypeCamera;
+                    break;
+                    
+                case 2:
+                    // 相册
+                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+            }
+        }
+        else {
+            if (buttonIndex == 0) {
+                
+                return;
+            } else {
+                sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            }
+        }
+        // 跳转到相机或相册页面
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        
+        imagePickerController.delegate = self;
+        
+        imagePickerController.allowsEditing = YES;
+        
+        imagePickerController.sourceType = sourceType;
+        
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+        
     }
-    self.reasonLabel.text = self.dataArray[reasonCode];
+    if (actionSheet.tag == 200) {
+        switch (buttonIndex) {
+            case 1:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 2;
+                break;
+            case 2:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 3;
+                break;
+            case 3:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 4;
+                break;
+            case 4:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                
+                reasonCode = 5;
+                break;
+            case 5:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 6;
+                break;
+            case 6:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 7;
+                break;
+            case 7:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 8;
+                break;
+            case 8:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 9;
+                break;
+            case 9:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 10;
+                break;
+            case 10:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 0;
+                break;
+            case 0:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                reasonCode = 1;
+                break;
+                
+                
+                
+                
+            default:
+                NSLog(@"buttonIndex = %ld", buttonIndex);
+                
+                break;
+        }
+        self.reasonLabel.text = self.dataArray[reasonCode];
+
+    }
+
     
 }
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet{
@@ -463,5 +546,26 @@
 
 - (IBAction)sendImages:(id)sender {
     NSLog(@"选择图片");
+    
+    
+    UIActionSheet *sheet;
+    
+    // 判断是否支持相机
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        sheet  = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    }
+    else {
+        
+        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
+    }
+    
+    sheet.tag = 255;
+    
+    [sheet showInView:self.view];
+    
+    
+    
+    
 }
 @end
