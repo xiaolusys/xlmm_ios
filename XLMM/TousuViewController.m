@@ -43,11 +43,6 @@
     //  http://m.xiaolu.so/rest/v1/complain
     
     self.infoLabel.userInteractionEnabled = NO;
-    self.tipsLabel.hidden = YES;
-    
-    
-   // [self createComplaintLists];
-    
     
     self.tijiaoButton.layer.cornerRadius = 20;
     self.tijiaoButton.layer.borderWidth = 1;
@@ -55,79 +50,8 @@
     self.tijiaoButton.enabled = NO;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    // zifei is going to get started.
-    // ok i c
-    
 }
 
-- (void)createComplaintLists{
-    NSString *string = @"http://m.xiaolu.so/rest/v1/complain";
-    NSURL *url = [NSURL URLWithString:string];
-    
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    NSArray *array = [dic objectForKey:@"results"];
-    for (NSDictionary *dic in array) {
-        NSString *time = [dic objectForKey:@"created_time"];
-        NSString *content = [dic objectForKey:@"com_content"];
-        NSString *string = [NSString stringWithFormat:@"%@ : %@", time, content];
-        [dataArray addObject:string];
-    }
-    
-    while (true) {
-        
-        NSString *urlString = [dic objectForKey:@"next"];
-        
-        if ([urlString class] == [NSNull class]) {
-            NSLog(@"结束了");
-            break;
-        }
-        NSLog(@"urlStr = %@", urlString);
-        NSData *nextData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        
-        dic = [NSJSONSerialization JSONObjectWithData:nextData options:kNilOptions error:nil];
-        // NSLog(@"dic = %@", dic);
-        NSArray *array = [dic objectForKey:@"results"];
-        for (NSDictionary *dic in array) {
-            NSString *time = [dic objectForKey:@"created_time"];
-            NSString *content = [dic objectForKey:@"com_content"];
-            NSString *string = [NSString stringWithFormat:@"%@ : %@", time, content];
-            [dataArray addObject:string];
-        }
-        
-        
-    }
-    
-    
-    NSMutableString *stringMuabe = [[NSMutableString alloc] init];
-    for (NSString *string in dataArray) {
-        // NSLog(@"%d. %@", ++i, string);
-        NSString *stringnum = [NSString stringWithFormat:@"%@\n", string];
-        [stringMuabe appendString:stringnum];
-    }
-    
-    NSLog(@"string = %@", stringMuabe);
-    
-    
-    
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    
-    NSString *plistPath1 = [paths objectAtIndex:0];
-    
-    NSLog(@"%@", plistPath1);
-    
-    //得到完整的文件名
-    
-    NSString *filename=[plistPath1 stringByAppendingPathComponent:@"complain.txt"];
-    
-    //输入写入
-    
-    BOOL fl = [stringMuabe writeToFile:filename atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    // BOOL fl = [stringMuabe writeToFile:filename atomically:YES]; //写入
-    
-    NSLog(@"ls = %d", fl);
-}
 
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -156,16 +80,11 @@
         return;
     }
     
-    
-    //[self performSelector:@selector(successCommit) withObject:nil afterDelay:0.5];
-        
     NSLog(@"投诉内容：%@", self.tousuTextView.text);
     // com_content 
     //  http://m.xiaolu.so/rest/v1/complain
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/complain", Root_URL];
     NSLog(@"urlString = %@", urlString);
-    
-    
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -192,9 +111,6 @@
     }
 }
 
-- (void)hiddenLabel{
-    self.tipsLabel.hidden = YES;
-}
 - (void)successCommit{
     NSLog(@"提交投诉意见");
     UIAlertView *laterView = [[UIAlertView alloc] initWithTitle:nil message:@"提交成功!\n谢谢您的反馈，我们将不断完善，给您最好的服务!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -230,8 +146,6 @@
     self.countLabel.text = count;
 }
 
-
-
 - (void)textViewDidEndEditing:(UITextView *)textView{
     if (textView.text.length <= 0) {
         self.infoLabel.hidden = NO;
@@ -249,7 +163,6 @@
     self.tijiaoButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
     self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
 }
-
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     return YES;
