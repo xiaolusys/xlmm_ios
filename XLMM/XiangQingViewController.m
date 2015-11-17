@@ -19,7 +19,7 @@
 #import "ShenQingTuikuanController.h"
 #import "ShenQingTuiHuoController.h"
 #import "NSString+URL.h"
-
+#import "WuliuViewController.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -42,12 +42,13 @@
     UIView *frontView;
     NSString *status;
     PerDingdanModel *tuihuoModel;//详情页子订单模型
-    NSString *tid;               //trade id
+    NSString *tid;               //internal trade id
     NSArray *oidArray;           //orders
     NSMutableArray *refund_statusArray;//退款状态
     NSMutableArray *refund_status_displayArray;// 退款状态描述
     NSMutableArray *orderStatusDisplay;
     NSMutableArray *orderStatus;
+    NSString *tradeId; //unique trade id for user
     NSTimer *theTimer;
 }
 
@@ -97,10 +98,21 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+    
+    [self.WuliuView addGestureRecognizer:tapGesture];
+    
 }
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)actiondo:(id)sender{
+    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    
+    wuliuView.tradeId = tradeId;
+    [self.navigationController pushViewController:wuliuView animated:YES];
 }
 
 - (void)downloadData{
@@ -180,8 +192,8 @@
     
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
     
-    tid = [dicJson objectForKey:@"id"]; //交易id号
-    
+    tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
+    tradeId = [dicJson objectForKey:@"tid"]; //交易ID，客户可见
     
     NSMutableString *string = [NSMutableString stringWithString:[dicJson objectForKey:@"created"]];
     NSRange range = [string rangeOfString:@"T"];

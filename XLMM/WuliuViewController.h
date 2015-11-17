@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface WuliuViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UIView *wuliuInfoChainView;
+@property (weak, nonatomic) IBOutlet UILabel *wuliuCompanyName;
+@property (weak, nonatomic) IBOutlet UILabel *wuliuMiandanId;
+@property (copy, nonatomic) NSString *tradeId;
 @end
