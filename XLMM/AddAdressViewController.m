@@ -37,6 +37,8 @@
   
     self.title = @"新增收货地址";
     
+    [self disableTijiaoButton];
+    
     [self setInfo];
     
     self.nameTextField.tag = 100;
@@ -81,7 +83,7 @@
     self.detailsAddressTF.userInteractionEnabled = NO;
     self.saveButton.layer.cornerRadius = 20;
     self.saveButton.layer.borderWidth = 1;
-    self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+   // self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
     
     self.addressSwitch.tintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
@@ -151,6 +153,17 @@
     return YES;
 }
 
+- (void)enableTijiaoButton{
+    self.saveButton.enabled = YES;
+    self.saveButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+}
+
+- (void)disableTijiaoButton{
+    self.saveButton.enabled = NO;
+    self.saveButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
+    self.saveButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+}
 
 
 
@@ -158,6 +171,7 @@
     UISwitch *switch2 = (UISwitch *)sender;
     if (switch2.isOn) {
         NSLog(@"设置为默认地址");
+        switch2.onTintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
         if (self.addressModel.addressID == nil) {
             NSLog(@"添加地址情况下设置为常用地址");//
 //#warning set default address
@@ -276,6 +290,13 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
+    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
+        [self enableTijiaoButton];
+        
+    } else{
+        [self disableTijiaoButton];
+        
+    }
 }
 
 
@@ -303,6 +324,13 @@
 //    } completion:^(BOOL finished) {
 //        
 //    }];
+    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
+        [self enableTijiaoButton];
+        
+    } else{
+        [self disableTijiaoButton];
+        
+    }
 
     
 }

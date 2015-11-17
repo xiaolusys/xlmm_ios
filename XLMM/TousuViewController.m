@@ -186,7 +186,7 @@
     
     
     NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    //NSLog(@"%@",str1);
+    NSLog(@"%@",str1);
     if ([str1 isEqualToString:@"\"OK\""]){
         [self successCommit];
     }
