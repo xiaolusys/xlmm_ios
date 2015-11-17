@@ -25,6 +25,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *myXiangQingView;
 
+@property (weak, nonatomic) IBOutlet UIView *WuliuView;
 
 @property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;

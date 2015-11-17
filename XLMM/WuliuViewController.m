@@ -7,6 +7,7 @@
 //
 
 #import "WuliuViewController.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface WuliuViewController ()
 
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self createNavigationBarWithTitle:@"物流信息" selecotr:@selector(goback)];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -24,6 +27,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)goback{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 /*
 #pragma mark - Navigation
 

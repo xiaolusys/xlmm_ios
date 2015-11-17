@@ -19,7 +19,7 @@
 #import "ShenQingTuikuanController.h"
 #import "ShenQingTuiHuoController.h"
 #import "NSString+URL.h"
-
+#import "WuliuViewController.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -95,10 +95,19 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+    
+    [self.WuliuView addGestureRecognizer:tapGesture];
+    
 }
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)actiondo:(id)sender{
+    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    [self.navigationController pushViewController:wuliuView animated:YES];
 }
 
 - (void)downloadData{
