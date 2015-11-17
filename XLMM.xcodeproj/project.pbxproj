@@ -645,6 +645,7 @@
 		32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */; };
 		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
 		8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
+		8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1194,6 +1195,7 @@
 		32FF9A2A1B9FDBEC0001F314 /* TuihuoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoCollectionCell.xib; sourceTree = "<group>"; };
 		32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoModel.h; sourceTree = "<group>"; };
 		32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoModel.m; sourceTree = "<group>"; };
+		8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuInfoView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1935,6 +1937,7 @@
 				32707F181BFAC9FB0006FB6A /* WuliuViewController.h */,
 				32707F191BFAC9FB0006FB6A /* WuliuViewController.m */,
 				32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */,
+				8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2198,6 +2201,7 @@
 			files = (
 				32CDC9431BD1FC9100EF5FA6 /* name.png in Resources */,
 				3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */,
+				8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,

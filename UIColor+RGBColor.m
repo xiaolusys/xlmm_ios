@@ -21,5 +21,8 @@
     
 }
 
++ (UIColor *)orangeThemeColor{
+    return [UIColor colorWithR:245 G:166 B:35 alpha:1];
+}
 
 @end
