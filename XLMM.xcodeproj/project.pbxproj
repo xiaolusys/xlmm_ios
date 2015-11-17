@@ -120,6 +120,8 @@
 		32703F221BEB5EB5002AFC6D /* icon29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F201BEB5EB5002AFC6D /* icon29@3x.png */; };
 		32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F231BEB60D3002AFC6D /* Icon-29@3x.png */; };
 		32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F241BEB60D3002AFC6D /* Icon-60@3x.png */; };
+		32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32707F191BFAC9FB0006FB6A /* WuliuViewController.m */; };
+		32707F1C1BFAC9FB0006FB6A /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */; };
 		32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
 		32746DD31B74884B00816208 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		32746E091B74A22000816208 /* btn-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD51B74A22000816208 /* btn-plus.png */; };
@@ -812,6 +814,9 @@
 		32703F201BEB5EB5002AFC6D /* icon29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon29@3x.png"; sourceTree = "<group>"; };
 		32703F231BEB60D3002AFC6D /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@3x.png"; sourceTree = "<group>"; };
 		32703F241BEB60D3002AFC6D /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
+		32707F181BFAC9FB0006FB6A /* WuliuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuliuViewController.h; sourceTree = "<group>"; };
+		32707F191BFAC9FB0006FB6A /* WuliuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuliuViewController.m; sourceTree = "<group>"; };
+		32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuViewController.xib; sourceTree = "<group>"; };
 		32746DC91B7438FC00816208 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		32746DCA1B7438FC00816208 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		32746DD11B74884B00816208 /* DetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsModel.h; sourceTree = "<group>"; };
@@ -1927,6 +1932,9 @@
 				32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */,
 				32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */,
 				32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */,
+				32707F181BFAC9FB0006FB6A /* WuliuViewController.h */,
+				32707F191BFAC9FB0006FB6A /* WuliuViewController.m */,
+				32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2213,6 +2221,7 @@
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */,
 				32D2B78C1BDDF41C00603FCE /* address_icon.png in Resources */,
+				32707F1C1BFAC9FB0006FB6A /* WuliuViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
@@ -2587,6 +2596,7 @@
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				32A288371B93E1FC006DC949 /* LeftMenuViewController.m in Sources */,
+				32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */,
