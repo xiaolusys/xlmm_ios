@@ -209,6 +209,10 @@
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
     [dataArray removeAllObjects];
+    [refund_status_displayArray removeAllObjects];
+    [refund_statusArray removeAllObjects];
+    [orderStatus removeAllObjects];
+    [orderStatusDisplay removeAllObjects];
     
     
     for (NSDictionary *dic in orderArray) {
