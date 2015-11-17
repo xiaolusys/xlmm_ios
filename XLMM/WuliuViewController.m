@@ -23,14 +23,6 @@
     [self createNavigationBarWithTitle:@"物流信息" selecotr:@selector(goback)];
     
     [self getWuliuInfoFromServer];
-    
-    //NSString *timeText = @"2015-11-12 12:34:56";
-    //NSString * infoText = @"这是一条物流信息，大哥你可要看清楚了，不要再来找我们问问问！";
-    //[self displayLastWuliuInfoWithTime:timeText andInfo:infoText];
-    
-    
-    //[self displayWuliuInfoWithOrder:1 andTime:timeText andInfo:infoText];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
