@@ -286,6 +286,8 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:_dataArray[1],_dataArray[2],_dataArray[3],_dataArray[4],_dataArray[5],_dataArray[6],_dataArray[7],_dataArray[8],_dataArray[9],_dataArray[10],_dataArray[0], nil];
     actionSheet.tag = 200;
     
+  
+    
     
     [actionSheet showInView:self.view];
     
@@ -362,16 +364,17 @@
 
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet
 {
+    [actionSheet addSubview:[[UIView alloc] initWithFrame:actionSheet.frame]];
    
-//    NSLog(@"%@", actionSheet.subviews);
-//    NSLog(@"%@", actionSheet);
-//    for (UIView *subViwe in actionSheet.subviews) {
-//        NSLog(@"%@", subViwe);
-//        if ([subViwe isKindOfClass:[UIButton class]]) {
-//            UIButton *button = (UIButton*)subViwe;
-//            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//        }
-//    }
+    NSLog(@"%ld", actionSheet.subviews.count);
+    NSLog(@"%@", actionSheet);
+    for (UIView *subViwe in actionSheet.subviews) {
+        NSLog(@"%@", subViwe);
+        if ([subViwe isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton*)subViwe;
+            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }
+    }
 }
 - (IBAction)commitClicked:(id)sender {
     
