@@ -36,6 +36,9 @@
     int reasonCode;
     float refundPrice;
     
+    UIView *backView;
+    UIView *reasonView;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -136,7 +139,68 @@
     
     self.commitButton.layer.cornerRadius = 20;
     self.commitButton.layer.borderWidth = 1;
-    self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor; 
+    self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    //[self.view addSubview:self.buttonView];
+    
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor blackColor];
+    backView.alpha = 0.5;
+    [self.view addSubview:backView];
+    backView.hidden = YES;
+    
+    //[self.view bringSubviewToFront:backView];
+    
+    NSLog(@"self.view = %@", self.view.subviews);
+    
+    [self loadReasonView];
+    [self hiddenReasonView];
+    
+}
+
+- (void)hiddenReasonView{
+    backView.hidden = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    }];
+    
+}
+- (void)showReasonView{
+    backView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH);
+        
+    }];
+}
+- (void)loadReasonView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"SelectedReasonsView" owner:nil options:nil];
+    
+    reasonView = [views objectAtIndex:0];
+    
+    UIButton *cancelButton = (UIButton *)[reasonView viewWithTag:200];
+    cancelButton.layer.cornerRadius = 20;
+    cancelButton.layer.borderWidth = 1;
+    cancelButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    [cancelButton addTarget:self action:@selector(cancelSeleted:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    UIView *listView = (UIView *)[reasonView viewWithTag:100];
+    
+    listView.layer.masksToBounds = YES;
+    listView.layer.cornerRadius = 20;
+    
+    
+    reasonView.frame = self.view.frame;
+    [self.view addSubview:reasonView];
+    
+}
+
+- (void)cancelSeleted:(UIButton *)button{
+    NSLog(@"取消选择");
+    [self hiddenReasonView];
+    
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -283,13 +347,16 @@
 - (IBAction)yuanyinClicked:(id)sender {
     
     NSLog(@"选择退款原因");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:_dataArray[1],_dataArray[2],_dataArray[3],_dataArray[4],_dataArray[5],_dataArray[6],_dataArray[7],_dataArray[8],_dataArray[9],_dataArray[10],_dataArray[0], nil];
-    actionSheet.tag = 200;
     
-  
+    [self showReasonView];
     
-    
-    [actionSheet showInView:self.view];
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:_dataArray[1],_dataArray[2],_dataArray[3],_dataArray[4],_dataArray[5],_dataArray[6],_dataArray[7],_dataArray[8],_dataArray[9],_dataArray[10],_dataArray[0], nil];
+//    actionSheet.tag = 200;
+//    
+//  
+//    
+//    
+//    [actionSheet showInView:self.view];
     
     
     

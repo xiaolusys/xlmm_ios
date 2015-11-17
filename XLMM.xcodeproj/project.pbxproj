@@ -228,6 +228,8 @@
 		32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B801BA117AE0045ADB9 /* tuihuo-warning.png */; };
 		32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */; };
 		32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */; };
+		3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3297C7921BFB344600776970 /* SelectedReasonsView.xib */; };
+		3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */; };
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
 		3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
@@ -637,7 +639,6 @@
 		32FE08831BF47E380072CCEC /* ReBuyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */; };
 		32FE08851BF492C50072CCEC /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08841BF492C50072CCEC /* FooterView.xib */; };
 		32FE08891BF5AC750072CCEC /* ShenQingTuikuanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */; };
-		32FE088A1BF5AC750072CCEC /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */; };
 		32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FE088B1BF5CB940072CCEC /* downArrow1.png */; };
 		32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A241B9FDB870001F314 /* TuihuoViewController.m */; };
 		32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
@@ -964,6 +965,7 @@
 		32976B841BA16C190045ADB9 /* ModifyshenqingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyshenqingViewController.h; sourceTree = "<group>"; };
 		32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyshenqingViewController.m; sourceTree = "<group>"; };
 		32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyshenqingViewController.xib; sourceTree = "<group>"; };
+		3297C7921BFB344600776970 /* SelectedReasonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedReasonsView.xib; sourceTree = "<group>"; };
 		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
 		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
 		3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -1928,6 +1930,7 @@
 				32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */,
 				32FE08861BF5AC750072CCEC /* ShenQingTuikuanController.h */,
 				32FE08871BF5AC750072CCEC /* ShenQingTuikuanController.m */,
+				3297C7921BFB344600776970 /* SelectedReasonsView.xib */,
 				32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */,
 				32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */,
 				32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */,
@@ -2304,7 +2307,6 @@
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */,
 				32CECF921BA6CE4900FF3BD3 /* icon-fanhuiqianye.png in Resources */,
-				32FE088A1BF5AC750072CCEC /* ShenQingTuikuanController.xib in Resources */,
 				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
@@ -2312,6 +2314,7 @@
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
+				3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
@@ -2359,6 +2362,7 @@
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
 				32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */,
+				3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
