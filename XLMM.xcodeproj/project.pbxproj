@@ -42,8 +42,6 @@
 		3220A21D1B9D70010019443F /* TuihuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3220A21B1B9D70010019443F /* TuihuoController.xib */; };
 		3236E3301BECD08D00A1036B /* SettingPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236E32E1BECD08D00A1036B /* SettingPsdViewController.m */; };
 		3236E3311BECD08D00A1036B /* SettingPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3236E32F1BECD08D00A1036B /* SettingPsdViewController.xib */; };
-		3236E3331BEDD32F00A1036B /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
-		3236E3341BEDDA6900A1036B /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
 		323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */; };
 		323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */; };
@@ -122,6 +120,9 @@
 		32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F241BEB60D3002AFC6D /* Icon-60@3x.png */; };
 		32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32707F191BFAC9FB0006FB6A /* WuliuViewController.m */; };
 		32707F1C1BFAC9FB0006FB6A /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */; };
+		3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
+		3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
+		3271EF101BFACF3900EDF55E /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
 		32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
 		32746DD31B74884B00816208 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		32746E091B74A22000816208 /* btn-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD51B74A22000816208 /* btn-plus.png */; };
@@ -518,7 +519,6 @@
 		32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
 		32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A81F951B8D9C08009972B3 /* BuyCartsView.xib */; };
 		32A88E0C1B86B2D8003501EF /* QuanbuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0A1B86B2D8003501EF /* QuanbuCollectionCell.m */; };
-		32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		32A88E151B86C840003501EF /* DingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E141B86C840003501EF /* DingdanModel.m */; };
 		32A88E181B8718F9003501EF /* XiangQingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E171B8718F9003501EF /* XiangQingView.m */; };
 		32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
@@ -2201,6 +2201,7 @@
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				32CECF941BA6D37000FF3BD3 /* Unknown.jpeg in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,
+				3271EF101BFACF3900EDF55E /* XiangQingView.xib in Resources */,
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,
 				32EC42581BE880D3009E5FA2 /* QuanbuCollectionCell.xib in Resources */,
 				32121B401B9461BF00742E53 /* icon.png in Resources */,
@@ -2309,6 +2310,7 @@
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
 				32CC7CA01BA0187E00475E2E /* TuihuoXQ6.xib in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
+				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
@@ -2333,7 +2335,6 @@
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
 				32FE08851BF492C50072CCEC /* FooterView.xib in Resources */,
-				3236E3341BEDDA6900A1036B /* XiangQingView.xib in Resources */,
 				32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */,
 				32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */,
 				32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */,
@@ -2408,7 +2409,6 @@
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
 				325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */,
-				3236E3331BEDD32F00A1036B /* XiangQingViewController.xib in Resources */,
 				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2591,7 +2591,6 @@
 				327F80D81B95A60900EDDF5B /* UIScrollView+MJExtension.m in Sources */,
 				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,
 				32121B441B9481B900742E53 /* PosterCollectionCell.m in Sources */,
-				32A88E111B86BD8C003501EF /* XiangQingViewController.m in Sources */,
 				32EC42591BE89307009E5FA2 /* EnterViewController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
@@ -2704,6 +2703,7 @@
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
+				3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */,
 				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
 				32E6BC191BEC95CF0036F338 /* ModifyPhoneController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,

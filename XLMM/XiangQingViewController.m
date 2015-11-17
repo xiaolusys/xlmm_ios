@@ -25,6 +25,8 @@
 #define kUrlScheme @"wx25fcb32689872499"
 
 @interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate>{
+    
+    float refundPrice;
 }
 
 
@@ -185,27 +187,23 @@
     NSRange range = [string rangeOfString:@"T"];
     [string deleteCharactersInRange:range];
     [string insertString:@"  " atIndex:range.location];
-    self.finishedLabel.text = string;//时间 创建订单时间  付款时间 发货时间
     
-    self.lastStatusLabel.text = [dicJson objectForKey:@"status_display"];
     self.yuanqiuView.layer.cornerRadius = 6;
     self.timeLabel.text = string;
-    self.jineLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
     
     self.nameLabel.text = [dicJson objectForKey:@"receiver_name"];
-    self.phoneLabel.text = [dicJson objectForKey:@"receiver_mobile"];
     NSString *addressStr = [NSString stringWithFormat:@"%@-%@-%@-%@",
                            [dicJson objectForKey:@"receiver_state"],
                            [dicJson objectForKey:@"receiver_city"],
                            [dicJson objectForKey:@"receiver_district"],
                             [dicJson objectForKey:@"receiver_address"]];
     self.addressLabel.text = addressStr;
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%.02f", [[dicJson objectForKey:@"discount_fee"] floatValue]];
+    self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.02f", [[dicJson objectForKey:@"payment"] floatValue]];
     
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"total_fee"] floatValue]];
-    self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%@", [dicJson objectForKey:@"post_fee"]];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%@", [dicJson objectForKey:@"discount_fee"]];
-    self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
-    
+    refundPrice = [[dicJson objectForKey:@"payment"] floatValue];
     
     
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
@@ -335,7 +333,7 @@
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
             if ([string isEqualToString:@"没有退款"] ) {
-               // string = @"";
+               
             }
             label.text = string;
             label.numberOfLines = 0;
@@ -418,8 +416,9 @@
     NSInteger i = button.tag - 200;
     tuihuoModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    
+    tuikuanVC.refundPrice = refundPrice;
     tuikuanVC.dingdanModel = tuihuoModel;
+    
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.priceString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);

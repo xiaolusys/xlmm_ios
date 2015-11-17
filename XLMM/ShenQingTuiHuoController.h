@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) PerDingdanModel *dingdanModel;
 
+@property (assign, nonatomic) float refundPrice;
 @property (copy, nonatomic) NSString *tid;
 @property (copy, nonatomic) NSString *oid;
 @property (copy, nonatomic) NSString *status;
@@ -28,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *sizeNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containterWidth;
 
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *refundPriceLabel;

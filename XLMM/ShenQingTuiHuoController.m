@@ -33,7 +33,7 @@
     int maxNumber;
     
     int reasonCode;
-    float refundPrice;
+   // float refundPrice;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -88,6 +88,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];
+    self.containterWidth.constant = SCREENWIDTH;
     
     self.dataArray = @[@"其他",
                        @"错拍",
@@ -118,8 +119,8 @@
     self.sizeNameLabel.text = self.dingdanModel.sizeString;
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
     
-    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", [self.dingdanModel.priceString floatValue]];
-    refundPrice = [self.dingdanModel.priceString floatValue];
+    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", self.refundPrice];
+   // refundPrice = [self.dingdanModel.priceString floatValue];
     self.refundNumLabel.text = [NSString stringWithFormat:@"%i", maxNumber];
     
     self.selectedReason.layer.cornerRadius = 4;
@@ -188,8 +189,8 @@
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"apply_fee"];
-              refundPrice = [string floatValue];
-              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", refundPrice];
+              self.refundPrice = [string floatValue];
+              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", self.refundPrice];
               self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
               
               
@@ -510,7 +511,7 @@
             }
             
             
-            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:refundPrice], descStr];//设置参数
+            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:self.refundPrice], descStr];//设置参数
             NSLog(@"params = %@", str);
             NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
             
