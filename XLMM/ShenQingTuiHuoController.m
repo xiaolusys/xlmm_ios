@@ -14,6 +14,8 @@
 #import "UIImageView+WebCache.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "QiniuSDK.h"
+
 
 
 
@@ -25,6 +27,10 @@
 @property (nonatomic, strong) NSArray *dataArray;
 
 @property (nonatomic, strong) NSMutableArray *imagesArray;
+@property (nonatomic, strong) NSMutableArray *keysArray;
+@property (nonatomic, strong) NSMutableArray *linksArray;
+
+
 
 
 @end
@@ -105,11 +111,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];
     self.containterWidth.constant = SCREENWIDTH;
     self.imagesArray = [[NSMutableArray alloc] init];
+    self.keysArray = [[NSMutableArray alloc] init];
+    self.linksArray = [[NSMutableArray alloc] init];
     
+    [self createKeysArray];
+
      NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.oid]];
    // self.imagesArray;
     
@@ -199,9 +211,64 @@
     self.sendImageView3.layer.borderWidth = 0.5;
     self.sendImageView3.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     
-   
+    
+    
+    
+
 }
 
+- (void)createKeysArray{
+    NSString *userUrlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
+    // NSLog(@"url = %@", userUrlString);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:userUrlString]];
+    NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    //  NSLog(@"dic = %@", diction);
+    NSDictionary *userInfo = [[diction objectForKey:@"results"] objectAtIndex:0];
+    NSString *userID = [userInfo objectForKey:@"id"];
+    for (int i = 0; i < 3; i++) {
+       NSString *key = [self keysWithTime:([[NSDate date] timeIntervalSince1970] + 100 * i) AndUserID:userID];
+        [self.keysArray addObject:key];
+        NSString *link = [NSString stringWithFormat:@"http://7xkyoy.com2.z0.glb.qiniucdn.com/%@", key];
+        [self.linksArray addObject:link];
+        
+    }
+    NSLog(@"keys = %@", self.keysArray);
+    NSLog(@"links = %@", self.linksArray);
+}
+
+- (void)uploadImages:(NSData *)imagedata andKeys:(NSString *)key{
+    NSString *token = [self getQiNiuToken];
+   
+        QNUploadManager *upManager = [[QNUploadManager alloc] init];
+        [upManager putData:imagedata key:key token:token
+                  complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                      NSLog(@"%@", info);
+                      NSLog(@"%@", resp);
+                  } option:nil];
+}
+
+- (NSString *)getQiNiuToken{
+    
+    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    NSString *token = [dic objectForKey:@"uptoken"];
+    
+    
+    return token;
+    
+    
+}
+
+- (NSString *)keysWithTime:(NSTimeInterval )time AndUserID:(NSString *)userID{
+   
+    
+    NSString *string = [NSString stringWithFormat:@"ios_%ld_%@_%c%c%c%c%c%c%c%c", (long)[[NSDate date] timeIntervalSince1970], userID, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65, arc4random()%26 + 65];
+    //NSLog(@"%@", string);
+    return string;
+   // return nil;
+}
 - (void)loadReasonView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"SelectedReasonsView" owner:nil options:nil];
     
@@ -480,7 +547,7 @@
     
     UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
     
-    NSData *imageData = UIImageJPEGRepresentation(savedImage, 0.5);
+    NSData *imageData = UIImageJPEGRepresentation(savedImage, 1);
 
     [self.imagesArray addObject:imageData];
     
@@ -509,6 +576,7 @@
         button.hidden = NO;
         imageView.image = [UIImage imageWithData:self.imagesArray[i]];
         
+        [self uploadImages:self.imagesArray[i] andKeys:self.keysArray[i]];
         
         
     }
@@ -622,9 +690,17 @@
                 descStr = @"七天无理由退货";
                 
             }
+          
+            NSMutableString *linkstr = [[NSMutableString alloc] init];
+            for (int i = 0; i < self.imagesArray.count; i++) {
+                [linkstr appendString:self.linksArray[i]];
+                [linkstr appendString:@","];
+            }
+            NSRange range = {linkstr.length - 1, 1};
+            [linkstr deleteCharactersInRange:range];
+            NSLog(@"str = %@", linkstr);
             
-            
-            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:self.refundPrice], descStr];//设置参数
+            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@&proof_pic=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:self.refundPrice], descStr, linkstr];//设置参数
             NSLog(@"params = %@", str);
             NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
             

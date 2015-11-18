@@ -123,10 +123,22 @@ static NSString *khead2View = @"head2View";
 }
 
 
-
+- (NSString *)getQiNiuToken{
+    
+    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    
+    
+    return nil;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+  //  [self getQiNiuToken];
     // Do any additional setup after loading the view, typically from a nib.
     childDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     ladyDataArray = [[NSMutableArray alloc] initWithCapacity:0];
