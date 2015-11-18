@@ -11,6 +11,8 @@
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 
+#import "ModifyPasswordViewController2.h"
+
 @interface ModifyPasswordViewController ()<UITextFieldDelegate>
 
 @end
@@ -22,6 +24,7 @@
     NSInteger countdownSecond;
     UILabel *timeLabel;
     NSInteger countSecond;
+    NSString *phonenumberString;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -48,7 +51,7 @@
 
      self.passCodeTextField.backgroundColor = [UIColor whiteColor];
 
-        self.passCodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.passCodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     self.passCodeTextField.keyboardType = UIKeyboardTypeNumberPad;
     
@@ -63,6 +66,8 @@
     self.nextButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
     NSString *str1 = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    phonenumberString = str1;
+    
     NSMutableString *str = [NSMutableString stringWithString:str1];
     
     NSRange range = {3,4};
@@ -148,54 +153,15 @@
 
     //下一步进入设置密码界面
     
+    if (self.passCodeTextField.text.length != 6) {
+        return;
+    }
+    ModifyPasswordViewController2 *modifypsdVC = [[ModifyPasswordViewController2 alloc] initWithNibName:@"ModifyPasswordViewController2" bundle:nil];
+    modifypsdVC.codeString = self.passCodeTextField.text;
+    modifypsdVC.phoneString = phonenumberString;
+    [self.navigationController pushViewController:modifypsdVC animated:YES];
     
     
-    
-    //    NSLog(@"确认");
-//    if (![self.setPasswordTextField.text isEqualToString:self.confirmPasswordTextField.text])
-//    {
-//        self.passwordLabel.hidden = NO;
-//        return;
-//    } else{
-//        self.passwordLabel.hidden = YES;
-//        
-//        NSLog(@"注册");
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        NSString *phoneNumber = _phoneNumberTextField.text;
-//        NSString *validCode = _passCodeTextField.text;
-//        NSString *password1 = _setPasswordTextField.text;
-//        NSString *password2 = _confirmPasswordTextField.text;
-//        
-//        NSLog(@"username:%@, validcode:%@, password1:%@, password2:%@", phoneNumber, validCode, password1, password2);
-//        
-//        
-//        NSDictionary *parameters = @{@"username": phoneNumber,
-//                                     @"valid_code":validCode,
-//                                     @"password1":password1,
-//                                     @"password2":password2,
-//                                     };
-//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
-//        NSLog(@"修改密码");
-//        MMLOG(string);
-//        [manager POST:string parameters:parameters
-//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                  //  NSError *error;
-//                  NSLog(@"JSON: %@", responseObject);
-//                  // [self.navigationController popViewControllerAnimated:YES];
-//                  
-//                 
-//             
-//                  
-//              }
-//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  
-//                  NSLog(@"Error: %@", error);
-//                  
-//                  
-//              }];
-//
-//        
-//    }
 }
 
 - (IBAction)getCode:(id)sender {
