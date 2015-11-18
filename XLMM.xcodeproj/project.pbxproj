@@ -33,6 +33,7 @@
 		321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 321928CD1BDB7EB8004EA6A7 /* waitpay.png */; };
 		321928E81BDB7EB8004EA6A7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 321928D01BDB7EB8004EA6A7 /* waitsend.png */; };
 		321928EE1BDB8599004EA6A7 /* refund.png in Resources */ = {isa = PBXBuildFile; fileRef = 321928EB1BDB8599004EA6A7 /* refund.png */; };
+		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
 		321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */; };
 		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; };
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
@@ -702,6 +703,7 @@
 		321928CD1BDB7EB8004EA6A7 /* waitpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitpay.png; sourceTree = "<group>"; };
 		321928D01BDB7EB8004EA6A7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
 		321928EB1BDB8599004EA6A7 /* refund.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refund.png; sourceTree = "<group>"; };
+		321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		321C8D941BD87C4B0060FB62 /* PurchaseViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController1.h; sourceTree = "<group>"; };
 		321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController1.m; sourceTree = "<group>"; };
 		321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController1.xib; sourceTree = "<group>"; };
@@ -1214,6 +1216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */,
 				3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */,
 				3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */,
 				326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */,
@@ -1753,6 +1756,7 @@
 				3266762B1BB5200E00307EC4 /* libz.tbd */,
 				326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */,
 				326676271BB51FE000307EC4 /* libc++.tbd */,
+				321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */,
 				32E329621B708A4000A6F0BC /* Foundation.framework */,
 				32E329601B708A3600A6F0BC /* UIKit.framework */,
 				328422B01B841B7600C4EA76 /* CFNetwork.framework */,
