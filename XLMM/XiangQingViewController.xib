@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XiangQingViewController">
@@ -156,18 +156,18 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="Ky5-1Z-ABb"/>
-                                            <exclude reference="cNH-Rh-bBJ"/>
-                                            <exclude reference="ciR-tX-U2J"/>
-                                            <exclude reference="4WA-HK-RIO"/>
-                                            <exclude reference="NUi-os-HK7"/>
-                                            <exclude reference="6Yv-ih-Pit"/>
-                                            <exclude reference="ABQ-ES-B23"/>
-                                            <exclude reference="G35-Nd-Nos"/>
-                                            <exclude reference="hUo-TZ-70f"/>
-                                            <exclude reference="8HP-Fz-rfv"/>
-                                            <exclude reference="nte-LQ-Nbu"/>
                                             <exclude reference="I7E-vt-JqU"/>
                                             <exclude reference="eFa-T9-4vO"/>
+                                            <exclude reference="4WA-HK-RIO"/>
+                                            <exclude reference="NUi-os-HK7"/>
+                                            <exclude reference="cNH-Rh-bBJ"/>
+                                            <exclude reference="ciR-tX-U2J"/>
+                                            <exclude reference="6Yv-ih-Pit"/>
+                                            <exclude reference="ABQ-ES-B23"/>
+                                            <exclude reference="8HP-Fz-rfv"/>
+                                            <exclude reference="nte-LQ-Nbu"/>
+                                            <exclude reference="G35-Nd-Nos"/>
+                                            <exclude reference="hUo-TZ-70f"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -181,18 +181,18 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="Ky5-1Z-ABb"/>
-                                            <include reference="cNH-Rh-bBJ"/>
-                                            <include reference="ciR-tX-U2J"/>
-                                            <include reference="4WA-HK-RIO"/>
-                                            <include reference="NUi-os-HK7"/>
-                                            <include reference="6Yv-ih-Pit"/>
-                                            <include reference="ABQ-ES-B23"/>
-                                            <include reference="G35-Nd-Nos"/>
-                                            <include reference="hUo-TZ-70f"/>
-                                            <include reference="8HP-Fz-rfv"/>
-                                            <include reference="nte-LQ-Nbu"/>
                                             <include reference="I7E-vt-JqU"/>
                                             <include reference="eFa-T9-4vO"/>
+                                            <include reference="4WA-HK-RIO"/>
+                                            <include reference="NUi-os-HK7"/>
+                                            <include reference="cNH-Rh-bBJ"/>
+                                            <include reference="ciR-tX-U2J"/>
+                                            <include reference="6Yv-ih-Pit"/>
+                                            <include reference="ABQ-ES-B23"/>
+                                            <include reference="8HP-Fz-rfv"/>
+                                            <include reference="nte-LQ-Nbu"/>
+                                            <include reference="G35-Nd-Nos"/>
+                                            <include reference="hUo-TZ-70f"/>
                                         </mask>
                                     </variation>
                                 </view>

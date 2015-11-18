@@ -119,7 +119,6 @@
 		32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F231BEB60D3002AFC6D /* Icon-29@3x.png */; };
 		32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F241BEB60D3002AFC6D /* Icon-60@3x.png */; };
 		32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32707F191BFAC9FB0006FB6A /* WuliuViewController.m */; };
-		32707F1C1BFAC9FB0006FB6A /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */; };
 		3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
 		3271EF101BFACF3900EDF55E /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
@@ -210,6 +209,9 @@
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
 		3284A23D1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */; };
 		3284A23E1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */; };
+		3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */; };
+		3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */; };
+		3284A2431BFC4C4400D0F0D0 /* CameraImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3284A2411BFC4C4400D0F0D0 /* CameraImage.png */; };
 		3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FC1BE0BEAA00C8A775 /* childImage.png */; };
 		3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */; };
 		32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B4E1B81C152007E562A /* EmptyCartViewController.m */; };
@@ -942,6 +944,8 @@
 		3284A23A1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController2.h; sourceTree = "<group>"; };
 		3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController2.m; sourceTree = "<group>"; };
 		3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController2.xib; sourceTree = "<group>"; };
+		3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletaBtnIcon.png; sourceTree = "<group>"; };
+		3284A2411BFC4C4400D0F0D0 /* CameraImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraImage.png; sourceTree = "<group>"; };
 		3286F2FC1BE0BEAA00C8A775 /* childImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childImage.png; sourceTree = "<group>"; };
 		3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladyImage.png; sourceTree = "<group>"; };
 		32891B4D1B81C152007E562A /* EmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCartViewController.h; sourceTree = "<group>"; };
@@ -1280,6 +1284,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */,
+				3284A2411BFC4C4400D0F0D0 /* CameraImage.png */,
 				32FE088B1BF5CB940072CCEC /* downArrow1.png */,
 				32DE21C41BF1DE2A00999ECA /* leftArrowIcon.png */,
 				32DE21C51BF1DE2A00999ECA /* shareIcon.png */,
@@ -2228,6 +2234,7 @@
 				320AC9391B6F6CFE003EABB6 /* ModifyPasswordViewController.xib in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
+				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				325B1E811BE48D390027B3E3 /* barbackImage2.png in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
@@ -2237,7 +2244,7 @@
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32A2883D1B93E20F006DC949 /* RightMenuViewController.xib in Resources */,
 				32D2B78C1BDDF41C00603FCE /* address_icon.png in Resources */,
-				32707F1C1BFAC9FB0006FB6A /* WuliuViewController.xib in Resources */,
+				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				32BC3CAA1BD4BB70008ADAA2 /* ios8_retina_HD5.5.png in Resources */,
 				32CC7C9C1BA0186C00475E2E /* TuihuoXQ4.xib in Resources */,
@@ -2342,6 +2349,7 @@
 				32A288381B93E1FC006DC949 /* LeftMenuViewController.xib in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
+				3284A2431BFC4C4400D0F0D0 /* CameraImage.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,

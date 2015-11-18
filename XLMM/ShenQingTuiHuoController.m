@@ -33,6 +33,11 @@
     int maxNumber;
     
     int reasonCode;
+    
+    UIView *reasonView;
+    UIView *backView;
+    
+    
    // float refundPrice;
 }
 
@@ -65,7 +70,7 @@
 - (void)keyboardDidHiden:(NSNotification *)notification{
     
     NSLog(@"hiden");
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0 animations:^{
         
         self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
         
@@ -90,7 +95,7 @@
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];
     self.containterWidth.constant = SCREENWIDTH;
     
-    self.dataArray = @[@"其他",
+    self.dataArray = @[
                        @"错拍",
                        @"缺货",
                        @"开线/脱色/脱毛/有色差/有虫洞",
@@ -100,7 +105,8 @@
                        @"与描述不符",
                        @"退运费",
                        @"发票问题",
-                       @"七天无理由退换货"
+                       @"七天无理由退换货",
+                       @"其他"
                        ];
     
     //[self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
@@ -138,7 +144,114 @@
     self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 
     
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor blackColor];
+    backView.alpha = 0.5;
+    [self.view addSubview:backView];
+    backView.hidden = YES;
+    
+    [self loadReasonView];
+    [self hiddenReasonView];
+    [self disableTijiaoButton];
+    
 }
+
+- (void)loadReasonView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"SelectedReasonsView" owner:nil options:nil];
+    
+    reasonView = [views objectAtIndex:0];
+    
+    UIButton *cancelButton = (UIButton *)[reasonView viewWithTag:200];
+    cancelButton.layer.cornerRadius = 20;
+    cancelButton.layer.borderWidth = 1;
+    cancelButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    [cancelButton addTarget:self action:@selector(cancelSeleted:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    UIView *listView = (UIView *)[reasonView viewWithTag:100];
+    
+    listView.layer.masksToBounds = YES;
+    listView.layer.cornerRadius = 20;
+    
+    
+    reasonView.frame = self.view.frame;
+    [self.view addSubview:reasonView];
+    
+    
+    
+    //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
+    for (int i = 0; i < 11; i++) {
+        UIButton *button = (UIButton *)[reasonView viewWithTag:800 + i];
+        [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateHighlighted];
+        
+        button.showsTouchWhenHighlighted = NO;
+        //  button.highlighted = NO;
+        [button addTarget:self action:@selector(selectReason:) forControlEvents:UIControlEventTouchUpInside];
+        NSLog(@"uibuton = %@", button);
+        
+    }
+    
+    
+    
+    
+}
+
+- (void)hiddenReasonView{
+    [UIView animateWithDuration:0.3 animations:^{
+        reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        backView.alpha = 0;
+    }completion:^(BOOL finished) {
+        backView.hidden = YES;
+        
+    }];
+    
+}
+- (void)showReasonView{
+    [UIView animateWithDuration:0.3 animations:^{
+        reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        backView.alpha = 0.5;
+        
+    }completion:^(BOOL finished) {
+        backView.hidden = NO;
+        
+    }];
+}
+
+- (void)selectReason:(UIButton *)button{
+    NSLog(@"tag = %ld", button.tag);
+    
+    self.reasonLabel.text = self.dataArray[button.tag - 800];
+    int num = (int)button.tag - 800+1;
+    reasonCode = num %11;
+    
+    NSLog(@"reason Code = %d", reasonCode);
+    [self hiddenReasonView];
+    [self enableTijiaoButton];
+    
+    
+    
+}
+
+- (void)enableTijiaoButton{
+    self.commitButton.enabled = YES;
+    self.commitButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+}
+
+- (void)disableTijiaoButton{
+    self.commitButton.enabled = NO;
+    self.commitButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
+    self.commitButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+}
+
+- (void)cancelSeleted:(UIButton *)button{
+    NSLog(@"取消选择");
+    [self hiddenReasonView];
+    
+}
+
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -286,11 +399,8 @@
 - (IBAction)yuanyinClicked:(id)sender {
     
     NSLog(@"选择退款原因");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:_dataArray[1],_dataArray[2],_dataArray[3],_dataArray[4],_dataArray[5],_dataArray[6],_dataArray[7],_dataArray[8],_dataArray[9],_dataArray[10],_dataArray[0], nil];
-    actionSheet.tag = 200;
+    [self showReasonView];
     
-    
-    [actionSheet showInView:self.view];
     
     
     
@@ -381,85 +491,14 @@
         [self presentViewController:imagePickerController animated:YES completion:^{}];
         
     }
-    if (actionSheet.tag == 200) {
-        switch (buttonIndex) {
-            case 1:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 2;
-                break;
-            case 2:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 3;
-                break;
-            case 3:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 4;
-                break;
-            case 4:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                
-                reasonCode = 5;
-                break;
-            case 5:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 6;
-                break;
-            case 6:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 7;
-                break;
-            case 7:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 8;
-                break;
-            case 8:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 9;
-                break;
-            case 9:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 10;
-                break;
-            case 10:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 0;
-                break;
-            case 0:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                reasonCode = 1;
-                break;
-                
-                
-                
-                
-            default:
-                NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-                
-                break;
-        }
-        self.reasonLabel.text = self.dataArray[reasonCode];
-
-    }
-
+   
     
 }
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet{
     NSLog(@"取消");
 }
 
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
-{
-    
-    //    NSLog(@"%@", actionSheet.subviews);
-    //    NSLog(@"%@", actionSheet);
-    //    for (UIView *subViwe in actionSheet.subviews) {
-    //        NSLog(@"%@", subViwe);
-    //        if ([subViwe isKindOfClass:[UIButton class]]) {
-    //            UIButton *button = (UIButton*)subViwe;
-    //            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    //        }
-    //    }
-}
+
 - (IBAction)commitClicked:(id)sender {
     
     NSLog(@"提交");
