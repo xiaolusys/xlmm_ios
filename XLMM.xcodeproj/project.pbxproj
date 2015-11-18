@@ -1284,6 +1284,14 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
+				32BE33931BDA0A720078C8B0 /* testImage.jpg */,
+				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
+				32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */,
+				32BC3CA81BD4BB70008ADAA2 /* retina4.png */,
+				32CDC9421BD1FC9100EF5FA6 /* name.png */,
+				32CDC9441BD2028F00EF5FA6 /* category.png */,
+				32CDC9451BD2028F00EF5FA6 /* profiles.png */,
 				3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */,
 				3284A2411BFC4C4400D0F0D0 /* CameraImage.png */,
 				32FE088B1BF5CB940072CCEC /* downArrow1.png */,
@@ -1402,15 +1410,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				321928BA1BDB7E7D004EA6A7 /* New Images */,
-				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
-				32BE33931BDA0A720078C8B0 /* testImage.jpg */,
-				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
-				32BC3CA71BD4BB70008ADAA2 /* retina_HD4.7.png */,
-				32BC3CA81BD4BB70008ADAA2 /* retina4.png */,
-				32CDC9421BD1FC9100EF5FA6 /* name.png */,
-				32CDC9441BD2028F00EF5FA6 /* category.png */,
-				32CDC9451BD2028F00EF5FA6 /* profiles.png */,
 				32E00C901BA7B79700A73390 /* The Third */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
@@ -2069,6 +2068,7 @@
 		32E00C901BA7B79700A73390 /* The Third */ = {
 			isa = PBXGroup;
 			children = (
+				321928BA1BDB7E7D004EA6A7 /* New Images */,
 				3290C88E1B88A6D000CFAFA0 /* font */,
 				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
 				327F80C21B95A60900EDDF5B /* MJRefresh */,
