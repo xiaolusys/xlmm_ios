@@ -30,14 +30,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *jineLabel;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;
 
@@ -51,9 +48,8 @@
 
 - (IBAction)goumai:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UILabel *lastStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *finishedLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *yuanqiuView;
 

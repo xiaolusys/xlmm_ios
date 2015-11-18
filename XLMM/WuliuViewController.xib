@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WuliuViewController">
@@ -10,6 +10,7 @@
                 <outlet property="WuliuInfoChainView" destination="Q93-6P-vXo" id="7zt-eU-buy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wuliuCompanyName" destination="fvM-F3-KJx" id="8QL-Yh-MgU"/>
+                <outlet property="wuliuInfoChainView" destination="Q93-6P-vXo" id="aEi-IL-iQr"/>
                 <outlet property="wuliuMiandanId" destination="IvL-8f-yYr" id="IFf-sS-jJm"/>
             </connections>
         </placeholder>
@@ -18,6 +19,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UqQ-0X-4Lg">
+                    <rect key="frame" x="0.0" y="80" width="320" height="50"/>
+                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="0ew-kN-0TG"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PEA-r1-FZn">
                     <rect key="frame" x="0.0" y="64" width="320" height="45"/>
                     <subviews>
@@ -65,8 +73,8 @@
                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="88888888888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvL-8f-yYr">
-                            <rect key="frame" x="204" y="13" width="106" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88888888888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IvL-8f-yYr">
+                            <rect key="frame" x="220" y="13" width="90" height="18"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="gJd-2d-bMn"/>
@@ -75,6 +83,13 @@
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GvN-X6-nSy">
+                            <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="lwd-hL-CXU"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -84,13 +99,28 @@
                         <constraint firstAttribute="trailing" secondItem="IvL-8f-yYr" secondAttribute="trailing" constant="10" id="Pmt-m9-tyk"/>
                         <constraint firstItem="OKj-Ae-aNf" firstAttribute="leading" secondItem="NGW-DB-GAC" secondAttribute="leading" constant="10" id="R2Z-a3-07R"/>
                         <constraint firstItem="IvL-8f-yYr" firstAttribute="top" secondItem="NGW-DB-GAC" secondAttribute="top" constant="13" id="eAI-OQ-Ton"/>
+                        <constraint firstItem="GvN-X6-nSy" firstAttribute="leading" secondItem="NGW-DB-GAC" secondAttribute="leading" id="fDp-8e-0SH"/>
+                        <constraint firstAttribute="bottom" secondItem="GvN-X6-nSy" secondAttribute="bottom" id="swp-Ha-aJA"/>
+                        <constraint firstAttribute="trailing" secondItem="GvN-X6-nSy" secondAttribute="trailing" id="tCL-Vu-ZtC"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q93-6P-vXo">
                     <rect key="frame" x="0.0" y="170" width="320" height="382"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9II-jl-d9T">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="6OX-70-Wyw"/>
+                            </constraints>
+                        </view>
+                    </subviews>
                     <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="9II-jl-d9T" secondAttribute="trailing" id="2E9-4l-7rP"/>
+                        <constraint firstItem="9II-jl-d9T" firstAttribute="top" secondItem="Q93-6P-vXo" secondAttribute="top" id="Ben-WV-p6V"/>
+                        <constraint firstItem="9II-jl-d9T" firstAttribute="leading" secondItem="Q93-6P-vXo" secondAttribute="leading" id="Nvk-OU-pvf"/>
                         <constraint firstAttribute="height" constant="382" id="gyY-UM-gCa"/>
                     </constraints>
                 </view>
@@ -98,8 +128,11 @@
             <animations/>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="UqQ-0X-4Lg" secondAttribute="trailing" id="1La-df-VEA"/>
                 <constraint firstItem="PEA-r1-FZn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="2mO-aY-cOT"/>
                 <constraint firstAttribute="trailing" secondItem="NGW-DB-GAC" secondAttribute="trailing" id="Eqa-wF-P7K"/>
+                <constraint firstItem="UqQ-0X-4Lg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HCQ-ef-mMp"/>
+                <constraint firstItem="UqQ-0X-4Lg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="XFg-dR-Mtc"/>
                 <constraint firstItem="Q93-6P-vXo" firstAttribute="top" secondItem="NGW-DB-GAC" secondAttribute="bottom" constant="15" id="cwl-d8-PDp"/>
                 <constraint firstAttribute="trailing" secondItem="PEA-r1-FZn" secondAttribute="trailing" id="dSp-7l-QWf"/>
                 <constraint firstItem="PEA-r1-FZn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g7d-hs-sgm"/>
@@ -108,13 +141,7 @@
                 <constraint firstItem="NGW-DB-GAC" firstAttribute="top" secondItem="PEA-r1-FZn" secondAttribute="bottom" constant="1" id="teG-X5-Nrm"/>
                 <constraint firstItem="NGW-DB-GAC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="w6u-nP-gfP"/>
             </constraints>
-            <point key="canvasLocation" x="537" y="403"/>
-        </view>
-        <view contentMode="scaleToFill" id="ucv-8g-doN">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="-126" y="213"/>
         </view>
     </objects>
 </document>

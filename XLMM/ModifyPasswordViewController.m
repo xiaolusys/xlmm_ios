@@ -11,71 +11,73 @@
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 
+#import "ModifyPasswordViewController2.h"
+
 @interface ModifyPasswordViewController ()<UITextFieldDelegate>
 
 @end
 
-@implementation ModifyPasswordViewController
+@implementation ModifyPasswordViewController{
+    
+    
+    NSTimer *myTimer;
+    NSInteger countdownSecond;
+    UILabel *timeLabel;
+    NSInteger countSecond;
+    NSString *phonenumberString;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
+//  获取验证码
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    self.title = @"修改密码";
-//    [self setInfo];
+//
+    countSecond = 60;
+    countdownSecond = countSecond;
+    
     
     [self createNavigationBarWithTitle:@"修改密码" selecotr:@selector(btnClicked:)];
-    
-    self.infoLabel.hidden = YES;
-    self.passwordLabel.hidden = YES;
-    self.phoneNumberTextField.text = [[NSUserDefaults standardUserDefaults]objectForKey:kUserName];
-    self.phoneNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
-    self.phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.phoneNumberTextField.delegate = self;
+
     self.passCodeTextField.delegate = self;
-    self.setPasswordTextField.delegate = self;
-    self.confirmPasswordTextField.delegate = self;
+    self.passCodeTextField.returnKeyType = UIReturnKeyDone;
     
-    self.phoneNumberTextField.borderStyle = UITextBorderStyleNone;
      self.passCodeTextField.borderStyle = UITextBorderStyleNone;
-     self.setPasswordTextField.borderStyle = UITextBorderStyleNone;
-     self.confirmPasswordTextField.borderStyle = UITextBorderStyleNone;
-    self.phoneNumberTextField.backgroundColor = [UIColor whiteColor];
+
      self.passCodeTextField.backgroundColor = [UIColor whiteColor];
-     self.setPasswordTextField.backgroundColor = [UIColor whiteColor];
-     self.confirmPasswordTextField.backgroundColor = [UIColor whiteColor];
-    self.phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        self.passCodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        self.setPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        self.confirmPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
+    self.passCodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+
+    self.passCodeTextField.keyboardType = UIKeyboardTypeNumberPad;
     
    // http://youni.huyi.so/rest/v1/register/change_pwd_code
     
+    self.codeButton.layer.cornerRadius = 15;
+    self.codeButton.layer.borderWidth = 0.5;
+    self.codeButton.layer.borderColor = [UIColor orangeThemeColor].CGColor;
+    
+    self.nextButton.layer.cornerRadius = 20;
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    NSString *str1 = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    phonenumberString = str1;
+    
+    NSMutableString *str = [NSMutableString stringWithString:str1];
+    
+    NSRange range = {3,4};
+    [str replaceCharactersInRange:range withString:@"****"];
+    self.phoneLabel.text = str;
+    
+    [self disableTijiaoButton];
     
 }
-//
-//- (void)setInfo{
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-//    label.text = @"密码修改";
-//    label.textColor = [UIColor blackColor];
-//    label.font = [UIFont systemFontOfSize:26];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    self.navigationItem.titleView = label;
-//    
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-//    imageView.frame = CGRectMake(8, 8, 18, 31);
-//    [button addSubview:imageView];
-//    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    self.navigationItem.leftBarButtonItem = leftItem;
-//    
-//}
+
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -89,28 +91,40 @@
 
 #pragma mark --UITextFieldDelegate--
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    if (textField.text.length == 6) {
+        [self enableTijiaoButton];
+        [textField resignFirstResponder];
+        
+    } else {
+        [self disableTijiaoButton];
+       // [textField becomeFirstResponder];
+    }
 }
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.text.length == 5) {
+        [self enableTijiaoButton];
+        return YES;
+    }
+    else
+    {
+        [self disableTijiaoButton];
+        
+    }
     return YES;
 }
+
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
 }
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.phoneNumberTextField resignFirstResponder];
     [self.passCodeTextField resignFirstResponder];
-    [self.setPasswordTextField resignFirstResponder];
-    [self.confirmPasswordTextField resignFirstResponder];
+
 }
 
 /*
@@ -123,60 +137,39 @@
 }
 */
 
-- (IBAction)confirmClicked:(id)sender {
-    NSLog(@"确认");
-    if (![self.setPasswordTextField.text isEqualToString:self.confirmPasswordTextField.text])
-    {
-        self.passwordLabel.hidden = NO;
-        return;
-    } else{
-        self.passwordLabel.hidden = YES;
-        
-        NSLog(@"注册");
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSString *phoneNumber = _phoneNumberTextField.text;
-        NSString *validCode = _passCodeTextField.text;
-        NSString *password1 = _setPasswordTextField.text;
-        NSString *password2 = _confirmPasswordTextField.text;
-        
-        NSLog(@"username:%@, validcode:%@, password1:%@, password2:%@", phoneNumber, validCode, password1, password2);
-        
-        
-        NSDictionary *parameters = @{@"username": phoneNumber,
-                                     @"valid_code":validCode,
-                                     @"password1":password1,
-                                     @"password2":password2,
-                                     };
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
-        NSLog(@"修改密码");
-        MMLOG(string);
-        [manager POST:string parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  //  NSError *error;
-                  NSLog(@"JSON: %@", responseObject);
-                  // [self.navigationController popViewControllerAnimated:YES];
-                  
-                 
-             
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  
-                  NSLog(@"Error: %@", error);
-                  
-                  
-              }];
+- (void)enableTijiaoButton{
+    self.nextButton.enabled = YES;
+    self.nextButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.nextButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+}
 
-        
+- (void)disableTijiaoButton{
+    self.nextButton.enabled = NO;
+    self.nextButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
+    self.nextButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+}
+
+- (IBAction)confirmClicked:(id)sender {
+
+    //下一步进入设置密码界面
+    
+    if (self.passCodeTextField.text.length != 6) {
+        return;
     }
+    ModifyPasswordViewController2 *modifypsdVC = [[ModifyPasswordViewController2 alloc] initWithNibName:@"ModifyPasswordViewController2" bundle:nil];
+    modifypsdVC.codeString = self.passCodeTextField.text;
+    modifypsdVC.phoneString = phonenumberString;
+    [self.navigationController pushViewController:modifypsdVC animated:YES];
+    
+    
 }
 
 - (IBAction)getCode:(id)sender {
     NSLog(@"获取验证码");
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSLog(@"phoneNumber = %@\n", self.phoneNumberTextField.text);
-    NSDictionary *parameters = @{@"vmobile": self.phoneNumberTextField.text};
+    NSString *phoneNum = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    NSLog(@"phoneNumber = %@\n", phoneNum);
+    NSDictionary *parameters = @{@"vmobile": phoneNum};
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_pwd_code", Root_URL];
     NSLog(@"stringUrl = %@", string);
@@ -193,5 +186,33 @@
           }];
 
     
+    
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+    
+}
+
+- (void)updateTime{
+    countdownSecond--;
+    //  NSLog(@"countdownSecond = %ld", (long)countdownSecond);
+    
+    NSString *text = [NSString stringWithFormat:@"%ld秒", (long)countdownSecond];
+    //   timeLabel.text = text;
+    self.buttonLabel.text = text;
+    self.buttonLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    self.codeButton.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+    
+    //#warning change timeLabel
+    
+    if (countdownSecond == 55) {
+        countdownSecond = countSecond;
+        [myTimer invalidate];
+        self.codeButton.enabled = YES;
+        self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+        self.buttonLabel.textColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+        self.buttonLabel.text = @"获取验证码";
+        
+        
+        
+    }
 }
 @end

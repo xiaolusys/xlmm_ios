@@ -142,6 +142,8 @@ static NSString *khead2View = @"head2View";
     [self createCollectionView];
  
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    
+   // [self getQiNiuToken];
 }
 
 
@@ -364,6 +366,17 @@ static NSString *khead2View = @"head2View";
     
     
 }
+//- (NSString *)getQiNiuToken{
+//    
+//    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu";
+//    NSLog(@"qiniu = %@", qiniuUrl);
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"dic = %@", dic);
+//    
+//    return nil;
+//    
+//}
 
 
 

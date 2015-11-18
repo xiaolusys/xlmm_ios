@@ -101,13 +101,18 @@
     
     //第三步，连接服务器
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
+    NSLog(@"result = %@", result);
     
-    
-    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",str1);
-    if ([str1 isEqualToString:@"\"OK\""]){
+    if ([[result objectForKey:@"res"] boolValue]) {
         [self successCommit];
+
     }
+    
+//    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+//    NSLog(@"%@",str1);
+//    if ([str1 isEqualToString:@"\"OK\""]){
+//    }
 }
 
 - (void)successCommit{

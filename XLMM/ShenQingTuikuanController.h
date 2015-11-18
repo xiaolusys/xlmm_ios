@@ -20,6 +20,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
+@property (weak, nonatomic) IBOutlet UIView *buttonView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 

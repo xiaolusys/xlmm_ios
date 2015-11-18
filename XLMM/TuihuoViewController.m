@@ -79,6 +79,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     });
     
 }
+//  退货款列表分页下载
+
+
+
+
+
 
 - (void)fetchedWaipayData:(NSData *)data{
     NSLog(@"11");
@@ -86,7 +92,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (data == nil) {
         return;
     }
-    [self.dataArray removeAllObjects];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"json = %@", json);
@@ -94,6 +99,10 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         NSLog(@"您的退货列表为空");
         return;
     }
+    
+  
+    
+    
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
         TuihuoModel *model = [TuihuoModel new];
@@ -132,7 +141,29 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         [self.dataArray addObject:model];
     
     }
+    
+    
+    if ([[json objectForKey:@"next"] class] == [NSNull class]) {
+        // 下一页为空
+    } else {
+        // 下载下一页内容
+        
+        NSString *string = [json objectForKey:@"next"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"url = %@", string);
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+            
+            
+        });
+        
+    }
+    
+    NSLog(@"dataArray = %@", self.dataArray);
+    
     [self.collectionView reloadData];
+    
+    
     
     
         

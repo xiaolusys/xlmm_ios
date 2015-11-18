@@ -25,6 +25,8 @@
 #define kUrlScheme @"wx25fcb32689872499"
 
 @interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate>{
+    
+    float refundPrice;
 }
 
 
@@ -171,20 +173,35 @@
     
     if ([statusDisplay isEqualToString:@"待付款"]) {
         self.zhuangtaiLabel.text = @"订单创建成功";
+        NSString *timeString = [dicJson objectForKey:@"created"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
 
     } else if ([statusDisplay isEqualToString:@"已付款"]){
         self.zhuangtaiLabel.text = @"您已提交了订单，请等待系统确认";
         self.headdingdanzhuangtai.text = @"待发货";
+        NSString *timeString = [dicJson objectForKey:@"pay_time"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
     } else if (([statusDisplay isEqualToString:@"已发货"])){
         self.zhuangtaiLabel.text = @"到达目的地网点上海杨浦区公司";
         self.headdingdanzhuangtai.text = @"待收货";
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
     } else if (([statusDisplay isEqualToString:@"交易成功"])){
         self.zhuangtaiLabel.text = @"已签收";
         self.headdingdanzhuangtai.text = @"交易成功";
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
 
     } else if (([statusDisplay isEqualToString:@"交易关闭"])){
         self.zhuangtaiLabel.text = @"交易关闭";
         self.headdingdanzhuangtai.text = @"交易关闭";
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
 
     }
     
@@ -193,36 +210,33 @@
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
     tradeId = [dicJson objectForKey:@"tid"]; //交易ID，客户可见
     
-    NSMutableString *string = [NSMutableString stringWithString:[dicJson objectForKey:@"created"]];
-    NSRange range = [string rangeOfString:@"T"];
-    [string deleteCharactersInRange:range];
-    [string insertString:@"  " atIndex:range.location];
-    self.finishedLabel.text = string;//时间 创建订单时间  付款时间 发货时间
+  
     
-    self.lastStatusLabel.text = [dicJson objectForKey:@"status_display"];
     self.yuanqiuView.layer.cornerRadius = 6;
-    self.timeLabel.text = string;
-    self.jineLabel.text = [NSString stringWithFormat:@"￥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
+   // self.timeLabel.text = string;
     
     self.nameLabel.text = [dicJson objectForKey:@"receiver_name"];
-    self.phoneLabel.text = [dicJson objectForKey:@"receiver_mobile"];
     NSString *addressStr = [NSString stringWithFormat:@"%@-%@-%@-%@",
                            [dicJson objectForKey:@"receiver_state"],
                            [dicJson objectForKey:@"receiver_city"],
                            [dicJson objectForKey:@"receiver_district"],
                             [dicJson objectForKey:@"receiver_address"]];
     self.addressLabel.text = addressStr;
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
+    self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
+    self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%.02f", [[dicJson objectForKey:@"discount_fee"] floatValue]];
+    self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.02f", [[dicJson objectForKey:@"payment"] floatValue]];
     
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"total_fee"] floatValue]];
-    self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%@", [dicJson objectForKey:@"post_fee"]];
-    self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%@", [dicJson objectForKey:@"discount_fee"]];
-    self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dicJson objectForKey:@"payment"] floatValue]];
-    
+    refundPrice = [[dicJson objectForKey:@"payment"] floatValue];
     
     
     NSArray *orderArray = [dicJson objectForKey:@"orders"];
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:0];
     [dataArray removeAllObjects];
+    [refund_status_displayArray removeAllObjects];
+    [refund_statusArray removeAllObjects];
+    [orderStatus removeAllObjects];
+    [orderStatusDisplay removeAllObjects];
     
     
     for (NSDictionary *dic in orderArray) {
@@ -252,6 +266,21 @@
     [self createXiangQing];
 
     
+}
+
+
+
+- (NSString *)formatterTimeString:(NSString *)timeString{
+    if (timeString == nil) {
+        return nil;
+    }
+    if ([timeString class] == [NSNull class]) {
+        return nil;
+    }
+    NSMutableString *newString = [NSMutableString stringWithString:timeString];
+    NSRange range = {10, 1};
+    [newString replaceCharactersInRange:range withString:@" "];
+    return newString;
 }
 
 - (void)createXiangQing{
@@ -316,7 +345,8 @@
             button.layer.cornerRadius = 12.5;
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
-        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"交易成功"]){
+        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"交易成功"]&&
+                   [[refund_statusArray objectAtIndex:i] integerValue] == 0){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
@@ -328,7 +358,8 @@
             button.layer.cornerRadius = 12.5;
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
-        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"]){
+        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"] &&
+                   [[refund_statusArray objectAtIndex:i] integerValue] == 0){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
@@ -341,13 +372,11 @@
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
         }
-        
-        
         else{
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
             if ([string isEqualToString:@"没有退款"] ) {
-               // string = @"";
+               
             }
             label.text = string;
             label.numberOfLines = 0;
@@ -430,8 +459,9 @@
     NSInteger i = button.tag - 200;
     tuihuoModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    
+    tuikuanVC.refundPrice = refundPrice;
     tuikuanVC.dingdanModel = tuihuoModel;
+    
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.priceString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);

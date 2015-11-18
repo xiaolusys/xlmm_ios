@@ -39,11 +39,12 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/wuliu/?tid=%@", Root_URL, self.tradeId];
     NSURL *url = [NSURL URLWithString:urlString];
-    //NSLog(@"%@", urlString);
+    NSLog(@"%@", urlString);
     
     NSData *responseData = [NSData dataWithContentsOfURL:url];
     
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
+    NSLog(@"json = %@", dicJson);
     NSInteger code = [[dicJson objectForKey:@"code"] integerValue];
     if (code == 0) {
         NSDictionary *responseContent = [dicJson objectForKey:@"response_content"];
