@@ -70,7 +70,7 @@
 - (void)keyboardDidHiden:(NSNotification *)notification{
 
     NSLog(@"hiden");
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0 animations:^{
 
         self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
 
@@ -94,17 +94,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.dataArray = @[@"其他",
-                       @"错拍",
-                       @"缺货",
-                       @"开线/脱色/脱毛/有色差/有虫洞",
-                       @"发错货/漏发",
-                       @"没有发货",
-                       @"未收到货",
-                       @"与描述不符",
-                       @"退运费",
-                       @"发票问题",
-                       @"七天无理由退换货"
+    self.dataArray = @[
+                       @"错拍",//1
+                       @"缺货",//2
+                       @"开线/脱色/脱毛/有色差/有虫洞",//3
+                       @"发错货/漏发",//4
+                       @"没有发货",//5
+                       @"未收到货",//6
+                       @"与描述不符",//7
+                       @"退运费",//8
+                       @"发票问题",//9
+                       @"七天无理由退换货",//10
+                       @"其他"//0
                        ];
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
@@ -159,17 +160,23 @@
 }
 
 - (void)hiddenReasonView{
-    backView.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        backView.alpha = 0;
+    }completion:^(BOOL finished) {
+        backView.hidden = YES;
+
     }];
     
 }
 - (void)showReasonView{
-    backView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH);
+        reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        backView.alpha = 0.5;
         
+    }completion:^(BOOL finished) {
+        backView.hidden = NO;
+
     }];
 }
 - (void)loadReasonView{
@@ -194,6 +201,38 @@
     
     reasonView.frame = self.view.frame;
     [self.view addSubview:reasonView];
+    
+    
+    
+  //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
+    for (int i = 0; i < 11; i++) {
+        UIButton *button = (UIButton *)[reasonView viewWithTag:800 + i];
+        [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateHighlighted];
+
+        button.showsTouchWhenHighlighted = NO;
+      //  button.highlighted = NO;
+        [button addTarget:self action:@selector(selectReason:) forControlEvents:UIControlEventTouchUpInside];
+        NSLog(@"uibuton = %@", button);
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+- (void)selectReason:(UIButton *)button{
+    NSLog(@"tag = %ld", button.tag);
+  
+    self.reasonLabel.text = self.dataArray[button.tag - 800];
+    int num = (int)button.tag - 800+1;
+    reasonCode = num %11;
+    
+    NSLog(@"reason Code = %d", reasonCode);
+    [self hiddenReasonView];
+    
     
 }
 
@@ -363,86 +402,6 @@
     
 }
 
-#pragma mark actionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"选择");
-    switch (buttonIndex) {
-        case 1:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 2;
-            break;
-        case 2:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 3;
-            break;
-        case 3:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 4;
-            break;
-        case 4:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            
-            reasonCode = 5;
-            break;
-        case 5:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 6;
-            break;
-        case 6:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 7;
-            break;
-        case 7:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 8;
-            break;
-        case 8:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 9;
-            break;
-        case 9:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 10;
-            break;
-        case 10:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 0;
-            break;
-        case 0:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-            reasonCode = 1;
-            break;
-      
-            
-    
-            
-        default:
-            NSLog(@"buttonIndex = %ld", (long)buttonIndex);
-
-            break;
-    }
-    self.reasonLabel.text = self.dataArray[reasonCode];
-    
-}
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet{
-    NSLog(@"取消");
-}
-
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
-{
-    [actionSheet addSubview:[[UIView alloc] initWithFrame:actionSheet.frame]];
-   
-    NSLog(@"%ld", actionSheet.subviews.count);
-    NSLog(@"%@", actionSheet);
-    for (UIView *subViwe in actionSheet.subviews) {
-        NSLog(@"%@", subViwe);
-        if ([subViwe isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton*)subViwe;
-            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        }
-    }
-}
 - (IBAction)commitClicked:(id)sender {
     
     NSLog(@"提交");
@@ -480,14 +439,10 @@
             
             [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
             
-            //     NSDictionary *parameters = @{@"id":self.oid,
-            //                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-            //                                         @"num":self.number.text,
-            //                                         @"sum_price":self.myTextField2.text,
-            //                                         @"description":self.myTextView.text
-            //                                         };
-            //[NSString stringWithFormat:@"",]
+          
             NSString *descStr;
+            descStr = self.inputTextView.text;
+            
             if ([self.inputTextView.text isEqualToString:@""]) {
                 descStr = @"七天无理由退货";
                 

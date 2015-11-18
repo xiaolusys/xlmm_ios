@@ -208,6 +208,8 @@
 		3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27C1B6B5B1300E73EB9 /* UIImageView+WebCache.m */; };
 		3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */; };
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
+		3284A23D1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */; };
+		3284A23E1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */; };
 		3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FC1BE0BEAA00C8A775 /* childImage.png */; };
 		3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */; };
 		32891B501B81C152007E562A /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B4E1B81C152007E562A /* EmptyCartViewController.m */; };
@@ -937,6 +939,9 @@
 		3282F27D1B6B5B1300E73EB9 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		3282F27E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3284A23A1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController2.h; sourceTree = "<group>"; };
+		3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController2.m; sourceTree = "<group>"; };
+		3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyPasswordViewController2.xib; sourceTree = "<group>"; };
 		3286F2FC1BE0BEAA00C8A775 /* childImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childImage.png; sourceTree = "<group>"; };
 		3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladyImage.png; sourceTree = "<group>"; };
 		32891B4D1B81C152007E562A /* EmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCartViewController.h; sourceTree = "<group>"; };
@@ -1523,6 +1528,9 @@
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
+				3284A23A1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.h */,
+				3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */,
+				3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */,
 				32E329961B70C70000A6F0BC /* DetailViewController.h */,
 				32E329971B70C70000A6F0BC /* DetailViewController.m */,
 				32E329981B70C70000A6F0BC /* DetailViewController.xib */,
@@ -2375,6 +2383,7 @@
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
 				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
+				3284A23E1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
 				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
@@ -2629,6 +2638,7 @@
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				3284A23D1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m in Sources */,
 				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
 				3290C88A1B886B0C00CFAFA0 /* AddressView.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
