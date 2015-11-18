@@ -24,6 +24,9 @@
 
 @property (nonatomic, strong) NSArray *dataArray;
 
+@property (nonatomic, strong) NSMutableArray *imagesArray;
+
+
 @end
 
 
@@ -58,6 +61,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     
     
+ 
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.oid]];
+    
+    // 将图片写入文件
+    
+    [self.imagesArray writeToFile:fullPath atomically:YES];
+    
+    
+    
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification{
@@ -68,6 +81,7 @@
     }];
 }
 - (void)keyboardDidHiden:(NSNotification *)notification{
+    
     
     NSLog(@"hiden");
     [UIView animateWithDuration:0 animations:^{
@@ -94,7 +108,21 @@
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];
     self.containterWidth.constant = SCREENWIDTH;
+    self.imagesArray = [[NSMutableArray alloc] init];
     
+     NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.oid]];
+   // self.imagesArray;
+    
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithContentsOfFile:fullPath];
+    if (mutableArray.count > 0) {
+        self.imagesArray = mutableArray;
+        [self createImageViews];
+    } else {
+        self.deleteButton1.hidden = YES;
+        self.deleteButton2.hidden = YES;
+        self.deleteButton3.hidden = YES;
+    }
+  //  NSLog(@"%@", self.imagesArray);
     self.dataArray = @[
                        @"错拍",
                        @"缺货",
@@ -154,6 +182,24 @@
     [self hiddenReasonView];
     [self disableTijiaoButton];
     
+    
+    self.sendButton.layer.cornerRadius = 5;
+    self.sendButton.layer.borderWidth = 0.5;
+    self.sendButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView.layer.masksToBounds = YES;
+    self.sendImageView2.layer.masksToBounds = YES;
+    self.sendImageView3.layer.masksToBounds = YES;
+    self.sendImageView.layer.cornerRadius = 5;
+    self.sendImageView.layer.borderWidth = 0.5;
+    self.sendImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView2.layer.cornerRadius = 5;
+    self.sendImageView2.layer.borderWidth = 0.5;
+    self.sendImageView2.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView3.layer.cornerRadius = 5;
+    self.sendImageView3.layer.borderWidth = 0.5;
+    self.sendImageView3.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    
+   
 }
 
 - (void)loadReasonView{
@@ -434,10 +480,38 @@
     
     UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
     
-    [self.sendImageView setImage:savedImage];
+    NSData *imageData = UIImageJPEGRepresentation(savedImage, 0.5);
+
+    [self.imagesArray addObject:imageData];
+    
+    [self createImageViews];
     
     
-    self.sendImageView.tag = 100;
+}
+
+- (void)createImageViews{
+    NSInteger MAX = 3;
+    NSInteger count = (long)[self.imagesArray count];
+    if (count > MAX) {
+        count = MAX;
+    }
+    self.deleteButton1.hidden = YES;
+    self.deleteButton2.hidden = YES;
+    self.deleteButton3.hidden = YES;
+    self.sendImageView.image = nil;
+    self.sendImageView2.image = nil;
+    self.sendImageView3.image = nil;
+    
+    for (int i = 0; i < count; i++) {
+     
+        UIImageView *imageView = [self.sendImgesView viewWithTag:1001 + i];
+        UIButton *button = [self.sendImgesView viewWithTag:2001 + i];
+        button.hidden = NO;
+        imageView.image = [UIImage imageWithData:self.imagesArray[i]];
+        
+        
+        
+    }
     
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -609,5 +683,20 @@
     
     
     
+}
+
+- (IBAction)deleteImageone:(id)sender {
+    [self.imagesArray removeObjectAtIndex:0];
+    [self createImageViews];
+}
+
+- (IBAction)deleteImageTwo:(id)sender {
+    [self.imagesArray removeObjectAtIndex:1];
+    [self createImageViews];
+}
+
+- (IBAction)deleteButtonThr:(id)sender {
+    [self.imagesArray removeObjectAtIndex:2];
+    [self createImageViews];
 }
 @end
