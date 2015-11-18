@@ -13,6 +13,7 @@
 #import "ModifyPasswordViewController.h"
 #import "ModifyPhoneController.h"
 #import "UIImageView+WebCache.h"
+#import "ChangeNicknameViewController.h"
 
 @interface SettingViewController ()
 
@@ -157,16 +158,16 @@
 */
 
 - (IBAction)nickButtonClicked:(id)sender {
-    NSLog(@"用户昵称");
+    ChangeNicknameViewController *changeNicknameView = [[ChangeNicknameViewController alloc] initWithNibName:@"ChangeNicknameViewController" bundle:nil];
+    [self.navigationController pushViewController:changeNicknameView animated:YES];
+
+    //NSLog(@"用户昵称");
 }
 
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
     [self.navigationController pushViewController:modifyVC animated:YES];
-    
-    
-
 }
 
 - (IBAction)modifyButtonClicked:(id)sender {

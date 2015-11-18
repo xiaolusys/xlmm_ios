@@ -646,6 +646,8 @@
 		32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */; };
 		8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */; };
 		8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */; };
+		8E0044EA1BFC5B9E00AFC1DF /* ChangeNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */; };
+		8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1196,6 +1198,9 @@
 		32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoModel.h; sourceTree = "<group>"; };
 		32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoModel.m; sourceTree = "<group>"; };
 		8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuInfoView.xib; sourceTree = "<group>"; };
+		8E0044E71BFC5B9E00AFC1DF /* ChangeNicknameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNicknameViewController.h; sourceTree = "<group>"; };
+		8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNicknameViewController.m; sourceTree = "<group>"; };
+		8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeNicknameViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1382,6 +1387,9 @@
 				32976B841BA16C190045ADB9 /* ModifyshenqingViewController.h */,
 				32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */,
 				32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */,
+				8E0044E71BFC5B9E00AFC1DF /* ChangeNicknameViewController.h */,
+				8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */,
+				8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -2287,6 +2295,7 @@
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */,
+				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
@@ -2573,6 +2582,7 @@
 				3290C8861B88232F00CFAFA0 /* LiJiGMViewController.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				326E88911B71FDD800D15973 /* PurchaseViewController.m in Sources */,
+				8E0044EA1BFC5B9E00AFC1DF /* ChangeNicknameViewController.m in Sources */,
 				327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */,
 				32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */,
 				32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */,

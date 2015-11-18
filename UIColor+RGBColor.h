@@ -15,4 +15,10 @@
 + (UIColor *)buttonBorderColor;
 + (UIColor *)orangeThemeColor;
 
++ (UIColor *)buttonEnabledBackgroundColor;
++ (UIColor *)buttonDisabledBackgroundColor;
++ (UIColor *)buttonEnabledBorderColor;
++ (UIColor *)buttonDisabledBorderColor;
+
+
 @end

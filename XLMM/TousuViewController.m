@@ -13,7 +13,7 @@
 #define TEXT_LIMIT 80
 
 @interface TousuViewController ()<UIAlertViewDelegate>{
-    NSMutableArray *dataArray;
+    
 }
 
 @end
@@ -38,7 +38,6 @@
    // [self setInfo];
     //获取投诉意见的内容;
     [self createNavigationBarWithTitle:@"投诉建议" selecotr:@selector(backBtnClicked:)];
-    dataArray = [[NSMutableArray alloc] init];
     
     //  http://m.xiaolu.so/rest/v1/complain
     
@@ -49,7 +48,7 @@
     self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     self.tijiaoButton.enabled = NO;
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO; //文本输入位置调整。
 }
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -28,33 +28,39 @@
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="YgD-Jc-cBg">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <animations/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称 :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIl-ZP-EPl">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afF-8H-WEJ">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="［游客身份］" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOs-EL-dtm">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ovf-of-pXk">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxx-QJ-p07">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="yI3-YX-kz2"/>
                                     </constraints>
@@ -78,6 +84,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAS-Ee-odM">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <animations/>
                                     <state key="normal" title="待收货">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,6 +95,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chf-VW-LVN">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <animations/>
                                     <state key="normal" title="全部订单">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,6 +106,7 @@
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-daizhifu.png" translatesAutoresizingMaskIntoConstraints="NO" id="LM0-dc-ZeN" userLabel="Image View1">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="22" id="i5j-dN-KNc"/>
                                         <constraint firstAttribute="width" secondItem="LM0-dc-ZeN" secondAttribute="height" multiplier="11:9" id="vAq-4D-HLz"/>
@@ -117,6 +126,7 @@
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-daishouhuo.png" translatesAutoresizingMaskIntoConstraints="NO" id="phd-x8-vUC" userLabel="Image View2">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="22" id="vQ5-Lo-23z"/>
                                         <constraint firstAttribute="width" secondItem="phd-x8-vUC" secondAttribute="height" multiplier="11:10" id="yCw-fq-Gop"/>
@@ -136,6 +146,7 @@
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-quanbudingdan.png" translatesAutoresizingMaskIntoConstraints="NO" id="8HD-Yl-pHD" userLabel="Image View3">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="16" id="0hO-UD-l20"/>
                                         <constraint firstAttribute="width" secondItem="8HD-Yl-pHD" secondAttribute="height" multiplier="4:5" id="B3U-tB-eKq"/>
@@ -154,6 +165,7 @@
                                     </variation>
                                 </imageView>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="YIl-ZP-EPl" firstAttribute="top" secondItem="Sq5-9p-T0g" secondAttribute="top" constant="44" id="2fc-uF-8s7"/>
@@ -292,6 +304,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0S-Ih-dbr">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <animations/>
                                     <color key="backgroundColor" red="0.85882352941176465" green="0.29411764705882354" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="200" id="cHB-75-khH"/>
@@ -316,6 +329,7 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="centerX" secondItem="F0S-Ih-dbr" secondAttribute="centerX" id="4sn-T4-Vra"/>
                                 <constraint firstItem="F0S-Ih-dbr" firstAttribute="top" secondItem="DGG-gd-IOE" secondAttribute="top" constant="10" id="OUJ-QV-1ag">
@@ -357,9 +371,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-wodejifen.png" translatesAutoresizingMaskIntoConstraints="NO" id="ec8-ZH-bu9">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-yl-J1S">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="ME4-In-bsd"/>
                                                 <constraint firstAttribute="width" secondItem="AGH-yl-J1S" secondAttribute="height" multiplier="18:31" id="p0W-NT-cMT"/>
@@ -379,6 +395,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ThW-oc-nSR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="kcD-0g-wbW"/>
@@ -396,6 +413,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA8-cH-z0O">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="7zf-OH-bYR"/>
                                             </constraints>
@@ -419,6 +437,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="XA8-cH-z0O" firstAttribute="leading" secondItem="DNp-8f-6Hi" secondAttribute="leading" constant="60" id="8aw-Fq-g2O"/>
@@ -475,9 +494,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-dizhiguanli.png" translatesAutoresizingMaskIntoConstraints="NO" id="a6y-bD-wbS">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="ll9-kw-PKM">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ll9-kw-PKM" secondAttribute="height" multiplier="18:31" id="9X7-wz-Q9R"/>
                                                 <constraint firstAttribute="height" constant="20" id="r8N-4g-HnH"/>
@@ -497,6 +518,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdY-zp-IqO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="McZ-c9-s8B"/>
@@ -514,6 +536,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqY-Uk-3cA">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="VHV-0c-1Bz"/>
                                                 <constraint firstAttribute="width" constant="200" id="fKV-VB-bDm"/>
@@ -540,6 +563,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="bdY-zp-IqO" secondAttribute="bottom" id="0ka-LS-O3R"/>
@@ -600,9 +624,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-tuihuanhuo.png" translatesAutoresizingMaskIntoConstraints="NO" id="W2a-Bt-Hq0">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="v1T-nf-Pga">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="v1T-nf-Pga" secondAttribute="height" multiplier="18:31" id="A6v-qa-iLk"/>
                                                 <constraint firstAttribute="height" constant="20" id="uDa-x6-abq"/>
@@ -622,6 +648,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tfo-HB-kuo">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="KGE-UN-tCg">
@@ -641,6 +668,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ds-Qm-T9a">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="9xU-ry-OXM"/>
                                             </constraints>
@@ -665,11 +693,13 @@
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="021-65662381" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9H-93-bWy">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="v1T-nf-Pga" secondAttribute="centerY" id="1yg-Vc-9zA"/>
@@ -742,9 +772,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-mimaxiugai.png" translatesAutoresizingMaskIntoConstraints="NO" id="UE5-zf-aqF">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="btW-iz-6Wh">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="H5N-NH-d35"/>
                                                 <constraint firstAttribute="width" secondItem="btW-iz-6Wh" secondAttribute="height" multiplier="18:31" id="s9U-6B-A5y"/>
@@ -764,6 +796,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHh-cm-k2F">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="r3B-Kl-sUS">
@@ -783,6 +816,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KV5-mp-f6M">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="BON-UK-XZe"/>
                                             </constraints>
@@ -806,6 +840,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="JHh-cm-k2F" secondAttribute="bottom" constant="32" id="1aq-Vr-ba2">
@@ -868,9 +903,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-tousujianyi.png" translatesAutoresizingMaskIntoConstraints="NO" id="GQu-wk-LnS">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Dd-FG-iwW">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="en2-6b-UPY"/>
                                                 <constraint firstAttribute="width" secondItem="1Dd-FG-iwW" secondAttribute="height" multiplier="18:31" id="lqw-YT-pcs"/>
@@ -890,6 +927,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhE-vy-1hF">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="6oT-2h-LXX">
@@ -909,6 +947,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="elf-7h-jc8">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="KB7-Gp-Hnj"/>
                                             </constraints>
@@ -932,6 +971,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="dhE-vy-1hF" firstAttribute="leading" secondItem="pj2-JS-LqC" secondAttribute="leading" constant="64" id="Hvd-FH-zK5">
@@ -994,9 +1034,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-qiehuanzhanghao.png" translatesAutoresizingMaskIntoConstraints="NO" id="zdW-b6-SVd">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mvi-1D-CiC">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Mvi-1D-CiC" secondAttribute="height" multiplier="18:31" id="EY3-kM-hYv"/>
                                                 <constraint firstAttribute="height" constant="20" id="JkC-6C-8aN"/>
@@ -1016,6 +1058,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUu-Wa-iSB">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="Rl2-vc-qgs">
@@ -1035,6 +1078,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oxc-Vb-ZND">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="gad-XI-aKL"/>
                                             </constraints>
@@ -1058,6 +1102,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="Oxc-Vb-ZND" firstAttribute="leading" secondItem="lBD-DQ-V6T" secondAttribute="leading" constant="60" id="9Yl-Ea-m1R"/>
@@ -1120,9 +1165,11 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-youhuiquan.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bgi-qq-Mv8">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-jiantouyou2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mw5-0g-hdv">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Mw5-0g-hdv" secondAttribute="height" multiplier="18:31" id="0Bx-um-muE"/>
                                                 <constraint firstAttribute="height" constant="20" id="P9T-KC-REX"/>
@@ -1142,6 +1189,7 @@
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXs-Bf-XsE">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="1mp-TW-7Yh"/>
@@ -1159,6 +1207,7 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdp-T4-8pH">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="Bqi-xO-8I4"/>
                                                 <constraint firstAttribute="width" constant="200" id="eLK-gc-FGT"/>
@@ -1185,6 +1234,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="hdp-T4-8pH" firstAttribute="leading" secondItem="ejZ-wI-SnU" secondAttribute="leading" constant="60" id="4OP-vY-OMl"/>
@@ -1241,6 +1291,7 @@
                                     </variation>
                                 </view>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" red="1" green="0.6207114655" blue="0.24758782879999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="Cuv-Ms-M3u" firstAttribute="top" secondItem="Lbw-g7-0vV" secondAttribute="bottom" constant="8" id="0F9-yK-Ztn">
@@ -1449,6 +1500,7 @@
                             </variation>
                         </view>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="DGG-gd-IOE" firstAttribute="leading" secondItem="loN-uy-U7O" secondAttribute="leading" id="1mH-bp-fMy"/>
@@ -1508,6 +1560,7 @@
                     </variation>
                 </scrollView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="loN-uy-U7O" secondAttribute="bottom" id="KgL-bA-Wy6"/>
