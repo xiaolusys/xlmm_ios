@@ -88,7 +88,7 @@
     if (self.nicknameField == textField)
     {
         if ([toBeString length] > NICK_UPPER_LIMIT) {
-            textField.text = [toBeString substringToIndex:20];
+            textField.text = [toBeString substringToIndex:NICK_UPPER_LIMIT];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请别超过20个字哦！" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
             return NO;
@@ -97,6 +97,10 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField{
+    [self disableChangeNicknameButton];
+    return YES;
+}
 
 /*
 #pragma mark - Navigation
