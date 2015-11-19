@@ -136,6 +136,16 @@
 }
 
 
+/*
+//此页面已经存在于self.navigationController.viewControllers中,并且是当前页面的前一页面
+AloneSetSiteViewController *setPrizeVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+//初始化其属性
+setPrizeVC.dictionary = nil;
+//传递参数过去
+setPrizeVC.dictionary = [NSMutableDictionary dictionaryWithDictionary:self.dictionary1];
+//使用popToViewController返回并传值到上一页面
+[self.navigationController popToViewController:setPrizeVC animated:true];
+*/
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

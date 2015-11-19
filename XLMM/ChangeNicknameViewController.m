@@ -7,13 +7,14 @@
 //
 
 #import "ChangeNicknameViewController.h"
+#import "SettingViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIColor+RGBColor.h"
+#import "MMClass.h"
 #define NICK_LOWER_LIMIT 4
 #define NICK_UPPER_LIMIT 20
 
-@interface ChangeNicknameViewController ()<UITextFieldDelegate>{
-    
+@interface ChangeNicknameViewController ()<UITextFieldDelegate,UIAlertViewDelegate>{
 }
 
 @end
@@ -110,4 +111,59 @@
 }
 */
 
+- (IBAction)changeNicknameButtonClick:(id)sender {
+    NSString *text = self.nicknameField.text;
+    NSUInteger length = text.length;
+    if (length <= 0) {
+        return;
+    }
+    [self.nicknameField resignFirstResponder];//seems not working well!
+    
+    // first: get userId -- future work: this should be stored in local instead.
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSDictionary *result = [dict objectForKey:@"results"][0];
+    NSString *userId = [result objectForKey:@"id"];
+    
+    // generate the actual url for changing nickname
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/%@", Root_URL, userId];
+    NSURL *actualUrl = [NSURL URLWithString:urlStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:actualUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"PATCH"];
+    NSString *str = [NSString stringWithFormat:@"nick=%@", self.nicknameField.text];//设置参数
+    
+    // create NSMutableURLRequest to add header information
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    NSString *value = @"application/x-www-form-urlencoded";
+    [mutableRequest addValue:value forHTTPHeaderField:@"Content-Type"];
+    request = [mutableRequest copy];
+    
+    NSData *patchData = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:patchData];
+    
+    // requesting for changing nickname
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
+    NSLog(@"result = %@", response);
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"修改成功!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+
+}
+
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self updateNameLabelAndGoBack];
+}
+
+-(void) updateNameLabelAndGoBack{
+    SettingViewController *svc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    svc.nameLabel.text = self.nicknameField.text;
+    svc.nameLabel.textColor = [UIColor orangeThemeColor];
+    
+    [self performSelector:@selector(goback) withObject:nil afterDelay:2];
+    //[self.navigationController popViewControllerAnimated:YES];
+}
 @end

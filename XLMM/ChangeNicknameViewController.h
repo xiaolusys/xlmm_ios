@@ -11,5 +11,6 @@
 @interface ChangeNicknameViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *changeNicknameButton;
 @property (weak, nonatomic) IBOutlet UITextField *nicknameField;
+- (IBAction)changeNicknameButtonClick:(id)sender;
 
 @end
