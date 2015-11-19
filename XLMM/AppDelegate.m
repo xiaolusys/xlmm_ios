@@ -39,47 +39,17 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    
     NSString *plistPath1 = [paths objectAtIndex:0];
-    
     NSLog(@"%@", plistPath1);
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
-    
-    
     //创建导航控制器，添加根视图控制器
 
     
-    // 设置登录状态
-    NSUserDefaults *userDefualts = [NSUserDefaults standardUserDefaults];
-    NSLog(@"userDefaults = %@", userDefualts);
-    
-    NSString *username = [userDefualts objectForKey:kUserName];
-    NSString *password = [userDefualts objectForKey:kPassWord];
-    
-    NSLog(@"username = %@", username);
-    NSLog(@"password = %@", password);
-    if (username != nil && password != nil && password.length > 3) {
-        NSLog(@"自动登录");
-        
-        
-        [self autoLoginWithUsername:username andPassword:password];
-        [userDefualts setBool:YES forKey:login];
-        
-    }
-    else{
-        NSLog(@"手动登录");
-        [userDefualts setBool:NO forKey:login];
-
-    }
-    [userDefualts synchronize];
-    
   
-    
-    
+  
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
 //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
@@ -112,76 +82,7 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
-    NSLog(@"---Token--%@", pToken);
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    
-    NSLog(@"userInfo == %@",userInfo);
-    NSString *message = [[userInfo objectForKey:@"aps"]objectForKey:@"alert"];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    
-    [alert show];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    
-    NSLog(@"Regist fail%@",error);
-}
-
-#ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-    [application registerForRemoteNotifications];
-}
-#endif
-
-- (BOOL)autoLoginWithUsername:(NSString *)username andPassword:(NSString *)password{
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    
-    NSLog(@"userName : %@, password : %@", username, password);
-    
-    
-    NSDictionary *parameters = @{@"username":username,
-                                 @"password":password
-                                 };
-    NSLog(@"parameters = %@", parameters);
-    
-    [manager POST:kLOGIN_URL parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              
-              
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-              //登录成功
-              [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
-              [[NSUserDefaults standardUserDefaults] synchronize];
-           
-              
-            
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             //登录失败
-              
-              NSLog(@"Error: %@", error);
-              [[NSUserDefaults standardUserDefaults]setBool:NO forKey:kIsLogin];
-              [[NSUserDefaults standardUserDefaults] synchronize];
-              
-              
-          }];
-    
-    return YES;
-    
-}
-
-
+//  ios 推送 消息
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
@@ -238,14 +139,12 @@
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
         NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-      
         NSString *strMsg;
         if (resp.errCode == 0) {
             strMsg = @"分享成功";
         } else {
             strMsg = @"分享失败";
         }
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
        
@@ -253,15 +152,10 @@
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
-            
             self.wxCode = code;
-            
-            
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setValue:code forKey:@"wxCode"];
             [userDefaults synchronize];
-            
-            
             NSDictionary *dic = @{@"code":code};
             NSLog(@"dic11111 = %@", dic);
             
@@ -280,7 +174,6 @@
 
 -(void)getAccess_token
 {
-    
     
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",@"wx25fcb32689872499",@"3c7b4e3eb5ae4cfb132b2ac060a872ee",self.wxCode];
     
@@ -304,7 +197,6 @@
                  scope = "snsapi_userinfo,snsapi_base";
                  }
                  */
-                
                 self.access_token = [dic objectForKey:@"access_token"];
                 self.openid = [dic objectForKey:@"openid"];
                 
@@ -346,32 +238,28 @@
                  }
                  */
                 self.userInfo = dic;
-
+//                NSLog(@"tokeninfo = %@", self.tokenInfo);
+//                NSLog(@"userInfo = %@", self.userInfo);
                 
-                NSLog(@"tokeninfo = %@", self.tokenInfo);
-                
-                NSLog(@"userInfo = %@", self.userInfo);
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
                 [userdefault setObject:self.userInfo forKey:@"userInfo"];
+                [userdefault setBool:YES forKey:kIsLogin];
+                [userdefault setObject:kWeiXinLogin forKey:kLoginMethod];
+                NSDictionary *wxUserInfo = @{@"nickname":[dic objectForKey:@"nickname"],
+                                             @"headimgurl":[dic objectForKey:@"headimgurl"]
+                                             };
+                [userdefault setObject:wxUserInfo forKey:kWeiXinUserInfo];
                 [userdefault synchronize];
-                
-                
-                //                self.nickname.text = [dic objectForKey:@"nickname"];
-                //                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
-                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
-                
+              
+//                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                //  发送微信登录成功的通知  
                 NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object:self];
                 NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
                 [notificationCenter postNotification: broadcastMessage];
+
+            //    NSLog(@"登录成功");
                 
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                NSLog(@"登录成功");
-                
-                //传递参数：
-                
-                
-                
+//                传递参数：
             }
         });
         
@@ -400,10 +288,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    return [WXApi handleOpenURL:url delegate:self];;
-//}
+
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
@@ -416,17 +301,17 @@
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
                    NSLog(@"支付成功");
-                   
+                   //  发送支付成功的 通知
+                   [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
                    
                } else {
                    // 支付失败或取消
+                   // 发送支付不成功的 通知
                    NSLog(@"取消支付或支付失败");
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    
-    
     return  [WXApi handleOpenURL:url delegate:self];
 }
 #pragma mark -
@@ -451,7 +336,4 @@
 {
     NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
-
-
-
 @end

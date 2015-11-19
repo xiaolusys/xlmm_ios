@@ -64,11 +64,13 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
+    //NSLog(@"text:%@  leng:%ld  range:%@  string:%@", textField.text,textField.text.length, NSStringFromRange(range), string);
+
     if ([string isEqualToString:@"\n"] || [string isEqualToString:@" "])
     {
         return NO; // cant input
     }
-    
+   // NSLog(@"text:%@  leng:%ld  range:%@  string:%@", textField.text,textField.text.length, NSStringFromRange(range), string);
     // input or delete
     BOOL increase = NO;
     if (textField.text.length == range.location){

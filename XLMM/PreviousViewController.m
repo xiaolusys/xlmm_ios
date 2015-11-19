@@ -475,7 +475,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
         
     }
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*7/6 + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*8/6 + 60);
     
 }
 
@@ -575,7 +575,7 @@ static NSString *khead2View = @"head2View";
     } else if (indexPath.section == 2){
         
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
-        headerView.nameLabel.text = @"潮童专区";
+        headerView.nameLabel.text = @"萌娃专区";
         headerView.headView.layer.cornerRadius = 4;
         childTimeLabel = headerView.timeLabel;
         headerView.headImageView.image = [UIImage imageNamed:@"childIcon.png"];

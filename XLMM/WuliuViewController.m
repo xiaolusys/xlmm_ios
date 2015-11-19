@@ -48,7 +48,7 @@
     NSInteger code = [[dicJson objectForKey:@"code"] integerValue];
     if (code == 0) {
         NSDictionary *responseContent = [dicJson objectForKey:@"response_content"];
-        BOOL RESULT = [responseContent objectForKey:@"result"];
+        BOOL RESULT = [[responseContent objectForKey:@"result"] boolValue];
         if (RESULT == YES) {
             NSArray *infoArray = [responseContent objectForKey:@"ret"];
             NSInteger length = infoArray.count;

@@ -9,7 +9,6 @@
 #import "GoodsView.h"
 #import "LadyView.h"
 #import "PosterModel.h"
-
 #import "LogInViewController.h"
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
@@ -45,12 +44,19 @@
 #define kIsLogin @"login"
 #define kUserName @"userName"
 #define kPassWord @"password"
+#define kPhoneLogin @"phonelogin"
+#define kLoginMethod @"loginMethod"
+#define kWeiXinLogin @"weixinlogin"
 
-//#define Root_URL @"http://192.168.1.31:9000"
+
+#define kPhoneNumberUserInfo @"phoneUserInfo"
+#define kWeiXinUserInfo @"weixinUserInfo"
+
+#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://youni.huyi.so"
 
 
-#define Root_URL @"http://m.xiaolu.so"
+//#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 
@@ -96,11 +102,7 @@ NSDictionary *parameters = @{@"vmobile": phoneNumber};
           
           
       }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          
-          NSLog(@"Error: %@", error);
-          
-      }];
+      
 
 UITouch ;
 UIGestureRecognizer  ;

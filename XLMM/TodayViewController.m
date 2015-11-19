@@ -476,7 +476,7 @@ static NSString *khead2View = @"head2View";
         
     }
   //    NSLog(@"%f,%f", (SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2 + 52);
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *7/6 + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6 + 60);
   
     
 }
@@ -522,6 +522,8 @@ static NSString *khead2View = @"head2View";
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+             //  cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
+
 
          }];
 
@@ -538,7 +540,7 @@ static NSString *khead2View = @"head2View";
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
-            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+//            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
             NSLog(@"%f", cell.headImageViewHeight.constant);
             return cell;
         }
@@ -554,7 +556,7 @@ static NSString *khead2View = @"head2View";
             [cell fillData:model];
            // cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
 
-            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
+//            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
             NSLog(@"%f", cell.headImageViewHeight.constant);
             return cell;
         }
@@ -575,7 +577,7 @@ static NSString *khead2View = @"head2View";
     } else if (indexPath.section == 2){
         
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
-        headerView.nameLabel.text = @"潮童专区";
+        headerView.nameLabel.text = @"萌娃专区";
         childTimeLabel = headerView.timeLabel;
         headerView.headImageView.image = [UIImage imageNamed:@"childIcon.png"];
         NSLog(@"asdfasdfasdfasdfasdf%@",[UIImage imageNamed:@"childIcon.png"]);

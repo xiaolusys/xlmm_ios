@@ -15,6 +15,8 @@
 #import "MMClass.h"
 
 
+#import <QuartzCore/QuartzCore.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 
 @interface ShenQingTuikuanController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -36,8 +38,9 @@
     int reasonCode;
     float refundPrice;
     
-    UIView *backView;
     UIView *reasonView;
+    
+    UIVisualEffectView *effectView;
     
 }
 
@@ -96,14 +99,14 @@
     
     self.dataArray = @[
                        @"错拍",//1
-                       @"缺货",//2
-                       @"开线/脱色/脱毛/有色差/有虫洞",//3
+                   
+                       @"商品质量问题",//3
                        @"发错货/漏发",//4
                        @"没有发货",//5
                        @"未收到货",//6
                        @"与描述不符",//7
                        @"退运费",//8
-                       @"发票问题",//9
+                  
                        @"七天无理由退换货",//10
                        @"其他"//0
                        ];
@@ -144,22 +147,31 @@
     //[self.view addSubview:self.buttonView];
     
     
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    backView.backgroundColor = [UIColor blackColor];
-    backView.alpha = 0.5;
-    [self.view addSubview:backView];
-    backView.hidden = YES;
+
     
     //[self.view bringSubviewToFront:backView];
     
     NSLog(@"self.view = %@", self.view.subviews);
     
+    //  创建需要的毛玻璃特效类型
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:2];
+    //  毛玻璃view 视图
+    effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    //添加到要有毛玻璃特效的控件中
+    effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    [self.view addSubview:effectView];
+    //设置模糊透明度
+    effectView.alpha = 1.0f;
+    
     [self loadReasonView];
-    [self hiddenReasonView];
     [self disableTijiaoButton];
     
     
+ 
+    
+    
 }
+
 
 - (void)enableTijiaoButton{
     self.commitButton.enabled = YES;
@@ -176,9 +188,10 @@
 - (void)hiddenReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-        backView.alpha = 0;
+        effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = NO;
     }completion:^(BOOL finished) {
-        backView.hidden = YES;
+        
 
     }];
     
@@ -186,10 +199,10 @@
 - (void)showReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        backView.alpha = 0.5;
+        effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = YES;
         
     }completion:^(BOOL finished) {
-        backView.hidden = NO;
 
     }];
 }
@@ -212,8 +225,13 @@
     listView.layer.masksToBounds = YES;
     listView.layer.cornerRadius = 20;
     
-    
-    reasonView.frame = self.view.frame;
+ 
+    UIScrollView *scrollView = (UIScrollView *)[reasonView viewWithTag:886];
+    scrollView.contentOffset = CGPointMake(0, -150);
+   // scrollView.bounces = NO;
+   // scrollView.showsVerticalScrollIndicator = NO;
+    reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    reasonView.alpha = 0.9;
     [self.view addSubview:reasonView];
     
     
@@ -238,7 +256,7 @@
 
 
 - (void)selectReason:(UIButton *)button{
-    NSLog(@"tag = %ld", button.tag);
+    NSLog(@"tag = %ld", (long)button.tag);
   
     self.reasonLabel.text = self.dataArray[button.tag - 800];
     int num = (int)button.tag - 800+1;

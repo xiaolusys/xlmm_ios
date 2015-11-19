@@ -30,28 +30,32 @@
         if (![[arrayOfViews objectAtIndex:0]isKindOfClass:[UICollectionViewCell class]]) {
             return nil;
         }
+     
         self = [arrayOfViews objectAtIndex:0];
-       
+   
+        self.headImageViewHeight.constant = (SCREENWIDTH - 15)/2*4/3;
+        
     }
-//    self.layer.borderWidth = 0.5;
-//    self.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    
+
     
     
     return self;
 }
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
-  //  NSString *string = [model.picPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSString *string = [model.picPath URLEncodedString];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
+    NSLog(@"%@ image url string = %@",model.name, string);
+    [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+        
+        
+    }] ;
     
-    
-//    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath)];
-//    self.imageView.layer.borderWidth = 1;
-//    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+
     
     self.nameLabel.text = model.name;
-    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
 
     
     if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
@@ -82,14 +86,12 @@
 
     
     NSLog(@"%@ image url string = %@",model.name, string);
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:string]];
-    self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*7/6;
-//    [self.imageView sd_setImageWithURL:kLoansRRL(model.picPath) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//       
-//
-//    }] ;
-//    self.imageView.layer.borderWidth = 1;
-//    self.imageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+    [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+
+
+    }] ;
+
     
     
     

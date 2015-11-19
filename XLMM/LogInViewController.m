@@ -29,10 +29,6 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
     _passwordTextField.text = [userDefault objectForKey:kPassWord];
-
-    
-    
-    //[NSString stringWithFormat:@"%@/",Root_URL]
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -40,18 +36,18 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:_userIDTextField.text forKey:kUserName];
     [userDefaults setObject:_passwordTextField.text forKey:kPassWord];
-    
     [userDefaults synchronize];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"登录";
+
     
     [self createNavigationBarWithTitle:@"登录" selecotr:@selector(btnClicked:)];
     self.infoLabel.hidden = YES;
     _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
+    
     _passwordTextField.secureTextEntry = YES;
     
     _userIDTextField.borderStyle = UITextBorderStyleNone;
@@ -64,18 +60,13 @@
     _passwordTextField.backgroundColor = [UIColor whiteColor];
     _userIDTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
-    NSString *username = [userfaults objectForKey:kUserName];
-    NSString *password = [userfaults objectForKey:kPassWord];
-    [self.zhuceBtn.layer setMasksToBounds:YES];
+
     self.zhuceBtn.backgroundColor = [UIColor clearColor];
     [self.zhuceBtn.layer setBorderWidth:1];
-   // [self.zhuceBtn setTitleColor:[UIColor colorWithRed:83 green:198 blue:206 alpha:1] forState:UIControlStateNormal];
+  
     [self.zhuceBtn.layer setBorderColor:[UIColor redColor].CGColor];
     self.zhuceBtn.layer.cornerRadius = 4;
-    
-    _userIDTextField.text = username;
-    _passwordTextField.text = password;
+   
     
 }
 
@@ -132,17 +123,15 @@
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password
                                  };
-    MMLOG(parameters);
+   
     
     
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
-              MMLOG(operation);
               NSLog(@"JSON: %@", responseObject);
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"null"]) {
-                  NSLog(@"用户名和密码不能为空");
                   self.infoLabel.text = @"用户名和密码不能为空!";
                   self.infoLabel.hidden = NO;
               }
@@ -152,12 +141,10 @@
               //  result = "p_error";
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
-                  NSLog(@"用户名错误");
                   self.infoLabel.text = @"用户名错误!";
                   self.infoLabel.hidden = NO;
               }
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
-                  NSLog(@"密码错误");
                   self.infoLabel.text = @"密码错误!";
                   self.infoLabel.hidden = NO;
               }
@@ -167,20 +154,22 @@
                   NSLog(@"succeed");
                   self.infoLabel.text = @"登录成功!";
                   self.infoLabel.hidden = NO;
-                  [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kIsLogin];
-                  [[NSUserDefaults standardUserDefaults] synchronize];
+                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                  // 手机登录成功 ，保存用户信息以及登录途径
+                  [defaults setBool:YES forKey:kIsLogin];
+                  NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
+                                             kPassWord:self.passwordTextField.text};
+                  [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
+                  [defaults setObject:kPhoneLogin forKey:kLoginMethod];
+                  [defaults synchronize];
+                  // 发送手机号码登录成功的通知
                   
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-                  
-                  
-                  
-                  
                   [self.navigationController popViewControllerAnimated:NO];
               }
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MMLOG(operation);
               NSLog(@"Error: %@", error);
               
               
