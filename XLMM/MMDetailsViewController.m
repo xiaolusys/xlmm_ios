@@ -29,6 +29,8 @@
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
+    CGFloat headImageOrigineHeight;
+    
     
     NSDictionary *json; //详情页json数据
     
@@ -167,10 +169,15 @@
     NSLog(@"keys = %@", allSizeKeys);
     isInfoHidden = YES;
     
-    
-    self.bottomImageViewHeight.constant = SCREENWIDTH * 82 / 75;
+    // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
-    self.headViewHeitht.constant = SCREENWIDTH * 82 / 75 + 106;
+    
+    if (SCREENHEIGHT == 568) {
+        self.headViewHeitht.constant = 420;
+        
+    } else if (SCREENHEIGHT == 667){
+        self.headViewHeitht.constant = 420 + 96;
+    }
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -215,24 +222,37 @@
     self.line5Height.constant = 0.5;
     self.line6height .constant = 0.5;
   //  self.line1Height.constant = 0.5;
+    
+//    if(SCREENHEIGHT == 568){
+//        NSLog(@"5s");
+//        self.scrollerView.contentOffset = CGPointMake(0, 40);
+//    }
 
     
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
+    
 
     CGPoint contentOffset = scrollView.contentOffset;
   
+    NSLog(@"%@", NSStringFromCGPoint(contentOffset));
     
-    self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , SCREENWIDTH * 82 / 75);
+    
+    self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , self.bottomImageViewHeight.constant);
 
-    if (contentOffset.y<0) {
+  //  headImageOrigineHeight
+
+    CGFloat distance = headImageOrigineHeight - SCREENWIDTH * 82 / 75;
+    
+    if (contentOffset.y<-distance) {
         CGFloat sizeheight = SCREENWIDTH * 82 / 75 - contentOffset.y;
         self.bottomImageViewHeight.constant = sizeheight;
-        self.imageleading.constant = contentOffset.y/2;
-        self.imageTrailing.constant = contentOffset.y/2;
+        self.imageleading.constant = (contentOffset.y + distance)/2;
+        self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
+  //  SCREENWIDTH * 82 / 75
     if (contentOffset.y >= 0 && contentOffset.y < SCREENWIDTH * 82 / 75) {
         NSLog(@"");
         //上拉 headImageView
@@ -282,8 +302,13 @@
     NSLog(@"details data = %@", dic);
     
     
-    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]]];
-    
+  //  [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]]];
+    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
+        headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+
+        
+    }];
     
     NSLog(@"imageFrame = %@", NSStringFromCGRect(self.bottomImageView.frame));
     self.nameLabel.text = [dic objectForKey:@"name"];
@@ -580,11 +605,13 @@
 //        [self createInfoViewWithFrame:rect];
         
         if (![[json objectForKey:@"is_saleopen"]boolValue]) {
-            [button setBackgroundColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1]];
+            [button setBackgroundColor:[UIColor buttonDisabledBackgroundColor]];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             button.userInteractionEnabled = NO;
         } else {
             if ([[dic objectForKey:@"is_saleout"]boolValue]) {
-                [button setBackgroundColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1]];
+                [button setBackgroundColor:[UIColor buttonDisabledBackgroundColor]];
+                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 button.userInteractionEnabled = NO;
             } else {
                 theNumberOfSizeCanSelected++;
@@ -600,8 +627,9 @@
         NSLog(@"已抢光");
         [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
         [self.lijiBuyButton setTitle:@"" forState:UIControlStateNormal];
-        self.addCartButton.backgroundColor = [UIColor grayColor];
+        self.addCartButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
         self.lijiBuyButton.backgroundColor = [UIColor lightGrayColor];
+        self.addCartButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
         self.addCartButton.enabled = NO;
         self.lijiBuyButton.enabled = NO;
         

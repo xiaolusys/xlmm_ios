@@ -44,8 +44,7 @@
     int reasonCode;
     
     UIView *reasonView;
-    UIView *backView;
-    
+    UIVisualEffectView *effectView;
     
    // float refundPrice;
 }
@@ -183,15 +182,19 @@
     self.commitButton.layer.borderWidth = 1;
     self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 
+
     
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    backView.backgroundColor = [UIColor blackColor];
-    backView.alpha = 0.5;
-    [self.view addSubview:backView];
-    backView.hidden = YES;
+    //  创建需要的毛玻璃特效类型
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:2];
+    //  毛玻璃view 视图
+    effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    //添加到要有毛玻璃特效的控件中
+    effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    [self.view addSubview:effectView];
+    //设置模糊透明度
+    effectView.alpha = 1.0f;
     
     [self loadReasonView];
-    [self hiddenReasonView];
     [self disableTijiaoButton];
     
     
@@ -290,6 +293,9 @@
     
     
     reasonView.frame = self.view.frame;
+    
+    reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    reasonView.alpha = 0.9;
     [self.view addSubview:reasonView];
     
     
@@ -314,9 +320,10 @@
 - (void)hiddenReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-        backView.alpha = 0;
+        effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = NO;
     }completion:^(BOOL finished) {
-        backView.hidden = YES;
+        
         
     }];
     
@@ -324,10 +331,10 @@
 - (void)showReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        backView.alpha = 0.5;
+        effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = YES;
         
     }completion:^(BOOL finished) {
-        backView.hidden = NO;
         
     }];
 }

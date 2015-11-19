@@ -577,7 +577,7 @@ static NSString *khead2View = @"head2View";
     } else if (indexPath.section == 2){
         
         Head2View * headerView = (Head2View *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View forIndexPath:indexPath];
-        headerView.nameLabel.text = @"潮童专区";
+        headerView.nameLabel.text = @"萌娃专区";
         childTimeLabel = headerView.timeLabel;
         headerView.headImageView.image = [UIImage imageNamed:@"childIcon.png"];
         NSLog(@"asdfasdfasdfasdfasdf%@",[UIImage imageNamed:@"childIcon.png"]);
