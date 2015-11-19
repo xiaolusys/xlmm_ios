@@ -238,7 +238,7 @@
 
 
 - (void)selectReason:(UIButton *)button{
-    NSLog(@"tag = %ld", button.tag);
+    NSLog(@"tag = %ld", (long)button.tag);
   
     self.reasonLabel.text = self.dataArray[button.tag - 800];
     int num = (int)button.tag - 800+1;

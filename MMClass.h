@@ -102,11 +102,7 @@ NSDictionary *parameters = @{@"vmobile": phoneNumber};
           
           
       }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          
-          NSLog(@"Error: %@", error);
-          
-      }];
+      
 
 UITouch ;
 UIGestureRecognizer  ;
