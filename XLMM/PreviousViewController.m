@@ -475,7 +475,7 @@ static NSString *khead2View = @"head2View";
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
         
     }
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*7/6 + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*8/6 + 60);
     
 }
 
