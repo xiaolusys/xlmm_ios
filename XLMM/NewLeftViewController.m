@@ -119,9 +119,23 @@
         
     }
     //[self setJifenInfo];
-    [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+  
+    
+    
+    
+    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod];
+    
+    NSLog(@"login: %@", string);
+    if ([string isEqualToString:kWeiXinLogin]) {
+        //
+        [self updataAfterLogin:nil];
+    } else if ([string isEqualToString:kPhoneLogin]) {
+        //
+        [self phoneNumberLogin:nil];
+        
+    }
+    
+    
     
     
 }
@@ -384,7 +398,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:@"login"];
 //    [userDefaults setObject:nil forKey:@"userInfo"];
-    
+    [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
     //   http://m.xiaolu.so/rest/v1/users/customer_logout
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
     NSLog(@"urlString = %@", urlString);

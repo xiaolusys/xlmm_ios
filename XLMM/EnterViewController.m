@@ -21,12 +21,9 @@
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @interface EnterViewController ()<WXApiDelegate>{
-    NSTimer *theTimer;
     NSMutableString *randomstring;
-    
     BOOL isBangding;
     BOOL isSettingPsd;
-    
     NSDictionary *dic;
     NSString *phoneNumber;
 }
@@ -36,6 +33,7 @@
 @property (nonatomic, copy)NSString *openid;
 
 @property (nonatomic, copy)NSString *wxCode;
+
 @end
 
 @implementation EnterViewController
@@ -56,6 +54,7 @@
 }
 
 - (void)dealloc{
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
 }
 
@@ -73,65 +72,32 @@
     if ([[strings sha1] isEqualToString:@"39ae931c59394c9b4b0973b3902956f63a35c21e"]) {
         NSLog(@"****一样的\n");
     }
+    //检查用户是否安装了微信客户端
+    
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
-        
         self.wxButton.hidden = NO;
-        
     }
     else{
         NSLog(@"没有安装微信");
-        
         self.wxButton.hidden = YES;
-        
     }
-    // NSLog(@"randomArray = %@", [self randomArray]);
     randomstring = [[NSMutableString alloc] init];
-    
     
     self.wxButton.layer.cornerRadius = 20;
     self.zhanghaoButton.layer.cornerRadius = 20;
-    
-    
 }
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-/*
- 
- 
- 
- 1442999252RwOO7Qb70y
- 1442999240QbaUmMxKys
- 14429992191wXjOfh0vf
- 
- XPoAc9iDonWDsSdd8SL1
- hxnrW2q8bNW3FGq7CuTY
- Fq7OEkL7WZ0KhcSkCfud
- 
- 
- 
- */
-
-
 - (void)update:(NSNotificationCenter *)notification{
     NSLog(@"微信一键登录成功， 请您绑定手机号");
     
-    
-    
-   dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
-    
-    
-    
     //微信登录 hash算法。。。。
-    
-    
-    
-    
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
     NSLog(@"count = %lu", count);
@@ -150,25 +116,10 @@
         [randomstring appendString:string];
     }
     NSLog(@"%@%@",timeSp ,randomstring);
-    
-    
     //    NSString *secret = @"3c7b4e3eb5ae4c";
     NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
-    
-    
-    
     //获得参数，升序排列
-    
-    
-    
-    
-    
-    
     NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
-    
-    
-    
-    
     NSLog(@"1.————》%@", sign_params);
     
     NSString *sign = [sign_params sha1];
@@ -236,37 +187,14 @@
             
         }
     }
-
-
-    
-   
-    [self loginSuccessful];
-    
-   
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setBool:YES forKey:@"login"];
     [userdefaults synchronize];
-    
-    
-//    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-//    [notificationCenter removeObserver:self name:@"login" object:nil];
+    [self loginSuccessful];
 }
 
 - (void) loginSuccessful {
     NSLog(@"33isBangDing = %d", isBangding);
-    
     if (isBangding) {
         NSLog(@"跳转首页");
         if (isSettingPsd == YES) {
@@ -278,12 +206,7 @@
             passVC.phoneNumber = phoneNumber;
             passVC.info = dic;
             [self.navigationController pushViewController:passVC animated:YES];
-            
-            
         }
-        
-      
-        
     } else {
         NSLog(@"请绑定手机");
         WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
@@ -292,54 +215,7 @@
     }
 }
 
--(NSString *)toLower:(NSString *)str{
-    for (NSInteger i=0; i<str.length; i++) {
-        if ([str characterAtIndex:i]>='A'&[str characterAtIndex:i]<='Z') {
-            //A  65  a  97
-            char  temp=[str characterAtIndex:i]+32;
-            NSRange range=NSMakeRange(i, 1);
-            str=[str stringByReplacingCharactersInRange:range withString:[NSString stringWithFormat:@"%c",temp]];
-        }
-    }
-    return str;
-}
 
-//- (NSString*) sha1
-//{
-//    const charchar *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
-//    NSData *data = [NSData dataWithBytes:cstr length:self.length];
-//
-//    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-//
-//    CC_SHA1(data.bytes, data.length, digest);
-//
-//    NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-//
-//    for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
-//        [output appendFormat:@"%02x", digest[i]];
-//
-//    return output;
-//}
-- (void)setInfo{
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"小鹿美美";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:26];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-fanhui.png"]];
-    imageView.frame = CGRectMake(8, 8, 18, 31);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
-    
-}
 
 - (NSArray *)randomArray{
     NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
@@ -357,18 +233,8 @@
     }
     NSArray *array = [NSArray arrayWithArray:mutable];
     return array;
-    
-    
 }
 
-//  NSArray
-
-//NSUInteger
-
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -397,26 +263,12 @@
     [self sendAuthRequest];
     
 }
-
-
-
 -(void)sendAuthRequest
 {
     SendAuthReq* req =[[SendAuthReq alloc ] init];
-  req.scope = @"snsapi_userinfo,snsapi_base";
-//    req.scope = @"snsapi_message,snsapi_friend,snsapi_contact";
-
+    req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
-    
     NSLog(@"req = %@", req);
     [WXApi sendReq:req];
 }
-
-
-
-
-
-
-
-
 @end
