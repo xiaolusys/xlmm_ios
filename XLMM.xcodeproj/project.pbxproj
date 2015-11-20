@@ -69,6 +69,9 @@
 		321952CA1BFC7AF800AA0AB8 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 321952BC1BFC7AF800AA0AB8 /* QNDes.m */; };
 		321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 321952BE1BFC7AF800AA0AB8 /* QNHex.m */; };
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
+		321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */; };
+		321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */; };
+		321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */; };
 		321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */; };
 		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; };
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
@@ -819,6 +822,9 @@
 		321952BE1BFC7AF800AA0AB8 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		321952D41BFC7C7A00AA0AB8 /* AGAsyncTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGAsyncTestHelper.h; sourceTree = "<group>"; };
+		321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanCanUsedImage.png; sourceTree = "<group>"; };
+		321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanGuoqiiamge.png; sourceTree = "<group>"; };
+		321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanUsedImage.png; sourceTree = "<group>"; };
 		321C8D941BD87C4B0060FB62 /* PurchaseViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController1.h; sourceTree = "<group>"; };
 		321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController1.m; sourceTree = "<group>"; };
 		321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController1.xib; sourceTree = "<group>"; };
@@ -1406,6 +1412,9 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */,
+				321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */,
+				321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */,
 				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
 				32BE33931BDA0A720078C8B0 /* testImage.jpg */,
 				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
@@ -2544,6 +2553,7 @@
 				32121B401B9461BF00742E53 /* icon.png in Resources */,
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
+				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
 				32746E091B74A22000816208 /* btn-plus.png in Resources */,
 				32746E0A1B74A22000816208 /* btn-reduce.png in Resources */,
@@ -2659,6 +2669,7 @@
 				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				32EC425C1BE89373009E5FA2 /* ShouHuoCollectionViewCell.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
+				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
 				32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */,
 				32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */,
@@ -2702,6 +2713,7 @@
 				3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
+				321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				32746E3A1B74A22000816208 /* youhuiquan2.png in Resources */,

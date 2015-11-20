@@ -10,9 +10,13 @@
 
 @interface YHQCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *myimageView;
-@property (weak, nonatomic) IBOutlet UILabel *name1;
-@property (weak, nonatomic) IBOutlet UILabel *name2;
-@property (weak, nonatomic) IBOutlet UILabel *time1;
-@property (weak, nonatomic) IBOutlet UILabel *time2;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *requireLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+
+
 
 @end

@@ -16,8 +16,13 @@
 @interface YouHuiQuanViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
+//存储3类优惠券的数据。。。。
 
-@property (nonatomic, strong) NSMutableArray *dataArray;
+
+@property (nonatomic, strong) NSMutableArray *canUsedArray;
+@property (nonatomic, strong) NSMutableArray *expiredArray;
+@property (nonatomic, strong) NSMutableArray *usedArray;
+
 
 
 @end
@@ -41,13 +46,13 @@ static NSString *ksimpleCell = @"youhuiCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.canUsedArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.expiredArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.usedArray = [[NSMutableArray alloc] initWithCapacity:0];
     model = [YHQModel new];
-    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
-    [self createInfo];
-   // [self createNavigationBarWithTitle:@"" selecotr:@selector(backBtnClicked:)];
+   [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backBtnClicked:)];
      [self createCollectionView];
-   // self.containerView.hidden = YES;
     
     [self downLoadData];
     if (self.isSelectedYHQ == YES) {
@@ -101,7 +106,7 @@ static NSString *ksimpleCell = @"youhuiCell";
             model1.status = [dic objectForKey:@"status"];
             model1.title = [dic objectForKey:@"title"];
             model1.valid = [dic objectForKey:@"valid"];
-            [self.dataArray addObject:model1];
+  //          [self.dataArray addObject:model1];
         }
         if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
             NSLog(@"下页为空");
@@ -109,7 +114,7 @@ static NSString *ksimpleCell = @"youhuiCell";
         }
         
     }
-    NSLog(@"dataArray = %ld", (long)self.dataArray.count);
+  //  NSLog(@"dataArray = %ld", (long)self.dataArray.count);
     
     
     
@@ -138,42 +143,14 @@ static NSString *ksimpleCell = @"youhuiCell";
         NSArray *array = [dictionary objectForKey:@"results"];
         for (NSDictionary *dic in array) {
             if (self.isSelectedYHQ == YES) {
-                if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ]!= 2) {
-                    
-             
-                    YHQModel *model1 = [YHQModel new];
-                    model1.ID = [dic objectForKey:@"id"];
-                    model1.coupon_no = [dic objectForKey:@"coupon_no"];
-                    model1.coupon_type = [dic objectForKey:@"coupon_type"];
-                    model1.coupon_value = [dic objectForKey:@"coupon_value"];
-                    model1.created = [dic objectForKey:@"created"];
-                    model1.customer = [dic objectForKey:@"customer"];
-                    model1.deadline = [dic objectForKey:@"deadline"];
-                    model1.poll_status = [dic objectForKey:@"poll_status"];
-                    
-                    model1.sale_trade = [dic objectForKey:@"sale_trade"];
-                    model1.status = [dic objectForKey:@"status"];
-                    model1.title = [dic objectForKey:@"title"];
-                    model1.valid = [dic objectForKey:@"valid"];
-                    [self.dataArray addObject:model1];
+                if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ] == 1) {
+                    YHQModel *model1 = [self fillModelWithData:dic];
+                    [self.canUsedArray addObject:model1];
                 }
                 
             } else {
-                YHQModel *model1 = [YHQModel new];
-                model1.ID = [dic objectForKey:@"id"];
-                model1.coupon_no = [dic objectForKey:@"coupon_no"];
-                model1.coupon_type = [dic objectForKey:@"coupon_type"];
-                model1.coupon_value = [dic objectForKey:@"coupon_value"];
-                model1.created = [dic objectForKey:@"created"];
-                model1.customer = [dic objectForKey:@"customer"];
-                model1.deadline = [dic objectForKey:@"deadline"];
-                model1.poll_status = [dic objectForKey:@"poll_status"];
-                
-                model1.sale_trade = [dic objectForKey:@"sale_trade"];
-                model1.status = [dic objectForKey:@"status"];
-                model1.title = [dic objectForKey:@"title"];
-                model1.valid = [dic objectForKey:@"valid"];
-                [self.dataArray addObject:model1];
+                YHQModel *model1 = [self fillModelWithData:dic];
+              [self.canUsedArray addObject:model1];
             }
         }
         urlString = [dictionary objectForKey:@"next"];
@@ -182,13 +159,30 @@ static NSString *ksimpleCell = @"youhuiCell";
             break;
         }
     }
-    NSLog(@"self.dataArray = %@", self.dataArray);
+    NSLog(@"self.dataArray = %@", self.canUsedArray);
     
     
     
     
     
     
+}
+
+- (YHQModel *)fillModelWithData:(NSDictionary *)dic{
+    YHQModel *model1 = [YHQModel new];
+    model1.ID = [dic objectForKey:@"id"];
+    model1.coupon_no = [dic objectForKey:@"coupon_no"];
+    model1.coupon_type = [dic objectForKey:@"coupon_type"];
+    model1.coupon_value = [dic objectForKey:@"coupon_value"];
+    model1.created = [dic objectForKey:@"created"];
+    model1.customer = [dic objectForKey:@"customer"];
+    model1.deadline = [dic objectForKey:@"deadline"];
+    model1.poll_status = [dic objectForKey:@"poll_status"];
+    model1.sale_trade = [dic objectForKey:@"sale_trade"];
+    model1.status = [dic objectForKey:@"status"];
+    model1.title = [dic objectForKey:@"title"];
+    model1.valid = [dic objectForKey:@"valid"];
+    return model1;
 }
 
 
@@ -218,7 +212,9 @@ static NSString *ksimpleCell = @"youhuiCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
-    return self.dataArray.count;
+  //  return self.dataArray.count;
+    return 10;
+    
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -226,33 +222,26 @@ static NSString *ksimpleCell = @"youhuiCell";
     
     cell.backgroundColor = [UIColor whiteColor];
     
-    YHQModel *model2 = [self.dataArray objectAtIndex:indexPath.row];
-    
-    if ([model2.status integerValue] == 1 || [model2.poll_status integerValue] == 2) {
-        cell.myimageView.image = [UIImage imageNamed:@"yhq_not_valid.jpg"];
-    }
-    else {
-        cell.myimageView.image = [UIImage imageNamed:@"yhq_valid.jpg"];
-    }
-    cell.name1.text = model2.title;
-    if ([model2.status integerValue] == 1) {
-        //优惠券已使用
-        cell.name2.text = @"已使用";
-    } else {
-        //优惠券未使用
-        if ([model2.poll_status integerValue] == 2) {
-            //优惠券已过期
-            cell.name2.text = @"已过期";
-        }else{
-            //
-             cell.name2.text = @"";
-        }
-    }
-   
-   
-//    cell.name2.text = @"";
-    cell.time1.text = model2.created;
-    cell.time2.text = model2.deadline;
+  //  YHQModel *model2 = [self.dataArray objectAtIndex:indexPath.row];
+//    
+//    if ([model2.status integerValue] == 1 || [model2.poll_status integerValue] == 2) {
+//        cell.myimageView.image = [UIImage imageNamed:@"yhq_not_valid.jpg"];
+//    }
+//    else {
+//        cell.myimageView.image = [UIImage imageNamed:@"yhq_valid.jpg"];
+//    }
+//    if ([model2.status integerValue] == 1) {
+//        //优惠券已使用
+//    } else {
+//        //优惠券未使用
+//        if ([model2.poll_status integerValue] == 2) {
+//            //优惠券已过期
+//        }else{
+//            //
+//        }
+//    }
+//   
+
     
     
     
@@ -281,7 +270,7 @@ static NSString *ksimpleCell = @"youhuiCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
-    model = [self.dataArray objectAtIndex:indexPath.row];
+ //   model = [self.dataArray objectAtIndex:indexPath.row];
    
   
  
@@ -324,46 +313,6 @@ static NSString *ksimpleCell = @"youhuiCell";
         //记录选择的优惠券 并返回上一个界面。。。。
         [self.navigationController popViewControllerAnimated:YES];
     }
-}
-
-
-
-
-
-
-- (void)createInfo{
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.text = @"优惠券";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image.png"]];
-    imageView.frame = CGRectMake(-4, 14, 22, 22);
-    [button addSubview:imageView];
-    [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-jia.png"]];
-    imageView2.frame = CGRectMake(8, 14, 20, 20);
-    [button2 addSubview:imageView2];
-    [button2 addTarget:self action:@selector(addBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button2];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
-}
-
-- (void)addBtnClicked:(UIButton *)button{
-    NSLog(@"获得优惠券");
-    
-    AddYouhuiquanViewController *addVC = [[AddYouhuiquanViewController alloc] initWithNibName:@"AddYouhuiquanViewController" bundle:nil];
-    [self.navigationController pushViewController:addVC animated:YES];
-    
 }
 
 - (void)backBtnClicked:(UIButton *)button{
