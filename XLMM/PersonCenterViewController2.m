@@ -17,6 +17,7 @@
 #import "MoreOrdersViewCell.h"
 
 
+
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong)NSArray *dataArray;
@@ -30,13 +31,11 @@
     self.navigationController.navigationBarHidden = NO;
     
     [self downlaodData];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
 }
 
 //待收货订单。。。。。。
@@ -59,9 +58,7 @@
 }
 
 - (void)downlaodData{
-    
-    
-//   http://192.168.1.79:8000/rest/v1/trades
+    //http://192.168.1.79:8000/rest/v1/trades
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"wait send = %@", kWaitsend_List_URL);
@@ -69,10 +66,7 @@
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
         
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-        
-        
     });
-    
 }
 
 - (void)fetchedWaipayData:(NSData *)data{
@@ -86,21 +80,14 @@
         NSLog(@"解析出错");
         return;
     }
-    NSLog(@"json = %@", json);
+
     if ([[json objectForKey:@"count"] integerValue] == 0) {
-        NSLog(@"无待收货列表");
+        [self displayDefaultView];
         return;
     }
     
     self.dataArray = [json objectForKey:@"results"];
-    
-    
-   // NSLog(@"dataArray = %@", self.dataArray);
-   
     [self.collectionView reloadData];
-    
-    
-    
 }
 
 
@@ -257,9 +244,24 @@
     [self.navigationController pushViewController:xiangqingVC animated:YES];
 }
 
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
+    [self.view addSubview:defaultView];
+    
+}
 
-
-
+-(void)gotoLandingPage{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

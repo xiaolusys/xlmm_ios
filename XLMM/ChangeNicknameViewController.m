@@ -165,7 +165,7 @@
     svc.nameLabel.text = self.nicknameField.text;
     svc.nameLabel.textColor = [UIColor orangeThemeColor];
     
-    [self performSelector:@selector(goback) withObject:nil afterDelay:2];
-    //[self.navigationController popViewControllerAnimated:YES];
+    //[self performSelector:@selector(goback) withObject:nil afterDelay:2];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

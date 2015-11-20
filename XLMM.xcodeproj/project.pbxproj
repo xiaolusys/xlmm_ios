@@ -689,6 +689,9 @@
 		8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */; };
 		8E0044EA1BFC5B9E00AFC1DF /* ChangeNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */; };
 		8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */; };
+		8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */; };
+		8E0044F41BFF09B600AFC1DF /* dingdanemptyimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044F21BFF09B600AFC1DF /* dingdanemptyimage.png */; };
+		8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1327,6 +1330,9 @@
 		8E0044E71BFC5B9E00AFC1DF /* ChangeNicknameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNicknameViewController.h; sourceTree = "<group>"; };
 		8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNicknameViewController.m; sourceTree = "<group>"; };
 		8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeNicknameViewController.xib; sourceTree = "<group>"; };
+		8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDefault.xib; sourceTree = "<group>"; };
+		8E0044F21BFF09B600AFC1DF /* dingdanemptyimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanemptyimage.png; sourceTree = "<group>"; };
+		8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouwucheemptyimage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1406,6 +1412,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E0044F21BFF09B600AFC1DF /* dingdanemptyimage.png */,
+				8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */,
 				32BC3CA51BD4BB70008ADAA2 /* ios7.png */,
 				32BE33931BDA0A720078C8B0 /* testImage.jpg */,
 				32BC3CA61BD4BB70008ADAA2 /* ios8_retina_HD5.5.png */,
@@ -1714,6 +1722,7 @@
 				8E0044E71BFC5B9E00AFC1DF /* ChangeNicknameViewController.h */,
 				8E0044E81BFC5B9E00AFC1DF /* ChangeNicknameViewController.m */,
 				8E0044E91BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib */,
+				8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */,
 			);
 			name = PersonCenter;
 			sourceTree = "<group>";
@@ -2597,6 +2606,7 @@
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
 				321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */,
 				3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */,
+				8E0044F41BFF09B600AFC1DF /* dingdanemptyimage.png in Resources */,
 				32746E2B1B74A22000816208 /* icon-wodejifen.png in Resources */,
 				32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */,
 				32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */,
@@ -2695,6 +2705,7 @@
 				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */,
 				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
+				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
 				32746E0B1B74A22000816208 /* font-logo.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
@@ -2710,6 +2721,7 @@
 				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
 				3284A23E1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
+				8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */,
 				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				325DF9421B69B38400351ACA /* poster1.png in Resources */,
