@@ -40,6 +40,7 @@
     
     UIView *reasonView;
     
+    
     UIVisualEffectView *effectView;
     
 }
@@ -273,6 +274,7 @@
 - (void)cancelSeleted:(UIButton *)button{
     NSLog(@"取消选择");
     [self hiddenReasonView];
+    
     
 }
 

@@ -44,6 +44,14 @@
     self.codeTextField.borderStyle = UITextBorderStyleNone;
     self.codeTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self createNavigationBarWithTitle:@"身份验证" selecotr:@selector(backClicked:)];
+    self.phoneLabel.text = self.numberString;
+    
+    
+    NSMutableString *mutableString = [self.numberString mutableCopy];
+    NSRange range = {3,4};
+    [mutableString replaceCharactersInRange:range withString:@"****"];
+    self.phoneLabel.text = mutableString;
+    NSLog(@"原始绑定手机号码：%@", self.numberString);
     
     
 }

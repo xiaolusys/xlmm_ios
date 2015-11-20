@@ -42,9 +42,11 @@
     int maxNumber;
     
     int reasonCode;
-    
+    UIView *backView;
     UIView *reasonView;
-    UIVisualEffectView *effectView;
+    UIView *selectedImageView;
+    
+   // UIVisualEffectView *effectView;
     
    // float refundPrice;
 }
@@ -184,17 +186,27 @@
 
 
     
-    //  创建需要的毛玻璃特效类型
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:2];
-    //  毛玻璃view 视图
-    effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    //添加到要有毛玻璃特效的控件中
-    effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-    [self.view addSubview:effectView];
-    //设置模糊透明度
-    effectView.alpha = 1.0f;
+//    //  创建需要的毛玻璃特效类型
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:2];
+//    //  毛玻璃view 视图
+//    effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    //添加到要有毛玻璃特效的控件中
+//    effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+//    [self.view addSubview:effectView];
+//    //设置模糊透明度
+//    effectView.alpha = 0.f;
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor blackColor];
+    backView.alpha = 0.6;
+    
+    backView.hidden = YES;
+    
+    [self.view addSubview:backView];
+    
     
     [self loadReasonView];
+    [self loadSelectedImageView];
     [self disableTijiaoButton];
     
     
@@ -205,13 +217,13 @@
     self.sendImageView2.layer.masksToBounds = YES;
     self.sendImageView3.layer.masksToBounds = YES;
     self.sendImageView.layer.cornerRadius = 5;
-    self.sendImageView.layer.borderWidth = 0.5;
+    self.sendImageView.layer.borderWidth = 0;
     self.sendImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     self.sendImageView2.layer.cornerRadius = 5;
-    self.sendImageView2.layer.borderWidth = 0.5;
+    self.sendImageView2.layer.borderWidth = 0;
     self.sendImageView2.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     self.sendImageView3.layer.cornerRadius = 5;
-    self.sendImageView3.layer.borderWidth = 0.5;
+    self.sendImageView3.layer.borderWidth = 0;
     self.sendImageView3.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
     
     
@@ -272,6 +284,48 @@
     return string;
    // return nil;
 }
+
+- (void)loadSelectedImageView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"PostImageView" owner:nil options:nil];
+    
+    selectedImageView = [views objectAtIndex:0];
+    
+    UIButton *cancelButton = (UIButton *)[selectedImageView viewWithTag:2000];
+    cancelButton.layer.cornerRadius = 20;
+    cancelButton.layer.borderWidth = 1;
+    cancelButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    [cancelButton addTarget:self action:@selector(cancelSeletedImage:) forControlEvents:UIControlEventTouchUpInside];
+    UIView *listView = (UIView *)[selectedImageView viewWithTag:1000];
+    listView.layer.masksToBounds = YES;
+    listView.layer.cornerRadius = 5;
+    selectedImageView.frame = self.view.frame;
+    selectedImageView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    selectedImageView.alpha = 0.9;
+    [self.view addSubview:selectedImageView];
+    //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
+    for (int i = 0; i < 2; i++) {
+        UIButton *button = (UIButton *)[selectedImageView viewWithTag:900 + i];
+        [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateHighlighted];
+        
+        button.showsTouchWhenHighlighted = NO;
+        //  button.highlighted = NO;
+        [button addTarget:self action:@selector(selectedimageMethod:) forControlEvents:UIControlEventTouchUpInside];
+        NSLog(@"uibuton = %@", button);
+    }
+
+}
+
+- (void)cancelSeletedImage:(UIButton *)button{
+    selectedImageView.hidden = YES;
+    backView.hidden = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedImageView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+     //   effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = NO;
+    }];
+    
+}
+
 - (void)loadReasonView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"SelectedReasonsView" owner:nil options:nil];
     
@@ -281,25 +335,14 @@
     cancelButton.layer.cornerRadius = 20;
     cancelButton.layer.borderWidth = 1;
     cancelButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-    
     [cancelButton addTarget:self action:@selector(cancelSeleted:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
     UIView *listView = (UIView *)[reasonView viewWithTag:100];
-    
     listView.layer.masksToBounds = YES;
-    listView.layer.cornerRadius = 20;
-    
-    
+    listView.layer.cornerRadius = 5;
     reasonView.frame = self.view.frame;
-    
     reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
     reasonView.alpha = 0.9;
     [self.view addSubview:reasonView];
-    
-    
-    
     //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
     for (int i = 0; i < 11; i++) {
         UIButton *button = (UIButton *)[reasonView viewWithTag:800 + i];
@@ -309,19 +352,16 @@
         //  button.highlighted = NO;
         [button addTarget:self action:@selector(selectReason:) forControlEvents:UIControlEventTouchUpInside];
         NSLog(@"uibuton = %@", button);
-        
     }
-    
-    
-    
-    
+    [self hiddenReasonView];
 }
 
 - (void)hiddenReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-        effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+      //  effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
         self.navigationController.navigationBarHidden = NO;
+        backView.hidden = YES;
     }completion:^(BOOL finished) {
         
         
@@ -331,9 +371,9 @@
 - (void)showReasonView{
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+      //  effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
         self.navigationController.navigationBarHidden = YES;
-        
+        backView.hidden = NO;
     }completion:^(BOOL finished) {
         
     }];
@@ -369,6 +409,7 @@
 - (void)cancelSeleted:(UIButton *)button{
     NSLog(@"取消选择");
     [self hiddenReasonView];
+    selectedImageView.hidden = YES;
     
 }
 
@@ -588,61 +629,55 @@
         
     }
     
+    selectedImageView.hidden = YES;
+    backView.hidden = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedImageView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        //   effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = NO;
+    }];
+    
+    
+    
+    
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
-#pragma mark actionSheetDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"选择");
-    if (actionSheet.tag == 255) {
-        
-        NSUInteger sourceType = 0;
-        
-        // 判断是否支持相机
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            
-            switch (buttonIndex) {
-                case 0:
-                    // 取消
-                    return;
-                case 1:
-                    // 相机
-                    sourceType = UIImagePickerControllerSourceTypeCamera;
-                    break;
-                    
-                case 2:
-                    // 相册
-                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    break;
-            }
-        }
-        else {
-            if (buttonIndex == 0) {
-                
-                return;
-            } else {
-                sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-            }
-        }
-        // 跳转到相机或相册页面
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        
-        imagePickerController.delegate = self;
-        
-        imagePickerController.allowsEditing = YES;
-        
-        imagePickerController.sourceType = sourceType;
-        
-        [self presentViewController:imagePickerController animated:YES completion:^{}];
-        
+
+
+- (void)selectedimageMethod:(UIButton *)button{
+    NSLog(@"button.tag = %ld", button.tag);
+    NSUInteger sourceType = 0;
+
+    if (button.tag == 900) {
+        sourceType = UIImagePickerControllerSourceTypeCamera;
+
+    } else if (button.tag == 901){
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
     }
-   
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    
+    imagePickerController.delegate = self;
+    
+    imagePickerController.allowsEditing = YES;
+    
+    imagePickerController.sourceType = sourceType;
+    
+    [self presentViewController:imagePickerController animated:YES completion:^{}];
     
 }
+
+
+
+
+
+
+
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet{
     NSLog(@"取消");
 }
@@ -747,23 +782,14 @@
     NSLog(@"选择图片");
     
     
-    UIActionSheet *sheet;
     
-    // 判断是否支持相机
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        sheet  = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
-    }
-    else {
-        
-        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
-    }
-    
-    sheet.tag = 255;
-    
-    [sheet showInView:self.view];
-    
-    
+    selectedImageView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedImageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+      //  effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        self.navigationController.navigationBarHidden = YES;
+        backView.hidden = NO;
+    }];
     
     
 }

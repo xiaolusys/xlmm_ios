@@ -37,6 +37,7 @@
     
     self.changeNicknameButton.layer.cornerRadius = 20;
     self.changeNicknameButton.layer.borderWidth = 1;
+    self.nicknameField.text = self.nickNameText;
     
     [self disableChangeNicknameButton];
     

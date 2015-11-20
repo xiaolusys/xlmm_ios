@@ -661,6 +661,7 @@
 		32EC42661BE8A8C1009E5FA2 /* zhengpin.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42621BE8A8C1009E5FA2 /* zhengpin.png */; };
 		32EC42681BE8AF10009E5FA2 /* gouwucheIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42671BE8AF10009E5FA2 /* gouwucheIcon.png */; };
 		32EC426A1BE8AFB8009E5FA2 /* gouwucheicon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42691BE8AFB8009E5FA2 /* gouwucheicon2.png */; };
+		32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ECAACF1BFEF30900A21CE7 /* PostImageView.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -1283,6 +1284,7 @@
 		32EC42621BE8A8C1009E5FA2 /* zhengpin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhengpin.png; sourceTree = "<group>"; };
 		32EC42671BE8AF10009E5FA2 /* gouwucheIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouwucheIcon.png; sourceTree = "<group>"; };
 		32EC42691BE8AFB8009E5FA2 /* gouwucheicon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouwucheicon2.png; sourceTree = "<group>"; };
+		32ECAACF1BFEF30900A21CE7 /* PostImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageView.xib; sourceTree = "<group>"; };
 		32F3D9501B6CCA41008530BA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		32F3D9521B6CCA41008530BA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -2271,6 +2273,7 @@
 				32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */,
 				32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */,
 				32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */,
+				32ECAACF1BFEF30900A21CE7 /* PostImageView.xib */,
 				32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */,
 				32707F181BFAC9FB0006FB6A /* WuliuViewController.h */,
 				32707F191BFAC9FB0006FB6A /* WuliuViewController.m */,
@@ -2611,6 +2614,7 @@
 				32E3299A1B70C70000A6F0BC /* DetailViewController.xib in Resources */,
 				32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */,
 				32D876321BB6C07B00D0C30F /* yhq_valid.jpg in Resources */,
+				32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */,
 				32746E321B74A22000816208 /* logo.png in Resources */,
 				32D2B7921BDDF59100603FCE /* rightArrow.png in Resources */,
 				32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */,

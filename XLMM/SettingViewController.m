@@ -15,7 +15,10 @@
 #import "UIImageView+WebCache.h"
 #import "ChangeNicknameViewController.h"
 
-@interface SettingViewController ()
+@interface SettingViewController (){
+    
+    NSString *phoneNumber;
+}
 
 @end
 
@@ -47,9 +50,7 @@
     self.deleteButton.layer.borderWidth = 1;
     self.deleteButton.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
     self.deleteButton.layer.cornerRadius = 13;
-    self.quitBUtton.layer.cornerRadius = 20;
-    self.quitBUtton.layer.borderWidth = 1;
-    self.quitBUtton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+
     
     NSString * path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
     NSLog(@"path = %@", path);
@@ -72,6 +73,30 @@
     NSLog(@"caches = %@", cachesDir);
     //清空缓存
    // [self clearTmpPics];
+    
+    [self setUserInfo];
+    
+}
+
+- (void)setUserInfo{
+   // http://m.xiaolu.so/rest/v1/users
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users.json", Root_URL];
+    NSLog(@"urlStr = %@", urlStr);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    NSDictionary *result = [[dic objectForKey:@"results"] firstObject];
+    NSString *nick = [result objectForKey:@"nick"];
+    phoneNumber = [result objectForKey:@"mobile"];
+    
+    NSMutableString * mutablePhoneNumber = [phoneNumber mutableCopy];
+    NSRange range = {3,4};
+    [mutablePhoneNumber replaceCharactersInRange:range withString:@"****"];
+    NSLog(@"nicknaem -> %@", nick);
+    NSLog(@"phoneNumber = %@", phoneNumber);
+    
+    self.nameLabel.text = nick;
+    self.phoneLabel.text = mutablePhoneNumber;
     
 }
 
@@ -169,6 +194,8 @@ setPrizeVC.dictionary = [NSMutableDictionary dictionaryWithDictionary:self.dicti
 
 - (IBAction)nickButtonClicked:(id)sender {
     ChangeNicknameViewController *changeNicknameView = [[ChangeNicknameViewController alloc] initWithNibName:@"ChangeNicknameViewController" bundle:nil];
+    changeNicknameView.nickNameText = self.nameLabel.text;
+    
     [self.navigationController pushViewController:changeNicknameView animated:YES];
 
     //NSLog(@"用户昵称");
@@ -177,6 +204,7 @@ setPrizeVC.dictionary = [NSMutableDictionary dictionaryWithDictionary:self.dicti
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
+    modifyVC.numberString = phoneNumber;
     [self.navigationController pushViewController:modifyVC animated:YES];
 }
 
@@ -203,9 +231,5 @@ setPrizeVC.dictionary = [NSMutableDictionary dictionaryWithDictionary:self.dicti
     NSLog(@"清除缓存");
 }
 
-- (IBAction)quitButtonClicked:(id)sender {
-    NSLog(@"退出");
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
+
 @end
