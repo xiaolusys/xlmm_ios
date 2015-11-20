@@ -40,6 +40,7 @@
     
     UIView *reasonView;
     
+    
     UIVisualEffectView *effectView;
     
 }
@@ -99,14 +100,14 @@
     
     self.dataArray = @[
                        @"错拍",//1
-                   
+                       @"缺货",
                        @"商品质量问题",//3
                        @"发错货/漏发",//4
                        @"没有发货",//5
                        @"未收到货",//6
                        @"与描述不符",//7
                        @"退运费",//8
-                  
+                       @"发票问题",
                        @"七天无理由退换货",//10
                        @"其他"//0
                        ];
@@ -273,6 +274,7 @@
 - (void)cancelSeleted:(UIButton *)button{
     NSLog(@"取消选择");
     [self hiddenReasonView];
+    
     
 }
 

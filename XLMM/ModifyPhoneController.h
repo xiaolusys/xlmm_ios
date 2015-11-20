@@ -10,10 +10,13 @@
 
 @interface ModifyPhoneController : UIViewController
 
+@property (nonatomic, copy) NSString *numberString;
+
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *codeButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+
 
 - (IBAction)getCodeClicked:(id)sender;
 - (IBAction)nextClicked:(id)sender;

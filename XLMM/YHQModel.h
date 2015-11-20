@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSString *valid;
 @property (nonatomic, copy) NSString *sale_trade;
 @property (nonatomic, copy) NSString *coupon_no;
+@property (nonatomic, copy) NSString *use_fee;
 @end
 
 

@@ -7,6 +7,8 @@
 //
 
 #import "YHQCollectionCell.h"
+#import "YHQModel.h"
+
 
 @implementation YHQCollectionCell
 
@@ -35,6 +37,32 @@
         self = [arrayOfViews objectAtIndex:0];
     }
     return self;
+}
+
+- (void)fillCellWithYHQModel:(YHQModel *)yhqModel{
+    NSString *createTime = yhqModel.created;
+    NSString *deadlineTime = yhqModel.deadline;
+    NSString *couponValue = yhqModel.coupon_value;
+    
+    NSString *useFee = yhqModel.use_fee;
+    NSMutableString *mutablestart = [createTime mutableCopy];
+    NSRange range = {10, 9};
+    [mutablestart deleteCharactersInRange:range];
+    NSMutableString *mutableend = [deadlineTime mutableCopy];
+    [mutableend deleteCharactersInRange:range];
+    NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutablestart, mutableend];
+    
+    
+    self.requireLabel.text = [NSString stringWithFormat:@"满%@元可以使用", useFee];
+    if ([useFee intValue] == 0 && [yhqModel.status integerValue] == 0 && [yhqModel.poll_status integerValue] == 1) {
+        self.requireLabel.textColor = [UIColor colorWithRed:240/255.0 green:80/255.0 blue:80/255.0 alpha:1];
+        self.requireLabel.text = @"无门槛";
+    }
+    self.valueLabel.text = [NSString stringWithFormat:@"%d", [couponValue intValue]];
+    self.timeLabel.text = newString;
+    
+    
+    
 }
 
 @end
