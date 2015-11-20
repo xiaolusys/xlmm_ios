@@ -52,11 +52,11 @@
 #define kPhoneNumberUserInfo @"phoneUserInfo"
 #define kWeiXinUserInfo @"weixinUserInfo"
 
-#define Root_URL @"http://192.168.1.31:9000"
+//#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://youni.huyi.so"
 
 
-//#define Root_URL @"http://m.xiaolu.so"
+#define Root_URL @"http://m.xiaolu.so"
 
 @protocol MenuVCPushSideDelegate <NSObject>
 
