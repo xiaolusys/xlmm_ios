@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YHQCollectionCell">
             <connections>
+                <outlet property="markLabel" destination="p4h-Pb-0pD" id="fhf-Iv-ikm"/>
                 <outlet property="myimageView" destination="b4Z-Kt-qT5" id="3c2-lc-zd7"/>
                 <outlet property="requireLabel" destination="CiJ-pO-JFQ" id="yDn-jy-YsC"/>
                 <outlet property="timeLabel" destination="pIB-Ak-sKU" id="QKq-qf-0Z4"/>
@@ -37,12 +38,6 @@
                                 <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="满99元使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiJ-pO-JFQ">
-                                <rect key="frame" x="144" y="24" width="79" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4h-Pb-0pD">
                                 <rect key="frame" x="64" y="24" width="10" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -59,6 +54,12 @@
                                 <rect key="frame" x="130" y="58" width="174" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="满99元使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiJ-pO-JFQ">
+                                <rect key="frame" x="144" y="24" width="79" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -93,9 +94,13 @@
             </constraints>
             <size key="customSize" width="391" height="50"/>
             <connections>
+                <outlet property="markLabel" destination="p4h-Pb-0pD" id="9IO-O9-fUj"/>
                 <outlet property="myimageView" destination="b4Z-Kt-qT5" id="Tqa-vI-d1Z"/>
+                <outlet property="requireLabel" destination="CiJ-pO-JFQ" id="HfD-jG-1ZO"/>
+                <outlet property="timeLabel" destination="pIB-Ak-sKU" id="CJl-AR-D1f"/>
+                <outlet property="valueLabel" destination="HIX-mG-fHb" id="jBB-d7-6Nn"/>
             </connections>
-            <point key="canvasLocation" x="327.5" y="318"/>
+            <point key="canvasLocation" x="245.5" y="271"/>
         </collectionViewCell>
     </objects>
     <resources>

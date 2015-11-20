@@ -90,6 +90,8 @@
 		3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA91BE9E07300A5CC1C /* wash02.png */; };
 		3247EAAE1BE9E07300A5CC1C /* wash03.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAAA1BE9E07300A5CC1C /* wash03.png */; };
 		3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAAB1BE9E07300A5CC1C /* wash04.png */; };
+		3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */; };
+		3247FDB51BFF1BEA00C6631D /* YHQHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -853,6 +855,9 @@
 		3247EAA91BE9E07300A5CC1C /* wash02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash02.png; sourceTree = "<group>"; };
 		3247EAAA1BE9E07300A5CC1C /* wash03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash03.png; sourceTree = "<group>"; };
 		3247EAAB1BE9E07300A5CC1C /* wash04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash04.png; sourceTree = "<group>"; };
+		3247FDB11BFF1BEA00C6631D /* YHQHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQHeadView.h; sourceTree = "<group>"; };
+		3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQHeadView.m; sourceTree = "<group>"; };
+		3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQHeadView.xib; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -2328,6 +2333,9 @@
 				32A288C01B942F6B006DC949 /* Head2View.h */,
 				32A288C11B942F6B006DC949 /* Head2View.m */,
 				32A288C21B942F6B006DC949 /* Head2View.xib */,
+				3247FDB11BFF1BEA00C6631D /* YHQHeadView.h */,
+				3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */,
+				3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */,
 				32121B411B9481B900742E53 /* PosterCollectionCell.h */,
 				32121B421B9481B900742E53 /* PosterCollectionCell.m */,
 				32121B431B9481B900742E53 /* PosterCollectionCell.xib */,
@@ -2764,6 +2772,7 @@
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				3247EAAE1BE9E07300A5CC1C /* wash03.png in Resources */,
+				3247FDB51BFF1BEA00C6631D /* YHQHeadView.xib in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
 				325B1E7B1BE471720027B3E3 /* CartCollectionCell.xib in Resources */,
@@ -3048,6 +3057,7 @@
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
 				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,
+				3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */,
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
