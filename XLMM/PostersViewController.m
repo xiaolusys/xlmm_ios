@@ -36,7 +36,6 @@ static NSString * ksimpleCell = @"simpleCell";
     NSInteger goodsCount;
     UILabel *countLabel;
     BOOL _isFirst;
-    UIImage *shareImage;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -126,22 +125,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://m.xiaolu.so/images/icon-xiaolu.png"]];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [paths objectAtIndex:0];
-    NSLog(@"path = %@", path);
-    NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
-    [data writeToFile:fileName atomically:YES];
-    
-    
-    
-    NSLog(@"data = %@", data);
-//
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString * string = [defaults objectForKey:@"imageUrlString"];
-    NSLog(@"imageLinkString = %@", string);
-    shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:string]]];
-    
+ 
     
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;

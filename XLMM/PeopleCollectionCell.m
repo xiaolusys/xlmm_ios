@@ -87,6 +87,10 @@
     
     NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image == nil) {
+            self.headImageViewHeight.constant = (SCREENWIDTH-15)/2;
+            return ;
+        }
         self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
 
 

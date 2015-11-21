@@ -183,7 +183,7 @@ static NSString *khead2View = @"head2View";
     NSDate *todate;
     
     if ([offSheltTime class] == [NSNull class]) {
-        NSLog(@"默认下架时间");
+       // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
         [endTime setMonth:month];
@@ -198,7 +198,7 @@ static NSString *khead2View = @"head2View";
         
        
     } else{
-        NSLog(@"特定下架时间");
+     //   NSLog(@"特定下架时间");
         NSMutableString *string = [NSMutableString stringWithString:offSheltTime];
         NSRange range = [string rangeOfString:@"T"];
         [string replaceCharactersInRange:range withString:@" "];
@@ -354,10 +354,12 @@ static NSString *khead2View = @"head2View";
         
     }
     //  NSLog(@"childDataArray = %@", childDataArray);
-    
-    PromoteModel *tempModel = [childDataArray objectAtIndex:0];
-    offSheltTime = tempModel.offshelfTime;
-    NSLog(@"offTime = %@", offSheltTime);
+    if (childArray.count != 0) {
+        PromoteModel *tempModel = [childDataArray objectAtIndex:0];
+        offSheltTime = tempModel.offshelfTime;
+        NSLog(@"offTime = %@", offSheltTime);
+    }
+   
     
     //倒计时。。。。。。
     
@@ -401,7 +403,8 @@ static NSString *khead2View = @"head2View";
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
     model.offshelfTime = [dic objectForKey:@"offshelf_time"];
-    
+    MMLOG(model.offshelfTime);
+    offSheltTime = model.offshelfTime;
     if ([model.productModel class] == [NSNull class]) {
          model.picPath = [dic objectForKey:@"head_img"];
         NSLog(@"productModel is null.");
@@ -534,12 +537,7 @@ static NSString *khead2View = @"head2View";
         if (childDataArray.count != 0) {
             PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
-//            if (isqiangGuang) {
-//                cell.backView.hidden = NO;
-//                
-//            }
-//            return cell;
-            
+
         }
         
         
@@ -552,11 +550,7 @@ static NSString *khead2View = @"head2View";
         if (ladyDataArray.count != 0) {
             PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
             [cell fillData:model];
-            
-//            if (isqiangGuang) {
-//                cell.backView.hidden = NO;
-//                
-//            }
+
             return cell;
         }
      
@@ -623,7 +617,7 @@ static NSString *khead2View = @"head2View";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 1) {
             PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
             childVC.urlString = kLADY_LIST_URL;
             childVC.orderUrlString = kLADY_LIST_ORDER_URL;

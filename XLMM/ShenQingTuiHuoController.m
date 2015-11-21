@@ -650,7 +650,8 @@
 
 
 - (void)selectedimageMethod:(UIButton *)button{
-    NSLog(@"button.tag = %ld", button.tag);
+    NSLog(@"button.tag = %ld", (long)button.tag);
+    
     NSUInteger sourceType = 0;
 
     if (button.tag == 900) {

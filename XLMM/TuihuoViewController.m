@@ -119,7 +119,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     }
     
   
-    
+    [self.dataArray removeAllObjects];
     
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
