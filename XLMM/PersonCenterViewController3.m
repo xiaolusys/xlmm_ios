@@ -177,6 +177,25 @@
     
 }
 
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
+    [self.view addSubview:defaultView];
+    
+}
+
+-(void)gotoLandingPage{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)fetchedDingdanData:(NSData *)responsedata{
     NSError *error = nil;
     diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
@@ -184,6 +203,7 @@
     NSArray *array = [diciontary objectForKey:@"results"];
     if (array.count == 0) {
         NSLog(@"没有订单");
+        [self displayDefaultView];
         return;
     }
     for (NSDictionary *dic in array) {

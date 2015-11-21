@@ -49,7 +49,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   // self.title = @"我的退货(款)";
+   // self.title = @"我的退货/款";
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     // Uncomment the following line to preserve selection between presentations
@@ -61,7 +61,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     // Do any additional setup after loading the view.
     self.collectionView.backgroundColor = [UIColor whiteColor];
     //[self createInfo];
-    [self createNavigationBarWithTitle:@"我的退货(款)" selecotr:@selector(backBtnClicked:)];
+    [self createNavigationBarWithTitle:@"我的退货/款" selecotr:@selector(backBtnClicked:)];
 
 }
 
@@ -82,7 +82,24 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 //  退货款列表分页下载
 
 
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
+    [self.view addSubview:defaultView];
+    
+}
 
+-(void)gotoLandingPage{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 
 
@@ -97,6 +114,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的退货列表为空");
+        [self displayDefaultView];
         return;
     }
     

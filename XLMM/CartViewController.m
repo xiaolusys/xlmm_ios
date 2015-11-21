@@ -25,6 +25,9 @@
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate>{
     float allPrice;
     NewCartsModel *deleteModel;
+    BOOL download1;
+    BOOL download2;
+    BOOL isEmpty;
 }
 @property (nonatomic, strong)NSMutableArray *historyCarts;
 @property (strong, nonatomic)NSMutableArray *dataArray;
@@ -40,10 +43,40 @@
     
     self.navigationController.navigationBarHidden = NO;
     
+    // This design has logical problem:
+    // downloadData & downloadHisoryData should be returned with on request.
+    isEmpty = YES;
+    download1 = NO;
+    download2 = NO;
     [self downloadData];
     [self downloadHistoryData];
-
     
+}
+
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    UILabel *label1 = [defaultView viewWithTag:200];
+    UILabel *label2 = [defaultView viewWithTag:300];
+    UIImageView *imageView = [defaultView viewWithTag:400];
+    
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor orangeThemeColor].CGColor;
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    label1.text = @"抢几件喜欢的就好～";
+    label2.text = @"亲，您的购物车空空的呢～快去装满它吧！";
+    imageView.image = [UIImage imageNamed:@"gouwucheemptyimage.png"];
+    
+    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
+    [self.view addSubview:defaultView];
+    
+}
+
+-(void)gotoLandingPage{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -67,24 +100,10 @@
     self.buyButton.layer.borderWidth = 1;
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     self.buyButton.layer.cornerRadius = 20;
+    self.totalPricelabel.text =[NSString stringWithFormat:@" "];
     
-    NSLog(@"url = %@", kCart_Number_URL);
-    NSURL *url = [NSURL URLWithString:kCart_Number_URL];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        return;
-    }
     [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
-    
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
-  
-    
-    
-    self.totalPricelabel.text =[NSString stringWithFormat:@" "];
-
-
 }
 
 
@@ -97,8 +116,8 @@
             NSLog(@"下载失败");
             return ;
         }
+
         [self performSelectorOnMainThread:@selector(fetchedCartData:) withObject:data waitUntilDone:YES];
-        
     });
 }
 
@@ -107,13 +126,19 @@
     NSError *error = nil;
     NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (error != nil) {
-        
         NSLog(@"解析失败");
         NSLog(@"error = %@", error);
-        
         return;
     }
-    NSLog(@"json = %@", json);
+    
+    download1 = YES;
+    if (json.count > 0) {
+        isEmpty = NO;
+    }
+    if (json.count <= 0 && download2 && isEmpty) {
+        [self displayDefaultView];
+    }
+    
     [self.dataArray removeAllObjects];
 
         
@@ -138,14 +163,9 @@
         allPrice += model.total_fee;
         [self.dataArray addObject:model];
     }
-    NSLog(@"%@", self.dataArray);
-    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
-    
-    
 
+    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
     [self.cartTableView reloadData];
-    
-    
 }
 
 - (void)downloadHistoryData{
@@ -156,8 +176,8 @@
             NSLog(@"下载失败");
             return ;
         }
-        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
         
+        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
     });
 }
 
@@ -167,7 +187,15 @@
     }
     NSError *error = nil;
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"array = %@", array);
+    
+    download2 = YES;
+    if (array.count > 0) {
+        isEmpty = NO;
+    }
+    if (array.count <= 0 && download1 && isEmpty) {
+        [self displayDefaultView];
+    }
+    
     [self.historyCarts removeAllObjects];
     for (NSDictionary *dic in array) {
         NewCartsModel *model = [NewCartsModel new];
@@ -181,13 +209,9 @@
         model.sku_id = [dic objectForKey:@"sku_id"];
         model.item_id = [dic objectForKey:@"item_id"];
         [self.historyCarts addObject:model];
-        
     }
-    NSLog(@"history Carts = %@", self.historyCarts);
     
     [self.myTableView reloadData];
-    
-    
 }
 
 
