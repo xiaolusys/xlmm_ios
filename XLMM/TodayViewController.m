@@ -515,7 +515,7 @@ static NSString *khead2View = @"head2View";
     if (indexPath.section == 0) {
        
       
-            PosterCollectionCell2 *cell = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
+        PosterCollectionCell2 *cell = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
         
         if (posterDataArray.count != 0) {
             

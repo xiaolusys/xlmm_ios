@@ -7,7 +7,7 @@
 //
 
 #import "JiFenCollectionCell.h"
-
+#import "JiFenModel.h"
 
 @implementation JiFenCollectionCell
 
@@ -40,6 +40,16 @@
 }
 
 - (void)fillCellWithData:(JiFenModel *)model{
+    self.timeLabel.text = [self replaceString:model.created];
+    self.bianhaoLabel.text = [model.order objectForKey:@"order_id"];
+    self.jifenLabel.text = [NSString stringWithFormat:@"+%@分",model.log_value];
     
+    
+}
+- (NSString *)replaceString:(NSString *)string{
+    NSMutableString *mutableStr = [[NSMutableString alloc] initWithString:string];
+    NSRange range = {10, 1};
+    [mutableStr replaceCharactersInRange:range withString:@" "];
+    return mutableStr;
 }
 @end

@@ -49,6 +49,9 @@
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
         NSLog(@"urlString = %@", urlString);
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        if (data== nil) {
+            return;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"dic = %@", dic);
         NSString *nickName = [dic objectForKey:@"nick"];

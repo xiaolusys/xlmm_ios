@@ -68,6 +68,9 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
     NSLog(@"urlStr = %@", urlStr);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+    if (data == nil) {
+        return nil;
+    }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
     
@@ -108,12 +111,10 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     model.created = [dic objectForKey:@"created"];
     model.modified = [dic objectForKey:@"modified"];
     
-    NSString *order = [dic objectForKey:@"order"];
-    NSData *data = [order dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSDictionary *orderDic = [array objectAtIndex:0];
-    NSLog(@"orders = %@", orderDic);
-    model.order = orderDic;
+    NSDictionary *order = [dic objectForKey:@"order_info"];
+    
+    model.order = order;
+    
     return model;
 
 }
