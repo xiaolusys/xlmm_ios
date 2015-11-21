@@ -116,7 +116,7 @@
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"无待支付列表");
         
-        [self creatrDefaultView];
+        [self displayDefaultView];
         return;
     }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:self.dataArray repeats:YES];
@@ -135,76 +135,29 @@
     NSLog(@"label = %@", self.labelArray);
 }
 
-- (void)creatrDefaultView{
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage *image = [UIImage imageNamed:@"logo.png"];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.frame = CGRectMake(0, 0, 328/2, 382/2);
-    imageView.center = self.view.center;
-    [self.view addSubview:imageView];
-    CGRect rect = imageView.frame;
-    rect.origin.y = 100;
-    imageView.frame = rect;
-    
-    
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
-    
-    label1.font = [UIFont systemFontOfSize:18];
-    label1.text = @"您的待支付还是空的";
-    label1.textColor = [UIColor blackColor];
-    label1.textAlignment = NSTextAlignmentCenter;
-    label1.center = self.view.center;
-    
-    CGRect labelrect = label1.frame;
-    labelrect.origin.y = 300;
-    label1.frame = labelrect;
-    
-    
-    [self.view addSubview:label1];
-    
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
-    label2.font = [UIFont systemFontOfSize:18];
-    label2.text = @"去首页逛逛吧~~";
-    label2.textColor = [UIColor blackColor];
-    label2.textAlignment = NSTextAlignmentCenter;
-    label2.center = self.view.center;
-    
-    CGRect labelFram = label2.frame;
-    labelFram.origin.y = 330;
-    label2.frame = labelFram;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, SCREENHEIGHT - 50, SCREENWIDTH - 16, 44)];
-    
-    [button setTitle:@"去首页逛逛" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor colorWithR:249 G:172 B:20 alpha:1] forState:UIControlStateNormal];
-    button.backgroundColor = [UIColor whiteColor];
-    button.titleLabel.font = [UIFont systemFontOfSize:20];
-    [button addTarget:self action:@selector(gotoRootView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    
-    [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:2];
-    button.layer.cornerRadius = 8;
-    [button.layer setBorderColor:[UIColor colorWithR:249 G:172 B:20 alpha:1].CGColor];
-    imageView.userInteractionEnabled = NO;
-    label1.userInteractionEnabled = NO;
-    label2.userInteractionEnabled = NO;
-    self.view.userInteractionEnabled = YES;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(panClicked:)];
-    [self.view addGestureRecognizer:tap];
-    
-    
-    [self.view addSubview:label2];
+    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
+    [self.view addSubview:defaultView];
     
 }
+
+-(void)gotoLandingPage{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 - (void)panClicked:(UIGestureRecognizer *)gesture{
     NSLog(@"tap");
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    
 }
 
 - (void)gotoRootView:(UIButton *)button{
@@ -330,11 +283,6 @@
     }
 }
 
-
-
-    
-
-
 - (void)lijizhifu:(UIButton *)button{
     NSLog(@"立即支付");
     NSLog(@"tag = %lu", (unsigned long)button.tag);
@@ -348,15 +296,12 @@
     NSString *ID = [dic objectForKey:@"id"];
     NSLog(@"id = %@", ID);
     
-       //      http://m.xiaolu.so/rest/v1/trades/86412/details
+    //      http://m.xiaolu.so/rest/v1/trades/86412/details
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
     NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;
     [self.navigationController pushViewController:xiangqingVC animated:YES];
-    
-    
-    
 }
 
 //设计倒计时方法。。。。
