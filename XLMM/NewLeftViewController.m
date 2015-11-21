@@ -35,10 +35,29 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self setUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     
     
+}
+
+- (void)setUserInfo{
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (islogin) {
+        // http://m.xiaolu.so/rest/v1/users/profile
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+        NSLog(@"urlString = %@", urlString);
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"dic = %@", dic);
+        NSString *nickName = [dic objectForKey:@"nick"];
+        if (nickName.length >= 4) {
+            self.nameLabel.text = [dic objectForKey:@"nick"];
+            
+        }
+        self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
+    }
 }
 
 - (void)dealloc{
@@ -448,5 +467,26 @@
     [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
     
     [self.sideMenuViewController hideMenuViewController];
+}
+
+- (IBAction)loginButtonClicked:(id)sender {
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+       
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        
+        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        // zhifuVC.menuDelegate = ;
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+        }
+        return;
+    }
+
+    
 }
 @end

@@ -24,6 +24,7 @@
     NSTimer *theTimer;
     UILabel *titleLabel;
     NSString *offSheltTime;
+    float ratio;
     
 }
 
@@ -31,14 +32,25 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   // self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
     [self downloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
 
+}
+
+- (void)updateCellSize:(NSNotification *)notification{
+    NSDictionary *dic = notification.userInfo;
+    NSLog(@"dic = %@", dic);
+    ratio = [[dic objectForKey:@"ratio"] floatValue];
+    [self.collectionView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+   // self.navigationController.navigationBarHidden = NO;
 
 }
 
@@ -66,6 +78,7 @@
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self createCollectionView];
+    ratio = 8.0f/6.0f;
     [self createInfo];
     
     
@@ -283,7 +296,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2*8/6 + 60);
+    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2*ratio + 60);
     
 }
 

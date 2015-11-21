@@ -43,5 +43,6 @@
 - (IBAction)allDingdanClicked:(id)sender;
 - (IBAction)tuichuClicked:(id)sender;
 
+- (IBAction)loginButtonClicked:(id)sender;
 
 @end

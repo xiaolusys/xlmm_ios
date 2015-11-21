@@ -41,14 +41,24 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hw2-nb-tlK">
                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kg8-HT-Uxd">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <connections>
+                                        <action selector="loginButtonClicked:" destination="-1" eventType="touchUpInside" id="CSM-TR-n0l"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Kg8-HT-Uxd" secondAttribute="trailing" id="NK1-eu-P4k"/>
                                 <constraint firstItem="Hw2-nb-tlK" firstAttribute="top" secondItem="Xex-8j-n6p" secondAttribute="top" id="Pvc-qv-eOi"/>
+                                <constraint firstAttribute="bottom" secondItem="Kg8-HT-Uxd" secondAttribute="bottom" id="Qqh-RP-FZi"/>
+                                <constraint firstItem="Kg8-HT-Uxd" firstAttribute="leading" secondItem="Xex-8j-n6p" secondAttribute="leading" id="Utc-2M-al9"/>
                                 <constraint firstAttribute="height" constant="60" id="VwG-P9-WPW"/>
                                 <constraint firstAttribute="width" constant="60" id="dTB-OQ-UYW"/>
                                 <constraint firstAttribute="bottom" secondItem="Hw2-nb-tlK" secondAttribute="bottom" id="jYG-xD-aJU"/>
                                 <constraint firstItem="Hw2-nb-tlK" firstAttribute="leading" secondItem="Xex-8j-n6p" secondAttribute="leading" id="kAX-Gh-6j4"/>
+                                <constraint firstItem="Kg8-HT-Uxd" firstAttribute="top" secondItem="Xex-8j-n6p" secondAttribute="top" id="nxj-co-4JR"/>
                                 <constraint firstAttribute="trailing" secondItem="Hw2-nb-tlK" secondAttribute="trailing" id="rls-W6-q5T"/>
                             </constraints>
                         </view>
@@ -367,7 +377,7 @@
                                 <constraint firstAttribute="width" constant="150" id="7pB-Sr-Sy8"/>
                                 <constraint firstAttribute="height" constant="37" id="qUC-TK-bBT"/>
                             </constraints>
-                            <state key="normal" title="退出账户">
+                            <state key="normal" title="登录">
                                 <color key="titleColor" red="0.62745098039215685" green="0.62745098039215685" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
