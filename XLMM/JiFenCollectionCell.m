@@ -38,4 +38,8 @@
     }
     return self;
 }
+
+- (void)fillCellWithData:(JiFenModel *)model{
+    
+}
 @end

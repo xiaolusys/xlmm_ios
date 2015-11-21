@@ -273,15 +273,10 @@
     
     NSLog(@"gouguche ");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        if (goodsCount > 0) {
+      
             CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
             [self.navigationController pushViewController:cartVC animated:YES];
-        } else{
-            NSLog(@"购物车为空");
-            EmptyCartViewController *emptyVC = [[EmptyCartViewController alloc] initWithNibName:@"EmptyCartViewController" bundle:nil];
-            [self.navigationController pushViewController:emptyVC animated:YES];
-            
-        }
+        
         
     } else{
         NSLog(@"请您先登录");

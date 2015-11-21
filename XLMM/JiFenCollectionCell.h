@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class JiFenModel;
 @interface JiFenCollectionCell : UICollectionViewCell
 
 
-@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
-@property (weak, nonatomic) IBOutlet UILabel *modifyTime;
-@property (weak, nonatomic) IBOutlet UILabel *bianhao;
-@property (weak, nonatomic) IBOutlet UILabel *jine;
-@property (weak, nonatomic) IBOutlet UILabel *jinfen;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *jifenLabel;
+
+- (void)fillCellWithData:(JiFenModel *)model;
 
 
 @end

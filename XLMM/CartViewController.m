@@ -116,6 +116,7 @@
     NSLog(@"json = %@", json);
     [self.dataArray removeAllObjects];
 
+        
     
     allPrice = 0.0f;
     for (NSDictionary *dic in json) {

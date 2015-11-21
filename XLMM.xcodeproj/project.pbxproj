@@ -92,6 +92,8 @@
 		3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAAB1BE9E07300A5CC1C /* wash04.png */; };
 		3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */; };
 		3247FDB51BFF1BEA00C6631D /* YHQHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */; };
+		3247FDB91C00217900C6631D /* JifenReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3247FDB71C00217900C6631D /* JifenReusableView.m */; };
+		3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3247FDB81C00217900C6631D /* JifenReusableView.xib */; };
 		3249B97F1B6F1E790086D030 /* PersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */; };
 		3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */; };
 		3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
@@ -861,6 +863,9 @@
 		3247FDB11BFF1BEA00C6631D /* YHQHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQHeadView.h; sourceTree = "<group>"; };
 		3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQHeadView.m; sourceTree = "<group>"; };
 		3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQHeadView.xib; sourceTree = "<group>"; };
+		3247FDB61C00217900C6631D /* JifenReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JifenReusableView.h; sourceTree = "<group>"; };
+		3247FDB71C00217900C6631D /* JifenReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JifenReusableView.m; sourceTree = "<group>"; };
+		3247FDB81C00217900C6631D /* JifenReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JifenReusableView.xib; sourceTree = "<group>"; };
 		3249B97C1B6F1E790086D030 /* PersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController.h; sourceTree = "<group>"; };
 		3249B97D1B6F1E790086D030 /* PersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController.m; sourceTree = "<group>"; };
 		3249B97E1B6F1E790086D030 /* PersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -2342,6 +2347,9 @@
 				3247FDB11BFF1BEA00C6631D /* YHQHeadView.h */,
 				3247FDB21BFF1BEA00C6631D /* YHQHeadView.m */,
 				3247FDB31BFF1BEA00C6631D /* YHQHeadView.xib */,
+				3247FDB61C00217900C6631D /* JifenReusableView.h */,
+				3247FDB71C00217900C6631D /* JifenReusableView.m */,
+				3247FDB81C00217900C6631D /* JifenReusableView.xib */,
 				32121B411B9481B900742E53 /* PosterCollectionCell.h */,
 				32121B421B9481B900742E53 /* PosterCollectionCell.m */,
 				32121B431B9481B900742E53 /* PosterCollectionCell.xib */,
@@ -2711,6 +2719,7 @@
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
 				32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
+				3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */,
 				32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */,
@@ -3086,6 +3095,7 @@
 				327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */,
 				32BDE48D1B85B12D00FBEC25 /* AddYouhuiquanViewController.m in Sources */,
 				32976B871BA16C190045ADB9 /* ModifyshenqingViewController.m in Sources */,
+				3247FDB91C00217900C6631D /* JifenReusableView.m in Sources */,
 				32A288321B93E1E5006DC949 /* PreviousViewController.m in Sources */,
 				3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */,
 				32FE08821BF47E380072CCEC /* ReBuyTableViewCell.m in Sources */,
