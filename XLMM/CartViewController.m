@@ -25,6 +25,8 @@
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate>{
     float allPrice;
     NewCartsModel *deleteModel;
+    BOOL download1;
+    BOOL download2;
     BOOL isEmpty;
 }
 @property (nonatomic, strong)NSMutableArray *historyCarts;
@@ -44,6 +46,8 @@
     // This design has logical problem:
     // downloadData & downloadHisoryData should be returned with on request.
     isEmpty = YES;
+    download1 = NO;
+    download2 = NO;
     [self downloadData];
     [self downloadHistoryData];
     
@@ -96,22 +100,10 @@
     self.buyButton.layer.borderWidth = 1;
     self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     self.buyButton.layer.cornerRadius = 20;
+    self.totalPricelabel.text =[NSString stringWithFormat:@" "];
     
-    //NSLog(@"url = %@", kCart_Number_URL);
-    //NSURL *url = [NSURL URLWithString:kCart_Number_URL];
-    //NSData *data = [NSData dataWithContentsOfURL:url];
-    //if (data == nil) {
-    //    return;
-    //}
     [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
-    
-    //NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    //NSLog(@"json = %@", json);
-  
-    
-    
-    self.totalPricelabel.text =[NSString stringWithFormat:@" "];
 }
 
 
@@ -124,7 +116,7 @@
             NSLog(@"下载失败");
             return ;
         }
-        isEmpty = NO;
+
         [self performSelectorOnMainThread:@selector(fetchedCartData:) withObject:data waitUntilDone:YES];
     });
 }
@@ -134,13 +126,19 @@
     NSError *error = nil;
     NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (error != nil) {
-        
         NSLog(@"解析失败");
         NSLog(@"error = %@", error);
-        
         return;
     }
-    NSLog(@"json = %@", json);
+    
+    download1 = YES;
+    if (json.count > 0) {
+        isEmpty = NO;
+    }
+    if (json.count <= 0 && download2 && isEmpty) {
+        [self displayDefaultView];
+    }
+    
     [self.dataArray removeAllObjects];
 
     
@@ -175,13 +173,8 @@
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
         if (data == nil) {
             NSLog(@"下载失败");
-            
-            if (isEmpty) {
-                [self displayDefaultView];
-            }
             return ;
         }
-        
         
         [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
     });
@@ -193,7 +186,15 @@
     }
     NSError *error = nil;
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"array = %@", array);
+    
+    download2 = YES;
+    if (array.count > 0) {
+        isEmpty = NO;
+    }
+    if (array.count <= 0 && download1 && isEmpty) {
+        [self displayDefaultView];
+    }
+    
     [self.historyCarts removeAllObjects];
     for (NSDictionary *dic in array) {
         NewCartsModel *model = [NewCartsModel new];
