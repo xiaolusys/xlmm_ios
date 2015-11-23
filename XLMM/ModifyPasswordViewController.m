@@ -65,14 +65,28 @@
     self.nextButton.layer.borderWidth = 1;
     self.nextButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
-    NSString *str1 = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    phonenumberString = str1;
+//    NSString *str1 = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+//    phonenumberString = str1;
+    //  http://m.xiaolu.so/rest/v1/users
     
-    NSMutableString *str = [NSMutableString stringWithString:str1];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
     
-    NSRange range = {3,4};
-    [str replaceCharactersInRange:range withString:@"****"];
-    self.phoneLabel.text = str;
+    
+    NSDictionary *result = [[dic objectForKey:@"results"] objectAtIndex:0];
+    NSString *str1 = [result objectForKey:@"mobile"];
+    
+    if (str1.length == 11) {
+        NSMutableString *str = [NSMutableString stringWithString:str1];
+        
+        NSRange range = {3,4};
+        [str replaceCharactersInRange:range withString:@"****"];
+        self.phoneLabel.text = str;
+    }
+    
+    
     
     [self disableTijiaoButton];
     

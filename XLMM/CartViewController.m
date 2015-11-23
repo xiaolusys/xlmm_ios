@@ -389,7 +389,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 34)];
         label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
         label.font = [UIFont systemFontOfSize:12];
-        label.text = @"支付超时";
+        label.text = @"可重新购买的商品";
         [headerView addSubview:label];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 43, SCREENWIDTH, 1)];
         lineView.backgroundColor= [UIColor colorWithR:218 G:218 B:218 alpha:1];

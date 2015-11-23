@@ -125,7 +125,7 @@
 
      NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.oid]];
    // self.imagesArray;
-    
+    //
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithContentsOfFile:fullPath];
     if (mutableArray.count > 0) {
         self.imagesArray = mutableArray;
@@ -265,10 +265,21 @@
 - (NSString *)getQiNiuToken{
     
     NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+    //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+    NSError *error = nil;
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl] options:NSDataReadingMappedIfSafe error:&error];                                                                                                                                                                                                                                                                
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+    }
+    NSLog(@"data = %@", data);
+    if (data == nil) {
+        return nil;
+    }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     NSString *token = [dic objectForKey:@"uptoken"];
+    NSLog(@"token = %@", token);
     
     
     return token;
@@ -630,8 +641,7 @@
         button.hidden = NO;
         imageView.image = [UIImage imageWithData:self.imagesArray[i]];
         
-        [self uploadImages:self.imagesArray[i] andKeys:self.keysArray[i]];
-        
+
         
     }
     
@@ -649,7 +659,9 @@
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    [self dismissViewControllerAnimated:YES completion:^{
+    
+    }];
 }
 
 
@@ -694,6 +706,17 @@
     
     NSLog(@"提交");
     
+    
+    
+    
+    NSLog(@"self.dataArray = %@", self.dataArray);
+  //  NSLog(@"self.dataArray = %@", self.imagesArray);
+    
+    for (int i = 0; i< self.imagesArray.count; i++) {
+         [self uploadImages:self.imagesArray[i] andKeys:self.keysArray[i]];
+        
+
+    }
     UIAlertView * myAlterView = [[UIAlertView alloc] initWithTitle:nil
                                                            message:@"确定要退货吗？"
                                                           delegate:nil
@@ -789,6 +812,7 @@
     NSLog(@"选择图片");
     
     [self.inputTextView resignFirstResponder];
+    
     [self performSelector:@selector(showImageSelected) withObject:nil afterDelay:0.3f];
   
     

@@ -30,7 +30,10 @@
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
   
     CGFloat headImageOrigineHeight;
+    CGFloat contentTopHeight;
+    CGFloat distance;
     
+    CGFloat origineDistance;
     
     NSDictionary *json; //详情页json数据
     
@@ -174,10 +177,23 @@
     
     if (SCREENHEIGHT == 568) {
         self.headViewHeitht.constant = 420;
+         self.bottomImageViewHeight.constant = 420;
+        contentTopHeight = 420 - 106;
+        
         
     } else if (SCREENHEIGHT == 667){
         self.headViewHeitht.constant = 420 + 96;
+         self.bottomImageViewHeight.constant = 420 + 96;
+        
+        contentTopHeight = 420 + 96 - 106;
+        
+    } else if (SCREENHEIGHT > 670){
+        self.headViewHeitht.constant = 420 + 163;
+        self.bottomImageViewHeight.constant = 420 + 163;
+        contentTopHeight = 420 + 163 - 106;
+        
     }
+    
     //完成前的显示界面
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     
@@ -209,56 +225,37 @@
     self.addCartButton.layer.cornerRadius = 20;
     self.addCartButton.layer.borderWidth = 1;
     self.addCartButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-    
-    
-    
     self.line1Height.constant = 0.5;
     self.line2Height.constant = 0.5;
-
     self.line3Height.constant = 0.5;
-
-  //  self.line4Height.constant = 0.5;
-
     self.line5Height.constant = 0.5;
     self.line6height .constant = 0.5;
-  //  self.line1Height.constant = 0.5;
-    
-//    if(SCREENHEIGHT == 568){
-//        NSLog(@"5s");
-//        self.scrollerView.contentOffset = CGPointMake(0, 40);
-//    }
 
+  
     
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    
-
     CGPoint contentOffset = scrollView.contentOffset;
-  
-    NSLog(@"%@", NSStringFromCGPoint(contentOffset));
-    
-    
     self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , self.bottomImageViewHeight.constant);
-
-  //  headImageOrigineHeight
-
-    CGFloat distance = headImageOrigineHeight - SCREENWIDTH * 82 / 75;
+    NSLog(@"contentOffset.y = %f", contentOffset.y);
+    distance = headImageOrigineHeight - contentTopHeight;
     
+    NSLog(@"distance = %f", distance);
     if (contentOffset.y<-distance) {
-        CGFloat sizeheight = SCREENWIDTH * 82 / 75 - contentOffset.y;
+        
+        //下拉
+        CGFloat sizeheight = contentTopHeight- contentOffset.y;
         self.bottomImageViewHeight.constant = sizeheight;
         self.imageleading.constant = (contentOffset.y + distance)/2;
         self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
-  //  SCREENWIDTH * 82 / 75
-    if (contentOffset.y >= 0 && contentOffset.y < SCREENWIDTH * 82 / 75) {
+    if (contentOffset.y >= 0 && contentOffset.y < contentTopHeight) {
         NSLog(@"");
-        //上拉 headImageView
+        //上滑
         
         self.imageViewTop.constant = -contentOffset.y/3;
-        self.imageBottom.constant = contentOffset.y/3;
+        self.imageBottom.constant = (contentOffset.y)/3;
     }
 }
 
@@ -306,7 +303,23 @@
     [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
         headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
-
+        
+        
+#pragma mark --判断是否拉伸图片
+        
+        origineDistance = headImageOrigineHeight - contentTopHeight;
+        
+        NSLog(@"distance = %f", origineDistance);
+        
+        if (origineDistance < 0 ) {
+    
+            CGFloat sizeheight = contentTopHeight;
+            self.bottomImageViewHeight.constant = sizeheight;
+            self.imageleading.constant = (origineDistance)/2;
+            self.imageTrailing.constant = (origineDistance)/2;
+        }
+        
+    
         
     }];
     
@@ -945,7 +958,7 @@
     }
         if (skusID == nil) {
             [UIView animateWithDuration:.5f animations:^{
-                self.scrollerView.contentOffset = CGPointMake(0, SCREENWIDTH);
+                self.scrollerView.contentOffset = CGPointMake(0, self.sizeViewHeight.constant);
                 
             } completion:^(BOOL finished) {
                 NSLog(@"top");
