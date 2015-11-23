@@ -343,6 +343,17 @@
                                                         <constraint firstAttribute="height" constant="60" id="qzf-XO-uQL"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" tag="2001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M44-rO-AJm">
+                                                    <rect key="frame" x="120" y="7" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="amV-S2-gas"/>
+                                                        <constraint firstAttribute="width" constant="40" id="sAj-tI-BKh"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="deletaBtnIcon.png"/>
+                                                    <connections>
+                                                        <action selector="deleteImageone:" destination="-1" eventType="touchUpInside" id="Vhf-e2-paz"/>
+                                                    </connections>
+                                                </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CameraImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="PcJ-Ei-ZJx">
                                                     <rect key="frame" x="20" y="37" width="40" height="40"/>
                                                     <constraints>
@@ -357,24 +368,6 @@
                                                         <constraint firstAttribute="height" constant="60" id="uYn-6y-jj4"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5pT-8l-qpm">
-                                                    <rect key="frame" x="240" y="27" width="60" height="60"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="2Fa-63-ybX"/>
-                                                        <constraint firstAttribute="width" constant="60" id="NKo-gu-ik5"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" tag="2001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M44-rO-AJm">
-                                                    <rect key="frame" x="120" y="7" width="40" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="amV-S2-gas"/>
-                                                        <constraint firstAttribute="width" constant="40" id="sAj-tI-BKh"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Button" image="deletaBtnIcon.png"/>
-                                                    <connections>
-                                                        <action selector="deleteImageone:" destination="-1" eventType="touchUpInside" id="Vhf-e2-paz"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" tag="2002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKJ-aL-1Eo">
                                                     <rect key="frame" x="200" y="7" width="40" height="40"/>
                                                     <constraints>
@@ -386,6 +379,13 @@
                                                         <action selector="deleteImageTwo:" destination="-1" eventType="touchUpInside" id="KRG-rQ-9Hk"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5pT-8l-qpm">
+                                                    <rect key="frame" x="240" y="27" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="2Fa-63-ybX"/>
+                                                        <constraint firstAttribute="width" constant="60" id="NKo-gu-ik5"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <button opaque="NO" tag="2003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbP-Lx-Awi">
                                                     <rect key="frame" x="280" y="7" width="40" height="40"/>
                                                     <constraints>

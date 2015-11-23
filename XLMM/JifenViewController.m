@@ -73,6 +73,10 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
+    if ([[dic objectForKey:@"count"] integerValue] == 0) {
+        NSLog(@"无积分");
+        return [NSNumber numberWithInt:0];
+    }
     
     NSDictionary *result = [[dic objectForKey:@"results"] objectAtIndex:0];
     NSNumber *number = [result objectForKey:@"integral_value"];
