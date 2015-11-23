@@ -24,8 +24,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UITextField *provinceTextField;
-@property (weak, nonatomic) IBOutlet UITextField *cityTextField;
-@property (weak, nonatomic) IBOutlet UITextField *countyTextField;
+
 @property (weak, nonatomic) IBOutlet UITextView *streetTextView;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;

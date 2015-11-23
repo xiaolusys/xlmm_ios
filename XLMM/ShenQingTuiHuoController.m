@@ -54,8 +54,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHiden:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHiden:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 
@@ -64,8 +64,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     
     
  
@@ -564,7 +564,7 @@
     
     [self.inputTextView resignFirstResponder];
     
-    [self performSelector:@selector(showReasonView) withObject:nil afterDelay:1.0f];
+    [self performSelector:@selector(showReasonView) withObject:nil afterDelay:0.3f];
     
 //    [self showReasonView];
     
@@ -789,7 +789,7 @@
     NSLog(@"选择图片");
     
     [self.inputTextView resignFirstResponder];
-    [self performSelector:@selector(showImageSelected) withObject:nil afterDelay:1.0f];
+    [self performSelector:@selector(showImageSelected) withObject:nil afterDelay:0.3f];
   
     
     

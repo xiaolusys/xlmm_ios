@@ -55,9 +55,7 @@
         county = _addressModel.countyName;
         
         self.provinceTextField.text = [NSString stringWithFormat:@"%@%@%@", _addressModel.provinceName, _addressModel.cityName, _addressModel.countyName];
-        //_addressModel.provinceName;
-        self.cityTextField.text = _addressModel.cityName;
-        self.countyTextField.text = _addressModel.countyName;
+
         
         
         UIButton *itemButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -258,15 +256,22 @@
     self.addressPicker = nil;
 }
 
+#pragma mark --UITextFieldDelegate, UITextViewDelegate--
+
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     self.detailsAddressTF.hidden = YES;
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    if (textView == self.streetTextView) {
+        [self cancelLocatePicker];
+        return YES;
+    } return NO;
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if ([textField isEqual:self.provinceTextField] ||
-        [textField isEqual:self.cityTextField] ||
-        [textField isEqual:self.countyTextField]) {
+    if ([textField isEqual:self.provinceTextField]) {
         [self cancelLocatePicker];
         self.addressPicker = [[AddressPickerView alloc] initWithdelegate:self];
         [self.addressPicker showInView:self.view];
@@ -371,14 +376,7 @@
         return;
         
     }
-    if ([self.cityTextField.text isEqualToString:@""]) {
-        self.infoLabel.text = @"请选择城市";
-        return;
-    }
-    if ([self.countyTextField.text isEqualToString:@""]) {
-        self.infoLabel.text = @"请选择区/县";
-        return;
-    }
+  
     if ([self.streetTextView.text isEqualToString:@""]) {
         self.infoLabel.text = @"请填写收货详细地址";
         return;
