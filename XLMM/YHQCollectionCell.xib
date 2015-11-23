@@ -23,7 +23,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hF0-p5-hzY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youhuiquanCanUsedImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="b4Z-Kt-qT5">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keshiyong.png" translatesAutoresizingMaskIntoConstraints="NO" id="b4Z-Kt-qT5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用范围  全场通用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqA-XK-mgT">
@@ -63,7 +63,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="pIB-Ak-sKU" firstAttribute="leading" secondItem="smf-tj-WdK" secondAttribute="trailing" constant="10" id="1Ue-zp-rDb"/>
                             <constraint firstItem="XqA-XK-mgT" firstAttribute="top" secondItem="smf-tj-WdK" secondAttribute="bottom" constant="4" id="6Am-5Q-g3z"/>
@@ -86,6 +86,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="hF0-p5-hzY" secondAttribute="bottom" id="1MQ-jH-M0p"/>
                 <constraint firstItem="hF0-p5-hzY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="HLh-Q8-fNH"/>
@@ -104,6 +105,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="youhuiquanCanUsedImage.png" width="1448" height="448"/>
+        <image name="keshiyong.png" width="720" height="228"/>
     </resources>
 </document>

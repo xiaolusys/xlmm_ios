@@ -268,7 +268,7 @@
     //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
     NSError *error = nil;
     
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl] options:NSDataReadingMappedIfSafe error:&error];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl] options:NSDataReadingMappedIfSafe error:&error];                                                                                                                                                                                                                                                                
     if (error != nil) {
         NSLog(@"error = %@", error);
     }

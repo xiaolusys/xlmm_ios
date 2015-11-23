@@ -186,16 +186,16 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         cell.valueLabel.textColor = [UIColor colorWithR:240 G:80 B:80 alpha:1];
         cell.markLabel.textColor = cell.valueLabel.textColor;
         cell.requireLabel.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
-        imageName = @"youhuiquanCanUsedImage.png";
+        imageName = @"keshiyong.png";
     } else if (indexPath.section == 1){
         yhqModel = [self.expiredArray objectAtIndex:indexPath.row];
-        imageName = @"youhuiquanGuoqiiamge.png";
+        imageName = @"yiguoqi.png";
         cell.valueLabel.textColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
         cell.markLabel.textColor = cell.valueLabel.textColor;
         cell.requireLabel.textColor = cell.valueLabel.textColor;
     } else{
         yhqModel = [self.usedArray objectAtIndex:indexPath.row];
-        imageName = @"youhuiquanUsedImage.png";
+        imageName = @"yishiyong.png";
         cell.valueLabel.textColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
         cell.markLabel.textColor = cell.valueLabel.textColor;
         cell.requireLabel.textColor = cell.valueLabel.textColor;
