@@ -22,6 +22,7 @@
 
 #import "AddressViewController.h"
 #import "SettingViewController.h"
+#import "LogInViewController.h"
 
 
 
@@ -218,11 +219,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
   
@@ -244,11 +241,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -271,11 +264,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
 }
@@ -294,11 +283,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -326,11 +311,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
 
@@ -352,11 +333,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -378,11 +355,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -402,12 +375,7 @@
         
         [self.sideMenuViewController hideMenuViewController];
         
-        
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -451,11 +419,7 @@
         [self.sideMenuViewController hideMenuViewController];
         
         
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
+        [self displayLoginView];
         return;
     }
     
@@ -478,18 +442,17 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
        
     }else{
-        
         [self.sideMenuViewController hideMenuViewController];
-        
-        
-        EnterViewController *zhifuVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
-        // zhifuVC.menuDelegate = ;
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
-        }
-        return;
+        [self displayLoginView];
     }
-
     
+}
+
+- (void) displayLoginView{
+    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+    // zhifuVC.menuDelegate = ;
+    if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+        [self.pushVCDelegate rootVCPushOtherVC:loginVC];
+    }
 }
 @end
