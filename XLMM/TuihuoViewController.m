@@ -88,7 +88,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     UIButton *button = [defaultView viewWithTag:100];
     button.layer.cornerRadius = 15;
     button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
     
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     

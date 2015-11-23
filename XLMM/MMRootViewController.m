@@ -466,10 +466,11 @@
 #pragma mark --mmNavigationDelegate--
 
 - (void)hiddenNavigation{
-    self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(15, SCREENHEIGHT - 112, 44, 44);
+    self.navigationController.navigationBarHidden = YES;
+
 }
 
 - (void)showNavigation{

@@ -224,7 +224,7 @@
     UIView *listView = (UIView *)[reasonView viewWithTag:100];
     
     listView.layer.masksToBounds = YES;
-    listView.layer.cornerRadius = 20;
+    listView.layer.cornerRadius = 10;
     
  
     UIScrollView *scrollView = (UIScrollView *)[reasonView viewWithTag:886];

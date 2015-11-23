@@ -47,6 +47,8 @@ static NSString *khead2View = @"head2View";
     BOOL isqiangGuang;
     NSString *offSheltTime;
     
+    CGFloat oldScrollViewTop;
+    
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -592,25 +594,35 @@ static NSString *khead2View = @"head2View";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGPoint point = scrollView.contentOffset;
+    CGFloat temp = oldScrollViewTop - point.y;
     
-   // NSLog(@"%f", point.y );
+    NSLog(@"temp = %f", temp);
     
-    
-    if (point.y > 160) {
-        
-        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-            [self.delegate hiddenNavigation];
-        }
-        //self.navigationController.navigationBarHidden = YES;
-        
-        
-    } else if(point.y < -66){
-        //self.navigationController.navigationBarHidden = NO;
-        
+    CGFloat marine = 120;
+    if (temp > marine) {
+        NSLog(@"下滑");
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
         
+        
+    } else if (temp < 0 - marine){
+        NSLog(@"上滑");
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
+        
+        
+    }
+    if (temp > marine ) {
+        oldScrollViewTop = point.y;
+        //  NSLog(@"point.y = %f", point.y);
+        return;
+        
+    }
+    if (temp < 0 - marine) {
+        oldScrollViewTop = point.y;
+        //NSLog(@"point.y = %f", point.y);
     }
 }
 

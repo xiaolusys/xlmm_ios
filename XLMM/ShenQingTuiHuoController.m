@@ -82,7 +82,7 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification{
     NSLog(@"show");
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         self.view.frame = CGRectMake(0, -120, SCREENWIDTH, 120 + SCREENHEIGHT);
         
     }];
@@ -91,7 +91,7 @@
     
     
     NSLog(@"hiden");
-    [UIView animateWithDuration:0 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         
         self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
         
@@ -297,7 +297,7 @@
     [cancelButton addTarget:self action:@selector(cancelSeletedImage:) forControlEvents:UIControlEventTouchUpInside];
     UIView *listView = (UIView *)[selectedImageView viewWithTag:1000];
     listView.layer.masksToBounds = YES;
-    listView.layer.cornerRadius = 5;
+    listView.layer.cornerRadius = 10;
     selectedImageView.frame = self.view.frame;
     selectedImageView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
     selectedImageView.alpha = 0.9;
@@ -338,7 +338,7 @@
     [cancelButton addTarget:self action:@selector(cancelSeleted:) forControlEvents:UIControlEventTouchUpInside];
     UIView *listView = (UIView *)[reasonView viewWithTag:100];
     listView.layer.masksToBounds = YES;
-    listView.layer.cornerRadius = 5;
+    listView.layer.cornerRadius = 10;
     reasonView.frame = self.view.frame;
     reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
     reasonView.alpha = 0.9;
@@ -560,7 +560,13 @@
 - (IBAction)yuanyinClicked:(id)sender {
     
     NSLog(@"选择退款原因");
-    [self showReasonView];
+    
+    
+    [self.inputTextView resignFirstResponder];
+    
+    [self performSelector:@selector(showReasonView) withObject:nil afterDelay:1.0f];
+    
+//    [self showReasonView];
     
     
     
@@ -782,17 +788,21 @@
 - (IBAction)sendImages:(id)sender {
     NSLog(@"选择图片");
     
+    [self.inputTextView resignFirstResponder];
+    [self performSelector:@selector(showImageSelected) withObject:nil afterDelay:1.0f];
+  
     
     
+}
+
+- (void)showImageSelected{
     selectedImageView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         selectedImageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-      //  effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        //  effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
         self.navigationController.navigationBarHidden = YES;
         backView.hidden = NO;
     }];
-    
-    
 }
 
 - (IBAction)deleteImageone:(id)sender {

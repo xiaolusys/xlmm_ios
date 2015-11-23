@@ -33,7 +33,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self downloadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
 
@@ -81,7 +80,8 @@
     ratio = 8.0f/6.0f;
     [self createInfo];
     
-    
+    [self downloadData];
+
 }
 
 
