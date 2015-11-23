@@ -21,7 +21,9 @@
 
 @end
 
-@implementation JifenViewController
+@implementation JifenViewController{
+    UIView *emptyView;
+}
 
 static NSString * const reuseIdentifier = @"jifenCell";
 static NSString * const headViewIdentifier = @"headViewIdentifier";
@@ -51,7 +53,11 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     self.title = @"我的积分";
     [self createNavigationBarWithTitle:@"我的积分" selecotr:@selector(btnClicked:)];
     
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    
+    
+    [self createEmptyView];
+    
     
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
@@ -60,6 +66,14 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     
     // Do any additional setup after loading the view.
+}
+
+- (void)createEmptyView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"emptyJifenView" owner:nil options:nil];
+    emptyView = views[0];
+    emptyView.frame = CGRectMake(0, SCREENHEIGHT/2 - 40, SCREENWIDTH, 80);
+    [self.view addSubview:emptyView];
+    emptyView.hidden = YES;
 }
 
 - (NSNumber *)numberOfJifen{
@@ -75,7 +89,9 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSLog(@"dic = %@", dic);
     if ([[dic objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"无积分");
+        emptyView.hidden = NO;
         return [NSNumber numberWithInt:0];
+        
     }
     
     NSDictionary *result = [[dic objectForKey:@"results"] objectAtIndex:0];
@@ -132,6 +148,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的积分列表为空");
+        emptyView.hidden = YES;
         return;
     }
     NSArray *array = [json objectForKey:@"results"];
@@ -210,7 +227,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     JifenReusableView * headerView = (JifenReusableView *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headViewIdentifier forIndexPath:indexPath];
     headerView.jifenValueLabel.text = [NSString stringWithFormat:@"%@", self.integralValue];
-    headerView.jifenValueLabel.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+    headerView.jifenValueLabel.textColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
     headerView.jifenValueLabel.font = [UIFont systemFontOfSize:40];
     return headerView;
 }

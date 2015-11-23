@@ -206,6 +206,7 @@
 		32746E371B74A22000816208 /* yifu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E031B74A22000816208 /* yifu2.png */; };
 		32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E041B74A22000816208 /* youhuiquan-kv.png */; };
 		32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746E711B74B5C600816208 /* UIColor+RGBColor.m */; };
+		3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16A1C03452800641C4E /* emptyJifenView.xib */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -970,6 +971,7 @@
 		32746E041B74A22000816208 /* youhuiquan-kv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youhuiquan-kv.png"; sourceTree = "<group>"; };
 		32746E701B74B5C600816208 /* UIColor+RGBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+RGBColor.h"; path = "../UIColor+RGBColor.h"; sourceTree = "<group>"; };
 		32746E711B74B5C600816208 /* UIColor+RGBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RGBColor.m"; path = "../UIColor+RGBColor.m"; sourceTree = "<group>"; };
+		3274C16A1C03452800641C4E /* emptyJifenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = emptyJifenView.xib; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1665,6 +1667,7 @@
 				328CE5D31B9F0B28000469DF /* JifenViewController.h */,
 				328CE5D41B9F0B28000469DF /* JifenViewController.m */,
 				328CE5D51B9F0B28000469DF /* JifenViewController.xib */,
+				3274C16A1C03452800641C4E /* emptyJifenView.xib */,
 				32FF9A231B9FDB870001F314 /* TuihuoViewController.h */,
 				32FF9A241B9FDB870001F314 /* TuihuoViewController.m */,
 				32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */,
@@ -2561,6 +2564,7 @@
 				32746E321B74A22000816208 /* logo.png in Resources */,
 				32D2B7921BDDF59100603FCE /* rightArrow.png in Resources */,
 				32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */,
+				3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
