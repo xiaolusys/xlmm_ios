@@ -209,6 +209,7 @@
 		3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16A1C03452800641C4E /* emptyJifenView.xib */; };
 		3274C16F1C03FC7400641C4E /* ForgetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3274C16D1C03FC7400641C4E /* ForgetPasswordController.m */; };
 		3274C1701C03FC7400641C4E /* ForgetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16E1C03FC7400641C4E /* ForgetPasswordController.xib */; };
+		3274C1741C0480AF00641C4E /* EmptyCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1731C0480AF00641C4E /* EmptyCartView.xib */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -980,6 +981,7 @@
 		3274C16C1C03FC7400641C4E /* ForgetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordController.h; sourceTree = "<group>"; };
 		3274C16D1C03FC7400641C4E /* ForgetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordController.m; sourceTree = "<group>"; };
 		3274C16E1C03FC7400641C4E /* ForgetPasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPasswordController.xib; sourceTree = "<group>"; };
+		3274C1731C0480AF00641C4E /* EmptyCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCartView.xib; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1856,6 +1858,7 @@
 				32891B4F1B81C152007E562A /* EmptyCartViewController.xib */,
 				32891B581B81C9E0007E562A /* CartViewController.h */,
 				32891B591B81C9E0007E562A /* CartViewController.m */,
+				3274C1731C0480AF00641C4E /* EmptyCartView.xib */,
 				32FE08841BF492C50072CCEC /* FooterView.xib */,
 				32A957851B82BC5600C23B34 /* ConfirmView.xib */,
 				32891B5A1B81C9E0007E562A /* CartViewController.xib */,
@@ -2648,6 +2651,7 @@
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
 				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
+				3274C1741C0480AF00641C4E /* EmptyCartView.xib in Resources */,
 				32FE08851BF492C50072CCEC /* FooterView.xib in Resources */,
 				32CC7C9E1BA0187300475E2E /* TuihuoXQ5.xib in Resources */,
 				32CC7CA41BA018A000475E2E /* TuihuoXQ7.xib in Resources */,

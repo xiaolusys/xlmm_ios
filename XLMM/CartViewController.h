@@ -25,5 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *historycartsView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
+
+
 - (IBAction)purchaseClicked:(id)sender;
 @end
