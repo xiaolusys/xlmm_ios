@@ -13,6 +13,8 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
+#import "ForgetPasswordController.h"
+
 
 
 @interface LogInViewController ()
@@ -178,7 +180,8 @@
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
-    [self.navigationController pushViewController:[[ModifyPasswordViewController alloc] init] animated:YES];
+    ForgetPasswordController *forgetPsdVC = [[ForgetPasswordController alloc] initWithNibName:@"ForgetPasswordController" bundle:nil];
+    [self.navigationController pushViewController:forgetPsdVC animated:YES];
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {

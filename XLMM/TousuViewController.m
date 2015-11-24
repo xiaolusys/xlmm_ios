@@ -158,14 +158,14 @@
 
 - (void)enableTijiaoButton{
     self.tijiaoButton.enabled = YES;
-    self.tijiaoButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.tijiaoButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     self.tijiaoButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 }
 
 - (void)disableTijiaoButton{
     self.tijiaoButton.enabled = NO;
-    self.tijiaoButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
-    self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.tijiaoButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
+    self.tijiaoButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{

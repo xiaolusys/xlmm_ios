@@ -207,6 +207,8 @@
 		32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E041B74A22000816208 /* youhuiquan-kv.png */; };
 		32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746E711B74B5C600816208 /* UIColor+RGBColor.m */; };
 		3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16A1C03452800641C4E /* emptyJifenView.xib */; };
+		3274C16F1C03FC7400641C4E /* ForgetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3274C16D1C03FC7400641C4E /* ForgetPasswordController.m */; };
+		3274C1701C03FC7400641C4E /* ForgetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16E1C03FC7400641C4E /* ForgetPasswordController.xib */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -972,6 +974,9 @@
 		32746E701B74B5C600816208 /* UIColor+RGBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+RGBColor.h"; path = "../UIColor+RGBColor.h"; sourceTree = "<group>"; };
 		32746E711B74B5C600816208 /* UIColor+RGBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RGBColor.m"; path = "../UIColor+RGBColor.m"; sourceTree = "<group>"; };
 		3274C16A1C03452800641C4E /* emptyJifenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = emptyJifenView.xib; sourceTree = "<group>"; };
+		3274C16C1C03FC7400641C4E /* ForgetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordController.h; sourceTree = "<group>"; };
+		3274C16D1C03FC7400641C4E /* ForgetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordController.m; sourceTree = "<group>"; };
+		3274C16E1C03FC7400641C4E /* ForgetPasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPasswordController.xib; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1819,6 +1824,9 @@
 				320AC9351B6F6CFE003EABB6 /* ModifyPasswordViewController.h */,
 				320AC9361B6F6CFE003EABB6 /* ModifyPasswordViewController.m */,
 				320AC9371B6F6CFE003EABB6 /* ModifyPasswordViewController.xib */,
+				3274C16C1C03FC7400641C4E /* ForgetPasswordController.h */,
+				3274C16D1C03FC7400641C4E /* ForgetPasswordController.m */,
+				3274C16E1C03FC7400641C4E /* ForgetPasswordController.xib */,
 				3284A23A1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.h */,
 				3284A23B1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.m */,
 				3284A23C1BFC21EF00D0F0D0 /* ModifyPasswordViewController2.xib */,
@@ -2636,6 +2644,7 @@
 				32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */,
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
 				32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */,
+				3274C1701C03FC7400641C4E /* ForgetPasswordController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */,
 				32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */,
@@ -2939,6 +2948,7 @@
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
+				3274C16F1C03FC7400641C4E /* ForgetPasswordController.m in Sources */,
 				3219529C1BFC7A8D00AA0AB8 /* QNFormUpload.m in Sources */,
 				32DE21C21BF1BD7F00999ECA /* XidiShuomingViewController.m in Sources */,
 				32BA1B2B1BF2F21B0000A0F2 /* MoreOrdersViewCell.m in Sources */,
