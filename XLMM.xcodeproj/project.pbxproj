@@ -669,6 +669,9 @@
 		8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */; };
 		8E0044F41BFF09B600AFC1DF /* dingdanemptyimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044F21BFF09B600AFC1DF /* dingdanemptyimage.png */; };
 		8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */; };
+		8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E61C041A53008D0C13 /* display_passwd_icon.png */; };
+		8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */; };
+		8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E81C041A53008D0C13 /* weixin_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1305,6 +1308,9 @@
 		8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDefault.xib; sourceTree = "<group>"; };
 		8E0044F21BFF09B600AFC1DF /* dingdanemptyimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanemptyimage.png; sourceTree = "<group>"; };
 		8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouwucheemptyimage.png; sourceTree = "<group>"; };
+		8EA825E61C041A53008D0C13 /* display_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = display_passwd_icon.png; sourceTree = "<group>"; };
+		8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide_passwd_icon.png; sourceTree = "<group>"; };
+		8EA825E81C041A53008D0C13 /* weixin_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixin_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1384,6 +1390,9 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				8EA825E61C041A53008D0C13 /* display_passwd_icon.png */,
+				8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */,
+				8EA825E81C041A53008D0C13 /* weixin_icon.png */,
 				3247FDBB1C03365900C6631D /* keshiyong.png */,
 				3247FDBC1C03365900C6631D /* yiguoqi.png */,
 				3247FDBD1C03365900C6631D /* yishiyong.png */,
@@ -2614,6 +2623,7 @@
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
 				3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
+				8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
@@ -2648,6 +2658,7 @@
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */,
 				32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */,
+				8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
@@ -2690,6 +2701,7 @@
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
+				8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
 				3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */,
