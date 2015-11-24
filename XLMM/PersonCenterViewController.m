@@ -14,7 +14,7 @@
 #import "AddressViewController.h"
 #import "TousuViewController.h"
 #import "EnterViewController.h"
-#import "ModifyPasswordViewController.h"
+#import "ModifyPasswordViewController2.h"
 #import "JifenViewController.h"
 
 
@@ -204,7 +204,7 @@
     NSUserDefaults *userfaults = [NSUserDefaults standardUserDefaults];
     islogin = [userfaults boolForKey:kIsLogin];
     if (islogin) {
-        ModifyPasswordViewController *modifyVC = [[ModifyPasswordViewController alloc] initWithNibName:@"ModifyPasswordViewController" bundle:nil];
+        ModifyPasswordViewController2 *modifyVC = [[ModifyPasswordViewController2 alloc] initWithNibName:@"ModifyPasswordViewController2" bundle:nil];
         [self.navigationController pushViewController:modifyVC animated:YES];
         
         

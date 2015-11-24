@@ -17,7 +17,7 @@
 
 #import "YouHuiQuanViewController.h"
 #import "AddressViewController.h"
-#import "ModifyPasswordViewController.h"
+#import "ModifyPasswordViewController2.h"
 #import "TousuViewController.h"
 #import "LogInViewController.h"
 #import "JifenViewController.h"
@@ -202,7 +202,7 @@
             
             break;
         case 7:{
-            ModifyPasswordViewController *modifyVC = [[ModifyPasswordViewController alloc] initWithNibName:@"ModifyPasswordViewController" bundle:nil];
+            ModifyPasswordViewController2 *modifyVC = [[ModifyPasswordViewController2 alloc] initWithNibName:@"ModifyPasswordViewController2" bundle:nil];
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
                 [self.pushVCDelegate rootVCPushOtherVC:modifyVC];
             }

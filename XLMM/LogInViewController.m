@@ -8,12 +8,12 @@
 
 #import "LogInViewController.h"
 #import "RegisterViewController.h"
-#import "ModifyPasswordViewController.h"
+#import "ModifyPasswordViewController2.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
-#import "ForgetPasswordController.h"
+#import "VerifyPhoneViewController.h"
 
 
 
@@ -159,8 +159,8 @@
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
-    ForgetPasswordController *forgetPsdVC = [[ForgetPasswordController alloc] initWithNibName:@"ForgetPasswordController" bundle:nil];
-    [self.navigationController pushViewController:forgetPsdVC animated:YES];
+    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
+    [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {
