@@ -95,16 +95,7 @@
     
     self.dataArray = [json objectForKey:@"results"];
     NSLog(@"dataArray = %@", self.dataArray);
-    if ([[json objectForKey:@"next"] class] == [NSNull class]) {
-        NSLog(@"没有第二页");
-        
-        
-    } else {
-        
-//#warning 支付列表有分页
-        
-        NSLog(@"有第二页");
-    }
+  
     
     self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120 * self.dataArray.count);
     [self.collectionView reloadData];
@@ -214,8 +205,18 @@
         
         for (int i = 0; i < self.dataArray.count; i++) {
             UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+            UILabel *label = (UILabel *)[cell.contentView viewWithTag:i + 10000];
+            [label removeFromSuperview];
             [btn removeFromSuperview];
         }
+        UILabel *label = [self.labelArray objectAtIndex:indexPath.row];
+        label.tag = indexPath.row + 10000;
+        label.frame = CGRectMake(SCREENWIDTH - 240, 10, 125, 16);
+        label.textAlignment = NSTextAlignmentRight;
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        [cell.contentView addSubview:label];
+       
         
         
         if ([string isEqualToString:@"待付款"]) {
@@ -233,7 +234,9 @@
             [cell.contentView addSubview:button];
             button.userInteractionEnabled = NO;
         }
+  
         return cell;
+       
     }
     else{
         MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
@@ -258,8 +261,18 @@
         }
         for (int i = 0; i < self.dataArray.count; i++) {
             UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+            UILabel *label = (UILabel *)[cell.contentView viewWithTag:i + 10000];
+            [label removeFromSuperview];
             [btn removeFromSuperview];
         }
+        UILabel *label = [self.labelArray objectAtIndex:indexPath.row];
+        label.tag = indexPath.row + 10000;
+        label.frame = CGRectMake(SCREENWIDTH - 240, 10, 125, 16);
+        label.textAlignment = NSTextAlignmentRight;
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        [cell.contentView addSubview:label];
+
         cell.statusLabel.text = @"待支付";
         NSString *string = [diction objectForKey:@"status_display"];
         
@@ -279,6 +292,8 @@
             button.userInteractionEnabled = NO;
             [cell.contentView addSubview:button];
         }
+        
+     
         return cell;
     }
 }
@@ -322,12 +337,12 @@
         [string replaceCharactersInRange:range withString:@"/"];
         
         
-      //  NSLog(@"string  = %@", string);
+       // NSLog(@"string  = %@", string);
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
 
         //  2015-09-06T16:35:25
         formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
-        string = [NSMutableString stringWithString: @"2015/11/09 18:55:55"];
+        //string = [NSMutableString stringWithString: @"2015/11/09 18:55:55"];
         NSDate *date = [formatter dateFromString:string];
         createdString = string;
 

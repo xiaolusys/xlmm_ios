@@ -15,7 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "ChangeNicknameViewController.h"
 
-@interface SettingViewController (){
+@interface SettingViewController ()<UIAlertViewDelegate>{
     
     NSString *phoneNumber;
 }
@@ -51,31 +51,19 @@
     self.deleteButton.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
     self.deleteButton.layer.cornerRadius = 13;
 
-    
-    NSString * path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
-    NSLog(@"path = %@", path);
-    NSDictionary * dict = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
-    NSLog(@"%@",[dict objectForKey:NSFileSize]);
-    
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesDir = [paths objectAtIndex:0];
-    
-    NSFileManager* manager = [NSFileManager defaultManager];
-    if ([manager fileExistsAtPath:path]){
-        
-     
-        
-        
-        NSLog(@"%llu",  [[manager attributesOfItemAtPath:cachesDir error:nil] fileSize]);
-    }
-
-    NSLog(@"caches = %@", cachesDir);
-    //清空缓存
-   // [self clearTmpPics];
-    
+    [self setcacheSize];
     [self setUserInfo];
     
+}
+
+- (void)setcacheSize{
+    NSString * path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
+    NSLog(@"path = %@", path);
+    
+    NSDictionary * dict = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
+    NSLog(@"file size = %@",[dict objectForKey:NSFileSize]);
+    
+    self.cacheLabel.text = [NSString stringWithFormat:@"%.1fM", [[dict objectForKey:NSFileSize] integerValue]/100.0f];
 }
 
 - (void)setUserInfo{
@@ -164,7 +152,60 @@
 
 - (IBAction)deleteButtonClicked:(id)sender {
     NSLog(@"清除缓存");
-    [self clearTmpPics];
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要清空缓存吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alterView.tag = 222;
+    alterView.delegate = self;
+    
+    [alterView show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 222) {
+        if (buttonIndex == 1) {
+            [self clearTmpPics];
+            
+            [self performSelector:@selector(setcacheSize) withObject:nil afterDelay:2.0f];
+            
+        }
+    }
+}
+
++(void)clearCache:(NSString *)path{
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:path]) {
+        NSArray *childerFiles=[fileManager subpathsAtPath:path];
+        for (NSString *fileName in childerFiles) {
+            //如有需要，加入条件，过滤掉不想删除的文件
+            NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
+            [fileManager removeItemAtPath:absolutePath error:nil];
+        }
+    }
+    [[SDImageCache sharedImageCache] cleanDisk];
+}
+
++ (float)folderSizeAtPath:(NSString *)path{
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    float folderSize;
+    if ([fileManager fileExistsAtPath:path]) {
+        NSArray *childerFiles=[fileManager subpathsAtPath:path];
+        for (NSString *fileName in childerFiles) {
+            NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
+            folderSize +=[self fileSizeAtPath:absolutePath];
+        }
+        //SDWebImage框架自身计算缓存的实现
+        folderSize+=[[SDImageCache sharedImageCache] getSize]/1024.0/1024.0;
+        return folderSize;
+    }
+    return 0;
+}
++ (float)fileSizeAtPath:(NSString *)path{
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:path]){
+        long long size=[fileManager attributesOfItemAtPath:path error:nil].fileSize;
+        return size/1024.0/1024.0;
+    }
+    return 0;
 }
 
 
