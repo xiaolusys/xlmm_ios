@@ -42,31 +42,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
-    
     [self createNavigationBarWithTitle:@"登录" selecotr:@selector(btnClicked:)];
-    self.infoLabel.hidden = YES;
-    _userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
-    
-    _passwordTextField.secureTextEntry = YES;
-    
-    _userIDTextField.borderStyle = UITextBorderStyleNone;
-    _passwordTextField.borderStyle = UITextBorderStyleNone;
-    CGRect rect = CGRectMake(0, 0, 220, 44);
-    
-    _userIDTextField.frame = rect;
-    _passwordTextField.frame = rect;
-    _userIDTextField.backgroundColor = [UIColor whiteColor];
-    _passwordTextField.backgroundColor = [UIColor whiteColor];
-    _userIDTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    self.zhuceBtn.backgroundColor = [UIColor clearColor];
-    [self.zhuceBtn.layer setBorderWidth:1];
-  
-    [self.zhuceBtn.layer setBorderColor:[UIColor redColor].CGColor];
-    self.zhuceBtn.layer.cornerRadius = 4;
-   
+    self.passwordTextField.secureTextEntry = YES;
+
+    self.registerButton.backgroundColor = [UIColor clearColor];
+    self.registerButton.layer.cornerRadius = 20;
+    self.registerButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    [self.registerButton.layer setBorderWidth:1];
+    
+    self.loginButton.layer.cornerRadius = 20;
+    self.loginButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    [self.loginButton.layer setBorderWidth:1];
     
 }
 
@@ -132,8 +119,6 @@
               NSLog(@"JSON: %@", responseObject);
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"null"]) {
-                  self.infoLabel.text = @"用户名和密码不能为空!";
-                  self.infoLabel.hidden = NO;
               }
               // result = null;
               
@@ -141,19 +126,13 @@
               //  result = "p_error";
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
-                  self.infoLabel.text = @"用户名错误!";
-                  self.infoLabel.hidden = NO;
               }
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
-                  self.infoLabel.text = @"密码错误!";
-                  self.infoLabel.hidden = NO;
               }
               
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
                   NSLog(@"succeed");
-                  self.infoLabel.text = @"登录成功!";
-                  self.infoLabel.hidden = NO;
                   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                   // 手机登录成功 ，保存用户信息以及登录途径
                   [defaults setBool:YES forKey:kIsLogin];
@@ -185,5 +164,19 @@
     NSLog(@"注册");
     RegisterViewController *registerVC = [[RegisterViewController alloc] init];
     [self.navigationController pushViewController:registerVC animated:YES];
+}
+
+- (IBAction)seePasswordButtonClicked:(id)sender {
+    UIImage *image = nil;
+    if (self.passwordTextField.secureTextEntry) {
+        image = [UIImage imageNamed:@"display_passwd_icon.png"];
+    } else {
+        image = [UIImage imageNamed:@"hide_passwd_icon.png"];
+    }
+    [self.displayHidePasswdButton setImage:image forState:UIControlStateNormal];
+    self.passwordTextField.secureTextEntry = !self.passwordTextField.secureTextEntry;
+}
+
+- (IBAction)weixinButtonClicked:(id)sender {
 }
 @end

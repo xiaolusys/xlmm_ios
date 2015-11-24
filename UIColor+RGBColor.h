@@ -19,6 +19,7 @@
 + (UIColor *)buttonDisabledBackgroundColor;
 + (UIColor *)buttonEnabledBorderColor;
 + (UIColor *)buttonDisabledBorderColor;
++ (UIColor *)buttonEmptyBorderColor;
 
 
 @end

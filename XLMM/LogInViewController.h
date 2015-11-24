@@ -10,13 +10,20 @@
 
 @interface LogInViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property (weak, nonatomic) IBOutlet UITextField *userIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *displayHidePasswdButton;
+
+
 - (IBAction)loginClicked:(UIButton *)sender;
-- (IBAction)forgetPasswordClicked:(UIButton *)sender;
 - (IBAction)registerClicked:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *zhuceBtn;
+
+- (IBAction)forgetPasswordClicked:(UIButton *)sender;
+- (IBAction)seePasswordButtonClicked:(id)sender;
+
+- (IBAction)weixinButtonClicked:(id)sender;
 
 @end
