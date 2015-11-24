@@ -280,7 +280,7 @@
         
     } else{
         NSLog(@"请您先登录");
-        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
     }
     

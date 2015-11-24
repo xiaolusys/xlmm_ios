@@ -25,6 +25,8 @@
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
 #import "NSString+URL.h"
+#import "LogInViewController.h"
+
 
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
@@ -951,7 +953,7 @@
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     NSLog(@"islogin = %d", islogin);
     if (islogin == NO) {
-        EnterViewController *enterVC = [[EnterViewController alloc] initWithNibName:@"EnterViewController" bundle:nil];
+        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
         
