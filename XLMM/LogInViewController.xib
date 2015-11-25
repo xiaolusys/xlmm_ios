@@ -51,7 +51,7 @@
                                 </constraint>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="De9-p3-tf6"/>
@@ -72,7 +72,7 @@
                                 </constraint>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="go"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="DAK-h0-lf1"/>

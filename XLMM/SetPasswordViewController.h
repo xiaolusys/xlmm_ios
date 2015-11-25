@@ -16,9 +16,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmTextField;
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
-@property (assign, nonatomic) BOOL isPasswordReset;
-@property (weak, nonatomic) IBOutlet UILabel *agreementLabel;
+@property (weak, nonatomic) IBOutlet UIButton *agreementButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkButton;
+
+@property (strong,nonatomic) NSDictionary *config;
 
 - (IBAction)commitClicked:(id)sender;
+
+- (IBAction)checkButtonClicked:(id)sender;
+- (IBAction)agreementButtonClicked:(id)sender;
 
 @end

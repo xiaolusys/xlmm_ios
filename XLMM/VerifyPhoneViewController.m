@@ -24,7 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"验证手机号" selecotr:@selector(backClicked:)];
+    
+    [self createNavigationBarWithTitle:self.config[@"title"] selecotr:@selector(backClicked:)];
     
     self.codeTextField.delegate = self;
     self.phoneNumberTextField.delegate = self;
@@ -171,7 +172,15 @@
 - (IBAction)nextButtonClicked:(id)sender {
     NSLog(@"验证验证码是否正确");
     SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] initWithNibName:@"SetPasswordViewController" bundle:nil];
-    setPasswordVC.isPasswordReset = YES;
+    
+    if ([self.config[@"isRegister"] boolValue])
+    {
+        setPasswordVC.config = @{@"title":@"设置密码",@"isRegister":@YES,@"text1":@"请输入6-16位登录密码"};
+    }
+    else
+    {
+        setPasswordVC.config = @{@"title":@"重置密码",@"isRegister":@NO,@"text1":@"请输入6-16位新密码"};
+    }
     [self.navigationController pushViewController:setPasswordVC animated:YES];
 }
 @end

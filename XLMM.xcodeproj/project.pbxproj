@@ -671,6 +671,8 @@
 		8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0044F31BFF09B600AFC1DF /* gouwucheemptyimage.png */; };
 		8E9665711C04AD43001CF18A /* SetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96656F1C04AD43001CF18A /* SetPasswordViewController.m */; };
 		8E9665731C04B021001CF18A /* SetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9665701C04AD43001CF18A /* SetPasswordViewController.xib */; };
+		8E9665761C0599CD001CF18A /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9665741C0599CD001CF18A /* empty.png */; };
+		8E9665771C0599CD001CF18A /* right_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9665751C0599CD001CF18A /* right_button.png */; };
 		8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E61C041A53008D0C13 /* display_passwd_icon.png */; };
 		8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */; };
 		8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E81C041A53008D0C13 /* weixin_icon.png */; };
@@ -1313,6 +1315,8 @@
 		8E96656E1C04AD43001CF18A /* SetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPasswordViewController.h; sourceTree = "<group>"; };
 		8E96656F1C04AD43001CF18A /* SetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPasswordViewController.m; sourceTree = "<group>"; };
 		8E9665701C04AD43001CF18A /* SetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPasswordViewController.xib; sourceTree = "<group>"; };
+		8E9665741C0599CD001CF18A /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty.png; sourceTree = "<group>"; };
+		8E9665751C0599CD001CF18A /* right_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_button.png; sourceTree = "<group>"; };
 		8EA825E61C041A53008D0C13 /* display_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = display_passwd_icon.png; sourceTree = "<group>"; };
 		8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide_passwd_icon.png; sourceTree = "<group>"; };
 		8EA825E81C041A53008D0C13 /* weixin_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixin_icon.png; sourceTree = "<group>"; };
@@ -2603,6 +2607,7 @@
 				32746E1B1B74A22000816208 /* icon-jiantouyou.png in Resources */,
 				32A81F961B8D9C08009972B3 /* BuyCartsView.xib in Resources */,
 				321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */,
+				8E9665761C0599CD001CF18A /* empty.png in Resources */,
 				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
@@ -2668,6 +2673,7 @@
 				3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */,
 				32EC425E1BE89579009E5FA2 /* ZhiFuCollectionCell.xib in Resources */,
 				8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */,
+				8E9665771C0599CD001CF18A /* right_button.png in Resources */,
 				32BDE4891B85AA9D00FBEC25 /* YouHuiQuanViewController.xib in Resources */,
 				32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */,
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,

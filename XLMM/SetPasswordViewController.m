@@ -13,7 +13,7 @@
 
 
 @interface SetPasswordViewController()<UITextFieldDelegate>
-
+@property (nonatomic, assign) BOOL isAgreementChecked;
 @end
 
 @implementation SetPasswordViewController
@@ -43,30 +43,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if (self.isPasswordReset)
-    {
-        [self createNavigationBarWithTitle:@"修改密码" selecotr:@selector(backClicked:)];
-        self.agreementLabel.hidden = YES;
+    [self createNavigationBarWithTitle:self.config[@"title"] selecotr:@selector(backClicked:)];
+    if (![self.config[@"isRegister"] boolValue]) {
+        self.checkButton.hidden = YES;
+        self.agreementButton.hidden = YES;
     }
-    else
-    {
-        [self createNavigationBarWithTitle:@"设置密码" selecotr:@selector(backClicked:)];
-        self.passwordTextField.placeholder = @"请输入登录密码";
-        self.confirmTextField.placeholder = @"请确认登录密码";
-    }
-
     
+    self.isAgreementChecked = YES;
+    self.passwordTextField.placeholder = self.config[@"text1"];
     
     self.commitButton.layer.cornerRadius = 20;
     self.commitButton.layer.borderWidth = 1;
-    self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-    self.passwordTextField.delegate = self;
-    self.passwordTextField.returnKeyType = UIReturnKeyNext;
-    self.passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.confirmTextField.delegate = self;
-    self.confirmTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.confirmTextField.returnKeyType = UIReturnKeyDone;
+    self.commitButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     
+    self.passwordTextField.delegate = self;
+    self.confirmTextField.delegate = self;
     [self disableTijiaoButton];
     
 }
@@ -189,5 +180,30 @@
 
     
 }
+
+
+- (void)changeCheckButtonBackground {
+    self.isAgreementChecked = !self.isAgreementChecked;
+    NSLog(@"--%d",self.isAgreementChecked);
+    UIImage *image = nil;
+    if (self.isAgreementChecked) {
+        image = [UIImage imageNamed:@"right_button.png"];
+    } else {
+        image = [UIImage imageNamed:@"empty.png"];
+    }
+    [self.checkButton setBackgroundImage:image forState:UIControlStateNormal];
+}
+
+- (IBAction)checkButtonClicked:(id)sender
+{
+    [self changeCheckButtonBackground];
+
+}
+
+- (IBAction)agreementButtonClicked:(id)sender
+{
+    [self changeCheckButtonBackground];
+}
+
 
 @end
