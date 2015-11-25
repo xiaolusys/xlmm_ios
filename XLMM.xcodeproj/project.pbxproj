@@ -1399,6 +1399,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E9665741C0599CD001CF18A /* empty.png */,
+				8E9665751C0599CD001CF18A /* right_button.png */,
 				3274C17D1C05962200641C4E /* emptyJifenIcon.png */,
 				3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */,
 				3274C17B1C0592A900641C4E /* shareIconImage2.png */,
