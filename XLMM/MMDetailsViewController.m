@@ -166,16 +166,19 @@
     json = dic;
     //设置底部图片,调整高度
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[dic objectForKey:@"pic_path"] URLEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
-        headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
-#pragma mark --判断是否拉伸图片
-        origineDistance = headImageOrigineHeight - contentTopHeight;
-        if (origineDistance < 0 ) {
-            CGFloat sizeheight = contentTopHeight;
-            self.bottomImageViewHeight.constant = sizeheight;
-            self.imageleading.constant = (origineDistance)/2;
-            self.imageTrailing.constant = (origineDistance)/2;
-        }
+       if (image != nil) {
+            self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
+            headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+            #pragma mark --判断是否拉伸图片
+            origineDistance = headImageOrigineHeight - contentTopHeight;
+            if (origineDistance < 0 ) {
+                CGFloat sizeheight = contentTopHeight;
+                self.bottomImageViewHeight.constant = sizeheight;
+                self.imageleading.constant = (origineDistance)/2;
+                self.imageTrailing.constant = (origineDistance)/2;
+            }
+       }
+
     }];
     //名字 价格 原价
     self.nameLabel.text = [dic objectForKey:@"name"];

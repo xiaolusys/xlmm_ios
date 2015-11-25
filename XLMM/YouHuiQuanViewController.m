@@ -34,6 +34,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 @implementation YouHuiQuanViewController{
     YHQModel *model;
+    UIView *emptyView;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -58,6 +59,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     [self createCollectionView];
     [self downLoadData];
     [self downLoadOtherDate];
+    [self displayEmptyView];
 }
 
 - (YHQModel *)fillModelWithData:(NSDictionary *)dic{
@@ -159,6 +161,25 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     [self.containerView addSubview:self.myCollectionView];
 }
 
+- (void)displayEmptyView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
+    UIView *empty = views[0];
+    UIButton *button = (UIButton *)[empty viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 0.5;
+    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
+    emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    emptyView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    emptyView.hidden = YES;
+    [self.containerView addSubview:emptyView];
+    empty.frame = CGRectMake(0, SCREENHEIGHT/2 - 100, SCREENWIDTH, 220);
+    [emptyView addSubview:empty];
+}
+- (void)gotoLeadingView{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 #pragma mark --UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 3;
@@ -167,6 +188,9 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
     if (section == 0) {
+        if (self.canUsedArray.count == 0) {
+            emptyView.hidden = NO;
+        }
         return self.canUsedArray.count;
     } else if (section == 1){
         return self.expiredArray.count;

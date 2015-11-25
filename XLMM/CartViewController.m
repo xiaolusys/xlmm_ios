@@ -401,7 +401,7 @@
 
 - (void)backClicked:(UIButton *)button{
     NSLog(@"逛逛");
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
