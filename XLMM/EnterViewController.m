@@ -49,8 +49,7 @@
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
     
-    NSArray *array = [self.navigationController viewControllers];
-    NSLog(@"array = %@", array);
+  
 }
 
 - (void)dealloc{

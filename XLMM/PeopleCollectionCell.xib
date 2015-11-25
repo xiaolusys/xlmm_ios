@@ -46,7 +46,7 @@
                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goodsthumb.png" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
+                    <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-WN-ROj">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="200"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="200" id="dgF-kR-Hde"/>
@@ -109,7 +109,4 @@
             <point key="canvasLocation" x="70" y="93"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="goodsthumb.png" width="288" height="292"/>
-    </resources>
 </document>
