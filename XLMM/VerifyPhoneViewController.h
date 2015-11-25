@@ -1,5 +1,5 @@
 //
-//  ForgetPasswordController.h
+//  VerifyPhoneViewController.h
 //  XLMM
 //
 //  Created by younishijie on 15/11/24.
@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ForgetPasswordController : UIViewController
+@interface VerifyPhoneViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *codeButtonLabel;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 

@@ -19,6 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmTextField;
+
+
 - (IBAction)commitBtnClicked:(id)sender;
 
 @end

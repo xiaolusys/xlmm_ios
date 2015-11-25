@@ -10,10 +10,10 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "AddressViewController.h"
-#import "ModifyPasswordViewController.h"
-#import "ModifyPhoneController.h"
 #import "UIImageView+WebCache.h"
 #import "ChangeNicknameViewController.h"
+#import "SetPasswordViewController.h"
+#import "ModifyPhoneController.h"
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
     
@@ -133,8 +133,8 @@
 
 - (IBAction)modifyButtonClicked:(id)sender {
     NSLog(@"修改密码");
-    ModifyPasswordViewController *modifyVC = [[ModifyPasswordViewController alloc] init];
-    [self.navigationController pushViewController:modifyVC animated:YES];
+    SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] init];
+    [self.navigationController pushViewController:setPasswordVC animated:YES];
     
     
 }
