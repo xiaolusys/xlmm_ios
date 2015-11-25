@@ -19,7 +19,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ojj-zy-SnR">
                         <rect key="frame" x="7" y="7" width="94" height="94"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="ojj-zy-SnR" secondAttribute="height" multiplier="1:1" id="Cij-0O-88c"/>
+                            <constraint firstAttribute="width" secondItem="ojj-zy-SnR" secondAttribute="height" multiplier="3:4" id="Cij-0O-88c"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZp-dx-RlH">

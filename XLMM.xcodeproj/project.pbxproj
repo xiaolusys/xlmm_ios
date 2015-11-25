@@ -207,6 +207,8 @@
 		3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16A1C03452800641C4E /* emptyJifenView.xib */; };
 		3274C16F1C03FC7400641C4E /* VerifyPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3274C16D1C03FC7400641C4E /* VerifyPhoneViewController.m */; };
 		3274C1701C03FC7400641C4E /* VerifyPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C16E1C03FC7400641C4E /* VerifyPhoneViewController.xib */; };
+		3274C1761C055FEA00641C4E /* EmptyCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1751C055FEA00641C4E /* EmptyCartView.xib */; };
+		3274C1781C056AE800641C4E /* empty_address_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1771C056AE800641C4E /* empty_address_icon.png */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -973,6 +975,8 @@
 		3274C16C1C03FC7400641C4E /* VerifyPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhoneViewController.h; sourceTree = "<group>"; };
 		3274C16D1C03FC7400641C4E /* VerifyPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPhoneViewController.m; sourceTree = "<group>"; };
 		3274C16E1C03FC7400641C4E /* VerifyPhoneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyPhoneViewController.xib; sourceTree = "<group>"; };
+		3274C1751C055FEA00641C4E /* EmptyCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCartView.xib; sourceTree = "<group>"; };
+		3274C1771C056AE800641C4E /* empty_address_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_address_icon.png; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1383,6 +1387,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3274C1771C056AE800641C4E /* empty_address_icon.png */,
 				8EA825E61C041A53008D0C13 /* display_passwd_icon.png */,
 				8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */,
 				8EA825E81C041A53008D0C13 /* weixin_icon.png */,
@@ -1847,6 +1852,7 @@
 				32891B581B81C9E0007E562A /* CartViewController.h */,
 				32891B591B81C9E0007E562A /* CartViewController.m */,
 				32FE08841BF492C50072CCEC /* FooterView.xib */,
+				3274C1751C055FEA00641C4E /* EmptyCartView.xib */,
 				32A957851B82BC5600C23B34 /* ConfirmView.xib */,
 				32891B5A1B81C9E0007E562A /* CartViewController.xib */,
 				3290C8831B88232F00CFAFA0 /* LiJiGMViewController.h */,
@@ -2653,6 +2659,7 @@
 				32891B511B81C152007E562A /* EmptyCartViewController.xib in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
 				32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */,
+				3274C1761C055FEA00641C4E /* EmptyCartView.xib in Resources */,
 				32CDC9471BD2028F00EF5FA6 /* profiles.png in Resources */,
 				3290C8871B88232F00CFAFA0 /* LiJiGMViewController.xib in Resources */,
 				321928E81BDB7EB8004EA6A7 /* waitsend.png in Resources */,
@@ -2692,6 +2699,7 @@
 				8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */,
 				325DF94A1B69BD9D00351ACA /* GoodsView.xib in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
+				3274C1781C056AE800641C4E /* empty_address_icon.png in Resources */,
 				3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */,
 				32A957861B82BC5600C23B34 /* ConfirmView.xib in Resources */,
 				3249B9801B6F1E790086D030 /* PersonCenterViewController.xib in Resources */,

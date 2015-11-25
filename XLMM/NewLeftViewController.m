@@ -383,45 +383,40 @@
 }
 
 - (IBAction)tuichuClicked:(id)sender {
-    NSLog(@"退出账户");
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:@"login"];
-//    [userDefaults setObject:nil forKey:@"userInfo"];
-    [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-    //   http://m.xiaolu.so/rest/v1/users/customer_logout
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-    NSLog(@"urlString = %@", urlString);
-    
-    
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    //第二步，创建请求
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-    
-    
-    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
-    
-    
-    NSLog(@"%@",str1);
-    
    
-    [userDefaults synchronize];
-    if ([self.quitButton.titleLabel.text  isEqual: @"登录"] ) {
+    
+    if ([self.quitButton.titleLabel.text isEqualToString:@"登录"] ) {
         [self.sideMenuViewController hideMenuViewController];
-        
-        
         [self displayLoginView];
         return;
     }
+    if ([self.quitButton.titleLabel.text isEqualToString:@"退出账号"]) {
+        NSLog(@"退出账户");
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:NO forKey:@"login"];
+        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+        [userDefaults synchronize];
+        
+        //   http://m.xiaolu.so/rest/v1/users/customer_logout
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
+        NSLog(@"urlString = %@", urlString);
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        //第二步，创建请求
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",str1);
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
+
+        [alterView show];
+    }
+
+    
     
     
     
@@ -435,6 +430,14 @@
     
     [self.sideMenuViewController hideMenuViewController];
 }
+
+-(void) performDismiss:(NSTimer *)timer
+{
+    UIAlertView *Alert = [timer.userInfo objectForKey:@"alterView"];
+    [Alert dismissWithClickedButtonIndex:0 animated:NO];
+}
+
+
 
 - (IBAction)loginButtonClicked:(id)sender {
     

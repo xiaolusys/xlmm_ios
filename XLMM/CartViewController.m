@@ -337,7 +337,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section == 0) {
-        return 50;
+        if (self.dataArray.count == 0) {
+            self.bottomHeight.constant = 0;
+            return 240;
+            
+        } else {
+            self.bottomHeight.constant = 90;
+            return 50;
+        }
     }
     return 0.1;
 }
@@ -353,29 +360,48 @@
         
 //        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"BlueView" owner:nil options:nil];
 //        self.blueView = views[0];
-        
-        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FooterView" owner:nil options:nil];
-        
-        UIView *footerView = views[0];
-        UILabel *pricelabel = (UILabel *)[footerView viewWithTag:100];
-        UILabel *nameLabel = (UILabel *)[footerView viewWithTag:200];
-        UIImageView *imageView = (UIImageView *)[footerView viewWithTag:300];
-        pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
-        
-        if (allPrice >= 150) {
-            nameLabel.text = @"有可用优惠券";
-        }  else {
-            nameLabel.text = [NSString stringWithFormat:@"还差%.1f元可用优惠券", 150 - allPrice];
+        if (self.dataArray.count == 0) {
+            NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyCartView" owner:nil options:nil];
             
+            UIView *footerView = views[0];
+            footerView.frame = CGRectMake(0, 0, SCREENHEIGHT, 240);
+            UIButton *button = [footerView viewWithTag:123];
+            button.layer.cornerRadius = 15;
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+            [button addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
+            return footerView;
+        } else {
+            NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FooterView" owner:nil options:nil];
+            
+            UIView *footerView = views[0];
+            UILabel *pricelabel = (UILabel *)[footerView viewWithTag:100];
+            UILabel *nameLabel = (UILabel *)[footerView viewWithTag:200];
+            UIImageView *imageView = (UIImageView *)[footerView viewWithTag:300];
+            pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+            
+            if (allPrice >= 150) {
+                nameLabel.text = @"有可用优惠券";
+            }  else {
+                nameLabel.text = [NSString stringWithFormat:@"还差%.1f元可用优惠券", 150 - allPrice];
+                
+            }
+            imageView.hidden = NO;
+            
+            footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
+            footerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+            
+            return footerView;
         }
-        imageView.hidden = NO;
         
-        footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
-        footerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
-        
-        return footerView;
+     
     }
     return [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)backClicked:(UIButton *)button{
+    NSLog(@"逛逛");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -386,15 +412,23 @@
         
         
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 34)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 160, 34)];
         label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
         label.font = [UIFont systemFontOfSize:12];
         label.text = @"可重新购买的商品";
+       
         [headerView addSubview:label];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 43, SCREENWIDTH, 1)];
         lineView.backgroundColor= [UIColor colorWithR:218 G:218 B:218 alpha:1];
         [headerView addSubview:lineView];
-        
+       
+        if (self.historyCarts.count == 0) {
+            label.hidden = YES;
+            lineView.hidden = YES;
+        } else{
+            label.hidden = NO;
+            lineView.hidden = NO;
+        }
         return headerView;
         
     

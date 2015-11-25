@@ -14,15 +14,25 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "VerifyPhoneViewController.h"
+#import "WXApi.h"
+#import "NSString+Encrypto.h"
+#import "SettingPsdViewController.h"
+#import "WXLoginController.h"
 
-
+#define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @interface LogInViewController ()
 
 @end
 
 
-@implementation LogInViewController
+@implementation LogInViewController{
+    NSMutableString *randomstring;
+    BOOL isBangding;
+    BOOL isSettingPsd;
+    NSDictionary *dic;
+    NSString *phoneNumber;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -31,7 +41,21 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
     _passwordTextField.text = [userDefault objectForKey:kPassWord];
+    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
+    if (islogin) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    
+    
 }
+
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -61,6 +85,150 @@
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)update:(NSNotificationCenter *)notification{
+    NSLog(@"微信一键登录成功， 请您绑定手机号");
+    
+    dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    NSLog(@"用户信息 = %@", dic);
+    //微信登录 hash算法。。。。
+    NSArray *randomArray = [self randomArray];
+    unsigned long count = (unsigned long)randomArray.count;
+    NSLog(@"count = %lu", count);
+    int index = 0;
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    NSLog(@"timeSp:%@",timeSp);
+    
+    long time = [timeSp integerValue];
+    NSLog(@"time = %ld", (long)time);
+    
+    for (int i = 0; i<8; i++) {
+        index = arc4random()%count;
+        // NSLog(@"index = %d", index);
+        NSString *string = [randomArray objectAtIndex:index];
+        [randomstring appendString:string];
+    }
+    NSLog(@"%@%@",timeSp ,randomstring);
+    //    NSString *secret = @"3c7b4e3eb5ae4c";
+    NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
+    //获得参数，升序排列
+    NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
+    NSLog(@"1.————》%@", sign_params);
+    
+    NSString *sign = [sign_params sha1];
+    NSString *dict;
+    
+    NSLog(@"sign = %@", sign);
+    
+    
+    //http://m.xiaolu.so/rest/v1/register/wxapp_login
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSLog(@"urlString = %@", urlString);
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
+    
+    NSLog(@"params = %@", dict);
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    [postRequest setHTTPBody:data];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //  [self showAlertWait];
+    
+    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+    NSLog(@"data");
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+    
+    
+    NSLog(@"dictionary = %@", dictionary);
+    
+    //   http://m.xiaolu.so/rest/v1/users/need_set_info
+    
+    if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
+        
+        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
+            NSLog(@"未绑定手机号码");
+            isBangding = NO;
+            
+            NSLog(@"%@", [dictionary objectForKey:@"info"]);
+            NSLog(@"11isBangDing = %d", isBangding);
+            
+            
+        } else {
+            NSLog(@"22已绑定手机号码");
+            isBangding = YES;
+            
+            phoneNumber = [[dictionary objectForKey:@"info"] objectForKey:@"mobile"];
+            NSLog(@"%@", phoneNumber);
+            NSLog(@"22isBangDing = %d", isBangding);
+            //  http://m.xiaolu.so/rest/v1/users/need_set_info
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/need_set_info", Root_URL];
+            NSLog(@"string = %@", string);
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSLog(@"%@", result);
+            if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
+                // isBangding = NO;
+                isSettingPsd = NO;
+            } else {
+                isSettingPsd = YES;
+            }
+            
+        }
+    }
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setBool:YES forKey:@"login"];
+    [userdefaults synchronize];
+    [self loginSuccessful];
+}
+
+- (void) loginSuccessful {
+    NSLog(@"33isBangDing = %d", isBangding);
+    if (isBangding) {
+        NSLog(@"跳转首页");
+        if (isSettingPsd == YES) {
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } else {
+            SettingPsdViewController *passVC = [[SettingPsdViewController alloc] initWithNibName:@"SettingPsdViewController" bundle:nil];
+            passVC.phoneNumber = phoneNumber;
+            passVC.info = dic;
+            [self.navigationController pushViewController:passVC animated:YES];
+        }
+    } else {
+        NSLog(@"请绑定手机");
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
+    }
+}
+
+
+
+- (NSArray *)randomArray{
+    NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
+    
+    for (int i = 0; i<10; i++) {
+        // NSLog(@"%d", i);
+        NSString *string = [NSString stringWithFormat:@"%d",i];
+        [mutable addObject:string];
+    }
+    for (char i = 'a'; i<='z'; i++) {
+        // NSLog(@"%c", i);
+        NSString *string = [NSString stringWithFormat:@"%c", i];
+        
+        [mutable addObject:string];
+    }
+    NSArray *array = [NSArray arrayWithArray:mutable];
+    return array;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,5 +351,11 @@
 }
 
 - (IBAction)weixinButtonClicked:(id)sender {
+    
+    SendAuthReq* req =[[SendAuthReq alloc ] init];
+    req.scope = @"snsapi_userinfo,snsapi_base";
+    req.state = @"xiaolumeimei" ;
+    NSLog(@"req = %@", req);
+    [WXApi sendReq:req];
 }
 @end

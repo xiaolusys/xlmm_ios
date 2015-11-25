@@ -34,17 +34,17 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
 
 }
 
 - (void)updateCellSize:(NSNotification *)notification{
-    NSDictionary *dic = notification.userInfo;
-    NSLog(@"dic = %@", dic);
-    ratio = [[dic objectForKey:@"ratio"] floatValue];
-    [self.collectionView reloadData];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
+//    NSDictionary *dic = notification.userInfo;
+//    NSLog(@"dic = %@", dic);
+//    ratio = [[dic objectForKey:@"ratio"] floatValue];
+//    [self.collectionView reloadData];
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

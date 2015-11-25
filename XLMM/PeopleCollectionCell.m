@@ -49,14 +49,14 @@
     NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
-            float ratio = image.size.height/image.size.width;
-            NSLog(@"%f", ratio);
-            self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*ratio;
-            NSNumber *ratioNumber = [NSNumber numberWithFloat:ratio];
-            NSLog(@"%@", ratioNumber);
-            NSDictionary *info = @{@"ratio":ratioNumber};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"custemImageSize" object:self userInfo:info];
-            
+//            float ratio = image.size.height/image.size.width;
+//            NSLog(@"%f", ratio);
+//            self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*ratio;
+//            NSNumber *ratioNumber = [NSNumber numberWithFloat:ratio];
+//            NSLog(@"%@", ratioNumber);
+//            NSDictionary *info = @{@"ratio":ratioNumber};
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"custemImageSize" object:self userInfo:info];
+//            
         }
         
         
