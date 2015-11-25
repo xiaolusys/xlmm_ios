@@ -251,7 +251,8 @@
     button.layer.cornerRadius = 15;
     button.layer.borderWidth = 1;
     button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    
+    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
+    label.text = @"亲,您暂时还没有待收货订单哦～快去看看吧!";
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     
     defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);

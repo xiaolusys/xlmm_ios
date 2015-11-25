@@ -89,6 +89,8 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     button.layer.cornerRadius = 15;
     button.layer.borderWidth = 1;
     button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
+    label.text = @"亲,您暂时还没有退货(款)订单哦～快去看看吧!";
     
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     
