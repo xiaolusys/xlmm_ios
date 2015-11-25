@@ -48,13 +48,11 @@
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        NSLog(@"urlString = %@", urlString);
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         if (data== nil) {
             return;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"dic = %@", dic);
         NSString *nickName = [dic objectForKey:@"nick"];
         if (nickName.length >= 4) {
             self.nameLabel.text = [dic objectForKey:@"nick"];
@@ -72,7 +70,6 @@
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
-    NSLog(@"phone number longin");
     self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [self setJifenInfo];
     [self setYHQInfo];
@@ -86,10 +83,8 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-    NSLog(@"12345678909");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
    NSDictionary *userInfo =  [userDefaults objectForKey:@"userInfo"];
-    NSLog(@"userInfo = %@", userInfo);
     
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
     self.nameLabel.text = [userInfo objectForKey:@"nickname"];
@@ -107,7 +102,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     CGRect mainSize = [UIScreen mainScreen].bounds;
-    NSLog(@"mainScreen %@", NSStringFromCGRect(mainSize));
     
     if (mainSize.size.height > 600) {
 
@@ -122,12 +116,11 @@
     }
   
     self.footerViewHeight.constant = mainSize.size.height * 0.29f;
-   NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
-    NSLog(@"用户信息 = %@", dic);
+  __unused NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     
     //[self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
     self.nameLabel.text = @"未登录";
-    NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
+//    NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
     self.quitButton.layer.borderWidth = 1.0;
     self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.quitButton.layer.cornerRadius = 18.5;
@@ -148,7 +141,7 @@
     
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod];
     
-    NSLog(@"login: %@", string);
+  //  NSLog(@"login: %@", string);
     if ([string isEqualToString:kWeiXinLogin]) {
         //
         [self updataAfterLogin:nil];
@@ -166,7 +159,7 @@
 - (void)setJifenInfo{
   //  http://m.xiaolu.so/rest/v1/integral
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
-    NSLog(@"jifen Url = %@", string);
+//    NSLog(@"jifen Url = %@", string);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     if (data == nil) {
         self.jifenLabel.text = @"0";
@@ -175,13 +168,13 @@
     }
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"dic = %@", dic);
+//    NSLog(@"dic = %@", dic);
     NSArray *array = [dic objectForKey:@"results"];
     if (array.count != 0) {
    
         NSDictionary *results = [array objectAtIndex:0];
         
-        NSLog(@"results = %@", results);
+       // NSLog(@"results = %@", results);
         
         self.jifenLabel.text = [NSString stringWithFormat:@"%ld", (long)[[results objectForKey:@"integral_value"] integerValue]];
     }
@@ -205,7 +198,6 @@
 */
 
 - (IBAction)jifenClicked:(id)sender {
-    NSLog(@"积分");
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -227,7 +219,6 @@
 }
 
 - (IBAction)youhuquanClicked:(id)sender {
-    NSLog(@"优惠券");
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
@@ -252,7 +243,6 @@
 }
 
 - (IBAction)settingClicked:(id)sender {
-    NSLog(@"设置");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
@@ -270,7 +260,6 @@
 }
 
 - (IBAction)suggestionClicked:(id)sender {
-    NSLog(@"投诉建议");
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
@@ -294,13 +283,11 @@
 }
 
 - (IBAction)waitPayClicked:(id)sender {
-    NSLog(@"待支付");
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self.sideMenuViewController hideMenuViewController];
         
-        NSLog(@"待支付");
         PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
         // zhifuVC.menuDelegate = ;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
@@ -320,7 +307,6 @@
 }
 
 - (IBAction)waitSendClicked:(id)sender {
-     NSLog(@"待收货");
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
@@ -342,7 +328,6 @@
 }
 
 - (IBAction)tuihuoClicked:(id)sender {
-     NSLog(@"退换货");
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
@@ -363,7 +348,6 @@
 }
 
 - (IBAction)allDingdanClicked:(id)sender {
-     NSLog(@"全部订单");
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         PersonCenterViewController3 *quanbuVC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
@@ -391,7 +375,6 @@
         return;
     }
     if ([self.quitButton.titleLabel.text isEqualToString:@"退出账号"]) {
-        NSLog(@"退出账户");
         
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setBool:NO forKey:@"login"];
@@ -400,7 +383,7 @@
         
         //   http://m.xiaolu.so/rest/v1/users/customer_logout
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-        NSLog(@"urlString = %@", urlString);
+       // NSLog(@"urlString = %@", urlString);
         NSURL *url = [NSURL URLWithString:urlString];
         
         //第二步，创建请求

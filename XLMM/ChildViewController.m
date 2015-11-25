@@ -47,9 +47,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSLog(@"self.tuijianButton : %@", self.tuijianButton);
-
-    NSLog(@"%@", self.view.subviews);
+ 
 
     
 }
@@ -58,8 +56,7 @@ static NSString * ksimpleCell = @"simpleCell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        NSLog(@"0000");
-     //   [self.view addSubview:[views objectAtIndex:0]];
+ 
     }
    
     return self;
@@ -121,14 +118,12 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)reload
 {
-    NSLog(@"reload");
     [self downloadData];
     
 }
 
 - (void)loadMore
 {
-    NSLog(@"loadmore");
 }
 
 
@@ -149,7 +144,6 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
     self.topdistant.constant = 0;
-    NSLog(@"%ld",(long) self.topdistant.constant);
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
     
   //  self.childCollectionView.bounces = NO;
@@ -186,22 +180,17 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)downloadData{
     [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
     
-    NSLog(@"url = %@", self.urlString);
 }
 
 - (void)fatchedChildListData:(NSData *)responseData{
     NSError *error;
-    //NSLog(@"responsedata = %@", responseData);
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (json == nil) {
-        NSLog(@"数据解析失败");
         return;
     }
-    NSLog(@"json = %@", json);
     
     NSArray *array = [json objectForKey:@"results"];
     if (array.count == 0) {
-        NSLog(@"数据解析失败");
         return;
     }
     
@@ -271,7 +260,6 @@ static NSString * ksimpleCell = @"simpleCell";
     if (isOrder) {
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
-            NSLog(@"没有集合页面");
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
@@ -279,7 +267,6 @@ static NSString * ksimpleCell = @"simpleCell";
         } else{
             
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSLog(@"没有集合页面");
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailsVC.urlString = string;
@@ -287,7 +274,6 @@ static NSString * ksimpleCell = @"simpleCell";
                 
             } else {
                 NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-                NSLog(@"stringURL -> = %@", string);
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = string;
                 [self.navigationController pushViewController:collectionVC animated:YES];
@@ -302,14 +288,12 @@ static NSString * ksimpleCell = @"simpleCell";
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
         
         if (model.productModel == nil) {
-            NSLog(@"没有集合页面");
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
             [self.navigationController pushViewController:detailsVC animated:YES];
         } else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSLog(@"没有集合页面");
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailsVC.urlString = string;
@@ -318,7 +302,6 @@ static NSString * ksimpleCell = @"simpleCell";
                 
             } else {
                 NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-                NSLog(@"stringURL -> = %@", string);
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = string;
                 [self.navigationController pushViewController:collectionVC animated:YES];
@@ -336,18 +319,15 @@ static NSString * ksimpleCell = @"simpleCell";
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
-    NSLog(@"temp = %f", temp);
     
     CGFloat marine = 120;
     if (temp > marine) {
-        NSLog(@"下滑");
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
         
         
     } else if (temp < 0 - marine){
-        NSLog(@"上滑");
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
         }
@@ -356,13 +336,11 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     if (temp > marine ) {
         oldScrollViewTop = point.y;
-        //  NSLog(@"point.y = %f", point.y);
         return;
         
     }
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
-        //NSLog(@"point.y = %f", point.y);
     }
 }
 
@@ -376,17 +354,14 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (IBAction)btnClicked:(UIButton *)sender {
     if (sender.tag == 1) {
-        NSLog(@"推荐排序");
         isOrder = NO;
         [self.childCollectionView reloadData];
         [self.jiageButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
         [self.tuijianButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
-        //self.jiageButton.titleLabel.font = [UIFont systemFontOfSize:18];
         
         
         
     } else if (sender.tag == 2){
-        NSLog(@"价格排序");
         isOrder = YES;
         [self.tuijianButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
         [self.jiageButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
@@ -411,7 +386,6 @@ static NSString * ksimpleCell = @"simpleCell";
     NSError *error;
     self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-   // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *ladyInfo in array) {
         PromoteModel *model = [self fillModel:ladyInfo];
@@ -444,12 +418,10 @@ static NSString * ksimpleCell = @"simpleCell";
     if ([model.productModel class] == [NSNull class]) {
         model.picPath = [dic objectForKey:@"head_img"];
         model.productModel = nil;
-        NSLog(@"productModel is null.");
         return model;
     }
     
     if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-          NSLog(@"没有集合页");
        
         model.picPath = [dic objectForKey:@"head_img"];
     } else{
@@ -463,7 +435,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
         }
         model.name = [model.productModel objectForKey:@"name"];
-          NSLog(@"----集合页----");
     }
     return model;
 }

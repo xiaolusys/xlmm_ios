@@ -64,7 +64,6 @@
 @implementation MMDetailsViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-      NSLog(@"appear");
     [super viewWillAppear:animated];
     
     
@@ -153,7 +152,6 @@
 - (void)downloadDetailsData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
-        NSLog(@"details url = %@", self.urlString);
         [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
     });
     
@@ -172,7 +170,6 @@
         headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
 #pragma mark --判断是否拉伸图片
         origineDistance = headImageOrigineHeight - contentTopHeight;
-        NSLog(@"distance = %f", origineDistance);
         if (origineDistance < 0 ) {
             CGFloat sizeheight = contentTopHeight;
             self.bottomImageViewHeight.constant = sizeheight;

@@ -46,7 +46,6 @@
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
 
     NSString *string = [model.picPath URLEncodedString];
-    NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
 //            float ratio = image.size.height/image.size.width;
@@ -79,14 +78,11 @@
         
         if ([model.isSaleout boolValue]) {
             self.backView.hidden = NO;
-            NSLog(@"已抢光");
         } else{
             self.backView.hidden = YES;
-            NSLog(@"未抢光");
         }
     } else{
         self.backView.hidden = NO;
-        NSLog(@"已下架");
     }
 }
 
@@ -94,7 +90,6 @@
     NSString *string = [model.picPath URLEncodedString];
 
     
-    NSLog(@"%@ image url string = %@",model.name, string);
     [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
@@ -122,26 +117,21 @@
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
-        NSLog(@"已上架");
         if (model.productModel == nil) {
             if ([model.isSaleout boolValue]) {
-                NSLog(@"已抢光\n\n");
                 
                 self.backView.hidden = NO;
                 
             } else {
-                NSLog(@"未抢光\n\n");
                 self.backView.hidden = YES;
             }
 
         } else {
             if ([model.isSaleout boolValue] && [[model.productModel objectForKey:@"is_single_spec"] boolValue]) {
-                NSLog(@"已抢光\n\n");
                 
                 self.backView.hidden = NO;
                 
             } else {
-                NSLog(@"未抢光\n\n");
                 self.backView.hidden = YES;
             }
 
@@ -149,7 +139,6 @@
         
     } else {
         self.backView.hidden = NO;
-        NSLog(@"已下架\n\n");
         
     }
   

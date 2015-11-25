@@ -110,7 +110,6 @@
             
             [self.sideMenuViewController hideMenuViewController];
 
-            NSLog(@"待支付");
            PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
            // zhifuVC.menuDelegate = ;
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {

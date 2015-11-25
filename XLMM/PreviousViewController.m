@@ -114,33 +114,20 @@ static NSString *khead2View = @"head2View";
 
 - (void)reload
 {
-    NSLog(@"reload");
     [self downloadData];
     
 }
 
 - (void)loadMore
 {
-    NSLog(@"loadmore");
 }
 
 
-- (NSString *)getQiNiuToken{
-    
-    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    
-    
-    return nil;
-    
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  //  [self getQiNiuToken];
     // Do any additional setup after loading the view, typically from a nib.
     childDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     ladyDataArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -178,14 +165,11 @@ static NSString *khead2View = @"head2View";
     int year=(int)[comps year];
     int month =(int) [comps month];
     int day = (int)[comps day];
-    //int hour = (int)[comps hour];
    
-    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
     NSString *string = nil;
     NSDate *todate;
     
     if ([offSheltTime class] == [NSNull class]) {
-       // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
         [endTime setMonth:month];
@@ -200,7 +184,6 @@ static NSString *khead2View = @"head2View";
         
        
     } else{
-     //   NSLog(@"特定下架时间");
         NSMutableString *string = [NSMutableString stringWithString:offSheltTime];
         NSRange range = [string rangeOfString:@"T"];
         [string replaceCharactersInRange:range withString:@" "];
@@ -255,13 +238,11 @@ static NSString *khead2View = @"head2View";
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_PROMOTE_URL]];
-        NSLog(@"%@", kTODAY_PROMOTE_URL);
         [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
         
     });
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_POSTERS_URL]];
-        NSLog(@"%@", kTODAY_POSTERS_URL);
         [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
         
     });
@@ -277,25 +258,20 @@ static NSString *khead2View = @"head2View";
 
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
-    //   NSLog(@"data = %@", data);
     [posterDataArray removeAllObjects];
     
     if (data == nil) {
-        //[frontView removeFromSuperview];
         return;
     }
     NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-      NSLog(@"poster data : %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
-    // NSLog(@"%@", childDic);
     PosterModel *childModel = [PosterModel new];
     childModel.imageURL = [childDic objectForKey:@"pic_link"];
     childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
     childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
     
     NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
-    //  NSLog(@"%@", ladyDic);
     PosterModel *ladyModel = [PosterModel new];
     ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
@@ -303,7 +279,6 @@ static NSString *khead2View = @"head2View";
     [posterDataArray addObject:ladyModel];
     [posterDataArray addObject:childModel];
     
-    //  NSLog(@"%@", posterDataArray);
     step1 = YES;
     if (step1 && step2) {
         
@@ -311,7 +286,6 @@ static NSString *khead2View = @"head2View";
         step2 = NO;
         [self.myCollectionView reloadData];
         
-        NSLog(@"poster finish");
         
     }
     
@@ -319,7 +293,6 @@ static NSString *khead2View = @"head2View";
 }
 - (void)fetchedPromoteData:(NSData *)data{
     NSError *error;
-    // NSLog(@"data = %@", data);
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {
@@ -327,10 +300,8 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-      NSLog(@"promote data = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
     ladyListNumber = ladyArray.count;
-    // NSLog(@"%ld", (long)ladyArray.count);
     for (NSDictionary *ladyInfo in ladyArray) {
         PromoteModel *model = [self fillModel:ladyInfo];
         
@@ -338,7 +309,6 @@ static NSString *khead2View = @"head2View";
         [ladyDataArray addObject:model];
         
     }
-    //  NSLog(@"ladyDataArray = %@", ladyDataArray);
     
     
     
@@ -346,7 +316,6 @@ static NSString *khead2View = @"head2View";
     
     NSArray *childArray = [promoteDic objectForKey:@"child_list"];
     childListNumber = childArray.count;
-    //  NSLog(@"%ld", (long)childArray.count);
     
     for (NSDictionary *childInfo in childArray) {
         PromoteModel *model = [self fillModel:childInfo];
@@ -355,11 +324,9 @@ static NSString *khead2View = @"head2View";
         [childDataArray addObject:model];
         
     }
-    //  NSLog(@"childDataArray = %@", childDataArray);
     if (childArray.count != 0) {
         PromoteModel *tempModel = [childDataArray objectAtIndex:0];
         offSheltTime = tempModel.offshelfTime;
-        NSLog(@"offTime = %@", offSheltTime);
     }
    
     
@@ -377,7 +344,6 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
-        NSLog(@"promote finish");
         
     }
     
@@ -405,18 +371,15 @@ static NSString *khead2View = @"head2View";
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
     model.offshelfTime = [dic objectForKey:@"offshelf_time"];
-    MMLOG(model.offshelfTime);
     offSheltTime = model.offshelfTime;
     if ([model.productModel class] == [NSNull class]) {
          model.picPath = [dic objectForKey:@"head_img"];
-        NSLog(@"productModel is null.");
         model.productModel = nil;
         return model;
     }
     
 
     if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-        // NSLog(@"没有集合页");
        
         model.picPath = [dic objectForKey:@"head_img"];
 
@@ -425,7 +388,6 @@ static NSString *khead2View = @"head2View";
             model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
             
         }        model.name = [model.productModel objectForKey:@"name"];
-        // NSLog(@"*************");
     }
     
     
@@ -596,18 +558,15 @@ static NSString *khead2View = @"head2View";
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
-    NSLog(@"temp = %f", temp);
     
     CGFloat marine = 120;
     if (temp > marine) {
-        NSLog(@"下滑");
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
         
         
     } else if (temp < 0 - marine){
-        NSLog(@"上滑");
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
         }
@@ -616,18 +575,15 @@ static NSString *khead2View = @"head2View";
     }
     if (temp > marine ) {
         oldScrollViewTop = point.y;
-        //  NSLog(@"point.y = %f", point.y);
         return;
         
     }
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
-        //NSLog(@"point.y = %f", point.y);
     }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     if (indexPath.section == 0) {
         if (indexPath.row == 1) {
             PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];

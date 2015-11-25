@@ -72,7 +72,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"商品集合";
-    NSLog(@"%@", self.urlString);
     //self.view.backgroundColor = [UIColor redColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
@@ -137,8 +136,7 @@
 }
 - (void)fetchedCollectionData:(NSData *)data{
     if (data == nil) {
-        NSLog(@"urlstring = %@", _urlString);
-        NSLog(@"集合页面数据下载失败");
+      
     }
     NSError *error;
     
@@ -147,16 +145,13 @@
     
     
     
-//    NSLog(@"data = %@", data);
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"string = %@",string);
     
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
     
-    NSLog(@"collections = %@", collections);
+   // NSLog(@"collections = %@", collections);
     for (NSDictionary *dic in collections) {
         CollectionModel *model = [CollectionModel new];
         
@@ -191,7 +186,6 @@
     
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];
-    NSLog(@"dataArray = %@", _dataArray);
     [self.collectionView reloadData];
 }
 
@@ -223,18 +217,7 @@
     int day = (int)[comps day];
     int nextday = day + 1;
     
-//    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
-//    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
-//    [endTime setYear:year];
-//    [endTime setMonth:month];
-//    [endTime setDay:nextday];
-//    [endTime setHour:14];
-//    [endTime setMinute:0];
-//    [endTime setSecond:0];
-//    NSLog(@" end time = %@", endTime);
-//    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
-    
-    //用来得到具体的时差
+
     NSDate *todate;
     if ([offSheltTime class] == [NSNull class]) {
        // NSLog(@"默认下架时间");
@@ -252,7 +235,7 @@
         
         
     } else{
-        NSLog(@"特定下架时间");
+     //   NSLog(@"特定下架时间");
         NSMutableString *string = [NSMutableString stringWithString:offSheltTime];
         NSRange range = [string rangeOfString:@"T"];
         [string replaceCharactersInRange:range withString:@" "];
@@ -321,7 +304,6 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld : %ld",(long)indexPath.section, (long)indexPath.row);
     
     
     //   http://m.xiaolu.so/rest/v1/products/15809
@@ -331,7 +313,6 @@
     NSString *ID = model.ID;
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, ID];
-    NSLog(@"urlString = %@", string);
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
     detailsVC.urlString = string;
     [self.navigationController pushViewController:detailsVC animated:YES];

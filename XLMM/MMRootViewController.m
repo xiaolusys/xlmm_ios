@@ -55,10 +55,8 @@
     
     if (_isFirst) {
         
-        NSLog(@"111");
         
     }else{
-        NSLog(@"222");
         
         // [self presentLeftMenuViewController:leftButton];
         
@@ -67,9 +65,7 @@
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
     if (self.navigationController.navigationBarHidden) {
-        NSLog(@"导航栏被隐藏了");
     } else {
-        NSLog(@"显示导航栏");
     }
     self.view.frame = frame;
     
@@ -110,7 +106,6 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     frame = self.view.frame;
-    NSLog(@"fram = %@", NSStringFromCGRect(frame));
 }
 
 - (void)viewDidLoad
@@ -134,7 +129,6 @@
 
 
 - (void)createInfo{
-    self.title = @"小鹿美美";
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"name.png"]];
     
     imageView.frame = CGRectMake(0, 8, 83, 20);
@@ -171,7 +165,6 @@
 }
 
 - (void)rightClicked:(UIButton *)button{
-    NSLog(@"right");
 }
 
 
@@ -232,29 +225,9 @@
     [button addSubview:iconView];
     
     
+
     
-    
-    
-    
-//    
-//    UIView *litleView = [[UIView alloc] initWithFrame:CGRectMake(22, 6, 16, 16)];
-//    litleView.layer.cornerRadius = 8;
-//    litleView.backgroundColor = [UIColor colorWithR:232 G:79 B:136 alpha:1];
-//    litleView.userInteractionEnabled = NO;
-//    litleView.alpha = 0.7;
-//    
-//    [button addSubview:litleView];
-//    label = [[UILabel alloc] initWithFrame:litleView.bounds];
-//    label.text = @"12";
-//    label.font = [UIFont boldSystemFontOfSize:12.0f];
-//    label.textColor = [UIColor whiteColor];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    [litleView addSubview:label];
-//    
-//    
-//    [self setLabelNumber];
-    
-    //  http://m.xiaolu.so/rest/v1/carts/show_carts_num
+   //  http://m.xiaolu.so/rest/v1/carts/show_carts_num
   
 }
 
@@ -275,17 +248,13 @@
     }
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"dic = %@", dic);
     goodsCount = [[dic objectForKey:@"result"]integerValue];
-    NSLog(@"goods count = %ld", (long)goodsCount);
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
     
 }
 
 - (void)gotoCarts:(id)sender{
-    NSLog(@"进入购物车。。。");
     
-    NSLog(@"gouguche ");
     
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
@@ -319,7 +288,6 @@
 #pragma mark --PageViewControllerDelegate--
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
-    NSLog(@"-->%@", pendingViewControllers);
 }
 
 
@@ -328,17 +296,14 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
     
-    NSLog(@"currentIndex = %ld", (long)currentIndex);
 
     if (currentIndex < _pageContentVC.count - 1) {
         
-        NSLog(@"1111");
         _pageCurrentIndex = currentIndex + 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
         
 
     } else{
-        NSLog(@"2222");
 
     }
     
@@ -350,21 +315,12 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
     NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
     
-    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (currentIndex > 0) {
         
-        NSLog(@"3333");
         _pageCurrentIndex = currentIndex - 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
     } else{
-        
-        
-        
-     
-        
-        NSLog(@"4444");
     }
-  //  return [_pageContentVC objectAtIndex:_pageCurrentIndex];
 
    return nil;
 }
@@ -373,7 +329,6 @@
 {
     NSInteger currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
     
-    NSLog(@"currentIndex = %ld", (long)currentIndex);
     if (completed)
     {
         NSInteger btnTag = currentIndex + 100;
@@ -420,18 +375,13 @@
     UIButton *button = (UIButton *)sender;
     NSInteger btnTag = button.tag;
     if (btnTag == 100) {
-        NSLog(@"100");
     } else if (btnTag == 101){
-        NSLog(@"101");
         
     } else if (btnTag == 102){
-        NSLog(@"102");
     } else if (btnTag == 103){
-        NSLog(@"103");
     }
     
     else{
-        NSLog(@"others");
     }
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
@@ -468,7 +418,6 @@
 }
 
 - (void)showNavigation{
-   // NSLog(@"sssssss");
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
