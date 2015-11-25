@@ -1,12 +1,12 @@
 //
-//  ForgetPasswordController.m
+//  VerifyPhoneViewController.m
 //  XLMM
 //
 //  Created by younishijie on 15/11/24.
 //  Copyright © 2015年 上海己美. All rights reserved.
 //
 
-#import "ModifyPasswordViewController2.h"
+#import "SetPasswordViewController.h"
 #import "VerifyPhoneViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIColor+RGBColor.h"
@@ -170,7 +170,8 @@
 
 - (IBAction)nextButtonClicked:(id)sender {
     NSLog(@"验证验证码是否正确");
-    ModifyPasswordViewController2 *setPasswdVC = [[ModifyPasswordViewController2 alloc] init];
-    [self.navigationController pushViewController:setPasswdVC animated:YES];
+    SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] initWithNibName:@"SetPasswordViewController" bundle:nil];
+    setPasswordVC.isPasswordReset = YES;
+    [self.navigationController pushViewController:setPasswordVC animated:YES];
 }
 @end

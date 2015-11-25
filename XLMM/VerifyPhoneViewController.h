@@ -1,5 +1,5 @@
 //
-//  ForgetPasswordController.h
+//  VerifyPhoneViewController.h
 //  XLMM
 //
 //  Created by younishijie on 15/11/24.

@@ -12,7 +12,7 @@
 #import "AddressViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChangeNicknameViewController.h"
-#import "ModifyPasswordViewController2.h"
+#import "SetPasswordViewController.h"
 #import "ModifyPhoneController.h"
 
 @interface SettingViewController (){
@@ -145,8 +145,8 @@
 
 - (IBAction)modifyButtonClicked:(id)sender {
     NSLog(@"修改密码");
-    ModifyPasswordViewController2 *modifyVC = [[ModifyPasswordViewController2 alloc] init];
-    [self.navigationController pushViewController:modifyVC animated:YES];
+    SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] init];
+    [self.navigationController pushViewController:setPasswordVC animated:YES];
     
     
 }

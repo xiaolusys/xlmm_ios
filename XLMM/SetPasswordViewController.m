@@ -1,22 +1,22 @@
 //
-//  ModifyPasswordViewController2.m
+//  SetPasswordViewController.m
 //  XLMM
 //
 //  Created by younishijie on 15/11/18.
 //  Copyright © 2015年 上海己美. All rights reserved.
 //
 
-#import "ModifyPasswordViewController2.h"
+#import "SetPasswordViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
 
 
-@interface ModifyPasswordViewController2 ()<UITextFieldDelegate>
+@interface SetPasswordViewController()<UITextFieldDelegate>
 
 @end
 
-@implementation ModifyPasswordViewController2
+@implementation SetPasswordViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -41,10 +41,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [self createNavigationBarWithTitle:@"修改密码" selecotr:@selector(backClicked:)];
-    
-    NSLog(@"%@,%@", self.phoneString, self.codeString);
+    if (self.isPasswordReset)
+    {
+        [self createNavigationBarWithTitle:@"修改密码" selecotr:@selector(backClicked:)];
+        self.agreementLabel.hidden = YES;
+    }
+    else
+    {
+        [self createNavigationBarWithTitle:@"设置密码" selecotr:@selector(backClicked:)];
+        self.passwordTextField.placeholder = @"请输入登录密码";
+        self.confirmTextField.placeholder = @"请确认登录密码";
+    }
+
     
     
     self.commitButton.layer.cornerRadius = 20;

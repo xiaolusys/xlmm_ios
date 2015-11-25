@@ -8,7 +8,7 @@
 
 #import "LogInViewController.h"
 #import "RegisterViewController.h"
-#import "ModifyPasswordViewController2.h"
+//#import "SetPasswordViewController.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
@@ -165,8 +165,10 @@
 
 - (IBAction)registerClicked:(UIButton *)sender {
     NSLog(@"注册");
-    RegisterViewController *registerVC = [[RegisterViewController alloc] init];
-    [self.navigationController pushViewController:registerVC animated:YES];
+    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
+    [self.navigationController pushViewController:verifyVC animated:YES];
+    //RegisterViewController *registerVC = [[RegisterViewController alloc] init];
+    //[self.navigationController pushViewController:registerVC animated:YES];
 }
 
 - (IBAction)seePasswordButtonClicked:(id)sender {
