@@ -32,7 +32,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+ //   self.navigationController.navigationBarHidden = NO;
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
 
@@ -49,7 +49,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-   // self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
 
 }
 

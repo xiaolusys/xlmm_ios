@@ -210,6 +210,7 @@
 		3274C1761C055FEA00641C4E /* EmptyCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1751C055FEA00641C4E /* EmptyCartView.xib */; };
 		3274C1781C056AE800641C4E /* empty_address_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1771C056AE800641C4E /* empty_address_icon.png */; };
 		3274C17A1C05847C00641C4E /* EmptyAddressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1791C05847C00641C4E /* EmptyAddressView.xib */; };
+		3274C17C1C0592A900641C4E /* shareIconImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17B1C0592A900641C4E /* shareIconImage2.png */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -979,6 +980,7 @@
 		3274C1751C055FEA00641C4E /* EmptyCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCartView.xib; sourceTree = "<group>"; };
 		3274C1771C056AE800641C4E /* empty_address_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_address_icon.png; sourceTree = "<group>"; };
 		3274C1791C05847C00641C4E /* EmptyAddressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyAddressView.xib; sourceTree = "<group>"; };
+		3274C17B1C0592A900641C4E /* shareIconImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareIconImage2.png; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1389,6 +1391,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3274C17B1C0592A900641C4E /* shareIconImage2.png */,
 				3274C1771C056AE800641C4E /* empty_address_icon.png */,
 				8EA825E61C041A53008D0C13 /* display_passwd_icon.png */,
 				8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */,
@@ -2604,6 +2607,7 @@
 				32BC3CAC1BD4BB70008ADAA2 /* retina4.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
+				3274C17C1C0592A900641C4E /* shareIconImage2.png in Resources */,
 				3274C17A1C05847C00641C4E /* EmptyAddressView.xib in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,

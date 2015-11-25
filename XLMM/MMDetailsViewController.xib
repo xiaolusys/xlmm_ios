@@ -652,7 +652,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Zh-kCF" userLabel="back View">
                     <rect key="frame" x="0.0" y="20" width="44" height="44"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leftArrowIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="gJo-fh-7LO">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_image2.png" translatesAutoresizingMaskIntoConstraints="NO" id="gJo-fh-7LO">
                             <rect key="frame" x="15" y="12" width="20" height="20"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAh-sq-KDQ">
@@ -713,11 +713,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rce-ec-jgh">
                     <rect key="frame" x="276" y="20" width="44" height="44"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="zbQ-Au-I3d">
-                            <rect key="frame" x="9" y="12" width="20" height="20"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareIconImage2.png" translatesAutoresizingMaskIntoConstraints="NO" id="zbQ-Au-I3d">
+                            <rect key="frame" x="4" y="10" width="25" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="20" id="cOa-KM-S1G"/>
-                                <constraint firstAttribute="height" constant="20" id="lqI-Cg-rnV"/>
+                                <constraint firstAttribute="width" constant="25" id="cOa-KM-S1G"/>
+                                <constraint firstAttribute="height" constant="25" id="lqI-Cg-rnV"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hld-yd-VKC">
@@ -763,10 +763,10 @@
         </view>
     </objects>
     <resources>
-        <image name="leftArrowIcon.png" width="44" height="44"/>
+        <image name="back_image2.png" width="44" height="44"/>
         <image name="qitiantuihuo.png" width="64" height="64"/>
         <image name="quabguobaoyou.png" width="64" height="64"/>
-        <image name="shareIcon.png" width="44" height="44"/>
+        <image name="shareIconImage2.png" width="50" height="50"/>
         <image name="tiantian.png" width="64" height="64"/>
         <image name="wash01.png" width="44" height="44"/>
         <image name="wash02.png" width="44" height="44"/>
