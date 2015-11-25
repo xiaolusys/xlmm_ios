@@ -328,14 +328,14 @@
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"skipButtonShow":NO};
+    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {
     NSLog(@"注册");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"手机注册",@"skipButtonShow":NO};
+    verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
