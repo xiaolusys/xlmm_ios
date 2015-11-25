@@ -198,7 +198,7 @@ static NSString *khead2View = @"head2View";
 }
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5 );
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
     

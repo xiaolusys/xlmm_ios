@@ -55,7 +55,10 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
