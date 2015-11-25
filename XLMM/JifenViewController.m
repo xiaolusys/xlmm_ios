@@ -71,9 +71,20 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 - (void)createEmptyView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"emptyJifenView" owner:nil options:nil];
     emptyView = views[0];
-    emptyView.frame = CGRectMake(0, SCREENHEIGHT/2 - 40, SCREENWIDTH, 80);
+    emptyView.frame = CGRectMake(0, SCREENHEIGHT/2 - 60, SCREENWIDTH, 200);
+    UIButton *button = (UIButton *)[emptyView viewWithTag:1234];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 0.5;
+    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     [self.view addSubview:emptyView];
     emptyView.hidden = YES;
+}
+- (void)gotoLeadingView{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
 }
 
 - (NSNumber *)numberOfJifen{
@@ -148,7 +159,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的积分列表为空");
-        emptyView.hidden = YES;
+        emptyView.hidden = NO;
         return;
     }
     NSArray *array = [json objectForKey:@"results"];
@@ -211,6 +222,13 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
+//    return 0;
+    if (self.dataArray.count == 0) {
+        emptyView.hidden = NO;
+    }
+    else{
+        emptyView.hidden = YES;
+    }
     return self.dataArray.count;
 }
 

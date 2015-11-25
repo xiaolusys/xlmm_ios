@@ -211,6 +211,8 @@
 		3274C1781C056AE800641C4E /* empty_address_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1771C056AE800641C4E /* empty_address_icon.png */; };
 		3274C17A1C05847C00641C4E /* EmptyAddressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1791C05847C00641C4E /* EmptyAddressView.xib */; };
 		3274C17C1C0592A900641C4E /* shareIconImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17B1C0592A900641C4E /* shareIconImage2.png */; };
+		3274C17F1C05962200641C4E /* emptyJifenIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17D1C05962200641C4E /* emptyJifenIcon.png */; };
+		3274C1801C05962200641C4E /* emptyYouhuiquanIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -981,6 +983,8 @@
 		3274C1771C056AE800641C4E /* empty_address_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_address_icon.png; sourceTree = "<group>"; };
 		3274C1791C05847C00641C4E /* EmptyAddressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyAddressView.xib; sourceTree = "<group>"; };
 		3274C17B1C0592A900641C4E /* shareIconImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareIconImage2.png; sourceTree = "<group>"; };
+		3274C17D1C05962200641C4E /* emptyJifenIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyJifenIcon.png; sourceTree = "<group>"; };
+		3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyYouhuiquanIcon.png; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1391,6 +1395,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3274C17D1C05962200641C4E /* emptyJifenIcon.png */,
+				3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */,
 				3274C17B1C0592A900641C4E /* shareIconImage2.png */,
 				3274C1771C056AE800641C4E /* empty_address_icon.png */,
 				8EA825E61C041A53008D0C13 /* display_passwd_icon.png */,
@@ -2674,6 +2680,7 @@
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
 				32CC7CA61BA018A800475E2E /* TuihuoXQ8.xib in Resources */,
 				3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */,
+				3274C1801C05962200641C4E /* emptyYouhuiquanIcon.png in Resources */,
 				32BC3CAB1BD4BB70008ADAA2 /* retina_HD4.7.png in Resources */,
 				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
@@ -2697,6 +2704,7 @@
 				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
+				3274C17F1C05962200641C4E /* emptyJifenIcon.png in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
