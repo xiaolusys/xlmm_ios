@@ -114,18 +114,6 @@
     
     
 }
-- (void)createTimeLabels{
-    for (int i = 0; i<self.dataArray.count; i++) {
-       
-        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 222, 0, 100, 35)];
-        label.textAlignment = NSTextAlignmentRight;
-        label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
-        [self.labelArray addObject:label];
-    }
-    NSLog(@"label = %@", self.labelArray);
-}
-
 -(void)displayDefaultView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
     UIView *defaultView = views[0];
@@ -141,9 +129,26 @@
     
 }
 
+
+
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+- (void)createTimeLabels{
+    for (int i = 0; i<self.dataArray.count; i++) {
+       
+        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 222, 0, 100, 35)];
+        label.textAlignment = NSTextAlignmentRight;
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        [self.labelArray addObject:label];
+    }
+    NSLog(@"label = %@", self.labelArray);
+}
+
+
+
+
 
 
 - (void)panClicked:(UIGestureRecognizer *)gesture{

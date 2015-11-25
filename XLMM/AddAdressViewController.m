@@ -228,6 +228,8 @@
   
 }
 
+
+
 - (void)backBtnClicked:(UIButton *)button{
     NSLog(@"fanhui");
     [self.navigationController popViewControllerAnimated:YES];

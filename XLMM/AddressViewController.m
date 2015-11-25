@@ -115,6 +115,7 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
+        [self displayEmptyAddressView];
         [self.addressTableView reloadData];
         return;
     }
@@ -147,6 +148,10 @@
 #pragma mark --UITableViewDelegate--
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (dataArray.count > 0) {
+        UIView *view = [self.view viewWithTag:888];
+        [view removeFromSuperview];
+    }
     return dataArray.count;
     
 }
@@ -241,6 +246,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)displayEmptyAddressView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyAddressView" owner:nil options:nil];
+    UIView *view = views[0];
+    view.tag = 888;
+    view.frame = CGRectMake(0, SCREENHEIGHT/2-100, SCREENWIDTH, 140);
+    [self.view addSubview:view];
+}
+
 
 
 #pragma mark --AddressDelegate--

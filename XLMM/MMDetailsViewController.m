@@ -87,6 +87,8 @@
     [self.view addSubview:self.shareView];
     agentPriceArray = [[NSMutableArray alloc] init];
     salePriceArray = [[NSMutableArray alloc] init];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
     self.scrollerView.delegate = self;
     contentCount = 0;
     theNumberOfSizeCanSelected = 0;
@@ -142,7 +144,12 @@
         self.imageBottom.constant = (contentOffset.y)/3;
     }
 }
-
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if (self.navigationController.viewControllers.count == 1) {
+        return NO;
+    }
+    return YES;
+}
 - (void)downloadDetailsData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
