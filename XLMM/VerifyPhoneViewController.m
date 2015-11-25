@@ -24,7 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"验证手机号" selecotr:@selector(backClicked:)];
+    
+    [self createNavigationBarWithTitle:self.config[@"title"] selecotr:@selector(backClicked:)];
     
     self.codeTextField.delegate = self;
     self.phoneNumberTextField.delegate = self;

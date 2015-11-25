@@ -19,6 +19,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
+@property (strong,nonatomic) NSDictionary *config;
+
+
 
 - (IBAction)obtainButtonClicked:(id)sender;
 - (IBAction)nextButtonClicked:(id)sender;
