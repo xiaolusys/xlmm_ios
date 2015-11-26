@@ -9,11 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface TuihuoCollectionCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *xiadanTime;
+
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bianhao;
-@property (weak, nonatomic) IBOutlet UILabel *zhuangtai;
 @property (weak, nonatomic) IBOutlet UILabel *jine;
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 
 @end

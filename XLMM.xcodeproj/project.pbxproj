@@ -214,6 +214,8 @@
 		3274C17F1C05962200641C4E /* emptyJifenIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17D1C05962200641C4E /* emptyJifenIcon.png */; };
 		3274C1801C05962200641C4E /* emptyYouhuiquanIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */; };
 		3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1811C05B3CA00641C4E /* EmptyYHQView.xib */; };
+		3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */; };
+		3274C1881C06F12C00641C4E /* RefundDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -989,6 +991,9 @@
 		3274C17D1C05962200641C4E /* emptyJifenIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyJifenIcon.png; sourceTree = "<group>"; };
 		3274C17E1C05962200641C4E /* emptyYouhuiquanIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyYouhuiquanIcon.png; sourceTree = "<group>"; };
 		3274C1811C05B3CA00641C4E /* EmptyYHQView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyYHQView.xib; sourceTree = "<group>"; };
+		3274C1831C06EB1400641C4E /* RefundDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundDetailsViewController.h; sourceTree = "<group>"; };
+		3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundDetailsViewController.m; sourceTree = "<group>"; };
+		3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundDetailsViewController.xib; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1704,12 +1709,14 @@
 				32FF9A231B9FDB870001F314 /* TuihuoViewController.h */,
 				32FF9A241B9FDB870001F314 /* TuihuoViewController.m */,
 				32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */,
+				3274C1831C06EB1400641C4E /* RefundDetailsViewController.h */,
+				3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */,
+				3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */,
 				32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */,
 				32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */,
 				32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */,
 				32CC7C971BA0185A00475E2E /* TuihuoXQ2.xib */,
 				32CC7C991BA0186700475E2E /* TuihuoXQ3.xib */,
-				32EC42571BE87A6A009E5FA2 /* New Group */,
 				32CC7C9B1BA0186C00475E2E /* TuihuoXQ4.xib */,
 				32CC7C9D1BA0187300475E2E /* TuihuoXQ5.xib */,
 				32CC7C9F1BA0187E00475E2E /* TuihuoXQ6.xib */,
@@ -2396,13 +2403,6 @@
 			name = "The Third";
 			sourceTree = "<group>";
 		};
-		32EC42571BE87A6A009E5FA2 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -2716,6 +2716,7 @@
 				323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */,
 				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
+				3274C1881C06F12C00641C4E /* RefundDetailsViewController.xib in Resources */,
 				3274C17F1C05962200641C4E /* emptyJifenIcon.png in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
@@ -2942,6 +2943,7 @@
 				321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
+				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,

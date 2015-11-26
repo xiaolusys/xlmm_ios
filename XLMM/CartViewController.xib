@@ -173,6 +173,19 @@
                     <exclude reference="Um7-cX-XnX"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="NVf-xQ-pVR"/>
+                    <exclude reference="TkV-U5-s9L"/>
+                    <exclude reference="ZZp-dK-xbv"/>
+                    <exclude reference="ema-qN-JS3"/>
+                    <exclude reference="qQA-XZ-CWb"/>
+                    <exclude reference="5Uy-PN-5hX"/>
+                    <exclude reference="Dy5-HQ-1oC"/>
+                    <exclude reference="Okz-aM-2JL"/>
+                    <exclude reference="zWh-DI-v3k"/>
+                    <exclude reference="fKU-1U-q8S"/>
+                    <exclude reference="eFk-Id-6Ll"/>
+                    <exclude reference="kMN-lD-KFE"/>
+                    <exclude reference="sSF-0h-VAi"/>
                     <exclude reference="8mn-JR-fbU"/>
                     <exclude reference="Cqy-f0-c4k"/>
                     <exclude reference="efy-Bo-PaG"/>
@@ -181,19 +194,6 @@
                     <exclude reference="dIN-3k-mJM"/>
                     <exclude reference="dWF-Vk-WeF"/>
                     <exclude reference="k2j-GX-hUI"/>
-                    <exclude reference="eFk-Id-6Ll"/>
-                    <exclude reference="kMN-lD-KFE"/>
-                    <exclude reference="sSF-0h-VAi"/>
-                    <exclude reference="Okz-aM-2JL"/>
-                    <exclude reference="zWh-DI-v3k"/>
-                    <exclude reference="5Uy-PN-5hX"/>
-                    <exclude reference="Dy5-HQ-1oC"/>
-                    <exclude reference="NVf-xQ-pVR"/>
-                    <exclude reference="TkV-U5-s9L"/>
-                    <exclude reference="ZZp-dK-xbv"/>
-                    <exclude reference="ema-qN-JS3"/>
-                    <exclude reference="qQA-XZ-CWb"/>
-                    <exclude reference="fKU-1U-q8S"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -207,6 +207,19 @@
                     <include reference="Um7-cX-XnX"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="NVf-xQ-pVR"/>
+                    <include reference="TkV-U5-s9L"/>
+                    <include reference="ZZp-dK-xbv"/>
+                    <include reference="ema-qN-JS3"/>
+                    <include reference="qQA-XZ-CWb"/>
+                    <include reference="5Uy-PN-5hX"/>
+                    <include reference="Dy5-HQ-1oC"/>
+                    <include reference="Okz-aM-2JL"/>
+                    <include reference="zWh-DI-v3k"/>
+                    <include reference="fKU-1U-q8S"/>
+                    <include reference="eFk-Id-6Ll"/>
+                    <include reference="kMN-lD-KFE"/>
+                    <include reference="sSF-0h-VAi"/>
                     <include reference="8mn-JR-fbU"/>
                     <include reference="Cqy-f0-c4k"/>
                     <include reference="efy-Bo-PaG"/>
@@ -215,19 +228,6 @@
                     <include reference="dIN-3k-mJM"/>
                     <include reference="dWF-Vk-WeF"/>
                     <include reference="k2j-GX-hUI"/>
-                    <include reference="eFk-Id-6Ll"/>
-                    <include reference="kMN-lD-KFE"/>
-                    <include reference="sSF-0h-VAi"/>
-                    <include reference="Okz-aM-2JL"/>
-                    <include reference="zWh-DI-v3k"/>
-                    <include reference="5Uy-PN-5hX"/>
-                    <include reference="Dy5-HQ-1oC"/>
-                    <include reference="NVf-xQ-pVR"/>
-                    <include reference="TkV-U5-s9L"/>
-                    <include reference="ZZp-dK-xbv"/>
-                    <include reference="ema-qN-JS3"/>
-                    <include reference="qQA-XZ-CWb"/>
-                    <include reference="fKU-1U-q8S"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="-165" y="166"/>

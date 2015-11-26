@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TuihuoViewController : UICollectionViewController
+@interface TuihuoViewController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
 
 @end

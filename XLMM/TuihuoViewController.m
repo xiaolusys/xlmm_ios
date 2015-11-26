@@ -11,10 +11,11 @@
 #import "TuihuoModel.h"
 #import "TuihuoCollectionCell.h"
 #import "OrderModel.h"
-#import "TuihuoXiangqingViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
+#import "RefundDetailsViewController.h"
+
 
 
 @interface TuihuoViewController ()
@@ -37,7 +38,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     downloadCount = 0;
-    [self downlaodData];
 
 }
 
@@ -59,9 +59,11 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [self.collectionView registerClass:[TuihuoCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     //[self createInfo];
-    [self createNavigationBarWithTitle:@"我的退货/款" selecotr:@selector(backBtnClicked:)];
+    [self createNavigationBarWithTitle:@"退款退货" selecotr:@selector(backBtnClicked:)];
+
+    [self downlaodData];
 
 }
 
@@ -121,7 +123,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     }
     
   
-    [self.dataArray removeAllObjects];
+//    [self.dataArray removeAllObjects];
     
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *dic in array) {
@@ -155,6 +157,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         model.status = [[dic objectForKey:kStatus] integerValue];
         model.refund_fee = [[dic objectForKey:kRefune_Fee] floatValue];
         model.status_display = [dic objectForKey:kStatus_Display];
+        
         NSLog(@"model = %@", model);
         
         
@@ -249,6 +252,13 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     return self.dataArray.count;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 15;
+}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 15;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     TuihuoCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
@@ -259,29 +269,29 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         cell.myImageView.image = nil;
     } else {
         [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+        cell.myImageView.layer.masksToBounds = YES;
+        cell.myImageView.layer.cornerRadius = 5;
+        cell.myImageView.layer.borderWidth = 0.5;
+        cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
         
     }
+    cell.titleLabel.text = model.title;
+    cell.numberLabel.text = [NSString stringWithFormat:@"x%ld", model.refund_num];
+    cell.sizeLabel.text = model.sku_name;
+    cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
     cell.infoLabel.text = model.status_display;
     cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
-    cell.zhuangtai.text = model.status_display;
     cell.jine.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
-    NSMutableString *string = [NSMutableString stringWithString:model.created];
-    NSRange range = [string rangeOfString:@"T"];
-    [string replaceCharactersInRange:range withString:@" "];
-    
-    
-    cell.xiadanTime.text = string;
-    
     return cell;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(10, 0, 10, 0);
+    return UIEdgeInsetsMake(0, 0, 10, 0);
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(SCREENWIDTH, 100);
+    return CGSizeMake(SCREENWIDTH, 174);
 }
 
 #pragma mark <UICollectionViewDelegate>
@@ -291,7 +301,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
    
     
-    TuihuoXiangqingViewController *xiangqingVC = [[TuihuoXiangqingViewController alloc] init];
+    RefundDetailsViewController *xiangqingVC = [[RefundDetailsViewController alloc] init];
 
     xiangqingVC.model = model;
     
