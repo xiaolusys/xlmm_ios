@@ -12,6 +12,7 @@
 #import "PeopleCollectionCell.h"
 #import "MMDetailsViewController.h"
 #import "MJRefresh.h"
+#import "NSString+URL.h"
 
 
 
@@ -30,6 +31,7 @@
     float ratio;
     int count;
     BOOL _isFirst;
+    UIImage *collectionImage;
     
 }
 
@@ -38,85 +40,20 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
  //   self.navigationController.navigationBarHidden = NO;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
-
 }
-
-- (void)updateCellSize:(NSNotification *)notification{
-    NSDictionary *dic = notification.userInfo;
-    NSLog(@"dic = %@", dic);
-    ratio = [[dic objectForKey:@"ratio"] floatValue];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
-    [self.collectionView reloadData];
-    
-
-    
-}
-
-
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    if (_isFirst) {
-        //集成刷新控件
-        
-        [self setupRefresh];
-        self.collectionView.footerHidden=NO;
-        self.collectionView.headerHidden=NO;
-        [self.collectionView headerBeginRefreshing];
-        _isFirst = NO;
-    }
+//    if (_isFirst) {
+//        //集成刷新控件
+//        [self setupRefresh];
+//        self.collectionView.footerHidden=NO;
+//        self.collectionView.headerHidden=NO;
+//        [self.collectionView headerBeginRefreshing];
+//        _isFirst = NO;
+//    }
 
-}
-
-- (void)setupRefresh{
-    [self.collectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_collectionView addFooterWithTarget:self action:@selector(footerRereshing)];
-    _collectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
-    _collectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
-    _collectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
-    
-    _collectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
-    _collectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
-    _collectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
-    
-}
-
-- (void)headerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self reload];
-        sleep(1.5);
-        [_collectionView headerEndRefreshing];
-//        _isDone = YES;
-        
-    });
-}
-
-
-- (void)footerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self loadMore];
-        sleep(1.5);
-        [_collectionView footerEndRefreshing];
-        
-    });
-}
-
-- (void)reload
-{
-    
-    [self downloadData];
-    
-}
-
-- (void)loadMore
-{
 }
 
 
@@ -148,7 +85,7 @@
     [self createCollectionView];
     ratio = 8.0f/6.0f;
     [self createInfo];
-    
+    [self downloadData];
 
 }
 
@@ -218,6 +155,11 @@
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
+    NSDictionary *firstDic = [collections objectAtIndex:0];
+    NSLog(@"firstDic = %@", firstDic);
+    collectionImage = [UIImage imagewithURLString:[[firstDic objectForKey:@"pic_path"] URLEncodedString]];
+    NSLog(@"firstImageURL = %@", [[firstDic objectForKey:@"pic_path"] URLEncodedString]);
+    NSLog(@"image = %@", collectionImage);
     
    // NSLog(@"collections = %@", collections);
     for (NSDictionary *dic in collections) {
@@ -341,14 +283,19 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSLog(@"%@", self.dataArray);
     return self.dataArray.count;
     
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*ratio + 60);
+    if (collectionImage == nil) {
+        return CGSizeZero;
+        
+    } else {
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *collectionImage.size.height/collectionImage.size.width + 60);
+    }
+    
     
 }
 
