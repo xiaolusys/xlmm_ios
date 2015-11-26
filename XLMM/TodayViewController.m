@@ -400,6 +400,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
     // Dispose of any resources that can be recreated.
 }
 

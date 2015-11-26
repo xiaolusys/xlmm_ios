@@ -189,7 +189,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
     if (section == 0) {
         if (self.canUsedArray.count == 0) {
-            emptyView.hidden = NO;
+            emptyView.hidden = YES;
         }
         return self.canUsedArray.count;
     } else if (section == 1){

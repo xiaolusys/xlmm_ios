@@ -568,6 +568,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
     // Dispose of any resources that can be recreated.
 }
 

@@ -11,6 +11,9 @@
 #import "MMClass.h"
 #import "PeopleCollectionCell.h"
 #import "MMDetailsViewController.h"
+#import "MJRefresh.h"
+
+
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -25,6 +28,8 @@
     UILabel *titleLabel;
     NSString *offSheltTime;
     float ratio;
+    int count;
+    BOOL _isFirst;
     
 }
 
@@ -34,24 +39,87 @@
     [super viewWillAppear:animated];
  //   self.navigationController.navigationBarHidden = NO;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCellSize:) name:@"custemImageSize" object:nil];
 
 }
 
 - (void)updateCellSize:(NSNotification *)notification{
-//    NSDictionary *dic = notification.userInfo;
-//    NSLog(@"dic = %@", dic);
-//    ratio = [[dic objectForKey:@"ratio"] floatValue];
-//    [self.collectionView reloadData];
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
+    NSDictionary *dic = notification.userInfo;
+    NSLog(@"dic = %@", dic);
+    ratio = [[dic objectForKey:@"ratio"] floatValue];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"custemImageSize" object:nil];
+    [self.collectionView reloadData];
+    
+
+    
 }
+
+
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    if (_isFirst) {
+        //集成刷新控件
+        
+        [self setupRefresh];
+        self.collectionView.footerHidden=NO;
+        self.collectionView.headerHidden=NO;
+        [self.collectionView headerBeginRefreshing];
+        _isFirst = NO;
+    }
 
 }
+
+- (void)setupRefresh{
+    [self.collectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_collectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    _collectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
+    _collectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
+    _collectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
+    
+    _collectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
+    _collectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
+    _collectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
+    
+}
+
+- (void)headerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self reload];
+        sleep(1.5);
+        [_collectionView headerEndRefreshing];
+//        _isDone = YES;
+        
+    });
+}
+
+
+- (void)footerRereshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self loadMore];
+        sleep(1.5);
+        [_collectionView footerEndRefreshing];
+        
+    });
+}
+
+- (void)reload
+{
+    
+    [self downloadData];
+    
+}
+
+- (void)loadMore
+{
+}
+
+
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -72,6 +140,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"商品集合";
+    count = 0;
+    _isFirst = YES;
     //self.view.backgroundColor = [UIColor redColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
     
@@ -79,7 +149,6 @@
     ratio = 8.0f/6.0f;
     [self createInfo];
     
-    [self downloadData];
 
 }
 
@@ -110,7 +179,7 @@
 
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 8, 5);
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
     
@@ -128,7 +197,7 @@
 
 - (void)downloadData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString] options:(NSDataReadingUncached) error:nil];
         [self performSelectorOnMainThread:@selector(fetchedCollectionData:)withObject:data waitUntilDone:YES];
         
     });
@@ -141,7 +210,6 @@
     NSError *error;
     
     [self.dataArray removeAllObjects];
-    
     
     
     
@@ -273,21 +341,22 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    NSLog(@"%@", self.dataArray);
     return self.dataArray.count;
     
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    return CGSizeMake((SCREENWIDTH-4)/2, (SCREENWIDTH-4)/2*ratio + 60);
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2*ratio + 60);
     
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+    return 5;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 4;
+    return 5;
 }
 
 
@@ -295,6 +364,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
+    
+    
     [cell fillDataWithCollectionModel:[self.dataArray objectAtIndex:indexPath.row]];
     
     return cell;
@@ -321,6 +392,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
     // Dispose of any resources that can be recreated.
 }
 
