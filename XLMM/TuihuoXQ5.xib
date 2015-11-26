@@ -148,7 +148,7 @@
                 <constraint firstItem="ahd-U3-xSR" firstAttribute="leading" secondItem="4jC-dd-ktE" secondAttribute="trailing" constant="2" id="x60-jX-3qV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="151" y="305"/>
+            <point key="canvasLocation" x="218" y="304"/>
         </view>
     </objects>
     <resources>

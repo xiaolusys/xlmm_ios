@@ -56,11 +56,8 @@
                                     <constraint firstAttribute="width" secondItem="xcy-qR-qTg" secondAttribute="height" multiplier="1:1" id="wCO-BS-hdg"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版大摆加厚卫衣/黄色" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Tt-gzn">
-                                <rect key="frame" x="80" y="12" width="200" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="eWN-SU-vJM"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版大摆加厚卫衣/黄色" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Tt-gzn">
+                                <rect key="frame" x="80" y="12" width="215" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -100,6 +97,7 @@
                             <constraint firstItem="J2j-cn-CNv" firstAttribute="leading" secondItem="xcy-qR-qTg" secondAttribute="trailing" constant="10" id="Urx-8o-tyq"/>
                             <constraint firstAttribute="trailing" secondItem="3Um-dr-Lie" secondAttribute="trailing" constant="13" id="VNl-oA-FGY"/>
                             <constraint firstAttribute="bottom" secondItem="J2j-cn-CNv" secondAttribute="bottom" constant="15" id="Yig-wV-R4j"/>
+                            <constraint firstAttribute="trailing" secondItem="gmS-Tt-gzn" secondAttribute="trailing" constant="80" id="a4h-wl-dVH"/>
                             <constraint firstItem="xcy-qR-qTg" firstAttribute="leading" secondItem="m8V-Iz-lWI" secondAttribute="leading" constant="10" id="g1c-ir-9G9"/>
                             <constraint firstItem="lXi-jU-0BV" firstAttribute="leading" secondItem="J2j-cn-CNv" secondAttribute="trailing" id="hfe-y0-sFT"/>
                             <constraint firstItem="gmS-Tt-gzn" firstAttribute="leading" secondItem="xcy-qR-qTg" secondAttribute="trailing" constant="10" id="mgm-GK-lkY"/>
@@ -132,6 +130,7 @@
                 <outlet property="statusLabel" destination="7T6-B8-gMg" id="WX3-vf-WA4"/>
                 <outlet property="topHeight" destination="8bS-wf-ZRz" id="z4T-X9-jFh"/>
             </connections>
+            <point key="canvasLocation" x="252.5" y="264"/>
         </collectionViewCell>
     </objects>
 </document>

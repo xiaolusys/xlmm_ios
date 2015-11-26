@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
+        <deployment version="2320" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RefundDetailsViewController">
             <connections>
+                <outlet property="bianhaoLabel" destination="ecR-3f-Hbl" id="nYk-nW-nYj"/>
+                <outlet property="detailsView" destination="fFU-ik-avB" id="6y2-Uc-AWd"/>
+                <outlet property="displayLabel" destination="F8f-G4-5j9" id="vtq-Iz-YLh"/>
+                <outlet property="imageView" destination="Gp4-QY-OuV" id="Loo-7W-iXI"/>
+                <outlet property="numberLabel" destination="UfU-ZW-BFl" id="qqx-hr-K05"/>
+                <outlet property="priceLabel" destination="ekQ-Rz-umc" id="1w5-po-wwp"/>
+                <outlet property="reasonLabel" destination="CFl-SB-ulz" id="U7g-fF-orX"/>
+                <outlet property="refundPriceLabel" destination="c1N-xZ-wW4" id="DDo-kT-Sg3"/>
+                <outlet property="sizeLabel" destination="MHr-9R-scq" id="nWa-Fn-wNU"/>
+                <outlet property="titleLabel" destination="jCx-Bw-Wyj" id="Rhs-qi-aiJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -54,10 +64,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1511048645423" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecR-3f-Hbl">
-                                                    <rect key="frame" x="77" y="14" width="123" height="17"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="123" id="Twc-xI-2Yu"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="77" y="14" width="106" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -83,8 +90,8 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fui-oA-H3d">
                                             <rect key="frame" x="0.0" y="47" width="320" height="90"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版大摆加厚卫衣/黄色" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCx-Bw-Wyj">
-                                                    <rect key="frame" x="88" y="15" width="145" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩版大摆加厚卫衣/黄色" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCx-Bw-Wyj">
+                                                    <rect key="frame" x="88" y="15" width="172" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -125,7 +132,7 @@
                                                 <constraint firstItem="jCx-Bw-Wyj" firstAttribute="top" secondItem="fui-oA-H3d" secondAttribute="top" constant="15" id="9LJ-9h-jba"/>
                                                 <constraint firstItem="Gp4-QY-OuV" firstAttribute="top" secondItem="fui-oA-H3d" secondAttribute="top" constant="10" id="DQC-GF-N3g"/>
                                                 <constraint firstAttribute="height" constant="90" id="HvX-M3-Bda"/>
-                                                <constraint firstAttribute="trailing" secondItem="jCx-Bw-Wyj" secondAttribute="trailing" constant="87" id="I9M-E8-FCV"/>
+                                                <constraint firstAttribute="trailing" secondItem="jCx-Bw-Wyj" secondAttribute="trailing" constant="60" id="I9M-E8-FCV"/>
                                                 <constraint firstItem="dII-Eb-KYV" firstAttribute="top" secondItem="jCx-Bw-Wyj" secondAttribute="bottom" constant="14" id="Obz-2n-YXv"/>
                                                 <constraint firstAttribute="bottom" secondItem="Gp4-QY-OuV" secondAttribute="bottom" constant="10" id="TE0-Bp-crd"/>
                                                 <constraint firstItem="gD9-WT-zup" firstAttribute="centerY" secondItem="MHr-9R-scq" secondAttribute="centerY" id="XkE-Nt-3MX"/>

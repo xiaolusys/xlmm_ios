@@ -269,6 +269,8 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         cell.myImageView.image = nil;
     } else {
         [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+        cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+        
         cell.myImageView.layer.masksToBounds = YES;
         cell.myImageView.layer.cornerRadius = 5;
         cell.myImageView.layer.borderWidth = 0.5;
@@ -279,9 +281,12 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     cell.numberLabel.text = [NSString stringWithFormat:@"x%ld", model.refund_num];
     cell.sizeLabel.text = model.sku_name;
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
+    if ([model.status_display isEqualToString:@"买家已经申请退款"]) {
+        model.status_display = @"卖家处理中";
+    }
     cell.infoLabel.text = model.status_display;
     cell.bianhao.text = [NSString stringWithFormat:@"%@", model.refund_no];
-    cell.jine.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
+    cell.jine.text = [NSString stringWithFormat:@"¥%.2f", model.refund_fee];
     return cell;
 }
 

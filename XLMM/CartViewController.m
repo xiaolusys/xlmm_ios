@@ -262,6 +262,8 @@
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.nameLabel.text = model.title;
@@ -296,6 +298,8 @@
             cell.headImageView.layer.cornerRadius = 5;
             cell.headImageView.layer.masksToBounds = YES;
             [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
+
             cell.delegate = self;
             cell.cartModel = model;
             cell.nameLabel.text = model.title;
