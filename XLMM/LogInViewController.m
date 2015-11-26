@@ -299,10 +299,11 @@
               //  result = "p_error";
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
+                  [self alertMessage:@"用户名或密码错误!"];
               }
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
+                  [self alertMessage:@"用户名或密码错误!"];
               }
-              
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
                   NSLog(@"succeed");
@@ -326,6 +327,12 @@
               
               
           }];
+}
+
+-(void) alertMessage:(NSString*)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {

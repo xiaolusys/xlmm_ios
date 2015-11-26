@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property (strong,nonatomic) NSDictionary *config;
+@property (weak, nonatomic) IBOutlet UILabel *countingLabel;
 
 
 
