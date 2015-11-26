@@ -141,19 +141,15 @@
 - (IBAction)commitClicked:(id)sender {
     NSLog(@"注册");
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *phoneNumber = self.phoneString;
-    NSString *validCode = self.codeString;
     NSString *password1 = self.passwordTextField.text;
     NSString *password2 = self.confirmTextField.text;
 
-    NSLog(@"username:%@, validcode:%@, password1:%@, password2:%@", phoneNumber, validCode, password1, password2);
-
-
-    NSDictionary *parameters = @{@"username": phoneNumber,
-                                 @"valid_code":validCode,
+    NSDictionary *parameters = @{@"username": self.config[@"phone"],
+                                 @"valid_code":self.config[@"vcode"],
                                  @"password1":password1,
                                  @"password2":password2,
                                  };
+    NSLog(@"%@", parameters);
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
     NSLog(@"修改密码");
     MMLOG(string);

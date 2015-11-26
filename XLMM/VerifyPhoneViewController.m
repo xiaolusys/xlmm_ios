@@ -203,16 +203,10 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"result"];
-              if ([string isEqualToString:@"false"])
+              NSString *result = [responseObject objectForKey:@"result"];
+              if ([result isEqualToString:@"false"])
               {
                   [self alertMessage:@"手机号输入错误!"];
-                  [self stopCountingDown];
-                  return;
-              }
-              else if([string isEqualToString:@"0"])
-              {
-                  [self alertMessage:@"该手机号已被注册!"];
                   [self stopCountingDown];
                   return;
               }
@@ -266,11 +260,11 @@
     
     if ([self.config[@"isRegister"] boolValue])
     {
-        setPasswordVC.config = @{@"title":@"设置密码",@"isRegister":@YES,@"text1":@"请输入6-16位登录密码"};
+        setPasswordVC.config = @{@"title":@"设置密码",@"isRegister":@YES,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位登录密码"};
     }
     else
     {
-        setPasswordVC.config = @{@"title":@"重置密码",@"isRegister":@NO,@"text1":@"请输入6-16位新密码"};
+        setPasswordVC.config = @{@"title":@"重置密码",@"isRegister":@NO,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位新密码"};
     }
     [self.navigationController pushViewController:setPasswordVC animated:YES];
 }
