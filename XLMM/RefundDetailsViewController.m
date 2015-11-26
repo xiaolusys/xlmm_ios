@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet UIView *circleView;
+@property (weak, nonatomic) IBOutlet UILabel *modifyTimeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *refundPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
@@ -30,6 +32,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
+
+@property (weak, nonatomic) IBOutlet UILabel *createTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *createdLabel;
+
 
 @end
 
@@ -77,7 +85,11 @@
     self.imageView.layer.cornerRadius = 5;
     self.imageView.layer.borderWidth = 0.5;
     self.imageView.layer.borderColor = [UIColor colorWithRed:218/255.0 green:218/255.0 blue:218/255.0 alpha:1].CGColor;
-    
+    self.circleView.layer.cornerRadius = 5;
+    self.createdLabel.text = @"申请退款";
+    self.statusLabel.text = self.model.status_display;
+    self.createTimeLabel.text = self.model.created;
+    self.modifyTimeLabel.text = self.model.created;
 
 }
 

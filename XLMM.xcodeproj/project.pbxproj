@@ -216,6 +216,7 @@
 		3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1811C05B3CA00641C4E /* EmptyYHQView.xib */; };
 		3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */; };
 		3274C1881C06F12C00641C4E /* RefundDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */; };
+		3274C18A1C07129E00641C4E /* refundSuccessful.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1891C07129E00641C4E /* refundSuccessful.png */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
 		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
@@ -994,6 +995,7 @@
 		3274C1831C06EB1400641C4E /* RefundDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundDetailsViewController.h; sourceTree = "<group>"; };
 		3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundDetailsViewController.m; sourceTree = "<group>"; };
 		3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundDetailsViewController.xib; sourceTree = "<group>"; };
+		3274C1891C07129E00641C4E /* refundSuccessful.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refundSuccessful.png; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -1406,6 +1408,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3274C1891C07129E00641C4E /* refundSuccessful.png */,
 				8E9665741C0599CD001CF18A /* empty.png */,
 				8E9665751C0599CD001CF18A /* right_button.png */,
 				3274C17D1C05962200641C4E /* emptyJifenIcon.png */,
@@ -2550,6 +2553,7 @@
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
+				3274C18A1C07129E00641C4E /* refundSuccessful.png in Resources */,
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,

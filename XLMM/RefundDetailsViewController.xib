@@ -9,14 +9,19 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RefundDetailsViewController">
             <connections>
                 <outlet property="bianhaoLabel" destination="ecR-3f-Hbl" id="nYk-nW-nYj"/>
+                <outlet property="circleView" destination="dV4-9g-6hq" id="DYj-Ga-awv"/>
+                <outlet property="createTimeLabel" destination="Apu-fG-wU7" id="8Na-Rd-CpR"/>
+                <outlet property="createdLabel" destination="iE1-nY-Eaq" id="TWp-tn-5m3"/>
                 <outlet property="detailsView" destination="fFU-ik-avB" id="6y2-Uc-AWd"/>
                 <outlet property="displayLabel" destination="F8f-G4-5j9" id="vtq-Iz-YLh"/>
                 <outlet property="imageView" destination="Gp4-QY-OuV" id="Loo-7W-iXI"/>
+                <outlet property="modifyTimeLabel" destination="rEC-KS-g4f" id="SLq-HZ-Zuz"/>
                 <outlet property="numberLabel" destination="UfU-ZW-BFl" id="qqx-hr-K05"/>
                 <outlet property="priceLabel" destination="ekQ-Rz-umc" id="1w5-po-wwp"/>
                 <outlet property="reasonLabel" destination="CFl-SB-ulz" id="U7g-fF-orX"/>
                 <outlet property="refundPriceLabel" destination="c1N-xZ-wW4" id="DDo-kT-Sg3"/>
                 <outlet property="sizeLabel" destination="MHr-9R-scq" id="nWa-Fn-wNU"/>
+                <outlet property="statusLabel" destination="Yy3-Tc-8H3" id="Ila-6Z-D0m"/>
                 <outlet property="titleLabel" destination="jCx-Bw-Wyj" id="Rhs-qi-aiJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -30,16 +35,79 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mzd-NC-xLN" userLabel="Container View">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="533"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="413"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kAL-XM-Piw" userLabel="FootView">
-                                    <rect key="frame" x="0.0" y="291" width="320" height="242"/>
+                                    <rect key="frame" x="0.0" y="291" width="320" height="122"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFU-ik-avB">
-                                            <rect key="frame" x="0.0" y="1" width="320" height="240"/>
+                                            <rect key="frame" x="0.0" y="1" width="320" height="120"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="申请退款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iE1-nY-Eaq">
+                                                    <rect key="frame" x="30" y="99" width="56" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-11-03 16:12:36" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Apu-fG-wU7">
+                                                    <rect key="frame" x="30" y="80" width="118" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退款完成" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yy3-Tc-8H3">
+                                                    <rect key="frame" x="30" y="33" width="56" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-11-03 16:12:36" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEC-KS-g4f">
+                                                    <rect key="frame" x="30" y="15" width="118" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQS-xZ-CUO">
+                                                    <rect key="frame" x="12" y="30" width="1" height="60"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="EBh-4S-oCd"/>
+                                                        <constraint firstAttribute="width" constant="1" id="FWU-Ax-Mpb"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dV4-9g-6hq">
+                                                    <rect key="frame" x="7" y="83" width="10" height="10"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="10" id="8Du-6W-ruI"/>
+                                                        <constraint firstAttribute="height" constant="10" id="I8j-iA-nfe"/>
+                                                    </constraints>
+                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refundSuccessful.png" translatesAutoresizingMaskIntoConstraints="NO" id="MIe-Bm-Yju">
+                                                    <rect key="frame" x="3" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="Ahb-E9-puj"/>
+                                                        <constraint firstAttribute="width" constant="20" id="iAb-lF-g8z"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="240" id="9zu-My-F3T"/>
+                                                <constraint firstItem="uQS-xZ-CUO" firstAttribute="leading" secondItem="fFU-ik-avB" secondAttribute="leading" constant="12" id="1OO-5f-nc5"/>
+                                                <constraint firstItem="rEC-KS-g4f" firstAttribute="centerY" secondItem="MIe-Bm-Yju" secondAttribute="centerY" id="40a-BK-xde"/>
+                                                <constraint firstAttribute="height" constant="120" id="9zu-My-F3T"/>
+                                                <constraint firstItem="uQS-xZ-CUO" firstAttribute="top" secondItem="MIe-Bm-Yju" secondAttribute="bottom" constant="-2" id="EgI-Vv-6ip"/>
+                                                <constraint firstItem="dV4-9g-6hq" firstAttribute="centerX" secondItem="uQS-xZ-CUO" secondAttribute="centerX" id="Eo2-tO-Viz"/>
+                                                <constraint firstItem="iE1-nY-Eaq" firstAttribute="leading" secondItem="fFU-ik-avB" secondAttribute="leading" constant="30" id="ORj-y1-vdH"/>
+                                                <constraint firstItem="Yy3-Tc-8H3" firstAttribute="top" secondItem="rEC-KS-g4f" secondAttribute="bottom" constant="3" id="U5b-ou-S2e"/>
+                                                <constraint firstItem="Apu-fG-wU7" firstAttribute="leading" secondItem="fFU-ik-avB" secondAttribute="leading" constant="30" id="WHH-0j-QRe"/>
+                                                <constraint firstAttribute="bottom" secondItem="iE1-nY-Eaq" secondAttribute="bottom" constant="4" id="bqp-XF-zB8"/>
+                                                <constraint firstItem="uQS-xZ-CUO" firstAttribute="top" secondItem="fFU-ik-avB" secondAttribute="top" constant="30" id="g7J-TQ-gaA"/>
+                                                <constraint firstItem="dV4-9g-6hq" firstAttribute="centerY" secondItem="Apu-fG-wU7" secondAttribute="centerY" id="gUf-OW-nsb"/>
+                                                <constraint firstItem="MIe-Bm-Yju" firstAttribute="centerX" secondItem="uQS-xZ-CUO" secondAttribute="centerX" id="iNg-yb-iFA"/>
+                                                <constraint firstItem="rEC-KS-g4f" firstAttribute="leading" secondItem="fFU-ik-avB" secondAttribute="leading" constant="30" id="mSx-dK-BeK"/>
+                                                <constraint firstItem="iE1-nY-Eaq" firstAttribute="top" secondItem="Apu-fG-wU7" secondAttribute="bottom" constant="4" id="uDk-Wq-u02"/>
+                                                <constraint firstItem="Yy3-Tc-8H3" firstAttribute="leading" secondItem="fFU-ik-avB" secondAttribute="leading" constant="30" id="vbF-W4-knW"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -271,7 +339,10 @@
                 <constraint firstItem="U6F-pk-f90" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Miw-Qp-5qO"/>
                 <constraint firstAttribute="trailing" secondItem="U6F-pk-f90" secondAttribute="trailing" id="eGu-5Q-pWd"/>
             </constraints>
-            <point key="canvasLocation" x="85" y="279"/>
+            <point key="canvasLocation" x="62" y="265"/>
         </view>
     </objects>
+    <resources>
+        <image name="refundSuccessful.png" width="40" height="40"/>
+    </resources>
 </document>
