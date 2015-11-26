@@ -54,6 +54,8 @@
     [self setcacheSize];
     [self setUserInfo];
     
+    
+    
 }
 
 - (void)setcacheSize{
@@ -62,8 +64,11 @@
     
     NSDictionary * dict = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
     NSLog(@"file size = %@",[dict objectForKey:NSFileSize]);
-    
-    self.cacheLabel.text = [NSString stringWithFormat:@"%.1fM", [[dict objectForKey:NSFileSize] integerValue]/100.0f];
+    float sizeValue = [[dict objectForKey:NSFileSize] integerValue]/200.0f;
+    if (sizeValue < 1.0) {
+        sizeValue = 0.0f;
+    }
+    self.cacheLabel.text = [NSString stringWithFormat:@"%.1fM", sizeValue];
 }
 
 - (void)setUserInfo{
@@ -164,11 +169,15 @@
     if (alertView.tag == 222) {
         if (buttonIndex == 1) {
             [self clearTmpPics];
-            
+            [self performSelector:@selector(alterMessage) withObject:nil afterDelay:1.0f];
             [self performSelector:@selector(setcacheSize) withObject:nil afterDelay:2.0f];
             
         }
     }
+}
+- (void)alterMessage{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"缓存清理完成！" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 +(void)clearCache:(NSString *)path{
