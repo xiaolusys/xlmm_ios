@@ -72,6 +72,8 @@
 @property (nonatomic, assign)NSInteger status;
 @property (nonatomic, assign)float refund_fee;
 @property (nonatomic, copy)NSString *status_display;
+@property (nonatomic, copy)NSArray *proof_pic;
+
 
 
 

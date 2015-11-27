@@ -158,8 +158,36 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         model.status = [[dic objectForKey:kStatus] integerValue];
         model.refund_fee = [[dic objectForKey:kRefune_Fee] floatValue];
         model.status_display = [dic objectForKey:kStatus_Display];
+        model.proof_pic = [dic objectForKey:@"proof_pic"];
         
-        NSLog(@"model = %@", model);
+        
+        for (NSString *imageUrl in model.proof_pic) {
+            NSLog(@"imageUrl = %@", imageUrl);
+            
+        }
+//        if ([[dic objectForKey:@"proof_pic_json"] class] == [NSNull class]) {
+//            //无图片
+//        } else {
+//           // 有图片;
+//            NSString *string = [dic objectForKey:@"proof_pic_json"];
+//             NSLog(@"string = %@", string);
+//            NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+//            
+//            BOOL json = [NSJSONSerialization isValidJSONObject:[dic objectForKey:@"proof_pic_json"]];
+//            if (json == YES) {
+//                NSLog(@"yes");
+//            } else {
+//                NSLog(@"no");
+//            }
+//            NSError *error = nil;
+//            
+//            NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//            NSLog(@"%@\n%@", error, array);
+//            
+//            
+//            
+//            
+//        }
         
         
         [self.dataArray addObject:model];

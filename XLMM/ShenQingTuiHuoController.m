@@ -113,7 +113,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //[self getQiNiuToken];
+    [self getQiNiuToken];
     
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];
@@ -125,7 +125,6 @@
     [self createKeysArray];
 
      NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.oid]];
-   // self.imagesArray;
     //
     NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithContentsOfFile:fullPath];
     if (mutableArray.count > 0) {
@@ -136,7 +135,6 @@
         self.deleteButton2.hidden = YES;
         self.deleteButton3.hidden = YES;
     }
-  //  NSLog(@"%@", self.imagesArray);
     self.dataArray = @[
                        @"错拍",
                        @"缺货",
@@ -264,8 +262,9 @@
 }
 
 - (NSString *)getQiNiuToken{
+   // http://192.168.1.31:9000/rest/v1/refunds/qiniu_token
     
-    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
+    NSString *qiniuUrl = [NSString stringWithFormat:@"%@/rest/v1/refunds/qiniu_token", Root_URL];
     //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
     NSError *error = nil;
     
@@ -280,6 +279,7 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     NSString *token = [dic objectForKey:@"uptoken"];
+    NSLog(@"dic = %@", dic);
     NSLog(@"token = %@", token);
     
     
@@ -650,7 +650,6 @@
     backView.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
         selectedImageView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-        //   effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
         self.navigationController.navigationBarHidden = NO;
     }];
     
@@ -710,8 +709,6 @@
     
     
     
-    NSLog(@"self.dataArray = %@", self.dataArray);
-  //  NSLog(@"self.dataArray = %@", self.imagesArray);
     
     for (int i = 0; i< self.imagesArray.count; i++) {
          [self uploadImages:self.imagesArray[i] andKeys:self.keysArray[i]];
@@ -769,8 +766,12 @@
                 [linkstr appendString:self.linksArray[i]];
                 [linkstr appendString:@","];
             }
+            
             NSRange range = {linkstr.length - 1, 1};
-            [linkstr deleteCharactersInRange:range];
+            if (linkstr.length >0 ) {
+                [linkstr deleteCharactersInRange:range];
+                
+            }
             NSLog(@"str = %@", linkstr);
             
             NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@&proof_pic=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:self.refundPrice], descStr, linkstr];//设置参数
