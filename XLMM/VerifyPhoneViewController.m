@@ -286,7 +286,7 @@
 - (void)timeFireMethod
 {
     secondsCountDown--;
-    self.countingLabel.text = [NSString stringWithFormat:@"%lu秒",secondsCountDown];
+    self.countingLabel.text = [NSString stringWithFormat:@"%lu秒",(long)secondsCountDown];
     
     if (secondsCountDown <= 0)
     {

@@ -57,6 +57,11 @@
     
 }
 
+- (IBAction)skipClicked:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil phoneNumber:(NSString *)phone{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -108,7 +113,9 @@
     self.nextButton.layer.borderWidth = 1;
     self.nextButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
     
-    
+    self.skipButton.layer.cornerRadius = 20;
+    self.skipButton.layer.borderWidth = 1;
+    self.skipButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     
 }
 

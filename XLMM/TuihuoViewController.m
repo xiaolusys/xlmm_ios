@@ -278,7 +278,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         
     }
     cell.titleLabel.text = model.title;
-    cell.numberLabel.text = [NSString stringWithFormat:@"x%ld", model.refund_num];
+    cell.numberLabel.text = [NSString stringWithFormat:@"x%ld", (long)model.refund_num];
     cell.sizeLabel.text = model.sku_name;
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.payment];
     if ([model.status_display isEqualToString:@"买家已经申请退款"]) {

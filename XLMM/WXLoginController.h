@@ -25,6 +25,8 @@
 - (IBAction)commitClicked:(id)sender;
 - (IBAction)backClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *buttonLabel;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+- (IBAction)skipClicked:(id)sender;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil phoneNumber:(NSString *)phone;
 

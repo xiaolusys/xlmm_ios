@@ -215,35 +215,11 @@ static NSString *khead2View = @"head2View";
     
     [self.view addSubview:self.myCollectionView];
     
-    [self getQiNiuToken];
 }
 
 
 
-- (NSString *)getQiNiuToken{
-    
-    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/";
-    //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
-    NSError *error = nil;
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl] options:NSDataReadingMappedIfSafe error:&error];
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-    }
-    NSLog(@"data = %@", data);
-    if (data == nil) {
-        return nil;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    
-    NSString *token = [dic objectForKey:@"uptoken"];
-    NSLog(@"token = %@", token);
-    
-    
-    return token;
-    
-    
-}
+
 
 
 - (void)downloadData123{

@@ -74,7 +74,7 @@
     self.titleLabel.text = self.model.title;
     self.sizeLabel.text = self.model.sku_name;
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", self.model.payment];
-    self.numberLabel.text = [NSString stringWithFormat:@"%ld", self.model.refund_num];
+    self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)self.model.refund_num];
     self.refundPriceLabel.text = [NSString stringWithFormat:@"%.2f", self.model.refund_fee];
     
     

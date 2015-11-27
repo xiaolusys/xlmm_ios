@@ -78,6 +78,9 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users.json", Root_URL];
     NSLog(@"urlStr = %@", urlStr);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+    if (data == nil) {
+        return;
+    }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
     NSDictionary *result = [[dic objectForKey:@"results"] firstObject];
@@ -86,7 +89,10 @@
     
     NSMutableString * mutablePhoneNumber = [phoneNumber mutableCopy];
     NSRange range = {3,4};
+    if (mutablePhoneNumber.length == 11) {
     [mutablePhoneNumber replaceCharactersInRange:range withString:@"****"];
+    }
+    
     NSLog(@"nicknaem -> %@", nick);
     NSLog(@"phoneNumber = %@", phoneNumber);
     
@@ -133,9 +139,10 @@
 
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
-    ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
-    modifyVC.numberString = phoneNumber;
-    [self.navigationController pushViewController:modifyVC animated:YES];
+    //return;
+//    ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
+//    modifyVC.numberString = phoneNumber;
+//    [self.navigationController pushViewController:modifyVC animated:YES];
 }
 
 - (IBAction)modifyButtonClicked:(id)sender {

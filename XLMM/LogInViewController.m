@@ -43,7 +43,7 @@
     _passwordTextField.text = [userDefault objectForKey:kPassWord];
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
     if (islogin) {
-        [self.navigationController popViewControllerAnimated:NO];
+       // [self.navigationController popViewControllerAnimated:NO];
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
