@@ -145,6 +145,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         model.total_fee = [[dic objectForKey:kTotal_Fee] floatValue];
         model.payment = [[dic objectForKey:kPayment] floatValue];
         model.created = [dic objectForKey:kCreated];
+        model.modified = [dic objectForKey:kModified];
         model.company_name = [dic objectForKey:kCompany_Name];
         model.sid = [dic objectForKey:kSID];
         model.reason = [dic objectForKey:kReason];

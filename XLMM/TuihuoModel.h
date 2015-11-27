@@ -25,6 +25,7 @@
 #define kTotal_Fee @"total_fee"
 #define kPayment @"payment"
 #define kCreated @"created"
+#define kModified @"modified"
 #define kCompany_Name @"company_name"
 #define kSID @"sid"
 #define kReason @"reason"
@@ -58,6 +59,7 @@
 @property (nonatomic, assign)float total_fee;
 @property (nonatomic, assign)float payment;
 @property (nonatomic, copy)NSString *created;
+@property (nonatomic, copy)NSString *modified;
 @property (nonatomic, copy)NSString *company_name;
 @property (nonatomic, copy)NSString *sid;
 @property (nonatomic, copy)NSString *reason;

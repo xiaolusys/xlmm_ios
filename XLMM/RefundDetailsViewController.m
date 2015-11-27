@@ -75,7 +75,7 @@
     self.sizeLabel.text = self.model.sku_name;
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", self.model.payment];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)self.model.refund_num];
-    self.refundPriceLabel.text = [NSString stringWithFormat:@"%.2f", self.model.refund_fee];
+    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", self.model.refund_fee];
     
     
     self.reasonLabel.text = self.model.reason;
@@ -90,9 +90,19 @@
     self.circleView.layer.cornerRadius = 5;
     self.createdLabel.text = @"申请退款";
     self.statusLabel.text = self.model.status_display;
-    self.createTimeLabel.text = self.model.created;
-    self.modifyTimeLabel.text = self.model.created;
+    self.createTimeLabel.text = [self stringReplaced:self.model.created];
+    self.modifyTimeLabel.text = [self stringReplaced:self.model.modified];
 
+}
+
+- (NSString *)stringReplaced:(NSString *)string{
+    NSMutableString *mutable = [string mutableCopy];
+    NSRange range = {10, 1};
+    if (mutable.length >= 11) {
+        [mutable replaceCharactersInRange:range withString:@" "];
+        
+    }
+    return mutable;
 }
 
 - (void)setFootInfo{
