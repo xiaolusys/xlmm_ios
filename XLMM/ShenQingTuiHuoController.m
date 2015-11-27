@@ -113,6 +113,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //[self getQiNiuToken];
     
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"申请退货" selecotr:@selector(backClicked:)];

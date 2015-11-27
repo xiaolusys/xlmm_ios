@@ -162,6 +162,7 @@
    
  
     MMLOG(string);
+    
     [manager POST:string parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;

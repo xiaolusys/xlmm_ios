@@ -254,7 +254,7 @@
     
 //#warning change timeLabel
     
-    if (countdownSecond == 55) {
+    if (countdownSecond == 0) {
         countdownSecond = countSecond;
         [myTimer invalidate];
         self.codeButton.enabled = YES;
