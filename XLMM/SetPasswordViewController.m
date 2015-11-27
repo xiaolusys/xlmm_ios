@@ -141,7 +141,6 @@
 */
 
 - (IBAction)commitClicked:(id)sender {
-    NSLog(@"注册");
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *password1 = self.passwordTextField.text;
     NSString *password2 = self.confirmTextField.text;
@@ -152,8 +151,16 @@
                                  @"password2":password2,
                                  };
     NSLog(@"%@", parameters);
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
-    NSLog(@"修改密码");
+    NSString *string;
+    if ([self.config[@"isRegister"] boolValue]) {
+        NSLog(@"注册密码");
+        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
+    } else {
+        NSLog(@"修改密码");
+        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
+    }
+   
+ 
     MMLOG(string);
     [manager POST:string parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -161,7 +168,12 @@
               NSLog(@"JSON: %@", responseObject);
               // [self.navigationController popViewControllerAnimated:YES];
 
-
+              NSString *result = [responseObject objectForKey:@"result"];
+              if ([result intValue] == 0) {
+                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"密码设置成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                  [alterView show];
+                  [self.navigationController popToRootViewControllerAnimated:YES];
+              }
               //修改密码成功，要怎么做。。。。
               
 

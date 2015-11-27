@@ -14,6 +14,8 @@
 #import "ChangeNicknameViewController.h"
 #import "SetPasswordViewController.h"
 #import "ModifyPhoneController.h"
+#import "VerifyPhoneViewController.h"
+
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
     
@@ -138,9 +140,12 @@
 
 - (IBAction)modifyButtonClicked:(id)sender {
     NSLog(@"修改密码");
-    SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] init];
-    [self.navigationController pushViewController:setPasswordVC animated:YES];
-    
+//    SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] init];
+//    [self.navigationController pushViewController:setPasswordVC animated:YES];
+    NSLog(@"忘记密码");
+    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
+    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO};
+    [self.navigationController pushViewController:verifyVC animated:YES];
     
 }
 

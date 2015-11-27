@@ -219,7 +219,45 @@
                   [self stopCountingDown];
                   return;
               }
-              
+              if ([self.config[@"isRegister"] boolValue]) {
+                  //注册接口返回结果。。。。。
+                  if ([result integerValue] == 0) {
+                      // 该手机号已被注册
+                      [self alertMessage:@"该手机号已被注册!"];
+
+                  } else if ([result integerValue] == 1){
+                      // 验证码已发送
+                      [self alertMessage:@"验证码已发送!"];
+
+                  } else if ([result integerValue] == 2){
+                      // 验证次数已达今日上限
+                      [self alertMessage:@"验证次数已达今日上限!"];
+
+                  }
+                  
+                  
+                  
+              } else {
+                  //修改密码接口返回结果。。。
+                  if ([result integerValue] == 1) {
+                      // 尚无用户或者手机未绑定。。。
+                      [self alertMessage:@"该手机号未被注册!"];
+                      
+                  } else if ([result integerValue] == 2){
+                      // 验证次数已达今日上限
+                      [self alertMessage:@"验证次数已达今日上限!"];
+                      
+                  } else if ([result integerValue] == 3){
+                      // 验证码过期
+                      [self alertMessage:@"验证码过期!"];
+                      
+                  }
+                  
+                  
+                  
+              }
+             
+
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
@@ -269,10 +307,12 @@
     
     if ([self.config[@"isRegister"] boolValue])
     {
+        // 注册 设置密码
         setPasswordVC.config = @{@"title":@"设置密码",@"isRegister":@YES,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位登录密码"};
     }
     else
     {
+        //修改密码 设置密码
         setPasswordVC.config = @{@"title":@"重置密码",@"isRegister":@NO,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位新密码"};
     }
     [self.navigationController pushViewController:setPasswordVC animated:YES];
@@ -286,15 +326,18 @@
     NSString *vcode = self.codeTextField.text;
     NSDictionary *parameters = @{@"mobile": phoneNumber, @"vcode":vcode};
     
-    
+    //校验验证码（新）
     NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
-    //NSLog(@"url = %@", stringurl);
+    NSLog(@"url = %@", stringurl);
     
     [manager POST:stringurl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSInteger result = [[responseObject objectForKey:@"result"] intValue];
+              NSLog(@"responseObject = %@", responseObject);
+              
               if (result == 0)
               {
+                  // 校验成功。。。
                   [self displaySetPasswordPage];
               }
               else

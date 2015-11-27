@@ -499,7 +499,6 @@
         //                http://youni.huyi.so/rest/v1/carts
         NSLog(@"item_id = %@", itemID);
         NSLog(@"sku_id = %@", skusID);
-        [self myAnimation];
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *parameters = @{@"item_id": itemID,
@@ -507,7 +506,8 @@
         [manager POST:kCart_URL parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   NSLog(@"JSON: %@", responseObject);
-                  
+                  [self myAnimation];
+
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);

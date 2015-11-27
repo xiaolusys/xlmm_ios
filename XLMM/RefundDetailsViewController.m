@@ -17,6 +17,8 @@
 @interface RefundDetailsViewController (){
     
 }
+
+
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *displayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

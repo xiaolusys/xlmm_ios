@@ -182,6 +182,9 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 #pragma mark --UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    if (self.isSelectedYHQ == YES) {
+        return 1;
+    }
     return 3;
 }
 
@@ -189,7 +192,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
     if (section == 0) {
         if (self.canUsedArray.count == 0) {
-            emptyView.hidden = YES;
+            emptyView.hidden = NO;
         }
         return self.canUsedArray.count;
     } else if (section == 1){

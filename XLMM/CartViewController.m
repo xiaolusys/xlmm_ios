@@ -22,7 +22,7 @@
 
 
 
-@interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate>{
+@interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
     NewCartsModel *deleteModel;
     BOOL download1;
@@ -600,28 +600,36 @@
     NSLog(@"id = %d", cartModel.ID);
 
     NSLog(@"删除购物车");
-    self.frontView.hidden = NO;
+  //  self.frontView.hidden = NO;
     NSArray *arrayViews = [[NSBundle mainBundle]loadNibNamed:@"ConfirmView" owner:self options:nil];
     self.myView = [arrayViews objectAtIndex:0];
     NSLog(@"%@",_myView );
   
     UIButton *btn1 = self.retainBtn;
     UIButton *btn2 = self.deleteBtn;
-     NSLog(@"%@", btn1);
-     NSLog(@"%@", btn2);
+ 
     deleteModel = cartModel;
     self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 188);
         
    
     [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];
     [btn2 addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_myView];
+   // [self.view addSubview:_myView];
+    
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alterView show];
     
 }
 - (void)retainClicked{
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
     
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self deleteClicked];
+    }
 }
 - (void)deleteClicked{
     NSLog(@"确认删除");

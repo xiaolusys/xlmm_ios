@@ -343,9 +343,13 @@
 }
 
 - (IBAction)registerClicked:(UIButton *)sender {
+    //登录界面进入手机注册界面
     NSLog(@"注册");
+    
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
+    
     verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES};
+    
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
