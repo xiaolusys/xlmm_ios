@@ -55,6 +55,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [self downloadAddressData];
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
@@ -80,6 +81,16 @@
     
 }
 
+- (void)paySuccessful{
+    
+    NSLog(@"恭喜你支付成功，");
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alterView show];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -326,6 +337,14 @@
 }
 
 - (void)updateUI{
+    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f",[yhqModel.coupon_value floatValue]];
+    
+    discountfee = [yhqModel.coupon_value floatValue];
+
+    float allpay = totalfee - discountfee + postfee;
+    
+    NSLog(@"allpay = %.1f", allpay);
+    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     
 }
 - (IBAction)zhifubaoClicked:(id)sender {
@@ -365,6 +384,7 @@
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     NSString* dict;
+    NSLog(@"youhuiquan.ID = %@", yhqModel.ID);
     
     if (yhqModel.ID == nil) {
         dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
@@ -417,6 +437,8 @@
                 if (error == nil) {
                     NSLog(@"PingppError is nil");
                     paySucceed = YES;
+                    
+                    
                 } else {
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                     paySucceed = NO;

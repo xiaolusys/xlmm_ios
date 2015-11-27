@@ -286,7 +286,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
- //   model = [self.dataArray objectAtIndex:indexPath.row];
+    model = [self.canUsedArray objectAtIndex:indexPath.row];
    
   
  
