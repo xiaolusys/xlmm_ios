@@ -56,8 +56,26 @@
     [self setcacheSize];
     [self setUserInfo];
     
+    [self setAppInfo];
     
     
+}
+// 获取当前版本号。。。。。。。 与appStore 版本号比较 自动更新。。。。
+
+- (void)setAppInfo{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    MMLOG(infoDictionary);
+    // app名称
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    // app版本
+    MMLOG(app_Name);
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    // app build版本
+    MMLOG(app_Version);
+    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    MMLOG(app_build);
+    NSString *versionString = [NSString stringWithFormat:@"%@.%@", app_Version, app_build];
+    self.versionLabel.text = versionString;
 }
 
 - (void)setcacheSize{

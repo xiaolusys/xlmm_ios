@@ -385,7 +385,7 @@
             pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
             
             if (allPrice >= 150) {
-                nameLabel.text = @"有可用优惠券";
+                nameLabel.text = @"可使用优惠券";
             }  else {
                 nameLabel.text = [NSString stringWithFormat:@"还差%.1f元可用优惠券", 150 - allPrice];
                 

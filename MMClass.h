@@ -133,5 +133,7 @@ NSDateComponents;
 NSDateFormatter;
 NSCalendar;
 
+ UIDevice ;;
+
 
 #endif
