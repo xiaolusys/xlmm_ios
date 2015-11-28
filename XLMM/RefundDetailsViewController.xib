@@ -127,12 +127,15 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退款编号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHy-a1-kHq">
                                                     <rect key="frame" x="13" y="14" width="56" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="56" id="j3K-9I-PRC"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1511048645423" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecR-3f-Hbl">
-                                                    <rect key="frame" x="77" y="14" width="106" height="17"/>
+                                                    <rect key="frame" x="77" y="14" width="143" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -153,6 +156,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="F8f-G4-5j9" secondAttribute="trailing" constant="10" id="ZuK-eh-sg3"/>
                                                 <constraint firstItem="ecR-3f-Hbl" firstAttribute="leading" secondItem="oHy-a1-kHq" secondAttribute="trailing" constant="8" id="aYt-G6-HlQ"/>
                                                 <constraint firstAttribute="height" constant="45" id="iZ7-WF-Rfl"/>
+                                                <constraint firstAttribute="trailing" secondItem="ecR-3f-Hbl" secondAttribute="trailing" constant="100" id="ttV-PU-q00"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fui-oA-H3d">

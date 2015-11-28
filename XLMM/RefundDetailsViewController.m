@@ -59,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"退货款详情" selecotr:@selector(backClicked:)];
+    [self createNavigationBarWithTitle:@"退货(款)详情" selecotr:@selector(backClicked:)];
     [self setHeadInfo];
     [self setFootInfo];
     

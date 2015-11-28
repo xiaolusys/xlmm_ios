@@ -228,7 +228,7 @@
      
        // cartOwner.myImageView.image = [UIImage imagewithURLString:[model.imageURL URLEncodedString]];
         [cartOwner.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL URLEncodedString]]];
-        
+        cartOwner.myImageView.contentMode = UIViewContentModeScaleAspectFill;
         cartOwner.myImageView.layer.masksToBounds = YES;
         cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;

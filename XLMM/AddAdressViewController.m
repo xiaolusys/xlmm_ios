@@ -169,6 +169,10 @@
     UISwitch *switch2 = (UISwitch *)sender;
     if (switch2.isOn) {
         NSLog(@"设置为默认地址");
+        if (_isAdd == NO) {
+            [self enableTijiaoButton];
+            
+        }
         switch2.onTintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
         if (self.addressModel.addressID == nil) {
             NSLog(@"添加地址情况下设置为常用地址");//
