@@ -296,6 +296,7 @@
         
         model = [dataArray objectAtIndex:i];
         [owner.frontView sd_setImageWithURL:[NSURL URLWithString:[model.urlString URLEncodedString]]];
+        owner.frontView.contentMode = UIViewContentModeScaleAspectFill;
         owner.frontView.layer.masksToBounds = YES;
         owner.frontView.layer.borderWidth = 0.5;
         owner.frontView.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;

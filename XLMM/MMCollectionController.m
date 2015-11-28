@@ -309,28 +309,21 @@
 }
 
 - (NSString *)getQiNiuToken{
-    
-    NSString *qiniuUrl = @"http://youni.huyi.so/supplychain/supplier/qiniu/?format=json";
-    //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
+    //  http://m.xiaolu.so/rest/v1/refunds/qiniu_token
+    NSString *qiniuUrl = [NSString stringWithFormat:@"%@/rest/v1/refunds/qiniu_token", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
     NSError *error = nil;
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl] options:NSDataReadingMappedIfSafe error:&error];
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-    }
     NSLog(@"data = %@", data);
     if (data == nil) {
         return nil;
     }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+    }
     NSString *token = [dic objectForKey:@"uptoken"];
     NSLog(@"token = %@", token);
-    
-    
     return token;
-    
-    
 }
 
 
