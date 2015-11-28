@@ -88,7 +88,12 @@
     self.imageView.layer.borderWidth = 0.5;
     self.imageView.layer.borderColor = [UIColor colorWithRed:218/255.0 green:218/255.0 blue:218/255.0 alpha:1].CGColor;
     self.circleView.layer.cornerRadius = 5;
-    self.createdLabel.text = @"申请退款";
+    if (self.model.good_status == 0) {
+        self.createdLabel.text = @"申请退款";
+    }else{
+          self.createdLabel.text = @"申请退货";
+    }
+  
     self.statusLabel.text = self.model.status_display;
     self.createTimeLabel.text = [self stringReplaced:self.model.created];
     self.modifyTimeLabel.text = [self stringReplaced:self.model.modified];
