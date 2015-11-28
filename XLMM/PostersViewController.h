@@ -19,6 +19,7 @@ UICollectionViewDelegate>{
 @property (copy, nonatomic) NSString *orderUrlString;
 @property (copy, nonatomic) NSString *titleName;
 
+@property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 
 
 

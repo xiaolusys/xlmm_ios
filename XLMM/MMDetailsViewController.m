@@ -731,6 +731,8 @@
     NSLog(@"尺码表");
     ChiMaBiaoViewController *sizeVC = [[ChiMaBiaoViewController alloc] initWithNibName:@"ChiMaBiaoViewController" bundle:nil];
     sizeVC.sizeArray = normalSkus;
+    sizeVC.childClothing = self.childClothing;
+    
     [self.navigationController pushViewController:sizeVC animated:YES];
 }
 #pragma mark -- weixin share

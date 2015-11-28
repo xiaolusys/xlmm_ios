@@ -416,6 +416,7 @@ static NSString * ksimpleCell = @"simpleCell";
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
+            detailsVC.childClothing = self.childClothing;
             [self.navigationController pushViewController:detailsVC animated:YES];
         } else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
@@ -423,6 +424,7 @@ static NSString * ksimpleCell = @"simpleCell";
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailsVC.urlString = string;
+                 detailsVC.childClothing = self.childClothing;
                 [self.navigationController pushViewController:detailsVC animated:YES];
                 
             } else {
@@ -430,6 +432,7 @@ static NSString * ksimpleCell = @"simpleCell";
                 NSLog(@"stringURL -> = %@", string);
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = string;
+                 collectionVC.childClothing = self.childClothing;
                 [self.navigationController pushViewController:collectionVC animated:YES];
                 
                 
@@ -443,6 +446,7 @@ static NSString * ksimpleCell = @"simpleCell";
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailsVC.urlString = string;
+             detailsVC.childClothing = self.childClothing;
             [self.navigationController pushViewController:detailsVC animated:YES];
         } else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
@@ -450,6 +454,7 @@ static NSString * ksimpleCell = @"simpleCell";
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailsVC.urlString = string;
+                 detailsVC.childClothing = self.childClothing;
                 [self.navigationController pushViewController:detailsVC animated:YES];
                 
                 
@@ -458,6 +463,7 @@ static NSString * ksimpleCell = @"simpleCell";
                 NSLog(@"stringURL -> = %@", string);
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = string;
+                 collectionVC.childClothing = self.childClothing;
                 [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }

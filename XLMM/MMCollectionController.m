@@ -350,6 +350,7 @@
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, ID];
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
+    detailsVC.childClothing = self.isChildClothing;
     detailsVC.urlString = string;
     [self.navigationController pushViewController:detailsVC animated:YES];
 }

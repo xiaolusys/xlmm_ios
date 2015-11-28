@@ -591,6 +591,7 @@ static NSString *khead2View = @"head2View";
             childVC.urlString = kLADY_LIST_URL;
             childVC.orderUrlString = kLADY_LIST_ORDER_URL;
             childVC.titleName = @"时尚女装";
+            childVC.childClothing = NO;
             [self.navigationController pushViewController:childVC animated:YES];
             
         } else{
@@ -598,6 +599,8 @@ static NSString *khead2View = @"head2View";
             childVC.urlString = kCHILD_LIST_URL;
             childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
             childVC.titleName = @"潮童装区";
+            childVC.childClothing = YES;
+            
             [self.navigationController pushViewController:childVC animated:YES];
             
         }
@@ -611,6 +614,7 @@ static NSString *khead2View = @"head2View";
             [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
+            detailVC.childClothing = YES;
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
@@ -619,6 +623,8 @@ static NSString *khead2View = @"head2View";
                 [urlString appendString:@"/details.json"];
                 MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailVC.urlString = urlString;
+                detailVC.childClothing = YES;
+                
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
             else{
@@ -627,6 +633,8 @@ static NSString *khead2View = @"head2View";
                 [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = urlString;
+                collectionVC.childClothing = YES;
+                
                 [self.navigationController pushViewController:collectionVC animated:YES];
                 
             }
@@ -641,6 +649,8 @@ static NSString *khead2View = @"head2View";
             [urlString appendString:@"/details.json"];
             MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
             detailVC.urlString = urlString;
+            detailVC.childClothing = NO;
+            
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
@@ -649,6 +659,7 @@ static NSString *khead2View = @"head2View";
                 [urlString appendString:@"/details.json"];
                 MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
                 detailVC.urlString = urlString;
+                detailVC.childClothing = NO;
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
             else{
@@ -657,6 +668,7 @@ static NSString *khead2View = @"head2View";
                 [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
                 MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
                 collectionVC.urlString = urlString;
+                collectionVC.childClothing = NO;
                 [self.navigationController pushViewController:collectionVC animated:YES];
                 
             }

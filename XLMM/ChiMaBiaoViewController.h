@@ -11,7 +11,12 @@
 @interface ChiMaBiaoViewController : UIViewController
 
 @property (nonatomic, strong) NSArray *sizeArray;
+@property (weak, nonatomic) IBOutlet UILabel *head1Label;
+@property (weak, nonatomic) IBOutlet UILabel *head2Llabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *noHaveLabel;
+
+@property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
+
 
 @end

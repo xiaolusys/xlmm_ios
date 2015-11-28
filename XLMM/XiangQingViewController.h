@@ -19,53 +19,30 @@
 @interface XiangQingViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *myViewHeight;
-
 @property (weak, nonatomic) IBOutlet UIView *myXiangQingView;
-
 @property (weak, nonatomic) IBOutlet UIView *WuliuView;
-
 @property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *youhuiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yingfuLabel;
-
 @property (weak, nonatomic) IBOutlet UIButton *quxiaoBtn;
 @property (weak, nonatomic) IBOutlet UIButton *buyBtn;
-
 - (IBAction)quxiaodingdan:(id)sender;
-
 - (IBAction)goumai:(id)sender;
-
 @property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
-
-
 @property (weak, nonatomic) IBOutlet UIView *yuanqiuView;
-
 @property (nonatomic, copy) NSString *urlString;
-
 @property (nonatomic, strong)DingdanModel *dingdanModel;
 @property (nonatomic, copy) NSString *createString;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *headdingdanzhuangtai;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
-
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 @end

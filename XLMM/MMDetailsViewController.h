@@ -12,6 +12,7 @@
     
 }
 
+@property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 
 @property (nonatomic, copy) NSString * urlString;
 

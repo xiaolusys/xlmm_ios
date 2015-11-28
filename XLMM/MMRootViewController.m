@@ -185,11 +185,13 @@
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
     childVC.urlString = kCHILD_LIST_URL;
     childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+    childVC.childClothing = YES;
     childVC.delegate = self;
   
     ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
     womanVC.urlString = kLADY_LIST_URL;
     womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+    womanVC.childClothing = NO;
     womanVC.delegate = self;
     
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];

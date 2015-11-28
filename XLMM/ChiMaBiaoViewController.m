@@ -53,6 +53,12 @@
     NSLog(@"%@", self.sizeArray);
     
     [self createSizeTable];
+    if (self.isChildClothing) {
+        
+    } else {
+        self.head1Label.hidden = YES;
+        self.head2Llabel.hidden = YES;
+    }
     
 }
 

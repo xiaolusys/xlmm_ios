@@ -761,7 +761,7 @@
                             <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20:06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jo9-Bd-eZR">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jo9-Bd-eZR">
                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -846,7 +846,9 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                         </constraint>
                         <constraint firstAttribute="height" constant="60" id="Q5T-uD-JRL"/>
-                        <constraint firstItem="Jo9-Bd-eZR" firstAttribute="top" secondItem="Ljh-uB-Stl" secondAttribute="bottom" constant="7" id="Qdx-2X-533"/>
+                        <constraint firstItem="Jo9-Bd-eZR" firstAttribute="top" secondItem="Ljh-uB-Stl" secondAttribute="bottom" constant="7" id="Qdx-2X-533">
+                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                        </constraint>
                         <constraint firstItem="ckl-0i-6sW" firstAttribute="leading" secondItem="5aH-SQ-54L" secondAttribute="leading" id="XaE-LF-MZE"/>
                         <constraint firstItem="2yd-kz-TxL" firstAttribute="top" secondItem="5aH-SQ-54L" secondAttribute="top" constant="16" id="gxT-bN-sxD">
                             <variation key="heightClass=regular-widthClass=compact" constant="10"/>

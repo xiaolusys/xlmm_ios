@@ -50,6 +50,8 @@
     NSMutableArray *orderStatus;
     NSString *tradeId; //unique trade id for user
     NSTimer *theTimer;
+    NSString *createdString;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -147,8 +149,11 @@
         self.quxiaoBtn.hidden = NO;
         self.buyBtn.hidden = NO;
         
+#pragma 显示剩余支付时间。。。。。
+        createdString = [self formatterTimeString:[dicJson objectForKey:@"created"]];
+        NSLog(@"created:%@", createdString);
         
-    //    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(aa) userInfo:nil repeats:YES];
+      theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         
         
     } else {
@@ -268,6 +273,38 @@
     
 }
 
+//设计倒计时方法。。。。
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    //  2015-10-29T15:50:19
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *date = [formatter dateFromString:createdString];
+    NSLog(@"date = %@", date);
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
+    NSLog(@"todate = %@", todate);
+    //把目标时间装载入date
+    //用来得到具体的时差
+    NSDateComponents *d = [calendar components:unitFlags fromDate:[NSDate date] toDate:todate options:0];
+    NSString *string = nil;
+    string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+    NSLog(@"string = %@", string);
+    
+    self.remainTimeLabel.text = string;
+    if ([d minute] <0 || [d second] < 0) {
+        self.remainTimeLabel.text = @"00:00";
+    }
+}
+
 
 
 - (NSString *)formatterTimeString:(NSString *)timeString{
@@ -282,6 +319,7 @@
     [newString replaceCharactersInRange:range withString:@" "];
     return newString;
 }
+
 
 - (void)createXiangQing{
     NSUInteger number = dataArray.count;
@@ -376,10 +414,14 @@
         else{
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:i];
-            if ([string isEqualToString:@"没有退款"] ) {
-               
-            }
+            
+            
+            // 判断退款订单状态  显示给客服看。。。。。
             label.text = string;
+            if ([string isEqualToString:@"没有退款"] ) {
+                label.text = @"";
+            }
+           
             label.numberOfLines = 0;
             
             label.font = [UIFont systemFontOfSize:12];

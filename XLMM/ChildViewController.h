@@ -17,6 +17,7 @@ UICollectionViewDelegate>{
 
 @property (nonatomic, assign) id<MMNavigationDelegate>delegate;
 
+@property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 
 @property (assign, nonatomic) BOOL isRoot;
 @property (copy, nonatomic) NSString *urlString;

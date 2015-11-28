@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChiMaBiaoViewController">
             <connections>
+                <outlet property="head1Label" destination="gCF-Uj-Qf2" id="Rf3-hJ-Hmt"/>
+                <outlet property="head2Llabel" destination="AvX-cd-5Tf" id="1Aj-zD-nAc"/>
                 <outlet property="noHaveLabel" destination="gGG-xi-4IX" id="9qk-eX-dLT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
