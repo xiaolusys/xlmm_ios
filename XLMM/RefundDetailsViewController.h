@@ -11,7 +11,12 @@
 
 @interface RefundDetailsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topToRefundHeight;
 
 @property (nonatomic, strong) TuihuoModel *model;
+@property (weak, nonatomic) IBOutlet UIButton *addressInfoButton;
+
+- (IBAction)addressInfoClicked:(id)sender;
+- (IBAction)wuliuInfoClicked:(id)sender;
 
 @end

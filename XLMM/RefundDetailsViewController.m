@@ -11,10 +11,14 @@
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
+#import "FillWuliuController.h"
 
+#import "MMClass.h"
 
 
 @interface RefundDetailsViewController (){
+    UIView *backView;
+    
     
 }
 
@@ -62,6 +66,17 @@
     [self createNavigationBarWithTitle:@"退货(款)详情" selecotr:@selector(backClicked:)];
     [self setHeadInfo];
     [self setFootInfo];
+    self.addressInfoButton.layer.cornerRadius = 13;
+    self.addressInfoButton.layer.borderWidth = 0.5;
+    self.addressInfoButton.layer.borderColor = [UIColor colorWithRed:245/255.0f green:166/255.0f blue:35/255.0f alpha:1].CGColor;
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor blackColor];
+    backView.alpha = 0.5;
+    backView.hidden = YES;
+    
+    [self.view addSubview:backView];
+    
     
 }
 
@@ -135,4 +150,85 @@
 }
 */
 
+- (IBAction)addressInfoClicked:(id)sender {
+    NSLog(@"退货地址信息");
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"RefundAddressInfoView" owner:nil options:nil];
+    UIView *infoView = views[0];
+    infoView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    UIView *bgView = [infoView viewWithTag:100];
+    bgView.layer.cornerRadius = 10;
+    
+    self.navigationController.navigationBarHidden = YES;
+    backView.hidden = NO;
+    backView.alpha = 0.6;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
+    [infoView addGestureRecognizer:tap];
+    
+    NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界 售后(收)";
+    NSString *phone1 = @"021-50939326-818  201602";
+    
+
+    NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼 售后(收)";
+    NSString *phone2 = @"15821245603  510000";
+    
+    NSDictionary *dic1 = @{@"address":backAddress1,
+                           @"phone":phone1,
+                        
+                           
+                           };
+    NSDictionary *dic2 = @{@"address":backAddress2,
+                           @"phone":phone2,
+                        
+                           };
+    NSArray *array = @[dic1, dic1, dic2];
+    
+    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.model.item_id];
+    NSLog(@"url = %@", urlstring);
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"json = %@", json);
+    NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
+    
+    NSLog(@"wear_by = %ld", (long)wear_by);
+    
+    NSDictionary *addressDetails = [array objectAtIndex:wear_by];
+    
+
+    
+    UILabel *addressLabel = [infoView viewWithTag:500];
+    UILabel *phoneLabel = [infoView viewWithTag:600];
+    UIButton *kefuButton = [infoView viewWithTag:800];
+    [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+    
+    addressLabel.text = [addressDetails objectForKey:@"address"];
+    phoneLabel.text = [addressDetails objectForKey:@"phone"];
+    
+    
+    
+    
+ 
+    [self.view addSubview:infoView];
+    
+}
+
+- (void)lianxikefu:(UIButton *)button{
+    NSLog(@"客服");
+}
+- (void)removeInfoView:(UIGestureRecognizer *)recognizer{
+    
+    NSLog(@"move");
+    backView.hidden = YES;
+    self.navigationController.navigationBarHidden = NO;
+    [recognizer.view removeFromSuperview];
+    
+}
+
+- (IBAction)wuliuInfoClicked:(id)sender {
+    NSLog(@"填写物流信息");
+    FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
+    
+    [self.navigationController pushViewController:wuliuVC animated:YES];
+    
+}
 @end

@@ -15,6 +15,7 @@
 #define NICK_UPPER_LIMIT 20
 
 @interface ChangeNicknameViewController ()<UITextFieldDelegate,UIAlertViewDelegate>{
+    
 }
 
 @end

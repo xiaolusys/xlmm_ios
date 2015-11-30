@@ -54,7 +54,7 @@
 
 //#define Root_URL @"http://youni.huyi.so"
 
-#if 0
+#if 1
 #define Root_URL @"http://192.168.1.31:9000"
 
 #else
