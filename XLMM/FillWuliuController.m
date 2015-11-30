@@ -12,7 +12,7 @@
 #import "UIViewController+NavigationBar.h"
 
 
-@interface FillWuliuController ()
+@interface FillWuliuController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -35,6 +35,48 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"填写物流信息" selecotr:@selector(backClicked:)];
+    self.commitButton.layer.cornerRadius = 20;
+    self.commitButton.layer.borderWidth = 1;
+    [self disableTijiaoButton];
+    
+}
+
+- (void)enableTijiaoButton{
+    self.commitButton.enabled = YES;
+    self.commitButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+}
+
+- (void)disableTijiaoButton{
+    self.commitButton.enabled = NO;
+    self.commitButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
+    self.commitButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
+}
+
+#pragma mark --UITextFieldDelegate--
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (self.companyTextField == textField) {
+        [self.danhaoTextField becomeFirstResponder];
+        return NO;
+    }
+    [textField resignFirstResponder];
+    return YES;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (self.companyTextField.text.length >0 && self.danhaoTextField.text.length > 0) {
+        [self enableTijiaoButton];
+    } else {
+        [self disableTijiaoButton];
+        
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.companyTextField resignFirstResponder];
+    [self.danhaoTextField resignFirstResponder];
+    
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -56,4 +98,8 @@
 }
 */
 
+- (IBAction)commitButtonClicked:(id)sender {
+    NSLog(@"提交。。。。");
+    
+}
 @end

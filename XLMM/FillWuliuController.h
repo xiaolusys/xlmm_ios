@@ -10,4 +10,13 @@
 
 @interface FillWuliuController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *companyTextField;
+
+
+@property (weak, nonatomic) IBOutlet UITextField *danhaoTextField;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
+- (IBAction)commitButtonClicked:(id)sender;
+
 @end

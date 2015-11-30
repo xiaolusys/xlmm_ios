@@ -81,7 +81,7 @@
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
-		323A05681C0BF5B300F56EAB /* FillWuliuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05661C0BF5B300F56EAB /* FillWuliuController.xib */; };
+		323A05691C0BFB7700F56EAB /* FillWuliuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05661C0BF5B300F56EAB /* FillWuliuController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
 		323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */; };
 		323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */; };
@@ -2669,7 +2669,7 @@
 				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				3247FDC01C03365900C6631D /* yishiyong.png in Resources */,
 				32EC425C1BE89373009E5FA2 /* ShouHuoCollectionViewCell.xib in Resources */,
-				323A05681C0BF5B300F56EAB /* FillWuliuController.xib in Resources */,
+				323A05691C0BFB7700F56EAB /* FillWuliuController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
