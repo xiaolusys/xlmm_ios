@@ -46,7 +46,7 @@
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
 
     NSString *string = [model.picPath URLEncodedString];
-    [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
@@ -85,7 +85,7 @@
     NSString *string = [model.picPath URLEncodedString];
 
     
-    [self.imageView sd_setImageWithURL:kLoansRRL(string) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;

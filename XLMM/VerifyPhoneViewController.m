@@ -111,7 +111,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
-    NSLog(@"%lu -- %lu", textField.text.length, range.location);
+//    NSLog(@"%lu -- %lu", ()textField.text.length, range.location);
     if ([string isEqualToString:@"\n"] || [string isEqualToString:@" "])
     {
         return NO; // cant input

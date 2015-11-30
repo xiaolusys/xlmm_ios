@@ -123,7 +123,7 @@
             
             
             
-            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", self.model.order_id],
+            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)self.model.order_id],
                                          @"modify":@2,
                                          @"company":self.companyTextField.text,
                                          @"sid":self.danhaoTextField.text

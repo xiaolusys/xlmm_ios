@@ -12,5 +12,8 @@
 
 - (NSString *)URLEncodedString;
 
+- (NSString *)imageCompression;
+
+- (NSString *)imageMoreCompression;
 
 @end

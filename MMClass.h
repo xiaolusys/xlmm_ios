@@ -54,7 +54,7 @@
 
 //#define Root_URL @"http://youni.huyi.so"
 
-#if 1
+#if 0
 #define Root_URL @"http://192.168.1.31:9000"
 
 #else
@@ -112,28 +112,18 @@ UITouch ;
 UIGestureRecognizer  ;
 UIPageViewController;
 
-NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-
-NSString *plistPath1 = [paths objectAtIndex:0];
-
+NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);NSString *plistPath1 = [paths objectAtIndex:0];
 NSLog(@"%@", plistPath1);
-
 //得到完整的文件名
-
 NSString *filename=[plistPath1 stringByAppendingPathComponent:@"aera.plist"];
-
 //输入写入
-
 BOOL fl = [addressArray writeToFile:filename atomically:YES]; //写入
-
 NSLog(@"ls = %d", fl);
-
 NSDate;
 NSDateComponents;
 NSDateFormatter;
 NSCalendar;
-
- UIDevice ;;
+UIDevice ;;
 
 
 #endif
