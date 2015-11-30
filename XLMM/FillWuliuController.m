@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
+#import "TuihuoModel.h"
 
 
 @interface FillWuliuController ()<UITextFieldDelegate, UIAlertViewDelegate>
@@ -100,6 +101,54 @@
 
 - (IBAction)commitButtonClicked:(id)sender {
     NSLog(@"提交。。。。");
+    
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要退吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alterView.tag = 1234;
+    [alterView show];
+    
+    
+
+
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1234) {
+        if (buttonIndex == 1) {
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+            NSLog(@"urlstring = %@", urlString);
+            
+            
+            
+            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", self.model.order_id],
+                                         @"modify":@2,
+                                         @"company":self.companyTextField.text,
+                                         @"sid":self.danhaoTextField.text
+                                         };
+            
+            NSLog(@"parameters = %@", parameters);
+            
+            [manager POST:urlString parameters:parameters
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      
+                      NSLog(@"JSON: %@", responseObject);
+                      NSLog(@"perration = %@", operation);
+                      [self.navigationController popViewControllerAnimated:YES];
+                      
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      
+                      NSLog(@"Error: %@", error);
+                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
+                      NSLog(@"perration = %@", operation);
+                      
+                      
+                  }];
+        }
+
+    }
+    
     
 }
 @end

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class TuihuoModel;
 @interface FillWuliuController : UIViewController
+
+
+@property (strong, nonatomic) TuihuoModel *model;
 
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
 

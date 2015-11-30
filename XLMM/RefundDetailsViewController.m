@@ -77,6 +77,11 @@
     
     [self.view addSubview:backView];
     
+    if (self.model.good_status == 1 && [self.model.status_display isEqualToString:@"卖家已经同意退款"]) {
+    self.topToRefundHeight.constant = 1;
+    }
+    
+    
     
 }
 
@@ -227,6 +232,7 @@
 - (IBAction)wuliuInfoClicked:(id)sender {
     NSLog(@"填写物流信息");
     FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
+    wuliuVC.model = self.model;
     
     [self.navigationController pushViewController:wuliuVC animated:YES];
     
