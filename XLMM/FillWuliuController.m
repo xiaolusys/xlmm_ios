@@ -11,6 +11,8 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "TuihuoModel.h"
+#import "WuliuCompanyController.h"
+
 
 
 @interface FillWuliuController ()<UITextFieldDelegate, UIAlertViewDelegate>
@@ -133,8 +135,13 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
-                      NSLog(@"perration = %@", operation);
-                      [self.navigationController popViewControllerAnimated:YES];
+                      UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退货成功，去看看其他商品吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                      alterView.tag = 4321;
+                      alterView.delegate = self;
+                      [alterView show];
+//                      [self.navigationController popToRootViewControllerAnimated:YES];
+//                      NSLog(@"perration = %@", operation);
+//                      [self.navigationController popViewControllerAnimated:YES];
                       
                   }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -149,6 +156,17 @@
 
     }
     
+    if (alertView.tag == 4321) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+    
+}
+
+- (IBAction)selectedWuliuClicked:(id)sender {
+    WuliuCompanyController *companyVC = [[WuliuCompanyController alloc] initWithNibName:@"WuliuCompanyController" bundle:nil];
+    
+    [self.navigationController pushViewController:companyVC animated:YES];
     
 }
 @end

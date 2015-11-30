@@ -20,13 +20,13 @@
                             <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  请将包裹里原发货单一并寄回或者写张纸条，注明您的微信昵称、联系电话和退换货的原因，方便我们售后收到及时为您处理哦，谢谢！　^_^" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1j-Q8-Jcp">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请将包裹里原发货单一并寄回或者写张纸条，注明您的微信昵称、联系电话和退换货的原因，方便我们售后收到及时为您处理哦，谢谢！^_^" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1j-Q8-Jcp">
                             <rect key="frame" x="10" y="113" width="280" height="67"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    质量问题的退货，邮费需要您先支付哦，到货验收后我们会把货款和运费分开退还给您的！发普通的快递即可！请勿发顺丰或EMS等高邮费的快递，拒收到付件，请保持衣服吊牌完整；不影响二次销售." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajD-yc-kpF">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="质量问题的退货，邮费需要您先支付哦，到货验收后我们会把货款和运费分开退还给您的！发普通的快递即可！请勿发顺丰或EMS等高邮费的快递，拒收到付件，请保持衣服吊牌完整；不影响二次销售." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajD-yc-kpF">
                             <rect key="frame" x="10" y="188" width="280" height="84"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>

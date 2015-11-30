@@ -72,7 +72,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"登录" selecotr:@selector(btnClicked:)];
-
+    if ([WXApi isWXAppInstalled]) {
+        NSLog(@"安装了微信");
+        self.weixinView.hidden = YES;
+        
+    }
     self.passwordTextField.secureTextEntry = YES;
 
     self.registerButton.backgroundColor = [UIColor clearColor];

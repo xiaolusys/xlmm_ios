@@ -24,8 +24,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsB-Zs-TUd">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入物流公司" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vtH-Og-icf">
-                                    <rect key="frame" x="10" y="0.0" width="300" height="45"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请选择物流公司" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vtH-Og-icf">
+                                    <rect key="frame" x="10" y="0.0" width="260" height="45"/>
                                     <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -33,13 +33,32 @@
                                         <outlet property="delegate" destination="-1" id="OLz-JH-U7h"/>
                                     </connections>
                                 </textField>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="AKm-HW-Ebq">
+                                    <rect key="frame" x="298" y="14" width="12" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="12" id="0DP-47-1fv"/>
+                                        <constraint firstAttribute="height" constant="18" id="jiz-wk-vR5"/>
+                                    </constraints>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQs-vR-upb">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                                    <connections>
+                                        <action selector="selectedWuliuClicked:" destination="-1" eventType="touchUpInside" id="795-VK-maS"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="vtH-Og-icf" secondAttribute="trailing" constant="10" id="Gha-3t-BWw"/>
+                                <constraint firstAttribute="trailing" secondItem="vtH-Og-icf" secondAttribute="trailing" constant="50" id="Gha-3t-BWw"/>
+                                <constraint firstAttribute="trailing" secondItem="aQs-vR-upb" secondAttribute="trailing" id="JTV-0x-z43"/>
                                 <constraint firstAttribute="bottom" secondItem="vtH-Og-icf" secondAttribute="bottom" id="cYg-Hg-Mh6"/>
+                                <constraint firstAttribute="bottom" secondItem="aQs-vR-upb" secondAttribute="bottom" id="ghU-YS-5Mp"/>
+                                <constraint firstItem="aQs-vR-upb" firstAttribute="leading" secondItem="hsB-Zs-TUd" secondAttribute="leading" id="mUP-Zp-xVY"/>
                                 <constraint firstItem="vtH-Og-icf" firstAttribute="top" secondItem="hsB-Zs-TUd" secondAttribute="top" id="o71-zu-L3D"/>
+                                <constraint firstAttribute="trailing" secondItem="AKm-HW-Ebq" secondAttribute="trailing" constant="10" id="t6K-Pt-9Lu"/>
+                                <constraint firstItem="AKm-HW-Ebq" firstAttribute="centerY" secondItem="hsB-Zs-TUd" secondAttribute="centerY" id="tUt-Ge-lic"/>
                                 <constraint firstItem="vtH-Og-icf" firstAttribute="leading" secondItem="hsB-Zs-TUd" secondAttribute="leading" constant="10" id="vev-Ns-q6F"/>
+                                <constraint firstItem="aQs-vR-upb" firstAttribute="top" secondItem="hsB-Zs-TUd" secondAttribute="top" id="ypB-96-oTy"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7r-0w-O4p">
@@ -101,7 +120,10 @@
                 <constraint firstItem="70K-KW-zkF" firstAttribute="top" secondItem="mCQ-3E-zIr" secondAttribute="bottom" constant="30" id="vCX-Fv-Sda"/>
                 <constraint firstItem="70K-KW-zkF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="wsC-Tx-yDU"/>
             </constraints>
-            <point key="canvasLocation" x="359" y="354"/>
+            <point key="canvasLocation" x="18" y="270"/>
         </view>
     </objects>
+    <resources>
+        <image name="rightArrow.png" width="40" height="60"/>
+    </resources>
 </document>

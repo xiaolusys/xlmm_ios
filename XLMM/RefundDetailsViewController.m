@@ -69,7 +69,7 @@
     self.addressInfoButton.layer.cornerRadius = 13;
     self.addressInfoButton.layer.borderWidth = 0.5;
     self.addressInfoButton.layer.borderColor = [UIColor colorWithRed:245/255.0f green:166/255.0f blue:35/255.0f alpha:1].CGColor;
-    
+    self.headViewWidth.constant = SCREENWIDTH;
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.backgroundColor = [UIColor blackColor];
     backView.alpha = 0.5;
@@ -77,7 +77,7 @@
     
     [self.view addSubview:backView];
     
-    if (self.model.good_status == 1 && [self.model.status_display isEqualToString:@"卖家已经同意退款"]) {
+    if (self.model.good_status == 1 && [self.model.status_display isEqualToString:@"审核通过"]) {
     self.topToRefundHeight.constant = 1;
     }
     
@@ -87,8 +87,12 @@
 
 - (void)setHeadInfo{
     self.bianhaoLabel.text = self.model.refund_no;
-    if ([self.model.status_display isEqualToString:@"买家已经申请退款"]) {
+    if ([self.model.status_display isEqualToString:@"买家已经申请退款"] ||[self.model.status_display isEqualToString:@"买家已经退货"]) {
         self.model.status_display = @"卖家处理中";
+    }
+    if ([self.model.status_display isEqualToString:@"卖家已经同意退款"]) {
+        self.model.status_display = @"审核通过";
+        
     }
     self.displayLabel.text = self.model.status_display;
     self.titleLabel.text = self.model.title;

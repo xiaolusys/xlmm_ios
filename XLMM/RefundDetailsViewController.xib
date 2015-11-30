@@ -15,6 +15,7 @@
                 <outlet property="createdLabel" destination="iE1-nY-Eaq" id="TWp-tn-5m3"/>
                 <outlet property="detailsView" destination="fFU-ik-avB" id="6y2-Uc-AWd"/>
                 <outlet property="displayLabel" destination="F8f-G4-5j9" id="vtq-Iz-YLh"/>
+                <outlet property="headViewWidth" destination="S7c-Lo-tRo" id="Hr2-cu-jNF"/>
                 <outlet property="imageView" destination="Gp4-QY-OuV" id="Loo-7W-iXI"/>
                 <outlet property="modifyTimeLabel" destination="rEC-KS-g4f" id="SLq-HZ-Zuz"/>
                 <outlet property="numberLabel" destination="UfU-ZW-BFl" id="qqx-hr-K05"/>
@@ -60,7 +61,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退款完成" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yy3-Tc-8H3">
                                                     <rect key="frame" x="30" y="33" width="56" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.96078431372549022" green="0.65098039215686276" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-11-03 16:12:36" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEC-KS-g4f">
@@ -176,6 +177,7 @@
                                                                         <constraint firstAttribute="width" constant="100" id="Bdw-vG-fpu"/>
                                                                         <constraint firstAttribute="height" constant="26" id="tuM-gL-JpB"/>
                                                                     </constraints>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <state key="normal" title="退货地址信息">
                                                                         <color key="titleColor" red="0.96078431372549022" green="0.65098039215686276" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </state>

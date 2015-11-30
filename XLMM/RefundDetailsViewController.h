@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) TuihuoModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *addressInfoButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
 
 - (IBAction)addressInfoClicked:(id)sender;
 - (IBAction)wuliuInfoClicked:(id)sender;

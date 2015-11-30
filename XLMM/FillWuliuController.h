@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
 
+- (IBAction)selectedWuliuClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *danhaoTextField;
 

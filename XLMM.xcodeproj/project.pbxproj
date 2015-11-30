@@ -82,6 +82,8 @@
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
 		323A05691C0BFB7700F56EAB /* FillWuliuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05661C0BF5B300F56EAB /* FillWuliuController.xib */; };
+		323A056D1C0C307700F56EAB /* WuliuCompanyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A056B1C0C307700F56EAB /* WuliuCompanyController.m */; };
+		323A056E1C0C307700F56EAB /* WuliuCompanyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A056C1C0C307700F56EAB /* WuliuCompanyController.xib */; };
 		323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C5F1BDDB5FC0060BFC1 /* back_image.png */; };
 		323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */; };
 		323B9C661BDDB5FC0060BFC1 /* shopping_coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */; };
@@ -836,6 +838,9 @@
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
 		323A05651C0BF5B300F56EAB /* FillWuliuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillWuliuController.m; sourceTree = "<group>"; };
 		323A05661C0BF5B300F56EAB /* FillWuliuController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FillWuliuController.xib; sourceTree = "<group>"; };
+		323A056A1C0C307700F56EAB /* WuliuCompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuliuCompanyController.h; sourceTree = "<group>"; };
+		323A056B1C0C307700F56EAB /* WuliuCompanyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuliuCompanyController.m; sourceTree = "<group>"; };
+		323A056C1C0C307700F56EAB /* WuliuCompanyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuCompanyController.xib; sourceTree = "<group>"; };
 		323B9C5F1BDDB5FC0060BFC1 /* back_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_image.png; sourceTree = "<group>"; };
 		323B9C601BDDB5FC0060BFC1 /* shopping_cart_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_cart_add.png; sourceTree = "<group>"; };
 		323B9C621BDDB5FC0060BFC1 /* shopping_coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping_coupon.png; sourceTree = "<group>"; };
@@ -1729,6 +1734,9 @@
 				323A05641C0BF5B300F56EAB /* FillWuliuController.h */,
 				323A05651C0BF5B300F56EAB /* FillWuliuController.m */,
 				323A05661C0BF5B300F56EAB /* FillWuliuController.xib */,
+				323A056A1C0C307700F56EAB /* WuliuCompanyController.h */,
+				323A056B1C0C307700F56EAB /* WuliuCompanyController.m */,
+				323A056C1C0C307700F56EAB /* WuliuCompanyController.xib */,
 				32CC7C861BA0109500475E2E /* TuihuoXiangqingViewController.h */,
 				32CC7C871BA0109500475E2E /* TuihuoXiangqingViewController.m */,
 				32CC7C951BA0185000475E2E /* TuihuoXQ1.xib */,
@@ -2599,6 +2607,7 @@
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
+				323A056E1C0C307700F56EAB /* WuliuCompanyController.xib in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
 				32EC425A1BE8931B009E5FA2 /* EnterViewController.xib in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
@@ -3087,6 +3096,7 @@
 				32891B601B81D1B7007E562A /* CartTableCellTableViewCell.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
+				323A056D1C0C307700F56EAB /* WuliuCompanyController.m in Sources */,
 				8E9665711C04AD43001CF18A /* SetPasswordViewController.m in Sources */,
 				3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */,
 				321952C91BFC7AF800AA0AB8 /* QNResolver.m in Sources */,
@@ -3279,7 +3289,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "33475e82-7e23-4b42-9f73-a9a7ca5c17e2";
+				PROVISIONING_PROFILE = "fd7ce1fa-8d68-478f-8b0b-7f9f0fd3281f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3316,7 +3326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "33475e82-7e23-4b42-9f73-a9a7ca5c17e2";
+				PROVISIONING_PROFILE = "fd7ce1fa-8d68-478f-8b0b-7f9f0fd3281f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3358,7 +3368,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "33475e82-7e23-4b42-9f73-a9a7ca5c17e2";
+				PROVISIONING_PROFILE = "fd7ce1fa-8d68-478f-8b0b-7f9f0fd3281f";
 			};
 			name = Debug;
 		};
@@ -3398,7 +3408,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "33475e82-7e23-4b42-9f73-a9a7ca5c17e2";
+				PROVISIONING_PROFILE = "fd7ce1fa-8d68-478f-8b0b-7f9f0fd3281f";
 			};
 			name = Release;
 		};
