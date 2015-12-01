@@ -87,9 +87,10 @@
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alterView show];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+
 }
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -409,12 +410,8 @@
         
         NSLog(@"response = %@", httpResponse);
         
-        NSLog(@"data = %@", data);
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"charge = %@", dic);
+      
         
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"dataString = %@", str);
         if (httpResponse.statusCode != 200) {
             NSLog(@"出错了");
             //  return;
@@ -426,8 +423,6 @@
         }
         
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"charge = %@", charge);
-        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {

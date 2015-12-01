@@ -32,7 +32,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLIconFile</key>
-			<string>小鹿美美logo</string>
+			<string>logo</string>
 			<key>CFBundleURLName</key>
 			<string>so.xiaolu.m</string>
 			<key>CFBundleURLSchemes</key>

@@ -136,6 +136,9 @@
 //    }
 //    //获取token和openid；
 //     [self getAccess_token];
+    
+  //  NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
         NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
@@ -148,7 +151,10 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
        
-    } else {
+    } else if([resp isKindOfClass:[PayResp class]]){
+
+
+    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
@@ -166,8 +172,8 @@
         }
         //获取token和openid；
         [self getAccess_token];
-    }
-    
+    } //启动微信支付的response
+ 
    
     
 }
@@ -296,24 +302,34 @@
 }
 
 
+//   [PayResp code]....
+
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [Pingpp handleOpenURL:url
+    
+   [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
+               
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
                    NSLog(@"支付成功");
                    //  发送支付成功的 通知
+                     NSLog(@"url = %@", url);
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
                    
                } else {
                    // 支付失败或取消
                    // 发送支付不成功的 通知
+                   NSLog(@"url = %@", url);
                    NSLog(@"取消支付或支付失败");
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+                   //[[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
+    
+    return [WXApi handleOpenURL:url delegate:self];;
+
 }
 #pragma mark -
 #pragma mark RESideMenu Delegate
