@@ -144,8 +144,7 @@ static NSString *khead2View = @"head2View";
  
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
-   // [self getQiNiuToken];
-}
+  }
 
 
 //设计倒计时方法。。。。
@@ -248,13 +247,15 @@ static NSString *khead2View = @"head2View";
     [posterDataArray removeAllObjects];
     if (data == nil) {
 
-        
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"posters = %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     if (childDic == nil) {
+        step1 = YES;
+
         return;
     }
     PosterModel *childModel = [PosterModel new];
@@ -291,6 +292,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"promote = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
    
     ladyListNumber = ladyArray.count;

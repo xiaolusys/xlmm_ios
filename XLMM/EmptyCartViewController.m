@@ -427,7 +427,7 @@
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
     
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-    NSLog(@"string = %@", string);
+  //  NSLog(@"string = %@", string);
     if ([string isEqualToString:@"00:00"]) {
         string = @"00:00";
         [theTimer invalidate];

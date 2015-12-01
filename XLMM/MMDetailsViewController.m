@@ -65,10 +65,17 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    
+    NSLog(@"%@", last_created);
+    if (last_created != nil) {
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    }
+    //
+
+    [self createTimeCartView];
     //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
+    
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -108,6 +115,8 @@
         self.bottomImageViewHeight.constant = 420 + 163;
         contentTopHeight = 420 + 163 - 106;
     }
+    [self createCartView];
+
     //完成前的显示界面 加载界面 可以使用加载动画
     frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     frontView.backgroundColor = [UIColor whiteColor];
@@ -123,7 +132,6 @@
     self.line3Height.constant = 0.5;
     self.line5Height.constant = 0.5;
     self.line6height.constant = 0.5;
-    [self createCartView];
     [self downloadDetailsData];
 }
 
@@ -249,8 +257,8 @@
     countLabel.layer.masksToBounds = YES;
     countLabel.font = [UIFont systemFontOfSize:14];
     countLabel.hidden = YES;
-    [self.view addSubview:countLabel];
     
+    [self.view addSubview:countLabel];
 }
 //点击购物车
 - (void)cartClicked:(UIButton *)btn{
@@ -605,27 +613,27 @@
             NSLog(@"%ld", (long)goodsCount);
             NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
             countLabel.text = strNum;
+            if (goodsCount >0) {
+                //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
+                [UIView animateWithDuration:0.1 animations:^{
+                    cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
+                    //        CGRect frame = self.addCartButton.frame;
+                    //        frame.origin.x = 118;
+                    //        frame.size.width = SCREENWIDTH - 126;
+                } completion:^(BOOL finished) {
+                    NSLog(@"显示剩余时间");
+                    [self createTimeLabel];
+                    countLabel.hidden = NO;
+                    
+                    
+                }];
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.leftWidth.constant = 118;
+                    
+                }];
+            }
         }
     }
-    
-    //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
-    [UIView animateWithDuration:0.1 animations:^{
-        cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
-//        CGRect frame = self.addCartButton.frame;
-//        frame.origin.x = 118;
-//        frame.size.width = SCREENWIDTH - 126;
-    } completion:^(BOOL finished) {
-        NSLog(@"显示剩余时间");
-        [self createTimeLabel];
-        countLabel.hidden = NO;
-        
-
-    }];
-    [UIView animateWithDuration:0.5 animations:^{
-        self.leftWidth.constant = 118;
-
-    }];
-   
 }
 
 - (void)createTimeLabel{
@@ -725,10 +733,11 @@
     } while (YES);
     UIImage *image = [UIImage imageWithData:imageData];
     NSLog(@"image = %@", image);
-    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(100, 100)];
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(150, 200)];
     NSLog(@"image = %@", image);
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
     UIImage *newImage = [UIImage imageWithData:imagedata];
+    
     NSLog(@"newImage = %@", newImage);
     [message setThumbImage:newImage];
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
