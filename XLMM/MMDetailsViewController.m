@@ -656,7 +656,7 @@
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
     NSLog(@"string = %@", string);
-    if ([string isEqualToString:@"00:00"]) {
+    if ([d minute] < 0 || [d second] < 0) {
         string = @"00:00";
         if ([theTimer isValid]) {
             [theTimer invalidate];
@@ -733,7 +733,7 @@
     } while (YES);
     UIImage *image = [UIImage imageWithData:imageData];
     NSLog(@"image = %@", image);
-    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(150, 200)];
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(150, 200                 )];
     NSLog(@"image = %@", image);
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
     UIImage *newImage = [UIImage imageWithData:imagedata];
