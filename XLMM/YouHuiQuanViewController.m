@@ -311,6 +311,12 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
             return;
         }
         
+    } else {
+        if (self.payment < 200) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
     }
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.delegate = self;

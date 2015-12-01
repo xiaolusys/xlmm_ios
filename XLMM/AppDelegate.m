@@ -295,8 +295,10 @@
     return [WXApi handleOpenURL:url delegate:self];;
 }
 
+
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    [Pingpp handleOpenURL:url
+    return [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
@@ -312,7 +314,6 @@
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    return  [WXApi handleOpenURL:url delegate:self];
 }
 #pragma mark -
 #pragma mark RESideMenu Delegate
