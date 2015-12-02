@@ -9,12 +9,8 @@
 #import "ChildViewController.h"
 #import "PeopleCollectionCell.h"
 #import "MMClass.h"
-#import "PurchaseViewController.h"
 #import "CollectionModel.h"
 #import "DetailsModel.h"
-#import "PersonCenterViewController.h"
-#import "EmptyCartViewController.h"
-#import "EnterViewController.h"
 #import "CartViewController.h"
 #import "PromoteModel.h"
 

@@ -11,8 +11,6 @@
 #import "MMClass.h"
 #import "ShoppingCartModel.h"
 #import "AFNetworking.h"
-#import "EmptyCartViewController.h"
-#import "PurchaseViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "NewCartsModel.h"
 #import "PurchaseViewController1.h"

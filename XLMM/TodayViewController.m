@@ -22,7 +22,6 @@
 #import "AFNetworking.h"
 #import "PostersViewController.h"
 #import "CartViewController.h"
-#import "EnterViewController.h"
 #import "MMNavigationDelegate.h"
 #import "NSString+URL.h"
 

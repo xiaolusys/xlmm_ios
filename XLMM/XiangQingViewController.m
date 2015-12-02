@@ -13,7 +13,6 @@
 #import "PerDingdanModel.h"
 #import "DingDanXiangQingModel.h"
 #import "UIImageView+WebCache.h"
-#import "TuihuoController.h"
 #import "Pingpp.h"
 #import "UIViewController+NavigationBar.h"
 #import "ShenQingTuikuanController.h"

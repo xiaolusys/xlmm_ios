@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="2048" identifier="iOS"/>
+        <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
@@ -111,7 +111,7 @@
                 <outlet property="morenLabel" destination="3K5-hY-f0i" id="Wcb-HX-kiR"/>
                 <outlet property="secondLabel" destination="lHv-Po-ST8" id="4qM-a2-8VP"/>
             </connections>
-            <point key="canvasLocation" x="99" y="428"/>
+            <point key="canvasLocation" x="190" y="408"/>
         </tableViewCell>
     </objects>
     <resources>

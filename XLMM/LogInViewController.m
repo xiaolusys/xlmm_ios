@@ -16,7 +16,6 @@
 #import "VerifyPhoneViewController.h"
 #import "WXApi.h"
 #import "NSString+Encrypto.h"
-#import "SettingPsdViewController.h"
 #import "WXLoginController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -205,10 +204,11 @@
             [self.navigationController popViewControllerAnimated:YES];
             
         } else {
-            SettingPsdViewController *passVC = [[SettingPsdViewController alloc] initWithNibName:@"SettingPsdViewController" bundle:nil];
-            passVC.phoneNumber = phoneNumber;
-            passVC.info = dic;
-            [self.navigationController pushViewController:passVC animated:YES];
+            
+            NSLog(@"请绑定手机");
+            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+            wxloginVC.userInfo = dic;
+            [self.navigationController pushViewController:wxloginVC animated:YES];
         }
     } else {
         NSLog(@"请绑定手机");

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LeftMenuViewController.h"
+
+@protocol RootVCPushOtherVCDelegate <NSObject>
+
+- (void) rootVCPushOtherVC:(UIViewController *)vc;
+
+@end
 
 @interface NewLeftViewController : UIViewController
 

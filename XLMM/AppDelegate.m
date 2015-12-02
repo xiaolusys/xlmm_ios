@@ -10,7 +10,6 @@
 
 #import "Pingpp.h"
 #import "MMRootViewController.h"
-#import "LeftMenuViewController.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
 

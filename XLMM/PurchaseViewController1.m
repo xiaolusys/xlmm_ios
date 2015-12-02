@@ -13,7 +13,6 @@
 #import "AddAdressViewController.h"
 #import "AddressViewController.h"
 #import "NewCartsModel.h"
-#import "AddressView.h"
 #import "BuyCartsView.h"
 #import "BuyModel.h"
 #import "YouHuiQuanViewController.h"
