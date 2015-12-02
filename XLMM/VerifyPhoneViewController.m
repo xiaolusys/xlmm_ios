@@ -111,7 +111,6 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
-//    NSLog(@"%lu -- %lu", ()textField.text.length, range.location);
     if ([string isEqualToString:@"\n"] || [string isEqualToString:@" "])
     {
         return NO; // cant input
@@ -221,6 +220,9 @@
               }
               if ([self.config[@"isRegister"] boolValue]) {
                   //注册接口返回结果。。。。。
+                  if ([result isEqualToString:@"OK"] || [result isEqualToString:@"ok"]) {
+                      return;
+                  }
                   if ([result integerValue] == 0) {
                       // 该手机号已被注册
                       [self alertMessage:@"该手机号已被注册!"];
@@ -324,10 +326,10 @@
     
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
-    NSDictionary *parameters = @{@"mobile": phoneNumber, @"vcode":vcode};
+    NSDictionary *parameters = @{@"username": phoneNumber, @"valid_code":vcode};
     
-    //校验验证码（新）
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
+    //校验验证码（旧）
+    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
     NSLog(@"url = %@", stringurl);
     
     [manager POST:stringurl parameters:parameters
