@@ -19,7 +19,7 @@
 #import "MJRefresh.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
-
+#import "NSString+URL.h"
 #import "PostersViewController.h"
 
 static NSString *ksimpleCell = @"simpleCell";
@@ -487,7 +487,7 @@ static NSString *khead2View = @"head2View";
             
             
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]]];
 
             
            

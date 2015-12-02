@@ -24,6 +24,7 @@
 #import "CartViewController.h"
 #import "EnterViewController.h"
 #import "MMNavigationDelegate.h"
+#import "NSString+URL.h"
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -492,7 +493,7 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-           [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:model.imageURL]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+           [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
              //  cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
 
 

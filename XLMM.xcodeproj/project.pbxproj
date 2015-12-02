@@ -278,6 +278,8 @@
 		32976B881BA16C190045ADB9 /* ModifyshenqingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */; };
 		3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3297C7921BFB344600776970 /* SelectedReasonsView.xib */; };
 		3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FE08881BF5AC750072CCEC /* ShenQingTuikuanController.xib */; };
+		3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299A0591C0EBA6500229D74 /* TiaoKuanViewController.m */; };
+		3299A05C1C0EBA6500229D74 /* TiaoKuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3299A05A1C0EBA6500229D74 /* TiaoKuanViewController.xib */; };
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
 		3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
@@ -1102,6 +1104,9 @@
 		32976B851BA16C190045ADB9 /* ModifyshenqingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyshenqingViewController.m; sourceTree = "<group>"; };
 		32976B861BA16C190045ADB9 /* ModifyshenqingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyshenqingViewController.xib; sourceTree = "<group>"; };
 		3297C7921BFB344600776970 /* SelectedReasonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedReasonsView.xib; sourceTree = "<group>"; };
+		3299A0581C0EBA6500229D74 /* TiaoKuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiaoKuanViewController.h; sourceTree = "<group>"; };
+		3299A0591C0EBA6500229D74 /* TiaoKuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiaoKuanViewController.m; sourceTree = "<group>"; };
+		3299A05A1C0EBA6500229D74 /* TiaoKuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TiaoKuanViewController.xib; sourceTree = "<group>"; };
 		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
 		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
 		3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -1887,6 +1892,9 @@
 				8E96656E1C04AD43001CF18A /* SetPasswordViewController.h */,
 				8E96656F1C04AD43001CF18A /* SetPasswordViewController.m */,
 				8E9665701C04AD43001CF18A /* SetPasswordViewController.xib */,
+				3299A0581C0EBA6500229D74 /* TiaoKuanViewController.h */,
+				3299A0591C0EBA6500229D74 /* TiaoKuanViewController.m */,
+				3299A05A1C0EBA6500229D74 /* TiaoKuanViewController.xib */,
 				32E329961B70C70000A6F0BC /* DetailViewController.h */,
 				32E329971B70C70000A6F0BC /* DetailViewController.m */,
 				32E329981B70C70000A6F0BC /* DetailViewController.xib */,
@@ -2668,6 +2676,7 @@
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
 				326E88921B71FDD800D15973 /* PurchaseViewController.xib in Resources */,
+				3299A05C1C0EBA6500229D74 /* TiaoKuanViewController.xib in Resources */,
 				3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */,
@@ -3105,6 +3114,7 @@
 				321952C81BFC7AF800AA0AB8 /* QNHosts.m in Sources */,
 				3219529B1BFC7A8D00AA0AB8 /* QNConfiguration.m in Sources */,
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
+				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,

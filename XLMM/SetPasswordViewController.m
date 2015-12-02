@@ -10,6 +10,8 @@
 #import "UIViewController+NavigationBar.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "TiaoKuanViewController.h"
+
 
 
 @interface SetPasswordViewController()<UITextFieldDelegate>
@@ -47,6 +49,8 @@
     if (![self.config[@"isRegister"] boolValue]) {
         self.checkButton.hidden = YES;
         self.agreementButton.hidden = YES;
+        self.fuwutiaokuanButton.hidden = YES;
+        
     }
     
     self.isAgreementChecked = YES;
@@ -212,6 +216,12 @@
 - (IBAction)agreementButtonClicked:(id)sender
 {
     [self changeCheckButtonBackground];
+}
+
+- (IBAction)fuwutiaokuanClicked:(id)sender {
+    NSLog(@"查看小鹿妹妹服务条款");
+    TiaoKuanViewController *tiaokuanVC = [[TiaoKuanViewController alloc] initWithNibName:@"TiaoKuanViewController" bundle:nil];
+    [self.navigationController pushViewController:tiaokuanVC animated:YES];
 }
 
 

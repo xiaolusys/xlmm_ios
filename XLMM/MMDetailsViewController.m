@@ -175,7 +175,7 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     json = dic;
     //设置底部图片,调整高度
-   [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] imageCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+   [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
        if (image != nil) {
             self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
             headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
@@ -347,7 +347,7 @@
         
         UIImageView *imageview = [[UIImageView alloc] init];
         
-        [imageview sd_setImageWithURL:[NSURL URLWithString:[[[imageArray objectAtIndex:i] URLEncodedString] imageCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [imageview sd_setImageWithURL:[NSURL URLWithString:[[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             NSLog(@"%dimage = %@",i, image);
             imagewidth = SCREENWIDTH;
             
@@ -722,7 +722,7 @@
     NSData *imageData = nil;
     do {
         NSLog(@"下载图片");
-        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[imageUrlString URLEncodedString] imageCompression]]];
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[imageUrlString URLEncodedString] imageShareCompression]]];
         if (imageData != nil) {
             
             NSLog(@"图片下载成功");
@@ -733,7 +733,7 @@
     } while (YES);
     UIImage *image = [UIImage imageWithData:imageData];
     NSLog(@"image = %@", image);
-    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(150, 200                 )];
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(75, 100)];
     NSLog(@"image = %@", image);
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
     UIImage *newImage = [UIImage imageWithData:imagedata];

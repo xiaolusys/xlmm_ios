@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
 @property (weak, nonatomic) IBOutlet UIButton *agreementButton;
 @property (weak, nonatomic) IBOutlet UIButton *checkButton;
+@property (weak, nonatomic) IBOutlet UIButton *fuwutiaokuanButton;
 
 @property (strong,nonatomic) NSDictionary *config;
 
@@ -25,5 +26,8 @@
 
 - (IBAction)checkButtonClicked:(id)sender;
 - (IBAction)agreementButtonClicked:(id)sender;
+- (IBAction)fuwutiaokuanClicked:(id)sender;
+
+
 
 @end

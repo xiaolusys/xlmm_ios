@@ -16,4 +16,11 @@
 
 - (NSString *)imageMoreCompression;
 
+- (NSString *)ImageNoCompression;
+
+- (NSString *)imageShareCompression;
+
+- (NSString *)imagePostersCompression;
+
+
 @end
