@@ -18,13 +18,20 @@
 
 #define login @"login"
 
-@interface AppDelegate ()
+#define appleID @"so.xiaolu.m.xiaolumeimei"
+
+@interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic ,copy) NSString *wxCode;
 @property (nonatomic ,copy) NSString *access_token;
 @property (nonatomic ,copy) NSString *openid;
 @property (nonatomic, strong) NSDictionary *tokenInfo;
 @property (nonatomic, strong) NSDictionary *userInfo;
+
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *trackViewUrl1;
+@property (nonatomic, copy) NSString *trackName;
+
 
 
 @end
@@ -79,7 +86,60 @@
 
     [self.window makeKeyAndVisible];
     
+ 
+    NSError *error = nil;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID]];
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
+    NSLog(@"%@", appInfoDic);
+    if (error) {
+        NSLog(@"%@", error);
+        return YES;
+    }
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if (![reluts count]) {
+        NSLog(@"reslut = nil");
+        return YES;
+    }
+    NSDictionary *infoDic = reluts[0];
+    
+    
+    
+    
+
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    double doubleCurrentVersion = [currentVersion doubleValue];
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+    
     return YES;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
+    }
 }
 
 //  ios 推送 消息
