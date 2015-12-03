@@ -99,9 +99,9 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-    
-    [self.WuliuView addGestureRecognizer:tapGesture];
+//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+//    
+//    [self.WuliuView addGestureRecognizer:tapGesture];
     
 }
 
@@ -177,22 +177,26 @@
     
     if ([statusDisplay isEqualToString:@"待付款"]) {
         self.zhuangtaiLabel.text = @"订单创建成功";
-        NSString *timeString = [dicJson objectForKey:@"created"];
+        NSString *timeString = [dicJson objectForKey:@"created"];// 创建时间。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 
     } else if ([statusDisplay isEqualToString:@"已付款"]){
         self.zhuangtaiLabel.text = @"您已提交了订单，请等待系统确认";
         self.headdingdanzhuangtai.text = @"待发货";
-        NSString *timeString = [dicJson objectForKey:@"pay_time"];
+        NSString *timeString = [dicJson objectForKey:@"pay_time"];//付款时间。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
     } else if (([statusDisplay isEqualToString:@"已发货"])){
-        self.zhuangtaiLabel.text = @"到达目的地网点上海杨浦区公司";
+        self.zhuangtaiLabel.text = @"查看详细物流信息";
         self.headdingdanzhuangtai.text = @"待收货";
-        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];//发货时间。。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+        self.rightImageView.hidden = NO;
+        
+        [self.WuliuView addGestureRecognizer:tapGesture];
     } else if (([statusDisplay isEqualToString:@"交易成功"])){
         self.zhuangtaiLabel.text = @"已签收";
         self.headdingdanzhuangtai.text = @"交易成功";
@@ -203,7 +207,7 @@
     } else if (([statusDisplay isEqualToString:@"交易关闭"])){
         self.zhuangtaiLabel.text = @"交易关闭";
         self.headdingdanzhuangtai.text = @"交易关闭";
-        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *timeString = [dicJson objectForKey:@"created"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 

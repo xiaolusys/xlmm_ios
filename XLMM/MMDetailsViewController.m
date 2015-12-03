@@ -204,6 +204,13 @@
     }
     if ([[details objectForKey:@"color"] isKindOfClass:[NSString class]]) {
         self.yanseLabel.text = [details objectForKey:@"color"];
+        NSString *string = [details objectForKey:@"color"];
+        NSInteger length = string.length;
+        if (string.length>0) {
+        self.yansebottomHeight.constant = length/16*15;
+        }
+       
+       // self.canshuViewHeight.constant += length/16*15;
     } else {
         self.yanseLabel.text = @"无";
     }
@@ -211,7 +218,7 @@
         self.canshulabel.text = [details objectForKey:@"note"];
         NSString *string = [details objectForKey:@"note"];
         NSInteger length = string.length;
-        self.canshuViewHeight.constant = 140 + length/16*15;
+        self.canshuViewHeight.constant += length/16*15;
     } else{
         self.canshulabel.text = @"无";
     }

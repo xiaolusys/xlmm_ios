@@ -483,7 +483,7 @@
         
         NSLog(@"dic = %@", dic);
         
-        NSInteger count = [[dic objectForKey:@"result"] integerValue];
+       NSInteger count = [[dic objectForKey:@"result"] integerValue];
         NSLog(@"count = %ld", (long)count);
        
     } else{
@@ -599,19 +599,19 @@
 
     NSLog(@"删除购物车");
   //  self.frontView.hidden = NO;
-    NSArray *arrayViews = [[NSBundle mainBundle]loadNibNamed:@"ConfirmView" owner:self options:nil];
-    self.myView = [arrayViews objectAtIndex:0];
-    NSLog(@"%@",_myView );
+//    NSArray *arrayViews = [[NSBundle mainBundle]loadNibNamed:@"ConfirmView" owner:self options:nil];
+//    self.myView = [arrayViews objectAtIndex:0];
+//    NSLog(@"%@",_myView );
   
-    UIButton *btn1 = self.retainBtn;
-    UIButton *btn2 = self.deleteBtn;
+//    UIButton *btn1 = self.retainBtn;
+//    UIButton *btn2 = self.deleteBtn;
  
     deleteModel = cartModel;
     self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 188);
         
    
-    [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];
-    [btn2 addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [btn2 addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
    // [self.view addSubview:_myView];
     
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

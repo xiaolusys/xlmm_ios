@@ -221,8 +221,8 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setValue:code forKey:@"wxCode"];
             [userDefaults synchronize];
-            NSDictionary *dic = @{@"code":code};
-            NSLog(@"dic11111 = %@", dic);
+//            NSDictionary *dic = @{@"code":code};
+//            NSLog(@"dic11111 = %@", dic);
             
         }else {
             NSLog(@"取消登录");

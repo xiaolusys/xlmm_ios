@@ -19,6 +19,7 @@
                 <outlet property="nameLabel" destination="BqH-2s-62X" id="QHQ-eT-Thc"/>
                 <outlet property="quxiaoBtn" destination="2yd-kz-TxL" id="Tfi-TJ-hsc"/>
                 <outlet property="remainTimeLabel" destination="Jo9-Bd-eZR" id="lU0-bq-Zif"/>
+                <outlet property="rightImageView" destination="dwJ-6j-u03" id="EMb-hZ-sMf"/>
                 <outlet property="screenWidth" destination="cN9-fJ-Ql2" id="rrf-R1-5Ux"/>
                 <outlet property="timeLabel" destination="akg-sF-yYd" id="Cqb-hz-2hw"/>
                 <outlet property="totalFeeLabel" destination="uTW-nH-syJ" id="UtF-6j-VuW"/>
@@ -499,7 +500,7 @@
                                             <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="dwJ-6j-u03">
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="dwJ-6j-u03">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <animations/>
                                             <constraints>

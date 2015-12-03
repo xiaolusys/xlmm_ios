@@ -326,20 +326,21 @@
     
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
-    NSDictionary *parameters = @{@"username": phoneNumber, @"valid_code":vcode};
+    NSDictionary *parameters = @{@"mobile":phoneNumber,
+                                 @"vcode":vcode};
+    NSLog(@"dic = %@", parameters);
+    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
+
     
-    //校验验证码（旧）
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
+
     NSLog(@"url = %@", stringurl);
-    
     [manager POST:stringurl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSInteger result = [[responseObject objectForKey:@"result"] intValue];
               NSLog(@"responseObject = %@", responseObject);
               
               if (result == 0)
-              {
-                  // 校验成功。。。
+              {   // 校验成功。。。
                   [self displaySetPasswordPage];
               }
               else
@@ -352,3 +353,7 @@
           }];
 }
 @end
+
+//第二步，创建请求
+
+
