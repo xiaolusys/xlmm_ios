@@ -133,6 +133,13 @@
     self.line5Height.constant = 0.5;
     self.line6height.constant = 0.5;
     [self downloadDetailsData];
+    
+    if ([WXApi isWXAppInstalled]) {
+        
+    } else {
+        self.shareButton.hidden = YES;
+        self.shareButtonImage.hidden = YES;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -693,11 +700,22 @@
     [self.navigationController pushViewController:sizeVC animated:YES];
 }
 #pragma mark -- weixin share
+
 - (IBAction)shareClicked:(id)sender {
     //修改分享图片，标题， 链接 ，
     
     //  kLinkURL = @"http://xiaolu.so/m/18807/";
     //NSString *kLinkTagName = @"xiaolumeimei";
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        
+    } else {
+        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        return;
+    }
+    
+    
     NSString *shareTitle = [json objectForKey:@"name"];
     NSString *shareDesc = [[json objectForKey:@"details"] objectForKey:@"note"];
     NSString *kLinkDescription;

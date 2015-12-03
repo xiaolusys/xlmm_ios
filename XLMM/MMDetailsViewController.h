@@ -57,6 +57,8 @@
 - (IBAction)backqianye:(id)sender;
 - (IBAction)addCartBtnClicked:(id)sender;
 - (IBAction)washshuomingClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *shareButtonImage;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 
 @end

@@ -43,6 +43,8 @@
                 <outlet property="nameLabel" destination="vuM-N0-go3" id="FUw-bn-ROc"/>
                 <outlet property="priceLabel" destination="gnV-T6-k8Y" id="eUL-fY-oCf"/>
                 <outlet property="scrollerView" destination="fwi-hO-blm" id="gJF-SN-PnG"/>
+                <outlet property="shareButton" destination="hld-yd-VKC" id="9bY-zA-WCq"/>
+                <outlet property="shareButtonImage" destination="zbQ-Au-I3d" id="pLb-ZI-RVW"/>
                 <outlet property="shareView" destination="rce-ec-jgh" id="3xx-aZ-750"/>
                 <outlet property="sizeView" destination="mWS-cl-9YW" id="GTr-DR-53D"/>
                 <outlet property="sizeViewHeight" destination="LyR-OB-Dts" id="VkX-T2-QOG"/>
