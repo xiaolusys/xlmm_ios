@@ -544,7 +544,7 @@
               NSLog(@"dic = %@", dic);
               NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
               
-              NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+              __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
               NSLog(@"%@",str);
               UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
               view.backgroundColor = [UIColor blackColor];

@@ -467,7 +467,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
     NSLog(@"%@",str1);
     
@@ -483,7 +483,7 @@
         
         NSLog(@"dic = %@", dic);
         
-       NSInteger count = [[dic objectForKey:@"result"] integerValue];
+       __unused NSInteger count = [[dic objectForKey:@"result"] integerValue];
         NSLog(@"count = %ld", (long)count);
        
     } else{
@@ -586,7 +586,7 @@
               NSLog(@"Error: %@", error.userInfo);
               NSDictionary *dic = error.userInfo;
               NSData *data = [dic objectForKey:@"com.alamofire.serialization.response.error.data"];
-              NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+              __unused NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
               NSLog(@"data = %@", str);
               
               [self downloadData];
@@ -640,7 +640,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     NSLog(@"%@",str1);
     [self downloadData];
     [self downloadHistoryData];
@@ -714,7 +714,7 @@
               NSLog(@"dic = %@", dic);
               NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
               
-              NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+              __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
               NSLog(@"%@",str);
               UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
               view.backgroundColor = [UIColor blackColor];

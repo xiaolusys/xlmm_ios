@@ -149,7 +149,7 @@
     
     // requesting for changing nickname
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
+   __unused NSDictionary *response = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
     NSLog(@"result = %@", response);
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"修改成功!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

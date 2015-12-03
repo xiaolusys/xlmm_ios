@@ -799,7 +799,7 @@
                 
             }
             
-            NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+            __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
             
             
             

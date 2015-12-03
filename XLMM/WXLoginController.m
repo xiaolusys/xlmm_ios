@@ -302,7 +302,7 @@
    // AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     
-    NSDictionary *parameters = @{@"username": self.phoneTextField.text,
+    __unused NSDictionary *parameters = @{@"username": self.phoneTextField.text,
                                  @"valid_code":self.codeTextField.text
                                  };
     NSLog(@"parameters = %@", parameters);
@@ -334,7 +334,7 @@
     
     
     
-    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions
                                                            error:nil];

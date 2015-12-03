@@ -298,7 +298,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [paths objectAtIndex:0];
     NSLog(@"path = %@", path);
-    NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
+    __unused NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
     NSLog(@"fileName = %@", fileName);
     
 //   UIImage * image = [UIImage imageWithContentsOfFile:fileName];

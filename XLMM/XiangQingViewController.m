@@ -632,7 +632,7 @@
     NSLog(@"111 : %@", response);
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"222 : %@", dic);
     NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
       NSLog(@"string = %@", charge);

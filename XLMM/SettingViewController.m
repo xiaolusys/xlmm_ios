@@ -66,7 +66,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     MMLOG(infoDictionary);
     // app名称
-    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    __unused NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
     // app版本
     MMLOG(app_Name);
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];

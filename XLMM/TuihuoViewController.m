@@ -167,7 +167,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         
         
         
-        for (NSString *imageUrl in model.proof_pic) {
+        for (__unused NSString *imageUrl in model.proof_pic) {
             NSLog(@"imageUrl = %@", imageUrl);
             
         }

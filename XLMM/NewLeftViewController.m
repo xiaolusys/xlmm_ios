@@ -389,7 +389,7 @@
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
         [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
         NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+        __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
         NSLog(@"%@",str1);
         UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];

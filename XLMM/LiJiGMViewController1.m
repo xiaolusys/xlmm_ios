@@ -160,7 +160,7 @@
     NSLog(@"dic = %@", dic);
     
     NSLog(@"---------------");
-    NSDictionary *coupon_ticket = [dic objectForKey:@"coupon_ticket"];
+    __unused NSDictionary *coupon_ticket = [dic objectForKey:@"coupon_ticket"];
     NSLog(@"coupon_ticket = %@", coupon_ticket);
     NSLog(@"---------------");
     
@@ -443,7 +443,7 @@
         NSLog(@"response = %@", httpResponse);
         
         NSLog(@"data = %@", data);
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        __unused NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"dataString = %@", str);
         if (httpResponse.statusCode != 200) {
             NSLog(@"出错了");
@@ -458,7 +458,7 @@
         NSLog(@"charge = %@", charge);
         NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"diction = %@", diction);
-        NSString *chargeID = [diction objectForKey:@"order_no"];
+        __unused NSString *chargeID = [diction objectForKey:@"order_no"];
         
         NSLog(@"chargeID = %@", chargeID);
         dispatch_sync(dispatch_get_main_queue(), ^{

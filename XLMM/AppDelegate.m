@@ -45,7 +45,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    NSString *plistPath1 = [paths objectAtIndex:0];
+    __unused NSString *plistPath1 = [paths objectAtIndex:0];
     NSLog(@"%@", plistPath1);
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];

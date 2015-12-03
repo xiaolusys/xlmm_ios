@@ -108,7 +108,7 @@
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
     NSLog(@"timeSp:%@",timeSp);
     
-    long time = [timeSp integerValue];
+    __unused long time = [timeSp integerValue];
     NSLog(@"time = %ld", (long)time);
     
     for (int i = 0; i<8; i++) {
