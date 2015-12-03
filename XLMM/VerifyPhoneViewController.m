@@ -327,7 +327,7 @@
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
     NSDictionary *parameters = @{@"mobile":phoneNumber,
-                                 @"vcode":vcode};
+                                 @"vgcode":vcode};
     NSLog(@"dic = %@", parameters);
     NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
 

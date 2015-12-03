@@ -19,7 +19,7 @@
 
 #import "MJRefresh.h"
 #import "WXApi.h"
-
+#import "LogInViewController.h"
 #import "UIViewController+NavigationBar.h"
 
 static NSString * ksimpleCell = @"simpleCell";
@@ -162,12 +162,19 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
-    imageView1.frame = CGRectMake(20, 10, 25, 25);
-    [button1 addSubview:imageView1];
-    [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    NSString *imageName = nil;
+    if ([WXApi isWXAppInstalled]) {
+        imageName = @"shareIconImage2.png";
+        UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+        imageView1.frame = CGRectMake(20, 10, 25, 25);
+        [button1 addSubview:imageView1];
+        [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    } else {
+
+    }
+    
     
 //    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharedMethod)];
 //    self.navigationItem.rightBarButtonItem = rightItem;
@@ -181,10 +188,26 @@ static NSString * ksimpleCell = @"simpleCell";
     
   //  http://m.xiaolu.so/rest/v1/share/today
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        
+    } else {
+        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        return;
+    }
+    
+    
+    
+    
     NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
+    
     NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
+    if (shareData == nil) {
+        return;
+    }
     NSError *shareError = nil;
     NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
+    
     NSLog(@"shareDic = %@", shareDic);
     
     
