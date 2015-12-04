@@ -92,6 +92,9 @@
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if (returnData == nil) {
+        return YES;
+    }
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
     NSLog(@"%@", appInfoDic);
     if (error) {

@@ -327,14 +327,14 @@ static NSString * ksimpleCell = @"simpleCell";
     CGFloat temp = oldScrollViewTop - point.y;
     
     
-    CGFloat marine = 120;
+    CGFloat marine = 300;
     if (temp > marine) {
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
         
         
-    } else if (temp < 0 - marine){
+    } else if (temp < 0 - marine +200){
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
         }
