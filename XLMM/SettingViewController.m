@@ -15,6 +15,8 @@
 #import "SetPasswordViewController.h"
 #import "ModifyPhoneController.h"
 #import "VerifyPhoneViewController.h"
+#import "VersionController.h"
+
 
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
@@ -183,6 +185,13 @@
 
 - (IBAction)versionButtonClicked:(id)sender {
     NSLog(@"版本号");
+    
+    VersionController *versionVC = [[VersionController alloc] initWithNibName:@"VersionController" bundle:nil];
+    
+    
+    [self.navigationController pushViewController:versionVC animated:YES];
+    
+    
 }
 
 - (IBAction)deleteButtonClicked:(id)sender {

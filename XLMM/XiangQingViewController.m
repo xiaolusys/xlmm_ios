@@ -81,7 +81,7 @@
     self.myViewHeight.constant = 0;
     
     
-    frontView = [[UIView alloc] initWithFrame:self.view.bounds];
+    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     frontView.backgroundColor = [UIColor whiteColor];
     
     activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

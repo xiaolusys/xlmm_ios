@@ -370,6 +370,12 @@
 - (IBAction)buyClicked:(id)sender {
      NSLog(@"购买商品");
     
+    if (addressModel.addressID == nil) {
+        NSLog(@"地址为空");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请填写收货地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
     //   http://m.xiaolu.so/rest/v1/trades/shoppingcart_create
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/shoppingcart_create", Root_URL];

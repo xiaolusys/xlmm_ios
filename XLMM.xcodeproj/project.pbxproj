@@ -74,6 +74,8 @@
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
+		32258B451C1120A6000FFE5F /* VersionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32258B431C1120A6000FFE5F /* VersionController.m */; };
+		32258B461C1120A6000FFE5F /* VersionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32258B441C1120A6000FFE5F /* VersionController.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -749,6 +751,9 @@
 		321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableCellTableViewCell1.h; sourceTree = "<group>"; };
 		321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableCellTableViewCell1.m; sourceTree = "<group>"; };
 		321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableCellTableViewCell1.xib; sourceTree = "<group>"; };
+		32258B421C1120A6000FFE5F /* VersionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionController.h; sourceTree = "<group>"; };
+		32258B431C1120A6000FFE5F /* VersionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionController.m; sourceTree = "<group>"; };
+		32258B441C1120A6000FFE5F /* VersionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionController.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2101,6 +2106,9 @@
 				32707F191BFAC9FB0006FB6A /* WuliuViewController.m */,
 				32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */,
 				8E0044E51BFAF4B000AFC1DF /* WuliuInfoView.xib */,
+				32258B421C1120A6000FFE5F /* VersionController.h */,
+				32258B431C1120A6000FFE5F /* VersionController.m */,
+				32258B441C1120A6000FFE5F /* VersionController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2550,6 +2558,7 @@
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				321928EE1BDB8599004EA6A7 /* refund.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
+				32258B461C1120A6000FFE5F /* VersionController.xib in Resources */,
 				32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
@@ -2846,6 +2855,7 @@
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
+				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
 				325DF93E1B69B16000351ACA /* PosterView.m in Sources */,
