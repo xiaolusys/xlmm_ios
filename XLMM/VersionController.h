@@ -10,4 +10,8 @@
 
 @interface VersionController : UIViewController
 
+@property (nonatomic, copy) NSString *versionString;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @end

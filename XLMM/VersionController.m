@@ -43,6 +43,7 @@
 
 - (void)createInfo{
     //创建关于小鹿美美的界面。。。。。。
+    self.versionLabel.text = self.versionString;
 }
 
 - (void)backClicked:(UIButton *)button{

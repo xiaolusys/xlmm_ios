@@ -76,7 +76,7 @@
     MMLOG(app_Version);
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
     MMLOG(app_build);
-    NSString *versionString = [NSString stringWithFormat:@"%@.%@", app_Version, app_build];
+    NSString *versionString = [NSString stringWithFormat:@"V%@.%@", app_Version, app_build];
     self.versionLabel.text = versionString;
 }
 
@@ -188,6 +188,7 @@
     
     VersionController *versionVC = [[VersionController alloc] initWithNibName:@"VersionController" bundle:nil];
     
+    versionVC.versionString = self.versionLabel.text;
     
     [self.navigationController pushViewController:versionVC animated:YES];
     

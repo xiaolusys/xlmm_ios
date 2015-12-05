@@ -75,7 +75,6 @@
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
 		32258B451C1120A6000FFE5F /* VersionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32258B431C1120A6000FFE5F /* VersionController.m */; };
-		32258B461C1120A6000FFE5F /* VersionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32258B441C1120A6000FFE5F /* VersionController.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -569,6 +568,8 @@
 		32F2E9591C128E3700A98EA3 /* ios8_retina_HD5.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F2E9551C128E3700A98EA3 /* ios8_retina_HD5.5.png */; };
 		32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F2E9561C128E3700A98EA3 /* retina_HD4.7.png */; };
 		32F2E95B1C128E3700A98EA3 /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F2E9571C128E3700A98EA3 /* retina4.png */; };
+		32F2E95D1C12AFBE00A98EA3 /* guanyuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F2E95C1C12AFBE00A98EA3 /* guanyuIcon.png */; };
+		32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32258B441C1120A6000FFE5F /* VersionController.xib */; };
 		32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */; };
 		32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9531B6CCA41008530BA /* AFHTTPRequestOperationManager.m */; };
 		32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
@@ -1153,6 +1154,7 @@
 		32F2E9551C128E3700A98EA3 /* ios8_retina_HD5.5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios8_retina_HD5.5.png; sourceTree = "<group>"; };
 		32F2E9561C128E3700A98EA3 /* retina_HD4.7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina_HD4.7.png; sourceTree = "<group>"; };
 		32F2E9571C128E3700A98EA3 /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
+		32F2E95C1C12AFBE00A98EA3 /* guanyuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guanyuIcon.png; sourceTree = "<group>"; };
 		32F3D9501B6CCA41008530BA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		32F3D9511B6CCA41008530BA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		32F3D9521B6CCA41008530BA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1293,6 +1295,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32F2E95C1C12AFBE00A98EA3 /* guanyuIcon.png */,
 				32F2E9541C128E3700A98EA3 /* ios7.png */,
 				32F2E9551C128E3700A98EA3 /* ios8_retina_HD5.5.png */,
 				32F2E9561C128E3700A98EA3 /* retina_HD4.7.png */,
@@ -2398,6 +2401,7 @@
 				32DE21B81BF184A200999ECA /* childIcon.png in Resources */,
 				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				321928DF1BDB7EB8004EA6A7 /* setting.png in Resources */,
+				32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */,
 				32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */,
 				32D2B78D1BDDF41C00603FCE /* selected_icon.png in Resources */,
 				321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */,
@@ -2444,6 +2448,7 @@
 				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
+				32F2E95D1C12AFBE00A98EA3 /* guanyuIcon.png in Resources */,
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				32EC426A1BE8AFB8009E5FA2 /* gouwucheicon2.png in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
@@ -2558,7 +2563,6 @@
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
 				321928EE1BDB8599004EA6A7 /* refund.png in Resources */,
 				32746E221B74A22000816208 /* icon-radio.png in Resources */,
-				32258B461C1120A6000FFE5F /* VersionController.xib in Resources */,
 				32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
