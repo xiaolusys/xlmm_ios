@@ -360,8 +360,9 @@
     for (int i = 0; i<imageArray.count; i++) {
         
         UIImageView *imageview = [[UIImageView alloc] init];
-        
-        [imageview sd_setImageWithURL:[NSURL URLWithString:[[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        NSString *imagelink = [[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression];
+        NSLog(@"imageLink = %@", imagelink);
+        [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             NSLog(@"%dimage = %@",i, image);
             imagewidth = SCREENWIDTH;
             

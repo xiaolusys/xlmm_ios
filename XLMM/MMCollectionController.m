@@ -159,7 +159,7 @@
     }
     NSDictionary *firstDic = [collections objectAtIndex:0];
     NSLog(@"firstDic = %@", firstDic);
-    collectionImage = [UIImage imagewithURLString:[[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageCompression]];
+    collectionImage = [UIImage imagewithURLString:[[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageMoreCompression]];
     NSLog(@"collenimage = %@", collectionImage);
     NSLog(@"firstImageURL = %@", [[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageCompression]);
     NSLog(@"image = %@", collectionImage);

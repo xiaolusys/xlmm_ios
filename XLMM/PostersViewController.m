@@ -47,6 +47,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
@@ -62,6 +63,11 @@ static NSString * ksimpleCell = @"simpleCell";
         _isFirst = NO;
     }
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)setupRefresh{
