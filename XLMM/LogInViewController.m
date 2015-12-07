@@ -43,6 +43,7 @@
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
     if (islogin) {
        // [self.navigationController popViewControllerAnimated:NO];
+        // test ying's change
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
