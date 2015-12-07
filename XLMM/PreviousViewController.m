@@ -78,7 +78,7 @@ static NSString *khead2View = @"head2View";
     
     
     [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    //[_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
     _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
