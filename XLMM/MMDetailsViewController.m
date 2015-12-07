@@ -140,6 +140,9 @@
         self.shareButton.hidden = YES;
         self.shareButtonImage.hidden = YES;
     }
+    
+    
+    self.scrollerView.scrollEnabled = NO;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -180,10 +183,14 @@
     }
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    json = dic;
+    json = dic; 
     //设置底部图片,调整高度
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+       [frontView removeFromSuperview];
+
        if (image != nil) {
+
+           self.scrollerView.scrollEnabled = YES;
             self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
             headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
             #pragma mark --判断是否拉伸图片
@@ -234,7 +241,6 @@
     normalSkus = [dic objectForKey:@"normal_skus"];
     saleTime = [dic objectForKey:@"sale_time"];
     offShelfTime = [dic objectForKey:@"offshelf_time"];
-    [frontView removeFromSuperview];
   
    
 

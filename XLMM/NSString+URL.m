@@ -29,12 +29,12 @@
 
 
 - (NSString *)imageMoreCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/10",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/50",self];
     return string;
 }
 
 - (NSString *)ImageNoCompression{
-    NSString *string = [NSString stringWithFormat:@"%@",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/100",self];
     return string;
 }
 
