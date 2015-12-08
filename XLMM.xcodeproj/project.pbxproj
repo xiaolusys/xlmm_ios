@@ -844,6 +844,7 @@
 		3265DAAA1C1667BD0095BC94 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		3265DAAB1C1667BD0095BC94 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		3265DAB11C16D8F20095BC94 /* readme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = readme.h; sourceTree = "<group>"; };
 		326676271BB51FE000307EC4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		3266762B1BB5200E00307EC4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1760,6 +1761,7 @@
 			isa = PBXGroup;
 			children = (
 				3265DAA51C1667BD0095BC94 /* SVIndefiniteAnimatedView.h */,
+				3265DAB11C16D8F20095BC94 /* readme.h */,
 				3265DAA61C1667BD0095BC94 /* SVIndefiniteAnimatedView.m */,
 				3265DAA71C1667BD0095BC94 /* SVProgressHUD-Prefix.pch */,
 				3265DAA81C1667BD0095BC94 /* SVProgressHUD.bundle */,

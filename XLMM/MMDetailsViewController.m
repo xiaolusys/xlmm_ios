@@ -102,7 +102,11 @@
     self.scrollerView.delegate = self;
     contentCount = 0;
     theNumberOfSizeCanSelected = 0;
-    [SVProgressHUD show];
+   
+   
+  
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
+      [SVProgressHUD show];
     // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
     if (SCREENHEIGHT == 568) {
