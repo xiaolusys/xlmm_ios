@@ -141,11 +141,28 @@ static NSString *khead2View = @"head2View";
     _isFirst = YES;
     _isDone = NO;
     [self createCollectionView];
- 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
-  }
+}
 
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+        
+    } else{
+        [self.delegate showNavigation];
+    }
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer

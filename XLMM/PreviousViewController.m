@@ -47,6 +47,7 @@ static NSString *khead2View = @"head2View";
     BOOL isqiangGuang;
     NSString *offSheltTime;
     
+    BOOL isHidden;
     CGFloat oldScrollViewTop;
     
 }
@@ -143,6 +144,23 @@ static NSString *khead2View = @"head2View";
     
     // [self downloadData];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+}
+
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+    
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+        
+    } else{
+        [self.delegate showNavigation];
+    }
 }
 
 

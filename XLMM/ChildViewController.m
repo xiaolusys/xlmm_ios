@@ -149,8 +149,22 @@ static NSString * ksimpleCell = @"simpleCell";
     self.childCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
     [self.view addSubview:self.containerView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
  
+}
+
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+
+    } else{
+        [self.delegate showNavigation];
+    }
 }
 
 - (void)setLayout{
