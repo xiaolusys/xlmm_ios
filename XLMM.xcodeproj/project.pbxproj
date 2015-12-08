@@ -130,6 +130,10 @@
 		3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */; };
 		3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */; };
 		3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA321B6C850100F36A8D /* PeopleModel.m */; };
+		3265DAAD1C1667BD0095BC94 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3265DAA61C1667BD0095BC94 /* SVIndefiniteAnimatedView.m */; };
+		3265DAAE1C1667BD0095BC94 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3265DAA81C1667BD0095BC94 /* SVProgressHUD.bundle */; };
+		3265DAAF1C1667BD0095BC94 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3265DAAA1C1667BD0095BC94 /* SVProgressHUD.m */; };
+		3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */; };
 		326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676271BB51FE000307EC4 /* libc++.tbd */; };
 		3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
 		3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
@@ -832,6 +836,14 @@
 		3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleCollectionCell.xib; sourceTree = "<group>"; };
 		3264EA311B6C850100F36A8D /* PeopleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleModel.h; sourceTree = "<group>"; };
 		3264EA321B6C850100F36A8D /* PeopleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleModel.m; sourceTree = "<group>"; };
+		3265DAA51C1667BD0095BC94 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		3265DAA61C1667BD0095BC94 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		3265DAA71C1667BD0095BC94 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		3265DAA81C1667BD0095BC94 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		3265DAA91C1667BD0095BC94 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		3265DAAA1C1667BD0095BC94 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		3265DAAB1C1667BD0095BC94 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		326676271BB51FE000307EC4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		3266762B1BB5200E00307EC4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1744,6 +1756,21 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		3265DAA41C1667BD0095BC94 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				3265DAA51C1667BD0095BC94 /* SVIndefiniteAnimatedView.h */,
+				3265DAA61C1667BD0095BC94 /* SVIndefiniteAnimatedView.m */,
+				3265DAA71C1667BD0095BC94 /* SVProgressHUD-Prefix.pch */,
+				3265DAA81C1667BD0095BC94 /* SVProgressHUD.bundle */,
+				3265DAA91C1667BD0095BC94 /* SVProgressHUD.h */,
+				3265DAAA1C1667BD0095BC94 /* SVProgressHUD.m */,
+				3265DAAB1C1667BD0095BC94 /* SVRadialGradientLayer.h */,
+				3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		32746DD41B74A22000816208 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -2225,6 +2252,7 @@
 		32E00C901BA7B79700A73390 /* The Third */ = {
 			isa = PBXGroup;
 			children = (
+				3265DAA41C1667BD0095BC94 /* SVProgressHUD */,
 				321952D01BFC7C7A00AA0AB8 /* AGAsyncTestHelper */,
 				321952A11BFC7AF800AA0AB8 /* HappyDNS */,
 				321952501BFC7A8D00AA0AB8 /* QiniuSDK */,
@@ -2572,6 +2600,7 @@
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				3247EAAE1BE9E07300A5CC1C /* wash03.png in Resources */,
+				3265DAAE1C1667BD0095BC94 /* SVProgressHUD.bundle in Resources */,
 				3247FDB51BFF1BEA00C6631D /* YHQHeadView.xib in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
@@ -2732,6 +2761,7 @@
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
 				32558A9F1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m in Sources */,
 				321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */,
+				3265DAAF1C1667BD0095BC94 /* SVProgressHUD.m in Sources */,
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
@@ -2855,10 +2885,12 @@
 				32E6BC191BEC95CF0036F338 /* ModifyPhoneController.m in Sources */,
 				321952C81BFC7AF800AA0AB8 /* QNHosts.m in Sources */,
 				3219529B1BFC7A8D00AA0AB8 /* QNConfiguration.m in Sources */,
+				3265DAAD1C1667BD0095BC94 /* SVIndefiniteAnimatedView.m in Sources */,
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
+				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
