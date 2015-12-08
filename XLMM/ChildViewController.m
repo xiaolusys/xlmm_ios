@@ -227,9 +227,15 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (isOrder) {
+        if (self.orderDataArray.count == 0) {
+            return 8;
+        }
         return self.orderDataArray.count;
         
     }else{
+        if (self.dataArray.count == 0) {
+            return 8;
+        }
         return self.dataArray.count;
         
     }
@@ -251,14 +257,20 @@ static NSString * ksimpleCell = @"simpleCell";
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
-        PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-      
-        [cell fillData:model];
+        if (_orderDataArray.count > indexPath.row) {
+            PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+            
+            [cell fillData:model];
+        }
+        
        
     }else{
-        PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
-        
-        [cell fillData:model];
+        if (_dataArray.count > indexPath.row) {
+            PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
+            
+            [cell fillData:model];
+        }
+       
     }
     return cell;
 }

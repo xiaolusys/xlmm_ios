@@ -7,11 +7,12 @@
 //
 
 #import "AppDelegate.h"
-
+#import "Reachability.h"
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "Reachability.h"
 
 #import "NewLeftViewController.h"
 
@@ -37,9 +38,35 @@
 
 @implementation AppDelegate
 
-
+- (NSString *)stringFromStatus:(NetworkStatus)status{
+    NSString *string;
+    switch (status) {
+        case NotReachable:
+            string = @"无网络连接，请检查您的网络";
+            break;
+            case ReachableViaWiFi:
+            string = @"wifi";
+            break;
+            case ReachableViaWWAN:
+            string = @"wwan";
+            break;
+            
+        default:
+            break;
+    }
+    return string;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    if (status == NotReachable) {
+        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+    }
+  
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];

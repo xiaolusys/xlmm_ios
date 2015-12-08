@@ -46,7 +46,7 @@
 }
 
 - (NSString *)imagePostersCompression{
-    NSString *string = [NSString stringWithFormat:@"%@",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/80",self];
     return string;
 }
 

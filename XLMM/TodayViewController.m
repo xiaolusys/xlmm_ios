@@ -447,9 +447,15 @@ static NSString *khead2View = @"head2View";
     if (section == 0) {
         return 2;
     } else if (section == 1){
+        if (ladyDataArray.count == 0) {
+            return 2;
+        }
         return ladyDataArray.count;
    
     } else if (section == 2){
+        if (childDataArray.count == 0) {
+            return 2;
+        }
         return childDataArray.count;
         
     
@@ -511,6 +517,7 @@ static NSString *khead2View = @"head2View";
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
              //  cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
+               NSLog(@"image = %@", image);
 
 
          }];

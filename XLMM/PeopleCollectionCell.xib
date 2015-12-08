@@ -52,7 +52,7 @@
                             <constraint firstAttribute="height" constant="200" id="dgF-kR-Hde"/>
                         </constraints>
                     </imageView>
-                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
+                    <view hidden="YES" alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUt-wu-bjn" userLabel="Back View">
                         <rect key="frame" x="46" y="70" width="60" height="60"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已抢光" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSt-Yf-KYY">

@@ -446,9 +446,15 @@ static NSString *khead2View = @"head2View";
     if (section == 0) {
         return 2;
     } else if (section == 1){
+        if (ladyDataArray.count == 0) {
+            return 2;
+        }
         return ladyDataArray.count;
    
     } else if (section == 2){
+        if (childDataArray.count == 0) {
+            return 2;
+        }
         return childDataArray.count;
         
     }
