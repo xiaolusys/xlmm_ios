@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
 		2E76FFEE1C180BAA008CE960 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE31C180BAA008CE960 /* libpingpp+alipay.a */; };
@@ -33,7 +34,6 @@
 		2EB87D321C17FAE4001CBF3D /* UMSocialSDKResourcesNew.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87D0A1C17FAE4001CBF3D /* UMSocialSDKResourcesNew.bundle */; };
 		2EB87D331C17FAE4001CBF3D /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D0E1C17FAE4001CBF3D /* libSocialSina.a */; };
 		2EB87D341C17FAE4001CBF3D /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D111C17FAE4001CBF3D /* libSocialQQ.a */; };
-		2EB87D351C17FAE4001CBF3D /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D121C17FAE4001CBF3D /* TencentOpenAPI.framework */; };
 		2EB87D361C17FAE4001CBF3D /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87D131C17FAE4001CBF3D /* TencentOpenApi_IOS_Bundle.bundle */; };
 		2EB87D371C17FAE4001CBF3D /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D161C17FAE4001CBF3D /* libSocialWechat.a */; };
 		2EB87D381C17FAE4001CBF3D /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D171C17FAE4001CBF3D /* libWeChatSDK.a */; };
@@ -654,6 +654,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		2E76FFE31C180BAA008CE960 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
@@ -695,7 +696,6 @@
 		2EB87D0E1C17FAE4001CBF3D /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
 		2EB87D0F1C17FAE4001CBF3D /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		2EB87D111C17FAE4001CBF3D /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
-		2EB87D121C17FAE4001CBF3D /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2EB87D131C17FAE4001CBF3D /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		2EB87D141C17FAE4001CBF3D /* UMSocialQQHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialQQHandler.h; sourceTree = "<group>"; };
 		2EB87D161C17FAE4001CBF3D /* libSocialWechat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWechat.a; sourceTree = "<group>"; };
@@ -1319,7 +1319,7 @@
 				2E76FFEF1C180BAA008CE960 /* libpingpp+up.a in Frameworks */,
 				2E8DB9731C169F3900FC33C2 /* libz.1.dylib in Frameworks */,
 				2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */,
-				2EB87D351C17FAE4001CBF3D /* TencentOpenAPI.framework in Frameworks */,
+				2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */,
 				2E8DB96D1C169EB300FC33C2 /* libiconv.2.dylib in Frameworks */,
 				2E8DB96B1C169E1600FC33C2 /* libsqlite3.dylib in Frameworks */,
 				2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */,
@@ -1565,8 +1565,8 @@
 		2EB87D101C17FAE4001CBF3D /* TencentOpenAPI */ = {
 			isa = PBXGroup;
 			children = (
+				2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */,
 				2EB87D111C17FAE4001CBF3D /* libSocialQQ.a */,
-				2EB87D121C17FAE4001CBF3D /* TencentOpenAPI.framework */,
 				2EB87D131C17FAE4001CBF3D /* TencentOpenApi_IOS_Bundle.bundle */,
 				2EB87D141C17FAE4001CBF3D /* UMSocialQQHandler.h */,
 			);
