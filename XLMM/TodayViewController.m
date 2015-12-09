@@ -633,22 +633,21 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"%f", scrollView.contentOffset.y);
-    if (scrollView.contentOffset.y <300 && scrollView.contentOffset.y > -80) {
+    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
         return;
     }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
     
-    CGFloat marine = 80;
+    CGFloat marine = 5;
     if (temp > marine) {
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
       
         
-    } else if (temp <  -marine + 60){
+    } else if (temp < -5){
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
         }
@@ -661,6 +660,12 @@ static NSString *khead2View = @"head2View";
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
     }
+}
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    if (section == 2) {
+        return UIEdgeInsetsMake(0, 5, 50, 5);
+    }
+    return UIEdgeInsetsMake(0, 5, 0, 5);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
