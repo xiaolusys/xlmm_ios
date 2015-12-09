@@ -764,7 +764,7 @@
     } else{
         kLinkDescription = @"小鹿妹妹";
     }
-    NSString *kLinkTitle = shareTitle;
+    __unused NSString *kLinkTitle = shareTitle;
     WXWebpageObject *ext = [WXWebpageObject object];
     NSString *shareLink = [NSString stringWithFormat:@"http://m.xiaolu.so/pages/shangpinxq.html?id=%@", [json objectForKey:@"id"]];
 

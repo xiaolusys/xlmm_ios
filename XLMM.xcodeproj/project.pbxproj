@@ -16,11 +16,7 @@
 		2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE81C180BAA008CE960 /* libpingpp+wx.a */; };
 		2E76FFF21C180BAA008CE960 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */; };
 		2E76FFF31C180BAA008CE960 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFEA1C180BAA008CE960 /* libpingpp.a */; };
-		2E8DB96B1C169E1600FC33C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96A1C169E1600FC33C2 /* libsqlite3.dylib */; };
-		2E8DB96D1C169EB300FC33C2 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96C1C169EB300FC33C2 /* libiconv.2.dylib */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
-		2E8DB9711C169F0C00FC33C2 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB9701C169F0C00FC33C2 /* libstdc++.6.0.9.dylib */; };
-		2E8DB9731C169F3900FC33C2 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB9721C169F3900FC33C2 /* libz.1.dylib */; };
 		2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87CF21C17FAE4001CBF3D /* UMSocialLocalizable.strings */; };
 		2EB87D291C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D001C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a */; };
 		2EB87D2A1C17FAE4001CBF3D /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87D021C17FAE4001CBF3D /* UMSCommentDetailController.xib */; };
@@ -197,6 +193,10 @@
 		3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E101B86BD8C003501EF /* XiangQingViewController.xib */; };
 		3271EF101BFACF3900EDF55E /* XiangQingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A88E191B87191A003501EF /* XiangQingView.xib */; };
+		327367011C182783008AAE86 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367001C182783008AAE86 /* libz.1.dylib */; };
+		327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */; };
+		327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367041C1827D3008AAE86 /* libiconv.2.dylib */; };
+		327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367061C182800008AAE86 /* libsqlite3.dylib */; };
 		32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
 		32746DD31B74884B00816208 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		32746E0C1B74A22000816208 /* font-xinpin.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DD81B74A22000816208 /* font-xinpin.png */; };
@@ -665,11 +665,7 @@
 		2E76FFEA1C180BAA008CE960 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
 		2E76FFEB1C180BAA008CE960 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		2E8DB96A1C169E1600FC33C2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
-		2E8DB96C1C169EB300FC33C2 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		2E8DB9701C169F0C00FC33C2 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
-		2E8DB9721C169F3900FC33C2 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		2EB87CF31C17FAE4001CBF3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		2EB87CF51C17FAE4001CBF3D /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		2EB87CF61C17FAE4001CBF3D /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -952,6 +948,10 @@
 		32707F181BFAC9FB0006FB6A /* WuliuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuliuViewController.h; sourceTree = "<group>"; };
 		32707F191BFAC9FB0006FB6A /* WuliuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuliuViewController.m; sourceTree = "<group>"; };
 		32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuViewController.xib; sourceTree = "<group>"; };
+		327367001C182783008AAE86 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = /usr/lib/libz.1.dylib; sourceTree = "<absolute>"; };
+		327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "/usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<absolute>"; };
+		327367041C1827D3008AAE86 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /usr/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
+		327367061C182800008AAE86 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		32746DC91B7438FC00816208 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		32746DCA1B7438FC00816208 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		32746DD11B74884B00816208 /* DetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsModel.h; sourceTree = "<group>"; };
@@ -1314,14 +1314,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E8DB9711C169F0C00FC33C2 /* libstdc++.6.0.9.dylib in Frameworks */,
+				327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */,
+				327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */,
+				327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */,
+				327367011C182783008AAE86 /* libz.1.dylib in Frameworks */,
 				2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */,
 				2E76FFEF1C180BAA008CE960 /* libpingpp+up.a in Frameworks */,
-				2E8DB9731C169F3900FC33C2 /* libz.1.dylib in Frameworks */,
 				2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */,
 				2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */,
-				2E8DB96D1C169EB300FC33C2 /* libiconv.2.dylib in Frameworks */,
-				2E8DB96B1C169E1600FC33C2 /* libsqlite3.dylib in Frameworks */,
 				2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */,
 				321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */,
 				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
@@ -1546,6 +1546,7 @@
 		2EB87D0C1C17FAE4001CBF3D /* UMSocial_Sdk_Extra_Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				327367081C18289F008AAE86 /* UMSocial_ScreenShot_Sdk */,
 				2EB87D0D1C17FAE4001CBF3D /* Sina */,
 				2EB87D101C17FAE4001CBF3D /* TencentOpenAPI */,
 				2EB87D151C17FAE4001CBF3D /* Wechat */,
@@ -1939,12 +1940,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				2E8DB9721C169F3900FC33C2 /* libz.1.dylib */,
-				2E8DB9701C169F0C00FC33C2 /* libstdc++.6.0.9.dylib */,
-				2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */,
-				2E8DB96C1C169EB300FC33C2 /* libiconv.2.dylib */,
-				2E8DB96A1C169E1600FC33C2 /* libsqlite3.dylib */,
-				2E8DB9681C1690B500FC33C2 /* libiconv.tbd */,
 				32E00C901BA7B79700A73390 /* The Third */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
@@ -2087,6 +2082,13 @@
 				3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		327367081C18289F008AAE86 /* UMSocial_ScreenShot_Sdk */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UMSocial_ScreenShot_Sdk;
 			sourceTree = "<group>";
 		};
 		32746DD41B74A22000816208 /* images */ = {
@@ -2256,10 +2258,16 @@
 		328422B81B84217100C4EA76 /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				327367061C182800008AAE86 /* libsqlite3.dylib */,
+				327367041C1827D3008AAE86 /* libiconv.2.dylib */,
+				327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */,
+				327367001C182783008AAE86 /* libz.1.dylib */,
+				2E8DB9681C1690B500FC33C2 /* libiconv.tbd */,
 				321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */,
 				3266762B1BB5200E00307EC4 /* libz.tbd */,
 				326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */,
 				326676271BB51FE000307EC4 /* libc++.tbd */,
+				2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */,
 				321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */,
 				32E329621B708A4000A6F0BC /* Foundation.framework */,
 				32E329601B708A3600A6F0BC /* UIKit.framework */,
