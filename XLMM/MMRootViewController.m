@@ -166,7 +166,7 @@
 }
 
 
-  
+
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageVC.view.frame = _view.bounds;

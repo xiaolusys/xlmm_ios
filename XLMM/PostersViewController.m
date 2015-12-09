@@ -20,6 +20,7 @@
 #import "MJRefresh.h"
 #import "WXApi.h"
 #import "LogInViewController.h"
+
 #import "UIViewController+NavigationBar.h"
 
 static NSString * ksimpleCell = @"simpleCell";
@@ -169,17 +170,14 @@ static NSString * ksimpleCell = @"simpleCell";
     
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     NSString *imageName = nil;
-    if ([WXApi isWXAppInstalled]) {
-        imageName = @"shareIconImage2.png";
-        UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-        imageView1.frame = CGRectMake(20, 10, 25, 25);
-        [button1 addSubview:imageView1];
-        [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
-        self.navigationItem.rightBarButtonItem = rightItem;
-    } else {
-
-    }
+    imageName = @"shareIconImage2.png";
+    
+    UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    imageView1.frame = CGRectMake(20, 10, 25, 25);
+    [button1 addSubview:imageView1];
+    [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
+    self.navigationItem.rightBarButtonItem = rightItem;
     
     
 //    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharedMethod)];
@@ -192,6 +190,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)sharedMethod{
     NSLog(@"分享");
     
+    
   //  http://m.xiaolu.so/rest/v1/share/today
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -199,9 +198,10 @@ static NSString * ksimpleCell = @"simpleCell";
     } else {
         LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
+        
+        
         return;
     }
-    
     
     
     
@@ -214,79 +214,17 @@ static NSString * ksimpleCell = @"simpleCell";
     NSError *shareError = nil;
     NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
     
-    NSLog(@"shareDic = %@", shareDic);
-    
-    
-    //   http://xiaolu.so/rest/v1/users/profile
-    
-//    NSString *string = @"http://m.xiaolu.so/rest/v1/users/profile.json";
-//    NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
-//    
-//    NSLog(@"url = %@", string);
-//    NSError *error = nil;
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]options:NSDataReadingMappedAlways error:&error];
-//    
-//    if (error != nil) {
-//        NSLog(@"Error:%@,\n%@", error, error.description);
-//    }
-//    error = nil;
-//    
-//    NSLog(@"data = %@", data);
-//    if (data == nil) {
-//        
-//    } else{
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//        
-//        NSLog(@"dic = %@", dic);
-//        NSDictionary *xiaolummID = [dic objectForKey:@"xiaolumm"];
-//        NSLog(@"id = %@", xiaolummID);
-//        if ([xiaolummID class] == [NSNull class]) {
-//            NSLog(@"不是小鹿妈妈");
-//            kLinkURL = @"http://xiaolu.so/m/0/";
-//        }else {
-//            kLinkURL = [NSString stringWithFormat:@"http://xiaolu.so/m/%@/", [xiaolummID objectForKey:@"id"]];
-//            NSLog(@"是小鹿妈妈， id = %@", xiaolummID);
-//        }
-//        NSLog(@"url = %@", kLinkURL);
-//    }
-// 
+
 
     
 #pragma mark -- weixin share
-    
-    //修改分享图片，标题， 链接 ， 
-    
-  //  kLinkURL = @"http://xiaolu.so/m/18807/";
-   //NSString *kLinkTagName = @"xiaolumeimei";
     NSString *shareTitle = [shareDic objectForKey:@"title"];
     NSString *shareDesc = [shareDic objectForKey:@"desc"];
-     NSString *kLinkTitle = shareTitle;
-    NSString *kLinkDescription = shareDesc;
-    
-    
-    
-    WXWebpageObject *ext = [WXWebpageObject object];
     NSString *shareLink = [shareDic objectForKey:@"share_link"];
-    ext.webpageUrl = shareLink;
-    //http://m.xiaolu.so/pages/shangpinxq.html?id=24454
-   // ext.webpageUrl = @"http://m.xiaolu.so/pages/shangpinxq.html?id=24454";
-    NSLog(@"title = %@", shareTitle);
-    NSLog(@"desc = %@", shareDesc);
-    NSLog(@"shareLink = %@", shareLink);
     
-   
-    
-    WXMediaMessage *message = [WXMediaMessage message];
-    message.title = kLinkTitle;
-    message.description = kLinkDescription;
-    message.mediaObject = ext;
-    message.messageExt = nil;
-    message.messageAction = nil;
-    message.mediaTagName = nil;
     NSString *imageUrlString = [shareDic objectForKey:@"share_img"];
-    NSLog(@"imageUrl = %@", imageUrlString);
     NSData *imageData = nil;
-    
+
     do {
         NSLog(@"下载图片");
         imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlString]];
@@ -301,34 +239,25 @@ static NSString * ksimpleCell = @"simpleCell";
 
     UIImage *image = [UIImage imageWithData:imageData];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [paths objectAtIndex:0];
-    NSLog(@"path = %@", path);
-    __unused NSString *fileName = [path stringByAppendingPathComponent:@"share.png"];
-    NSLog(@"fileName = %@", fileName);
     
-//   UIImage * image = [UIImage imageWithContentsOfFile:fileName];
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"5665541ee0f55aedfc0034f4"
+                                      shareText: shareDesc
+                                     shareImage:image
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
+                                       delegate:self];
+    //设置分享内容
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
     
-    NSLog(@"image = %@", image);
-    [message setThumbImage:image];
-
-
+    //设置跳转链接
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
     
-
-    
-
-    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-    req.bText = NO;
-    req.scene = 1;
-    if (/* DISABLES CODE */ (NO))
-        req.text = nil;
-    else
-        req.message = message;
-
-    [WXApi sendReq:req];
-    
-    
-    
+    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
+    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
     
 }
 

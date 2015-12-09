@@ -34,10 +34,34 @@
 			<key>CFBundleURLIconFile</key>
 			<string>logo</string>
 			<key>CFBundleURLName</key>
-			<string>so.xiaolu.m</string>
+			<string>so.xiaolu.m.xiaolumeimei</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wx25fcb32689872499</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>logo</string>
+			<key>CFBundleURLName</key>
+			<string>so.xiaolu.m.xiaolumeimei</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>QQ41dd19a6</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>logo</string>
+			<key>CFBundleURLName</key>
+			<string>so.xiaolu.m.xiaolumeimei</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sina.5665541ee0f55aedfc0034f4</string>
 			</array>
 		</dict>
 	</array>
@@ -45,9 +69,24 @@
 	<string>19</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>weixin</string>
+		<string>mqzoneopensdk</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>wtloginmqq2</string>
+		<string>mqqapi</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
+		<string>mqq</string>
 		<string>wechat</string>
-		<string>alipay</string>
+		<string>weixin</string>
+		<string>sinaweibo</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibosso</string>
+		<string>sinaweibohdsso</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

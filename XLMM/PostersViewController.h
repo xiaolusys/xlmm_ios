@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UMSocial.h"
 
 @interface PostersViewController : UIViewController<
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout,
-UICollectionViewDelegate>{
+UICollectionViewDelegate,
+UMSocialUIDelegate>{
 }
 
 @property (assign, nonatomic) BOOL isRoot;

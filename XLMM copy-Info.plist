@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>小鹿美美</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,12 +26,22 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLIconFile</key>
-			<string>小鹿美美logo</string>
+			<string>logo</string>
 			<key>CFBundleURLName</key>
 			<string>so.xiaolu.m</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wx25fcb32689872499</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>1105009062</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>QQ41dd19a6</string>
 			</array>
 		</dict>
 	</array>
