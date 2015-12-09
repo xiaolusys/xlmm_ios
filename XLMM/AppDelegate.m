@@ -7,11 +7,12 @@
 //
 
 #import "AppDelegate.h"
-
+#import "Reachability.h"
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
+#import "Reachability.h"
 
 #import "NewLeftViewController.h"
 
@@ -37,9 +38,43 @@
 
 @implementation AppDelegate
 
-
+- (NSString *)stringFromStatus:(NetworkStatus)status{
+    NSString *string;
+    switch (status) {
+        case NotReachable:
+            string = @"无网络连接，请检查您的网络";
+            break;
+            case ReachableViaWiFi:
+            string = @"wifi";
+            break;
+            case ReachableViaWWAN:
+            string = @"wwan";
+            break;
+            
+        default:
+            
+            string = @"unknown";
+            break;
+    }
+    return string;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+   
+    //  推送
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        //IOS8
+        //创建UIUserNotificationSettings，并设置消息的显示类类型
+        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIRemoteNotificationTypeSound) categories:nil];
+        
+        [application registerUserNotificationSettings:notiSettings];
+        
+    } else{ // ios7
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+  
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -141,7 +176,7 @@
         alert.tag = 1001;
         [alert show];
     }
-    
+   
     return YES;
 }
 
@@ -171,10 +206,7 @@
 
 
 
--(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
-{
-    //在没有启动本App时，收到服务器推送消息，下拉消息会有快捷回复的按钮，点击按钮后调用的方法，根据identifier来判断点击的哪个按钮
-}
+
 
 
 
@@ -360,6 +392,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    if (status == NotReachable) {
+        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -380,6 +419,8 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    NSLog(@"url = %@", url);
+    
     
    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {

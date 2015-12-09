@@ -11,6 +11,7 @@
 @interface MMDetailsViewController : UIViewController{
     
 }
+@property (weak, nonatomic) IBOutlet UILabel *midLabel;
 
 @property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 

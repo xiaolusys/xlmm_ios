@@ -12,6 +12,8 @@
 #import "CollectionModel.h"
 #import "UIImage+ChangeGray.h"
 #import "NSString+URL.h"
+#import "SVProgressHUD.h"
+
 
 
 @implementation PeopleCollectionCell
@@ -32,6 +34,7 @@
         }
      
         self = [arrayOfViews objectAtIndex:0];
+//        [SVProgressHUD show];
    
         self.headImageViewHeight.constant = (SCREENWIDTH - 15)/2*4/3;
         
@@ -51,7 +54,7 @@
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
-            
+//            [SVProgressHUD dismiss];
         }
         
     }] ;
@@ -89,7 +92,7 @@
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
-           
+//            [SVProgressHUD dismiss];
         }
 
 

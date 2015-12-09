@@ -20,6 +20,7 @@
 #import "UIImage+ImageWithUrl.h"
 #import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
+#import "SVProgressHUD.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -79,6 +80,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -92,6 +94,7 @@
     [self.view addSubview:self.scrollerView];
     [self.view addSubview:self.backView];
     [self.view addSubview:self.shareView];
+    _midLabel.hidden = YES;
     agentPriceArray = [[NSMutableArray alloc] init];
     salePriceArray = [[NSMutableArray alloc] init];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -99,7 +102,14 @@
     self.scrollerView.delegate = self;
     contentCount = 0;
     theNumberOfSizeCanSelected = 0;
+   
+   
+  
+    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
     
+    [SVProgressHUD setDefaultMaskType:3];
+    
+    [SVProgressHUD show];
     // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
     if (SCREENHEIGHT == 568) {
@@ -118,13 +128,13 @@
     [self createCartView];
 
     //完成前的显示界面 加载界面 可以使用加载动画
-    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    frontView.backgroundColor = [UIColor whiteColor];
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    indicatorView.frame = CGRectMake(SCREENWIDTH/2-40, 200, 80, 80);
-    [indicatorView startAnimating];
-    [frontView addSubview:indicatorView];
-    [self.view addSubview:frontView];
+//    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    frontView.backgroundColor = [UIColor whiteColor];
+//    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    indicatorView.frame = CGRectMake(SCREENWIDTH/2-40, 200, 80, 80);
+//    [indicatorView startAnimating];
+//    [frontView addSubview:indicatorView];
+//    [self.view addSubview:frontView];
     self.addCartButton.layer.cornerRadius = 20;
     self.addCartButton.layer.borderWidth = 1;
     self.addCartButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
@@ -156,8 +166,10 @@
         self.imageleading.constant = (contentOffset.y + distance)/2;
         self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
-    if (contentOffset.y >= 0 && contentOffset.y < contentTopHeight) {
+    if (contentOffset.y >= 0) {
         NSLog(@"");
+        
+        NSLog(@"%@", NSStringFromCGPoint(contentOffset));
         //上滑
         self.imageViewTop.constant = -contentOffset.y/3;
         self.imageBottom.constant = (contentOffset.y)/3;
@@ -178,16 +190,18 @@
 }
 - (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
-        [frontView removeFromSuperview];
+        //[frontView removeFromSuperview];
+        [SVProgressHUD dismiss];
         return;
     }
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     json = dic; 
     //设置底部图片,调整高度
+    self.midLabel.hidden = NO;
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       [frontView removeFromSuperview];
-
+  //     [frontView removeFromSuperview];
+       [SVProgressHUD dismiss];
        if (image != nil) {
 
            self.scrollerView.scrollEnabled = YES;
@@ -201,6 +215,23 @@
                 self.imageleading.constant = (origineDistance)/2;
                 self.imageTrailing.constant = (origineDistance)/2;
             }
+       } else{
+           UIImage *image = [UIImage imagewithURLString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]];
+           if (image != nil) {
+               self.bottomImageView.image = image;
+               self.scrollerView.scrollEnabled = YES;
+               self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
+               headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+#pragma mark --判断是否拉伸图片
+               origineDistance = headImageOrigineHeight - contentTopHeight;
+               if (origineDistance < 0 ) {
+                   CGFloat sizeheight = contentTopHeight;
+                   self.bottomImageViewHeight.constant = sizeheight;
+                   self.imageleading.constant = (origineDistance)/2;
+                   self.imageTrailing.constant = (origineDistance)/2;
+               }
+           }
+         
        }
 
     }];
@@ -277,6 +308,7 @@
     countLabel.layer.masksToBounds = YES;
     countLabel.font = [UIFont systemFontOfSize:14];
     countLabel.hidden = YES;
+    
     
     [self.view addSubview:countLabel];
 }
@@ -781,7 +813,7 @@
         req.message = message;
     
     [WXApi sendReq:req];
-        
 
 }
+
 @end

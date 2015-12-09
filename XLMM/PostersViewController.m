@@ -76,7 +76,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     [self.childCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_childCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    //[_childCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _childCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _childCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
     _childCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);

@@ -24,6 +24,9 @@
 #import "CartViewController.h"
 #import "MMNavigationDelegate.h"
 #import "NSString+URL.h"
+#import "Reachability.h"
+
+
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -48,6 +51,7 @@ static NSString *khead2View = @"head2View";
     BOOL step1;
     BOOL step2;
     BOOL _isDone;
+    BOOL _isUpdate;
     
     CGFloat oldScrollViewTop;
 }
@@ -64,7 +68,12 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewDidAppear:(BOOL)animated
 {
+   
     [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    [reach startNotifier];
+    
     if (_isFirst) {
         //集成刷新控件
         
@@ -73,15 +82,52 @@ static NSString *khead2View = @"head2View";
         self.myCollectionView.headerHidden=NO;
         [self.myCollectionView headerBeginRefreshing];
         _isFirst = NO;
+        _isUpdate = YES;
+    }
+    
+}
+
+- (NSString *)stringFromStatus:(NetworkStatus)status{
+    NSString *string;
+    switch (status) {
+        case NotReachable:
+            string = @"无网络连接，请检查您的网络";
+            break;
+        case ReachableViaWiFi:
+            string = @"wifi";
+            break;
+        case ReachableViaWWAN:
+            string = @"wwan";
+            break;
+            
+        default:
+            
+            string = @"unknown";
+            break;
+    }
+    return string;
+}
+- (void)reachabilityChanged:(NSNotification *)notification{
+    
+    Reachability *reach = [notification object];
+    
+    if([reach isKindOfClass:[Reachability class]]){
+        
+        NetworkStatus status = [reach currentReachabilityStatus];
+        if (status == NotReachable) {
+            UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alterView show];
+        }
+        //Insert your code here
+        
     }
     
 }
 
 
-
 - (void)setupRefresh{
     [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    //[_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
     _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
@@ -141,11 +187,28 @@ static NSString *khead2View = @"head2View";
     _isFirst = YES;
     _isDone = NO;
     [self createCollectionView];
- 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
-  }
+}
 
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+        
+    } else{
+        [self.delegate showNavigation];
+    }
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)theTimer
@@ -430,9 +493,15 @@ static NSString *khead2View = @"head2View";
     if (section == 0) {
         return 2;
     } else if (section == 1){
+        if (ladyDataArray.count == 0) {
+            return 2;
+        }
         return ladyDataArray.count;
    
     } else if (section == 2){
+        if (childDataArray.count == 0) {
+            return 2;
+        }
         return childDataArray.count;
         
     
@@ -494,6 +563,7 @@ static NSString *khead2View = @"head2View";
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
              //  cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
+               NSLog(@"image = %@", image);
 
 
          }];
@@ -563,23 +633,25 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"%f", scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y <300 && scrollView.contentOffset.y > -80) {
+        return;
+    }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
-
-    CGFloat marine = 300;
-    if (temp > marine) {
-            if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-                [self.delegate showNavigation];
-            }
     
-       
-    } else if (temp < 0 - marine + 200){
-            if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-                [self.delegate hiddenNavigation];
-            }
-       
-       
+    CGFloat marine = 80;
+    if (temp > marine) {
+        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+            [self.delegate showNavigation];
+        }
+      
+        
+    } else if (temp <  -marine + 60){
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
     }
     if (temp > marine ) {
         oldScrollViewTop = point.y;
@@ -589,7 +661,6 @@ static NSString *khead2View = @"head2View";
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
     }
- 
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -618,6 +689,9 @@ static NSString *khead2View = @"head2View";
         }
         
     } else if (indexPath.section == 2){
+        if (childDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
 
         if (model.productModel == nil) {
@@ -652,6 +726,9 @@ static NSString *khead2View = @"head2View";
         
         
     } else if (indexPath.section == 1){
+        if (ladyDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];

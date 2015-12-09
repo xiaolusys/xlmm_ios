@@ -47,6 +47,7 @@ static NSString *khead2View = @"head2View";
     BOOL isqiangGuang;
     NSString *offSheltTime;
     
+    BOOL isHidden;
     CGFloat oldScrollViewTop;
     
 }
@@ -78,7 +79,7 @@ static NSString *khead2View = @"head2View";
     
     
     [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+    //[_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
     _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
@@ -143,6 +144,23 @@ static NSString *khead2View = @"head2View";
     
     // [self downloadData];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+}
+
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+    
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+        
+    } else{
+        [self.delegate showNavigation];
+    }
 }
 
 
@@ -428,9 +446,15 @@ static NSString *khead2View = @"head2View";
     if (section == 0) {
         return 2;
     } else if (section == 1){
+        if (ladyDataArray.count == 0) {
+            return 2;
+        }
         return ladyDataArray.count;
    
     } else if (section == 2){
+        if (childDataArray.count == 0) {
+            return 2;
+        }
         return childDataArray.count;
         
     }
@@ -606,6 +630,9 @@ static NSString *khead2View = @"head2View";
         }
         
     } else if (indexPath.section == 2){
+        if (childDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
         
         if (model.productModel == nil) {
@@ -642,6 +669,9 @@ static NSString *khead2View = @"head2View";
         
         
     } else if (indexPath.section == 1){
+        if (ladyDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];

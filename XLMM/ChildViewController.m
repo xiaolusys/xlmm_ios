@@ -78,7 +78,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     [self.childCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_childCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
+   // [_childCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
     _childCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
     _childCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
     _childCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
@@ -149,8 +149,22 @@ static NSString * ksimpleCell = @"simpleCell";
     self.childCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     
     [self.view addSubview:self.containerView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
  
+}
+
+- (void)saveCurrentState{
+    NSLog(@"enterBackground");
+}
+- (void)restoreCurrentState{
+    NSLog(@"还原状态");
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.delegate hiddenNavigation];
+
+    } else{
+        [self.delegate showNavigation];
+    }
 }
 
 - (void)setLayout{
@@ -213,9 +227,15 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (isOrder) {
+        if (self.orderDataArray.count == 0) {
+            return 8;
+        }
         return self.orderDataArray.count;
         
     }else{
+        if (self.dataArray.count == 0) {
+            return 8;
+        }
         return self.dataArray.count;
         
     }
@@ -237,14 +257,20 @@ static NSString * ksimpleCell = @"simpleCell";
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
-        PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-      
-        [cell fillData:model];
+        if (_orderDataArray.count > indexPath.row) {
+            PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+            
+            [cell fillData:model];
+        }
+        
        
     }else{
-        PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
-        
-        [cell fillData:model];
+        if (_dataArray.count > indexPath.row) {
+            PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
+            
+            [cell fillData:model];
+        }
+       
     }
     return cell;
 }
