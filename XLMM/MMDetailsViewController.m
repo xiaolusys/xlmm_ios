@@ -774,15 +774,15 @@
     NSLog(@"title = %@", shareTitle);
     NSLog(@"desc = %@", shareDesc);
     NSLog(@"shareLink = %@", shareLink);
-    WXMediaMessage *message = [WXMediaMessage message];
-    message.title = kLinkTitle;
-    message.description = kLinkDescription;
-    message.mediaObject = ext;
-    message.messageExt = nil;
-    message.messageAction = nil;
-    message.mediaTagName = nil;
+//    WXMediaMessage *message = [WXMediaMessage message];
+//    message.title = kLinkTitle;
+//    message.description = kLinkDescription;
+//    message.mediaObject = ext;
+//    message.messageExt = nil;
+//    message.messageAction = nil;
+//    message.mediaTagName = nil;
     NSString *imageUrlString = [json objectForKey:@"pic_path"];
-    NSLog(@"imageUrl = %@", imageUrlString);
+//    NSLog(@"imageUrl = %@", imageUrlString);
     NSData *imageData = nil;
     do {
         NSLog(@"下载图片");
@@ -802,17 +802,36 @@
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
     UIImage *newImage = [UIImage imageWithData:imagedata];
     
-    NSLog(@"newImage = %@", newImage);
-    [message setThumbImage:newImage];
-    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-    req.bText = NO;
-    req.scene = 1;
-    if (/* DISABLES CODE */ (NO))
-        req.text = nil;
-    else
-        req.message = message;
+//    NSLog(@"newImage = %@", newImage);
+//    [message setThumbImage:newImage];
+//    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+//    req.bText = NO;
+//    req.scene = 1;
+//    if (/* DISABLES CODE */ (NO))
+//        req.text = nil;
+//    else
+//        req.message = message;
+//    
+//    [WXApi sendReq:req];
     
-    [WXApi sendReq:req];
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"5665541ee0f55aedfc0034f4"
+                                      shareText: shareDesc
+                                     shareImage:newImage
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
+                                       delegate:self];
+    //设置分享内容
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
+    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
+    
+    //设置跳转链接
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
+    
+    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
+    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
 
 }
 

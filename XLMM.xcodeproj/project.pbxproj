@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
+		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
+		2E76FFEE1C180BAA008CE960 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE31C180BAA008CE960 /* libpingpp+alipay.a */; };
+		2E76FFEF1C180BAA008CE960 /* libpingpp+up.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE51C180BAA008CE960 /* libpingpp+up.a */; };
+		2E76FFF01C180BAA008CE960 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE61C180BAA008CE960 /* libUPPayPlugin.a */; };
+		2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE81C180BAA008CE960 /* libpingpp+wx.a */; };
+		2E76FFF21C180BAA008CE960 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */; };
+		2E76FFF31C180BAA008CE960 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFEA1C180BAA008CE960 /* libpingpp.a */; };
 		2E8DB96B1C169E1600FC33C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96A1C169E1600FC33C2 /* libsqlite3.dylib */; };
 		2E8DB96D1C169EB300FC33C2 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96C1C169EB300FC33C2 /* libiconv.2.dylib */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
@@ -298,14 +306,6 @@
 		3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299A0591C0EBA6500229D74 /* TiaoKuanViewController.m */; };
 		3299A05C1C0EBA6500229D74 /* TiaoKuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3299A05A1C0EBA6500229D74 /* TiaoKuanViewController.xib */; };
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
-		3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
-		3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
-		3299D8891B8C7FAA000AA744 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8751B8C7FAA000AA744 /* libpingpp+alipay.a */; };
-		3299D88A1B8C7FAA000AA744 /* libpingpp+up.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D87F1B8C7FAA000AA744 /* libpingpp+up.a */; };
-		3299D88B1B8C7FAA000AA744 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8801B8C7FAA000AA744 /* libUPPayPlugin.a */; };
-		3299D88C1B8C7FAA000AA744 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */; };
-		3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */; };
-		3299D88E1B8C7FAA000AA744 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8841B8C7FAA000AA744 /* libpingpp.a */; };
 		329E89841BB574B0008AA0B6 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		329E89861BB574B0008AA0B6 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2781B6B5B1300E73EB9 /* UIImage+WebP.m */; };
 		329E89881BB574B0008AA0B6 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */; };
@@ -404,18 +404,11 @@
 		329E89F41BB574B0008AA0B6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
 		329E89F51BB574B0008AA0B6 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
 		329E89F61BB574B0008AA0B6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676271BB51FE000307EC4 /* libc++.tbd */; };
-		329E89F71BB574B0008AA0B6 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8751B8C7FAA000AA744 /* libpingpp+alipay.a */; };
 		329E89F81BB574B0008AA0B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32151BFC1B96EA4A003569D7 /* libWeChatSDK.a */; };
-		329E89F91BB574B0008AA0B6 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */; };
-		329E89FA1BB574B0008AA0B6 /* libpingpp+up.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D87F1B8C7FAA000AA744 /* libpingpp+up.a */; };
 		329E89FB1BB574B0008AA0B6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
 		329E89FC1BB574B0008AA0B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		329E89FD1BB574B0008AA0B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
-		329E89FE1BB574B0008AA0B6 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */; };
-		329E89FF1BB574B0008AA0B6 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */; };
 		329E8A001BB574B0008AA0B6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
-		329E8A011BB574B0008AA0B6 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8841B8C7FAA000AA744 /* libpingpp.a */; };
-		329E8A021BB574B0008AA0B6 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3299D8801B8C7FAA000AA744 /* libUPPayPlugin.a */; };
 		329E8A031BB574B0008AA0B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		329E8A041BB574B0008AA0B6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
 		329E8A051BB574B0008AA0B6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D96F1B6CCBCE008530BA /* Security.framework */; };
@@ -506,7 +499,6 @@
 		329E8A801BB574B0008AA0B6 /* icon-radio.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DEE1B74A22000816208 /* icon-radio.png */; };
 		329E8A841BB574B0008AA0B6 /* icon-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7E1BA117AE0045ADB9 /* icon-ok.png */; };
 		329E8A861BB574B0008AA0B6 /* yifu.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E021B74A22000816208 /* yifu.png */; };
-		329E8A871BB574B0008AA0B6 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */; };
 		329E8A881BB574B0008AA0B6 /* PosterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DF93F1B69B17F00351ACA /* PosterView.xib */; };
 		329E8A891BB574B0008AA0B6 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		329E8A8A1BB574B0008AA0B6 /* yifu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746E031B74A22000816208 /* yifu2.png */; };
@@ -662,6 +654,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		2E76FFE31C180BAA008CE960 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
+		2E76FFE51C180BAA008CE960 /* libpingpp+up.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+up.a"; sourceTree = "<group>"; };
+		2E76FFE61C180BAA008CE960 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
+		2E76FFE81C180BAA008CE960 /* libpingpp+wx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+wx.a"; sourceTree = "<group>"; };
+		2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		2E76FFEA1C180BAA008CE960 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
+		2E76FFEB1C180BAA008CE960 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96A1C169E1600FC33C2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		2E8DB96C1C169EB300FC33C2 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
@@ -1098,15 +1099,6 @@
 		3299A05A1C0EBA6500229D74 /* TiaoKuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TiaoKuanViewController.xib; sourceTree = "<group>"; };
 		3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiJiBuyModel.h; sourceTree = "<group>"; };
 		3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiJiBuyModel.m; sourceTree = "<group>"; };
-		3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		3299D8751B8C7FAA000AA744 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
-		3299D87F1B8C7FAA000AA744 /* libpingpp+up.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+up.a"; sourceTree = "<group>"; };
-		3299D8801B8C7FAA000AA744 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
-		3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+wx.a"; sourceTree = "<group>"; };
-		3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		3299D8841B8C7FAA000AA744 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
-		3299D8861B8C7FAA000AA744 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		329E8A8F1BB574B0008AA0B6 /* XLMM copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XLMM copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XLMM copy-Info.plist"; path = "/Users/younishijie/Desktop/xlmm/XLMM/XLMM copy-Info.plist"; sourceTree = "<absolute>"; };
 		329E8A911BB648A3008AA0B6 /* WXLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXLoginController.h; sourceTree = "<group>"; };
@@ -1324,34 +1316,34 @@
 			files = (
 				2E8DB9711C169F0C00FC33C2 /* libstdc++.6.0.9.dylib in Frameworks */,
 				2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */,
+				2E76FFEF1C180BAA008CE960 /* libpingpp+up.a in Frameworks */,
 				2E8DB9731C169F3900FC33C2 /* libz.1.dylib in Frameworks */,
+				2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */,
 				2EB87D351C17FAE4001CBF3D /* TencentOpenAPI.framework in Frameworks */,
 				2E8DB96D1C169EB300FC33C2 /* libiconv.2.dylib in Frameworks */,
 				2E8DB96B1C169E1600FC33C2 /* libsqlite3.dylib in Frameworks */,
+				2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */,
 				321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */,
 				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
+				2E76FFF31C180BAA008CE960 /* libpingpp.a in Frameworks */,
+				2E76FFEE1C180BAA008CE960 /* libpingpp+alipay.a in Frameworks */,
 				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
 				321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */,
+				2E76FFF21C180BAA008CE960 /* libWeChatSDK.a in Frameworks */,
 				3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */,
 				3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */,
 				2EB87D331C17FAE4001CBF3D /* libSocialSina.a in Frameworks */,
 				2EB87D341C17FAE4001CBF3D /* libSocialQQ.a in Frameworks */,
 				326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */,
-				3299D8891B8C7FAA000AA744 /* libpingpp+alipay.a in Frameworks */,
 				2EB87D371C17FAE4001CBF3D /* libSocialWechat.a in Frameworks */,
 				32151C001B96EA4A003569D7 /* libWeChatSDK.a in Frameworks */,
 				2EB87D381C17FAE4001CBF3D /* libWeChatSDK.a in Frameworks */,
-				3299D88D1B8C7FAA000AA744 /* libWeChatSDK.a in Frameworks */,
-				3299D88A1B8C7FAA000AA744 /* libpingpp+up.a in Frameworks */,
 				328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */,
 				32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */,
 				32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */,
-				3299D88C1B8C7FAA000AA744 /* libpingpp+wx.a in Frameworks */,
+				2E76FFF01C180BAA008CE960 /* libUPPayPlugin.a in Frameworks */,
 				2EB87D291C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a in Frameworks */,
-				3299D8881B8C7FAA000AA744 /* AlipaySDK.framework in Frameworks */,
 				32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */,
-				3299D88E1B8C7FAA000AA744 /* libpingpp.a in Frameworks */,
-				3299D88B1B8C7FAA000AA744 /* libUPPayPlugin.a in Frameworks */,
 				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1370,18 +1362,11 @@
 				329E89F41BB574B0008AA0B6 /* libz.tbd in Frameworks */,
 				329E89F51BB574B0008AA0B6 /* libsqlite3.0.tbd in Frameworks */,
 				329E89F61BB574B0008AA0B6 /* libc++.tbd in Frameworks */,
-				329E89F71BB574B0008AA0B6 /* libpingpp+alipay.a in Frameworks */,
 				329E89F81BB574B0008AA0B6 /* libWeChatSDK.a in Frameworks */,
-				329E89F91BB574B0008AA0B6 /* libWeChatSDK.a in Frameworks */,
-				329E89FA1BB574B0008AA0B6 /* libpingpp+up.a in Frameworks */,
 				329E89FB1BB574B0008AA0B6 /* CFNetwork.framework in Frameworks */,
 				329E89FC1BB574B0008AA0B6 /* Foundation.framework in Frameworks */,
 				329E89FD1BB574B0008AA0B6 /* UIKit.framework in Frameworks */,
-				329E89FE1BB574B0008AA0B6 /* libpingpp+wx.a in Frameworks */,
-				329E89FF1BB574B0008AA0B6 /* AlipaySDK.framework in Frameworks */,
 				329E8A001BB574B0008AA0B6 /* CoreLocation.framework in Frameworks */,
-				329E8A011BB574B0008AA0B6 /* libpingpp.a in Frameworks */,
-				329E8A021BB574B0008AA0B6 /* libUPPayPlugin.a in Frameworks */,
 				329E8A031BB574B0008AA0B6 /* SystemConfiguration.framework in Frameworks */,
 				329E8A041BB574B0008AA0B6 /* MobileCoreServices.framework in Frameworks */,
 				329E8A051BB574B0008AA0B6 /* Security.framework in Frameworks */,
@@ -1391,6 +1376,118 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E76FFDE1C180BAA008CE960 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFDF1C180BAA008CE960 /* Channels */,
+				2E76FFEA1C180BAA008CE960 /* libpingpp.a */,
+				2E76FFEB1C180BAA008CE960 /* Pingpp.h */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		2E76FFDF1C180BAA008CE960 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFFB1C180D66008CE960 /* ApplePay */,
+				2E76FFF41C180D49008CE960 /* Bfb */,
+				2E76FFE01C180BAA008CE960 /* Alipay */,
+				2E76FFE41C180BAA008CE960 /* UnionPay */,
+				2E76FFE71C180BAA008CE960 /* Wx */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		2E76FFE01C180BAA008CE960 /* Alipay */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */,
+				2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */,
+				2E76FFE31C180BAA008CE960 /* libpingpp+alipay.a */,
+			);
+			path = Alipay;
+			sourceTree = "<group>";
+		};
+		2E76FFE41C180BAA008CE960 /* UnionPay */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFE51C180BAA008CE960 /* libpingpp+up.a */,
+				2E76FFE61C180BAA008CE960 /* libUPPayPlugin.a */,
+			);
+			path = UnionPay;
+			sourceTree = "<group>";
+		};
+		2E76FFE71C180BAA008CE960 /* Wx */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFE81C180BAA008CE960 /* libpingpp+wx.a */,
+				2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */,
+			);
+			path = Wx;
+			sourceTree = "<group>";
+		};
+		2E76FFF41C180D49008CE960 /* Bfb */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFF51C180D49008CE960 /* Dependencies */,
+			);
+			path = Bfb;
+			sourceTree = "<group>";
+		};
+		2E76FFF51C180D49008CE960 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFF61C180D49008CE960 /* ASIHttpRequest */,
+				2E76FFF71C180D49008CE960 /* BaiduMobStat */,
+				2E76FFF91C180D49008CE960 /* JSONKit */,
+				2E76FFFA1C180D49008CE960 /* SDWebImage */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		2E76FFF61C180D49008CE960 /* ASIHttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ASIHttpRequest;
+			sourceTree = "<group>";
+		};
+		2E76FFF71C180D49008CE960 /* BaiduMobStat */ = {
+			isa = PBXGroup;
+			children = (
+				2E76FFF81C180D49008CE960 /* BaiduMobStat */,
+			);
+			path = BaiduMobStat;
+			sourceTree = "<group>";
+		};
+		2E76FFF81C180D49008CE960 /* BaiduMobStat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BaiduMobStat;
+			sourceTree = "<group>";
+		};
+		2E76FFF91C180D49008CE960 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		2E76FFFA1C180D49008CE960 /* SDWebImage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		2E76FFFB1C180D66008CE960 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
 		2EB87CF01C17FAE4001CBF3D /* umeng_ios_social_sdk_4-2.4_arm64_custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -2184,118 +2281,6 @@
 			name = font;
 			sourceTree = "<group>";
 		};
-		3299D8701B8C7FAA000AA744 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8711B8C7FAA000AA744 /* Channels */,
-				3299D8841B8C7FAA000AA744 /* libpingpp.a */,
-				3299D8861B8C7FAA000AA744 /* Pingpp.h */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		3299D8711B8C7FAA000AA744 /* Channels */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8721B8C7FAA000AA744 /* Alipay */,
-				3299D8761B8C7FAA000AA744 /* ApplePay */,
-				3299D8771B8C7FAA000AA744 /* Bfb */,
-				3299D87E1B8C7FAA000AA744 /* UnionPay */,
-				3299D8811B8C7FAA000AA744 /* Wx */,
-			);
-			path = Channels;
-			sourceTree = "<group>";
-		};
-		3299D8721B8C7FAA000AA744 /* Alipay */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8731B8C7FAA000AA744 /* AlipaySDK.bundle */,
-				3299D8741B8C7FAA000AA744 /* AlipaySDK.framework */,
-				3299D8751B8C7FAA000AA744 /* libpingpp+alipay.a */,
-			);
-			path = Alipay;
-			sourceTree = "<group>";
-		};
-		3299D8761B8C7FAA000AA744 /* ApplePay */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ApplePay;
-			sourceTree = "<group>";
-		};
-		3299D8771B8C7FAA000AA744 /* Bfb */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8781B8C7FAA000AA744 /* Dependencies */,
-			);
-			path = Bfb;
-			sourceTree = "<group>";
-		};
-		3299D8781B8C7FAA000AA744 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8791B8C7FAA000AA744 /* ASIHttpRequest */,
-				3299D87A1B8C7FAA000AA744 /* BaiduMobStat */,
-				3299D87C1B8C7FAA000AA744 /* JSONKit */,
-				3299D87D1B8C7FAA000AA744 /* SDWebImage */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		3299D8791B8C7FAA000AA744 /* ASIHttpRequest */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ASIHttpRequest;
-			sourceTree = "<group>";
-		};
-		3299D87A1B8C7FAA000AA744 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-				3299D87B1B8C7FAA000AA744 /* BaiduMobStat */,
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3299D87B1B8C7FAA000AA744 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3299D87C1B8C7FAA000AA744 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		3299D87D1B8C7FAA000AA744 /* SDWebImage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SDWebImage;
-			sourceTree = "<group>";
-		};
-		3299D87E1B8C7FAA000AA744 /* UnionPay */ = {
-			isa = PBXGroup;
-			children = (
-				3299D87F1B8C7FAA000AA744 /* libpingpp+up.a */,
-				3299D8801B8C7FAA000AA744 /* libUPPayPlugin.a */,
-			);
-			path = UnionPay;
-			sourceTree = "<group>";
-		};
-		3299D8811B8C7FAA000AA744 /* Wx */ = {
-			isa = PBXGroup;
-			children = (
-				3299D8821B8C7FAA000AA744 /* libpingpp+wx.a */,
-				3299D8831B8C7FAA000AA744 /* libWeChatSDK.a */,
-			);
-			path = Wx;
-			sourceTree = "<group>";
-		};
 		32A288291B93E198006DC949 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -2473,7 +2458,9 @@
 		32E00C901BA7B79700A73390 /* The Third */ = {
 			isa = PBXGroup;
 			children = (
+				2E76FFDE1C180BAA008CE960 /* lib */,
 				2EB87CF01C17FAE4001CBF3D /* umeng_ios_social_sdk_4-2.4_arm64_custom */,
+				3265DAA41C1667BD0095BC94 /* SVProgressHUD */,
 				321952D01BFC7C7A00AA0AB8 /* AGAsyncTestHelper */,
 				321952A11BFC7AF800AA0AB8 /* HappyDNS */,
 				321952501BFC7A8D00AA0AB8 /* QiniuSDK */,
@@ -2484,7 +2471,6 @@
 				32F3D94F1B6CCA41008530BA /* AFNetworking */,
 				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
 				32A288431B93E2AC006DC949 /* RESideMenu */,
-				3299D8701B8C7FAA000AA744 /* lib */,
 				32746DD41B74A22000816208 /* images */,
 			);
 			name = "The Third";
@@ -2796,6 +2782,7 @@
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
 				321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
+				2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				2EB87D2C1C17FAE4001CBF3D /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -2840,7 +2827,6 @@
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				321928DC1BDB7EB8004EA6A7 /* score.png in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
-				3299D8871B8C7FAA000AA744 /* AlipaySDK.bundle in Resources */,
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				2EB87D421C17FAE4001CBF3D /* ios-social-sdk-share-quick.html in Resources */,
@@ -2951,7 +2937,6 @@
 				329E8A801BB574B0008AA0B6 /* icon-radio.png in Resources */,
 				329E8A841BB574B0008AA0B6 /* icon-ok.png in Resources */,
 				329E8A861BB574B0008AA0B6 /* yifu.png in Resources */,
-				329E8A871BB574B0008AA0B6 /* AlipaySDK.bundle in Resources */,
 				329E8A881BB574B0008AA0B6 /* PosterView.xib in Resources */,
 				329E8A891BB574B0008AA0B6 /* area.plist in Resources */,
 				329E8A8A1BB574B0008AA0B6 /* yifu2.png in Resources */,

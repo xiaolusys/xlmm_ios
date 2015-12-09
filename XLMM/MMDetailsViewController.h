@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UMSocial.h"
 
-@interface MMDetailsViewController : UIViewController{
+
+@interface MMDetailsViewController : UIViewController<UMSocialUIDelegate>{
     
 }
 @property (weak, nonatomic) IBOutlet UILabel *midLabel;

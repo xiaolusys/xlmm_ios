@@ -180,7 +180,40 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
+    [application registerForRemoteNotifications];
+}
 
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler{
+    if ([identifier isEqualToString:@"declineAction"]){
+   
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+   
+    }
+}
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
+   
+    
+    NSLog(@"token ＝ %@",[[[[pToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""] stringByReplacingOccurrencesOfString: @">" withString: @""]                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    NSLog(@"userInfo == %@",userInfo);
+    NSString *message = [[userInfo objectForKey:@"aps"]objectForKey:@"alert"];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alert show];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    NSLog(@"Regist fail%@",error);
+}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1001) {
         if (buttonIndex == 1) {
@@ -203,11 +236,6 @@
     NSLog(@"%@----%@",identifier,notification);
     completionHandler();//处理完消息，最后一定要调用这个代码块
 }
-
-
-
-
-
 
 
 
@@ -407,8 +435,7 @@
 
 
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
 //    return [WXApi handleOpenURL:url delegate:self];;
     return [UMSocialSnsService handleOpenURL:nil];
 }

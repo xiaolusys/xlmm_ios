@@ -88,7 +88,7 @@
                             <rect key="frame" x="0.0" y="140" width="375" height="59"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXN-dV-E42">
-                                    <rect key="frame" x="51" y="0.0" width="31" height="21"/>
+                                    <rect key="frame" x="42" y="0.0" width="40" height="21"/>
                                     <animations/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="mHa-vh-UDa"/>
