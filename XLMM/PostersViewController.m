@@ -217,39 +217,6 @@ static NSString * ksimpleCell = @"simpleCell";
     NSLog(@"shareDic = %@", shareDic);
     
     
-    //   http://xiaolu.so/rest/v1/users/profile
-    
-//    NSString *string = @"http://m.xiaolu.so/rest/v1/users/profile.json";
-//    NSString *kLinkURL;// = @"http://xiaolu.so/m/0/";
-//    
-//    NSLog(@"url = %@", string);
-//    NSError *error = nil;
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]options:NSDataReadingMappedAlways error:&error];
-//    
-//    if (error != nil) {
-//        NSLog(@"Error:%@,\n%@", error, error.description);
-//    }
-//    error = nil;
-//    
-//    NSLog(@"data = %@", data);
-//    if (data == nil) {
-//        
-//    } else{
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//        
-//        NSLog(@"dic = %@", dic);
-//        NSDictionary *xiaolummID = [dic objectForKey:@"xiaolumm"];
-//        NSLog(@"id = %@", xiaolummID);
-//        if ([xiaolummID class] == [NSNull class]) {
-//            NSLog(@"不是小鹿妈妈");
-//            kLinkURL = @"http://xiaolu.so/m/0/";
-//        }else {
-//            kLinkURL = [NSString stringWithFormat:@"http://xiaolu.so/m/%@/", [xiaolummID objectForKey:@"id"]];
-//            NSLog(@"是小鹿妈妈， id = %@", xiaolummID);
-//        }
-//        NSLog(@"url = %@", kLinkURL);
-//    }
-// 
 
     
 #pragma mark -- weixin share
@@ -268,8 +235,6 @@ static NSString * ksimpleCell = @"simpleCell";
     WXWebpageObject *ext = [WXWebpageObject object];
     NSString *shareLink = [shareDic objectForKey:@"share_link"];
     ext.webpageUrl = shareLink;
-    //http://m.xiaolu.so/pages/shangpinxq.html?id=24454
-   // ext.webpageUrl = @"http://m.xiaolu.so/pages/shangpinxq.html?id=24454";
     NSLog(@"title = %@", shareTitle);
     NSLog(@"desc = %@", shareDesc);
     NSLog(@"shareLink = %@", shareLink);

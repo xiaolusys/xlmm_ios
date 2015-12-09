@@ -106,7 +106,10 @@
    
   
     [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
-      [SVProgressHUD show];
+    
+    [SVProgressHUD setDefaultMaskType:3];
+    
+    [SVProgressHUD show];
     // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
     if (SCREENHEIGHT == 568) {
@@ -163,8 +166,10 @@
         self.imageleading.constant = (contentOffset.y + distance)/2;
         self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
-    if (contentOffset.y >= 0 && contentOffset.y < contentTopHeight) {
+    if (contentOffset.y >= 0) {
         NSLog(@"");
+        
+        NSLog(@"%@", NSStringFromCGPoint(contentOffset));
         //上滑
         self.imageViewTop.constant = -contentOffset.y/3;
         self.imageBottom.constant = (contentOffset.y)/3;
@@ -210,6 +215,23 @@
                 self.imageleading.constant = (origineDistance)/2;
                 self.imageTrailing.constant = (origineDistance)/2;
             }
+       } else{
+           UIImage *image = [UIImage imagewithURLString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]];
+           if (image != nil) {
+               self.bottomImageView.image = image;
+               self.scrollerView.scrollEnabled = YES;
+               self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
+               headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+#pragma mark --判断是否拉伸图片
+               origineDistance = headImageOrigineHeight - contentTopHeight;
+               if (origineDistance < 0 ) {
+                   CGFloat sizeheight = contentTopHeight;
+                   self.bottomImageViewHeight.constant = sizeheight;
+                   self.imageleading.constant = (origineDistance)/2;
+                   self.imageTrailing.constant = (origineDistance)/2;
+               }
+           }
+         
        }
 
     }];
@@ -791,7 +813,7 @@
         req.message = message;
     
     [WXApi sendReq:req];
-        
 
 }
+
 @end

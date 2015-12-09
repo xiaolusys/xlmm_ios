@@ -24,6 +24,9 @@
 #import "CartViewController.h"
 #import "MMNavigationDelegate.h"
 #import "NSString+URL.h"
+#import "Reachability.h"
+
+
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -48,6 +51,7 @@ static NSString *khead2View = @"head2View";
     BOOL step1;
     BOOL step2;
     BOOL _isDone;
+    BOOL _isUpdate;
     
     CGFloat oldScrollViewTop;
 }
@@ -64,7 +68,12 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewDidAppear:(BOOL)animated
 {
+   
     [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    [reach startNotifier];
+    
     if (_isFirst) {
         //集成刷新控件
         
@@ -73,10 +82,47 @@ static NSString *khead2View = @"head2View";
         self.myCollectionView.headerHidden=NO;
         [self.myCollectionView headerBeginRefreshing];
         _isFirst = NO;
+        _isUpdate = YES;
     }
     
 }
 
+- (NSString *)stringFromStatus:(NetworkStatus)status{
+    NSString *string;
+    switch (status) {
+        case NotReachable:
+            string = @"无网络连接，请检查您的网络";
+            break;
+        case ReachableViaWiFi:
+            string = @"wifi";
+            break;
+        case ReachableViaWWAN:
+            string = @"wwan";
+            break;
+            
+        default:
+            
+            string = @"unknown";
+            break;
+    }
+    return string;
+}
+- (void)reachabilityChanged:(NSNotification *)notification{
+    
+    Reachability *reach = [notification object];
+    
+    if([reach isKindOfClass:[Reachability class]]){
+        
+        NetworkStatus status = [reach currentReachabilityStatus];
+        if (status == NotReachable) {
+            UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alterView show];
+        }
+        //Insert your code here
+        
+    }
+    
+}
 
 
 - (void)setupRefresh{
@@ -587,23 +633,25 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"%f", scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y <300 && scrollView.contentOffset.y > -80) {
+        return;
+    }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
-
-    CGFloat marine = 300;
-    if (temp > marine) {
-            if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-                [self.delegate showNavigation];
-            }
     
-       
-    } else if (temp < 0 - marine + 200){
-            if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-                [self.delegate hiddenNavigation];
-            }
-       
-       
+    CGFloat marine = 80;
+    if (temp > marine) {
+        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+            [self.delegate showNavigation];
+        }
+      
+        
+    } else if (temp <  -marine + 60){
+        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+            [self.delegate hiddenNavigation];
+        }
     }
     if (temp > marine ) {
         oldScrollViewTop = point.y;
@@ -613,7 +661,6 @@ static NSString *khead2View = @"head2View";
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
     }
- 
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -642,6 +689,9 @@ static NSString *khead2View = @"head2View";
         }
         
     } else if (indexPath.section == 2){
+        if (childDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
 
         if (model.productModel == nil) {
@@ -676,6 +726,9 @@ static NSString *khead2View = @"head2View";
         
         
     } else if (indexPath.section == 1){
+        if (ladyDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];

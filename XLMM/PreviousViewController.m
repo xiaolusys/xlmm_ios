@@ -630,6 +630,9 @@ static NSString *khead2View = @"head2View";
         }
         
     } else if (indexPath.section == 2){
+        if (childDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
         
         if (model.productModel == nil) {
@@ -666,6 +669,9 @@ static NSString *khead2View = @"head2View";
         
         
     } else if (indexPath.section == 1){
+        if (ladyDataArray.count == 0) {
+            return;
+        }
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
