@@ -13,6 +13,7 @@
 #import "MMDetailsViewController.h"
 #import "MJRefresh.h"
 #import "NSString+URL.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -87,6 +88,8 @@
     [self createInfo];
     [self downloadData];
     
+    [SVProgressHUD setDefaultMaskType:3];
+    [SVProgressHUD show];
 
 }
 
@@ -292,10 +295,10 @@
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
     NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
-    NSLog(@"imageUrl = %@", string);
+   // NSLog(@"imageUrl = %@", string);
     UIImage *image = [UIImage imagewithURLString:string];
     if (image != nil) {
-        NSLog(@"image = %@", image);
+     //   NSLog(@"image = %@", image);
         return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
     }
     
@@ -322,6 +325,7 @@
     
     NSString *string = [model.picPath URLEncodedString];
     [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [SVProgressHUD dismiss];
         
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
