@@ -28,8 +28,9 @@
 
 
 
+
 - (NSString *)imageMoreCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/50",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/50",self];
     return string;
 }
 
@@ -46,7 +47,7 @@
 }
 
 - (NSString *)imagePostersCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/80",self];
+    NSString *string = [NSString stringWithFormat:@"%@",self];
     return string;
 }
 

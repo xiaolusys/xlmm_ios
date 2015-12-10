@@ -86,7 +86,6 @@
     ratio = 8.0f/6.0f;
     [self createInfo];
     [self downloadData];
-    [self getQiNiuToken];
     
 
 }
@@ -157,12 +156,10 @@
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
-    NSDictionary *firstDic = [collections objectAtIndex:0];
-    NSLog(@"firstDic = %@", firstDic);
-    collectionImage = [UIImage imagewithURLString:[[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageMoreCompression]];
-    NSLog(@"collenimage = %@", collectionImage);
-    NSLog(@"firstImageURL = %@", [[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageCompression]);
-    NSLog(@"image = %@", collectionImage);
+   // NSDictionary *firstDic = [collections objectAtIndex:0];
+ 
+   // collectionImage = [UIImage imagewithURLString:[[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageMoreCompression]];
+  
     
    // NSLog(@"collections = %@", collections);
     for (NSDictionary *dic in collections) {
@@ -292,13 +289,20 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (collectionImage == nil) {
-        return CGSizeZero;
-        
-    } else {
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *collectionImage.size.height/collectionImage.size.width + 60);
+    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
+    NSLog(@"imageUrl = %@", string);
+    UIImage *image = [UIImage imagewithURLString:string];
+    if (image != nil) {
+        NSLog(@"image = %@", image);
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
     }
     
+    
+    
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+
     
 }
 
@@ -309,30 +313,49 @@
     return 5;
 }
 
-- (NSString *)getQiNiuToken{
-    //  http://m.xiaolu.so/rest/v1/refunds/qiniu_token
-    NSString *qiniuUrl = [NSString stringWithFormat:@"%@/rest/v1/refunds/qiniu_token", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:qiniuUrl]];
-    NSError *error = nil;
-    NSLog(@"data = %@", data);
-    if (data == nil) {
-        return nil;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-    }
-    NSString *token = [dic objectForKey:@"uptoken"];
-    NSLog(@"token = %@", token);
-    return token;
-}
-
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
     
     
-    [cell fillDataWithCollectionModel:[self.dataArray objectAtIndex:indexPath.row]];
+  //  [cell fillDataWithCollectionModel:[self.dataArray objectAtIndex:indexPath.row]];
+    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSString *string = [model.picPath URLEncodedString];
+    [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        if (image != nil) {
+            //自适应图片高度 ,图片宽度固定高度自适应。。。。。
+            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+        }
+    }] ;
+    
+    
+    
+    cell.nameLabel.text = model.name;
+    
+    
+    if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
+    } else {
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
+    }
+    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@",model.stdSalePrice];
+    cell.backView.layer.cornerRadius = 30;
+    
+    if ([model.isSaleopen boolValue]) {
+        
+        if ([model.isSaleout boolValue]) {
+            cell.backView.hidden = NO;
+        } else{
+            cell.backView.hidden = YES;
+        }
+    } else{
+        cell.backView.hidden = NO;
+    }
+
+    
+    
+    
     
     return cell;
 
