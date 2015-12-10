@@ -313,7 +313,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"posters = %@", jsonDic);
+   // NSLog(@"posters = %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     if (childDic == nil) {
@@ -355,7 +355,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"promote = %@", promoteDic);
+   // NSLog(@"promote = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
    
     ladyListNumber = ladyArray.count;
@@ -665,6 +665,10 @@ static NSString *khead2View = @"head2View";
     if (section == 2) {
         return UIEdgeInsetsMake(0, 5, 50, 5);
     }
+    if (section == 0) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    
     return UIEdgeInsetsMake(0, 5, 0, 5);
 }
 

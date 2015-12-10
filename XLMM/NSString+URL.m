@@ -56,12 +56,12 @@
     float width;
     if (screenwidth < 400) {
         width = (screenwidth - 15);
-         NSLog(@"width = %f", width);
+        // NSLog(@"width = %f", width);
         return width;
     }
     width = (screenwidth - 15)*1.3;
     
-    NSLog(@"width = %f", width);
+    //NSLog(@"width = %f", width);
     
     return width;
 }

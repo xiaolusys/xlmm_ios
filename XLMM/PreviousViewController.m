@@ -612,6 +612,9 @@ static NSString *khead2View = @"head2View";
     if (section == 2) {
         return UIEdgeInsetsMake(0, 5, 50, 5);
     }
+    if (section == 0) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
     return UIEdgeInsetsMake(0, 5, 0, 5);
 }
 

@@ -142,7 +142,7 @@
         return YES;
     }
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
-    NSLog(@"%@", appInfoDic);
+    NSLog(@"appInfoDic = %@", appInfoDic);
     if (error) {
         NSLog(@"%@", error);
         return YES;
