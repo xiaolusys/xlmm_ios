@@ -42,7 +42,7 @@
 //  imageMogr2/thumbnail/289/format/jpg/quality/90
 
 - (NSString *)imageShareCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/png/quality/50",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/png/quality/90",self];
     return string;
 }
 
