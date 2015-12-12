@@ -66,7 +66,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSLog(@"%@", last_created);
+  //  NSLog(@"%@", last_created);
     if (last_created != nil) {
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }
@@ -156,6 +156,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    self.navigationController.navigationBarHidden = YES;
     CGPoint contentOffset = scrollView.contentOffset;
     self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , self.bottomImageViewHeight.constant);
     distance = headImageOrigineHeight - contentTopHeight;
@@ -167,9 +168,9 @@
         self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
     if (contentOffset.y >= 0) {
-        NSLog(@"");
-        
-        NSLog(@"%@", NSStringFromCGPoint(contentOffset));
+//        NSLog(@"");
+//        
+//        NSLog(@"%@", NSStringFromCGPoint(contentOffset));
         //上滑
         self.imageViewTop.constant = -contentOffset.y/3;
         self.imageBottom.constant = (contentOffset.y)/3;
@@ -388,7 +389,7 @@
         
     }
     
-    NSLog(@"imagelinks = %@", imageArray);
+   // NSLog(@"imagelinks = %@", imageArray);
     __block float origineY = 0.0;
     __block float imagewidth = 0.0;
     __block float imageHeight = 0.0;
@@ -399,9 +400,9 @@
         
         UIImageView *imageview = [[UIImageView alloc] init];
         NSString *imagelink = [[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression];
-        NSLog(@"imageLink = %@", imagelink);
+    //    NSLog(@"imageLink = %@", imagelink);
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            NSLog(@"%dimage = %@",i, image);
+          //  NSLog(@"%dimage = %@",i, image);
             imagewidth = SCREENWIDTH;
             
             if (image.size.width == 0) {
@@ -434,10 +435,10 @@
         height = 8;
     }
     self.sizeViewHeight.constant =  30 + 15 + 50*(int)(sizeCount/3)+height;
-    NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
+   // NSLog(@"height = %f",20 + 44*(int)(sizeCount/3)+height);
     CGFloat buttonwidth = (SCREENWIDTH-60)/3;
     for (int i = 0; i<sizeCount; i++) {
-        NSLog(@"%D", i);
+    //    NSLog(@"%D", i);
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 15 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
 //        [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
@@ -477,7 +478,7 @@
         }
     }
     if (theNumberOfSizeCanSelected == 0) {
-        NSLog(@"已抢光");
+    //    NSLog(@"已抢光");
         [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
         self.addCartButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
         self.addCartButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
@@ -490,19 +491,19 @@
                 [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
                 [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
                 skusID = [[normalSkus objectAtIndex:i] objectForKey:@"id"];
-                NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
+               // NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             }
         }
     }
 }
 - (void)btnClicked:(UIButton *)button{
-    NSLog(@"button.tag = %ld", (long)button.tag);
+//    NSLog(@"button.tag = %ld", (long)button.tag);
     for (int i = 100; i<100+normalSkus.count; i++) {
         if (button.tag == i) {
             [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
             [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
-            NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
+         //   NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [agentPriceArray[i - 100] floatValue]];
             self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [salePriceArray[i - 100] floatValue]];
         }else{
@@ -523,9 +524,9 @@
 }
 
 - (IBAction)addCartBtnClicked:(id)sender {
-    NSLog(@"加入购物车");
+ //   NSLog(@"加入购物车");
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    NSLog(@"islogin = %d", islogin);
+   // NSLog(@"islogin = %d", islogin);
     if (islogin == NO) {
         LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:enterVC animated:YES];
@@ -536,7 +537,7 @@
             self.scrollerView.contentOffset = CGPointMake(0, self.sizeViewHeight.constant);
             
         } completion:^(BOOL finished) {
-            NSLog(@"top");
+           // NSLog(@"top");
         }];
         
         __block UIView *view;
@@ -548,43 +549,43 @@
             view.backgroundColor = [UIColor blackColor];
             view.alpha = 0;
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 280, 30)];
-            label.text = @"请选择正确的商品尺寸";
+          //  label.text = @"请选择正确的商品尺寸";
             label.textColor = [UIColor whiteColor];
             label.textAlignment = NSTextAlignmentCenter;
             label.font = [UIFont systemFontOfSize:24];
             [view addSubview:label];
             view.layer.cornerRadius = 6;
             [self.view addSubview:view];
-            NSLog(@"tips");
+          //  NSLog(@"tips");
         } completion:^(BOOL finished) {
             [view removeFromSuperview];
-            NSLog(@"finish");
+           // NSLog(@"finish");
         }];
         
     } else{
-        NSLog(@"加入购物车");
+       // NSLog(@"加入购物车");
         //                http://youni.huyi.so/rest/v1/carts
-        NSLog(@"item_id = %@", itemID);
-        NSLog(@"sku_id = %@", skusID);
+      //  NSLog(@"item_id = %@", itemID);
+      //  NSLog(@"sku_id = %@", skusID);
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *parameters = @{@"item_id": itemID,
                                      @"sku_id":skusID};
         [manager POST:kCart_URL parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSLog(@"JSON: %@", responseObject);
+               //   NSLog(@"JSON: %@", responseObject);
                   [self myAnimation];
 
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-              NSLog(@"error:, --.>>>%@", error.description);
+         //   NSLog(@"Error: %@", error);
+         //     NSLog(@"error:, --.>>>%@", error.description);
               NSDictionary *dic = [error userInfo];
-              NSLog(@"dic = %@", dic);
-              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+            //  NSLog(@"dic = %@", dic);
+           //   NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
               
               __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-              NSLog(@"%@",str);
+           //   NSLog(@"%@",str);
               UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
               view.backgroundColor = [UIColor blackColor];
               view.layer.cornerRadius = 8;
@@ -641,11 +642,11 @@
          NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
          if (data != nil) {
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-             NSLog(@"%@", dic);
+          //   NSLog(@"%@", dic);
              if ([dic objectForKey:@"result"] != nil) {
                  last_created = [dic objectForKey:@"last_created"];
                  goodsCount = [[dic objectForKey:@"result"] integerValue];
-                 NSLog(@"%ld", (long)goodsCount);
+            //     NSLog(@"%ld", (long)goodsCount);
                  NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
                  countLabel.text = strNum;
              }
@@ -658,12 +659,15 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
     if (data != nil) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"%@", dic);
+      //  NSLog(@"%@", dic);
         if ([dic objectForKey:@"result"] != nil) {
             
             last_created = [dic objectForKey:@"last_created"];
             goodsCount = [[dic objectForKey:@"result"] integerValue];
-            NSLog(@"%ld", (long)goodsCount);
+           //nnnf
+            
+            
+            //NSLog(@"%ld", (long)goodsCount);
             NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
             countLabel.text = strNum;
             if (goodsCount >0) {
@@ -674,7 +678,8 @@
                     //        frame.origin.x = 118;
                     //        frame.size.width = SCREENWIDTH - 126;
                 } completion:^(BOOL finished) {
-                    NSLog(@"显示剩余时间");
+              //
+                 //   NSLog(@"显示剩余时间");
                     [self createTimeLabel];
                     countLabel.hidden = NO;
                     
@@ -708,7 +713,7 @@
     NSCalendarUnitSecond;
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-    NSLog(@"string = %@", string);
+ //   NSLog(@"string = %@", string);
     if ([d minute] < 0 || [d second] < 0) {
         string = @"00:00";
         if ([theTimer isValid]) {
@@ -724,14 +729,14 @@
 }
 
 - (IBAction)washshuomingClicked:(id)sender {
-    NSLog(@"查看洗涤说明");
+ //   NSLog(@"查看洗涤说明");
     XidiShuomingViewController *xdVC = [[XidiShuomingViewController alloc] initWithNibName:@"XidiShuomingViewController" bundle:nil];
     [self.navigationController pushViewController:xdVC animated:YES];
 }
 
 - (IBAction)sizeViewBtnClicked:(id)sender {
     
-    NSLog(@"尺码表");
+ //   NSLog(@"尺码表");
     ChiMaBiaoViewController *sizeVC = [[ChiMaBiaoViewController alloc] initWithNibName:@"ChiMaBiaoViewController" bundle:nil];
     sizeVC.sizeArray = normalSkus;
     sizeVC.childClothing = self.childClothing;
@@ -771,9 +776,7 @@
 
     ext.webpageUrl = shareLink;
     //  http://m.xiaolu.so/pages/shangpinxq.html?id=24454
-    NSLog(@"title = %@", shareTitle);
-    NSLog(@"desc = %@", shareDesc);
-    NSLog(@"shareLink = %@", shareLink);
+ 
 //    WXMediaMessage *message = [WXMediaMessage message];
 //    message.title = kLinkTitle;
 //    message.description = kLinkDescription;
@@ -785,21 +788,21 @@
 //    NSLog(@"imageUrl = %@", imageUrlString);
     NSData *imageData = nil;
     do {
-        NSLog(@"下载图片");
-        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[imageUrlString URLEncodedString] imageShareCompression]]];
+       // NSLog(@"下载图片");
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
         if (imageData != nil) {
             
-            NSLog(@"图片下载成功");
+        //    NSLog(@"图片下载成功");
             break;
         }
-        NSLog(@"图片下载失败，重新下载！");
+       // NSLog(@"图片下载失败，重新下载！");
         
     } while (YES);
     UIImage *image = [UIImage imageWithData:imageData];
-    NSLog(@"image = %@", image);
-    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(75, 100)];
-    NSLog(@"image = %@", image);
-    NSData *imagedata = UIImageJPEGRepresentation(image, 0.5);
+  //  NSLog(@"image = %@", image);
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
+   // NSLog(@"image = %@", image);
+    NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
     UIImage *newImage = [UIImage imageWithData:imagedata];
     
 //    NSLog(@"newImage = %@", newImage);

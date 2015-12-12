@@ -54,7 +54,6 @@
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
-//            [SVProgressHUD dismiss];
         }
         
     }] ;

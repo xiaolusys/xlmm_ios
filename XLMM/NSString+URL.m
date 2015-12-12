@@ -28,8 +28,9 @@
 
 
 
+
 - (NSString *)imageMoreCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/50",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/50",self];
     return string;
 }
 
@@ -41,12 +42,12 @@
 //  imageMogr2/thumbnail/289/format/jpg/quality/90
 
 - (NSString *)imageShareCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/png/quality/50",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/png/quality/90",self];
     return string;
 }
 
 - (NSString *)imagePostersCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/80",self];
+    NSString *string = [NSString stringWithFormat:@"%@",self];
     return string;
 }
 
@@ -56,12 +57,12 @@
     float width;
     if (screenwidth < 400) {
         width = (screenwidth - 15);
-         NSLog(@"width = %f", width);
+        // NSLog(@"width = %f", width);
         return width;
     }
     width = (screenwidth - 15)*1.3;
     
-    NSLog(@"width = %f", width);
+    //NSLog(@"width = %f", width);
     
     return width;
 }

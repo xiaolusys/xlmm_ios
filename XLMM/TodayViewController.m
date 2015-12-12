@@ -313,7 +313,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"posters = %@", jsonDic);
+   // NSLog(@"posters = %@", jsonDic);
     
     NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
     if (childDic == nil) {
@@ -355,7 +355,7 @@ static NSString *khead2View = @"head2View";
         return;
     }
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"promote = %@", promoteDic);
+   // NSLog(@"promote = %@", promoteDic);
     NSArray *ladyArray = [promoteDic objectForKey:@"female_list"];
    
     ladyListNumber = ladyArray.count;
@@ -562,8 +562,6 @@ static NSString *khead2View = @"head2View";
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-             //  cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*8/6;
-               NSLog(@"image = %@", image);
 
 
          }];
@@ -633,22 +631,21 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"%f", scrollView.contentOffset.y);
-    if (scrollView.contentOffset.y <300 && scrollView.contentOffset.y > -80) {
+    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
         return;
     }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
     
-    CGFloat marine = 80;
+    CGFloat marine = 5;
     if (temp > marine) {
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];
         }
       
         
-    } else if (temp <  -marine + 60){
+    } else if (temp < -5){
         if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
             [self.delegate hiddenNavigation];
         }
@@ -661,6 +658,16 @@ static NSString *khead2View = @"head2View";
     if (temp < 0 - marine) {
         oldScrollViewTop = point.y;
     }
+}
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    if (section == 2) {
+        return UIEdgeInsetsMake(0, 5, 50, 5);
+    }
+    if (section == 0) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    
+    return UIEdgeInsetsMake(0, 5, 0, 5);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
