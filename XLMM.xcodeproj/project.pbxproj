@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */; };
+		2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E91C1BB9C700D452E0 /* shareFirends.png */; };
+		2E72B3F01C1BB9C700D452E0 /* shareqq.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3EA1C1BB9C700D452E0 /* shareqq.png */; };
+		2E72B3F11C1BB9C700D452E0 /* shareQQSpacing.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3EB1C1BB9C700D452E0 /* shareQQSpacing.png */; };
+		2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3EC1C1BB9C700D452E0 /* shareweibo.png */; };
+		2E72B3F31C1BB9C700D452E0 /* shareweixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3ED1C1BB9C700D452E0 /* shareweixin.png */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -16,6 +22,8 @@
 		2E76FFF11C180BAA008CE960 /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE81C180BAA008CE960 /* libpingpp+wx.a */; };
 		2E76FFF21C180BAA008CE960 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */; };
 		2E76FFF31C180BAA008CE960 /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFEA1C180BAA008CE960 /* libpingpp.a */; };
+		2E77F5651C1BF7140020C014 /* YoumengShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E77F5641C1BF7140020C014 /* YoumengShare.m */; };
+		2E77F56A1C1C10900020C014 /* YoumengShare.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E77F5661C1BF77B0020C014 /* YoumengShare.xib */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87CF21C17FAE4001CBF3D /* UMSocialLocalizable.strings */; };
 		2EB87D291C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D001C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a */; };
@@ -654,6 +662,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharecopylink.png; sourceTree = "<group>"; };
+		2E72B3E91C1BB9C700D452E0 /* shareFirends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareFirends.png; sourceTree = "<group>"; };
+		2E72B3EA1C1BB9C700D452E0 /* shareqq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareqq.png; sourceTree = "<group>"; };
+		2E72B3EB1C1BB9C700D452E0 /* shareQQSpacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareQQSpacing.png; sourceTree = "<group>"; };
+		2E72B3EC1C1BB9C700D452E0 /* shareweibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareweibo.png; sourceTree = "<group>"; };
+		2E72B3ED1C1BB9C700D452E0 /* shareweixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareweixin.png; sourceTree = "<group>"; };
 		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -664,6 +678,9 @@
 		2E76FFE91C180BAA008CE960 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		2E76FFEA1C180BAA008CE960 /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
 		2E76FFEB1C180BAA008CE960 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		2E77F5631C1BF7140020C014 /* YoumengShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoumengShare.h; sourceTree = "<group>"; };
+		2E77F5641C1BF7140020C014 /* YoumengShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoumengShare.m; sourceTree = "<group>"; };
+		2E77F5661C1BF77B0020C014 /* YoumengShare.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YoumengShare.xib; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2EB87CF31C17FAE4001CBF3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
@@ -2094,6 +2111,12 @@
 		32746DD41B74A22000816208 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */,
+				2E72B3E91C1BB9C700D452E0 /* shareFirends.png */,
+				2E72B3EA1C1BB9C700D452E0 /* shareqq.png */,
+				2E72B3EB1C1BB9C700D452E0 /* shareQQSpacing.png */,
+				2E72B3EC1C1BB9C700D452E0 /* shareweibo.png */,
+				2E72B3ED1C1BB9C700D452E0 /* shareweixin.png */,
 				3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */,
 				32B83E141BA3FD8F004E3215 /* area.plist */,
 				32CC3FE91BA282B30043764F /* tuihuo-ing.png */,
@@ -2423,6 +2446,9 @@
 				32FE08771BF377CB0072CCEC /* HistoryCartsView.h */,
 				32FE08781BF377CB0072CCEC /* HistoryCartsView.m */,
 				32FE087A1BF377E30072CCEC /* HistoryCartsView.xib */,
+				2E77F5631C1BF7140020C014 /* YoumengShare.h */,
+				2E77F5641C1BF7140020C014 /* YoumengShare.m */,
+				2E77F5661C1BF77B0020C014 /* YoumengShare.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -2653,6 +2679,7 @@
 				32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */,
 				2EB87D2E1C17FAE4001CBF3D /* UMShareEditViewControlleriPad.xib in Resources */,
 				32D2B78D1BDDF41C00603FCE /* selected_icon.png in Resources */,
+				2E72B3F01C1BB9C700D452E0 /* shareqq.png in Resources */,
 				321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */,
 				320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */,
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
@@ -2750,6 +2777,7 @@
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
 				32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
+				2E72B3F11C1BB9C700D452E0 /* shareQQSpacing.png in Resources */,
 				323B9C681BDDB6690060BFC1 /* shopping_cart_jian.png in Resources */,
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
@@ -2781,14 +2809,18 @@
 				3274C1801C05962200641C4E /* emptyYouhuiquanIcon.png in Resources */,
 				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,
 				3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */,
+				2E77F56A1C1C10900020C014 /* YoumengShare.xib in Resources */,
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
 				2EB87D2D1C17FAE4001CBF3D /* UMShareEditViewController.xib in Resources */,
+				2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */,
+				2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */,
 				32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */,
 				3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
 				321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */,
+				2E72B3F31C1BB9C700D452E0 /* shareweixin.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */,
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
@@ -2836,6 +2868,7 @@
 				321928DC1BDB7EB8004EA6A7 /* score.png in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
 				325DF9401B69B17F00351ACA /* PosterView.xib in Resources */,
+				2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				2EB87D421C17FAE4001CBF3D /* ios-social-sdk-share-quick.html in Resources */,
 				3247EAAE1BE9E07300A5CC1C /* wash03.png in Resources */,
@@ -2975,6 +3008,7 @@
 				3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */,
 				321952961BFC7A8D00AA0AB8 /* QNSessionManager.m in Sources */,
 				3219529A1BFC7A8D00AA0AB8 /* QNFileRecorder.m in Sources */,
+				2E77F5651C1BF7140020C014 /* YoumengShare.m in Sources */,
 				3219528C1BFC7A8D00AA0AB8 /* QNAsyncRun.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
