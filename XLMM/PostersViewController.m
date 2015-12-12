@@ -23,6 +23,8 @@
 
 #import "UIViewController+NavigationBar.h"
 
+#import "YoumengShare.h"
+
 static NSString * ksimpleCell = @"simpleCell";
 
 @interface PostersViewController () {
@@ -38,9 +40,24 @@ static NSString * ksimpleCell = @"simpleCell";
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
 
+//分享页面
+@property (nonatomic, strong) YoumengShare *youmengShare;
+//分享参数
+@property (nonatomic, strong)NSString *title;
+@property (nonatomic, strong)NSString *des;
+@property (nonatomic, strong)UIImage *shareImage;
+@property (nonatomic, strong)NSString *url;
+
+
 @end
 
 @implementation PostersViewController
+- (YoumengShare *)youmengShare {
+    if (!_youmengShare) {
+        self.youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _youmengShare;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -239,33 +256,125 @@ static NSString * ksimpleCell = @"simpleCell";
 
     UIImage *image = [UIImage imageWithData:imageData];
     
+    // 点击分享后弹出自定义的分享界面
+    [UIView animateWithDuration:3 animations:^{
+        [[UIApplication sharedApplication].keyWindow addSubview:self.youmengShare];
+        self.youmengShare.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    }];
     
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"5665541ee0f55aedfc0034f4"
-                                      shareText: shareDesc
-                                     shareImage:image
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
-                                       delegate:self];
-    //设置分享内容
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
     
-    //设置跳转链接
-    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
     
-    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
-    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
+
+//    [self.view insertSubview:self.youmengShare atIndex:999];
+    
+    // 分享页面事件处理
+    [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.youmengShare.weixinShareBtn addTarget:self action:@selector(weixinShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.friendsShareBtn addTarget:self action:@selector(friendsShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.title = shareTitle;
+    self.des = shareDesc;
+    self.shareImage = image;
+    self.url = shareLink;
+    
+//    [UMSocialSnsService presentSnsIconSheetView:self
+//                                         appKey:@"5665541ee0f55aedfc0034f4"
+//                                      shareText: shareDesc
+//                                     shareImage:image
+//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
+//                                       delegate:self];
+//    //设置分享内容
+//    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+//    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
+//    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
+//    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
+//    
+//    //设置跳转链接
+//    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
+//    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
+//    
+//    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
+//    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
     
 }
+
+#pragma mark --分享按钮事件
+- (void)cancleShareBtnClick:(UIButton *)btn{
+    [self.youmengShare removeFromSuperview];
+}
+- (void)weixinShareBtnClick:(UIButton *)btn{
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self.youmengShare removeFromSuperview];
+
+    
+
+}
+
+- (void)friendsShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.title;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            [self.youmengShare removeFromSuperview];
+        }
+    }];
+    
+    [self.youmengShare removeFromSuperview];
+    
+}
+
+- (void)qqshareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qqData.url = self.url;
+    [UMSocialData defaultData].extConfig.qqData.title = self.title;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self.youmengShare removeFromSuperview];
+    
+}
+
+- (void)qqspaceShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.title;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            NSLog(@"分享成功！");
+        }
+    }];
+    
+    [self.youmengShare removeFromSuperview];
+}
+
+- (void)weiboShareBtnClick:(UIButton *)btn {
+    
+}
+
+
+
 
 
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 - (void)setLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
