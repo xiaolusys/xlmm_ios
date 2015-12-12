@@ -174,7 +174,9 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="xUO-PG-jSY"/>
                             </constraints>
-                            <state key="normal" title="取消"/>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

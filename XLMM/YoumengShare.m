@@ -26,6 +26,13 @@
         self.backView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.5];
         self.shareBackView.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:1.0];
 //         self.frame = CGRectMake(SCREENHEIGHT, 0, SCREENWIDTH, SCREENHEIGHT);
+        
+        self.cancleShareBtn.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+        self.cancleShareBtn.layer.cornerRadius = 20;
+        self.cancleShareBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+        self.cancleShareBtn.layer.borderWidth = 1.0;
+        
+        self.shareBackView.layer.cornerRadius = 20;
     }
     
     return self;
