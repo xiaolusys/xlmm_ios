@@ -262,15 +262,14 @@ static NSString * ksimpleCell = @"simpleCell";
     UIImage *image = [UIImage imageWithData:imageData];
     
     self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    self.backView.backgroundColor = [UIColor blackColor];
-    self.backView.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];
+    self.backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [[UIApplication sharedApplication].keyWindow addSubview:self.backView];
+    [self.backView addSubview:self.youmengShare];
+    self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     
     // 点击分享后弹出自定义的分享界面
-    [UIView animateWithDuration:0.1 animations:^{
-        
-        [self.backView addSubview:self.youmengShare];
-        self.youmengShare.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
     }];
     
     
@@ -293,7 +292,11 @@ static NSString * ksimpleCell = @"simpleCell";
 
 #pragma mark --分享按钮事件
 - (void)cancleShareBtnClick:(UIButton *)btn{
-    [self.backView removeFromSuperview];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    } completion:^(BOOL finished) {
+        [self.backView removeFromSuperview];
+    }];
 }
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
@@ -305,7 +308,7 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
 
 }
 
@@ -315,11 +318,11 @@ static NSString * ksimpleCell = @"simpleCell";
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
-            [self.youmengShare removeFromSuperview];
+            
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
     
 }
 
@@ -333,8 +336,7 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
-    
+    [self cancleShareBtnClick:nil];
 }
 
 - (void)qqspaceShareBtnClick:(UIButton *)btn {
@@ -347,15 +349,17 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
 }
-#pragma mark    --weiboShare--
-- (void)weiboShareBtnClick:(UIButton *)btn {
-    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.title, self.url];
-    [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
 
-    [self.youmengShare removeFromSuperview];
+- (void)weiboShareBtnClick:(UIButton *)btn {
+    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
+    [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
+    
+    [self cancleShareBtnClick:nil];
 }
+
+
 
 
 - (void)backBtnClicked:(UIButton *)button{
