@@ -40,7 +40,8 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
-
+//遮罩层
+@property (nonatomic, strong)UIView *backView;
 //分享页面
 @property (nonatomic, strong) YoumengShare *youmengShare;
 //分享参数
@@ -258,16 +259,18 @@ static NSString * ksimpleCell = @"simpleCell";
 
     UIImage *image = [UIImage imageWithData:imageData];
     
+    self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.backView.backgroundColor = [UIColor blackColor];
+    self.backView.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.backView];
+    
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.1 animations:^{
-        [[UIApplication sharedApplication].keyWindow addSubview:self.youmengShare];
+        
+        [self.backView addSubview:self.youmengShare];
         self.youmengShare.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     }];
     
-    
-    
-
-//    [self.view insertSubview:self.youmengShare atIndex:999];
     
     // 分享页面事件处理
     [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -284,31 +287,11 @@ static NSString * ksimpleCell = @"simpleCell";
     self.shareImage = image;
     self.url = shareLink;
     self.imageD = imageData;
-    
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:@"5665541ee0f55aedfc0034f4"
-//                                      shareText: shareDesc
-//                                     shareImage:image
-//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
-//                                       delegate:self];
-//    //设置分享内容
-//    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
-//    
-//    //设置跳转链接
-//    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
-//    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
-//    
-//    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
-//    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
-    
 }
 
 #pragma mark --分享按钮事件
 - (void)cancleShareBtnClick:(UIButton *)btn{
-    [self.youmengShare removeFromSuperview];
+    [self.backView removeFromSuperview];
 }
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.title;
@@ -321,8 +304,6 @@ static NSString * ksimpleCell = @"simpleCell";
     }];
     
     [self.youmengShare removeFromSuperview];
-
-    
 
 }
 
@@ -368,13 +349,9 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)weiboShareBtnClick:(UIButton *)btn {
-//    [[UMSocialControllerService defaultControllerService] setShareText:@"分享内嵌文字" shareImage:[UIImage imageNamed:@"icon"] socialUIDelegate:self];
-//    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    
-    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.title,self.url];
-
+    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.title, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
-    
+
     [self.youmengShare removeFromSuperview];
 }
 
