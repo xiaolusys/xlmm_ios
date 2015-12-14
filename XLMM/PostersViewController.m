@@ -43,7 +43,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //分享页面
 @property (nonatomic, strong) YoumengShare *youmengShare;
 //分享参数
-@property (nonatomic, strong)NSString *title;
+@property (nonatomic, strong)NSString *titleStr;
 @property (nonatomic, strong)NSString *des;
 @property (nonatomic, strong)UIImage *shareImage;
 @property (nonatomic, strong)NSString *url;
@@ -52,6 +52,7 @@ static NSString * ksimpleCell = @"simpleCell";
 @end
 
 @implementation PostersViewController
+
 - (YoumengShare *)youmengShare {
     if (!_youmengShare) {
         self.youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
@@ -62,6 +63,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     //self.navigationController.navigationBarHidden = NO;
+    
 
 }
 
@@ -232,7 +234,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
     
 
-
+ 
     
 #pragma mark -- weixin share
     NSString *shareTitle = [shareDic objectForKey:@"title"];
@@ -277,7 +279,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    self.title = shareTitle;
+    self.titleStr = shareTitle;
     self.des = shareDesc;
     self.shareImage = image;
     self.url = shareLink;
@@ -308,7 +310,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.youmengShare removeFromSuperview];
 }
 - (void)weixinShareBtnClick:(UIButton *)btn{
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -325,7 +327,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)friendsShareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.title;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
@@ -339,7 +341,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)qqshareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
-    [UMSocialData defaultData].extConfig.qqData.title = self.title;
+    [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
@@ -353,7 +355,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)qqspaceShareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
-    [UMSocialData defaultData].extConfig.qzoneData.title = self.title;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
@@ -363,7 +365,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     [self.youmengShare removeFromSuperview];
 }
-
+#pragma mark    --weiboShare--
 - (void)weiboShareBtnClick:(UIButton *)btn {
     
 }
