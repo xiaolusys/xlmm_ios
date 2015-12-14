@@ -61,7 +61,7 @@
 			<string>so.xiaolu.m.xiaolumeimei</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sina.5665541ee0f55aedfc0034f4</string>
+				<string>wb2475629754</string>
 			</array>
 		</dict>
 	</array>
@@ -83,10 +83,15 @@
 		<string>mqq</string>
 		<string>wechat</string>
 		<string>weixin</string>
+		<string>weibo.com</string>
+		<string>weibo.cn</string>
+		<string>sina.com.cn</string>
+		<string>sinaweibohdsso</string>
 		<string>sinaweibo</string>
 		<string>sinaweibohd</string>
 		<string>sinaweibosso</string>
-		<string>sinaweibohdsso</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

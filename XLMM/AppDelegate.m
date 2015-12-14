@@ -83,6 +83,8 @@
     __unused NSString *plistPath1 = [paths objectAtIndex:0];
     NSLog(@"%@", plistPath1);
  
+    [UMSocialData openLog:YES];
+    
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
     [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
@@ -91,15 +93,16 @@
     [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
     
      //微博分享
-    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-    
-    
+    //[UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+//    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"2475629754" RedirectURL:@"https://api.weibo.com/oauth2/default.html"];
+    [WeiboSDK registerApp:@"2475629754"];
+
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
-
-    
+ 
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
