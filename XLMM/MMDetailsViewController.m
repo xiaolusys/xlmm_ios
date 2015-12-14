@@ -252,8 +252,15 @@
         self.yanseLabel.text = [details objectForKey:@"color"];
         NSString *string = [details objectForKey:@"color"];
         NSInteger length = string.length;
-        if (string.length>0) {
-        self.yansebottomHeight.constant = length/16*15;
+        //商品可选颜色
+        if (length > 0) {
+        self.yansebottomHeight.constant = 14;
+        }
+        if (length > 22) {
+            self.yansebottomHeight.constant = 24;
+        }
+        if (length > 45) {
+            self.yansebottomHeight.constant = 34;
         }
        
        // self.canshuViewHeight.constant += length/16*15;
@@ -549,7 +556,7 @@
             view.backgroundColor = [UIColor blackColor];
             view.alpha = 0;
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 280, 30)];
-          //  label.text = @"请选择正确的商品尺寸";
+            label.text = @"请选择正确的商品尺寸";
             label.textColor = [UIColor whiteColor];
             label.textAlignment = NSTextAlignmentCenter;
             label.font = [UIFont systemFontOfSize:24];

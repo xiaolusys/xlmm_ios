@@ -388,6 +388,7 @@
     NSLog(@"allpay = %.1f", allpay);
     
     
+    
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     NSString* dict;
     NSLog(@"youhuiquan.ID = %@", yhqModel.ID);
