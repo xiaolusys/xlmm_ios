@@ -24,6 +24,7 @@
 #import "UIViewController+NavigationBar.h"
 
 #import "YoumengShare.h"
+#import "SendMessageToWeibo.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -47,6 +48,7 @@ static NSString * ksimpleCell = @"simpleCell";
 @property (nonatomic, strong)NSString *des;
 @property (nonatomic, strong)UIImage *shareImage;
 @property (nonatomic, strong)NSString *url;
+@property (nonatomic, strong)NSData *imageD;
 
 
 @end
@@ -221,7 +223,7 @@ static NSString * ksimpleCell = @"simpleCell";
         
         return;
     }
-    
+
     
     
     NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
@@ -259,7 +261,7 @@ static NSString * ksimpleCell = @"simpleCell";
     UIImage *image = [UIImage imageWithData:imageData];
     
     // 点击分享后弹出自定义的分享界面
-    [UIView animateWithDuration:3 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         [[UIApplication sharedApplication].keyWindow addSubview:self.youmengShare];
         self.youmengShare.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     }];
@@ -283,6 +285,7 @@ static NSString * ksimpleCell = @"simpleCell";
     self.des = shareDesc;
     self.shareImage = image;
     self.url = shareLink;
+    self.imageD = imageData;
     
 //    [UMSocialSnsService presentSnsIconSheetView:self
 //                                         appKey:@"5665541ee0f55aedfc0034f4"
@@ -367,11 +370,15 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 #pragma mark    --weiboShare--
 - (void)weiboShareBtnClick:(UIButton *)btn {
+//    [[UMSocialControllerService defaultControllerService] setShareText:@"分享内嵌文字" shareImage:[UIImage imageNamed:@"icon"] socialUIDelegate:self];
+//    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     
+    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.title,self.url];
+
+    [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
+    
+    [self.youmengShare removeFromSuperview];
 }
-
-
-
 
 
 - (void)backBtnClicked:(UIButton *)button{

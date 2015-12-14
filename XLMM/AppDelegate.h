@@ -17,6 +17,8 @@
 #import "UMSocialQQHandler.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaHandler.h"
+#import "WeiboSDK.h"
+
 
 
 
