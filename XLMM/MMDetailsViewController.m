@@ -21,6 +21,8 @@
 #import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
 #import "SVProgressHUD.h"
+#import "YoumengShare.h"
+#import "SendMessageToWeibo.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -60,9 +62,27 @@
 @property (weak, nonatomic) IBOutlet UILabel *caizhiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yanseLabel;
 
+//遮罩层
+@property (nonatomic, strong)UIView *shareBackView;
+//分享页面
+@property (nonatomic, strong) YoumengShare *youmengShare;
+//分享参数
+@property (nonatomic, strong)NSString *titleStr;
+@property (nonatomic, strong)NSString *des;
+@property (nonatomic, strong)UIImage *shareImage;
+@property (nonatomic, strong)NSString *url;
+@property (nonatomic, strong)NSData *imageD;
+
 @end
 
 @implementation MMDetailsViewController
+
+- (YoumengShare *)youmengShare {
+    if (!_youmengShare) {
+        self.youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _youmengShare;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -782,67 +802,134 @@
 
 
     ext.webpageUrl = shareLink;
-    //  http://m.xiaolu.so/pages/shangpinxq.html?id=24454
- 
-//    WXMediaMessage *message = [WXMediaMessage message];
-//    message.title = kLinkTitle;
-//    message.description = kLinkDescription;
-//    message.mediaObject = ext;
-//    message.messageExt = nil;
-//    message.messageAction = nil;
-//    message.mediaTagName = nil;
+    
     NSString *imageUrlString = [json objectForKey:@"pic_path"];
-//    NSLog(@"imageUrl = %@", imageUrlString);
     NSData *imageData = nil;
     do {
-       // NSLog(@"下载图片");
         imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
         if (imageData != nil) {
-            
-        //    NSLog(@"图片下载成功");
             break;
         }
-       // NSLog(@"图片下载失败，重新下载！");
         
     } while (YES);
     UIImage *image = [UIImage imageWithData:imageData];
-  //  NSLog(@"image = %@", image);
     image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-   // NSLog(@"image = %@", image);
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-    UIImage *newImage = [UIImage imageWithData:imagedata];
+//    UIImage *newImage = [UIImage imageWithData:imagedata];
     
-//    NSLog(@"newImage = %@", newImage);
-//    [message setThumbImage:newImage];
-//    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-//    req.bText = NO;
-//    req.scene = 1;
-//    if (/* DISABLES CODE */ (NO))
-//        req.text = nil;
-//    else
-//        req.message = message;
-//    
-//    [WXApi sendReq:req];
+    self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
+    [self.shareBackView addSubview:self.youmengShare];
+    self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"5665541ee0f55aedfc0034f4"
-                                      shareText: shareDesc
-                                     shareImage:newImage
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
-                                       delegate:self];
-    //设置分享内容
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
+    // 点击分享后弹出自定义的分享界面
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
+    }];
     
-    //设置跳转链接
-    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
     
-    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
-    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
+    // 分享页面事件处理
+    [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.youmengShare.weixinShareBtn addTarget:self action:@selector(weixinShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.friendsShareBtn addTarget:self action:@selector(friendsShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.titleStr = shareTitle;
+    self.des = shareDesc;
+    self.shareImage = image;
+    self.url = shareLink;
+    self.imageD = imageData;
 
 }
+
+#pragma mark --分享按钮事件
+- (void)cancleShareBtnClick:(UIButton *)btn{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    } completion:^(BOOL finished) {
+        [self.shareBackView removeFromSuperview];
+    }];
+}
+- (void)weixinShareBtnClick:(UIButton *)btn{
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+    
+}
+
+- (void)friendsShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+    
+}
+
+- (void)qqshareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qqData.url = self.url;
+    [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)qqspaceShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            NSLog(@"分享成功！");
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)weiboShareBtnClick:(UIButton *)btn {
+    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
+    [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
+    
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)linkCopyBtnClick:(UIButton *)btn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = self.url;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+    }else
+    {
+        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    }
+    [self cancleShareBtnClick:nil];
+}
+
+
 
 @end

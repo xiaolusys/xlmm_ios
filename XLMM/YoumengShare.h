@@ -10,7 +10,6 @@
 
 @interface YoumengShare : UIView
 
-@property (weak, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet UIView *shareBackView;
 
 @property (weak, nonatomic) IBOutlet UIButton *weixinShareBtn;
@@ -18,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *qqshareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *qqspaceShareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *weiboShareBtn;
+@property (weak, nonatomic) IBOutlet UIButton *linkCopyBtn;
 
 @property (weak, nonatomic) IBOutlet UIButton *cancleShareBtn;
 

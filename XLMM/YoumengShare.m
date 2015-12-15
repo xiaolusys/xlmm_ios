@@ -23,7 +23,6 @@
     if (self) {
         self = [[[NSBundle mainBundle] loadNibNamed:@"YoumengShare" owner:nil options:nil]objectAtIndex:0];
         self.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.0];
-        self.backView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.5];
         self.shareBackView.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:1.0];
 //         self.frame = CGRectMake(SCREENHEIGHT, 0, SCREENWIDTH, SCREENHEIGHT);
         

@@ -82,8 +82,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     __unused NSString *plistPath1 = [paths objectAtIndex:0];
     NSLog(@"%@", plistPath1);
- 
-    [UMSocialData openLog:YES];
+    
     
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
@@ -92,10 +91,7 @@
     //微信分享
     [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
     
-     //微博分享
-    //[UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-//    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"2475629754" RedirectURL:@"https://api.weibo.com/oauth2/default.html"];
+    //微博分享
     [WeiboSDK registerApp:@"2475629754"];
 
     
@@ -471,8 +467,7 @@
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    
-    return [WXApi handleOpenURL:url delegate:self];;
+    return [WXApi handleOpenURL:url delegate:self];
 
 }
 #pragma mark -

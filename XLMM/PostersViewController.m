@@ -25,10 +25,11 @@
 
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
+#import "SVProgressHUD.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
-@interface PostersViewController () {
+@interface PostersViewController ()<UIAlertViewDelegate> {
     
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
@@ -40,7 +41,8 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
-
+//遮罩层
+@property (nonatomic, strong)UIView *backView;
 //分享页面
 @property (nonatomic, strong) YoumengShare *youmengShare;
 //分享参数
@@ -209,11 +211,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 - (void)sharedMethod{
-    NSLog(@"分享");
-    
-    
-  //  http://m.xiaolu.so/rest/v1/share/today
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
     } else {
@@ -223,9 +220,6 @@ static NSString * ksimpleCell = @"simpleCell";
         
         return;
     }
-
-    
-    
     NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
     
     NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
@@ -235,8 +229,6 @@ static NSString * ksimpleCell = @"simpleCell";
     NSError *shareError = nil;
     NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
     
-
- 
     
 #pragma mark -- weixin share
     NSString *shareTitle = [shareDic objectForKey:@"title"];
@@ -260,16 +252,17 @@ static NSString * ksimpleCell = @"simpleCell";
 
     UIImage *image = [UIImage imageWithData:imageData];
     
+    self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.backView];
+    [self.backView addSubview:self.youmengShare];
+    self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    
     // 点击分享后弹出自定义的分享界面
-    [UIView animateWithDuration:0.1 animations:^{
-        [[UIApplication sharedApplication].keyWindow addSubview:self.youmengShare];
-        self.youmengShare.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
     }];
     
-    
-    
-
-//    [self.view insertSubview:self.youmengShare atIndex:999];
     
     // 分享页面事件处理
     [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -280,37 +273,23 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     self.titleStr = shareTitle;
     self.des = shareDesc;
     self.shareImage = image;
     self.url = shareLink;
     self.imageD = imageData;
-    
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:@"5665541ee0f55aedfc0034f4"
-//                                      shareText: shareDesc
-//                                     shareImage:image
-//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,nil]
-//                                       delegate:self];
-//    //设置分享内容
-//    [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-//    [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
-//    
-//    //设置跳转链接
-//    [UMSocialData defaultData].extConfig.wechatSessionData.url = shareLink;
-//    [UMSocialData defaultData].extConfig.wechatTimelineData.url = shareLink;
-//    
-//    [UMSocialData defaultData].extConfig.qqData.url = shareLink;
-//    [UMSocialData defaultData].extConfig.qzoneData.url = shareLink;
-    
 }
 
 #pragma mark --分享按钮事件
 - (void)cancleShareBtnClick:(UIButton *)btn{
-    [self.youmengShare removeFromSuperview];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    } completion:^(BOOL finished) {
+        [self.backView removeFromSuperview];
+    }];
 }
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
@@ -322,9 +301,7 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
-
-    
+    [self cancleShareBtnClick:nil];
 
 }
 
@@ -334,15 +311,26 @@ static NSString * ksimpleCell = @"simpleCell";
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
-            [self.youmengShare removeFromSuperview];
+            
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
     
 }
 
 - (void)qqshareBtnClick:(UIButton *)btn {
+//    BOOL isInstall = 0;
+//    isInstall = [QQApiInterface isQQInstalled];
+//    NSLog(@"%d", isInstall);
+//    if ( !isInstall ) {
+////        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alterView show];
+//        NSLog(@"------------");
+//        return;
+//    }
+    
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
@@ -352,8 +340,7 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
-    
+    [self cancleShareBtnClick:nil];
 }
 
 - (void)qqspaceShareBtnClick:(UIButton *)btn {
@@ -366,18 +353,27 @@ static NSString * ksimpleCell = @"simpleCell";
         }
     }];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
 }
-#pragma mark    --weiboShare--
-- (void)weiboShareBtnClick:(UIButton *)btn {
-//    [[UMSocialControllerService defaultControllerService] setShareText:@"分享内嵌文字" shareImage:[UIImage imageNamed:@"icon"] socialUIDelegate:self];
-//    [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    
-    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.title,self.url];
 
+- (void)weiboShareBtnClick:(UIButton *)btn {
+    NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
     
-    [self.youmengShare removeFromSuperview];
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)linkCopyBtnClick:(UIButton *)btn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = self.url;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+    }else
+    {
+        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    }
+    [self cancleShareBtnClick:nil];
 }
 
 
