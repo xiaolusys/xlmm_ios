@@ -837,6 +837,7 @@
     [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
     self.titleStr = shareTitle;
@@ -913,6 +914,19 @@
     NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
     
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)linkCopyBtnClick:(UIButton *)btn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = self.url;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+    }else
+    {
+        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    }
     [self cancleShareBtnClick:nil];
 }
 

@@ -25,6 +25,7 @@
 
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
+#import "SVProgressHUD.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -210,11 +211,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 - (void)sharedMethod{
-    NSLog(@"分享");
-    
-    
-  //  http://m.xiaolu.so/rest/v1/share/today
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
     } else {
@@ -224,9 +220,6 @@ static NSString * ksimpleCell = @"simpleCell";
         
         return;
     }
-
-    
-    
     NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
     
     NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
@@ -236,8 +229,6 @@ static NSString * ksimpleCell = @"simpleCell";
     NSError *shareError = nil;
     NSDictionary *shareDic = [NSJSONSerialization JSONObjectWithData:shareData options:kNilOptions error:&shareError];
     
-
- 
     
 #pragma mark -- weixin share
     NSString *shareTitle = [shareDic objectForKey:@"title"];
@@ -281,6 +272,8 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
     self.titleStr = shareTitle;
@@ -359,7 +352,18 @@ static NSString * ksimpleCell = @"simpleCell";
     [self cancleShareBtnClick:nil];
 }
 
-
+- (void)linkCopyBtnClick:(UIButton *)btn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = self.url;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+    }else
+    {
+        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    }
+    [self cancleShareBtnClick:nil];
+}
 
 
 - (void)backBtnClicked:(UIButton *)button{

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *qqshareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *qqspaceShareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *weiboShareBtn;
+@property (weak, nonatomic) IBOutlet UIButton *linkCopyBtn;
 
 @property (weak, nonatomic) IBOutlet UIButton *cancleShareBtn;
 

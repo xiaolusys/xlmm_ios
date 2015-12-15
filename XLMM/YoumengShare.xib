@@ -17,6 +17,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="1gL-5g-jkd"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="取消">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -135,7 +136,6 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="RM7-eH-ApA" secondAttribute="bottom" id="0UH-YH-dF8"/>
                         <constraint firstItem="Kt2-Gh-Ce2" firstAttribute="top" secondItem="JNk-23-9tf" secondAttribute="top" id="0my-Z0-A0m"/>
@@ -190,6 +190,7 @@
             <connections>
                 <outlet property="cancleShareBtn" destination="Wad-9G-eJ9" id="YMf-jl-Es9"/>
                 <outlet property="friendsShareBtn" destination="4dY-kt-0lF" id="PK5-Cs-v0d"/>
+                <outlet property="linkCopyBtn" destination="Lzv-BQ-boV" id="bck-1D-xVA"/>
                 <outlet property="qqshareBtn" destination="r3l-vk-Rpk" id="Ot2-RF-EV5"/>
                 <outlet property="qqspaceShareBtn" destination="VNr-eV-Xof" id="Hja-dI-rb5"/>
                 <outlet property="shareBackView" destination="JNk-23-9tf" id="guy-hw-8F2"/>
