@@ -19,7 +19,6 @@
 @property (nonatomic, copy)NSString *dingdanZhuangtai;
 @property (nonatomic, copy)NSString *dingdanJine;
 @property (nonatomic, copy)NSString *status_display;
-
 @property (nonatomic, copy) NSArray *ordersArray;
 
 

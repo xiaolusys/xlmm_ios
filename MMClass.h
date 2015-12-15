@@ -5,7 +5,6 @@
 //  Created by younishijie on 15/7/29.
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
-#import "PosterView.h"
 #import "PosterModel.h"
 #import "LogInViewController.h"
 #import "RegisterViewController.h"

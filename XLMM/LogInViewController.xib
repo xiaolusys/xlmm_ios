@@ -410,12 +410,12 @@
                             <exclude reference="g5d-xg-0Ob"/>
                             <exclude reference="kLS-MI-IIt"/>
                             <exclude reference="tKk-LX-6yQ"/>
-                            <exclude reference="XXK-NJ-xaX"/>
-                            <exclude reference="cWX-Mh-3j1"/>
                             <exclude reference="52A-GP-dCL"/>
                             <exclude reference="wqR-k0-7AA"/>
                             <exclude reference="6ot-Jh-ega"/>
                             <exclude reference="RNs-J8-NAj"/>
+                            <exclude reference="XXK-NJ-xaX"/>
+                            <exclude reference="cWX-Mh-3j1"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -430,12 +430,12 @@
                             <include reference="g5d-xg-0Ob"/>
                             <include reference="kLS-MI-IIt"/>
                             <include reference="tKk-LX-6yQ"/>
-                            <include reference="XXK-NJ-xaX"/>
-                            <include reference="cWX-Mh-3j1"/>
                             <include reference="52A-GP-dCL"/>
                             <include reference="wqR-k0-7AA"/>
                             <include reference="6ot-Jh-ega"/>
                             <include reference="RNs-J8-NAj"/>
+                            <include reference="XXK-NJ-xaX"/>
+                            <include reference="cWX-Mh-3j1"/>
                         </mask>
                     </variation>
                 </view>
@@ -502,30 +502,30 @@
                     <exclude reference="7zX-DS-Bhs"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="Di4-Sg-M5l"/>
-                    <exclude reference="SRm-8C-Zco"/>
-                    <exclude reference="iCe-uG-UpP"/>
-                    <exclude reference="9Yj-Y1-0GC"/>
-                    <exclude reference="Zkr-pl-Xub"/>
-                    <exclude reference="muh-EN-Gdu"/>
+                    <exclude reference="3Xc-Rm-Sd9"/>
+                    <exclude reference="dB9-iz-BT3"/>
                     <exclude reference="A2K-CV-mYB"/>
                     <exclude reference="SJh-TA-BsJ"/>
                     <exclude reference="UUf-qF-8hN"/>
-                    <exclude reference="3Xc-Rm-Sd9"/>
-                    <exclude reference="dB9-iz-BT3"/>
-                    <exclude reference="1lo-gu-ooa"/>
-                    <exclude reference="Dp2-tt-ifT"/>
-                    <exclude reference="ucf-dw-jZy"/>
-                    <exclude reference="N80-Mn-oud"/>
-                    <exclude reference="zuV-ez-aSz"/>
+                    <exclude reference="9Yj-Y1-0GC"/>
+                    <exclude reference="Zkr-pl-Xub"/>
+                    <exclude reference="muh-EN-Gdu"/>
                     <exclude reference="9xp-JR-wOU"/>
                     <exclude reference="OtP-CM-H1j"/>
                     <exclude reference="Yql-VQ-5sN"/>
                     <exclude reference="RZL-Gl-3vV"/>
                     <exclude reference="ohG-vI-TD4"/>
+                    <exclude reference="1lo-gu-ooa"/>
+                    <exclude reference="Dp2-tt-ifT"/>
+                    <exclude reference="ucf-dw-jZy"/>
+                    <exclude reference="N80-Mn-oud"/>
+                    <exclude reference="zuV-ez-aSz"/>
                     <exclude reference="43T-t3-UR0"/>
                     <exclude reference="Sbw-WI-RRb"/>
                     <exclude reference="dwL-mw-PWp"/>
+                    <exclude reference="Di4-Sg-M5l"/>
+                    <exclude reference="SRm-8C-Zco"/>
+                    <exclude reference="iCe-uG-UpP"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -540,30 +540,30 @@
                     <include reference="7zX-DS-Bhs"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="Di4-Sg-M5l"/>
-                    <include reference="SRm-8C-Zco"/>
-                    <include reference="iCe-uG-UpP"/>
-                    <include reference="9Yj-Y1-0GC"/>
-                    <include reference="Zkr-pl-Xub"/>
-                    <include reference="muh-EN-Gdu"/>
+                    <include reference="3Xc-Rm-Sd9"/>
+                    <include reference="dB9-iz-BT3"/>
                     <include reference="A2K-CV-mYB"/>
                     <include reference="SJh-TA-BsJ"/>
                     <include reference="UUf-qF-8hN"/>
-                    <include reference="3Xc-Rm-Sd9"/>
-                    <include reference="dB9-iz-BT3"/>
-                    <include reference="1lo-gu-ooa"/>
-                    <include reference="Dp2-tt-ifT"/>
-                    <include reference="ucf-dw-jZy"/>
-                    <include reference="N80-Mn-oud"/>
-                    <include reference="zuV-ez-aSz"/>
+                    <include reference="9Yj-Y1-0GC"/>
+                    <include reference="Zkr-pl-Xub"/>
+                    <include reference="muh-EN-Gdu"/>
                     <include reference="9xp-JR-wOU"/>
                     <include reference="OtP-CM-H1j"/>
                     <include reference="Yql-VQ-5sN"/>
                     <include reference="RZL-Gl-3vV"/>
                     <include reference="ohG-vI-TD4"/>
+                    <include reference="1lo-gu-ooa"/>
+                    <include reference="Dp2-tt-ifT"/>
+                    <include reference="ucf-dw-jZy"/>
+                    <include reference="N80-Mn-oud"/>
+                    <include reference="zuV-ez-aSz"/>
                     <include reference="43T-t3-UR0"/>
                     <include reference="Sbw-WI-RRb"/>
                     <include reference="dwL-mw-PWp"/>
+                    <include reference="Di4-Sg-M5l"/>
+                    <include reference="SRm-8C-Zco"/>
+                    <include reference="iCe-uG-UpP"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="298" y="445"/>

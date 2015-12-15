@@ -7,7 +7,6 @@
 //
 
 #import "PersonCenterViewController1.h"
-#import "ZhiFuCollectionCell.h"
 #import "MMClass.h"
 #import "XiangQingViewController.h"
 #import "UIViewController+NavigationBar.h"
@@ -62,7 +61,6 @@
     
     self.labelArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view from its nib.
-    [self.collectionView registerClass:[ZhiFuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     [self.view addSubview:[[UIView alloc] init]];
     self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     

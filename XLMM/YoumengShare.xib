@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -43,7 +43,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJ2-iI-GDB" userLabel="微博">
-                            <rect key="frame" x="0.0" y="90" width="90" height="89.5"/>
+                            <rect key="frame" x="0.0" y="90" width="90" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S16-an-bc0">
                                     <rect key="frame" x="17" y="7" width="55" height="75"/>
@@ -63,7 +63,7 @@
                             <rect key="frame" x="180" y="90" width="90" height="90"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-eH-ApA">
-                            <rect key="frame" x="270" y="90" width="90" height="89.5"/>
+                            <rect key="frame" x="270" y="90" width="90" height="90"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQU-jk-aHp" userLabel="朋友圈">
                             <rect key="frame" x="90" y="0.0" width="90" height="90"/>
@@ -119,7 +119,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrB-X9-Sww" userLabel="复制">
-                            <rect key="frame" x="90" y="90" width="90" height="89.5"/>
+                            <rect key="frame" x="90" y="90" width="90" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzv-BQ-boV">
                                     <rect key="frame" x="17" y="7" width="55" height="75"/>
@@ -197,7 +197,7 @@
                 <outlet property="weiboShareBtn" destination="S16-an-bc0" id="wjs-sv-I6X"/>
                 <outlet property="weixinShareBtn" destination="Q0S-pY-cQp" id="azY-cl-IhL"/>
             </connections>
-            <point key="canvasLocation" x="219.5" y="-240.5"/>
+            <point key="canvasLocation" x="408.5" y="-315.5"/>
         </view>
     </objects>
     <resources>

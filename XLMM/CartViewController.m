@@ -14,7 +14,6 @@
 #import "UIViewController+NavigationBar.h"
 #import "NewCartsModel.h"
 #import "PurchaseViewController1.h"
-#import "HistoryCartsView.h"
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
 

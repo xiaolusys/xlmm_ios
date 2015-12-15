@@ -153,7 +153,6 @@
     [self.view addSubview:[[UIView alloc] init]];
     [self.view addSubview:self.quanbuCollectionView];
 
-    [self.quanbuCollectionView registerClass:[QuanbuCollectionCell class] forCellWithReuseIdentifier:kSimpleCellIdentifier];
     
     [self.quanbuCollectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.quanbuCollectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];

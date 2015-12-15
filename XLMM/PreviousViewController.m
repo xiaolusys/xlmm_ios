@@ -10,7 +10,6 @@
 #import "MMClass.h"
 #import "Head1View.h"
 #import "Head2View.h"
-#import "PosterCollectionCell.h"
 #import "PeopleCollectionCell.h"
 #import "PosterCollectionCell2.h"
 #import "PromoteModel.h"
