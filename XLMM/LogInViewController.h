@@ -17,10 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *displayHidePasswdButton;
 
-@property (weak, nonatomic) IBOutlet UIView *weixinView;
 
 - (IBAction)loginClicked:(UIButton *)sender;
 - (IBAction)registerClicked:(UIButton *)sender;
+- (IBAction)verifyMessageClicked:(id)sender;
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender;
 - (IBAction)seePasswordButtonClicked:(id)sender;

@@ -280,6 +280,7 @@
 		327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */; };
 		327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */; };
 		327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
+		32816F871C1FA880004DD2EF /* messageicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32816F861C1FA880004DD2EF /* messageicon.png */; };
 		3282F27F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */; };
 		3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
@@ -1074,6 +1075,7 @@
 		327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsModel.m; sourceTree = "<group>"; };
 		327FC25D1B9AEC2F00F111B3 /* CartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartModel.h; sourceTree = "<group>"; };
 		327FC25E1B9AEC2F00F111B3 /* CartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartModel.m; sourceTree = "<group>"; };
+		32816F861C1FA880004DD2EF /* messageicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageicon.png; sourceTree = "<group>"; };
 		3282F25E1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		3282F25F1B6B5B1300E73EB9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3282F2601B6B5B1300E73EB9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -1683,6 +1685,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32816F861C1FA880004DD2EF /* messageicon.png */,
 				32F2E95C1C12AFBE00A98EA3 /* guanyuIcon.png */,
 				32F2E9541C128E3700A98EA3 /* ios7.png */,
 				32F2E9551C128E3700A98EA3 /* ios8_retina_HD5.5.png */,
@@ -2847,6 +2850,7 @@
 				32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */,
 				2EB87D2F1C17FAE4001CBF3D /* UMSLoginViewController.xib in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
+				32816F871C1FA880004DD2EF /* messageicon.png in Resources */,
 				32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */,
 				2EB87D391C17FAE4001CBF3D /* iOS-social-analytics-releasenote.html in Resources */,
 				3274C1761C055FEA00641C4E /* EmptyCartView.xib in Resources */,

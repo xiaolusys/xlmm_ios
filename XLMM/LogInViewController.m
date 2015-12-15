@@ -76,7 +76,6 @@
     [self createNavigationBarWithTitle:@"登录" selecotr:@selector(btnClicked:)];
     if ([WXApi isWXAppInstalled]) {
         NSLog(@"安装了微信");
-        self.weixinView.hidden = YES;
         
     }
     self.passwordTextField.secureTextEntry = YES;
@@ -345,7 +344,7 @@
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO};
+    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
@@ -355,8 +354,17 @@
     
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     
-    verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES};
+    verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES, @"isMessageLogin":@NO};
     
+    [self.navigationController pushViewController:verifyVC animated:YES];
+}
+
+- (IBAction)verifyMessageClicked:(id)sender {
+    
+    NSLog(@"短信验证");
+    
+    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
+    verifyVC.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 

@@ -23,6 +23,7 @@
 {
     NSTimer *countDownTimer;
     NSInteger secondsCountDown;
+    BOOL _isSettingPassword;
 }
 @end
 
@@ -53,7 +54,9 @@
     self.obtainCodeButton.layer.cornerRadius = 15;
     self.obtainCodeButton.layer.borderWidth = 0.5;
     self.obtainCodeButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    
+    if ([self.config[@"isMessageLogin"] boolValue]) {
+        [self.nextButton setTitle:@"提交" forState:UIControlStateNormal];
+    }
     [self disableNextButton];
     [self disableCodeButton];
     
@@ -192,17 +195,23 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSDictionary *parameters = @{@"vmobile": phoneNumber};
-    
+    NSLog(@"paramters = %@", parameters);
     
     NSString *stringurl = nil;
     NSLog(@"---%@", self.config[@"isRegister"]);
-    if ([self.config[@"isRegister"] boolValue])
+    
+    if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO)
     {
         stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
     }
-    else
+    else if ([self.config[@"isRegister"] boolValue] == NO && [self.config[@"isMessageLogin"] boolValue] == NO)
     {
         stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/change_pwd_code", Root_URL];
+    } else if ([self.config[@"isMessageLogin"] boolValue] == YES){
+        stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/send_code", Root_URL];
+        parameters = @{@"mobile": phoneNumber};
+        NSLog(@"paramters = %@", parameters);
+
     }
     
     NSLog(@"url = %@", stringurl);
@@ -211,56 +220,62 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
-              NSString *result = [responseObject objectForKey:@"result"];
-              if ([result isEqualToString:@"false"])
-              {
-                  [self alertMessage:@"手机号输入错误!"];
-                  [self stopCountingDown];
-                  return;
-              }
-              if ([self.config[@"isRegister"] boolValue]) {
-                  //注册接口返回结果。。。。。
-                  if ([result isEqualToString:@"OK"] || [result isEqualToString:@"ok"]) {
+              NSLog(@"info = %@", [responseObject objectForKey:@"info"]);
+              
+              if ([self.config[@"isMessageLogin"] boolValue]) {
+                  if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+                      [self alertMessage:[responseObject objectForKey:@"info"]];
+                      
+                  }
+              } else {
+                  NSString *result = [responseObject objectForKey:@"result"];
+                  if ([result isEqualToString:@"false"])
+                  {
+                      [self alertMessage:@"手机号输入错误!"];
+                      [self stopCountingDown];
                       return;
                   }
-                  if ([result integerValue] == 0) {
-                      // 该手机号已被注册
-                      [self alertMessage:@"该手机号已被注册!"];
-
-                  } else if ([result integerValue] == 1){
-                      // 验证码已发送
-                      [self alertMessage:@"验证码已发送!"];
-
-                  } else if ([result integerValue] == 2){
-                      // 验证次数已达今日上限
-                      [self alertMessage:@"验证次数已达今日上限!"];
-
+                  if ([self.config[@"isRegister"] boolValue]) {
+                      //注册接口返回结果。。。。。
+                      if ([result isEqualToString:@"OK"] || [result isEqualToString:@"ok"]) {
+                          return;
+                      }
+                      if ([result integerValue] == 0) {
+                          // 该手机号已被注册
+                          [self alertMessage:@"该手机号已被注册!"];
+                          
+                      } else if ([result integerValue] == 1){
+                          // 验证码已发送
+                          [self alertMessage:@"验证码已发送!"];
+                          
+                      } else if ([result integerValue] == 2){
+                          // 验证次数已达今日上限
+                          [self alertMessage:@"验证次数已达今日上限!"];
+                          
+                      }
+                      
+                      
+                      
+                  } else {
+                      //修改密码接口返回结果。。。
+                      if ([result integerValue] == 1) {
+                          // 尚无用户或者手机未绑定。。。
+                          [self alertMessage:@"该手机号未被注册!"];
+                          
+                      } else if ([result integerValue] == 2){
+                          // 验证次数已达今日上限
+                          [self alertMessage:@"验证次数已达今日上限!"];
+                          
+                      } else if ([result integerValue] == 3){
+                          // 验证码过期
+                          [self alertMessage:@"验证码过期!"];
+                          
+                      }
                   }
-                  
-                  
-                  
-              } else {
-                  //修改密码接口返回结果。。。
-                  if ([result integerValue] == 1) {
-                      // 尚无用户或者手机未绑定。。。
-                      [self alertMessage:@"该手机号未被注册!"];
-                      
-                  } else if ([result integerValue] == 2){
-                      // 验证次数已达今日上限
-                      [self alertMessage:@"验证次数已达今日上限!"];
-                      
-                  } else if ([result integerValue] == 3){
-                      // 验证码过期
-                      [self alertMessage:@"验证码过期!"];
-                      
-                  }
-                  
-                  
                   
               }
-             
-
-          }
+          
+        }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
               NSLog(@"Error: %@", error);
@@ -326,31 +341,86 @@
     
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
-    NSDictionary *parameters = @{@"mobile":phoneNumber,
-                                 @"vcode":vcode};
-    NSLog(@"dic = %@", parameters);
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
-
-    
-
-    NSLog(@"url = %@", stringurl);
-    [manager POST:stringurl parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSInteger result = [[responseObject objectForKey:@"result"] intValue];
-              NSLog(@"responseObject = %@", responseObject);
-              
-              if (result == 0)
-              {   // 校验成功。。。
-                  [self displaySetPasswordPage];
+    if (self.config[@"isMessageLogin"]) {
+        
+        NSDictionary *parameters = @{@"mobile":phoneNumber,
+                                     @"sms_code":vcode};
+        NSLog(@"dic = %@", parameters);
+        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/sms_login", Root_URL];
+        NSLog(@"url = %@", stringurl);
+        
+        [manager POST:stringurl parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  NSLog(@"responseObject = %@", responseObject);
+                  //                  responseObject = {
+                  //                      code = 0;
+                  //                      info =     {
+                  //                          created = "2015-12-03T15:04:49";
+                  //                          email = "";
+                  //                          "has_usable_password" = 1;
+                  //                          id = 665152;
+                  //                          mobile = 13816404857;
+                  //                          modified = "2015-12-03T15:04:49";
+                  //                          nick = "";
+                  //                          phone = "";
+                  //                          score = 0;
+                  //                          status = 1;
+                  //                          url = "http://m.xiaolu.so/rest/v1/users/665152";
+                  //                          "user_id" = 665297;
+                  //                          username = 13816404857;
+                  //                          xiaolumm = "<null>";
+                  //                      };
+                  //                  }
+                  if ([[[responseObject objectForKey:@"info"] objectForKey:@"has_usable_password"] integerValue] == 1)
+                  {   // 校验成功。。。
+                      
+                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                      // 手机登录成功 ，保存用户信息以及登录途径
+                      [defaults setBool:YES forKey:kIsLogin];
+                    
+                      [defaults synchronize];
+                      
+                      [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+                      [self.navigationController popToRootViewControllerAnimated:YES];
+                      //                      [self displaySetPasswordPage];
+                  }
+                  else
+                  {
+                      [self displaySetPasswordPage];
+                  }
               }
-              else
-              {
-                  [self alertMessage:@"验证码错误，请重试!"];
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+              }];
+        
+
+        
+        
+    } else {
+        NSDictionary *parameters = @{@"mobile":phoneNumber,
+                                     @"vcode":vcode};
+        NSLog(@"dic = %@", parameters);
+        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
+        NSLog(@"url = %@", stringurl);
+        [manager POST:stringurl parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  NSInteger result = [[responseObject objectForKey:@"result"] intValue];
+                  NSLog(@"responseObject = %@", responseObject);
+
+                  if (result == 0)
+                  {   // 校验成功。。。
+                      [self displaySetPasswordPage];
+                  }
+                  else
+                  {
+                      [self alertMessage:@"验证码错误，请重试!"];
+                  }
               }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-          }];
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+              }];
+    }
+  
 }
 @end
 
