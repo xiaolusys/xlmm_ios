@@ -815,7 +815,7 @@
     UIImage *image = [UIImage imageWithData:imageData];
     image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
     NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-//    UIImage *newImage = [UIImage imageWithData:imagedata];
+    UIImage *newImage = [UIImage imageWithData:imagedata];
     
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
@@ -842,7 +842,7 @@
     
     self.titleStr = shareTitle;
     self.des = shareDesc;
-    self.shareImage = image;
+    self.shareImage = newImage;
     self.url = shareLink;
     self.imageD = imageData;
 
