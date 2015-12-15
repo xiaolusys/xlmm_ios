@@ -467,8 +467,7 @@
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    
-    return [WXApi handleOpenURL:url delegate:self];;
+    return [WXApi handleOpenURL:url delegate:self];
 
 }
 #pragma mark -

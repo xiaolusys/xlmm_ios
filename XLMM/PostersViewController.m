@@ -29,7 +29,7 @@
 
 static NSString * ksimpleCell = @"simpleCell";
 
-@interface PostersViewController () {
+@interface PostersViewController ()<UIAlertViewDelegate> {
     
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
@@ -320,6 +320,17 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)qqshareBtnClick:(UIButton *)btn {
+//    BOOL isInstall = 0;
+//    isInstall = [QQApiInterface isQQInstalled];
+//    NSLog(@"%d", isInstall);
+//    if ( !isInstall ) {
+////        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alterView show];
+//        NSLog(@"------------");
+//        return;
+//    }
+    
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
