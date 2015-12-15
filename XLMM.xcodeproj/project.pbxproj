@@ -552,7 +552,6 @@
 		32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B7891BDDF41C00603FCE /* unselected_icon.png */; };
 		32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B78A1BDDF41C00603FCE /* weixinzhifu.png */; };
 		32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B78B1BDDF41C00603FCE /* zhifubao.png */; };
-		32D2B7921BDDF59100603FCE /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B7911BDDF59100603FCE /* rightArrow.png */; };
 		32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */; };
 		32DE21B81BF184A200999ECA /* childIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21B61BF184A200999ECA /* childIcon.png */; };
 		32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DE21B71BF184A200999ECA /* ladyIcon.png */; };
@@ -2668,7 +2667,7 @@
 		325BA0E61B68B18A006D64BD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "上海己美";
 				TargetAttributes = {
 					325BA0ED1B68B18A006D64BD = {
@@ -2773,7 +2772,6 @@
 				3247FDBF1C03365900C6631D /* yiguoqi.png in Resources */,
 				32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */,
 				32746E321B74A22000816208 /* logo.png in Resources */,
-				32D2B7921BDDF59100603FCE /* rightArrow.png in Resources */,
 				32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */,
 				2EB87D3A1C17FAE4001CBF3D /* iOS-social-releasenote.html in Resources */,
 				3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */,
@@ -3434,14 +3432,12 @@
 		325BA1121B68B18A006D64BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
@@ -3450,10 +3446,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/UnionPay",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
-					"$(PROJECT_DIR)/XLMM/lib",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/ApplePay",
 					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
@@ -3481,14 +3473,12 @@
 		325BA1131B68B18A006D64BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
@@ -3497,10 +3487,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Alipay",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/UnionPay",
-					"$(PROJECT_DIR)/XLMM/lib/Channels/Wx",
-					"$(PROJECT_DIR)/XLMM/lib",
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/lib/Channels/ApplePay",
 					"$(PROJECT_DIR)/lib/Channels/Bfb/Dependencies/ASIHttpRequest",
