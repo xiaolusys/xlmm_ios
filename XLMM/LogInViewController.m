@@ -381,6 +381,15 @@
 
 - (IBAction)weixinButtonClicked:(id)sender {
     
+    if ([WXApi isWXAppInstalled]) {
+        
+    } else{
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alterView show];
+        
+        return;
+    }
+    
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
