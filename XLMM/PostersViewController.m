@@ -26,10 +26,11 @@
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "SVProgressHUD.h"
+#import "UIImage+ImageWithSelectedView.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
-@interface PostersViewController ()<UIAlertViewDelegate> {
+@interface PostersViewController ()<UIAlertViewDelegate, UIWebViewDelegate> {
     
     NSMutableArray *_ModelListArray;
     UIActivityIndicatorView *activityIndicator;
@@ -51,6 +52,8 @@ static NSString * ksimpleCell = @"simpleCell";
 @property (nonatomic, strong)UIImage *shareImage;
 @property (nonatomic, strong)NSString *url;
 @property (nonatomic, strong)NSData *imageD;
+//加载快照
+@property (nonatomic, strong)UIWebView *webView;
 
 
 @end
@@ -62,6 +65,13 @@ static NSString * ksimpleCell = @"simpleCell";
         self.youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     }
     return _youmengShare;
+}
+
+- (UIWebView *)webView {
+    if (!_webView) {
+        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
+    }
+    return _webView;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -272,8 +282,9 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     
     self.titleStr = shareTitle;
@@ -375,6 +386,44 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     [self cancleShareBtnClick:nil];
 }
+
+- (void)snapshotBtnClick:(UIButton *)btn {
+    NSString *str = @"http://www.baidu.com";
+    
+    NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
+    self.webView.delegate = self;
+    
+    
+}
+
+#pragma mark -- UIWebView代理
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.isLoading) {
+        return;
+    }
+    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
+    webView.frame = CGRectMake(0, 0, 320, height);
+    
+    [self createImageWithSize:CGSizeMake(SCREENWIDTH, height)];
+}
+
+- (void)createImageWithSize:(CGSize)size{
+    UIImage *image = [UIImage imageWithView:self.webView];
+    
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+}
+
 
 
 - (void)backBtnClicked:(UIButton *)button{

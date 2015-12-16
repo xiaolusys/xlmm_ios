@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -61,6 +61,21 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-6q-wz0">
                             <rect key="frame" x="180" y="90" width="90" height="90"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqY-MJ-5jD">
+                                    <rect key="frame" x="17.5" y="7.5" width="55" height="75"/>
+                                    <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="55" id="Gml-lS-Aag"/>
+                                        <constraint firstAttribute="height" constant="75" id="r1m-Vh-zNu"/>
+                                    </constraints>
+                                    <state key="normal" title="快照"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="hqY-MJ-5jD" firstAttribute="centerX" secondItem="9dE-6q-wz0" secondAttribute="centerX" id="TAK-Ye-f7k"/>
+                                <constraint firstItem="hqY-MJ-5jD" firstAttribute="centerY" secondItem="9dE-6q-wz0" secondAttribute="centerY" id="lBm-Sr-QHH"/>
+                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-eH-ApA">
                             <rect key="frame" x="270" y="90" width="90" height="90"/>
@@ -194,6 +209,7 @@
                 <outlet property="qqshareBtn" destination="r3l-vk-Rpk" id="Ot2-RF-EV5"/>
                 <outlet property="qqspaceShareBtn" destination="VNr-eV-Xof" id="Hja-dI-rb5"/>
                 <outlet property="shareBackView" destination="JNk-23-9tf" id="guy-hw-8F2"/>
+                <outlet property="snapshotBtn" destination="hqY-MJ-5jD" id="dEh-8w-rYz"/>
                 <outlet property="weiboShareBtn" destination="S16-an-bc0" id="wjs-sv-I6X"/>
                 <outlet property="weixinShareBtn" destination="Q0S-pY-cQp" id="azY-cl-IhL"/>
             </connections>

@@ -24,7 +24,6 @@
         self = [[[NSBundle mainBundle] loadNibNamed:@"YoumengShare" owner:nil options:nil]objectAtIndex:0];
         self.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.0];
         self.shareBackView.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:1.0];
-//         self.frame = CGRectMake(SCREENHEIGHT, 0, SCREENWIDTH, SCREENHEIGHT);
         
         self.cancleShareBtn.backgroundColor = [UIColor buttonEnabledBackgroundColor];
         self.cancleShareBtn.layer.cornerRadius = 20;

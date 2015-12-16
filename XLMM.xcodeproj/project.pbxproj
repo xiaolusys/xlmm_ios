@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */; };
 		2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E91C1BB9C700D452E0 /* shareFirends.png */; };
 		2E72B3F01C1BB9C700D452E0 /* shareqq.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3EA1C1BB9C700D452E0 /* shareqq.png */; };
@@ -638,6 +639,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
+		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharecopylink.png; sourceTree = "<group>"; };
 		2E72B3E91C1BB9C700D452E0 /* shareFirends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareFirends.png; sourceTree = "<group>"; };
 		2E72B3EA1C1BB9C700D452E0 /* shareqq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareqq.png; sourceTree = "<group>"; };
@@ -2190,6 +2193,8 @@
 				32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */,
 				32FE087C1BF4398A0072CCEC /* NSString+URL.h */,
 				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
+				2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */,
+				2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */,
 			);
 			name = cageory;
 			sourceTree = "<group>";
@@ -3160,6 +3165,7 @@
 				32C74C4B1BE7425E00E25A7C /* SetPasswordController.m in Sources */,
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
+				2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */,
 				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,
 				3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */,
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
