@@ -388,11 +388,13 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)snapshotBtnClick:(UIButton *)btn {
-    NSString *str = @"http://www.baidu.com";
+    NSString *str = @"http://m.xiaolu.so/rest/v1/products/28599/snapshot.html";
     
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+    [self.webView setScalesPageToFit:YES];
+
     self.webView.delegate = self;
     
     
