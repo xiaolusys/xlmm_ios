@@ -23,8 +23,9 @@
 #import "SVProgressHUD.h"
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
+#import "UIImage+ImageWithSelectedView.h"
 
-@interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
+@interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
     CGFloat contentTopHeight;
     CGFloat distance;
@@ -72,6 +73,8 @@
 @property (nonatomic, strong)UIImage *shareImage;
 @property (nonatomic, strong)NSString *url;
 @property (nonatomic, strong)NSData *imageD;
+//加载快照
+@property (nonatomic, strong)UIWebView *webView;
 
 @end
 
@@ -123,7 +126,7 @@
     contentCount = 0;
     theNumberOfSizeCanSelected = 0;
    
-   
+    self.webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
   
     [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
     
@@ -839,6 +842,8 @@
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     self.titleStr = shareTitle;
     self.des = shareDesc;
@@ -930,6 +935,43 @@
     [self cancleShareBtnClick:nil];
 }
 
+- (void)snapshotBtnClick:(UIButton *)btn {
+    //进行网络请求
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
+    
+    NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [self.webView loadRequest:request];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
+}
 
+#pragma mark -- UIWebView代理
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.isLoading) {
+        return;
+    }
+    CGSize size = webView.scrollView.contentSize;
+    NSLog(@"－－－－－－－size = %@", NSStringFromCGSize(size));
+    
+    self.webView.frame = CGRectMake(0, 0, size.width, size.height);
+    [self createImageWithSize:size];
+}
+
+- (void)createImageWithSize:(CGSize)size{
+    UIImage *image = [UIImage imageWithView:self.webView];
+    
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            
+        }
+    }];
+    
+    [self cancleShareBtnClick:nil];
+}
 
 @end
