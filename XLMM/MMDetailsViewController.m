@@ -76,6 +76,9 @@
 //加载快照
 @property (nonatomic, strong)UIWebView *webView;
 
+@property (nonatomic, strong)UIImage *kuaiZhaoImage;
+
+
 @end
 
 @implementation MMDetailsViewController
@@ -308,9 +311,31 @@
 
     [self createSizeView];
     [self createContentView];
+    [self createKuaiZhaoImage];
+    //[self performSelector:@selector(createKuaiZhaoImage) withObject:nil afterDelay:1.0f];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
+}
+- (void)createKuaiZhaoImage{
+    
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
+    
+    
+    NSLog(@"imageUrlString = %@", str);
+    
+    
+    NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [self.webView loadRequest:request];
+    
+    
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
+    
+    
+    
 }
 
 - (void)createCartView{
@@ -937,41 +962,35 @@
 
 - (void)snapshotBtnClick:(UIButton *)btn {
     //进行网络请求
-    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
-    
-    NSURL *url = [NSURL URLWithString:str];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [self.webView loadRequest:request];
-    self.webView.delegate = self;
-    self.webView.scalesPageToFit = YES;
-}
-
-#pragma mark -- UIWebView代理
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (webView.isLoading) {
-        return;
-    }
-    CGSize size = webView.scrollView.contentSize;
-    NSLog(@"－－－－－－－size = %@", NSStringFromCGSize(size));
-    
-    self.webView.frame = CGRectMake(0, 0, size.width, size.height);
-    [self createImageWithSize:size];
-}
-
-- (void)createImageWithSize:(CGSize)size{
-    UIImage *image = [UIImage imageWithView:self.webView];
+  
     
     [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
     
-    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
             
         }
     }];
     
     [self cancleShareBtnClick:nil];
+    
+  //  [self performSelector:@selector(createImageWithSize) withObject:nil afterDelay:5.0];
+}
+
+#pragma mark -- UIWebView代理
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.isLoading) {
+        return;
+    }
+    [self createImageWithSize];
+}
+
+- (void)createImageWithSize{
+    self.kuaiZhaoImage  = [UIImage imagewithWebView:self.webView];
+    self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
+   
 }
 
 @end

@@ -54,6 +54,7 @@ static NSString * ksimpleCell = @"simpleCell";
 @property (nonatomic, strong)NSData *imageD;
 
 
+
 @end
 
 @implementation PostersViewController
@@ -378,44 +379,10 @@ static NSString * ksimpleCell = @"simpleCell";
     [self cancleShareBtnClick:nil];
 }
 
-- (void)snapshotBtnClick:(UIButton *)btn {
-    NSString *str = @"http://m.xiaolu.so/rest/v1/products/28599/snapshot.html";
-    
-    NSURL *url = [NSURL URLWithString:str];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [self.webView loadRequest:request];
-    [self.webView setScalesPageToFit:YES];
 
-    self.webView.delegate = self;
-    
-    
-}
 
-#pragma mark -- UIWebView代理
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (webView.isLoading) {
-        return;
-    }
-    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
-    webView.frame = CGRectMake(0, 0, 320, height);
-    
-    [self createImageWithSize:CGSizeMake(SCREENWIDTH, height)];
-}
 
-- (void)createImageWithSize:(CGSize)size{
-    UIImage *image = [UIImage imageWithView:self.webView];
-    
-    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
-    
-    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
-    }];
-    
-    [self cancleShareBtnClick:nil];
-}
+
 
 
 

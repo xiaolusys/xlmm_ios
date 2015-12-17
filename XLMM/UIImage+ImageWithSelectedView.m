@@ -19,6 +19,18 @@
     return image;
 }
 
++ (UIImage *)imagewithWebView:(UIWebView *)webView{
+    UIGraphicsBeginImageContextWithOptions(webView.scrollView.contentSize, FALSE, 0);
+    NSLog(@"webViewSize = %@", NSStringFromCGSize(webView.scrollView.contentSize));
+    //渲染图形
+    // [[webView.scrollView layer] renderInContext:UIGraphicsGetCurrentContext()];//这个方法没下边的好 因为快照截图 只截了大部分 还剩一点没截到
+    [[[webView.scrollView.subviews objectAtIndex:0] layer] renderInContext:UIGraphicsGetCurrentContext()];//这个subview 的名字是 UIWebBrowserView
+    //得到新的image
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    NSLog(@"%@",image);
+
+    return image;
+}
 + (UIImage *) imagewithScrollView:(UIScrollView *)scrollView
 {
     UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size,scrollView.opaque, 0.0);
@@ -28,6 +40,7 @@
     UIGraphicsEndImageContext();
     return image;
 }
+
 
 
 

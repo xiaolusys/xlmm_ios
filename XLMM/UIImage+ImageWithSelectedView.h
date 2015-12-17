@@ -11,6 +11,7 @@
 @interface UIImage (ImageWithSelectedView)
 
 + (UIImage *) imageWithView:(UIView *)selectView;
++ (UIImage *)imagewithWebView:(UIWebView *)webView;
 
 + (UIImage *) imagewithScrollView:(UIScrollView *)scrollView;
 
