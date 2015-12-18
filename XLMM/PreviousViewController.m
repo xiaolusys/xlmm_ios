@@ -645,31 +645,23 @@ static NSString *khead2View = @"head2View";
         PromoteModel *model = [childDataArray objectAtIndex:indexPath.row];
         
         if (model.productModel == nil) {
-            NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details.json"];
-            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-            detailVC.urlString = urlString;
-            detailVC.childClothing = YES;
+          
+            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:YES];
+        
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
-                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-                [urlString appendString:@"/details.json"];
-                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-                detailVC.urlString = urlString;
-                detailVC.childClothing = YES;
+            
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:YES];
+           
                 
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
             else{
                 NSString *modelID = [model.productModel objectForKey:@"id"];
-                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-                collectionVC.urlString = urlString;
-                collectionVC.childClothing = YES;
+            
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:modelID isChild:YES];
+              
                 
                 [self.navigationController pushViewController:collectionVC animated:YES];
                 
@@ -683,31 +675,22 @@ static NSString *khead2View = @"head2View";
         }
         PromoteModel *model = [ladyDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
-            NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
-            [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-            [urlString appendString:@"/details.json"];
-            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-            detailVC.urlString = urlString;
-            detailVC.childClothing = NO;
-            
+       
+            MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
+         
             [self.navigationController pushViewController:detailVC animated:YES];
         }else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/", Root_URL];
-                [urlString appendString:[NSString stringWithFormat:@"%@", model.ID]];
-                [urlString appendString:@"/details.json"];
-                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-                detailVC.urlString = urlString;
-                detailVC.childClothing = NO;
+       
+                MMDetailsViewController *detailVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
+            
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
             else{
                 NSString *modelID = [model.productModel objectForKey:@"id"];
-                NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/rest/v1/products/modellist/", Root_URL];
-                [urlString appendString:[NSString stringWithFormat:@"%@.json", modelID]];
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-                collectionVC.urlString = urlString;
-                collectionVC.childClothing = NO;
+           
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:modelID isChild:NO];
+           
                 [self.navigationController pushViewController:collectionVC animated:YES];
                 
             }

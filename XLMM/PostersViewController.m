@@ -494,62 +494,31 @@ static NSString * ksimpleCell = @"simpleCell";
         return;
     }
     if (isOrder) {
-        
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-        
         if (model.productModel == nil) {
-            NSLog(@"没有集合页面");
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
-            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-            detailsVC.urlString = string;
-            detailsVC.childClothing = self.childClothing;
+            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
             [self.navigationController pushViewController:detailsVC animated:YES];
         } else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSLog(@"没有集合页面");
-                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
-                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-                detailsVC.urlString = string;
-                 detailsVC.childClothing = self.childClothing;
+                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
                 [self.navigationController pushViewController:detailsVC animated:YES];
                 
             } else {
-                NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-                NSLog(@"stringURL -> = %@", string);
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-                collectionVC.urlString = string;
-                 collectionVC.childClothing = self.childClothing;
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
                 [self.navigationController pushViewController:collectionVC animated:YES];
-                
-                
             }
-
         }
     } else {
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
-            NSLog(@"没有集合页面");
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
-            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-            detailsVC.urlString = string;
-             detailsVC.childClothing = self.childClothing;
+            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
             [self.navigationController pushViewController:detailsVC animated:YES];
         } else{
             if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                NSLog(@"没有集合页面");
-                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json",Root_URL,model.ID ];
-                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-                detailsVC.urlString = string;
-                 detailsVC.childClothing = self.childClothing;
+                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
                 [self.navigationController pushViewController:detailsVC animated:YES];
-                
-                
             } else {
-                NSString * string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, [model.productModel objectForKey:@"id"]];
-                NSLog(@"stringURL -> = %@", string);
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil];
-                collectionVC.urlString = string;
-                 collectionVC.childClothing = self.childClothing;
+                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
                 [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }

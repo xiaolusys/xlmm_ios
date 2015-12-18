@@ -17,4 +17,7 @@
 
 @property (nonatomic, copy) NSString * urlString;
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild;
+
+
 @end

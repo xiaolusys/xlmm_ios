@@ -36,6 +36,15 @@
     
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, modelID];
+        self.urlString = string;
+        _childClothing = isChild;
+    }
+    return self;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated{

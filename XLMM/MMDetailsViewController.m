@@ -115,6 +115,17 @@
     }
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, modelID];
+        self.urlString = string;
+        _childClothing = isChild;
+    }
+    return self;
+}
+
+
 
 
 - (void)viewDidLoad {

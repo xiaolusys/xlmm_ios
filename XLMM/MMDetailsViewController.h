@@ -63,5 +63,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *shareButtonImage;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild;
+
 
 @end
