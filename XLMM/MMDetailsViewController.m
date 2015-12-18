@@ -106,6 +106,9 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    
+    self.webView = nil;
+    self.kuaiZhaoImage = nil;
     [SVProgressHUD dismiss];
     if ([theTimer isValid]) {
         [theTimer invalidate];
@@ -335,6 +338,13 @@
     self.webView.scalesPageToFit = YES;
     
     
+    
+}
+
+
+
+- (void)dealloc{
+   
     
 }
 
