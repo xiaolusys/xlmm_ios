@@ -339,7 +339,7 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
         NSLog(@"shareUrl = %@", string);
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-        if (data == nil) {
+        if (data == nil || [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == NO) {
             
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
             [self.navigationController pushViewController:loginVC animated:YES];
