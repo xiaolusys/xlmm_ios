@@ -339,6 +339,13 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
         NSLog(@"shareUrl = %@", string);
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+        if (data == nil) {
+            
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            return;
+            
+        }
         shareDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"dic = %@", shareDic);
         
