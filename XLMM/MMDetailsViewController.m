@@ -56,6 +56,7 @@
     NSString *offShelfTime;
     NSMutableArray *mutableSize;
     NSMutableArray *mutableSizeName;
+    NSDictionary *shareDic;
 }
 
 
@@ -321,6 +322,7 @@
     saleTime = [dic objectForKey:@"sale_time"];
     offShelfTime = [dic objectForKey:@"offshelf_time"];
   
+//    [self createShareData];
    
 
     [self createSizeView];
@@ -330,6 +332,22 @@
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
+}
+
+- (void)createShareData{
+    if (shareDic == nil) {
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
+        NSLog(@"shareUrl = %@", string);
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+        shareDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"dic = %@", shareDic);
+        
+        self.titleStr = [shareDic objectForKey:@"title"];
+        self.des = [shareDic objectForKey:@"desc"];
+        self.url = [shareDic objectForKey:@"share_link"];
+    }
+
+    
 }
 - (void)createKuaiZhaoImage{
     
@@ -821,7 +839,7 @@
     //NSString *kLinkTagName = @"xiaolumeimei";
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        
+        [self createShareData];
     } else {
         LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -884,11 +902,10 @@
     [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    self.titleStr = shareTitle;
-    self.des = shareDesc;
-    self.shareImage = newImage;
-    self.url = shareLink;
+
     self.imageD = imageData;
+
+    self.shareImage = newImage;
 
 }
 
@@ -911,6 +928,9 @@
         }
     }];
     
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+    
+    
     [self cancleShareBtnClick:nil];
     
 }
@@ -925,6 +945,9 @@
         }
     }];
     
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
+    
     [self cancleShareBtnClick:nil];
     
 }
@@ -938,6 +961,8 @@
             
         }
     }];
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
     
     [self cancleShareBtnClick:nil];
 }
@@ -951,6 +976,8 @@
             NSLog(@"分享成功！");
         }
     }];
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
     
     [self cancleShareBtnClick:nil];
 }
@@ -958,7 +985,8 @@
 - (void)weiboShareBtnClick:(UIButton *)btn {
     NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
-    
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
     [self cancleShareBtnClick:nil];
 }
 
@@ -972,6 +1000,9 @@
     {
         [SVProgressHUD showSuccessWithStatus:@"已复制"];
     }
+    
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
     [self cancleShareBtnClick:nil];
 }
 
@@ -980,7 +1011,8 @@
     [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
     snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    
+    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+
     [self cancleShareBtnClick:nil];
 }
 
