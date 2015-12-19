@@ -63,7 +63,7 @@
                             <rect key="frame" x="180" y="90" width="90" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqY-MJ-5jD">
-                                    <rect key="frame" x="17.5" y="7.5" width="55" height="75"/>
+                                    <rect key="frame" x="17" y="7" width="55" height="75"/>
                                     <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="Gml-lS-Aag"/>
@@ -79,6 +79,21 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-eH-ApA">
                             <rect key="frame" x="270" y="90" width="90" height="90"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIz-vk-iNw">
+                                    <rect key="frame" x="18" y="7.5" width="55" height="75"/>
+                                    <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="75" id="UrQ-fZ-eQw"/>
+                                        <constraint firstAttribute="width" constant="55" id="g0Y-YK-dwn"/>
+                                    </constraints>
+                                    <state key="normal" title="朋友圈"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="xIz-vk-iNw" firstAttribute="centerY" secondItem="RM7-eH-ApA" secondAttribute="centerY" id="TmV-Qe-QiG"/>
+                                <constraint firstItem="xIz-vk-iNw" firstAttribute="centerX" secondItem="RM7-eH-ApA" secondAttribute="centerX" id="qAb-zP-JO3"/>
+                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQU-jk-aHp" userLabel="朋友圈">
                             <rect key="frame" x="90" y="0.0" width="90" height="90"/>
@@ -205,6 +220,7 @@
             <connections>
                 <outlet property="cancleShareBtn" destination="Wad-9G-eJ9" id="YMf-jl-Es9"/>
                 <outlet property="friendsShareBtn" destination="4dY-kt-0lF" id="PK5-Cs-v0d"/>
+                <outlet property="friendsSnaoshotBtn" destination="xIz-vk-iNw" id="fFd-ZN-SUu"/>
                 <outlet property="linkCopyBtn" destination="Lzv-BQ-boV" id="bck-1D-xVA"/>
                 <outlet property="qqshareBtn" destination="r3l-vk-Rpk" id="Ot2-RF-EV5"/>
                 <outlet property="qqspaceShareBtn" destination="VNr-eV-Xof" id="Hja-dI-rb5"/>
