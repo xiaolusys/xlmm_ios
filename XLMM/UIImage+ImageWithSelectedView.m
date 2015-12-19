@@ -27,7 +27,6 @@
     [[[webView.scrollView.subviews objectAtIndex:0] layer] renderInContext:UIGraphicsGetCurrentContext()];//这个subview 的名字是 UIWebBrowserView
     //得到新的image
     UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
-    NSLog(@"%@",image);
 
     return image;
 }

@@ -334,8 +334,6 @@
 - (void)createKuaiZhaoImage{
     
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
-    
-    
     NSLog(@"imageUrlString = %@", str);
     
     
@@ -343,13 +341,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [self.webView loadRequest:request];
-    
-    
     self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
-    
-    
-    
 }
 
 
@@ -910,6 +903,7 @@
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+    [UMSocialData defaultData].extConfig.wxMessageType = nil;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
@@ -982,21 +976,12 @@
 }
 
 - (void)snapshotBtnClick:(UIButton *)btn {
-    //进行网络请求
-  
-    
-    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
-    
-    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
-    }];
+    [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:self.kuaiZhaoImage socialUIDelegate:self];
+    [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+    snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     
     [self cancleShareBtnClick:nil];
-    
-  //  [self performSelector:@selector(createImageWithSize) withObject:nil afterDelay:5.0];
 }
 
 #pragma mark -- UIWebView代理
