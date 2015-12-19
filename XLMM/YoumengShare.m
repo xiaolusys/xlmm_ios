@@ -32,7 +32,6 @@
         
         self.shareBackView.layer.cornerRadius = 20;
     }
-    
     return self;
 }
 

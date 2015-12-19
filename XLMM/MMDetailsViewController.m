@@ -357,7 +357,6 @@
     
 }
 - (void)createKuaiZhaoImage{
-    
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
     NSLog(@"imageUrlString = %@", str);
     
@@ -907,9 +906,9 @@
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-
     self.imageD = imageData;
 
     self.shareImage = newImage;
@@ -1007,8 +1006,6 @@
     {
         [SVProgressHUD showSuccessWithStatus:@"已复制"];
     }
-    
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
     [self cancleShareBtnClick:nil];
 }
@@ -1018,11 +1015,19 @@
     [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
     snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
     [self cancleShareBtnClick:nil];
 }
 
+- (void)friendsSnaoshotBtnClick:(UIButton *)btn{
+    [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            NSLog(@"分享成功！");
+        }
+    }];
+    [self cancleShareBtnClick:nil];
+}
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -1035,7 +1040,49 @@
 - (void)createImageWithSize{
     self.kuaiZhaoImage  = [UIImage imagewithWebView:self.webView];
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
+    
+//    NSData *data = UIImageJPEGRepresentation(self.kuaiZhaoImage, 1.0);
+//    NSString *str = [MMDetailsViewController typeForImageData:data];
+//    self.kuaiZhaoImage = [UIImage imageWithData:data];
+//
+//    NSLog(@"------%@", self.kuaiZhaoImage);
+//    NSLog(@"str = %@", str);
    
+}
+
++ (NSString *)typeForImageData:(NSData *)data {
+    
+    
+    uint8_t c;
+    
+    [data getBytes:&c length:1];
+    
+    
+    
+    switch (c) {
+            
+        case 0xFF:
+            
+            return @"image/jpeg";
+            
+        case 0x89:
+            
+            return @"image/png";
+            
+        case 0x47:
+            
+            return @"image/gif";
+            
+        case 0x49:
+            
+        case 0x4D:
+            
+            return @"image/tiff";
+            
+    }
+    
+    return nil;
+    
 }
 
 @end
