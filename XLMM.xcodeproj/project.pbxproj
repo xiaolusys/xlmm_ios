@@ -136,6 +136,8 @@
 		323D66761C27921F00A2B955 /* ios8_retina_HD5.5@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66721C27921F00A2B955 /* ios8_retina_HD5.5@3x.png */; };
 		323D66771C27921F00A2B955 /* retina_HD4.7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66731C27921F00A2B955 /* retina_HD4.7@2x.png */; };
 		323D66781C27921F00A2B955 /* retina4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66741C27921F00A2B955 /* retina4@2x.png */; };
+		323D667A1C2799BE00A2B955 /* retina6@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66791C2799BE00A2B955 /* retina6@3x.png */; };
+		323D667C1C2799C200A2B955 /* retina7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D667B1C2799C200A2B955 /* retina7@2x.png */; };
 		3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */; };
 		3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA81BE9E07300A5CC1C /* wash01.png */; };
 		3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA91BE9E07300A5CC1C /* wash02.png */; };
@@ -867,6 +869,8 @@
 		323D66721C27921F00A2B955 /* ios8_retina_HD5.5@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios8_retina_HD5.5@3x.png"; sourceTree = "<group>"; };
 		323D66731C27921F00A2B955 /* retina_HD4.7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retina_HD4.7@2x.png"; sourceTree = "<group>"; };
 		323D66741C27921F00A2B955 /* retina4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retina4@2x.png"; sourceTree = "<group>"; };
+		323D66791C2799BE00A2B955 /* retina6@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "retina6@3x.png"; path = "XLMM/retina6@3x.png"; sourceTree = "<group>"; };
+		323D667B1C2799C200A2B955 /* retina7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "retina7@2x.png"; path = "XLMM/retina7@2x.png"; sourceTree = "<group>"; };
 		3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lingquyouhuiquan.png; sourceTree = "<group>"; };
 		3247EAA81BE9E07300A5CC1C /* wash01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash01.png; sourceTree = "<group>"; };
 		3247EAA91BE9E07300A5CC1C /* wash02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash02.png; sourceTree = "<group>"; };
@@ -1645,6 +1649,8 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				323D667B1C2799C200A2B955 /* retina7@2x.png */,
+				323D66791C2799BE00A2B955 /* retina6@3x.png */,
 				323D66711C27921F00A2B955 /* ios7@2x.png */,
 				323D66721C27921F00A2B955 /* ios8_retina_HD5.5@3x.png */,
 				323D66731C27921F00A2B955 /* retina_HD4.7@2x.png */,
@@ -2790,6 +2796,7 @@
 				32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */,
 				32746E321B74A22000816208 /* logo.png in Resources */,
 				32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */,
+				323D667A1C2799BE00A2B955 /* retina6@3x.png in Resources */,
 				2EB87D3A1C17FAE4001CBF3D /* iOS-social-releasenote.html in Resources */,
 				3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */,
 				2EB87D301C17FAE4001CBF3D /* UMSnsAccountViewController.xib in Resources */,
@@ -2932,6 +2939,7 @@
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
+				323D667C1C2799C200A2B955 /* retina7@2x.png in Resources */,
 				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,

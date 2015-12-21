@@ -671,7 +671,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
             PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
             childVC.urlString = kLADY_LIST_URL;
             childVC.orderUrlString = kLADY_LIST_ORDER_URL;
