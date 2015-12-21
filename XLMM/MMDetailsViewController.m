@@ -926,7 +926,7 @@
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
-    [UMSocialData defaultData].extConfig.wxMessageType = nil;
+    [UMSocialData defaultData].extConfig.wxMessageType = 0;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
