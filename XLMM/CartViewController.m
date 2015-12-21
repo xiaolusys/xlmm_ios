@@ -162,6 +162,7 @@
     }
 
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+    
     [self.cartTableView reloadData];
 }
 
@@ -361,7 +362,7 @@
         
 //        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"BlueView" owner:nil options:nil];
 //        self.blueView = views[0];
-        if (self.dataArray.count == 0) {
+        if (self.dataArray.count == 0 && download1) {
             NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyCartView" owner:nil options:nil];
             
             UIView *footerView = views[0];

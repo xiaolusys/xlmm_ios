@@ -258,7 +258,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.backView addSubview:self.youmengShare];
     //隐藏快照
     self.youmengShare.snapshotBtn.hidden = YES;
-    
+    self.youmengShare.friendsSnaoshotBtn.hidden = YES;
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     
     // 点击分享后弹出自定义的分享界面
