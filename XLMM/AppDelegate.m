@@ -280,6 +280,7 @@
             strMsg = @"分享失败";
         }
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"weixinshared" object:nil];
         [alert show];
        
     } else if([resp isKindOfClass:[PayResp class]]){

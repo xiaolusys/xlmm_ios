@@ -100,10 +100,24 @@
     //
 
     [self createTimeCartView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenNavigationView) name:@"weixinshared" object:nil];
+    
+    
     //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
     
     
+}
+
+- (void)hiddenNavigationView{
+    
+    NSLog(@"隐藏导航栏");
+    self.navigationController.navigationBarHidden = YES;
+
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -371,10 +385,6 @@
 
 
 
-- (void)dealloc{
-   
-    
-}
 
 - (void)createCartView{
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(15, SCREENHEIGHT - 48, 40, 40)];
