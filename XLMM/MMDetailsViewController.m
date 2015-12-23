@@ -93,15 +93,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-  //  NSLog(@"%@", last_created);
     if (last_created != nil) {
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }
-    //
-
     [self createTimeCartView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenNavigationView) name:@"weixinshared" object:nil];
     
     
     //隐藏导航栏
@@ -939,10 +934,8 @@
     [UMSocialData defaultData].extConfig.wxMessageType = 0;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        
+        [self hiddenNavigationView];
     }];
-    
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
     
     
     [self cancleShareBtnClick:nil];
@@ -954,12 +947,10 @@
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        
-    }];
-    
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
+        [self hiddenNavigationView];
 
-    
+    }];
+
     [self cancleShareBtnClick:nil];
     
 }
@@ -969,9 +960,8 @@
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        
+        [self hiddenNavigationView];
     }];
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
     
     [self cancleShareBtnClick:nil];
@@ -982,17 +972,15 @@
     [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [self hiddenNavigationView];
     }];
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
-    
     [self cancleShareBtnClick:nil];
 }
 
 - (void)weiboShareBtnClick:(UIButton *)btn {
     NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
-    NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
     [self cancleShareBtnClick:nil];
 }
