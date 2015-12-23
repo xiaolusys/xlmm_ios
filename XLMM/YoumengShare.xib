@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wad-9G-eJ9">
-                    <rect key="frame" x="20" y="246" width="345" height="40"/>
+                    <rect key="frame" x="15" y="251" width="345" height="40"/>
                     <color key="backgroundColor" red="1" green="0.56862745098039214" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="1gL-5g-jkd"/>
@@ -23,10 +23,10 @@
                     </state>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-23-9tf" userLabel="分享背景">
-                    <rect key="frame" x="10" y="56" width="360" height="180"/>
+                    <rect key="frame" x="10" y="61" width="355" height="180"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-fZ-8y5" userLabel="空间">
-                            <rect key="frame" x="270" y="0.0" width="90" height="90"/>
+                            <rect key="frame" x="266" y="0.0" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNr-eV-Xof">
                                     <rect key="frame" x="17" y="7" width="55" height="75"/>
@@ -43,7 +43,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJ2-iI-GDB" userLabel="微博">
-                            <rect key="frame" x="0.0" y="90" width="90" height="90"/>
+                            <rect key="frame" x="0.0" y="90" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S16-an-bc0">
                                     <rect key="frame" x="17" y="7" width="55" height="75"/>
@@ -60,10 +60,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-6q-wz0">
-                            <rect key="frame" x="180" y="90" width="90" height="90"/>
+                            <rect key="frame" x="178" y="90" width="88" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqY-MJ-5jD">
-                                    <rect key="frame" x="17" y="7" width="55" height="75"/>
+                                    <rect key="frame" x="16" y="7" width="55" height="75"/>
                                     <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="Gml-lS-Aag"/>
@@ -78,10 +78,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-eH-ApA">
-                            <rect key="frame" x="270" y="90" width="90" height="90"/>
+                            <rect key="frame" x="266" y="90" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIz-vk-iNw">
-                                    <rect key="frame" x="18" y="7.5" width="55" height="75"/>
+                                    <rect key="frame" x="17" y="8" width="55" height="75"/>
                                     <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="UrQ-fZ-eQw"/>
@@ -96,7 +96,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQU-jk-aHp" userLabel="朋友圈">
-                            <rect key="frame" x="90" y="0.0" width="90" height="90"/>
+                            <rect key="frame" x="89" y="0.0" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dY-kt-0lF">
                                     <rect key="frame" x="17" y="8" width="55" height="75"/>
@@ -113,10 +113,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kt2-Gh-Ce2" userLabel="qq">
-                            <rect key="frame" x="180" y="0.0" width="90" height="90"/>
+                            <rect key="frame" x="178" y="0.0" width="88" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3l-vk-Rpk">
-                                    <rect key="frame" x="17" y="8" width="55" height="75"/>
+                                    <rect key="frame" x="16" y="8" width="55" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="Tza-B2-mvi"/>
                                         <constraint firstAttribute="height" constant="75" id="oTX-70-rI9"/>
@@ -130,7 +130,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIp-gy-3cd" userLabel="微信">
-                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                            <rect key="frame" x="0.0" y="0.0" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-pY-cQp">
                                     <rect key="frame" x="17" y="8" width="55" height="75"/>
@@ -149,7 +149,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrB-X9-Sww" userLabel="复制">
-                            <rect key="frame" x="90" y="90" width="90" height="90"/>
+                            <rect key="frame" x="89" y="90" width="89" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzv-BQ-boV">
                                     <rect key="frame" x="17" y="7" width="55" height="75"/>
@@ -188,7 +188,6 @@
                         <constraint firstItem="FrB-X9-Sww" firstAttribute="width" secondItem="aIp-gy-3cd" secondAttribute="width" id="aTe-Nc-qSo"/>
                         <constraint firstItem="aIp-gy-3cd" firstAttribute="leading" secondItem="JNk-23-9tf" secondAttribute="leading" id="bGY-Uc-eb5"/>
                         <constraint firstAttribute="trailing" secondItem="Rez-fZ-8y5" secondAttribute="trailing" id="buU-Hu-PPU"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="180" id="dtQ-hq-nqt"/>
                         <constraint firstItem="FrB-X9-Sww" firstAttribute="height" secondItem="aIp-gy-3cd" secondAttribute="height" id="gyb-cS-gPu"/>
                         <constraint firstItem="JQU-jk-aHp" firstAttribute="width" secondItem="aIp-gy-3cd" secondAttribute="width" id="hPe-Hp-4gU"/>
                         <constraint firstItem="9dE-6q-wz0" firstAttribute="top" secondItem="Kt2-Gh-Ce2" secondAttribute="bottom" id="hXP-en-4fi"/>
@@ -209,11 +208,11 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Wad-9G-eJ9" secondAttribute="trailing" constant="10" id="66Y-gb-Okj"/>
+                <constraint firstAttribute="trailing" secondItem="Wad-9G-eJ9" secondAttribute="trailing" constant="15" id="66Y-gb-Okj"/>
                 <constraint firstItem="Wad-9G-eJ9" firstAttribute="top" secondItem="JNk-23-9tf" secondAttribute="bottom" constant="10" id="K9s-eH-H8h"/>
-                <constraint firstAttribute="bottom" secondItem="Wad-9G-eJ9" secondAttribute="bottom" constant="15" id="dDA-Ll-5QH"/>
-                <constraint firstAttribute="trailing" secondItem="JNk-23-9tf" secondAttribute="trailing" constant="5" id="kEu-cN-84i"/>
-                <constraint firstItem="Wad-9G-eJ9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rl8-WS-lxX"/>
+                <constraint firstAttribute="bottom" secondItem="Wad-9G-eJ9" secondAttribute="bottom" constant="10" id="dDA-Ll-5QH"/>
+                <constraint firstAttribute="trailing" secondItem="JNk-23-9tf" secondAttribute="trailing" constant="10" id="kEu-cN-84i"/>
+                <constraint firstItem="Wad-9G-eJ9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="rl8-WS-lxX"/>
                 <constraint firstItem="JNk-23-9tf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="xOQ-wE-KQP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
