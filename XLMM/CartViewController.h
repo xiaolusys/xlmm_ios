@@ -28,5 +28,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
 
 
+
+
 - (IBAction)purchaseClicked:(id)sender;
+
 @end

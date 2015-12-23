@@ -926,12 +926,10 @@
 - (void)weixinShareBtnClick:(UIButton *)btn{
     [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
-    [UMSocialData defaultData].extConfig.wxMessageType = nil;
+    [UMSocialData defaultData].extConfig.wxMessageType = 0;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
+        
     }];
     
     NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
@@ -946,9 +944,7 @@
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
+        
     }];
     
     NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
@@ -963,9 +959,7 @@
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
+        
     }];
     NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
@@ -978,9 +972,6 @@
     [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            NSLog(@"分享成功！");
-        }
     }];
     NSLog(@"%@\n%@\n%@\n", self.titleStr, self.des, self.url);
 
@@ -1022,9 +1013,7 @@
 - (void)friendsSnaoshotBtnClick:(UIButton *)btn{
     [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            NSLog(@"分享成功！");
-        }
+        
     }];
     [self cancleShareBtnClick:nil];
 }
@@ -1040,49 +1029,5 @@
 - (void)createImageWithSize{
     self.kuaiZhaoImage  = [UIImage imagewithWebView:self.webView];
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
-    
-//    NSData *data = UIImageJPEGRepresentation(self.kuaiZhaoImage, 1.0);
-//    NSString *str = [MMDetailsViewController typeForImageData:data];
-//    self.kuaiZhaoImage = [UIImage imageWithData:data];
-//
-//    NSLog(@"------%@", self.kuaiZhaoImage);
-//    NSLog(@"str = %@", str);
-   
 }
-
-+ (NSString *)typeForImageData:(NSData *)data {
-    
-    
-    uint8_t c;
-    
-    [data getBytes:&c length:1];
-    
-    
-    
-    switch (c) {
-            
-        case 0xFF:
-            
-            return @"image/jpeg";
-            
-        case 0x89:
-            
-            return @"image/png";
-            
-        case 0x47:
-            
-            return @"image/gif";
-            
-        case 0x49:
-            
-        case 0x4D:
-            
-            return @"image/tiff";
-            
-    }
-    
-    return nil;
-    
-}
-
 @end

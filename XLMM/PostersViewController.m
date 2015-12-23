@@ -299,9 +299,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
+        
     }];
     
     [self cancleShareBtnClick:nil];
@@ -313,9 +311,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
+        
     }];
     
     [self cancleShareBtnClick:nil];
@@ -323,24 +319,10 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)qqshareBtnClick:(UIButton *)btn {
-//    BOOL isInstall = 0;
-//    isInstall = [QQApiInterface isQQInstalled];
-//    NSLog(@"%d", isInstall);
-//    if ( !isInstall ) {
-////        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:@"温馨提示" message:@"您的设备没有安装QQ" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [alterView show];
-//        NSLog(@"------------");
-//        return;
-//    }
     
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
-    
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-        }
     }];
     
     [self cancleShareBtnClick:nil];
@@ -351,9 +333,6 @@ static NSString * ksimpleCell = @"simpleCell";
     [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            NSLog(@"分享成功！");
-        }
     }];
     
     [self cancleShareBtnClick:nil];
@@ -379,10 +358,30 @@ static NSString * ksimpleCell = @"simpleCell";
     [self cancleShareBtnClick:nil];
 }
 
+//分享成功或者失败的提示
+//- (void)thirdShareResult:(BOOL)result {
+//    NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+//    NSString *strMsg;
+//    if (result) {
+//        strMsg = @"分享成功";
+//    } else {
+//        strMsg = @"分享失败";
+//    }
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//    [alert show];
+//}
 
 
-
-
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        NSLog(@"－－－－－－－－－分享成功");
+    }else {
+        NSLog(@"－－－－－－－－分享失败");
+    }
+}
 
 
 

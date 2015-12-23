@@ -272,15 +272,15 @@
 
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
-        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-        NSString *strMsg;
-        if (resp.errCode == 0) {
-            strMsg = @"分享成功";
-        } else {
-            strMsg = @"分享失败";
-        }
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+//        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+//        NSString *strMsg;
+//        if (resp.errCode == 0) {
+//            strMsg = @"分享成功";
+//        } else {
+//            strMsg = @"分享失败";
+//        }
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
        
     } else if([resp isKindOfClass:[PayResp class]]){
 
@@ -304,8 +304,6 @@
         //获取token和openid；
         [self getAccess_token];
     } //启动微信支付的response
- 
-   
     
 }
 
@@ -445,8 +443,10 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    NSLog(@"url = %@", url);
-    
+//    NSLog(@"url = %@", url);
+//    
+//    NSLog(@"sourceApplication = %@", sourceApplication);
+//    NSLog(@"annotation = %@", annotation);
     
    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
@@ -467,9 +467,10 @@
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    return [WXApi handleOpenURL:url delegate:self];
+    return [UMSocialSnsService handleOpenURL:url];;
 
 }
+
 #pragma mark -
 #pragma mark RESideMenu Delegate
 
