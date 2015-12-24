@@ -57,6 +57,7 @@
     NSMutableArray *mutableSize;
     NSMutableArray *mutableSizeName;
     NSDictionary *shareDic;
+    BOOL isWXFriends;
 }
 
 
@@ -96,21 +97,13 @@
     if (last_created != nil) {
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }
+    //
     [self createTimeCartView];
-    
-    
     //隐藏导航栏
     self.navigationController.navigationBarHidden = YES;
-    
-    
 }
 
-- (void)hiddenNavigationView{
-    
-    NSLog(@"隐藏导航栏");
-    self.navigationController.navigationBarHidden = YES;
 
-}
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -187,6 +180,7 @@
 //    [self.view addSubview:frontView];
     self.addCartButton.layer.cornerRadius = 20;
     self.addCartButton.layer.borderWidth = 1;
+    self.addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     self.addCartButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     self.line2Height.constant = 0.5;
     self.line3Height.constant = 0.5;
@@ -336,8 +330,6 @@
 
     [self createSizeView];
     [self createContentView];
-    [self createKuaiZhaoImage];
-    //[self performSelector:@selector(createKuaiZhaoImage) withObject:nil afterDelay:1.0f];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
@@ -849,8 +841,11 @@
     //  kLinkURL = @"http://xiaolu.so/m/18807/";
     //NSString *kLinkTagName = @"xiaolumeimei";
     
+    
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self createShareData];
+
     } else {
         LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -1000,20 +995,15 @@
 }
 
 - (void)snapshotBtnClick:(UIButton *)btn {
-    [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:self.kuaiZhaoImage socialUIDelegate:self];
-    [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-    snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    isWXFriends = NO;
+    [self createKuaiZhaoImage];
 
-    [self cancleShareBtnClick:nil];
 }
 
 - (void)friendsSnaoshotBtnClick:(UIButton *)btn{
-    [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        
-    }];
-    [self cancleShareBtnClick:nil];
+    isWXFriends = YES;
+    [self createKuaiZhaoImage];
+
 }
 #pragma mark -- UIWebView代理
 
@@ -1021,11 +1011,26 @@
     if (webView.isLoading) {
         return;
     }
-    [self createImageWithSize];
+    self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
+    self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
+    
+    if (isWXFriends) {
+        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            
+        }];
+        [self cancleShareBtnClick:nil];
+    } else {
+        [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:self.kuaiZhaoImage socialUIDelegate:self];
+        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+        [self cancleShareBtnClick:nil];
+    }
+    
+    
 }
 
-- (void)createImageWithSize{
-    self.kuaiZhaoImage  = [UIImage imagewithWebView:self.webView];
-    self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
-}
+
 @end
