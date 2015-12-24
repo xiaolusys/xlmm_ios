@@ -164,8 +164,12 @@
 }
 
 - (void)rightClicked:(UIButton *)button{
-    NSLog(@"right");
+//    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     
+    MaMaViewController *ma = [[MaMaViewController alloc] init];
+    [self.navigationController pushViewController:ma animated:YES];
+//    [self presentViewController:ma animated:YES completion:nil];
     
 }
 
