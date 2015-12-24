@@ -104,6 +104,12 @@
 }
 
 
+
+- (void)hiddenNavigationView{
+    self.navigationController.navigationBarHidden = YES;
+}
+
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -949,6 +955,8 @@
     [self cancleShareBtnClick:nil];
     
 }
+
+
 
 - (void)qqshareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
