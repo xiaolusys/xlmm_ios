@@ -19,13 +19,15 @@
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
 #import "LogInViewController.h"
+#import "WXApi.h"
+#import "MaMaViewController.h"
 
 
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
 
-@interface MMRootViewController ()<MMNavigationDelegate>
+@interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>
 
 {
     UIView *_view;
@@ -158,7 +160,7 @@
 
 
     
-    [ self.view addSubview:[[UIView alloc] init]];
+    [self.view addSubview:[[UIView alloc] init]];
 }
 
 - (void)rightClicked:(UIButton *)button{

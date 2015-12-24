@@ -28,6 +28,7 @@
 		2E77F5B91C1EBBA90020C014 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E77F5AB1C1EBBA90020C014 /* libWeiboSDK.a */; };
 		2E77F5BA1C1EBBA90020C014 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E77F5B41C1EBBA90020C014 /* WeiboSDK.bundle */; };
 		2E77F5BB1C1EBBA90020C014 /* SendMessageToWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E77F5B81C1EBBA90020C014 /* SendMessageToWeibo.m */; };
+		2E7C03831C2BBBC3004047BB /* MaMaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C03821C2BBBC3004047BB /* MaMaViewController.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2EB87CF21C17FAE4001CBF3D /* UMSocialLocalizable.strings */; };
 		2EB87D291C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB87D001C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a */; };
@@ -680,6 +681,8 @@
 		2E77F5B61C1EBBA90020C014 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 		2E77F5B71C1EBBA90020C014 /* SendMessageToWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendMessageToWeibo.h; sourceTree = "<group>"; };
 		2E77F5B81C1EBBA90020C014 /* SendMessageToWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageToWeibo.m; sourceTree = "<group>"; };
+		2E7C03811C2BBBC3004047BB /* MaMaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaViewController.h; sourceTree = "<group>"; };
+		2E7C03821C2BBBC3004047BB /* MaMaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaViewController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2EB87CF31C17FAE4001CBF3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
@@ -2276,6 +2279,8 @@
 				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
+				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
+				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -3085,6 +3090,7 @@
 				32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */,
 				321952C21BFC7AF800AA0AB8 /* QNDomain.m in Sources */,
 				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
+				2E7C03831C2BBBC3004047BB /* MaMaViewController.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				321952A01BFC7A8D00AA0AB8 /* QNUpToken.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
