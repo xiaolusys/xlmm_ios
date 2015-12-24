@@ -19,13 +19,15 @@
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
 #import "LogInViewController.h"
+#import "WXApi.h"
+#import "MaMaViewController.h"
 
 
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
 
-@interface MMRootViewController ()<MMNavigationDelegate>
+@interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>
 
 {
     UIView *_view;
@@ -148,21 +150,25 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-//    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-//    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-//    [rightBtn addSubview:rightImageView];
-//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-//    self.navigationItem.rightBarButtonItem = rightItem;
-
-//    rightBtn.backgroundColor = [UIColor redColor];
-//    leftButton.backgroundColor = [UIColor redColor];
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+    rightImageView.frame = CGRectMake(18, 11, 26, 26);
+    [rightBtn addSubview:rightImageView];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
     
-    [ self.view addSubview:[[UIView alloc] init]];
+    [self.view addSubview:[[UIView alloc] init]];
 }
 
 - (void)rightClicked:(UIButton *)button{
+//    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+    MaMaViewController *ma = [[MaMaViewController alloc] init];
+    [self.navigationController pushViewController:ma animated:YES];
+//    [self presentViewController:ma animated:YES completion:nil];
+    
 }
 
 

@@ -443,10 +443,6 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-//    NSLog(@"url = %@", url);
-//    
-//    NSLog(@"sourceApplication = %@", sourceApplication);
-//    NSLog(@"annotation = %@", annotation);
     
    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
@@ -470,7 +466,7 @@
     return [UMSocialSnsService handleOpenURL:url];;
 
 }
-
+    
 #pragma mark -
 #pragma mark RESideMenu Delegate
 
