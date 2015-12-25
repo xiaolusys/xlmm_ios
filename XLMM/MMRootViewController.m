@@ -429,25 +429,6 @@
     }
     _pageCurrentIndex = index;
     [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-    
-    for (UIView *v in  _pageVC.view.subviews) {
-        if ([v isKindOfClass:[UIScrollView class]]) {
-            ((UIScrollView *)v).delegate = self;
-            
-            UIScrollView *scrollView = (UIScrollView *)v;
-
-            if (_currentIndex == 0) {
-                scrollView.bounces = NO;
-            } else {
-                scrollView.bounces = YES;
-            }
-        }
-        
-    }
-    
-    
-    
-    
 }
 
 #pragma mark --mmNavigationDelegate--
