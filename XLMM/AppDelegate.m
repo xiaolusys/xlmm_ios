@@ -5,7 +5,7 @@
 //  Created by younishijie on 15/7/29.
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
-
+#import "MiPushSDK.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "Pingpp.h"
@@ -20,7 +20,7 @@
 
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
-@interface AppDelegate ()<UIAlertViewDelegate>
+@interface AppDelegate ()<UIAlertViewDelegate, MiPushSDKDelegate>
 
 @property (nonatomic ,copy) NSString *wxCode;
 @property (nonatomic ,copy) NSString *access_token;
@@ -61,6 +61,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
    
     //  推送
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
@@ -93,6 +94,8 @@
     
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
+    
+     [MiPushSDK registerMiPush:self type:0 connect:YES];
 
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
@@ -194,12 +197,16 @@
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
-   
+    [MiPushSDK bindDeviceToken:pToken];
     
     NSLog(@"token ＝ %@",[[[[pToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""] stringByReplacingOccurrencesOfString: @">" withString: @""]                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    [MiPushSDK handleReceiveRemoteNotification :userInfo];
+    
+ 
     
     NSLog(@"userInfo == %@",userInfo);
     NSString *message = [[userInfo objectForKey:@"aps"]objectForKey:@"alert"];
@@ -210,7 +217,7 @@
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    
+    // 注册APNS失败。。
     NSLog(@"Regist fail%@",error);
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -226,6 +233,8 @@
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     //收到本地推送消息后调用的方法
+    
+    
     NSLog(@"%@",notification);
 }
 
@@ -235,6 +244,25 @@
     NSLog(@"%@----%@",identifier,notification);
     completionHandler();//处理完消息，最后一定要调用这个代码块
 }
+
+#pragma mark MiPushSDKDelegate
+
+- (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
+{
+    // 请求成功
+}
+
+- (void)miPushRequestErrWithSelector:(NSString *)selector error:(int)error data:(NSDictionary *)data
+{
+    // 请求失败
+}
+
+- ( void )miPushReceiveNotification:( NSDictionary *)data
+{
+    // 长连接收到的消息。消息格式跟APNs格式一样
+}
+
+#pragma mark --微信回调方法--
 
 
 
