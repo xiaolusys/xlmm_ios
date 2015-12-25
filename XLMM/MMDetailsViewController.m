@@ -24,6 +24,7 @@
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
+#import "MMLoadingAnimation.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -118,7 +119,8 @@
     
     self.webView = nil;
     self.kuaiZhaoImage = nil;
-    [SVProgressHUD dismiss];
+   // [SVProgressHUD dismiss];
+    [MMLoadingAnimation dismissLoadingView];
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -153,12 +155,14 @@
     theNumberOfSizeCanSelected = 0;
    
     self.webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-  
-    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
-    
-    [SVProgressHUD setDefaultMaskType:3];
-    
-    [SVProgressHUD show];
+//  
+//    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
+//    
+//    [SVProgressHUD setDefaultMaskType:3];
+//    
+//    [SVProgressHUD show];
+    [self.view addSubview:[MMLoadingAnimation sharedView]];
+    [MMLoadingAnimation showLoadingView];
     // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
     if (SCREENHEIGHT == 568) {
@@ -242,7 +246,9 @@
 - (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
         //[frontView removeFromSuperview];
-        [SVProgressHUD dismiss];
+       // [SVProgressHUD dismiss];
+        [MMLoadingAnimation dismissLoadingView];
+        cartsButton.hidden = NO;
         return;
     }
     NSError *error = nil;
@@ -252,7 +258,9 @@
     self.midLabel.hidden = NO;
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
   //     [frontView removeFromSuperview];
-       [SVProgressHUD dismiss];
+    //   [SVProgressHUD dismiss];
+       [MMLoadingAnimation dismissLoadingView];
+       cartsButton.hidden = NO;
        if (image != nil) {
 
            self.scrollerView.scrollEnabled = YES;
@@ -387,6 +395,7 @@
     cartsButton.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
     [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cartsButton];
+    cartsButton.hidden = YES;
     shengyutimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 6, 44, 30)];
     shengyutimeLabel.textColor = [UIColor whiteColor];
     shengyutimeLabel.textAlignment = NSTextAlignmentCenter;

@@ -272,6 +272,7 @@
 		3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
 		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
+		326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
 		32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F131BEB5D39002AFC6D /* Icon-29.png */; };
 		32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F141BEB5D39002AFC6D /* Icon-29@2x.png */; };
@@ -1108,6 +1109,8 @@
 		326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		326C4E0A1C2CE8FB00A79359 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		326C4E0E1C2D4EF000A79359 /* MMLoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLoadingAnimation.h; sourceTree = "<group>"; };
+		326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLoadingAnimation.m; sourceTree = "<group>"; };
 		326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageWithUrl.h"; path = "../UIImage+ImageWithUrl.h"; sourceTree = "<group>"; };
 		326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageWithUrl.m"; path = "../UIImage+ImageWithUrl.m"; sourceTree = "<group>"; };
 		32703F131BEB5D39002AFC6D /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
@@ -2274,6 +2277,8 @@
 				32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */,
 				2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */,
 				2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */,
+				326C4E0E1C2D4EF000A79359 /* MMLoadingAnimation.h */,
+				326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3456,6 +3461,7 @@
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
+				326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */,
 				321952911BFC7A8D00AA0AB8 /* QNSystem.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */,

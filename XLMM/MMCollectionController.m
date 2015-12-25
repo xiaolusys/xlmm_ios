@@ -14,6 +14,9 @@
 #import "MJRefresh.h"
 #import "NSString+URL.h"
 #import "SVProgressHUD.h"
+#import "LoadingAnimation.h"
+#import "MMLoadingAnimation.h"
+
 
 
 
@@ -49,7 +52,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
- //   self.navigationController.navigationBarHidden = NO;
+ //  self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -97,8 +100,14 @@
     [self createInfo];
     [self downloadData];
     
-    [SVProgressHUD setDefaultMaskType:3];
-    [SVProgressHUD show];
+//    [SVProgressHUD setDefaultMaskType:3];
+//    [SVProgressHUD show];
+
+    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
+    [self.view addSubview:loadView];
+    
+    [MMLoadingAnimation showLoadingView];
+
 
 }
 
@@ -334,7 +343,9 @@
     
     NSString *string = [model.picPath URLEncodedString];
     [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [SVProgressHUD dismiss];
+      //  [SVProgressHUD dismiss];
+        [MMLoadingAnimation dismissLoadingView];
+        self.navigationController.navigationBarHidden = NO;
         
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
