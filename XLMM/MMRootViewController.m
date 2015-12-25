@@ -293,8 +293,18 @@
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    scrollView.bounces = NO;
+    NSLog(@"currentIndex = %ld", _currentIndex);
+    
+    if (_currentIndex == 0) {
+        scrollView.bounces = NO;
+        
+    } else{
+        scrollView.bounces = YES;
+    }
+    
 }
+
+
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     if ((scrollView.contentInset.left < 0) && (_currentIndex == 0) && velocity.x < 0) {
@@ -385,9 +395,12 @@
 }
 
 - (IBAction)btnClicked:(id)sender {
+
     
+  
     UIButton *button = (UIButton *)sender;
     NSInteger btnTag = button.tag;
+    _currentIndex = btnTag - 100+1;
     if (btnTag == 100) {
     } else if (btnTag == 101){
         
@@ -416,6 +429,23 @@
     }
     _pageCurrentIndex = index;
     [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    
+    for (UIView *v in  _pageVC.view.subviews) {
+        if ([v isKindOfClass:[UIScrollView class]]) {
+            ((UIScrollView *)v).delegate = self;
+            
+            UIScrollView *scrollView = (UIScrollView *)v;
+
+            if (_currentIndex == 0) {
+                scrollView.bounces = NO;
+            } else {
+                scrollView.bounces = YES;
+            }
+        }
+        
+    }
+    
+    
     
     
 }
