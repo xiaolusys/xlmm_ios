@@ -10,7 +10,7 @@
 #import "NewLeftViewController.h"
 
 
-@interface MMRootViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate>
+@interface MMRootViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *btnView;
 
