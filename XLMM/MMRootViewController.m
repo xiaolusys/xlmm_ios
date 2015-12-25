@@ -41,6 +41,7 @@
     UILabel *label;
     
     CGRect frame;
+    NSInteger _currentIndex;
 
     
 }
@@ -210,7 +211,12 @@
 
     [_pageVC didMoveToParentViewController:self];
     
- 
+    
+    for (UIView *v in  _pageVC.view.subviews) {
+        if ([v isKindOfClass:[UIScrollView class]]) {
+            ((UIScrollView *)v).delegate = self;
+        }
+    }
     
 }
 
@@ -232,11 +238,6 @@
     iconView.userInteractionEnabled = NO;
     [button addSubview:iconView];
     
-    
-
-    
-   //  http://m.xiaolu.so/rest/v1/carts/show_carts_num
-  
 }
 
 - (void)setLabelNumber{
@@ -262,8 +263,6 @@
 }
 
 - (void)gotoCarts:(id)sender{
-    
-    
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
         LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
@@ -292,22 +291,29 @@
 }
 */
 
+#pragma mark UIscrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    scrollView.bounces = NO;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if ((scrollView.contentInset.left < 0) && (_currentIndex == 0) && velocity.x < 0) {
+        [self performSelector:@selector(presentLeftMenuViewController:) withObject:nil withObject:self];
+    }
+}
+
 
 #pragma mark --PageViewControllerDelegate--
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
 }
 
-
-
-
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
-    NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    _currentIndex = [_pageContentVC indexOfObject:viewController];
     
 
-    if (currentIndex < _pageContentVC.count - 1) {
-        
-        _pageCurrentIndex = currentIndex + 1;
+    if (_currentIndex < _pageContentVC.count - 1) {
+        _pageCurrentIndex = _currentIndex + 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
         
 
@@ -321,11 +327,11 @@
 
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
-    NSInteger currentIndex = [_pageContentVC indexOfObject:viewController];
+    _currentIndex = [_pageContentVC indexOfObject:viewController];
     
-    if (currentIndex > 0) {
+    if (_currentIndex > 0) {
         
-        _pageCurrentIndex = currentIndex - 1;
+        _pageCurrentIndex = _currentIndex - 1;
         return [_pageContentVC objectAtIndex:_pageCurrentIndex];
     } else{
     }
@@ -335,11 +341,11 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    NSInteger currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
+    _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
     
     if (completed)
     {
-        NSInteger btnTag = currentIndex + 100;
+        NSInteger btnTag = _currentIndex + 100;
         for (int i = 100; i<104; i++) {
             if (btnTag == i) {
                 UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
@@ -360,7 +366,7 @@
         if (finished)
         {
             
-            NSInteger btnTag = currentIndex + 100;
+            NSInteger btnTag = _currentIndex + 100;
             for (int i = 100; i<104; i++) {
                 if (btnTag == i) {
                     UIButton *button = (UIButton *)[self.btnView viewWithTag:i];

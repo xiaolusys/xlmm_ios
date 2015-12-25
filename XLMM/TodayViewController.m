@@ -24,6 +24,7 @@
 #import "MMNavigationDelegate.h"
 #import "NSString+URL.h"
 #import "Reachability.h"
+#import "RESideMenu.h"
 
 
 
@@ -33,7 +34,7 @@ static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
 
 
-@interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout >
 {
     NSMutableArray *childDataArray;
     NSMutableArray *ladyDataArray;
@@ -258,6 +259,7 @@ static NSString *khead2View = @"head2View";
     ladyTimeLabel.text = string;
     
 }
+
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5 );
@@ -275,12 +277,7 @@ static NSString *khead2View = @"head2View";
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View];
     
     [self.view addSubview:self.myCollectionView];
-    
 }
-
-
-
-
 
 
 - (void)downloadData123{
