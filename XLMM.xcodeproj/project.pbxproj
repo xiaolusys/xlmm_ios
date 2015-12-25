@@ -270,6 +270,8 @@
 		3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */; };
 		3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320CABE01BA906D400C62E36 /* PostersViewController.xib */; };
 		3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
+		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
+		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
 		32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F131BEB5D39002AFC6D /* Icon-29.png */; };
 		32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F141BEB5D39002AFC6D /* Icon-29@2x.png */; };
@@ -1103,6 +1105,9 @@
 		3266A6DF1BE35C4100C676A9 /* PosterCollectionCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell2.h; sourceTree = "<group>"; };
 		3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell2.m; sourceTree = "<group>"; };
 		3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell2.xib; sourceTree = "<group>"; };
+		326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
+		326C4E0A1C2CE8FB00A79359 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
+		326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageWithUrl.h"; path = "../UIImage+ImageWithUrl.h"; sourceTree = "<group>"; };
 		326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageWithUrl.m"; path = "../UIImage+ImageWithUrl.m"; sourceTree = "<group>"; };
 		32703F131BEB5D39002AFC6D /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
@@ -1474,6 +1479,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */,
 				327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */,
 				327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */,
 				327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */,
@@ -1503,6 +1509,7 @@
 				32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */,
 				32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */,
 				2E76FFF01C180BAA008CE960 /* libUPPayPlugin.a in Frameworks */,
+				326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */,
 				2EB87D291C17FAE4001CBF3D /* libUMSocial_Sdk_4.4.a in Frameworks */,
 				32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */,
 				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
@@ -2178,6 +2185,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -2295,6 +2303,15 @@
 				3265DAAC1C1667BD0095BC94 /* SVRadialGradientLayer.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		326C4E081C2CE8FB00A79359 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */,
+				326C4E0A1C2CE8FB00A79359 /* MiPushSDK.h */,
+			);
+			path = SDK;
 			sourceTree = "<group>";
 		};
 		327367081C18289F008AAE86 /* UMSocial_ScreenShot_Sdk */ = {
@@ -2832,6 +2849,7 @@
 		32E00C901BA7B79700A73390 /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				326C4E081C2CE8FB00A79359 /* SDK */,
 				2E77F5A91C1EBBA90020C014 /* weibo */,
 				2E76FFDE1C180BAA008CE960 /* lib */,
 				2EB87CF01C17FAE4001CBF3D /* umeng_ios_social_sdk_4-2.4_arm64_custom */,
@@ -3820,6 +3838,7 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/weibo/libWeiboSDK",
+					"$(PROJECT_DIR)/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
@@ -3862,6 +3881,7 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/weibo/libWeiboSDK",
+					"$(PROJECT_DIR)/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
