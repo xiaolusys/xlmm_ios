@@ -13,7 +13,6 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "Reachability.h"
-
 #import "NewLeftViewController.h"
 
 #define login @"login"
@@ -96,6 +95,8 @@
     [WeiboSDK registerApp:@"2475629754"];
     
      [MiPushSDK registerMiPush:self type:0 connect:YES];
+    
+
 
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
@@ -132,52 +133,53 @@
     
 
     [self.window makeKeyAndVisible];
-    
- 
-    NSError *error = nil;
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-    [request setURL:url];
-    [request setHTTPMethod:@"GET"];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if (returnData == nil) {
-        return YES;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
-    NSLog(@"appInfoDic = %@", appInfoDic);
-    if (error) {
-        NSLog(@"%@", error);
-        return YES;
-    }
-    NSArray *reluts = [appInfoDic objectForKey:@"results"];
-    if (![reluts count]) {
-        NSLog(@"reslut = nil");
-        return YES;
-    }
-    NSDictionary *infoDic = reluts[0];
-    
-    
 
-    self.latestVersion = [infoDic objectForKey:@"version"];
-    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
-    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
     
-    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    double doubleCurrentVersion = [currentVersion doubleValue];
-    double doubleUpdateVersion = [self.latestVersion doubleValue];
-    
-    if (doubleCurrentVersion < doubleUpdateVersion) {
-        
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-                                           message:@"有新版本，是否升级！"
-                                          delegate: self
-                                 cancelButtonTitle:@"取消"
-                                 otherButtonTitles: @"升级", nil];
-        alert.tag = 1001;
-        [alert show];
-    }
+// 
+//    NSError *error = nil;
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
+//    [request setURL:url];
+//    [request setHTTPMethod:@"GET"];
+//    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//    if (returnData == nil) {
+//        return YES;
+//    }
+//    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
+//    NSLog(@"appInfoDic = %@", appInfoDic);
+//    if (error) {
+//        NSLog(@"%@", error);
+//        return YES;
+//    }
+//    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+//    if (![reluts count]) {
+//        NSLog(@"reslut = nil");
+//        return YES;
+//    }
+//    NSDictionary *infoDic = reluts[0];
+//    
+//    
+//
+//    self.latestVersion = [infoDic objectForKey:@"version"];
+//    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+//    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+//    
+//    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+//    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+//    double doubleCurrentVersion = [currentVersion doubleValue];
+//    double doubleUpdateVersion = [self.latestVersion doubleValue];
+//    
+//    if (doubleCurrentVersion < doubleUpdateVersion) {
+//        
+//        UIAlertView *alert;
+//        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+//                                           message:@"有新版本，是否升级！"
+//                                          delegate: self
+//                                 cancelButtonTitle:@"取消"
+//                                 otherButtonTitles: @"升级", nil];
+//        alert.tag = 1001;
+//        [alert show];
+//    }
    
     return YES;
 }
@@ -209,11 +211,14 @@
  
     
     NSLog(@"userInfo == %@",userInfo);
-    NSString *message = [[userInfo objectForKey:@"aps"]objectForKey:@"alert"];
+    NSString *messageId = [userInfo objectForKey:@"_id_"];
+    [MiPushSDK openAppNotify:messageId];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    NSString *messageId = [userInfo objectForKey:@"_id_"];
+    [MiPushSDK openAppNotify:messageId];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    
-    [alert show];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
@@ -250,6 +255,30 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
+    if ([selector isEqualToString:@"bindDeviceToken:"]) {
+        
+        UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
+        action.identifier = @"action1"; //按钮的标示
+        action.title=@"启动"; //按钮的标题
+        action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+        
+        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
+        action2.identifier = @"action2";
+        action2.title=@"忽略";
+        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+        action.authenticationRequired = YES;//需要解锁才能处理
+        action.destructive = YES;
+        
+        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+        categorys.identifier = @"category"; //这组动作的唯一标示
+        [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
+        
+        UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:
+                                           (UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound)
+                                                                            categories:[NSSet setWithObjects:categorys, nil]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
+    }
+
 }
 
 - (void)miPushRequestErrWithSelector:(NSString *)selector error:(int)error data:(NSDictionary *)data
@@ -261,6 +290,8 @@
 {
     // 长连接收到的消息。消息格式跟APNs格式一样
 }
+
+
 
 #pragma mark --微信回调方法--
 

@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "472707711.070054"
+            timestampString = "472727906.033733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "-getUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "472707711.070054"
+            timestampString = "472727906.033733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "-applicationWillResignActive:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "472707711.070054"
+            timestampString = "472727906.033733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "-getUserInfo"
             landmarkType = "5">
          </BreakpointContent>
