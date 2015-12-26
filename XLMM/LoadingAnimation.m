@@ -84,6 +84,16 @@
 }
 
 
+- (void)runGifForImage {
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+    webView.backgroundColor = [UIColor redColor];
+    webView.scalesPageToFit = YES;
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"run" ofType:@"gif"]];
+    [webView loadData:data MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
+    [self addSubview:webView];
+}
+
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

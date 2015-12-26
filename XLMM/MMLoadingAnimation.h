@@ -15,4 +15,6 @@
 + (void)showLoadingView;
 + (void)dismissLoadingView;
 
++ (void)showLoadingViewOfGif;
+
 @end

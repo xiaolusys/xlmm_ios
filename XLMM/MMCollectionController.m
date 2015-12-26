@@ -103,16 +103,17 @@
 //    [SVProgressHUD setDefaultMaskType:3];
 //    [SVProgressHUD show];
 
-    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
-    [self.view addSubview:loadView];
+//    LoadingAnimation *loadView = [[LoadingAnimation alloc]initWithFrame:self.view.frame];
+//    [self.view addSubview:loadView];
+//    
+//    [loadView runGifForImage];
     
+    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
+//    loadView.alpha = 0.5;
+    [self.view addSubview:loadView];
     [MMLoadingAnimation showLoadingView];
 
-
 }
-
-
-
 
 - (void)createInfo{
     
@@ -166,6 +167,7 @@
     if (data == nil) {
       
     }
+    [MMLoadingAnimation dismissLoadingView];
     NSError *error;
     
     [self.dataArray removeAllObjects];
@@ -345,7 +347,7 @@
     [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
       //  [SVProgressHUD dismiss];
         
-     //   [MMLoadingAnimation dismissLoadingView];
+       
         
         self.navigationController.navigationBarHidden = NO;
         
