@@ -62,19 +62,19 @@
     
     
    
-    //  推送
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-    {
-        //IOS8
-        //创建UIUserNotificationSettings，并设置消息的显示类类型
-        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIRemoteNotificationTypeSound) categories:nil];
-        
-        [application registerUserNotificationSettings:notiSettings];
-        
-    } else{ // ios7
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    }
-  
+//    //  推送
+//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+//    {
+//        //IOS8
+//        //创建UIUserNotificationSettings，并设置消息的显示类类型
+//        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIRemoteNotificationTypeSound) categories:nil];
+//        
+//        [application registerUserNotificationSettings:notiSettings];
+//        
+//    } else{ // ios7
+//        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+//    }
+//  
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -197,17 +197,21 @@
     }
 }
 
+#pragma mark UIApplicationDelegate
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
     [MiPushSDK bindDeviceToken:pToken];
-    
-    NSLog(@"token ＝ %@",[[[[pToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""] stringByReplacingOccurrencesOfString: @">" withString: @""]                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    // 注册APNS失败。。
+    NSLog(@"Regist fail%@",error);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     
     [MiPushSDK handleReceiveRemoteNotification :userInfo];
-    
+    // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
  
     
     NSLog(@"userInfo == %@",userInfo);
@@ -216,15 +220,14 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    NSLog(@"userInfo == %@",userInfo);
+
     NSString *messageId = [userInfo objectForKey:@"_id_"];
     [MiPushSDK openAppNotify:messageId];
     
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    // 注册APNS失败。。
-    NSLog(@"Regist fail%@",error);
-}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1001) {
         if (buttonIndex == 1) {
@@ -255,6 +258,7 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
+    NSLog(@"chengchong");
     if ([selector isEqualToString:@"bindDeviceToken:"]) {
         
         UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
@@ -283,11 +287,13 @@
 
 - (void)miPushRequestErrWithSelector:(NSString *)selector error:(int)error data:(NSDictionary *)data
 {
+    NSLog(@"请求失败");
     // 请求失败
 }
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
+    NSLog(@"data");
     // 长连接收到的消息。消息格式跟APNs格式一样
 }
 
