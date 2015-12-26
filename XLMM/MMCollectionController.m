@@ -345,7 +345,7 @@
     [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
       //  [SVProgressHUD dismiss];
         
-     //   [MMLoadingAnimation dismissLoadingView];
+        [MMLoadingAnimation dismissLoadingView];
         
         self.navigationController.navigationBarHidden = NO;
         

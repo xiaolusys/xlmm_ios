@@ -2188,7 +2188,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -2750,6 +2749,7 @@
 		328422B81B84217100C4EA76 /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */,
 				327367061C182800008AAE86 /* libsqlite3.dylib */,
 				327367041C1827D3008AAE86 /* libiconv.2.dylib */,
 				327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */,
