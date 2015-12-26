@@ -72,11 +72,12 @@
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     
     [self addSubview:self.imageV];
-    self.imageV.backgroundColor = [UIColor whiteColor];
+
     
     [self createFirstAnimating];
     [self performSelector:@selector(createSecondAnimating) withObject:nil afterDelay:1.5];
-    
+ 
+    self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 }
 
 
@@ -87,8 +88,8 @@
 
 - (void)createFirstAnimating {
     self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
-    self.shadeView.backgroundColor = [UIColor whiteColor];
-    self.shadeView.alpha = 0.5;
+    self.shadeView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+    
     [self addSubview:self.shadeView];
     
     NSMutableArray *imgArr = [NSMutableArray array];
