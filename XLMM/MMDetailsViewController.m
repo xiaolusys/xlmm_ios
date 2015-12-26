@@ -120,7 +120,7 @@
     self.webView = nil;
     self.kuaiZhaoImage = nil;
    // [SVProgressHUD dismiss];
-    [MMLoadingAnimation dismissLoadingView];
+//    [MMLoadingAnimation dismissLoadingView];
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -160,7 +160,7 @@
 //    
 //    [SVProgressHUD setDefaultMaskType:3];
 //    
-//    [SVProgressHUD show];
+////    [SVProgressHUD show];
     [self.view addSubview:[MMLoadingAnimation sharedView]];
     [MMLoadingAnimation showLoadingView];
     // 667 736
@@ -245,8 +245,6 @@
 }
 - (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
-        //[frontView removeFromSuperview];
-       // [SVProgressHUD dismiss];
         [MMLoadingAnimation dismissLoadingView];
         cartsButton.hidden = NO;
         return;
@@ -257,8 +255,6 @@
     //设置底部图片,调整高度
     self.midLabel.hidden = NO;
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-  //     [frontView removeFromSuperview];
-    //   [SVProgressHUD dismiss];
        [MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {

@@ -85,6 +85,7 @@
 		2E5600CD1C2D496E000AFB39 /* loading动画0077.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600801C2D496E000AFB39 /* loading动画0077.png */; };
 		2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600811C2D496E000AFB39 /* loading动画008.png */; };
 		2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600821C2D496E000AFB39 /* loading动画009.png */; };
+		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
 		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */; };
 		2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E91C1BB9C700D452E0 /* shareFirends.png */; };
@@ -806,6 +807,7 @@
 		2E5600801C2D496E000AFB39 /* loading动画0077.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画0077.png"; sourceTree = "<group>"; };
 		2E5600811C2D496E000AFB39 /* loading动画008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画008.png"; sourceTree = "<group>"; };
 		2E5600821C2D496E000AFB39 /* loading动画009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画009.png"; sourceTree = "<group>"; };
+		2E5600D41C2E6418000AFB39 /* run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = run.gif; sourceTree = "<group>"; };
 		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
 		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharecopylink.png; sourceTree = "<group>"; };
@@ -1550,6 +1552,7 @@
 		2E5600351C2D496E000AFB39 /* loading */ = {
 			isa = PBXGroup;
 			children = (
+				2E5600D41C2E6418000AFB39 /* run.gif */,
 				2E5600361C2D496E000AFB39 /* loading动画001.png */,
 				2E5600371C2D496E000AFB39 /* loading动画0010.png */,
 				2E5600381C2D496E000AFB39 /* loading动画0011.png */,
@@ -3150,6 +3153,7 @@
 				2E5600A61C2D496E000AFB39 /* loading动画0041.png in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
+				2E5600D51C2E6418000AFB39 /* run.gif in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
 				3299A05C1C0EBA6500229D74 /* TiaoKuanViewController.xib in Resources */,

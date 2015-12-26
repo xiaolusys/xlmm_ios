@@ -12,5 +12,6 @@
 
 - (void)startLoadingAnimating;
 - (void)stopLoadingAnimating;
+- (void)runGifForImage;
 
 @end
