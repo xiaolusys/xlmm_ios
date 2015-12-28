@@ -42,8 +42,6 @@
     
     CGRect frame;
     NSInteger _currentIndex;
-
-    
 }
 
 @end

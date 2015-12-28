@@ -953,6 +953,7 @@
 - (void)friendsShareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
+    [UMSocialData defaultData].extConfig.wxMessageType = 0;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
@@ -1037,6 +1038,7 @@
         [self cancleShareBtnClick:nil];
     } else {
         [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:self.kuaiZhaoImage socialUIDelegate:self];
+//        [UMSocialData defaultData].extConfig.wxMessageType = 0;
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
         UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
         snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);

@@ -94,7 +94,7 @@
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
     
-     [MiPushSDK registerMiPush:self type:0 connect:YES];
+//     [MiPushSDK registerMiPush:self type:0 connect:YES];
     
 
 
@@ -258,7 +258,7 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-    NSLog(@"chengchong");
+//    NSLog(@"chengchong");
     if ([selector isEqualToString:@"bindDeviceToken:"]) {
         
         UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
@@ -347,8 +347,6 @@
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //        [alert show];
         
-        
-       
     } else if([resp isKindOfClass:[PayResp class]]){
 
 

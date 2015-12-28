@@ -54,6 +54,8 @@ static NSString *khead2View = @"head2View";
     BOOL _isUpdate;
     
     CGFloat oldScrollViewTop;
+    
+    SRRefreshView   *_slimeView;
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -76,7 +78,11 @@ static NSString *khead2View = @"head2View";
     
     if (_isFirst) {
         //集成刷新控件
+//        _slimeView = [[SRRefreshView alloc] init];
+//        _slimeView.delegate = self;
+//        _slimeView.slimeMissWhenGoingBack = YES;
         
+        [self.myCollectionView addSubview:_slimeView];
         [self setupRefresh];
         self.myCollectionView.footerHidden=NO;
         self.myCollectionView.headerHidden=NO;
@@ -144,6 +150,11 @@ static NSString *khead2View = @"head2View";
         
         [self reload];
         sleep(1.5);
+        
+//        _slimeView = [[SRRefreshView alloc] init];
+//        _slimeView.delegate = self;
+//        _slimeView.slimeMissWhenGoingBack = YES;
+        
         [_myCollectionView headerEndRefreshing];
         _isDone = YES;
         
@@ -161,6 +172,29 @@ static NSString *khead2View = @"head2View";
         
     });
 }
+
+#pragma mark - scrollView delegate
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    [_slimeView scrollViewDidScroll];
+//}
+
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    [_slimeView scrollViewDidEndDraging];
+//}
+
+//#pragma mark - slimeRefresh delegate
+//
+//- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+//{
+//    [_slimeView performSelector:@selector(endRefresh)
+//                     withObject:nil afterDelay:4
+//                        inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+//}
+
+
 
 - (void)reload
 {
@@ -277,6 +311,9 @@ static NSString *khead2View = @"head2View";
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View];
     
     [self.view addSubview:self.myCollectionView];
+    
+//    self.myCollectionView.contentOffset = CGPointMake(0, 50);
+//    self.myCollectionView.backgroundColor = [UIColor greenColor];
 }
 
 
@@ -561,14 +598,10 @@ static NSString *khead2View = @"head2View";
 
 
          }];
-
-
            
         }
         return cell;
        
-
-        
     }
     else if (indexPath.section == 2)
     {
@@ -577,10 +610,7 @@ static NSString *khead2View = @"head2View";
             [cell fillData:model];
             return cell;
         }
-        
-        
-
-        
+    
     }
     
     else {
@@ -591,9 +621,6 @@ static NSString *khead2View = @"head2View";
             return cell;
         }
         
-     
-        
-    
     }
     return cell;;
    
@@ -627,6 +654,8 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    [_slimeView scrollViewDidScroll];
+    
     if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
         return;
     }
@@ -675,10 +704,6 @@ static NSString *khead2View = @"head2View";
             childVC.titleName = @"时尚女装";
             childVC.childClothing = NO;
             [self.navigationController pushViewController:childVC animated:YES];
-            
-
-            
-            
             
             
         } else{
@@ -747,10 +772,6 @@ static NSString *khead2View = @"head2View";
         }
     }
 }
-
-
-
-
 
 
 
