@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E07A8091C3104E300C6F1B8 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E07A8021C3104E300C6F1B8 /* sr_refresh.png */; };
+		2E07A80A1C3104E300C6F1B8 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E07A8031C3104E300C6F1B8 /* sr_refresh@2X.png */; };
+		2E07A80B1C3104E300C6F1B8 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E07A8061C3104E300C6F1B8 /* SRRefreshView.m */; };
+		2E07A80C1C3104E300C6F1B8 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E07A8081C3104E300C6F1B8 /* SRSlimeView.m */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -86,6 +90,7 @@
 		2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600811C2D496E000AFB39 /* loading动画008.png */; };
 		2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600821C2D496E000AFB39 /* loading动画009.png */; };
 		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
+		2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5D4CB01C311A6700F5D269 /* smallrun.gif */; };
 		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */; };
 		2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E72B3E91C1BB9C700D452E0 /* shareFirends.png */; };
@@ -733,6 +738,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E07A8021C3104E300C6F1B8 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
+		2E07A8031C3104E300C6F1B8 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
+		2E07A8041C3104E300C6F1B8 /* SRDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
+		2E07A8051C3104E300C6F1B8 /* SRRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRefreshView.h; sourceTree = "<group>"; };
+		2E07A8061C3104E300C6F1B8 /* SRRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRefreshView.m; sourceTree = "<group>"; };
+		2E07A8071C3104E300C6F1B8 /* SRSlimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRSlimeView.h; sourceTree = "<group>"; };
+		2E07A8081C3104E300C6F1B8 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -813,6 +825,7 @@
 		2E5600811C2D496E000AFB39 /* loading动画008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画008.png"; sourceTree = "<group>"; };
 		2E5600821C2D496E000AFB39 /* loading动画009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画009.png"; sourceTree = "<group>"; };
 		2E5600D41C2E6418000AFB39 /* run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = run.gif; sourceTree = "<group>"; };
+		2E5D4CB01C311A6700F5D269 /* smallrun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = smallrun.gif; sourceTree = "<group>"; };
 		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
 		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharecopylink.png; sourceTree = "<group>"; };
@@ -1559,9 +1572,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E07A8011C3104E300C6F1B8 /* SlimeRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				2E07A8021C3104E300C6F1B8 /* sr_refresh.png */,
+				2E07A8031C3104E300C6F1B8 /* sr_refresh@2X.png */,
+				2E07A8041C3104E300C6F1B8 /* SRDefine.h */,
+				2E07A8051C3104E300C6F1B8 /* SRRefreshView.h */,
+				2E07A8061C3104E300C6F1B8 /* SRRefreshView.m */,
+				2E07A8071C3104E300C6F1B8 /* SRSlimeView.h */,
+				2E07A8081C3104E300C6F1B8 /* SRSlimeView.m */,
+			);
+			path = SlimeRefresh;
+			sourceTree = "<group>";
+		};
 		2E5600351C2D496E000AFB39 /* loading */ = {
 			isa = PBXGroup;
 			children = (
+				2E5D4CB01C311A6700F5D269 /* smallrun.gif */,
 				2E5600D41C2E6418000AFB39 /* run.gif */,
 				2E5600361C2D496E000AFB39 /* loading动画001.png */,
 				2E5600371C2D496E000AFB39 /* loading动画0010.png */,
@@ -2872,6 +2900,7 @@
 		32E00C901BA7B79700A73390 /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				2E07A8011C3104E300C6F1B8 /* SlimeRefresh */,
 				326C4E081C2CE8FB00A79359 /* SDK */,
 				2E77F5A91C1EBBA90020C014 /* weibo */,
 				2E76FFDE1C180BAA008CE960 /* lib */,
@@ -3092,6 +3121,7 @@
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
 				2E5600C51C2D496E000AFB39 /* loading动画007.png in Resources */,
 				32746E0C1B74A22000816208 /* font-xinpin.png in Resources */,
+				2E07A8091C3104E300C6F1B8 /* sr_refresh.png in Resources */,
 				2E5600BA1C2D496E000AFB39 /* loading动画006.png in Resources */,
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
 				321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */,
@@ -3263,6 +3293,7 @@
 				2E72B3EE1C1BB9C700D452E0 /* sharecopylink.png in Resources */,
 				2E72B3EF1C1BB9C700D452E0 /* shareFirends.png in Resources */,
 				32BA1B2C1BF2F21B0000A0F2 /* MoreOrdersViewCell.xib in Resources */,
+				2E07A80A1C3104E300C6F1B8 /* sr_refresh@2X.png in Resources */,
 				3297C7941BFB488900776970 /* ShenQingTuikuanController.xib in Resources */,
 				32E6BC151BEC7ED20036F338 /* AddressViewController.xib in Resources */,
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
@@ -3314,6 +3345,7 @@
 				8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
 				323D66781C27921F00A2B955 /* retina4@2x.png in Resources */,
+				2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */,
 				3274C1781C056AE800641C4E /* empty_address_icon.png in Resources */,
 				2E5600BD1C2D496E000AFB39 /* loading动画0062.png in Resources */,
 				3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */,
@@ -3512,6 +3544,7 @@
 				32F3D9681B6CCA41008530BA /* AFNetworkReachabilityManager.m in Sources */,
 				325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */,
 				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
+				2E07A80C1C3104E300C6F1B8 /* SRSlimeView.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
@@ -3556,6 +3589,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				2E07A80B1C3104E300C6F1B8 /* SRRefreshView.m in Sources */,
 				321952941BFC7A8D00AA0AB8 /* QNHttpManager.m in Sources */,
 				321952C61BFC7AF800AA0AB8 /* QNDnspodFree.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,

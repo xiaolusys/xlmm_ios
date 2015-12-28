@@ -326,8 +326,6 @@
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //        [alert show];
         
-        
-       
     } else if([resp isKindOfClass:[PayResp class]]){
 
 

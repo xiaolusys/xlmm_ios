@@ -140,7 +140,9 @@
 
 
 - (void)runGifForImage {
-//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+//
+    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
 //    webView.backgroundColor = [UIColor redColor];
 //    webView.scalesPageToFit = YES;
 //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"run" ofType:@"gif"]];
