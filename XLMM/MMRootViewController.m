@@ -293,7 +293,6 @@
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"currentIndex = %ld", _currentIndex);
     
     if (_currentIndex == 0) {
         scrollView.bounces = NO;

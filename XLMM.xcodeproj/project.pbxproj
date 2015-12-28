@@ -196,6 +196,8 @@
 		321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */; };
 		321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */; };
 		321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */; };
+		3219D2251C31113000619A55 /* wxkuaizhao.png in Resources */ = {isa = PBXBuildFile; fileRef = 3219D2231C31113000619A55 /* wxkuaizhao.png */; };
+		3219D2261C31113000619A55 /* friendskuaizhao.png in Resources */ = {isa = PBXBuildFile; fileRef = 3219D2241C31113000619A55 /* friendskuaizhao.png */; };
 		321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */; };
 		321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */; };
 		321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321C8D9B1BD8E2110060FB62 /* NewLeftViewController.xib */; };
@@ -1006,6 +1008,8 @@
 		321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanCanUsedImage.png; sourceTree = "<group>"; };
 		321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanGuoqiiamge.png; sourceTree = "<group>"; };
 		321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanUsedImage.png; sourceTree = "<group>"; };
+		3219D2231C31113000619A55 /* wxkuaizhao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wxkuaizhao.png; sourceTree = "<group>"; };
+		3219D2241C31113000619A55 /* friendskuaizhao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friendskuaizhao.png; sourceTree = "<group>"; };
 		321C8D941BD87C4B0060FB62 /* PurchaseViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseViewController1.h; sourceTree = "<group>"; };
 		321C8D951BD87C4B0060FB62 /* PurchaseViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseViewController1.m; sourceTree = "<group>"; };
 		321C8D961BD87C4B0060FB62 /* PurchaseViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseViewController1.xib; sourceTree = "<group>"; };
@@ -2340,6 +2344,8 @@
 		32746DD41B74A22000816208 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3219D2231C31113000619A55 /* wxkuaizhao.png */,
+				3219D2241C31113000619A55 /* friendskuaizhao.png */,
 				2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */,
 				2E72B3E91C1BB9C700D452E0 /* shareFirends.png */,
 				2E72B3EA1C1BB9C700D452E0 /* shareqq.png */,
@@ -3026,6 +3032,7 @@
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
+				3219D2251C31113000619A55 /* wxkuaizhao.png in Resources */,
 				2E5600941C2D496E000AFB39 /* loading动画0025.png in Resources */,
 				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
@@ -3241,6 +3248,7 @@
 				321928E81BDB7EB8004EA6A7 /* waitsend.png in Resources */,
 				32746E341B74A22000816208 /* select-bg.png in Resources */,
 				3247EAAF1BE9E07300A5CC1C /* wash04.png in Resources */,
+				3219D2261C31113000619A55 /* friendskuaizhao.png in Resources */,
 				3274C1801C05962200641C4E /* emptyYouhuiquanIcon.png in Resources */,
 				2E5600921C2D496E000AFB39 /* loading动画0023.png in Resources */,
 				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,

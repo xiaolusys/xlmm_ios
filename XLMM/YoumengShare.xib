@@ -64,12 +64,11 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqY-MJ-5jD">
                                     <rect key="frame" x="16" y="7" width="55" height="75"/>
-                                    <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="Gml-lS-Aag"/>
                                         <constraint firstAttribute="height" constant="75" id="r1m-Vh-zNu"/>
                                     </constraints>
-                                    <state key="normal" title="快照"/>
+                                    <state key="normal" backgroundImage="wxkuaizhao.png"/>
                                 </button>
                             </subviews>
                             <constraints>
@@ -82,12 +81,11 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIz-vk-iNw">
                                     <rect key="frame" x="17" y="8" width="55" height="75"/>
-                                    <color key="backgroundColor" red="0.24423062640000001" green="0.99113555269999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="UrQ-fZ-eQw"/>
                                         <constraint firstAttribute="width" constant="55" id="g0Y-YK-dwn"/>
                                     </constraints>
-                                    <state key="normal" title="朋友圈"/>
+                                    <state key="normal" backgroundImage="friendskuaizhao.png"/>
                                 </button>
                             </subviews>
                             <constraints>
@@ -232,11 +230,13 @@
         </view>
     </objects>
     <resources>
+        <image name="friendskuaizhao.png" width="110" height="150"/>
         <image name="shareFirends.png" width="110" height="150"/>
         <image name="shareQQSpacing.png" width="110" height="150"/>
         <image name="sharecopylink.png" width="110" height="150"/>
         <image name="shareqq.png" width="110" height="150"/>
         <image name="shareweibo.png" width="110" height="150"/>
         <image name="shareweixin.png" width="110" height="150"/>
+        <image name="wxkuaizhao.png" width="110" height="150"/>
     </resources>
 </document>
