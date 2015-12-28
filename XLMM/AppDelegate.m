@@ -258,7 +258,7 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-    NSLog(@"chengchong");
+  //  NSLog(@"chengchong");
     if ([selector isEqualToString:@"bindDeviceToken:"]) {
         
         UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
