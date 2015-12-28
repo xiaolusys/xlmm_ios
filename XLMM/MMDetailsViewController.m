@@ -953,6 +953,8 @@
 - (void)friendsShareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
+    [UMSocialData defaultData].extConfig.wxMessageType = 0;
+
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];

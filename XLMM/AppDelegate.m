@@ -94,7 +94,9 @@
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
     
-     [MiPushSDK registerMiPush:self type:0 connect:YES];
+    //[MiPushSDK registerMiPush:self];
+    
+    [MiPushSDK registerMiPush:self type:0 connect:YES];
     
 
 
@@ -258,30 +260,7 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-  //  NSLog(@"chengchong");
-    if ([selector isEqualToString:@"bindDeviceToken:"]) {
-        
-        UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
-        action.identifier = @"action1"; //按钮的标示
-        action.title=@"启动"; //按钮的标题
-        action.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
-        
-        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
-        action2.identifier = @"action2";
-        action2.title=@"忽略";
-        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
-        action.authenticationRequired = YES;//需要解锁才能处理
-        action.destructive = YES;
-        
-        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
-        categorys.identifier = @"category"; //这组动作的唯一标示
-        [categorys setActions:@[action,action2] forContext:(UIUserNotificationActionContextMinimal)];
-        
-        UIUserNotificationSettings *uns = [UIUserNotificationSettings settingsForTypes:
-                                           (UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound)
-                                                                            categories:[NSSet setWithObjects:categorys, nil]];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:uns];
-    }
+    NSLog(@"chengchong");
 
 }
 
