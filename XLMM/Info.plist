@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>MiSDKRun</key>
-	<string>Debug</string>
+	<string>Online</string>
 	<key>MiSDKAppID</key>
 	<string>2882303761517423405</string>
 	<key>MiSDKAppKey</key>

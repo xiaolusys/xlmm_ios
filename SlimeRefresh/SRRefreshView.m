@@ -329,7 +329,7 @@
     _webView.backgroundColor = [UIColor redColor];
     _webView.scalesPageToFit = YES;
     NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"smallrun" ofType:@"gif"]];
-    [_webView loadData:data MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
+    [_webView loadData:data MIMEType:@"image/gif" textEncodingName:@"utf-8" baseURL:nil];
     [self addSubview:_webView];
     
     

@@ -30,6 +30,9 @@
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
+@property (nonatomic, copy) NSString *xiaomiToken;
+@property (nonatomic, copy) NSString *xiaomiUserId;
+@property (nonatomic, copy) NSString *xiaomiRegid;
 
 
 
@@ -60,21 +63,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
-   
-//    //  推送
-//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-//    {
-//        //IOS8
-//        //创建UIUserNotificationSettings，并设置消息的显示类类型
-//        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIRemoteNotificationTypeSound) categories:nil];
-//        
-//        [application registerUserNotificationSettings:notiSettings];
-//        
-//    } else{ // ios7
-//        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-//    }
-//  
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -94,7 +84,6 @@
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
     
-    //[MiPushSDK registerMiPush:self];
     
     [MiPushSDK registerMiPush:self type:0 connect:YES];
     
@@ -137,65 +126,60 @@
     [self.window makeKeyAndVisible];
 
     
-// 
-//    NSError *error = nil;
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-//    [request setURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-//    if (returnData == nil) {
-//        return YES;
-//    }
-//    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
-//    NSLog(@"appInfoDic = %@", appInfoDic);
-//    if (error) {
-//        NSLog(@"%@", error);
-//        return YES;
-//    }
-//    NSArray *reluts = [appInfoDic objectForKey:@"results"];
-//    if (![reluts count]) {
-//        NSLog(@"reslut = nil");
-//        return YES;
-//    }
-//    NSDictionary *infoDic = reluts[0];
-//    
-//    
-//
-//    self.latestVersion = [infoDic objectForKey:@"version"];
-//    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
-//    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
-//    
-//    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-//    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
-//    double doubleCurrentVersion = [currentVersion doubleValue];
-//    double doubleUpdateVersion = [self.latestVersion doubleValue];
-//    
-//    if (doubleCurrentVersion < doubleUpdateVersion) {
-//        
-//        UIAlertView *alert;
-//        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-//                                           message:@"有新版本，是否升级！"
-//                                          delegate: self
-//                                 cancelButtonTitle:@"取消"
-//                                 otherButtonTitles: @"升级", nil];
-//        alert.tag = 1001;
-//        [alert show];
-//    }
+ 
+    NSError *error = nil;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if (returnData == nil) {
+        return YES;
+    }
+    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
+   // NSLog(@"appInfoDic = %@", appInfoDic);
+    if (error) {
+        NSLog(@"%@", error);
+        return YES;
+    }
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if (![reluts count]) {
+        NSLog(@"reslut = nil");
+        return YES;
+    }
+    NSDictionary *infoDic = reluts[0];
+    
+    
+
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    double doubleCurrentVersion = [currentVersion doubleValue];
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
    
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
-    [application registerForRemoteNotifications];
-}
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler{
-    if ([identifier isEqualToString:@"declineAction"]){
-   
-    }
-    else if ([identifier isEqualToString:@"answerAction"]){
-   
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
     }
 }
 
@@ -203,6 +187,19 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
     [MiPushSDK bindDeviceToken:pToken];
+    // 方式1
+    
+    NSMutableString *deviceTokenString1 = [NSMutableString string];
+    
+    const char *bytes = pToken.bytes;
+    
+    NSUInteger iCount = pToken.length;
+    
+    for (int i = 0; i < iCount; i++) {
+        
+        [deviceTokenString1 appendFormat:@"%02x", bytes[i]&0x000000FF];
+        
+    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
@@ -214,55 +211,32 @@
     
     [MiPushSDK handleReceiveRemoteNotification :userInfo];
     // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
- 
-    
-    NSLog(@"userInfo == %@",userInfo);
-    NSString *messageId = [userInfo objectForKey:@"_id_"];
-    [MiPushSDK openAppNotify:messageId];
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    NSLog(@"userInfo == %@",userInfo);
-
-    NSString *messageId = [userInfo objectForKey:@"_id_"];
-    [MiPushSDK openAppNotify:messageId];
-    
 }
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1001) {
-        if (buttonIndex == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
-        }
-    }
-}
 
-//  ios 推送 消息
-
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    //收到本地推送消息后调用的方法
-    
-    
-    NSLog(@"%@",notification);
-}
-
--(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
-{
-    //在非本App界面时收到本地消息，下拉消息会有快捷回复的按钮，点击按钮后调用的方法，根据identifier来判断点击的哪个按钮，notification为消息内容
-    NSLog(@"%@----%@",identifier,notification);
-    completionHandler();//处理完消息，最后一定要调用这个代码块
-}
 
 #pragma mark MiPushSDKDelegate
 
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-    NSLog(@"chengchong");
+
+    if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
+       // NSLog(@"data = %@", data);
+        self.xiaomiToken = [data objectForKey:@"token"];
+        self.xiaomiUserId = [data objectForKey:@"userId"];
+
+    } else if ([selector isEqualToString:@"bindDeviceToken:"]){
+       NSLog(@"data = %@", data);
+        self.xiaomiRegid = [data objectForKey:@"regid"];
+    }
+    
+
 
 }
+
+
 
 - (void)miPushRequestErrWithSelector:(NSString *)selector error:(int)error data:(NSDictionary *)data
 {
@@ -272,8 +246,13 @@
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
-    NSLog(@"data");
+    NSLog(@"data = %@", data);
     // 长连接收到的消息。消息格式跟APNs格式一样
+    // 返回数据
+    
+    
+    
+    
 }
 
 
