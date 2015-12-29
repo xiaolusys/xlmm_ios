@@ -64,53 +64,12 @@ static NSString *khead2View = @"head2View";
     if (_isFirst) {
         //集成刷新控件
         
-        [self setupRefresh];
-        self.myCollectionView.footerHidden=NO;
-        self.myCollectionView.headerHidden=NO;
-        [self.myCollectionView headerBeginRefreshing];
         _isFirst = NO;
     }
     
 }
 
-- (void)setupRefresh{
-    
-    
-    
-    [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    //[_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
-    _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
-    _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
-    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
-    
-    _myCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
-    _myCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
-    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
-    
-}
 
-- (void)headerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self reload];
-        sleep(1.5);
-        [_myCollectionView headerEndRefreshing];
-        
-    });
-}
-
-
-- (void)footerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self loadMore];
-        sleep(1.5);
-        [_myCollectionView footerEndRefreshing];
-        
-    });
-}
 
 - (void)reload
 {

@@ -25,6 +25,7 @@
 #import "NSString+URL.h"
 #import "Reachability.h"
 #import "RESideMenu.h"
+#import "MJPullGifHeader.h"
 
 
 
@@ -78,15 +79,8 @@ static NSString *khead2View = @"head2View";
     
     if (_isFirst) {
         //集成刷新控件
-//        _slimeView = [[SRRefreshView alloc] init];
-//        _slimeView.delegate = self;
-//        _slimeView.slimeMissWhenGoingBack = YES;
-        
-        [self.myCollectionView addSubview:_slimeView];
-        [self setupRefresh];
-        self.myCollectionView.footerHidden=NO;
-        self.myCollectionView.headerHidden=NO;
-        [self.myCollectionView headerBeginRefreshing];
+
+
         _isFirst = NO;
         _isUpdate = YES;
     }
@@ -131,47 +125,7 @@ static NSString *khead2View = @"head2View";
 }
 
 
-- (void)setupRefresh{
-    [self.myCollectionView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    //[_myCollectionView addFooterWithTarget:self action:@selector(footerRereshing)];
-    _myCollectionView.headerPullToRefreshText = NSLocalizedString(@"下拉可以刷新", nil);
-    _myCollectionView.headerReleaseToRefreshText = NSLocalizedString (@"松开马上刷新",nil);
-    _myCollectionView.headerRefreshingText = NSLocalizedString(@"正在帮你刷新中", nil);
-    
-    _myCollectionView.footerPullToRefreshText = NSLocalizedString(@"上拉可以加载更多数据", nil);
-    _myCollectionView.footerReleaseToRefreshText = NSLocalizedString(@"松开马上加载更多数据", nil);
-    _myCollectionView.footerRefreshingText = NSLocalizedString(@"正在帮你加载中", nil);
-    
-}
 
-- (void)headerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self reload];
-        sleep(1.5);
-        
-//        _slimeView = [[SRRefreshView alloc] init];
-//        _slimeView.delegate = self;
-//        _slimeView.slimeMissWhenGoingBack = YES;
-        
-        [_myCollectionView headerEndRefreshing];
-        _isDone = YES;
-        
-    });
-}
-
-
-- (void)footerRereshing
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self loadMore];
-        sleep(1.5);
-        [_myCollectionView footerEndRefreshing];
-        
-    });
-}
 
 #pragma mark - scrollView delegate
 
@@ -224,6 +178,14 @@ static NSString *khead2View = @"head2View";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.myCollectionView.mj_header = header;
+    [self.myCollectionView.mj_header beginRefreshing];
+    
+    
+    
     
 }
 
@@ -373,6 +335,7 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
+        [self.myCollectionView.mj_header endRefreshing];
         
 
     }
@@ -441,6 +404,7 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
+        [self.myCollectionView.mj_header endRefreshing];
 
     }
     

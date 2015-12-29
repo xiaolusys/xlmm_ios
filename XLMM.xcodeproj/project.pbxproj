@@ -209,6 +209,72 @@
 		321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9F1BD8E22A0060FB62 /* SettingViewController.m */; };
 		321EA39A1BE2279D009A45DE /* CartTableCellTableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */; };
 		32258B451C1120A6000FFE5F /* VersionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32258B431C1120A6000FFE5F /* VersionController.m */; };
+		322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25391C32B66100509EAD /* MJRefreshAutoFooter.m */; };
+		322D25641C32B66100509EAD /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D253B1C32B66100509EAD /* MJRefreshBackFooter.m */; };
+		322D25651C32B66100509EAD /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D253D1C32B66100509EAD /* MJRefreshComponent.m */; };
+		322D25661C32B66100509EAD /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D253F1C32B66100509EAD /* MJRefreshFooter.m */; };
+		322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25411C32B66100509EAD /* MJRefreshHeader.m */; };
+		322D25681C32B66100509EAD /* MJRefreshAutoGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25461C32B66100509EAD /* MJRefreshAutoGifFooter.m */; };
+		322D25691C32B66100509EAD /* MJRefreshAutoNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25481C32B66100509EAD /* MJRefreshAutoNormalFooter.m */; };
+		322D256A1C32B66100509EAD /* MJRefreshAutoStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D254A1C32B66100509EAD /* MJRefreshAutoStateFooter.m */; };
+		322D256B1C32B66100509EAD /* MJRefreshBackGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D254D1C32B66100509EAD /* MJRefreshBackGifFooter.m */; };
+		322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D254F1C32B66100509EAD /* MJRefreshBackNormalFooter.m */; };
+		322D256D1C32B66100509EAD /* MJRefreshBackStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25511C32B66100509EAD /* MJRefreshBackStateFooter.m */; };
+		322D256E1C32B66100509EAD /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25541C32B66100509EAD /* MJRefreshGifHeader.m */; };
+		322D256F1C32B66100509EAD /* MJRefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25561C32B66100509EAD /* MJRefreshNormalHeader.m */; };
+		322D25701C32B66100509EAD /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25581C32B66100509EAD /* MJRefreshStateHeader.m */; };
+		322D25711C32B66100509EAD /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 322D25591C32B66100509EAD /* MJRefresh.bundle */; };
+		322D25721C32B66100509EAD /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D255C1C32B66100509EAD /* MJRefreshConst.m */; };
+		322D25731C32B66100509EAD /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D255E1C32B66100509EAD /* UIScrollView+MJExtension.m */; };
+		322D25741C32B66100509EAD /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25601C32B66100509EAD /* UIScrollView+MJRefresh.m */; };
+		322D25751C32B66100509EAD /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25621C32B66100509EAD /* UIView+MJExtension.m */; };
+		322D257B1C32B7C700509EAD /* MJPullGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D257A1C32B7C700509EAD /* MJPullGifHeader.m */; };
+		322D257E1C32B92000509EAD /* songshou.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D257C1C32B92000509EAD /* songshou.png */; };
+		322D257F1C32B92000509EAD /* xiala.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D257D1C32B92000509EAD /* xiala.png */; };
+		322D25AC1C32B93A00509EAD /* 圈圈加载0001.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25801C32B93A00509EAD /* 圈圈加载0001.png */; };
+		322D25AD1C32B93A00509EAD /* 圈圈加载0002.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25811C32B93A00509EAD /* 圈圈加载0002.png */; };
+		322D25AE1C32B93A00509EAD /* 圈圈加载0003.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25821C32B93A00509EAD /* 圈圈加载0003.png */; };
+		322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25831C32B93A00509EAD /* 圈圈加载0004.png */; };
+		322D25B01C32B93A00509EAD /* 圈圈加载0005.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25841C32B93A00509EAD /* 圈圈加载0005.png */; };
+		322D25B11C32B93A00509EAD /* 圈圈加载0006.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25851C32B93A00509EAD /* 圈圈加载0006.png */; };
+		322D25B21C32B93A00509EAD /* 圈圈加载0007.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25861C32B93A00509EAD /* 圈圈加载0007.png */; };
+		322D25B31C32B93A00509EAD /* 圈圈加载0008.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25871C32B93A00509EAD /* 圈圈加载0008.png */; };
+		322D25B41C32B93A00509EAD /* 圈圈加载0009.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25881C32B93A00509EAD /* 圈圈加载0009.png */; };
+		322D25B51C32B93A00509EAD /* 圈圈加载0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25891C32B93A00509EAD /* 圈圈加载0010.png */; };
+		322D25B61C32B93A00509EAD /* 圈圈加载0011.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258A1C32B93A00509EAD /* 圈圈加载0011.png */; };
+		322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258B1C32B93A00509EAD /* 圈圈加载0012.png */; };
+		322D25B81C32B93A00509EAD /* 圈圈加载0013.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258C1C32B93A00509EAD /* 圈圈加载0013.png */; };
+		322D25B91C32B93A00509EAD /* 圈圈加载0014.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258D1C32B93A00509EAD /* 圈圈加载0014.png */; };
+		322D25BA1C32B93A00509EAD /* 圈圈加载0015.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258E1C32B93A00509EAD /* 圈圈加载0015.png */; };
+		322D25BB1C32B93A00509EAD /* 圈圈加载0016.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D258F1C32B93A00509EAD /* 圈圈加载0016.png */; };
+		322D25BC1C32B93A00509EAD /* 圈圈加载0017.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25901C32B93A00509EAD /* 圈圈加载0017.png */; };
+		322D25BD1C32B93A00509EAD /* 圈圈加载0018.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25911C32B93A00509EAD /* 圈圈加载0018.png */; };
+		322D25BE1C32B93A00509EAD /* 圈圈加载0019.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25921C32B93A00509EAD /* 圈圈加载0019.png */; };
+		322D25BF1C32B93A00509EAD /* 圈圈加载0020.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25931C32B93A00509EAD /* 圈圈加载0020.png */; };
+		322D25C01C32B93A00509EAD /* 圈圈加载0021.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25941C32B93A00509EAD /* 圈圈加载0021.png */; };
+		322D25C11C32B93A00509EAD /* 圈圈加载0022.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25951C32B93A00509EAD /* 圈圈加载0022.png */; };
+		322D25C21C32B93A00509EAD /* 圈圈加载0023.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25961C32B93A00509EAD /* 圈圈加载0023.png */; };
+		322D25C31C32B93A00509EAD /* 圈圈加载0024.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25971C32B93A00509EAD /* 圈圈加载0024.png */; };
+		322D25C41C32B93A00509EAD /* 圈圈加载0025.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25981C32B93A00509EAD /* 圈圈加载0025.png */; };
+		322D25C51C32B93A00509EAD /* 圈圈加载0026.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25991C32B93A00509EAD /* 圈圈加载0026.png */; };
+		322D25C61C32B93A00509EAD /* 圈圈加载0027.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259A1C32B93A00509EAD /* 圈圈加载0027.png */; };
+		322D25C71C32B93A00509EAD /* 圈圈加载0028.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259B1C32B93A00509EAD /* 圈圈加载0028.png */; };
+		322D25C81C32B93A00509EAD /* 圈圈加载0029.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259C1C32B93A00509EAD /* 圈圈加载0029.png */; };
+		322D25C91C32B93A00509EAD /* 圈圈加载0030.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259D1C32B93A00509EAD /* 圈圈加载0030.png */; };
+		322D25CA1C32B93A00509EAD /* 圈圈加载0031.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259E1C32B93A00509EAD /* 圈圈加载0031.png */; };
+		322D25CB1C32B93A00509EAD /* 圈圈加载0032.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D259F1C32B93A00509EAD /* 圈圈加载0032.png */; };
+		322D25CC1C32B93A00509EAD /* 圈圈加载0033.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A01C32B93A00509EAD /* 圈圈加载0033.png */; };
+		322D25CD1C32B93A00509EAD /* 圈圈加载0034.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A11C32B93A00509EAD /* 圈圈加载0034.png */; };
+		322D25CE1C32B93A00509EAD /* 圈圈加载0035.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A21C32B93A00509EAD /* 圈圈加载0035.png */; };
+		322D25CF1C32B93A00509EAD /* 圈圈加载0036.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A31C32B93A00509EAD /* 圈圈加载0036.png */; };
+		322D25D01C32B93A00509EAD /* 圈圈加载0037.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A41C32B93A00509EAD /* 圈圈加载0037.png */; };
+		322D25D11C32B93A00509EAD /* 圈圈加载0038.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A51C32B93A00509EAD /* 圈圈加载0038.png */; };
+		322D25D21C32B93A00509EAD /* 圈圈加载0039.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A61C32B93A00509EAD /* 圈圈加载0039.png */; };
+		322D25D31C32B93A00509EAD /* 圈圈加载0040.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A71C32B93A00509EAD /* 圈圈加载0040.png */; };
+		322D25D41C32B93A00509EAD /* 圈圈加载0041.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A81C32B93A00509EAD /* 圈圈加载0041.png */; };
+		322D25D51C32B93A00509EAD /* 圈圈加载0042.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A91C32B93A00509EAD /* 圈圈加载0042.png */; };
+		322D25D61C32B93A00509EAD /* 圈圈加载0043.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */; };
+		322D25D71C32B93A00509EAD /* 圈圈加载0044.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -363,14 +429,6 @@
 		3274C18A1C07129E00641C4E /* refundSuccessful.png in Resources */ = {isa = PBXBuildFile; fileRef = 3274C1891C07129E00641C4E /* refundSuccessful.png */; };
 		327F80BF1B9559F600EDDF5B /* PersonTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80BD1B9559F600EDDF5B /* PersonTableCell.m */; };
 		327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */; };
-		327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
-		327F80D41B95A60900EDDF5B /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80C61B95A60900EDDF5B /* MJRefreshBaseView.m */; };
-		327F80D51B95A60900EDDF5B /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80C81B95A60900EDDF5B /* MJRefreshConst.m */; };
-		327F80D61B95A60900EDDF5B /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CA1B95A60900EDDF5B /* MJRefreshFooterView.m */; };
-		327F80D71B95A60900EDDF5B /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CC1B95A60900EDDF5B /* MJRefreshHeaderView.m */; };
-		327F80D81B95A60900EDDF5B /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CE1B95A60900EDDF5B /* UIScrollView+MJExtension.m */; };
-		327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */; };
-		327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */; };
 		327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */; };
 		327FC25F1B9AEC2F00F111B3 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
 		32816F871C1FA880004DD2EF /* messageicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32816F861C1FA880004DD2EF /* messageicon.png */; };
@@ -411,7 +469,6 @@
 		3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		329E89841BB574B0008AA0B6 /* DetailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DD21B74884B00816208 /* DetailsModel.m */; };
 		329E89861BB574B0008AA0B6 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2781B6B5B1300E73EB9 /* UIImage+WebP.m */; };
-		329E89881BB574B0008AA0B6 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */; };
 		329E89891BB574B0008AA0B6 /* PromoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288D01B943EB4006DC949 /* PromoteModel.m */; };
 		329E898B1BB574B0008AA0B6 /* LiJiBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */; };
 		329E898C1BB574B0008AA0B6 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4811B85620F00FBEC25 /* AddressTableCell.m */; };
@@ -423,8 +480,6 @@
 		329E89931BB574B0008AA0B6 /* Head2View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288C11B942F6B006DC949 /* Head2View.m */; };
 		329E89941BB574B0008AA0B6 /* PersonCenterViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9831B6F381F0086D030 /* PersonCenterViewController1.m */; };
 		329E89951BB574B0008AA0B6 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2721B6B5B1300E73EB9 /* UIButton+WebCache.m */; };
-		329E89961BB574B0008AA0B6 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80C61B95A60900EDDF5B /* MJRefreshBaseView.m */; };
-		329E89971BB574B0008AA0B6 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CE1B95A60900EDDF5B /* UIScrollView+MJExtension.m */; };
 		329E89981BB574B0008AA0B6 /* MMCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32151BF21B96CFBF003569D7 /* MMCollectionController.m */; };
 		329E899A1BB574B0008AA0B6 /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E0F1B86BD8C003501EF /* XiangQingViewController.m */; };
 		329E899B1BB574B0008AA0B6 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F26B1B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m */; };
@@ -435,7 +490,6 @@
 		329E89A21BB574B0008AA0B6 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91B91B7C2A4D00CA67C3 /* AddressViewController.m */; };
 		329E89A31BB574B0008AA0B6 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
 		329E89A41BB574B0008AA0B6 /* MMCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */; };
-		329E89A51BB574B0008AA0B6 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */; };
 		329E89A61BB574B0008AA0B6 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2631B6B5B1300E73EB9 /* SDImageCache.m */; };
 		329E89A71BB574B0008AA0B6 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2611B6B5B1300E73EB9 /* NSData+ImageContentType.m */; };
 		329E89A81BB574B0008AA0B6 /* PersonCenterViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B9881B6F38410086D030 /* PersonCenterViewController2.m */; };
@@ -449,7 +503,6 @@
 		329E89B31BB574B0008AA0B6 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2671B6B5B1300E73EB9 /* SDWebImageDecoder.m */; };
 		329E89B41BB574B0008AA0B6 /* CartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 327FC25E1B9AEC2F00F111B3 /* CartModel.m */; };
 		329E89B51BB574B0008AA0B6 /* DingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E141B86C840003501EF /* DingdanModel.m */; };
-		329E89B61BB574B0008AA0B6 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CA1B95A60900EDDF5B /* MJRefreshFooterView.m */; };
 		329E89B71BB574B0008AA0B6 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F3D9551B6CCA41008530BA /* AFHTTPSessionManager.m */; };
 		329E89B91BB574B0008AA0B6 /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
 		329E89BB1BB574B0008AA0B6 /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4861B85AA9D00FBEC25 /* YouHuiQuanViewController.m */; };
@@ -457,7 +510,6 @@
 		329E89BD1BB574B0008AA0B6 /* Head1View.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A288BC1B942F53006DC949 /* Head1View.m */; };
 		329E89BF1BB574B0008AA0B6 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F27A1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m */; };
 		329E89C11BB574B0008AA0B6 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
-		329E89C21BB574B0008AA0B6 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80C81B95A60900EDDF5B /* MJRefreshConst.m */; };
 		329E89C31BB574B0008AA0B6 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2691B6B5B1300E73EB9 /* SDWebImageDownloader.m */; };
 		329E89C51BB574B0008AA0B6 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32746DCA1B7438FC00816208 /* CollectionModel.m */; };
 		329E89C61BB574B0008AA0B6 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 3282F2651B6B5B1300E73EB9 /* SDWebImageCompat.m */; };
@@ -493,7 +545,6 @@
 		329E89E91BB574B0008AA0B6 /* MMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32151BF71B96CFD4003569D7 /* MMDetailsViewController.m */; };
 		329E89EA1BB574B0008AA0B6 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A81F931B8D9BF6009972B3 /* BuyCartsView.m */; };
 		329E89EB1BB574B0008AA0B6 /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
-		329E89EC1BB574B0008AA0B6 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F80CC1B95A60900EDDF5B /* MJRefreshHeaderView.m */; };
 		329E89EE1BB574B0008AA0B6 /* PeopleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA321B6C850100F36A8D /* PeopleModel.m */; };
 		329E89EF1BB574B0008AA0B6 /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91BE1B7C37D100CA67C3 /* AddAdressViewController.m */; };
 		329E89F01BB574B0008AA0B6 /* JifenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 328CE5D41B9F0B28000469DF /* JifenViewController.m */; };
@@ -557,7 +608,6 @@
 		329E8A461BB574B0008AA0B6 /* info-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DFC1B74A22000816208 /* info-bg.png */; };
 		329E8A471BB574B0008AA0B6 /* icon-radio-select.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DED1B74A22000816208 /* icon-radio-select.png */; };
 		329E8A481BB574B0008AA0B6 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */; };
-		329E8A4B1BB574B0008AA0B6 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 327F80C31B95A60900EDDF5B /* MJRefresh.bundle */; };
 		329E8A4D1BB574B0008AA0B6 /* icon-shouye.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DF31B74A22000816208 /* icon-shouye.png */; };
 		329E8A4F1BB574B0008AA0B6 /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF9A251B9FDB870001F314 /* TuihuoViewController.xib */; };
 		329E8A511BB574B0008AA0B6 /* icon-fanhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 32746DDE1B74A22000816208 /* icon-fanhui.png */; };
@@ -1038,6 +1088,92 @@
 		32258B421C1120A6000FFE5F /* VersionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionController.h; sourceTree = "<group>"; };
 		32258B431C1120A6000FFE5F /* VersionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionController.m; sourceTree = "<group>"; };
 		32258B441C1120A6000FFE5F /* VersionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionController.xib; sourceTree = "<group>"; };
+		322D25381C32B66100509EAD /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
+		322D25391C32B66100509EAD /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
+		322D253A1C32B66100509EAD /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
+		322D253B1C32B66100509EAD /* MJRefreshBackFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackFooter.m; sourceTree = "<group>"; };
+		322D253C1C32B66100509EAD /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
+		322D253D1C32B66100509EAD /* MJRefreshComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshComponent.m; sourceTree = "<group>"; };
+		322D253E1C32B66100509EAD /* MJRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooter.h; sourceTree = "<group>"; };
+		322D253F1C32B66100509EAD /* MJRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooter.m; sourceTree = "<group>"; };
+		322D25401C32B66100509EAD /* MJRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeader.h; sourceTree = "<group>"; };
+		322D25411C32B66100509EAD /* MJRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeader.m; sourceTree = "<group>"; };
+		322D25451C32B66100509EAD /* MJRefreshAutoGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoGifFooter.h; sourceTree = "<group>"; };
+		322D25461C32B66100509EAD /* MJRefreshAutoGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoGifFooter.m; sourceTree = "<group>"; };
+		322D25471C32B66100509EAD /* MJRefreshAutoNormalFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoNormalFooter.h; sourceTree = "<group>"; };
+		322D25481C32B66100509EAD /* MJRefreshAutoNormalFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoNormalFooter.m; sourceTree = "<group>"; };
+		322D25491C32B66100509EAD /* MJRefreshAutoStateFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoStateFooter.h; sourceTree = "<group>"; };
+		322D254A1C32B66100509EAD /* MJRefreshAutoStateFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoStateFooter.m; sourceTree = "<group>"; };
+		322D254C1C32B66100509EAD /* MJRefreshBackGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackGifFooter.h; sourceTree = "<group>"; };
+		322D254D1C32B66100509EAD /* MJRefreshBackGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackGifFooter.m; sourceTree = "<group>"; };
+		322D254E1C32B66100509EAD /* MJRefreshBackNormalFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackNormalFooter.h; sourceTree = "<group>"; };
+		322D254F1C32B66100509EAD /* MJRefreshBackNormalFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackNormalFooter.m; sourceTree = "<group>"; };
+		322D25501C32B66100509EAD /* MJRefreshBackStateFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackStateFooter.h; sourceTree = "<group>"; };
+		322D25511C32B66100509EAD /* MJRefreshBackStateFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackStateFooter.m; sourceTree = "<group>"; };
+		322D25531C32B66100509EAD /* MJRefreshGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshGifHeader.h; sourceTree = "<group>"; };
+		322D25541C32B66100509EAD /* MJRefreshGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshGifHeader.m; sourceTree = "<group>"; };
+		322D25551C32B66100509EAD /* MJRefreshNormalHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshNormalHeader.h; sourceTree = "<group>"; };
+		322D25561C32B66100509EAD /* MJRefreshNormalHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshNormalHeader.m; sourceTree = "<group>"; };
+		322D25571C32B66100509EAD /* MJRefreshStateHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshStateHeader.h; sourceTree = "<group>"; };
+		322D25581C32B66100509EAD /* MJRefreshStateHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshStateHeader.m; sourceTree = "<group>"; };
+		322D25591C32B66100509EAD /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		322D255A1C32B66100509EAD /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		322D255B1C32B66100509EAD /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		322D255C1C32B66100509EAD /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		322D255D1C32B66100509EAD /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
+		322D255E1C32B66100509EAD /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
+		322D255F1C32B66100509EAD /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		322D25601C32B66100509EAD /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		322D25611C32B66100509EAD /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
+		322D25621C32B66100509EAD /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		322D25791C32B7C700509EAD /* MJPullGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPullGifHeader.h; sourceTree = "<group>"; };
+		322D257A1C32B7C700509EAD /* MJPullGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPullGifHeader.m; sourceTree = "<group>"; };
+		322D257C1C32B92000509EAD /* songshou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = songshou.png; sourceTree = "<group>"; };
+		322D257D1C32B92000509EAD /* xiala.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiala.png; sourceTree = "<group>"; };
+		322D25801C32B93A00509EAD /* 圈圈加载0001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0001.png"; sourceTree = "<group>"; };
+		322D25811C32B93A00509EAD /* 圈圈加载0002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0002.png"; sourceTree = "<group>"; };
+		322D25821C32B93A00509EAD /* 圈圈加载0003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0003.png"; sourceTree = "<group>"; };
+		322D25831C32B93A00509EAD /* 圈圈加载0004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0004.png"; sourceTree = "<group>"; };
+		322D25841C32B93A00509EAD /* 圈圈加载0005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0005.png"; sourceTree = "<group>"; };
+		322D25851C32B93A00509EAD /* 圈圈加载0006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0006.png"; sourceTree = "<group>"; };
+		322D25861C32B93A00509EAD /* 圈圈加载0007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0007.png"; sourceTree = "<group>"; };
+		322D25871C32B93A00509EAD /* 圈圈加载0008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0008.png"; sourceTree = "<group>"; };
+		322D25881C32B93A00509EAD /* 圈圈加载0009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0009.png"; sourceTree = "<group>"; };
+		322D25891C32B93A00509EAD /* 圈圈加载0010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0010.png"; sourceTree = "<group>"; };
+		322D258A1C32B93A00509EAD /* 圈圈加载0011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0011.png"; sourceTree = "<group>"; };
+		322D258B1C32B93A00509EAD /* 圈圈加载0012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0012.png"; sourceTree = "<group>"; };
+		322D258C1C32B93A00509EAD /* 圈圈加载0013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0013.png"; sourceTree = "<group>"; };
+		322D258D1C32B93A00509EAD /* 圈圈加载0014.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0014.png"; sourceTree = "<group>"; };
+		322D258E1C32B93A00509EAD /* 圈圈加载0015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0015.png"; sourceTree = "<group>"; };
+		322D258F1C32B93A00509EAD /* 圈圈加载0016.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0016.png"; sourceTree = "<group>"; };
+		322D25901C32B93A00509EAD /* 圈圈加载0017.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0017.png"; sourceTree = "<group>"; };
+		322D25911C32B93A00509EAD /* 圈圈加载0018.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0018.png"; sourceTree = "<group>"; };
+		322D25921C32B93A00509EAD /* 圈圈加载0019.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0019.png"; sourceTree = "<group>"; };
+		322D25931C32B93A00509EAD /* 圈圈加载0020.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0020.png"; sourceTree = "<group>"; };
+		322D25941C32B93A00509EAD /* 圈圈加载0021.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0021.png"; sourceTree = "<group>"; };
+		322D25951C32B93A00509EAD /* 圈圈加载0022.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0022.png"; sourceTree = "<group>"; };
+		322D25961C32B93A00509EAD /* 圈圈加载0023.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0023.png"; sourceTree = "<group>"; };
+		322D25971C32B93A00509EAD /* 圈圈加载0024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0024.png"; sourceTree = "<group>"; };
+		322D25981C32B93A00509EAD /* 圈圈加载0025.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0025.png"; sourceTree = "<group>"; };
+		322D25991C32B93A00509EAD /* 圈圈加载0026.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0026.png"; sourceTree = "<group>"; };
+		322D259A1C32B93A00509EAD /* 圈圈加载0027.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0027.png"; sourceTree = "<group>"; };
+		322D259B1C32B93A00509EAD /* 圈圈加载0028.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0028.png"; sourceTree = "<group>"; };
+		322D259C1C32B93A00509EAD /* 圈圈加载0029.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0029.png"; sourceTree = "<group>"; };
+		322D259D1C32B93A00509EAD /* 圈圈加载0030.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0030.png"; sourceTree = "<group>"; };
+		322D259E1C32B93A00509EAD /* 圈圈加载0031.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0031.png"; sourceTree = "<group>"; };
+		322D259F1C32B93A00509EAD /* 圈圈加载0032.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0032.png"; sourceTree = "<group>"; };
+		322D25A01C32B93A00509EAD /* 圈圈加载0033.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0033.png"; sourceTree = "<group>"; };
+		322D25A11C32B93A00509EAD /* 圈圈加载0034.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0034.png"; sourceTree = "<group>"; };
+		322D25A21C32B93A00509EAD /* 圈圈加载0035.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0035.png"; sourceTree = "<group>"; };
+		322D25A31C32B93A00509EAD /* 圈圈加载0036.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0036.png"; sourceTree = "<group>"; };
+		322D25A41C32B93A00509EAD /* 圈圈加载0037.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0037.png"; sourceTree = "<group>"; };
+		322D25A51C32B93A00509EAD /* 圈圈加载0038.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0038.png"; sourceTree = "<group>"; };
+		322D25A61C32B93A00509EAD /* 圈圈加载0039.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0039.png"; sourceTree = "<group>"; };
+		322D25A71C32B93A00509EAD /* 圈圈加载0040.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0040.png"; sourceTree = "<group>"; };
+		322D25A81C32B93A00509EAD /* 圈圈加载0041.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0041.png"; sourceTree = "<group>"; };
+		322D25A91C32B93A00509EAD /* 圈圈加载0042.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0042.png"; sourceTree = "<group>"; };
+		322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0043.png"; sourceTree = "<group>"; };
+		322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0044.png"; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -1221,22 +1357,6 @@
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
-		327F80C31B95A60900EDDF5B /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
-		327F80C41B95A60900EDDF5B /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
-		327F80C51B95A60900EDDF5B /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
-		327F80C61B95A60900EDDF5B /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
-		327F80C71B95A60900EDDF5B /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
-		327F80C81B95A60900EDDF5B /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
-		327F80C91B95A60900EDDF5B /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
-		327F80CA1B95A60900EDDF5B /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
-		327F80CB1B95A60900EDDF5B /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
-		327F80CC1B95A60900EDDF5B /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
-		327F80CD1B95A60900EDDF5B /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
-		327F80CE1B95A60900EDDF5B /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
-		327F80CF1B95A60900EDDF5B /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
-		327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
-		327F80D11B95A60900EDDF5B /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
-		327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDetailsModel.h; sourceTree = "<group>"; };
 		327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsModel.m; sourceTree = "<group>"; };
 		327FC25D1B9AEC2F00F111B3 /* CartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartModel.h; sourceTree = "<group>"; };
@@ -1944,6 +2064,52 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				322D25801C32B93A00509EAD /* 圈圈加载0001.png */,
+				322D25811C32B93A00509EAD /* 圈圈加载0002.png */,
+				322D25821C32B93A00509EAD /* 圈圈加载0003.png */,
+				322D25831C32B93A00509EAD /* 圈圈加载0004.png */,
+				322D25841C32B93A00509EAD /* 圈圈加载0005.png */,
+				322D25851C32B93A00509EAD /* 圈圈加载0006.png */,
+				322D25861C32B93A00509EAD /* 圈圈加载0007.png */,
+				322D25871C32B93A00509EAD /* 圈圈加载0008.png */,
+				322D25881C32B93A00509EAD /* 圈圈加载0009.png */,
+				322D25891C32B93A00509EAD /* 圈圈加载0010.png */,
+				322D258A1C32B93A00509EAD /* 圈圈加载0011.png */,
+				322D258B1C32B93A00509EAD /* 圈圈加载0012.png */,
+				322D258C1C32B93A00509EAD /* 圈圈加载0013.png */,
+				322D258D1C32B93A00509EAD /* 圈圈加载0014.png */,
+				322D258E1C32B93A00509EAD /* 圈圈加载0015.png */,
+				322D258F1C32B93A00509EAD /* 圈圈加载0016.png */,
+				322D25901C32B93A00509EAD /* 圈圈加载0017.png */,
+				322D25911C32B93A00509EAD /* 圈圈加载0018.png */,
+				322D25921C32B93A00509EAD /* 圈圈加载0019.png */,
+				322D25931C32B93A00509EAD /* 圈圈加载0020.png */,
+				322D25941C32B93A00509EAD /* 圈圈加载0021.png */,
+				322D25951C32B93A00509EAD /* 圈圈加载0022.png */,
+				322D25961C32B93A00509EAD /* 圈圈加载0023.png */,
+				322D25971C32B93A00509EAD /* 圈圈加载0024.png */,
+				322D25981C32B93A00509EAD /* 圈圈加载0025.png */,
+				322D25991C32B93A00509EAD /* 圈圈加载0026.png */,
+				322D259A1C32B93A00509EAD /* 圈圈加载0027.png */,
+				322D259B1C32B93A00509EAD /* 圈圈加载0028.png */,
+				322D259C1C32B93A00509EAD /* 圈圈加载0029.png */,
+				322D259D1C32B93A00509EAD /* 圈圈加载0030.png */,
+				322D259E1C32B93A00509EAD /* 圈圈加载0031.png */,
+				322D259F1C32B93A00509EAD /* 圈圈加载0032.png */,
+				322D25A01C32B93A00509EAD /* 圈圈加载0033.png */,
+				322D25A11C32B93A00509EAD /* 圈圈加载0034.png */,
+				322D25A21C32B93A00509EAD /* 圈圈加载0035.png */,
+				322D25A31C32B93A00509EAD /* 圈圈加载0036.png */,
+				322D25A41C32B93A00509EAD /* 圈圈加载0037.png */,
+				322D25A51C32B93A00509EAD /* 圈圈加载0038.png */,
+				322D25A61C32B93A00509EAD /* 圈圈加载0039.png */,
+				322D25A71C32B93A00509EAD /* 圈圈加载0040.png */,
+				322D25A81C32B93A00509EAD /* 圈圈加载0041.png */,
+				322D25A91C32B93A00509EAD /* 圈圈加载0042.png */,
+				322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */,
+				322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */,
+				322D257C1C32B92000509EAD /* songshou.png */,
+				322D257D1C32B92000509EAD /* xiala.png */,
 				323D667B1C2799C200A2B955 /* retina7@2x.png */,
 				323D66791C2799BE00A2B955 /* retina6@3x.png */,
 				323D66711C27921F00A2B955 /* ios7@2x.png */,
@@ -2213,6 +2379,99 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		322D25361C32B66100509EAD /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				322D25371C32B66100509EAD /* Base */,
+				322D25421C32B66100509EAD /* Custom */,
+				322D25591C32B66100509EAD /* MJRefresh.bundle */,
+				322D255A1C32B66100509EAD /* MJRefresh.h */,
+				322D255B1C32B66100509EAD /* MJRefreshConst.h */,
+				322D255C1C32B66100509EAD /* MJRefreshConst.m */,
+				322D255D1C32B66100509EAD /* UIScrollView+MJExtension.h */,
+				322D255E1C32B66100509EAD /* UIScrollView+MJExtension.m */,
+				322D255F1C32B66100509EAD /* UIScrollView+MJRefresh.h */,
+				322D25601C32B66100509EAD /* UIScrollView+MJRefresh.m */,
+				322D25611C32B66100509EAD /* UIView+MJExtension.h */,
+				322D25621C32B66100509EAD /* UIView+MJExtension.m */,
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		322D25371C32B66100509EAD /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				322D25381C32B66100509EAD /* MJRefreshAutoFooter.h */,
+				322D25391C32B66100509EAD /* MJRefreshAutoFooter.m */,
+				322D253A1C32B66100509EAD /* MJRefreshBackFooter.h */,
+				322D253B1C32B66100509EAD /* MJRefreshBackFooter.m */,
+				322D253C1C32B66100509EAD /* MJRefreshComponent.h */,
+				322D253D1C32B66100509EAD /* MJRefreshComponent.m */,
+				322D253E1C32B66100509EAD /* MJRefreshFooter.h */,
+				322D253F1C32B66100509EAD /* MJRefreshFooter.m */,
+				322D25401C32B66100509EAD /* MJRefreshHeader.h */,
+				322D25411C32B66100509EAD /* MJRefreshHeader.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		322D25421C32B66100509EAD /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				322D25431C32B66100509EAD /* Footer */,
+				322D25521C32B66100509EAD /* Header */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		322D25431C32B66100509EAD /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				322D25441C32B66100509EAD /* Auto */,
+				322D254B1C32B66100509EAD /* Back */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
+		322D25441C32B66100509EAD /* Auto */ = {
+			isa = PBXGroup;
+			children = (
+				322D25451C32B66100509EAD /* MJRefreshAutoGifFooter.h */,
+				322D25461C32B66100509EAD /* MJRefreshAutoGifFooter.m */,
+				322D25471C32B66100509EAD /* MJRefreshAutoNormalFooter.h */,
+				322D25481C32B66100509EAD /* MJRefreshAutoNormalFooter.m */,
+				322D25491C32B66100509EAD /* MJRefreshAutoStateFooter.h */,
+				322D254A1C32B66100509EAD /* MJRefreshAutoStateFooter.m */,
+			);
+			path = Auto;
+			sourceTree = "<group>";
+		};
+		322D254B1C32B66100509EAD /* Back */ = {
+			isa = PBXGroup;
+			children = (
+				322D254C1C32B66100509EAD /* MJRefreshBackGifFooter.h */,
+				322D254D1C32B66100509EAD /* MJRefreshBackGifFooter.m */,
+				322D254E1C32B66100509EAD /* MJRefreshBackNormalFooter.h */,
+				322D254F1C32B66100509EAD /* MJRefreshBackNormalFooter.m */,
+				322D25501C32B66100509EAD /* MJRefreshBackStateFooter.h */,
+				322D25511C32B66100509EAD /* MJRefreshBackStateFooter.m */,
+			);
+			path = Back;
+			sourceTree = "<group>";
+		};
+		322D25521C32B66100509EAD /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				322D25531C32B66100509EAD /* MJRefreshGifHeader.h */,
+				322D25541C32B66100509EAD /* MJRefreshGifHeader.m */,
+				322D25551C32B66100509EAD /* MJRefreshNormalHeader.h */,
+				322D25561C32B66100509EAD /* MJRefreshNormalHeader.m */,
+				322D25571C32B66100509EAD /* MJRefreshStateHeader.h */,
+				322D25581C32B66100509EAD /* MJRefreshStateHeader.m */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
 		3249B9811B6F37A20086D030 /* PersonCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -2322,6 +2581,8 @@
 				2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */,
 				326C4E0E1C2D4EF000A79359 /* MMLoadingAnimation.h */,
 				326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */,
+				322D25791C32B7C700509EAD /* MJPullGifHeader.h */,
+				322D257A1C32B7C700509EAD /* MJPullGifHeader.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2478,29 +2739,6 @@
 				32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		327F80C21B95A60900EDDF5B /* MJRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				327F80C31B95A60900EDDF5B /* MJRefresh.bundle */,
-				327F80C41B95A60900EDDF5B /* MJRefresh.h */,
-				327F80C51B95A60900EDDF5B /* MJRefreshBaseView.h */,
-				327F80C61B95A60900EDDF5B /* MJRefreshBaseView.m */,
-				327F80C71B95A60900EDDF5B /* MJRefreshConst.h */,
-				327F80C81B95A60900EDDF5B /* MJRefreshConst.m */,
-				327F80C91B95A60900EDDF5B /* MJRefreshFooterView.h */,
-				327F80CA1B95A60900EDDF5B /* MJRefreshFooterView.m */,
-				327F80CB1B95A60900EDDF5B /* MJRefreshHeaderView.h */,
-				327F80CC1B95A60900EDDF5B /* MJRefreshHeaderView.m */,
-				327F80CD1B95A60900EDDF5B /* UIScrollView+MJExtension.h */,
-				327F80CE1B95A60900EDDF5B /* UIScrollView+MJExtension.m */,
-				327F80CF1B95A60900EDDF5B /* UIScrollView+MJRefresh.h */,
-				327F80D01B95A60900EDDF5B /* UIScrollView+MJRefresh.m */,
-				327F80D11B95A60900EDDF5B /* UIView+MJExtension.h */,
-				327F80D21B95A60900EDDF5B /* UIView+MJExtension.m */,
-			);
-			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 		32816F891C1FF469004DD2EF /* cageory */ = {
@@ -2900,6 +3138,7 @@
 		32E00C901BA7B79700A73390 /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				322D25361C32B66100509EAD /* MJRefresh */,
 				2E07A8011C3104E300C6F1B8 /* SlimeRefresh */,
 				326C4E081C2CE8FB00A79359 /* SDK */,
 				2E77F5A91C1EBBA90020C014 /* weibo */,
@@ -2911,7 +3150,6 @@
 				321952501BFC7A8D00AA0AB8 /* QiniuSDK */,
 				3290C88E1B88A6D000CFAFA0 /* font */,
 				32151BFB1B96EA4A003569D7 /* WeChatSDK_1.5_OnlyIphone */,
-				327F80C21B95A60900EDDF5B /* MJRefresh */,
 				32F3D94F1B6CCA41008530BA /* AFNetworking */,
 				3282F25D1B6B5B1300E73EB9 /* SDWebImage */,
 				32A288431B93E2AC006DC949 /* RESideMenu */,
@@ -3055,12 +3293,14 @@
 				323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */,
 				8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
+				322D25B11C32B93A00509EAD /* 圈圈加载0006.png in Resources */,
 				2EB87D321C17FAE4001CBF3D /* UMSocialSDKResourcesNew.bundle in Resources */,
 				32746E1E1B74A22000816208 /* icon-mimaxiugai.png in Resources */,
 				3271EF101BFACF3900EDF55E /* XiangQingView.xib in Resources */,
 				3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */,
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
+				322D25BD1C32B93A00509EAD /* 圈圈加载0018.png in Resources */,
 				3219D2251C31113000619A55 /* wxkuaizhao.png in Resources */,
 				2E5600941C2D496E000AFB39 /* loading动画0025.png in Resources */,
 				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
@@ -3075,21 +3315,25 @@
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
+				322D25BF1C32B93A00509EAD /* 圈圈加载0020.png in Resources */,
 				2E5600991C2D496E000AFB39 /* loading动画003.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
 				3274C18A1C07129E00641C4E /* refundSuccessful.png in Resources */,
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
+				322D257E1C32B92000509EAD /* songshou.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32D2B78C1BDDF41C00603FCE /* address_icon.png in Resources */,
 				2E5600B51C2D496E000AFB39 /* loading动画0055.png in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
 				32DE21B81BF184A200999ECA /* childIcon.png in Resources */,
 				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				321928DF1BDB7EB8004EA6A7 /* setting.png in Resources */,
+				322D25B21C32B93A00509EAD /* 圈圈加载0007.png in Resources */,
 				2E5600981C2D496E000AFB39 /* loading动画0029.png in Resources */,
 				32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */,
 				2E5600931C2D496E000AFB39 /* loading动画0024.png in Resources */,
@@ -3105,6 +3349,7 @@
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
+				322D25D01C32B93A00509EAD /* 圈圈加载0037.png in Resources */,
 				8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */,
 				325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */,
 				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
@@ -3114,14 +3359,19 @@
 				323A056E1C0C307700F56EAB /* WuliuCompanyController.xib in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
 				2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */,
+				322D25CE1C32B93A00509EAD /* 圈圈加载0035.png in Resources */,
 				2E5600A51C2D496E000AFB39 /* loading动画0040.png in Resources */,
 				2EB87D3E1C17FAE4001CBF3D /* ios-social-sdk-login-detail.html in Resources */,
+				322D25BB1C32B93A00509EAD /* 圈圈加载0016.png in Resources */,
 				2E56009B1C2D496E000AFB39 /* loading动画0031.png in Resources */,
 				2E5600AA1C2D496E000AFB39 /* loading动画0045.png in Resources */,
+				322D25B91C32B93A00509EAD /* 圈圈加载0014.png in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
 				2E5600C51C2D496E000AFB39 /* loading动画007.png in Resources */,
 				32746E0C1B74A22000816208 /* font-xinpin.png in Resources */,
+				322D25B01C32B93A00509EAD /* 圈圈加载0005.png in Resources */,
 				2E07A8091C3104E300C6F1B8 /* sr_refresh.png in Resources */,
+				322D25AC1C32B93A00509EAD /* 圈圈加载0001.png in Resources */,
 				2E5600BA1C2D496E000AFB39 /* loading动画006.png in Resources */,
 				3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */,
 				321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */,
@@ -3151,10 +3401,12 @@
 				2E56008B1C2D496E000AFB39 /* loading动画0017.png in Resources */,
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
 				2E5600AD1C2D496E000AFB39 /* loading动画0048.png in Resources */,
+				322D25D51C32B93A00509EAD /* 圈圈加载0042.png in Resources */,
 				2E5600C81C2D496E000AFB39 /* loading动画0072.png in Resources */,
 				328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */,
 				32703F1D1BEB5D39002AFC6D /* Icon-60@2x.png in Resources */,
 				2E5600CB1C2D496E000AFB39 /* loading动画0075.png in Resources */,
+				322D25C41C32B93A00509EAD /* 圈圈加载0025.png in Resources */,
 				2E5600A41C2D496E000AFB39 /* loading动画004.png in Resources */,
 				32703F1C1BEB5D39002AFC6D /* Icon-40@2x.png in Resources */,
 				32DE21C71BF1DE2A00999ECA /* shareIcon.png in Resources */,
@@ -3173,33 +3425,42 @@
 				2E5600CA1C2D496E000AFB39 /* loading动画0074.png in Resources */,
 				32EC426A1BE8AFB8009E5FA2 /* gouwucheicon2.png in Resources */,
 				2E5600C21C2D496E000AFB39 /* loading动画0067.png in Resources */,
+				322D25C61C32B93A00509EAD /* 圈圈加载0027.png in Resources */,
 				32746E2F1B74A22000816208 /* icon_loading.gif in Resources */,
 				323D66771C27921F00A2B955 /* retina_HD4.7@2x.png in Resources */,
 				32746E1F1B74A22000816208 /* icon-qiehuanzhanghao.png in Resources */,
 				32FF9A2C1B9FDBEC0001F314 /* TuihuoCollectionCell.xib in Resources */,
+				322D25D41C32B93A00509EAD /* 圈圈加载0041.png in Resources */,
 				32746E301B74A22000816208 /* info-bg.png in Resources */,
 				2EB87D3F1C17FAE4001CBF3D /* ios-social-sdk-login-quick.html in Resources */,
+				322D25BC1C32B93A00509EAD /* 圈圈加载0017.png in Resources */,
 				3274C17C1C0592A900641C4E /* shareIconImage2.png in Resources */,
 				32F2E9591C128E3700A98EA3 /* ios8_retina_HD5.5.png in Resources */,
 				3274C17A1C05847C00641C4E /* EmptyAddressView.xib in Resources */,
+				322D25C71C32B93A00509EAD /* 圈圈加载0028.png in Resources */,
 				2E5600B11C2D496E000AFB39 /* loading动画0051.png in Resources */,
 				2E56008C1C2D496E000AFB39 /* loading动画0018.png in Resources */,
 				2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				2EB87D3C1C17FAE4001CBF3D /* ios-social-sdk-comment-quick.html in Resources */,
+				322D25BA1C32B93A00509EAD /* 圈圈加载0015.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				32E6BC141BEC762B0036F338 /* SettingViewController.xib in Resources */,
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
+				322D25D31C32B93A00509EAD /* 圈圈加载0040.png in Resources */,
 				2E5600B31C2D496E000AFB39 /* loading动画0053.png in Resources */,
 				2E5600C41C2D496E000AFB39 /* loading动画0069.png in Resources */,
 				325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */,
+				322D25CB1C32B93A00509EAD /* 圈圈加载0032.png in Resources */,
 				32EC42661BE8A8C1009E5FA2 /* zhengpin.png in Resources */,
 				323B9C631BDDB5FC0060BFC1 /* back_image.png in Resources */,
 				32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */,
-				327F80D31B95A60900EDDF5B /* MJRefresh.bundle in Resources */,
 				2E5600A61C2D496E000AFB39 /* loading动画0041.png in Resources */,
+				322D25AD1C32B93A00509EAD /* 圈圈加载0002.png in Resources */,
+				322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
+				322D25AE1C32B93A00509EAD /* 圈圈加载0003.png in Resources */,
 				2E5600D51C2E6418000AFB39 /* run.gif in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
 				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
@@ -3215,6 +3476,7 @@
 				2E5600C31C2D496E000AFB39 /* loading动画0068.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
+				322D25B51C32B93A00509EAD /* 圈圈加载0010.png in Resources */,
 				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				2E5600CD1C2D496E000AFB39 /* loading动画0077.png in Resources */,
 				2E5600B71C2D496E000AFB39 /* loading动画0057.png in Resources */,
@@ -3222,6 +3484,7 @@
 				323A05691C0BFB7700F56EAB /* FillWuliuController.xib in Resources */,
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				323D66751C27921F00A2B955 /* ios7@2x.png in Resources */,
+				322D25C91C32B93A00509EAD /* 圈圈加载0030.png in Resources */,
 				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				2E5600BE1C2D496E000AFB39 /* loading动画0063.png in Resources */,
 				2E56009C1C2D496E000AFB39 /* loading动画0032.png in Resources */,
@@ -3234,10 +3497,12 @@
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				2E5600BC1C2D496E000AFB39 /* loading动画0061.png in Resources */,
 				2E5600C71C2D496E000AFB39 /* loading动画0071.png in Resources */,
+				322D25C81C32B93A00509EAD /* 圈圈加载0029.png in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				2E5600891C2D496E000AFB39 /* loading动画0015.png in Resources */,
 				3284A2431BFC4C4400D0F0D0 /* CameraImage.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
+				322D25BE1C32B93A00509EAD /* 圈圈加载0019.png in Resources */,
 				32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
 				2E72B3F11C1BB9C700D452E0 /* shareQQSpacing.png in Resources */,
@@ -3248,18 +3513,22 @@
 				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
 				2E5600B61C2D496E000AFB39 /* loading动画0056.png in Resources */,
 				32FE08851BF492C50072CCEC /* FooterView.xib in Resources */,
+				322D25B31C32B93A00509EAD /* 圈圈加载0008.png in Resources */,
 				32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */,
 				32E4D5361B9FCFB1001230F4 /* JiFenCollectionCell.xib in Resources */,
 				32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */,
 				323D66761C27921F00A2B955 /* ios8_retina_HD5.5@3x.png in Resources */,
 				2E5600AB1C2D496E000AFB39 /* loading动画0046.png in Resources */,
 				2EB87D431C17FAE4001CBF3D /* ios-social-sdk-socialbar.html in Resources */,
+				322D25B41C32B93A00509EAD /* 圈圈加载0009.png in Resources */,
 				3274C1701C03FC7400641C4E /* VerifyPhoneViewController.xib in Resources */,
 				32746E0E1B74A22000816208 /* icon-daishouhuo.png in Resources */,
 				3247FDBA1C00217900C6631D /* JifenReusableView.xib in Resources */,
 				8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */,
 				8E9665771C0599CD001CF18A /* right_button.png in Resources */,
+				322D25C31C32B93A00509EAD /* 圈圈加载0024.png in Resources */,
 				2E5600A01C2D496E000AFB39 /* loading动画0036.png in Resources */,
+				322D25C01C32B93A00509EAD /* 圈圈加载0021.png in Resources */,
 				2E56008F1C2D496E000AFB39 /* loading动画0020.png in Resources */,
 				2E5600A91C2D496E000AFB39 /* loading动画0044.png in Resources */,
 				2EB87D361C17FAE4001CBF3D /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -3273,6 +3542,7 @@
 				2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */,
 				2EB87D391C17FAE4001CBF3D /* iOS-social-analytics-releasenote.html in Resources */,
 				3274C1761C055FEA00641C4E /* EmptyCartView.xib in Resources */,
+				322D25CF1C32B93A00509EAD /* 圈圈加载0036.png in Resources */,
 				32F2E95B1C128E3700A98EA3 /* retina4.png in Resources */,
 				32CDC9471BD2028F00EF5FA6 /* profiles.png in Resources */,
 				321928E81BDB7EB8004EA6A7 /* waitsend.png in Resources */,
@@ -3304,10 +3574,12 @@
 				32746E261B74A22000816208 /* icon-shengyu4.png in Resources */,
 				3249B9861B6F381F0086D030 /* PersonCenterViewController1.xib in Resources */,
 				2EB87D2C1C17FAE4001CBF3D /* UMSCommentInputControlleriPad.xib in Resources */,
+				322D25C21C32B93A00509EAD /* 圈圈加载0023.png in Resources */,
 				2E5600881C2D496E000AFB39 /* loading动画0014.png in Resources */,
 				2EB87D401C17FAE4001CBF3D /* ios-social-sdk-shake.html in Resources */,
 				32F2E9581C128E3700A98EA3 /* ios7.png in Resources */,
 				2E5600A11C2D496E000AFB39 /* loading动画0037.png in Resources */,
+				322D25CC1C32B93A00509EAD /* 圈圈加载0033.png in Resources */,
 				2E5600B21C2D496E000AFB39 /* loading动画0052.png in Resources */,
 				32746E151B74A22000816208 /* icon-gerenzhongxin.png in Resources */,
 				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
@@ -3316,6 +3588,7 @@
 				2EB87D2B1C17FAE4001CBF3D /* UMSCommentInputController.xib in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
 				8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */,
+				322D25D21C32B93A00509EAD /* 圈圈加载0039.png in Resources */,
 				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				2E56009E1C2D496E000AFB39 /* loading动画0034.png in Resources */,
@@ -3329,19 +3602,23 @@
 				2E5600971C2D496E000AFB39 /* loading动画0028.png in Resources */,
 				325B1E881BE4B2A00027B3E3 /* CartViewController.xib in Resources */,
 				3274C1881C06F12C00641C4E /* RefundDetailsViewController.xib in Resources */,
+				322D25D11C32B93A00509EAD /* 圈圈加载0038.png in Resources */,
 				3274C17F1C05962200641C4E /* emptyJifenIcon.png in Resources */,
 				2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
+				322D25CA1C32B93A00509EAD /* 圈圈加载0031.png in Resources */,
 				323D667C1C2799C200A2B955 /* retina7@2x.png in Resources */,
 				2E5600851C2D496E000AFB39 /* loading动画0011.png in Resources */,
 				324EA2F61C30E03800E46557 /* placeHolderImage.png in Resources */,
 				32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */,
+				322D25C11C32B93A00509EAD /* 圈圈加载0022.png in Resources */,
 				2E5600B91C2D496E000AFB39 /* loading动画0059.png in Resources */,
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
+				322D25CD1C32B93A00509EAD /* 圈圈加载0034.png in Resources */,
 				8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
 				323D66781C27921F00A2B955 /* retina4@2x.png in Resources */,
@@ -3351,6 +3628,7 @@
 				3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */,
 				8E9665731C04B021001CF18A /* SetPasswordViewController.xib in Resources */,
 				32746E101B74A22000816208 /* icon-dizhiguanli.png in Resources */,
+				322D25D61C32B93A00509EAD /* 圈圈加载0043.png in Resources */,
 				324EA2F71C30E03800E46557 /* placeHolderPosterImage.png in Resources */,
 				2E5600871C2D496E000AFB39 /* loading动画0013.png in Resources */,
 				321928EE1BDB8599004EA6A7 /* refund.png in Resources */,
@@ -3358,12 +3636,17 @@
 				32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */,
 				2EB87D3D1C17FAE4001CBF3D /* ios-social-sdk-like.html in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
+				322D257F1C32B92000509EAD /* xiala.png in Resources */,
 				2E5600B01C2D496E000AFB39 /* loading动画0050.png in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */,
 				2E5600901C2D496E000AFB39 /* loading动画0021.png in Resources */,
 				321928DC1BDB7EB8004EA6A7 /* score.png in Resources */,
+				322D25B61C32B93A00509EAD /* 圈圈加载0011.png in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
+				322D25C51C32B93A00509EAD /* 圈圈加载0026.png in Resources */,
+				322D25711C32B66100509EAD /* MJRefresh.bundle in Resources */,
+				322D25B81C32B93A00509EAD /* 圈圈加载0013.png in Resources */,
 				2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				2EB87D421C17FAE4001CBF3D /* ios-social-sdk-share-quick.html in Resources */,
@@ -3372,6 +3655,7 @@
 				3247FDB51BFF1BEA00C6631D /* YHQHeadView.xib in Resources */,
 				32746E371B74A22000816208 /* yifu2.png in Resources */,
 				32746E191B74A22000816208 /* icon-jia.png in Resources */,
+				322D25D71C32B93A00509EAD /* 圈圈加载0044.png in Resources */,
 				3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3435,7 +3719,6 @@
 				329E8A461BB574B0008AA0B6 /* info-bg.png in Resources */,
 				329E8A471BB574B0008AA0B6 /* icon-radio-select.png in Resources */,
 				329E8A481BB574B0008AA0B6 /* AddressTableCell.xib in Resources */,
-				329E8A4B1BB574B0008AA0B6 /* MJRefresh.bundle in Resources */,
 				329E8A4D1BB574B0008AA0B6 /* icon-shouye.png in Resources */,
 				329E8A4F1BB574B0008AA0B6 /* TuihuoViewController.xib in Resources */,
 				329E8A511BB574B0008AA0B6 /* icon-fanhui.png in Resources */,
@@ -3485,7 +3768,6 @@
 				32746DD31B74884B00816208 /* DetailsModel.m in Sources */,
 				3282F28B1B6B5B1300E73EB9 /* UIImage+WebP.m in Sources */,
 				8E0044EA1BFC5B9E00AFC1DF /* ChangeNicknameViewController.m in Sources */,
-				327F80D91B95A60900EDDF5B /* UIScrollView+MJRefresh.m in Sources */,
 				32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */,
 				32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */,
 				321952C21BFC7AF800AA0AB8 /* QNDomain.m in Sources */,
@@ -3499,26 +3781,29 @@
 				3218132C1BD76CCC00D3D036 /* NSArray+Log.m in Sources */,
 				321952961BFC7A8D00AA0AB8 /* QNSessionManager.m in Sources */,
 				3219529A1BFC7A8D00AA0AB8 /* QNFileRecorder.m in Sources */,
+				322D25751C32B66100509EAD /* UIView+MJExtension.m in Sources */,
 				2E77F5651C1BF7140020C014 /* YoumengShare.m in Sources */,
 				3219528C1BFC7A8D00AA0AB8 /* QNAsyncRun.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
+				322D25681C32B66100509EAD /* MJRefreshAutoGifFooter.m in Sources */,
 				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
 				321952951BFC7A8D00AA0AB8 /* QNResponseInfo.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
+				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
-				327F80D41B95A60900EDDF5B /* MJRefreshBaseView.m in Sources */,
-				327F80D81B95A60900EDDF5B /* UIScrollView+MJExtension.m in Sources */,
 				321952981BFC7A8D00AA0AB8 /* QNUserAgent.m in Sources */,
 				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,
 				32F3D96E1B6CCA41008530BA /* Reachability.m in Sources */,
 				32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */,
+				322D25661C32B66100509EAD /* MJRefreshFooter.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
 				326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */,
 				321952911BFC7A8D00AA0AB8 /* QNSystem.m in Sources */,
+				322D256A1C32B66100509EAD /* MJRefreshAutoStateFooter.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
 				32DE21CA1BF1E62600999ECA /* UIImage+UIImageExt.m in Sources */,
 				32F3D9691B6CCA41008530BA /* AFSecurityPolicy.m in Sources */,
@@ -3530,10 +3815,10 @@
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
-				327F80DA1B95A60900EDDF5B /* UIView+MJExtension.m in Sources */,
 				321952921BFC7A8D00AA0AB8 /* QNUrlSafeBase64.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,
 				32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */,
+				322D25721C32B66100509EAD /* MJRefreshConst.m in Sources */,
 				321952971BFC7A8D00AA0AB8 /* QNStats.m in Sources */,
 				3282F2801B6B5B1300E73EB9 /* NSData+ImageContentType.m in Sources */,
 				3249B98A1B6F38410086D030 /* PersonCenterViewController2.m in Sources */,
@@ -3561,9 +3846,9 @@
 				32A88E151B86C840003501EF /* DingdanModel.m in Sources */,
 				321952901BFC7A8D00AA0AB8 /* QNPHAssetFile.m in Sources */,
 				32E6BC1E1BEC95F90036F338 /* BoundingNewPhoneController.m in Sources */,
-				327F80D61B95A60900EDDF5B /* MJRefreshFooterView.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */,
+				322D256E1C32B66100509EAD /* MJRefreshGifHeader.m in Sources */,
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
@@ -3575,10 +3860,10 @@
 				3282F28C1B6B5B1300E73EB9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				321952CA1BFC7AF800AA0AB8 /* QNDes.m in Sources */,
 				3219528E1BFC7A8D00AA0AB8 /* QNEtag.m in Sources */,
+				322D25701C32B66100509EAD /* MJRefreshStateHeader.m in Sources */,
 				321952991BFC7A8D00AA0AB8 /* QNReachability.m in Sources */,
 				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
 				3219528B1BFC7A8D00AA0AB8 /* QNALAssetFile.m in Sources */,
-				327F80D51B95A60900EDDF5B /* MJRefreshConst.m in Sources */,
 				321952931BFC7A8D00AA0AB8 /* QNDns.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				3219528D1BFC7A8D00AA0AB8 /* QNCrc32.m in Sources */,
@@ -3586,11 +3871,15 @@
 				3219529F1BFC7A8D00AA0AB8 /* QNUploadOption.m in Sources */,
 				3282F2821B6B5B1300E73EB9 /* SDWebImageCompat.m in Sources */,
 				2E77F5BB1C1EBBA90020C014 /* SendMessageToWeibo.m in Sources */,
+				322D256D1C32B66100509EAD /* MJRefreshBackStateFooter.m in Sources */,
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				322D25651C32B66100509EAD /* MJRefreshComponent.m in Sources */,
 				2E07A80B1C3104E300C6F1B8 /* SRRefreshView.m in Sources */,
+				322D25731C32B66100509EAD /* UIScrollView+MJExtension.m in Sources */,
 				321952941BFC7A8D00AA0AB8 /* QNHttpManager.m in Sources */,
+				322D25691C32B66100509EAD /* MJRefreshAutoNormalFooter.m in Sources */,
 				321952C61BFC7AF800AA0AB8 /* QNDnspodFree.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
@@ -3605,8 +3894,11 @@
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
+				322D25641C32B66100509EAD /* MJRefreshBackFooter.m in Sources */,
+				322D256F1C32B66100509EAD /* MJRefreshNormalHeader.m in Sources */,
 				32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */,
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
+				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
@@ -3630,17 +3922,19 @@
 				32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
+				322D257B1C32B7C700509EAD /* MJPullGifHeader.m in Sources */,
+				322D25741C32B66100509EAD /* UIScrollView+MJRefresh.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
-				327F80D71B95A60900EDDF5B /* MJRefreshHeaderView.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
 				323A056D1C0C307700F56EAB /* WuliuCompanyController.m in Sources */,
 				8E9665711C04AD43001CF18A /* SetPasswordViewController.m in Sources */,
+				322D256B1C32B66100509EAD /* MJRefreshBackGifFooter.m in Sources */,
 				3271EF0E1BFACE9900EDF55E /* XiangQingViewController.m in Sources */,
 				321952C91BFC7AF800AA0AB8 /* QNResolver.m in Sources */,
 				32CE91C01B7C37D100CA67C3 /* AddAdressViewController.m in Sources */,
@@ -3652,6 +3946,7 @@
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
+				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
 				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
@@ -3673,7 +3968,6 @@
 			files = (
 				329E89841BB574B0008AA0B6 /* DetailsModel.m in Sources */,
 				329E89861BB574B0008AA0B6 /* UIImage+WebP.m in Sources */,
-				329E89881BB574B0008AA0B6 /* UIScrollView+MJRefresh.m in Sources */,
 				329E89891BB574B0008AA0B6 /* PromoteModel.m in Sources */,
 				329E898B1BB574B0008AA0B6 /* LiJiBuyModel.m in Sources */,
 				329E898C1BB574B0008AA0B6 /* AddressTableCell.m in Sources */,
@@ -3685,8 +3979,6 @@
 				329E89931BB574B0008AA0B6 /* Head2View.m in Sources */,
 				329E89941BB574B0008AA0B6 /* PersonCenterViewController1.m in Sources */,
 				329E89951BB574B0008AA0B6 /* UIButton+WebCache.m in Sources */,
-				329E89961BB574B0008AA0B6 /* MJRefreshBaseView.m in Sources */,
-				329E89971BB574B0008AA0B6 /* UIScrollView+MJExtension.m in Sources */,
 				329E89981BB574B0008AA0B6 /* MMCollectionController.m in Sources */,
 				329E899A1BB574B0008AA0B6 /* XiangQingViewController.m in Sources */,
 				329E899B1BB574B0008AA0B6 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -3697,7 +3989,6 @@
 				329E89A21BB574B0008AA0B6 /* AddressViewController.m in Sources */,
 				329E89A31BB574B0008AA0B6 /* JiFenCollectionCell.m in Sources */,
 				329E89A41BB574B0008AA0B6 /* MMCartsView.m in Sources */,
-				329E89A51BB574B0008AA0B6 /* UIView+MJExtension.m in Sources */,
 				329E89A61BB574B0008AA0B6 /* SDImageCache.m in Sources */,
 				329E89A71BB574B0008AA0B6 /* NSData+ImageContentType.m in Sources */,
 				329E89A81BB574B0008AA0B6 /* PersonCenterViewController2.m in Sources */,
@@ -3711,7 +4002,6 @@
 				329E89B31BB574B0008AA0B6 /* SDWebImageDecoder.m in Sources */,
 				329E89B41BB574B0008AA0B6 /* CartModel.m in Sources */,
 				329E89B51BB574B0008AA0B6 /* DingdanModel.m in Sources */,
-				329E89B61BB574B0008AA0B6 /* MJRefreshFooterView.m in Sources */,
 				329E89B71BB574B0008AA0B6 /* AFHTTPSessionManager.m in Sources */,
 				329E89B91BB574B0008AA0B6 /* DingDanXiangQingModel.m in Sources */,
 				329E89BB1BB574B0008AA0B6 /* YouHuiQuanViewController.m in Sources */,
@@ -3719,7 +4009,6 @@
 				329E89BD1BB574B0008AA0B6 /* Head1View.m in Sources */,
 				329E89BF1BB574B0008AA0B6 /* UIImageView+HighlightedWebCache.m in Sources */,
 				329E89C11BB574B0008AA0B6 /* TousuViewController.m in Sources */,
-				329E89C21BB574B0008AA0B6 /* MJRefreshConst.m in Sources */,
 				329E89C31BB574B0008AA0B6 /* SDWebImageDownloader.m in Sources */,
 				329E89C51BB574B0008AA0B6 /* CollectionModel.m in Sources */,
 				329E89C61BB574B0008AA0B6 /* SDWebImageCompat.m in Sources */,
@@ -3755,7 +4044,6 @@
 				329E89E91BB574B0008AA0B6 /* MMDetailsViewController.m in Sources */,
 				329E89EA1BB574B0008AA0B6 /* BuyCartsView.m in Sources */,
 				329E89EB1BB574B0008AA0B6 /* PosterModel.m in Sources */,
-				329E89EC1BB574B0008AA0B6 /* MJRefreshHeaderView.m in Sources */,
 				329E89EE1BB574B0008AA0B6 /* PeopleModel.m in Sources */,
 				329E89EF1BB574B0008AA0B6 /* AddAdressViewController.m in Sources */,
 				329E89F01BB574B0008AA0B6 /* JifenViewController.m in Sources */,
