@@ -13,7 +13,7 @@
 #import "DetailsModel.h"
 #import "CartViewController.h"
 #import "PromoteModel.h"
-
+#import "MJPullGifHeader.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 
@@ -111,6 +111,13 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.view addSubview:self.containerView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.childCollectionView.mj_header = header;
+    [self.childCollectionView.mj_header beginRefreshing];
+
  
 }
 
@@ -152,7 +159,14 @@ static NSString * ksimpleCell = @"simpleCell";
     
 }
 
+- (void)stopRefresh{
+    [self.childCollectionView.mj_header endRefreshing];
+    
+}
+
 - (void)fatchedChildListData:(NSData *)responseData{
+    
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (json == nil) {

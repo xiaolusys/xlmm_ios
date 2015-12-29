@@ -20,6 +20,7 @@
 #import "MMCollectionController.h"
 #import "NSString+URL.h"
 #import "PostersViewController.h"
+#import "MJPullGifHeader.h"
 
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
@@ -104,6 +105,12 @@ static NSString *khead2View = @"head2View";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.myCollectionView.mj_header = header;
+    [self.myCollectionView.mj_header beginRefreshing];
+
     
 }
 
@@ -261,7 +268,7 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
-        
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         
     }
     
@@ -320,11 +327,18 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         
     }
     
     
 }
+- (void)stopRefresh{
+    [self.myCollectionView.mj_header endRefreshing];
+    
+}
+
+
 
 
 

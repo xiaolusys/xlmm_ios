@@ -335,7 +335,7 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
-        [self.myCollectionView.mj_header endRefreshing];
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         
 
     }
@@ -404,10 +404,15 @@ static NSString *khead2View = @"head2View";
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
-        [self.myCollectionView.mj_header endRefreshing];
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
 
     }
     
+    
+}
+
+- (void)stopRefresh{
+    [self.myCollectionView.mj_header endRefreshing];
     
 }
 

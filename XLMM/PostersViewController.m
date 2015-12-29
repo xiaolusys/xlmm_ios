@@ -13,7 +13,7 @@
 #import "DetailsModel.h"
 #import "CartViewController.h"
 #import "PromoteModel.h"
-
+#import "MJPullGifHeader.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 
@@ -130,6 +130,13 @@ static NSString * ksimpleCell = @"simpleCell";
     // [self downloadData];
    // [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backBtnClicked:)];
     [self createInfo];
+    
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.childCollectionView.mj_header = header;
+    [self.childCollectionView.mj_header beginRefreshing];
+
 }
 
 - (void)createInfo{
@@ -374,7 +381,14 @@ static NSString * ksimpleCell = @"simpleCell";
     NSLog(@"url = %@", self.urlString);
 }
 
+- (void)stopRefresh{
+    [self.childCollectionView.mj_header endRefreshing];
+
+}
+
 - (void)fatchedChildListData:(NSData *)responseData{
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
+    
     NSError *error;
     //NSLog(@"responsedata = %@", responseData);
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
