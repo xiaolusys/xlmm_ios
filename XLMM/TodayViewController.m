@@ -43,6 +43,8 @@ static NSString *khead2View = @"head2View";
     
     NSInteger childListNumber;
     NSInteger ladyListNumber;
+    
+    
 
     NSTimer *theTimer;
 
@@ -57,6 +59,8 @@ static NSString *khead2View = @"head2View";
     CGFloat oldScrollViewTop;
     
     SRRefreshView   *_slimeView;
+    
+    NSString *nextUrl;
 }
 
 @property (nonatomic, retain) UICollectionView *myCollectionView;
@@ -160,6 +164,24 @@ static NSString *khead2View = @"head2View";
 
 - (void)loadMore
 {
+    NSLog(@"lodeMore url = %@", nextUrl);
+    if ([nextUrl isKindOfClass:[NSString class]]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
+            [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
+            
+        });
+    } else {
+        [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
+    }
+    
+   
+    
+    [self performSelector:@selector(stopFootRefresh) withObject:nil afterDelay:2];
+}
+
+- (void)stopFootRefresh{
+    [self.myCollectionView.mj_footer endRefreshing];
 }
 
 
@@ -184,6 +206,9 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.mj_header = header;
     [self.myCollectionView.mj_header beginRefreshing];
     
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+  //  [footer setAutomaticallyHidden:YES];
+    self.myCollectionView.mj_footer = footer;
     
     
     
@@ -280,9 +305,11 @@ static NSString *khead2View = @"head2View";
 
 
 - (void)downloadData123{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging.json?page_size=10",Root_URL];
+    NSLog(@"string = %@", urlStr);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_PROMOTE_URL]];
-        [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+        [self performSelectorOnMainThread:@selector(fetchedPromotePageData:)withObject:data waitUntilDone:YES];
         
     });
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -342,6 +369,82 @@ static NSString *khead2View = @"head2View";
     
     
 }
+
+- (void)fetchedPromoteMorePageData:(NSData *)data{
+    if (data == nil) {
+        
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"err = %@", error);
+    NSLog(@"promote = %@", promoteDic);
+    
+    nextUrl = [promoteDic objectForKey:@"next"];
+    NSArray *results = [promoteDic objectForKey:@"results"];
+    
+    
+    
+    for (NSDictionary *ladyInfo in results) {
+        
+        PromoteModel *model = [self fillModel:ladyInfo];
+        NSDictionary *category = model.category;
+        NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+        if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
+            [ladyDataArray addObject:model];
+        } else{
+            [childDataArray addObject:model];
+        }
+    }
+    NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
+    
+    [self.myCollectionView reloadData];
+
+}
+- (void)fetchedPromotePageData:(NSData *)data{
+    
+    [childDataArray removeAllObjects];
+    [ladyDataArray removeAllObjects];
+    if (data == nil) {
+        
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"err = %@", error);
+     NSLog(@"promote = %@", promoteDic);
+    
+    nextUrl = [promoteDic objectForKey:@"next"];
+    NSArray *results = [promoteDic objectForKey:@"results"];
+    
+   
+    
+    for (NSDictionary *ladyInfo in results) {
+        
+        PromoteModel *model = [self fillModel:ladyInfo];
+        NSDictionary *category = model.category;
+        NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+        if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
+            [ladyDataArray addObject:model];
+        } else{
+            [childDataArray addObject:model];
+        }
+    }
+    NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
+    
+    
+    step2 = YES;
+    
+    if (step1 && step2) {
+        step1 = NO;
+        step2 = NO;
+        [self.myCollectionView reloadData];
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
+        
+    }
+
+}
+
 - (void)fetchedPromoteData:(NSData *)data{
     NSError *error;
     [childDataArray removeAllObjects];
@@ -488,6 +591,10 @@ static NSString *khead2View = @"head2View";
 #pragma mark --UICollectionViewDelegate--
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    if (childDataArray.count == 0) {
+        return 2;
+    }
     return 3;
 }
 
@@ -501,9 +608,7 @@ static NSString *khead2View = @"head2View";
         return ladyDataArray.count;
    
     } else if (section == 2){
-        if (childDataArray.count == 0) {
-            return 2;
-        }
+        
         return childDataArray.count;
         
     
