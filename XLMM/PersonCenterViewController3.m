@@ -19,6 +19,7 @@
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
+#import "MJPullGifHeader.h"
 
 
 
@@ -46,11 +47,7 @@
 {
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    if (_isFirst) {
-        //集成刷新控件
-        
-        _isFirst = NO;
-    }
+    
     
 }
 
@@ -69,18 +66,15 @@
     NSString *urlString = [diciontary objectForKey:@"next"];
     if ([urlString class] == [NSNull class]) {
         NSLog(@"no more");
+        if ([self.quanbuCollectionView.mj_header isRefreshing]) {
+            [self.quanbuCollectionView.mj_header endRefreshing];
+            
+        }
       
         [alterView show];
-        
-        
-        
         return;
     }
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDingdanData:)];
-    
-    
-
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -121,6 +115,25 @@
     
     self.quanbuCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     [self downloadData];
+    
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.quanbuCollectionView.mj_header = header;
+    [self.quanbuCollectionView.mj_header beginRefreshing];
+    
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          
+            [self loadMore];
+            [self.quanbuCollectionView.mj_footer endRefreshing];
+        });
+    }];
+    footer.hidden = YES;
+    self.quanbuCollectionView.mj_footer = footer;
+    
+    
 }
 
 - (void)backBtnClicked:(UIButton *)button{
@@ -156,6 +169,10 @@
 }
 
 - (void)fetchedDingdanData:(NSData *)responsedata{
+    if ([self.quanbuCollectionView.mj_header isRefreshing]) {
+        [self.quanbuCollectionView.mj_header endRefreshing];
+
+    }
     NSError *error = nil;
     diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
     NSLog(@"array = %@", diciontary);

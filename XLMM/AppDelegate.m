@@ -330,6 +330,8 @@
     
 }
 
+
+
 -(void)getAccess_token
 {
     
@@ -456,8 +458,8 @@
 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-//    return [WXApi handleOpenURL:url delegate:self];;
-    return [UMSocialSnsService handleOpenURL:nil];
+   return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+  //  return [UMSocialSnsService handleOpenURL:url];
 }
 
 
@@ -486,7 +488,8 @@
                    NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                }
            }];
-    return [UMSocialSnsService handleOpenURL:url];;
+//    return [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];;
 
 }
     
