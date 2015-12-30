@@ -108,10 +108,10 @@
 //    
 //    [loadView runGifForImage];
     
-    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
-//    loadView.alpha = 0.5;
-    [self.view addSubview:loadView];
-    [MMLoadingAnimation showLoadingView];
+//    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
+////    loadView.alpha = 0.5;
+//    [self.view addSubview:loadView];
+//    [MMLoadingAnimation showLoadingView];
 
 }
 
@@ -167,7 +167,7 @@
     if (data == nil) {
       
     }
-    [MMLoadingAnimation dismissLoadingView];
+    //[MMLoadingAnimation dismissLoadingView];
     NSError *error;
     
     [self.dataArray removeAllObjects];
@@ -349,7 +349,7 @@
         
        
         
-        self.navigationController.navigationBarHidden = NO;
+//        self.navigationController.navigationBarHidden = NO;
         
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
