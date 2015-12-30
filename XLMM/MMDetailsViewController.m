@@ -645,19 +645,21 @@
         
         __block UIView *view;
         
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 115, 35)];
         view.center = self.view.center;
+        view.alpha = 0.6;
+        
         [UIView animateWithDuration:3.0 animations:^{
             
             view.backgroundColor = [UIColor blackColor];
             view.alpha = 0;
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 280, 30)];
-            label.text = @"请选择正确的商品尺寸";
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 105, 35)];
+            label.text = @"请选择 尺码";
             label.textColor = [UIColor whiteColor];
             label.textAlignment = NSTextAlignmentCenter;
-            label.font = [UIFont systemFontOfSize:24];
+            label.font = [UIFont systemFontOfSize:14];
             [view addSubview:label];
-            view.layer.cornerRadius = 6;
+            view.layer.cornerRadius = 4;
             [self.view addSubview:view];
           //  NSLog(@"tips");
         } completion:^(BOOL finished) {

@@ -27,9 +27,11 @@
     // 设置即将刷新状态的动画图片（一松开就会刷新的状态）
 
     [self setImages:@[[UIImage imageNamed:@"songshou.png"]] forState:MJRefreshStatePulling];
-    
+    self.stateLabel.font = [UIFont systemFontOfSize:10];
+  //  self.stateLabel.textAlignment = NSTextAlignmentLeft;
     // 设置正在刷新状态的动画图片
-    [self setImages:idleImages forState:MJRefreshStateRefreshing];
+    
+    [self setImages:idleImages duration:1.0 forState:MJRefreshStateRefreshing];
 }
 
 

@@ -144,13 +144,13 @@ static NSString * ksimpleCell = @"simpleCell";
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = self.titleName;
     label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:20];
+    label.font = [UIFont systemFontOfSize:14];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image.png"]];
-    imageView.frame = CGRectMake(-4, 14, 22, 22);
+    imageView.frame = CGRectMake(-4, 14, 16, 16);
     [button addSubview:imageView];
     [button addTarget:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -162,7 +162,7 @@ static NSString * ksimpleCell = @"simpleCell";
     imageName = @"shareIconImage2.png";
     
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    imageView1.frame = CGRectMake(20, 10, 25, 25);
+    imageView1.frame = CGRectMake(20, 10, 20, 20);
     [button1 addSubview:imageView1];
     [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
