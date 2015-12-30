@@ -66,10 +66,10 @@
     NSString *urlString = [diciontary objectForKey:@"next"];
     if ([urlString class] == [NSNull class]) {
         NSLog(@"no more");
-        if ([self.quanbuCollectionView.mj_header isRefreshing]) {
-            [self.quanbuCollectionView.mj_header endRefreshing];
-            
-        }
+//        if ([self.quanbuCollectionView.mj_header isRefreshing]) {
+//            [self.quanbuCollectionView.mj_header endRefreshing];
+//            
+//        }
       
         [alterView show];
         return;
@@ -116,11 +116,11 @@
     self.quanbuCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
     [self downloadData];
     
-    
-    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    self.quanbuCollectionView.mj_header = header;
-    [self.quanbuCollectionView.mj_header beginRefreshing];
+//    
+//    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    header.lastUpdatedTimeLabel.hidden = YES;
+//    self.quanbuCollectionView.mj_header = header;
+//    [self.quanbuCollectionView.mj_header beginRefreshing];
     
     
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -131,6 +131,7 @@
         });
     }];
     footer.hidden = YES;
+    
     self.quanbuCollectionView.mj_footer = footer;
     
     
@@ -169,10 +170,10 @@
 }
 
 - (void)fetchedDingdanData:(NSData *)responsedata{
-    if ([self.quanbuCollectionView.mj_header isRefreshing]) {
-        [self.quanbuCollectionView.mj_header endRefreshing];
-
-    }
+//    if ([self.quanbuCollectionView.mj_header isRefreshing]) {
+//        [self.quanbuCollectionView.mj_header endRefreshing];
+//
+//    }
     NSError *error = nil;
     diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
     NSLog(@"array = %@", diciontary);

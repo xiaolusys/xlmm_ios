@@ -23,21 +23,21 @@
 
 - (void)createCouponValue{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
-    NSLog(@"urlString = %@", string);
+  //  NSLog(@"urlString = %@", string);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     if (data == nil) {
         _couponValue = 0;
         return;
     }
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
+   // NSLog(@"json = %@", json);
     
     if (json == nil) {
         _couponValue = 0;
         return;
     }
     _couponValue = [[json objectForKey:@"count"] integerValue];
-    NSLog(@"_couponValue = %ld", (long)self.couponValue);
+    //NSLog(@"_couponValue = %ld", (long)self.couponValue);
     
 }
 

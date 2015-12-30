@@ -30,11 +30,10 @@
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
-@property (nonatomic, copy) NSString *xiaomiToken;
-@property (nonatomic, copy) NSString *xiaomiUserId;
-@property (nonatomic, copy) NSString *xiaomiRegid;
 
-
+@property (nonatomic, copy) NSString *deviceToken;
+@property (nonatomic, copy) NSString *deviceUUID;
+@property (nonatomic, copy) NSString *miRegid;
 
 @end
 
@@ -186,7 +185,6 @@
 #pragma mark UIApplicationDelegate
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken{
-    [MiPushSDK bindDeviceToken:pToken];
     // 方式1
     
     NSMutableString *deviceTokenString1 = [NSMutableString string];
@@ -200,6 +198,12 @@
         [deviceTokenString1 appendFormat:@"%02x", bytes[i]&0x000000FF];
         
     }
+    self.deviceToken = deviceTokenString1;
+    self.deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    [MiPushSDK bindDeviceToken:pToken];
+
+    
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
@@ -223,13 +227,54 @@
     // 请求成功
 
     if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
-       // NSLog(@"data = %@", data);
-        self.xiaomiToken = [data objectForKey:@"token"];
-        self.xiaomiUserId = [data objectForKey:@"userId"];
+   
 
     } else if ([selector isEqualToString:@"bindDeviceToken:"]){
        NSLog(@"data = %@", data);
-        self.xiaomiRegid = [data objectForKey:@"regid"];
+        
+        
+        self.miRegid = [data objectForKey:@"regid"];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+        
+
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+
+        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
+        NSDictionary *parameters = @{@"platform":@"ios",
+                                     @"regid":self.miRegid,
+                                     @"device_id":self.deviceUUID,
+                                     @"ios_token":self.deviceToken
+                                     };
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:parameters forKey:@"MiPush"];
+        [defaults synchronize];
+        
+        NSLog(@"parameters = %@", parameters);
+        NSLog(@"urlStr = %@", urlString);
+        
+        [manager POST:urlString parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  //  NSError *error;
+                  NSLog(@"JSON: %@", responseObject);
+                  NSString *user_account = [responseObject objectForKey:@"user_account"];
+                  if ([user_account isEqualToString:@""]) {
+                      
+                  } else {
+                      NSLog(@"user_account = %@", user_account);
+                      [MiPushSDK setAccount:user_account];
+                  }
+               
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  
+                  
+              }];
+//
+        
     }
     
 
@@ -498,21 +543,21 @@
 
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 {
-    NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+  //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
 {
-    NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+   // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
 {
-    NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+   // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
 {
-    NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+   // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 @end
