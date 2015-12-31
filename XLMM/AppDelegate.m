@@ -27,9 +27,7 @@
 @property (nonatomic, strong) NSDictionary *tokenInfo;
 @property (nonatomic, strong) NSDictionary *userInfo;
 
-@property (nonatomic, copy) NSString *latestVersion;
-@property (nonatomic, copy) NSString *trackViewUrl1;
-@property (nonatomic, copy) NSString *trackName;
+
 
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *deviceUUID;
@@ -126,61 +124,11 @@
 
     
  
-    NSError *error = nil;
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-    [request setURL:url];
-    [request setHTTPMethod:@"GET"];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if (returnData == nil) {
-        return YES;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&error];
-    NSLog(@"appInfoDic = %@", appInfoDic);
-    if (error) {
-        NSLog(@"%@", error);
-        return YES;
-    }
-    NSArray *reluts = [appInfoDic objectForKey:@"results"];
-    if (![reluts count]) {
-        NSLog(@"reslut = nil");
-        return YES;
-    }
-    NSDictionary *infoDic = reluts[0];
-    
-    
-
-    self.latestVersion = [infoDic objectForKey:@"version"];
-    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
-    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
-    
-    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    double doubleCurrentVersion = [currentVersion doubleValue];
-    double doubleUpdateVersion = [self.latestVersion doubleValue];
-    
-    if (doubleCurrentVersion < doubleUpdateVersion) {
-        
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-                                           message:@"有新版本，是否升级！"
-                                          delegate: self
-                                 cancelButtonTitle:@"取消"
-                                 otherButtonTitles: @"升级", nil];
-        alert.tag = 1001;
-        [alert show];
-    }
-   
+      
     return YES;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1001) {
-        if (buttonIndex == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
-        }
-    }
-}
+
 
 #pragma mark UIApplicationDelegate
 
@@ -235,44 +183,44 @@
         
         self.miRegid = [data objectForKey:@"regid"];
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-        
-
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-
-        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
-        NSDictionary *parameters = @{@"platform":@"ios",
-                                     @"regid":self.miRegid,
-                                     @"device_id":self.deviceUUID,
-                                     @"ios_token":self.deviceToken
-                                     };
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:parameters forKey:@"MiPush"];
-        [defaults synchronize];
-        
-        NSLog(@"parameters = %@", parameters);
-        NSLog(@"urlStr = %@", urlString);
-        
-        [manager POST:urlString parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  //  NSError *error;
-                  NSLog(@"JSON: %@", responseObject);
-                  NSString *user_account = [responseObject objectForKey:@"user_account"];
-                  if ([user_account isEqualToString:@""]) {
-                      
-                  } else {
-                      NSLog(@"user_account = %@", user_account);
-                      [MiPushSDK setAccount:user_account];
-                  }
-               
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"Error: %@", error);
-                  
-                  
-              }];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//        
+//
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+//
+//        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
+//        NSDictionary *parameters = @{@"platform":@"ios",
+//                                     @"regid":self.miRegid,
+//                                     @"device_id":self.deviceUUID,
+//                                     @"ios_token":self.deviceToken
+//                                     };
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setObject:parameters forKey:@"MiPush"];
+//        [defaults synchronize];
+//        
+//        NSLog(@"parameters = %@", parameters);
+//        NSLog(@"urlStr = %@", urlString);
+//        
+//        [manager POST:urlString parameters:parameters
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  //  NSError *error;
+//                  NSLog(@"JSON: %@", responseObject);
+//                  NSString *user_account = [responseObject objectForKey:@"user_account"];
+//                  if ([user_account isEqualToString:@""]) {
+//                      
+//                  } else {
+//                      NSLog(@"user_account = %@", user_account);
+//                      [MiPushSDK setAccount:user_account];
+//                  }
+//               
+//                  
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  NSLog(@"Error: %@", error);
+//                  
+//                  
+//              }];
 //
         
     }

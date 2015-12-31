@@ -2064,6 +2064,9 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				324EA2F41C30E03800E46557 /* placeHolderImage.png */,
+				324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */,
+				324EA2F21C30DC3100E46557 /* default.png */,
 				322D25801C32B93A00509EAD /* 圈圈加载0001.png */,
 				322D25811C32B93A00509EAD /* 圈圈加载0002.png */,
 				322D25821C32B93A00509EAD /* 圈圈加载0003.png */,
@@ -2488,9 +2491,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				324EA2F41C30E03800E46557 /* placeHolderImage.png */,
-				324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */,
-				324EA2F21C30DC3100E46557 /* default.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,

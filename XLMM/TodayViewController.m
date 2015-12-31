@@ -35,7 +35,7 @@ static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
 
 
-@interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout >
+@interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UIAlertViewDelegate>
 {
     NSMutableArray *childDataArray;
     NSMutableArray *ladyDataArray;
@@ -62,7 +62,9 @@ static NSString *khead2View = @"head2View";
     
     NSString *nextUrl;
 }
-
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *trackViewUrl1;
+@property (nonatomic, copy) NSString *trackName;
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 
 @end
@@ -164,7 +166,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)loadMore
 {
-    NSLog(@"lodeMore url = %@", nextUrl);
+   // NSLog(@"lodeMore url = %@", nextUrl);
     if ([nextUrl isKindOfClass:[NSString class]]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
@@ -211,7 +213,61 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.mj_footer = footer;
     
     
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        [self performSelectorOnMainThread:@selector(fetchedUpdateData:)withObject:data waitUntilDone:YES];
+        
+    });
+  
+
+}
+
+- (void)fetchedUpdateData:(NSData *)data{
+    NSError *error = nil;
+    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSLog(@"appInfoDic = %@", appInfoDic);
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if (![reluts count]) {
+        NSLog(@"reslut = nil");
+    }
+    NSDictionary *infoDic = reluts[0];
+    
+    
+    
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    double doubleCurrentVersion = [currentVersion doubleValue];
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+   
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
+    }
 }
 
 - (void)saveCurrentState{
@@ -306,7 +362,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)downloadData123{
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging.json?page_size=10",Root_URL];
-    NSLog(@"string = %@", urlStr);
+    //NSLog(@"string = %@", urlStr);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
         [self performSelectorOnMainThread:@selector(fetchedPromotePageData:)withObject:data waitUntilDone:YES];
@@ -377,8 +433,8 @@ static NSString *khead2View = @"head2View";
     }
     NSError *error = nil;
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"err = %@", error);
-    NSLog(@"promote = %@", promoteDic);
+//    NSLog(@"err = %@", error);
+//    NSLog(@"promote = %@", promoteDic);
     
     nextUrl = [promoteDic objectForKey:@"next"];
     NSArray *results = [promoteDic objectForKey:@"results"];
@@ -389,14 +445,14 @@ static NSString *khead2View = @"head2View";
         
         PromoteModel *model = [self fillModel:ladyInfo];
         NSDictionary *category = model.category;
-        NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+      //  NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
         if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
             [ladyDataArray addObject:model];
         } else{
             [childDataArray addObject:model];
         }
     }
-    NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
+  //  NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
     
     [self.myCollectionView reloadData];
 
@@ -411,8 +467,8 @@ static NSString *khead2View = @"head2View";
     }
     NSError *error = nil;
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"err = %@", error);
-     NSLog(@"promote = %@", promoteDic);
+//    NSLog(@"err = %@", error);
+//     NSLog(@"promote = %@", promoteDic);
     
     nextUrl = [promoteDic objectForKey:@"next"];
     NSArray *results = [promoteDic objectForKey:@"results"];
@@ -423,14 +479,14 @@ static NSString *khead2View = @"head2View";
         
         PromoteModel *model = [self fillModel:ladyInfo];
         NSDictionary *category = model.category;
-        NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+       // NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
         if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
             [ladyDataArray addObject:model];
         } else{
             [childDataArray addObject:model];
         }
     }
-    NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
+   // NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
     
     
     step2 = YES;
