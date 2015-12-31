@@ -227,7 +227,7 @@ static NSString *khead2View = @"head2View";
 - (void)fetchedUpdateData:(NSData *)data{
     NSError *error = nil;
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSLog(@"appInfoDic = %@", appInfoDic);
+    //NSLog(@"appInfoDic = %@", appInfoDic);
     if (error) {
         NSLog(@"%@", error);
     }
