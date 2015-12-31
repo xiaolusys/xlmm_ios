@@ -58,7 +58,6 @@ static NSString *khead2View = @"head2View";
     
     CGFloat oldScrollViewTop;
     
-    SRRefreshView   *_slimeView;
     
     NSString *nextUrl;
 }
@@ -129,31 +128,6 @@ static NSString *khead2View = @"head2View";
     }
     
 }
-
-
-
-
-#pragma mark - scrollView delegate
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    [_slimeView scrollViewDidScroll];
-//}
-
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-//{
-//    [_slimeView scrollViewDidEndDraging];
-//}
-
-//#pragma mark - slimeRefresh delegate
-//
-//- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-//{
-//    [_slimeView performSelector:@selector(endRefresh)
-//                     withObject:nil afterDelay:4
-//                        inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-//}
-
 
 
 - (void)reload

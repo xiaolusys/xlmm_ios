@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MMNavigationDelegate.h"
-#import "SRRefreshView.h"
 
-@interface TodayViewController : UIViewController<SRRefreshDelegate>
+@interface TodayViewController : UIViewController
 
 @property (nonatomic, assign) id<MMNavigationDelegate>delegate;
 
