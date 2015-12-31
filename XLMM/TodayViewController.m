@@ -200,6 +200,10 @@ static NSString *khead2View = @"head2View";
 
 - (void)fetchedUpdateData:(NSData *)data{
     NSError *error = nil;
+    if (data == nil) {
+        [self.myCollectionView.mj_header endRefreshing];
+        return;
+    }
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     //NSLog(@"appInfoDic = %@", appInfoDic);
     if (error) {
@@ -759,14 +763,16 @@ static NSString *khead2View = @"head2View";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    [_slimeView scrollViewDidScroll];
     
-    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
+    if (scrollView.contentOffset.y <200 && scrollView.contentOffset.y > -400) {
+        NSLog(@"%F", scrollView.contentOffset.y);
+        //下滑 小于0，  上滑 大于 0
         return;
     }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
     
-    CGFloat marine = 5;
+    CGFloat marine = 120;
     if (temp > marine) {
         if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
             [self.delegate showNavigation];

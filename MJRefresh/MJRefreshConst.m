@@ -18,7 +18,7 @@ NSString *const MJRefreshHeaderIdleText = @"下拉刷新";
 NSString *const MJRefreshHeaderPullingText = @"松开加载";
 NSString *const MJRefreshHeaderRefreshingText = @"正在加载...";
 
-NSString *const MJRefreshAutoFooterIdleText = @"点击或上拉加载更多";
+NSString *const MJRefreshAutoFooterIdleText = @"上拉加载更多";
 NSString *const MJRefreshAutoFooterRefreshingText = @"正在加载更多的数据...";
 NSString *const MJRefreshAutoFooterNoMoreDataText = @"已经全部加载完毕";
 
