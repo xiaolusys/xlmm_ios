@@ -271,6 +271,9 @@
 		322D25D51C32B93A00509EAD /* 圈圈加载0042.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A91C32B93A00509EAD /* 圈圈加载0042.png */; };
 		322D25D61C32B93A00509EAD /* 圈圈加载0043.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */; };
 		322D25D71C32B93A00509EAD /* 圈圈加载0044.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */; };
+		322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25D91C35289700509EAD /* MaMaCenterViewController.m */; };
+		322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */; };
+		322D25E01C3532A200509EAD /* MaMaHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DF1C3532A200509EAD /* MaMaHeadView.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1163,6 +1166,10 @@
 		322D25A91C32B93A00509EAD /* 圈圈加载0042.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0042.png"; sourceTree = "<group>"; };
 		322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0043.png"; sourceTree = "<group>"; };
 		322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0044.png"; sourceTree = "<group>"; };
+		322D25D81C35289700509EAD /* MaMaCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaCenterViewController.h; sourceTree = "<group>"; };
+		322D25D91C35289700509EAD /* MaMaCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaCenterViewController.m; sourceTree = "<group>"; };
+		322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaCenterViewController.xib; sourceTree = "<group>"; };
+		322D25DF1C3532A200509EAD /* MaMaHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHeadView.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2804,6 +2811,10 @@
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
 				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
 				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
+				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
+				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
+				322D25DF1C3532A200509EAD /* MaMaHeadView.xib */,
+				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -3433,6 +3444,7 @@
 				322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
+				322D25E01C3532A200509EAD /* MaMaHeadView.xib in Resources */,
 				322D25AE1C32B93A00509EAD /* 圈圈加载0003.png in Resources */,
 				2E5600D51C2E6418000AFB39 /* run.gif in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
@@ -3609,6 +3621,7 @@
 				2EB87D3D1C17FAE4001CBF3D /* ios-social-sdk-like.html in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
 				322D257F1C32B92000509EAD /* xiala.png in Resources */,
+				322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */,
 				2E5600B01C2D496E000AFB39 /* loading动画0050.png in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */,
@@ -3916,6 +3929,7 @@
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
+				322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */,
 				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
 				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,

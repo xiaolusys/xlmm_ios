@@ -22,7 +22,7 @@
 #import "WXApi.h"
 #import "MaMaViewController.h"
 
-
+#import "MaMaCenterViewController.h"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -149,13 +149,13 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-//    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-//    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-//    [rightBtn addSubview:rightImageView];
-//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-//    self.navigationItem.rightBarButtonItem = rightItem;
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+    rightImageView.frame = CGRectMake(18, 11, 26, 26);
+    [rightBtn addSubview:rightImageView];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
 
 
     
@@ -166,7 +166,7 @@
 //    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
 //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     
-    MaMaViewController *ma = [[MaMaViewController alloc] init];
+    MaMaCenterViewController *ma = [[MaMaCenterViewController alloc] initWithNibName:@"MaMaCenterViewController" bundle:nil];
     [self.navigationController pushViewController:ma animated:YES];
 //    [self presentViewController:ma animated:YES completion:nil];
     
