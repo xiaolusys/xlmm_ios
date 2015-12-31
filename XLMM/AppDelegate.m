@@ -82,7 +82,7 @@
     [WeiboSDK registerApp:@"2475629754"];
     
     
-    [MiPushSDK registerMiPush:self type:0 connect:YES];
+    //[MiPushSDK registerMiPush:self type:0 connect:YES];
     
 
 

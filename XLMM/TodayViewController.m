@@ -764,7 +764,7 @@ static NSString *khead2View = @"head2View";
 //    [_slimeView scrollViewDidScroll];
     
     if (scrollView.contentOffset.y <200 && scrollView.contentOffset.y > -400) {
-        NSLog(@"%F", scrollView.contentOffset.y);
+      //  NSLog(@"%F", scrollView.contentOffset.y);
         //下滑 小于0，  上滑 大于 0
         return;
     }
