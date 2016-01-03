@@ -68,6 +68,7 @@
                     <include reference="tmP-cL-SqD"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="489.5" y="237.5"/>
         </view>
     </objects>
 </document>

@@ -99,9 +99,7 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-//    
-//    [self.WuliuView addGestureRecognizer:tapGesture];
+
     
 }
 

@@ -51,10 +51,12 @@
 #define kWeiXinUserInfo @"weixinUserInfo"
 
 //#define Root_URL @"http://youni.huyi.so"
+//  Root_URL @"http://192.168.1.31:9000"
 
-#if 0
-#define Root_URL @"http://192.168.1.57:8000"
+//  Root_URL @"http://192.168.1.57:8000"
 
+#if 1
+#define Root_URL @"http://192.168.1.31:9000"
 #else
 #define Root_URL @"http://m.xiaolu.so"
 

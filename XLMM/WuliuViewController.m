@@ -38,13 +38,25 @@
     //self.tradeId = @"xd15081955d45da07263e";
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/wuliu/?tid=%@", Root_URL, self.tradeId];
-    NSURL *url = [NSURL URLWithString:urlString];
     NSLog(@"%@", urlString);
     
-    NSData *responseData = [NSData dataWithContentsOfURL:url];
+    
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        [self performSelectorOnMainThread:@selector(fetchedWuliuData:)withObject:data waitUntilDone:YES];
+    });
+    
+    
+  }
+
+- (void)fetchedWuliuData:(NSData *)responseData{
+    if (responseData == nil) {
+        return;
+    }
     
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
     NSLog(@"json = %@", dicJson);
+    
     NSInteger code = [[dicJson objectForKey:@"code"] integerValue];
     if (code == 0) {
         NSDictionary *responseContent = [dicJson objectForKey:@"response_content"];
@@ -57,7 +69,7 @@
                 NSDictionary *lastWuliuInfo = [infoArray lastObject];
                 NSString *timeText = [lastWuliuInfo objectForKey:@"time"];
                 timeText = [self spaceFormatTimeString:timeText];
-            
+                
                 NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
                 [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
                 
@@ -82,6 +94,7 @@
             // here we should do some process to have more friendly UI display
         }
     }
+
 }
 
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{
