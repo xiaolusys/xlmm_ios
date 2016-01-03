@@ -9,6 +9,7 @@
 #import "MaMaCenterViewController.h"
 #import "MaMaOrderTableViewCell.h"
 #import "MaMaChartTableViewCell.h"
+#import "MMClass.h"
 
 @interface MaMaCenterViewController ()
 
@@ -69,6 +70,50 @@
     self.mamaTableView.delegate = self;
     self.mamaTableView.dataSource = self;
     [self.view addSubview:self.mamaTableView];
+    
+    [self downloadData];
+    
+}
+
+- (void)downloadData{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
+    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+}
+- (void)fetchedInfoData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (!error) {
+        NSLog(@"dicJson = %@", dicJson);
+       
+    }
+    
+}
+
+- (void)fetchedMaMaData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (!error) {
+        NSLog(@"dicJson = %@", arrJson);
+        NSDictionary *dic = [arrJson objectAtIndex:0];
+        levelLabel.text = [NSString stringWithFormat:@"%ld", [[dic objectForKey:@"agencylevel"] integerValue]];
+        jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
+    }
+    
+}
+
+- (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        [self performSelectorOnMainThread:aSelector withObject:data waitUntilDone:YES];
+        
+    });
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
