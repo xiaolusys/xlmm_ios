@@ -99,6 +99,7 @@
                 <constraint firstAttribute="trailing" secondItem="qrf-17-OWC" secondAttribute="trailing" id="p9o-Ea-Kjh"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="347" y="223"/>
         </view>
     </objects>
 </document>
