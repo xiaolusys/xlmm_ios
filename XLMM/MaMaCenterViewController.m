@@ -8,6 +8,7 @@
 
 #import "MaMaCenterViewController.h"
 #import "MaMaOrderTableViewCell.h"
+#import "MaMaChartTableViewCell.h"
 
 @interface MaMaCenterViewController ()
 
@@ -63,6 +64,7 @@
     self.mamaTableView.tableHeaderView = headView;
     
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
+    [self.mamaTableView registerClass:[MaMaChartTableViewCell class] forCellReuseIdentifier:@"MaMaChart"];
     
     self.mamaTableView.delegate = self;
     self.mamaTableView.dataSource = self;
@@ -107,15 +109,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *CellIdentifier = @"MaMaOrder";
-    
-    
+    NSString *CellIdentifier = nil;
+    if (0 == indexPath.row) {
+        CellIdentifier = @"MaMaChart";
+    }else {
+        CellIdentifier = @"MaMaOrder";
+    }
     UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"折线图";
+//        cell.textLabel.text = @"折线图";
         
     } else {
 //        cell.textLabel.text = @"今日订单";
