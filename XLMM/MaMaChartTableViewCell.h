@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FSLineChart;
 
 @interface MaMaChartTableViewCell : UITableViewCell
+
+@property (nonatomic, strong)UILabel *orderNum;
+@property (nonatomic, strong)FSLineChart *lineChart;
 
 @end

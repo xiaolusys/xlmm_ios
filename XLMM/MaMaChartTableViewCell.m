@@ -15,9 +15,16 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        [self createLabel];
         [self addSubview:[self chart2]];
     }
     return self;
+}
+
+- (void)createLabel {
+    self.orderNum = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, [UIScreen mainScreen].bounds.size.width - 75, 30)];
+    self.orderNum.text = @"今日订单3  今日收入6.6";
+    [self addSubview:self.orderNum];
 }
 
 -(FSLineChart*)chart2 {
@@ -27,11 +34,11 @@
         chartData[i] = [NSNumber numberWithFloat:(float)i / 30.0f + (float)(rand() % 100) / 200.0f];
     }
     // Creating the line chart
-    FSLineChart* lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 40, 166)];
-    lineChart.verticalGridStep = 1;
-    lineChart.horizontalGridStep = 6;
-    lineChart.color = [UIColor fsOrange];
-    lineChart.fillColor = nil;
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10, 35, [UIScreen mainScreen].bounds.size.width - 20, 100)];
+    self.lineChart.verticalGridStep = 1;
+    self.lineChart.horizontalGridStep = 6;
+    self.lineChart.color = [UIColor fsOrange];
+    self.lineChart.fillColor = nil;
     
     //    lineChart.labelForIndex = ^(NSUInteger item) {
     //         return [NSString stringWithFormat:@""];
@@ -43,10 +50,11 @@
     ////        return [NSString stringWithFormat:@"%.f €", value];
     //    };
     
-    lineChart.bezierSmoothing = NO;
+    self.lineChart.bezierSmoothing = NO;
+    self.lineChart.animationDuration = 1.0;
     
-    [lineChart setChartData:chartData];
-    return lineChart;
+    [self.lineChart setChartData:chartData];
+    return self.lineChart;
 }
 
 
