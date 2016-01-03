@@ -15,6 +15,7 @@
 #import "LogInViewController.h"
 #import "UIImage+ColorImage.h"
 #import "CartViewController.h"
+#import "MMDetailsViewController.h"
 
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
@@ -52,6 +53,11 @@
 {
     [super viewWillAppear:animated];
     
+    //订阅展示视图消息，将直接打开某个分支视图
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
+    //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
+    
     if (_isFirst) {
         
         
@@ -75,6 +81,33 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
    // [self.navigationController.navigationBar setShadowImage:[UIImage imageWithColor:[UIColor redColor] size:CGSizeMake(SCREENWIDTH, 1)]];
 }
+
+
+- (void)presentView:(NSNotification *)notification{
+    NSLog(@"跳转新的界面");
+    NSLog(@"userInfo = %@", notification);
+    
+    
+    
+    
+    MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:@"9504" isChild:NO];
+    [self.navigationController pushViewController:details animated:YES];
+    
+}
+
+- (void)showNotification:(NSNotification *)notification{
+    NSLog(@"弹出提示框");
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+
+
+
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
