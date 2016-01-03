@@ -276,7 +276,6 @@
 		322D25D71C32B93A00509EAD /* 圈圈加载0044.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */; };
 		322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25D91C35289700509EAD /* MaMaCenterViewController.m */; };
 		322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */; };
-		322D25E01C3532A200509EAD /* MaMaHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DF1C3532A200509EAD /* MaMaHeadView.xib */; };
 		322D25E21C38AF1800509EAD /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25E11C38AF1800509EAD /* head_icon.png */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
@@ -668,6 +667,8 @@
 		32A88E181B8718F9003501EF /* XiangQingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E171B8718F9003501EF /* XiangQingView.m */; };
 		32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */; };
 		32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A88E1F1B872CB5003501EF /* PerDingdanModel.m */; };
+		32AA6D991C38E7DE0011BB04 /* MaMaHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DF1C3532A200509EAD /* MaMaHeadView.xib */; };
+		32AA6D9B1C38E9A50011BB04 /* mmback_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32AA6D9A1C38E9A50011BB04 /* mmback_icon.png */; };
 		32B83E151BA3FD8F004E3215 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32B83E141BA3FD8F004E3215 /* area.plist */; };
 		32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */; };
 		32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BA1B251BF2F1FA0000A0F2 /* SingleOrderViewCell.xib */; };
@@ -1471,6 +1472,7 @@
 		32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DingDanXiangQingModel.m; sourceTree = "<group>"; };
 		32A88E1E1B872CB5003501EF /* PerDingdanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerDingdanModel.h; sourceTree = "<group>"; };
 		32A88E1F1B872CB5003501EF /* PerDingdanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerDingdanModel.m; sourceTree = "<group>"; };
+		32AA6D9A1C38E9A50011BB04 /* mmback_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmback_icon.png; sourceTree = "<group>"; };
 		32B5DE3F1BC7CBFE00AEE6B3 /* MMNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
 		32B83E141BA3FD8F004E3215 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = ../area.plist; sourceTree = "<group>"; };
 		32BA1B231BF2F1FA0000A0F2 /* SingleOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleOrderViewCell.h; sourceTree = "<group>"; };
@@ -2497,6 +2499,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32AA6D9A1C38E9A50011BB04 /* mmback_icon.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3317,6 +3320,7 @@
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
 				324EA2F31C30DC3100E46557 /* default.png in Resources */,
 				2EB87D2A1C17FAE4001CBF3D /* UMSCommentDetailController.xib in Resources */,
+				32AA6D9B1C38E9A50011BB04 /* mmback_icon.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
@@ -3469,7 +3473,6 @@
 				322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
-				322D25E01C3532A200509EAD /* MaMaHeadView.xib in Resources */,
 				322D25AE1C32B93A00509EAD /* 圈圈加载0003.png in Resources */,
 				2E5600D51C2E6418000AFB39 /* run.gif in Resources */,
 				32FF9A271B9FDB870001F314 /* TuihuoViewController.xib in Resources */,
@@ -3595,6 +3598,7 @@
 				32088DD71BE20A7300A33FC9 /* back_image2.png in Resources */,
 				2E56009A1C2D496E000AFB39 /* loading动画0030.png in Resources */,
 				323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */,
+				32AA6D991C38E7DE0011BB04 /* MaMaHeadView.xib in Resources */,
 				2EB87D2B1C17FAE4001CBF3D /* UMSCommentInputController.xib in Resources */,
 				32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */,
 				8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */,
