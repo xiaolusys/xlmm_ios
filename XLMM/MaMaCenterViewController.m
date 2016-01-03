@@ -7,6 +7,7 @@
 //
 
 #import "MaMaCenterViewController.h"
+#import "MaMaOrderTableViewCell.h"
 
 @interface MaMaCenterViewController ()
 
@@ -28,11 +29,11 @@
     // Do any additional setup after loading the view from its nib.
     self.mamaTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200)];
-    headView.backgroundColor = [UIColor grayColor];
-    
+    headView.backgroundColor = [UIColor lightGrayColor];
     
     self.mamaTableView.tableHeaderView = headView;
-  
+    
+    [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     
     self.mamaTableView.delegate = self;
     self.mamaTableView.dataSource = self;
@@ -57,20 +58,16 @@
 #pragma mark --TableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 1;
-    } else {
-        return 10;
-    }
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         return 200;
-    } else{
+    }else {
         return 80;
     }
 }
@@ -79,18 +76,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MaMaOrder";
     
     
-    UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         cell.textLabel.text = @"折线图";
         
     } else {
-        cell.textLabel.text = @"今日订单";
+//        cell.textLabel.text = @"今日订单";
         
     }
     return cell;
