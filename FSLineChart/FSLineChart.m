@@ -260,11 +260,11 @@
             CGContextAddLineToPoint(ctx, point.x, _axisHeight + _margin);
             CGContextStrokePath(ctx);
             
-            CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
-            CGContextSetLineWidth(ctx, _axisLineWidth);
-            CGContextMoveToPoint(ctx, point.x - 0.5f, _axisHeight + _margin);
-            CGContextAddLineToPoint(ctx, point.x - 0.5f, _axisHeight + _margin + 3);
-            CGContextStrokePath(ctx);
+//            CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
+//            CGContextSetLineWidth(ctx, _axisLineWidth);
+//            CGContextMoveToPoint(ctx, point.x - 0.5f, _axisHeight + _margin);
+//            CGContextAddLineToPoint(ctx, point.x - 0.5f, _axisHeight + _margin + 3);
+//            CGContextStrokePath(ctx);
         }
         
         for(int i=0;i<_verticalGridStep + 1;i++) {
