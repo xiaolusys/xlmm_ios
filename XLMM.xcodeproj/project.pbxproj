@@ -274,6 +274,7 @@
 		322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25D91C35289700509EAD /* MaMaCenterViewController.m */; };
 		322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */; };
 		322D25E01C3532A200509EAD /* MaMaHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DF1C3532A200509EAD /* MaMaHeadView.xib */; };
+		322D25E21C38AF1800509EAD /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25E11C38AF1800509EAD /* head_icon.png */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1170,6 +1171,7 @@
 		322D25D91C35289700509EAD /* MaMaCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaCenterViewController.m; sourceTree = "<group>"; };
 		322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaCenterViewController.xib; sourceTree = "<group>"; };
 		322D25DF1C3532A200509EAD /* MaMaHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHeadView.xib; sourceTree = "<group>"; };
+		322D25E11C38AF1800509EAD /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2046,6 +2048,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				322D25E11C38AF1800509EAD /* head_icon.png */,
 				324EA2F41C30E03800E46557 /* placeHolderImage.png */,
 				324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */,
 				324EA2F21C30DC3100E46557 /* default.png */,
@@ -3451,6 +3454,7 @@
 				3271EF0F1BFACEEB00EDF55E /* XiangQingViewController.xib in Resources */,
 				3299A05C1C0EBA6500229D74 /* TiaoKuanViewController.xib in Resources */,
 				2E5600C91C2D496E000AFB39 /* loading动画0073.png in Resources */,
+				322D25E21C38AF1800509EAD /* head_icon.png in Resources */,
 				2E77F5BA1C1EBBA90020C014 /* WeiboSDK.bundle in Resources */,
 				2E5600951C2D496E000AFB39 /* loading动画0026.png in Resources */,
 				2E5600C01C2D496E000AFB39 /* loading动画0065.png in Resources */,
@@ -4075,8 +4079,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -4098,7 +4102,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "7ac5c414-4931-4cf2-a3de-9e434036b908";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4120,8 +4124,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4135,7 +4139,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "7ac5c414-4931-4cf2-a3de-9e434036b908";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4146,8 +4150,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -4179,7 +4183,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "7ac5c414-4931-4cf2-a3de-9e434036b908";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4189,8 +4193,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -4222,7 +4226,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "7ac5c414-4931-4cf2-a3de-9e434036b908";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
