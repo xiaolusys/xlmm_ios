@@ -97,6 +97,8 @@
 		2E73ED841C38C11C00EDB94E /* MaMaOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED821C38C11C00EDB94E /* MaMaOrderTableViewCell.m */; };
 		2E73ED851C38C11C00EDB94E /* MaMaOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73ED831C38C11C00EDB94E /* MaMaOrderTableViewCell.xib */; };
 		2E73ED891C38D37700EDB94E /* MaMaChartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED881C38D37700EDB94E /* MaMaChartTableViewCell.m */; };
+		2E73ED8F1C38E8FE00EDB94E /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED8C1C38E8FE00EDB94E /* FSLineChart.m */; };
+		2E73ED901C38E8FE00EDB94E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED8E1C38E8FE00EDB94E /* UIColor+FSPalette.m */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -885,6 +887,10 @@
 		2E73ED831C38C11C00EDB94E /* MaMaOrderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaOrderTableViewCell.xib; sourceTree = "<group>"; };
 		2E73ED871C38D37700EDB94E /* MaMaChartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaChartTableViewCell.h; sourceTree = "<group>"; };
 		2E73ED881C38D37700EDB94E /* MaMaChartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaChartTableViewCell.m; sourceTree = "<group>"; };
+		2E73ED8B1C38E8FE00EDB94E /* FSLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLineChart.h; sourceTree = "<group>"; };
+		2E73ED8C1C38E8FE00EDB94E /* FSLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSLineChart.m; sourceTree = "<group>"; };
+		2E73ED8D1C38E8FE00EDB94E /* UIColor+FSPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FSPalette.h"; sourceTree = "<group>"; };
+		2E73ED8E1C38E8FE00EDB94E /* UIColor+FSPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FSPalette.m"; sourceTree = "<group>"; };
 		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -1795,6 +1801,18 @@
 				2E73ED881C38D37700EDB94E /* MaMaChartTableViewCell.m */,
 			);
 			name = MaMaView;
+			sourceTree = "<group>";
+		};
+		2E73ED8A1C38E8FE00EDB94E /* FSLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				2E73ED8B1C38E8FE00EDB94E /* FSLineChart.h */,
+				2E73ED8C1C38E8FE00EDB94E /* FSLineChart.m */,
+				2E73ED8D1C38E8FE00EDB94E /* UIColor+FSPalette.h */,
+				2E73ED8E1C38E8FE00EDB94E /* UIColor+FSPalette.m */,
+			);
+			name = FSLineChart;
+			path = ../../Desktop/FSLineChart;
 			sourceTree = "<group>";
 		};
 		2E76FFDE1C180BAA008CE960 /* lib */ = {
@@ -3148,6 +3166,7 @@
 		32E00C901BA7B79700A73390 /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				2E73ED8A1C38E8FE00EDB94E /* FSLineChart */,
 				322D25361C32B66100509EAD /* MJRefresh */,
 				326C4E081C2CE8FB00A79359 /* SDK */,
 				2E77F5A91C1EBBA90020C014 /* weibo */,
@@ -3887,6 +3906,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				2E73ED8F1C38E8FE00EDB94E /* FSLineChart.m in Sources */,
 				322D25651C32B66100509EAD /* MJRefreshComponent.m in Sources */,
 				322D25731C32B66100509EAD /* UIScrollView+MJExtension.m in Sources */,
 				321952941BFC7A8D00AA0AB8 /* QNHttpManager.m in Sources */,
@@ -3962,6 +3982,7 @@
 				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
+				2E73ED901C38E8FE00EDB94E /* UIColor+FSPalette.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
