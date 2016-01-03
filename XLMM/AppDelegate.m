@@ -284,9 +284,13 @@
             NSLog(@"product_id = %@", [params lastObject]);
             
            
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"product_id":[params lastObject]}];
-            
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"product_id":[params lastObject]}];  
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"product_id":[params lastObject]}];
+                
+            }
+           
             
             
             
