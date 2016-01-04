@@ -8,15 +8,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MaMaOrder" rowHeight="102" id="KGk-i7-Jjw" customClass="MaMaOrderTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="543" height="102"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MaMaOrder" rowHeight="80" id="KGk-i7-Jjw" customClass="MaMaOrderTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="543" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="543" height="101.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="543" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="购买人：小公举" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrT-6R-obr">
-                        <rect key="frame" x="80" y="18" width="105" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="购买人：小公举" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrT-6R-obr">
+                        <rect key="frame" x="80" y="10" width="98" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="9xq-w6-DYb"/>
                         </constraints>
@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反佣" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PpB-VN-1ZL">
-                        <rect key="frame" x="80" y="48" width="30" height="30"/>
+                        <rect key="frame" x="80" y="40" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="nEC-bt-d51"/>
                             <constraint firstAttribute="width" constant="30" id="wk8-nu-GLh"/>
@@ -34,8 +34,8 @@
                         <color key="textColor" red="0.30980392156862746" green="0.30980392156862746" blue="0.30980392156862746" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="等待买家付款" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRQ-Fi-BlV">
-                        <rect key="frame" x="413" y="18" width="120" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="等待买家付款" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRQ-Fi-BlV">
+                        <rect key="frame" x="415" y="10" width="120" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="enM-gR-Bec"/>
                             <constraint firstAttribute="height" constant="30" id="tub-uJ-6gA"/>
@@ -44,8 +44,8 @@
                         <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="今天 16:40" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihz-zN-TO4">
-                        <rect key="frame" x="413" y="48" width="120" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天 16:40" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihz-zN-TO4">
+                        <rect key="frame" x="415" y="40" width="120" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="BIh-ws-Zxw"/>
                             <constraint firstAttribute="width" constant="120" id="P0V-wS-Htg"/>
@@ -55,14 +55,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Eo-db-WQ6">
-                        <rect key="frame" x="10" y="18" width="60" height="60"/>
+                        <rect key="frame" x="10" y="10" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="eQ5-A8-66P"/>
                             <constraint firstAttribute="width" constant="60" id="kDA-2U-CUG"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.9元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Eo-nO-BlC">
-                        <rect key="frame" x="110" y="48" width="68" height="30"/>
+                        <rect key="frame" x="110" y="40" width="68" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="mV5-bw-yBS"/>
                         </constraints>
@@ -73,8 +73,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="5Eo-db-WQ6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="0xY-OY-8w2"/>
+                    <constraint firstItem="DRQ-Fi-BlV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="AWg-b9-DXh"/>
                     <constraint firstItem="qrT-6R-obr" firstAttribute="leading" secondItem="5Eo-db-WQ6" secondAttribute="trailing" constant="10" id="EdM-di-fJu"/>
                     <constraint firstItem="PpB-VN-1ZL" firstAttribute="leading" secondItem="5Eo-db-WQ6" secondAttribute="trailing" constant="10" id="F10-vg-Bja"/>
+                    <constraint firstItem="5Eo-db-WQ6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="FpJ-Vj-agU"/>
                     <constraint firstItem="4Eo-nO-BlC" firstAttribute="top" secondItem="qrT-6R-obr" secondAttribute="bottom" id="Nqw-Y7-lMy"/>
                     <constraint firstItem="4Eo-nO-BlC" firstAttribute="trailing" secondItem="qrT-6R-obr" secondAttribute="trailing" id="QVw-sJ-3nB"/>
                     <constraint firstItem="5Eo-db-WQ6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="RuO-0t-Byz"/>
@@ -82,10 +84,18 @@
                     <constraint firstItem="qrT-6R-obr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="bvN-iE-N2j"/>
                     <constraint firstItem="ihz-zN-TO4" firstAttribute="top" secondItem="DRQ-Fi-BlV" secondAttribute="bottom" id="k0I-fN-NkH"/>
                     <constraint firstItem="4Eo-nO-BlC" firstAttribute="leading" secondItem="PpB-VN-1ZL" secondAttribute="trailing" id="sfv-y0-cax"/>
+                    <constraint firstItem="qrT-6R-obr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="w40-gu-0ll"/>
                     <constraint firstItem="PpB-VN-1ZL" firstAttribute="top" secondItem="qrT-6R-obr" secondAttribute="bottom" id="xc9-ZR-BKk"/>
                     <constraint firstItem="DRQ-Fi-BlV" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="yC9-qd-mqw"/>
                     <constraint firstItem="ihz-zN-TO4" firstAttribute="trailing" secondItem="DRQ-Fi-BlV" secondAttribute="trailing" id="zgi-bm-5xq"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="RuO-0t-Byz"/>
+                        <exclude reference="bvN-iE-N2j"/>
+                        <exclude reference="Vsa-m9-Rvs"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="fanyong" destination="PpB-VN-1ZL" id="8wd-e2-J8u"/>

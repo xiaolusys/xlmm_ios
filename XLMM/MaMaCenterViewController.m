@@ -18,6 +18,7 @@
 @interface MaMaCenterViewController ()
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
+@property (nonatomic, strong)NSMutableArray *chartPoint;
 
 @end
 
@@ -37,6 +38,13 @@
     return _dataArr;
 }
 
+- (NSMutableArray *)chartPoint {
+    if (!_chartPoint) {
+        self.chartPoint = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _chartPoint;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
@@ -49,17 +57,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 60) style:UITableViewStylePlain];
+    self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 60) style:UITableViewStylePlain];
     self.mamaTableView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:244/255.0 alpha:1];
     UIView *headView;
     
     NSLog(@"%f, %f",self.view.frame.size.width, self.view.frame.size.height );
+    NSLog(@"%f, %f",[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height);
     
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"MaMaHeadView" owner:nil options:nil];
     headView = views[0];
-    NSLog(@"headView = %@", headView);
-    headView.frame = CGRectMake(0, 0, SCREENWIDTH, 245);
-    NSLog(@"headView = %@", headView);
+    headView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 245);
     self.mamaTableView.showsVerticalScrollIndicator = NO;
     backButton = [headView viewWithTag:100];
     levelLabel = [headView viewWithTag:200];
@@ -105,6 +112,16 @@
         [self maMaOrderInfoData:data];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
+    //chart data
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/seven_days_num", Root_URL];
+    [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        NSMutableArray *data = responseObject;
+        self.chartPoint = data;
+        [self.mamaTableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 
 }
 - (void)fetchedInfoData:(NSData *)data{
@@ -115,7 +132,6 @@
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     NSLog(@"－－－－－－－%@", dicJson);
     if (!error) {
-//        NSLog(@"dicJson = %@", dicJson);
     }
 }
 
@@ -135,6 +151,7 @@
 }
 
 - (void)maMaOrderInfoData:(NSArray *)array {
+    
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
@@ -192,6 +209,9 @@
         MaMaChartTableViewCell *cell = (MaMaChartTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaChart" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[MaMaChartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaChart"];
+        }
+        if (self.chartPoint.count > 0) {
+            [cell createChart:self.chartPoint];
         }
         return cell;
 
