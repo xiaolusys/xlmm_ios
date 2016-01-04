@@ -22,8 +22,10 @@
 }
 
 - (void)createLabel {
-    self.orderNum = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, [UIScreen mainScreen].bounds.size.width - 75, 30)];
+    self.orderNum = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, [UIScreen mainScreen].bounds.size.width - 150, 30)];
     self.orderNum.text = @"今日订单3  今日收入6.6";
+    self.orderNum.font = [UIFont systemFontOfSize:13];
+    self.orderNum.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.orderNum];
 }
 
@@ -36,7 +38,7 @@
     // Creating the line chart
     self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10, 35, [UIScreen mainScreen].bounds.size.width - 20, 100)];
     self.lineChart.verticalGridStep = 1;
-    self.lineChart.horizontalGridStep = 6;
+    self.lineChart.horizontalGridStep = 7;
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     
