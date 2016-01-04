@@ -99,6 +99,7 @@
 		2E73ED891C38D37700EDB94E /* MaMaChartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED881C38D37700EDB94E /* MaMaChartTableViewCell.m */; };
 		2E73ED961C38F19B00EDB94E /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED931C38F19B00EDB94E /* FSLineChart.m */; };
 		2E73ED971C38F19B00EDB94E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED951C38F19B00EDB94E /* UIColor+FSPalette.m */; };
+		2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -892,6 +893,8 @@
 		2E73ED931C38F19B00EDB94E /* FSLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSLineChart.m; sourceTree = "<group>"; };
 		2E73ED941C38F19B00EDB94E /* UIColor+FSPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FSPalette.h"; sourceTree = "<group>"; };
 		2E73ED951C38F19B00EDB94E /* UIColor+FSPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FSPalette.m"; sourceTree = "<group>"; };
+		2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaOrderModel.h; sourceTree = "<group>"; };
+		2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaOrderModel.m; sourceTree = "<group>"; };
 		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -1816,6 +1819,15 @@
 			path = FSLineChart;
 			sourceTree = "<group>";
 		};
+		2E73ED981C3A14A300EDB94E /* MaMaModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */,
+				2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */,
+			);
+			name = MaMaModel;
+			sourceTree = "<group>";
+		};
 		2E76FFDE1C180BAA008CE960 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -2726,6 +2738,7 @@
 		32746E3D1B74A4EA00816208 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2E73ED981C3A14A300EDB94E /* MaMaModel */,
 				320B300A1BB93E46006C4FC4 /* YHQModel.h */,
 				320B300B1BB93E46006C4FC4 /* YHQModel.m */,
 				32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */,
@@ -3934,6 +3947,7 @@
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
+				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
@@ -4231,7 +4245,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4274,7 +4288,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

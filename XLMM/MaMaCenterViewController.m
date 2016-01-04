@@ -10,20 +10,32 @@
 #import "MaMaOrderTableViewCell.h"
 #import "MaMaChartTableViewCell.h"
 #import "MMClass.h"
+#import "AFHTTPRequestOperationManager.h"
+#import "MaMaOrderModel.h"
+
+
 
 @interface MaMaCenterViewController ()
 
+@property (nonatomic, strong)NSMutableArray *dataArr;
+
 @end
 
-@implementation MaMaCenterViewController{
+@implementation MaMaCenterViewController
+{
     UIButton *backButton;
     UILabel *jineLabel;
     UILabel *levelLabel;
     UILabel *jiluLabel;
     UILabel *shouyiLabel;
-    
 }
 
+- (NSMutableArray *)dataArr {
+    if (!_dataArr) {
+        self.dataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _dataArr;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -36,10 +48,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"%f %f", SCREENWIDTH, SCREENHEIGHT);
-    self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
+    
+    self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 60) style:UITableViewStylePlain];
     self.mamaTableView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:244/255.0 alpha:1];
     UIView *headView;
+    
+    NSLog(@"%f, %f",self.view.frame.size.width, self.view.frame.size.height );
     
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"MaMaHeadView" owner:nil options:nil];
     headView = views[0];
@@ -81,18 +95,28 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+    
+    //mama今日订单列表
+    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/today_shops", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        NSArray *data = responseObject;
+        [self maMaOrderInfoData:data];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+
 }
 - (void)fetchedInfoData:(NSData *)data{
     if (data == nil) {
         return;
     }
     NSError *error = nil;
-   __unused NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"－－－－－－－%@", dicJson);
     if (!error) {
-        NSLog(@"dicJson = %@", dicJson);
-       
+//        NSLog(@"dicJson = %@", dicJson);
     }
-    
 }
 
 - (void)fetchedMaMaData:(NSData *)data{
@@ -108,6 +132,15 @@
         jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
     }
     
+}
+
+- (void)maMaOrderInfoData:(NSArray *)array {
+    for (NSDictionary *orderDic in array) {
+        MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
+        [orderM setValuesForKeysWithDictionary:orderDic];
+        [self.dataArr addObject:orderM];
+    }
+    [self.mamaTableView reloadData];
 }
 
 - (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
@@ -141,7 +174,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    return (self.dataArr.count + 1);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -155,28 +188,22 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSString *CellIdentifier = nil;
-    if (0 == indexPath.row) {
-        CellIdentifier = @"MaMaChart";
-    }else {
-        CellIdentifier = @"MaMaOrder";
-    }
-    UITableViewCell *cell = (UITableViewCell*)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
     if (indexPath.row == 0) {
-//        cell.textLabel.text = @"折线图";
-        
+        MaMaChartTableViewCell *cell = (MaMaChartTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaChart" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[MaMaChartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaChart"];
+        }
+        return cell;
+
     } else {
-//        cell.textLabel.text = @"今日订单";
-        
+        MaMaOrderTableViewCell *cell = (MaMaOrderTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaOrder" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
+        }
+        MaMaOrderModel *orderM = self.dataArr[indexPath.row - 1];
+        [cell fillDataOfCell:orderM];
+        return cell;
     }
-    return cell;
-    
-    
-  
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
