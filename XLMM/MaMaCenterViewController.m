@@ -104,7 +104,7 @@
     if (!error) {
         NSLog(@"dicJson = %@", arrJson);
         NSDictionary *dic = [arrJson objectAtIndex:0];
-        levelLabel.text = [NSString stringWithFormat:@"%ld", [[dic objectForKey:@"agencylevel"] integerValue]];
+        levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
         jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
     }
     
