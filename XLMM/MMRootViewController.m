@@ -237,7 +237,6 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 
 
-    
     [self.view addSubview:[[UIView alloc] init]];
 }
 
