@@ -55,8 +55,10 @@
 
 //  Root_URL @"http://192.168.1.57:8000"
 
-#if 1
+#if 0
+
 #define Root_URL @"http://192.168.1.31:9000"
+
 #else
 #define Root_URL @"http://api.xiaolumeimei.com"
 

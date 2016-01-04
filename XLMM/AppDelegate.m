@@ -14,6 +14,7 @@
 #import "MMClass.h"
 #import "Reachability.h"
 #import "NewLeftViewController.h"
+#import "MMDetailsViewController.h"
 
 #define login @"login"
 
@@ -28,7 +29,7 @@
 @property (nonatomic, strong) NSDictionary *userInfo;
 
 
-
+@property (nonatomic) BOOL isLaunchedByNotification;
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *deviceUUID;
 @property (nonatomic, copy) NSString *miRegid;
@@ -62,7 +63,8 @@
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
-    
+  //  [MiPushSDK registerMiPush:self type:0 connect:YES];
+
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
@@ -70,6 +72,8 @@
     __unused NSString *plistPath1 = [paths objectAtIndex:0];
     NSLog(@"%@", plistPath1);
     
+   
+    NSLog(@"%d", self.isLaunchedByNotification);
     
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
@@ -82,7 +86,6 @@
     [WeiboSDK registerApp:@"2475629754"];
     
     
-    [MiPushSDK registerMiPush:self type:0 connect:YES];
     
 
 
@@ -123,8 +126,22 @@
     [self.window makeKeyAndVisible];
 
     
- 
-      
+//    NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//    NSLog(@"%d", self.isLaunchedByNotification);
+//    if (remoteNotification != nil) {
+//        NSLog(@"remoteNotification = %@", remoteNotification);
+//        self.isLaunchedByNotification = YES;
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[remoteNotification objectForKey:@"target_url"]}];
+//        
+//        
+//        
+//        
+//        
+//        
+//        
+//    }
+    
     return YES;
 }
 
@@ -246,44 +263,20 @@
     // 返回数据
     NSString *target_url = nil;
     target_url = [data objectForKey:@"target_url"];
-    NSLog(@"target_url = %@", target_url);
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
-        NSLog(@"跳到今日上新");
-
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
-        NSLog(@"跳到昨日推荐");
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
-        NSLog(@"跳到潮童专区");
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
-        NSLog(@"跳到时尚女装");
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-        NSLog(@"跳转到用户为过期优惠券列表");
-    } else {
-        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        
-        NSString *parameter = [components lastObject];
-        NSArray *params = [parameter componentsSeparatedByString:@"="];
-        NSString *firstparam = [params firstObject];
-        if ([firstparam isEqualToString:@"model_id"]) {
-            NSLog(@"跳到集合页面");
-            NSLog(@"model_id = %@", [params lastObject]);
-            
-        } else if ([firstparam isEqualToString:@"product_id"]){
-            NSLog(@"跳到商品详情");
-            NSLog(@"product_id = %@", [params lastObject]);
-            
-        } else if ([firstparam isEqualToString:@"trade_id"]){
-            NSLog(@"跳到订单详情");
-            NSLog(@"trade_id = %@", [params lastObject]);
-            
-        } else {
-            NSLog(@"跳到首页");
-        }
-    }
-   
     
+    
+    
+    if (self.isLaunchedByNotification == YES) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+        return;
+    }
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+    }
+    
+
 }
 
 
@@ -458,6 +451,8 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+   // [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -468,6 +463,8 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 

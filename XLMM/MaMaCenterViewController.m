@@ -57,7 +57,9 @@
     
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"MaMaHeadView" owner:nil options:nil];
     headView = views[0];
-    headView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 245);
+    NSLog(@"headView = %@", headView);
+    headView.frame = CGRectMake(0, 0, SCREENWIDTH, 245);
+    NSLog(@"headView = %@", headView);
     self.mamaTableView.showsVerticalScrollIndicator = NO;
     backButton = [headView viewWithTag:100];
     levelLabel = [headView viewWithTag:200];
