@@ -17,7 +17,7 @@
 
 + (instancetype)fsOrange
 {
-    return [UIColor colorWithRed:1.0f green:0.58f blue:0.21f alpha:1.0f];
+    return [UIColor colorWithRed:245 / 256.0 green: 166 / 256.0 blue:35 / 256.0 alpha:1.0];
 }
 
 + (instancetype)fsYellow

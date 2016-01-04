@@ -14,7 +14,34 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGT-o6-5kt">
+                    <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPC-sS-FYi">
+                            <rect key="frame" x="15" y="10" width="290" height="40"/>
+                            <color key="backgroundColor" red="1" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="发布新品">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="ZPC-sS-FYi" secondAttribute="bottom" constant="10" id="c0g-Vp-b0u"/>
+                        <constraint firstAttribute="height" constant="60" id="eG7-uf-KmU"/>
+                        <constraint firstAttribute="trailing" secondItem="ZPC-sS-FYi" secondAttribute="trailing" constant="15" id="lkw-Vp-JO8"/>
+                        <constraint firstItem="ZPC-sS-FYi" firstAttribute="top" secondItem="aGT-o6-5kt" secondAttribute="top" constant="10" id="nW4-Qw-zq1"/>
+                        <constraint firstItem="ZPC-sS-FYi" firstAttribute="leading" secondItem="aGT-o6-5kt" secondAttribute="leading" constant="15" id="oxw-KJ-klG"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="aGT-o6-5kt" secondAttribute="trailing" id="46o-ta-L9J"/>
+                <constraint firstAttribute="bottom" secondItem="aGT-o6-5kt" secondAttribute="bottom" id="mIY-2g-Xxi"/>
+                <constraint firstItem="aGT-o6-5kt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="tBv-hP-5mO"/>
+            </constraints>
             <point key="canvasLocation" x="300" y="71"/>
         </view>
     </objects>
