@@ -15,13 +15,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="329" height="200"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" tag="300" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="          " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-d1-iRu">
-                            <rect key="frame" x="127" y="149" width="76" height="36"/>
+                            <rect key="frame" x="127" y="141" width="76" height="36"/>
                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <color key="textColor" red="0.96078431372549022" green="0.65098039215686276" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户余额(元)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyW-Vm-Ggk">
-                            <rect key="frame" x="125" y="124" width="80" height="17"/>
+                            <rect key="frame" x="125" y="116" width="80" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -52,7 +52,7 @@
                     <constraints>
                         <constraint firstItem="YEQ-d1-iRu" firstAttribute="top" secondItem="DyW-Vm-Ggk" secondAttribute="bottom" constant="8" id="Dgi-oY-f15"/>
                         <constraint firstAttribute="height" constant="200" id="Frr-1b-shY"/>
-                        <constraint firstItem="DyW-Vm-Ggk" firstAttribute="top" secondItem="Z4U-Nz-goO" secondAttribute="bottom" constant="28" id="Qvb-F7-VaT"/>
+                        <constraint firstItem="DyW-Vm-Ggk" firstAttribute="top" secondItem="Z4U-Nz-goO" secondAttribute="bottom" constant="20" id="Qvb-F7-VaT"/>
                         <constraint firstItem="Z4U-Nz-goO" firstAttribute="centerX" secondItem="utP-2w-w5a" secondAttribute="centerX" id="Xsf-yb-1wn"/>
                         <constraint firstItem="DyW-Vm-Ggk" firstAttribute="centerX" secondItem="utP-2w-w5a" secondAttribute="centerX" id="YEB-6F-nfi"/>
                         <constraint firstItem="ctz-Os-Dei" firstAttribute="leading" secondItem="utP-2w-w5a" secondAttribute="leading" constant="8" id="Yhj-gS-6ff"/>

@@ -85,13 +85,59 @@
 
 - (void)presentView:(NSNotification *)notification{
     NSLog(@"跳转新的界面");
-    NSLog(@"userInfo = %@", notification);
+    NSLog(@"userInfo = %@", notification.userInfo);
+    NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
     
+    NSLog(@"target_url = %@", target_url);
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
+        NSLog(@"跳到今日上新");
+        [self buttonClicked:100];
+      
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
+        NSLog(@"跳到昨日推荐");
+        [self buttonClicked:101];
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
+        NSLog(@"跳到潮童专区");
+        [self buttonClicked:102];
+      
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
+        NSLog(@"跳到时尚女装");
+        [self buttonClicked:103];
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
+        NSLog(@"跳转到用户为过期优惠券列表");
+    } else {
+        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+        
+        NSString *parameter = [components lastObject];
+        NSArray *params = [parameter componentsSeparatedByString:@"="];
+        NSString *firstparam = [params firstObject];
+        if ([firstparam isEqualToString:@"model_id"]) {
+            NSLog(@"跳到集合页面");
+            NSLog(@"model_id = %@", [params lastObject]);
+            
+        } else if ([firstparam isEqualToString:@"product_id"]){
+            NSLog(@"跳到商品详情");
+            NSLog(@"product_id = %@", [params lastObject]);
+            
+            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:@"9504" isChild:NO];
+            [self.navigationController pushViewController:details animated:YES];
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            
+        } else if ([firstparam isEqualToString:@"trade_id"]){
+            NSLog(@"跳到订单详情");
+            NSLog(@"trade_id = %@", [params lastObject]);
+            
+        } else {
+            NSLog(@"跳到H5首页");
+            
+        }
+    }
+
     
-    
-    
-    MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:@"9504" isChild:NO];
-    [self.navigationController pushViewController:details animated:YES];
+ 
     
 }
 
@@ -424,6 +470,31 @@
     
 }
 
+- (void)buttonClicked:(NSInteger)btnTag{
+    _currentIndex = btnTag - 100+1;
+  
+    for (int i = 100; i<104; i++) {
+        if (btnTag == i) {
+            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
+            [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+            
+        }else{
+            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+            [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        }
+    }
+    
+    
+    
+    NSInteger index = btnTag - 100;
+    BOOL state = 0;
+    if (_pageCurrentIndex < index) {
+        state = 1;
+    }
+    _pageCurrentIndex = index;
+    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+}
+
 - (IBAction)btnClicked:(id)sender {
 
     
@@ -431,15 +502,7 @@
     UIButton *button = (UIButton *)sender;
     NSInteger btnTag = button.tag;
     _currentIndex = btnTag - 100+1;
-    if (btnTag == 100) {
-    } else if (btnTag == 101){
-        
-    } else if (btnTag == 102){
-    } else if (btnTag == 103){
-    }
-    
-    else{
-    }
+   
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
             [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];

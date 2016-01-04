@@ -120,7 +120,7 @@
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     titleLabel.text = @"";
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.font = [UIFont systemFontOfSize:13  ];
+    titleLabel.font = [UIFont systemFontOfSize:15];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleLabel;
     
