@@ -61,6 +61,7 @@
     if (code == 0) {
         NSDictionary *responseContent = [dicJson objectForKey:@"response_content"];
         BOOL RESULT = [[responseContent objectForKey:@"result"] boolValue];
+        NSLog(@"message = %@", [responseContent objectForKey:@"message"]);
         if (RESULT == YES) {
             NSArray *infoArray = [responseContent objectForKey:@"ret"];
             NSInteger length = infoArray.count;
