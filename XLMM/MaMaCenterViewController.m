@@ -12,6 +12,7 @@
 #import "MMClass.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MaMaOrderModel.h"
+#import "TiXianViewController.h"
 
 
 
@@ -74,6 +75,11 @@
     jiluLabel = [headView viewWithTag:400];
     shouyiLabel = [headView viewWithTag:500];
     
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tixianClicked:)];
+    [jineLabel addGestureRecognizer:tap];
+    jineLabel.userInteractionEnabled = YES;
+    
     [backButton addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -96,6 +102,12 @@
     
     [self downloadData];
     
+}
+
+- (void)tixianClicked:(id)sender{
+    NSLog(@"提现");
+    TiXianViewController *tixianVC = [[TiXianViewController alloc] initWithNibName:@"TiXianViewController" bundle:nil];
+    [self.navigationController pushViewController:tixianVC animated:YES];
 }
 
 - (void)downloadData{
@@ -227,7 +239,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.navigationController popViewControllerAnimated:YES];
+   // [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

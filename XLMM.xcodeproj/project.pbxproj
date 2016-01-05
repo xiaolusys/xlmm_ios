@@ -2512,6 +2512,18 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		322FA9351C3BA521008DD942 /* MaMaCenter */ = {
+			isa = PBXGroup;
+			children = (
+				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
+				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
+				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
+				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
+				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
+			);
+			name = MaMaCenter;
+			sourceTree = "<group>";
+		};
 		3249B9811B6F37A20086D030 /* PersonCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -2628,6 +2640,7 @@
 		325DF95C1B6A472600351ACA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				322FA9351C3BA521008DD942 /* MaMaCenter */,
 				32816F8D1C1FF740004DD2EF /* Catrs */,
 				32816F8C1C1FF603004DD2EF /* Common */,
 				32816F8A1C1FF5C1004DD2EF /* Login */,
@@ -2866,11 +2879,6 @@
 				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
-				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
-				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
-				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
-				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
-				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";

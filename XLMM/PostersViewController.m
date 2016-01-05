@@ -186,7 +186,7 @@ static NSString * ksimpleCell = @"simpleCell";
         
         return;
     }
-    NSString *shareUrlString = @"http://m.xiaolu.so/rest/v1/share/today";
+    NSString *shareUrlString = [NSString stringWithFormat:@"%@/rest/v1/share/today", Root_URL];
     
     NSData *shareData = [NSData dataWithContentsOfURL:[NSURL URLWithString:shareUrlString]];
     if (shareData == nil) {
