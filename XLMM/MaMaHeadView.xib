@@ -34,7 +34,7 @@
                             </constraints>
                         </imageView>
                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctz-Os-Dei">
-                            <rect key="frame" x="8" y="20" width="40" height="40"/>
+                            <rect key="frame" x="8" y="8" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="ZDl-U0-x9j"/>
                                 <constraint firstAttribute="height" constant="40" id="zRO-vg-48E"/>
@@ -58,7 +58,7 @@
                         <constraint firstItem="ctz-Os-Dei" firstAttribute="leading" secondItem="utP-2w-w5a" secondAttribute="leading" constant="8" id="Yhj-gS-6ff"/>
                         <constraint firstItem="KvQ-xJ-KVZ" firstAttribute="top" secondItem="Z4U-Nz-goO" secondAttribute="bottom" constant="-39" id="f7l-iR-WE2"/>
                         <constraint firstItem="KvQ-xJ-KVZ" firstAttribute="centerX" secondItem="Z4U-Nz-goO" secondAttribute="centerX" id="kfP-JF-Ck3"/>
-                        <constraint firstItem="ctz-Os-Dei" firstAttribute="top" secondItem="utP-2w-w5a" secondAttribute="top" constant="20" id="s6E-Sz-hyh"/>
+                        <constraint firstItem="ctz-Os-Dei" firstAttribute="top" secondItem="utP-2w-w5a" secondAttribute="top" constant="8" id="s6E-Sz-hyh"/>
                         <constraint firstItem="YEQ-d1-iRu" firstAttribute="centerX" secondItem="utP-2w-w5a" secondAttribute="centerX" id="wgU-ub-LRT"/>
                         <constraint firstItem="Z4U-Nz-goO" firstAttribute="top" secondItem="utP-2w-w5a" secondAttribute="top" constant="28" id="yNI-Ed-OEZ"/>
                     </constraints>

@@ -12,7 +12,6 @@
 #import "MMClass.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MaMaOrderModel.h"
-#import "TiXianViewController.h"
 
 
 
@@ -106,8 +105,7 @@
 
 - (void)tixianClicked:(id)sender{
     NSLog(@"提现");
-    TiXianViewController *tixianVC = [[TiXianViewController alloc] initWithNibName:@"TiXianViewController" bundle:nil];
-    [self.navigationController pushViewController:tixianVC animated:YES];
+  
 }
 
 - (void)downloadData{
