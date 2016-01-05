@@ -66,16 +66,22 @@
             NSInteger length = infoArray.count;
             
             if (length > 0) {
-                NSDictionary *lastWuliuInfo = [infoArray lastObject];
-                NSString *timeText = [lastWuliuInfo objectForKey:@"time"];
-                timeText = [self spaceFormatTimeString:timeText];
-                
-                NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
-                [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
-                
-                // display wuliu company name and wuliu miandan id
-                self.wuliuCompanyName.text = [lastWuliuInfo objectForKey:@"logistics_company"];
-                self.wuliuMiandanId.text = [lastWuliuInfo objectForKey:@"out_sid"];
+                if ([infoArray isKindOfClass:[NSArray class]]) {
+                    NSDictionary *lastWuliuInfo = [infoArray lastObject];
+                    NSString *timeText = [lastWuliuInfo objectForKey:@"time"];
+                    timeText = [self spaceFormatTimeString:timeText];
+                    
+                    NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
+                    [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
+                    
+                    // display wuliu company name and wuliu miandan id
+                    self.wuliuCompanyName.text = [lastWuliuInfo objectForKey:@"logistics_company"];
+                    self.wuliuMiandanId.text = [lastWuliuInfo objectForKey:@"out_sid"];
+                } else{
+                    
+                    return;
+                }
+               
             }
             NSInteger MAX = 4; // we only display at most 3 wuliu info.
             if (length < MAX) {

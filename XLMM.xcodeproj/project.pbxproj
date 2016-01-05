@@ -2584,7 +2584,6 @@
 		325BA10B1B68B18A006D64BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				325BA11E1B68BAF0006D64BD /* MMClass.h */,
 				325BA10C1B68B18A006D64BD /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -3167,6 +3166,7 @@
 		32E00C8F1BA7B48500A73390 /* Custom Class */ = {
 			isa = PBXGroup;
 			children = (
+				325BA11E1B68BAF0006D64BD /* MMClass.h */,
 				32816F891C1FF469004DD2EF /* cageory */,
 				325D567D1BCE449700B12EE6 /* ArrowView.h */,
 				325D567E1BCE449700B12EE6 /* ArrowView.m */,
@@ -4245,7 +4245,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4288,7 +4288,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

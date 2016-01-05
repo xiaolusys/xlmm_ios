@@ -16,6 +16,7 @@
 @property (nonatomic, copy)NSString *priceString;
 @property (nonatomic, copy)NSString *urlString;
 @property (nonatomic, copy)NSString *orderID;
-
+@property (nonatomic, assign)BOOL killTitle;
+@property (nonatomic, copy) NSString *status_display;
 
 @end
