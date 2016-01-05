@@ -58,15 +58,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
-    
-    if (_isFirst) {
-        
-        
-    }else{
-        
-        // [self presentLeftMenuViewController:leftButton];
-        
-    }
+  
+   
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
@@ -86,8 +79,11 @@
 
 - (void)presentView:(NSNotification *)notification{
     NSLog(@"跳转新的界面");
+    
     NSLog(@"userInfo = %@", notification.userInfo);
     NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
+    
+   
     
     NSLog(@"target_url = %@", target_url);
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
@@ -139,7 +135,7 @@
             
             MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
             [self.navigationController pushViewController:details animated:YES];
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
+       
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
             NSLog(@"跳到订单详情");

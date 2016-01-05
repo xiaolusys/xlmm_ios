@@ -33,6 +33,8 @@
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *deviceUUID;
 @property (nonatomic, copy) NSString *miRegid;
+@property (nonatomic, copy) NSDictionary *pushInfo;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -63,6 +65,7 @@
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
+    self.isFirst = YES;
     [MiPushSDK registerMiPush:self type:0 connect:YES];
 
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -126,21 +129,14 @@
     [self.window makeKeyAndVisible];
 
     
-//    NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-//    NSLog(@"%d", self.isLaunchedByNotification);
-//    if (remoteNotification != nil) {
-//        NSLog(@"remoteNotification = %@", remoteNotification);
-//        self.isLaunchedByNotification = YES;
-//        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[remoteNotification objectForKey:@"target_url"]}];
-//        
-//        
-//        
-//        
-//        
-//        
-//        
-//    }
+    if (launchOptions != nil) {
+        NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (remoteNotification != nil) {
+            self.pushInfo = remoteNotification;
+            self.isLaunchedByNotification = YES;
+        }
+    }
+   
     
     return YES;
 }
@@ -181,6 +177,9 @@
 //    NSLog(@"UserInfo = %@", userInfo);
     [MiPushSDK handleReceiveRemoteNotification :userInfo];
     // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
+    NSString *messageId = [userInfo objectForKey:@"_id_"];
+    NSLog(@"messageID = %@", messageId);
+    [MiPushSDK openAppNotify:messageId];
 }
 
 
@@ -265,17 +264,20 @@
     target_url = [data objectForKey:@"target_url"];
     
     
-    
+   
     if (self.isLaunchedByNotification == YES) {
+        
+       
          [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
         return;
     }
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
          [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+        return;
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
     }
-    
+  
 
 }
 
@@ -466,10 +468,23 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+    
 }
+
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (_isFirst == YES && self.isLaunchedByNotification == YES) {
+        _isFirst = NO;
+        
+        
+        dispatch_after(3.0f, dispatch_get_main_queue(), ^(void){ // 2
+           [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[self.pushInfo objectForKey:@"target_url"]}];
+        });
+    }
+  
     
     Reachability *reach = [Reachability reachabilityForInternetConnection];
     NetworkStatus status = [reach currentReachabilityStatus];

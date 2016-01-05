@@ -127,6 +127,7 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
+        cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
         NSString *string = [details objectForKey:@"status_display"];
         if ([string isEqualToString:@"已付款"]) {
              cell.statusLabel.text = @"商品准备中";
@@ -172,6 +173,7 @@
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             NSLog(@"imageView = %@", imageView);
             [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
             imageView.layer.borderWidth = 0.5;
