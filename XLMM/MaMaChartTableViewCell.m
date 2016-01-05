@@ -16,7 +16,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self createLabel];
-        [self addSubview:[self chart2]];
+//        [self addSubview:[self chart2:self.chartData]];
     }
     return self;
 }
@@ -30,12 +30,11 @@
     [self addSubview:self.orderNum];
 }
 
--(FSLineChart*)chart2 {
-    // Generating some dummy data
-    NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:7];
-    for(int i=0;i<7;i++) {
-        chartData[i] = [NSNumber numberWithFloat:(float)i / 30.0f + (float)(rand() % 100) / 200.0f];
-    }
+- (void)createChart:(NSMutableArray *)chartData {
+    [self addSubview:[self chart2:chartData]];
+}
+
+-(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
     self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10, 35, [UIScreen mainScreen].bounds.size.width - 20, 100)];
     self.lineChart.verticalGridStep = 1;

@@ -14,4 +14,5 @@
 @property (nonatomic, strong)UILabel *orderNum;
 @property (nonatomic, strong)FSLineChart *lineChart;
 
+- (void)createChart:(NSMutableArray *)chartData;
 @end
