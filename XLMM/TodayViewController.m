@@ -225,6 +225,7 @@ static NSString *khead2View = @"head2View";
     NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
     double doubleCurrentVersion = [currentVersion doubleValue];
     double doubleUpdateVersion = [self.latestVersion doubleValue];
+    NSLog(@"%f %f", doubleCurrentVersion, doubleUpdateVersion);
     
     if (doubleCurrentVersion < doubleUpdateVersion) {
         

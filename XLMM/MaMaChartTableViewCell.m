@@ -9,6 +9,7 @@
 #import "MaMaChartTableViewCell.h"
 #import "FSLineChart.h"
 #import "UIColor+FSPalette.h"
+#import "MMClass.h"
 
 @implementation MaMaChartTableViewCell
 
@@ -31,14 +32,22 @@
 }
 
 - (void)createChart:(NSMutableArray *)chartData {
-    [self addSubview:[self chart2:chartData]];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 100)];
+    scrollView.contentSize = CGSizeMake(SCREENWIDTH * 2, 100);
+    scrollView.contentOffset = CGPointMake(SCREENWIDTH, 0);
+    [self addSubview:scrollView];
+    scrollView.bounces = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    
+    
+    [scrollView addSubview:[self chart2:chartData]];
 }
 
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
-    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10, 35, [UIScreen mainScreen].bounds.size.width - 20, 100)];
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH *2, 100)];
     self.lineChart.verticalGridStep = 1;
-    self.lineChart.horizontalGridStep = 7;
+    self.lineChart.horizontalGridStep = 14;
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     

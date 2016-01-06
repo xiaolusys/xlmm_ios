@@ -131,7 +131,18 @@
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         NSMutableArray *data = responseObject;
-        self.chartPoint = data;
+//        self.chartPoint = data;
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (id obj in data) {
+            [array addObject:obj];
+        }
+        for (id obj in data) {
+            [array addObject:obj];
+        }
+        self.chartPoint = array;
+
+        
+        
         [self.mamaTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -157,6 +168,9 @@
     NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSLog(@"dicJson = %@", arrJson);
+        if (arrJson.count == 0) {
+            return;
+        }
         NSDictionary *dic = [arrJson objectAtIndex:0];
         levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
         jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
