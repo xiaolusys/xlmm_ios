@@ -280,6 +280,8 @@
 		322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25D91C35289700509EAD /* MaMaCenterViewController.m */; };
 		322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */; };
 		322D25E21C38AF1800509EAD /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25E11C38AF1800509EAD /* head_icon.png */; };
+		322FA9401C3CA9CC008DD942 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322FA93E1C3CA9CC008DD942 /* TixianViewController.m */; };
+		322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1190,6 +1192,9 @@
 		322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaCenterViewController.xib; sourceTree = "<group>"; };
 		322D25DF1C3532A200509EAD /* MaMaHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHeadView.xib; sourceTree = "<group>"; };
 		322D25E11C38AF1800509EAD /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
+		322FA93D1C3CA9CC008DD942 /* TixianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianViewController.h; sourceTree = "<group>"; };
+		322FA93E1C3CA9CC008DD942 /* TixianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianViewController.m; sourceTree = "<group>"; };
+		322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianViewController.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2520,6 +2525,9 @@
 				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
 				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
 				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
+				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
+				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
+				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
 			);
 			name = MaMaCenter;
 			sourceTree = "<group>";
@@ -3491,6 +3499,7 @@
 				322D25C71C32B93A00509EAD /* 圈圈加载0028.png in Resources */,
 				2E5600B11C2D496E000AFB39 /* loading动画0051.png in Resources */,
 				2E56008C1C2D496E000AFB39 /* loading动画0018.png in Resources */,
+				322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */,
 				2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				2EB87D3C1C17FAE4001CBF3D /* ios-social-sdk-comment-quick.html in Resources */,
@@ -3959,6 +3968,7 @@
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
+				322FA9401C3CA9CC008DD942 /* TixianViewController.m in Sources */,
 				325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */,
 				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,
 				32FE08891BF5AC750072CCEC /* ShenQingTuikuanController.m in Sources */,
