@@ -16,14 +16,15 @@
 #import "UIImage+ColorImage.h"
 #import "CartViewController.h"
 #import "MMDetailsViewController.h"
-
+#import "MMCollectionController.h"
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
 #import "LogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
-
+#import "YouHuiQuanViewController.h"
 #import "MaMaCenterViewController.h"
+#import "XiangQingViewController.h"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -57,15 +58,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
-    
-    if (_isFirst) {
-        
-        
-    }else{
-        
-        // [self presentLeftMenuViewController:leftButton];
-        
-    }
+  
+   
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
@@ -85,8 +79,11 @@
 
 - (void)presentView:(NSNotification *)notification{
     NSLog(@"跳转新的界面");
+    
     NSLog(@"userInfo = %@", notification.userInfo);
     NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
+    
+   
     
     NSLog(@"target_url = %@", target_url);
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
@@ -107,7 +104,14 @@
         NSLog(@"跳到时尚女装");
         [self buttonClicked:103];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-        NSLog(@"跳转到用户为过期优惠券列表");
+        NSLog(@"跳转到用户未过期优惠券列表");
+        
+        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        youhuiVC.isSelectedYHQ = YES;
+        [self.navigationController pushViewController:youhuiVC animated:YES];
+        
+        
+        
     } else {
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
@@ -118,17 +122,36 @@
             NSLog(@"跳到集合页面");
             NSLog(@"model_id = %@", [params lastObject]);
             
+            
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+            
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+            
+            
         } else if ([firstparam isEqualToString:@"product_id"]){
             NSLog(@"跳到商品详情");
             NSLog(@"product_id = %@", [params lastObject]);
             
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:@"9504" isChild:NO];
+            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
             [self.navigationController pushViewController:details animated:YES];
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
+       
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
             NSLog(@"跳到订单详情");
             NSLog(@"trade_id = %@", [params lastObject]);
+            
+            
+            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+            //http://m.xiaolu.so/rest/v1/trades/86412/details
+            
+           // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            NSLog(@"url = %@", xiangqingVC.urlString);
+            
+            
+            [self.navigationController pushViewController:xiangqingVC animated:YES];
+            
             
         } else {
             NSLog(@"跳到H5首页");

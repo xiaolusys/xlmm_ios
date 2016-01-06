@@ -75,6 +75,11 @@
     jiluLabel = [headView viewWithTag:400];
     shouyiLabel = [headView viewWithTag:500];
     
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tixianClicked:)];
+    [jineLabel addGestureRecognizer:tap];
+    jineLabel.userInteractionEnabled = YES;
+    
     [backButton addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -99,6 +104,13 @@
     
 }
 
+- (void)tixianClicked:(id)sender{
+    NSLog(@"提现");
+    TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+  
+}
+
 - (void)downloadData{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
@@ -118,7 +130,18 @@
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         NSMutableArray *data = responseObject;
-        self.chartPoint = data;
+//        self.chartPoint = data;
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (id obj in data) {
+            [array addObject:obj];
+        }
+        for (id obj in data) {
+            [array addObject:obj];
+        }
+        self.chartPoint = array;
+
+        
+        
         [self.mamaTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -144,8 +167,11 @@
     NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSLog(@"dicJson = %@", arrJson);
+        if (arrJson.count == 0) {
+            return;
+        }
         NSDictionary *dic = [arrJson objectAtIndex:0];
-        levelLabel.text = [NSString stringWithFormat:@"%ld", [[dic objectForKey:@"agencylevel"] integerValue]];
+        levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
         jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
     }
     
@@ -208,6 +234,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         MaMaChartTableViewCell *cell = (MaMaChartTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaChart" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (cell == nil) {
             cell = [[MaMaChartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaChart"];
         }
@@ -218,6 +245,7 @@
 
     } else {
         MaMaOrderTableViewCell *cell = (MaMaOrderTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaOrder" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (cell == nil) {
             cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
         }
@@ -228,7 +256,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.navigationController popViewControllerAnimated:YES];
+   // [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)publishNewPmt:(id)sender {

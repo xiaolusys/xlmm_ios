@@ -260,6 +260,13 @@
             CGContextAddLineToPoint(ctx, point.x, _axisHeight + _margin);
             CGContextStrokePath(ctx);
             
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.frame = CGRectMake(point.x - 20, point.y, 40, _axisHeight + _margin - point.y);
+            btn.backgroundColor = [UIColor lightGrayColor];
+            btn.tag = 100 + i;
+            [self addSubview:btn];
+            
 //            CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
 //            CGContextSetLineWidth(ctx, _axisLineWidth);
 //            CGContextMoveToPoint(ctx, point.x - 0.5f, _axisHeight + _margin);

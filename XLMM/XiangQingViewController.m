@@ -160,12 +160,12 @@
     }
 
     //订单编号和状态
-    
-    
-   // self.headdingdanzhuangtai.text = [dicJson objectForKey:@"status_display"];
-    
-    
     NSString *statusDisplay = [dicJson objectForKey:@"status_display"];
+
+    
+    self.headdingdanzhuangtai.text = statusDisplay;
+   
+    
     if (![statusDisplay isEqualToString:@"待付款"]) {
         NSLog(@"订单不是待付款状态");
         self.bottomViewHeight.constant = -60;
@@ -201,6 +201,10 @@
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+        self.rightImageView.hidden = NO;
+        
+        [self.WuliuView addGestureRecognizer:tapGesture];
 
     } else if (([statusDisplay isEqualToString:@"交易关闭"])){
         self.zhuangtaiLabel.text = @"交易关闭";
@@ -209,6 +213,18 @@
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 
+    } else if([statusDisplay isEqualToString:@"确认签收"]){
+        self.zhuangtaiLabel.text = @"已签收";
+        self.headdingdanzhuangtai.text = @"交易成功";
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+        self.rightImageView.hidden = NO;
+        
+        [self.WuliuView addGestureRecognizer:tapGesture];
+    } else {
+        // do other things
     }
     
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
@@ -253,6 +269,8 @@
         model.priceString = [dic objectForKey:@"total_fee"];
         model.nameString = [dic objectForKey:@"title"];
         model.orderID = [dic objectForKey:@"id"];
+        model.killTitle = [[dic objectForKey:@"kill_title"] boolValue];
+        model.status_display = [dic objectForKey:@"status_display"];
         [dataArray addObject:model];
         
         [refund_status_displayArray addObject:[dic objectForKey:@"refund_status_display"]];
@@ -265,6 +283,7 @@
     NSLog(@"dataArray = %@", dataArray);//orders 模型数组
     NSLog(@"refund_status_display = %@", refund_status_displayArray);//退货状态描述
     NSLog(@"refund_status = %@", refund_statusArray);//退货状态编码 0，1，2，3，4，5，6，7
+   
     
     oidArray = [[NSArray alloc] initWithArray:mutableArray];
     NSLog(@"oids = %@", oidArray);
@@ -329,7 +348,7 @@
     PerDingdanModel *model = nil;
     for (int i = 0; i<number ; i++) {
         
-        
+        NSLog(@"model.status_disPlay = %@", model.status_display);
         [[NSBundle mainBundle] loadNibNamed:@"XiangQingView" owner:owner options:nil];
         owner.myView.frame = CGRectMake(0, 0 + 90 * i, SCREENWIDTH, 90);
         
@@ -398,8 +417,20 @@
             button.layer.cornerRadius = 12.5;
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
+            if (model.killTitle) {
+                button.enabled = NO;
+                [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor colorWithR:155 G:155 B:155 alpha:0] forState:UIControlStateNormal];
+                button.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+                CGRect rect = button.frame;
+                rect.size.width = 112;
+                rect.origin.x -= 40;
+                button.frame = rect;
+            }
         } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"] &&
                    [[refund_statusArray objectAtIndex:i] integerValue] == 0){
+            
+            
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
@@ -411,6 +442,16 @@
             button.layer.cornerRadius = 12.5;
             [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
             [owner.myView addSubview:button];
+            if (model.killTitle) {
+                button.enabled = NO;
+                [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor colorWithR:155 G:155 B:155 alpha:0] forState:UIControlStateNormal];
+                button.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+                CGRect rect = button.frame;
+                rect.size.width = 112;
+                rect.origin.x -= 40;
+                button.frame = rect;
+            }
         }
         else{
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];

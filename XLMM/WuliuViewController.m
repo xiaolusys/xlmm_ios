@@ -37,11 +37,11 @@
 - (void) getWuliuInfoFromServer{
     //self.tradeId = @"xd15081955d45da07263e";
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/wuliu/?tid=%@", Root_URL, self.tradeId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_tid?tid=%@", Root_URL, self.tradeId];
     NSLog(@"%@", urlString);
     
     
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         [self performSelectorOnMainThread:@selector(fetchedWuliuData:)withObject:data waitUntilDone:YES];
     });
@@ -50,50 +50,53 @@
   }
 
 - (void)fetchedWuliuData:(NSData *)responseData{
+    NSLog(@"%@",responseData);
     if (responseData == nil) {
         return;
     }
     
+    
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
     NSLog(@"json = %@", dicJson);
     
-    NSInteger code = [[dicJson objectForKey:@"code"] integerValue];
-    if (code == 0) {
-        NSDictionary *responseContent = [dicJson objectForKey:@"response_content"];
-        BOOL RESULT = [[responseContent objectForKey:@"result"] boolValue];
-        if (RESULT == YES) {
-            NSArray *infoArray = [responseContent objectForKey:@"ret"];
-            NSInteger length = infoArray.count;
-            
-            if (length > 0) {
-                NSDictionary *lastWuliuInfo = [infoArray lastObject];
+    
+    self.wuliuCompanyName.text = [dicJson objectForKey:@"name"];
+    self.wuliuMiandanId.text = [dicJson objectForKey:@"order"];
+    
+ 
+        NSArray *infoArray = [dicJson objectForKey:@"data"];
+        NSInteger length = infoArray.count;
+    if (length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂无物流信息，请稍候查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+    }
+        
+        if (length > 0) {
+                NSDictionary *lastWuliuInfo = [infoArray firstObject];
                 NSString *timeText = [lastWuliuInfo objectForKey:@"time"];
                 timeText = [self spaceFormatTimeString:timeText];
                 
                 NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
                 [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
                 
-                // display wuliu company name and wuliu miandan id
-                self.wuliuCompanyName.text = [lastWuliuInfo objectForKey:@"logistics_company"];
-                self.wuliuMiandanId.text = [lastWuliuInfo objectForKey:@"out_sid"];
-            }
-            NSInteger MAX = 4; // we only display at most 3 wuliu info.
-            if (length < MAX) {
-                MAX = length;
-            }
-            for (int i=1; i<MAX; ++i) {
-                NSDictionary *wuliuInfo =  infoArray[length-1-i];
-                NSString *timeText = [wuliuInfo objectForKey:@"time"];
-                timeText = [self spaceFormatTimeString:timeText];
-                
-                NSString *infoText = [wuliuInfo objectForKey:@"content"];
-                [self displayWuliuInfoWithOrder:i andTime:timeText andInfo:infoText];
-            }
-        } else {
-            // future work:
-            // here we should do some process to have more friendly UI display
+           
+            
+           
         }
-    }
+        NSInteger MAX = 4; // we only display at most 3 wuliu info.
+        if (length < MAX) {
+            MAX = length;
+        }
+        for (int i=1; i<MAX; ++i) {
+            NSDictionary *wuliuInfo =  infoArray[i];
+            NSString *timeText = [wuliuInfo objectForKey:@"time"];
+            timeText = [self spaceFormatTimeString:timeText];
+            
+            NSString *infoText = [wuliuInfo objectForKey:@"content"];
+            [self displayWuliuInfoWithOrder:i andTime:timeText andInfo:infoText];
+        }
+   
+    
 
 }
 

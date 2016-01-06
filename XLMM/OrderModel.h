@@ -27,6 +27,7 @@
 @property (nonatomic, copy)NSString *status_display;
 @property (nonatomic, copy)NSString *refund_status;
 @property (nonatomic, copy)NSString *refund_status_display;
-
+@property (nonatomic, copy) NSString *refund_id;
+@property (nonatomic, assign) BOOL kill_title;
 
 @end
