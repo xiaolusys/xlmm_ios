@@ -1836,20 +1836,6 @@
 			name = MaMaModel;
 			sourceTree = "<group>";
 		};
-		2E73EDE41C3CF63600EDB94E /* XiaoLuMaMa */ = {
-			isa = PBXGroup;
-			children = (
-				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
-				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
-				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
-				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
-				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
-				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
-				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
-			);
-			name = XiaoLuMaMa;
-			sourceTree = "<group>";
-		};
 		2E76FFDE1C180BAA008CE960 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -2545,6 +2531,8 @@
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
+				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
+				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
 			);
 			name = MaMaCenter;
 			sourceTree = "<group>";
@@ -2665,7 +2653,7 @@
 		325DF95C1B6A472600351ACA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2E73EDE41C3CF63600EDB94E /* XiaoLuMaMa */,
+				322FA9351C3BA521008DD942 /* MaMaCenter */,
 				32816F8D1C1FF740004DD2EF /* Catrs */,
 				32816F8C1C1FF603004DD2EF /* Common */,
 				32816F8A1C1FF5C1004DD2EF /* Login */,
