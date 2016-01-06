@@ -12,6 +12,7 @@
 #import "MMClass.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MaMaOrderModel.h"
+#import "PublishNewPdtViewController.h"
 
 
 
@@ -230,4 +231,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)publishNewPmt:(id)sender {
+    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+    [self.navigationController pushViewController:publish animated:YES];
+    
+}
 @end

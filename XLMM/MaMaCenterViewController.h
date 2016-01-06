@@ -12,4 +12,8 @@
 
 @property (strong, nonatomic) UITableView *mamaTableView;
 
+
+- (IBAction)publishNewPmt:(id)sender;
+
+
 @end

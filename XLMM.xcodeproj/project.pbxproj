@@ -100,6 +100,7 @@
 		2E73ED961C38F19B00EDB94E /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED931C38F19B00EDB94E /* FSLineChart.m */; };
 		2E73ED971C38F19B00EDB94E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED951C38F19B00EDB94E /* UIColor+FSPalette.m */; };
 		2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */; };
+		2E73EDE31C3CF61F00EDB94E /* PublishNewPdtViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -895,6 +896,8 @@
 		2E73ED951C38F19B00EDB94E /* UIColor+FSPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FSPalette.m"; sourceTree = "<group>"; };
 		2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaOrderModel.h; sourceTree = "<group>"; };
 		2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaOrderModel.m; sourceTree = "<group>"; };
+		2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishNewPdtViewController.h; sourceTree = "<group>"; };
+		2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishNewPdtViewController.m; sourceTree = "<group>"; };
 		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -1828,6 +1831,20 @@
 			name = MaMaModel;
 			sourceTree = "<group>";
 		};
+		2E73EDE41C3CF63600EDB94E /* XiaoLuMaMa */ = {
+			isa = PBXGroup;
+			children = (
+				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
+				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
+				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
+				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
+				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
+				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
+				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
+			);
+			name = XiaoLuMaMa;
+			sourceTree = "<group>";
+		};
 		2E76FFDE1C180BAA008CE960 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -2629,6 +2646,7 @@
 		325DF95C1B6A472600351ACA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2E73EDE41C3CF63600EDB94E /* XiaoLuMaMa */,
 				32816F8D1C1FF740004DD2EF /* Catrs */,
 				32816F8C1C1FF603004DD2EF /* Common */,
 				32816F8A1C1FF5C1004DD2EF /* Login */,
@@ -2867,11 +2885,6 @@
 				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
-				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
-				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
-				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
-				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
-				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -3912,6 +3925,7 @@
 				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
 				3219528B1BFC7A8D00AA0AB8 /* QNALAssetFile.m in Sources */,
 				321952931BFC7A8D00AA0AB8 /* QNDns.m in Sources */,
+				2E73EDE31C3CF61F00EDB94E /* PublishNewPdtViewController.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				3219528D1BFC7A8D00AA0AB8 /* QNCrc32.m in Sources */,
 				32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */,
