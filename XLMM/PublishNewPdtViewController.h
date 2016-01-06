@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PublishNewPdtViewController : UIViewController
+@interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @end

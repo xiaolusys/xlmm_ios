@@ -264,6 +264,8 @@
 - (IBAction)publishNewPmt:(id)sender {
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
+//    UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:publish];
+//    [self presentViewController:navC animated:YES completion:nil];
     
 }
 @end

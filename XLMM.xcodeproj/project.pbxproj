@@ -101,6 +101,12 @@
 		2E73ED971C38F19B00EDB94E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED951C38F19B00EDB94E /* UIColor+FSPalette.m */; };
 		2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */; };
 		2E73EDE31C3CF61F00EDB94E /* PublishNewPdtViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */; };
+		2E73EDEB1C3D160F00EDB94E /* PicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDE91C3D160F00EDB94E /* PicCollectionViewCell.m */; };
+		2E73EDEC1C3D160F00EDB94E /* PicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEA1C3D160F00EDB94E /* PicCollectionViewCell.xib */; };
+		2E73EDF01C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDEE1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m */; };
+		2E73EDF11C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
+		2E73EDF51C3D1FE500EDB94E /* PicFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDF31C3D1FE500EDB94E /* PicFooterCollectionReusableView.m */; };
+		2E73EDF61C3D1FE500EDB94E /* PicFooterCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDF41C3D1FE500EDB94E /* PicFooterCollectionReusableView.xib */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -900,6 +906,15 @@
 		2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaOrderModel.m; sourceTree = "<group>"; };
 		2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishNewPdtViewController.h; sourceTree = "<group>"; };
 		2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishNewPdtViewController.m; sourceTree = "<group>"; };
+		2E73EDE81C3D160F00EDB94E /* PicCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicCollectionViewCell.h; sourceTree = "<group>"; };
+		2E73EDE91C3D160F00EDB94E /* PicCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicCollectionViewCell.m; sourceTree = "<group>"; };
+		2E73EDEA1C3D160F00EDB94E /* PicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicCollectionViewCell.xib; sourceTree = "<group>"; };
+		2E73EDED1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicHeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		2E73EDEE1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		2E73EDF21C3D1FE500EDB94E /* PicFooterCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicFooterCollectionReusableView.h; sourceTree = "<group>"; };
+		2E73EDF31C3D1FE500EDB94E /* PicFooterCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicFooterCollectionReusableView.m; sourceTree = "<group>"; };
+		2E73EDF41C3D1FE500EDB94E /* PicFooterCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicFooterCollectionReusableView.xib; sourceTree = "<group>"; };
 		2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -1812,6 +1827,15 @@
 				2E73ED831C38C11C00EDB94E /* MaMaOrderTableViewCell.xib */,
 				2E73ED871C38D37700EDB94E /* MaMaChartTableViewCell.h */,
 				2E73ED881C38D37700EDB94E /* MaMaChartTableViewCell.m */,
+				2E73EDE81C3D160F00EDB94E /* PicCollectionViewCell.h */,
+				2E73EDE91C3D160F00EDB94E /* PicCollectionViewCell.m */,
+				2E73EDEA1C3D160F00EDB94E /* PicCollectionViewCell.xib */,
+				2E73EDED1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.h */,
+				2E73EDEE1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m */,
+				2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */,
+				2E73EDF21C3D1FE500EDB94E /* PicFooterCollectionReusableView.h */,
+				2E73EDF31C3D1FE500EDB94E /* PicFooterCollectionReusableView.m */,
+				2E73EDF41C3D1FE500EDB94E /* PicFooterCollectionReusableView.xib */,
 			);
 			name = MaMaView;
 			sourceTree = "<group>";
@@ -3410,6 +3434,7 @@
 				2E72B3F01C1BB9C700D452E0 /* shareqq.png in Resources */,
 				321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */,
 				320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */,
+				2E73EDF11C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib in Resources */,
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
@@ -3552,6 +3577,7 @@
 				3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */,
 				323D66751C27921F00A2B955 /* ios7.png in Resources */,
 				322D25C91C32B93A00509EAD /* 圈圈加载0030.png in Resources */,
+				2E73EDF61C3D1FE500EDB94E /* PicFooterCollectionReusableView.xib in Resources */,
 				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				2E5600BE1C2D496E000AFB39 /* loading动画0063.png in Resources */,
 				2E56009C1C2D496E000AFB39 /* loading动画0032.png in Resources */,
@@ -3577,6 +3603,7 @@
 				32151BFA1B96CFD4003569D7 /* MMDetailsViewController.xib in Resources */,
 				2E5600961C2D496E000AFB39 /* loading动画0027.png in Resources */,
 				32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */,
+				2E73EDEC1C3D160F00EDB94E /* PicCollectionViewCell.xib in Resources */,
 				32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */,
 				2E5600B61C2D496E000AFB39 /* loading动画0056.png in Resources */,
 				32FE08851BF492C50072CCEC /* FooterView.xib in Resources */,
@@ -3905,6 +3932,7 @@
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				3219529D1BFC7A8D00AA0AB8 /* QNResumeUpload.m in Sources */,
 				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
+				2E73EDF51C3D1FE500EDB94E /* PicFooterCollectionReusableView.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
 				320CABE11BA906D400C62E36 /* PostersViewController.m in Sources */,
 				32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */,
@@ -4004,6 +4032,7 @@
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
+				2E73EDEB1C3D160F00EDB94E /* PicCollectionViewCell.m in Sources */,
 				323A056D1C0C307700F56EAB /* WuliuCompanyController.m in Sources */,
 				8E9665711C04AD43001CF18A /* SetPasswordViewController.m in Sources */,
 				322D256B1C32B66100509EAD /* MJRefreshBackGifFooter.m in Sources */,
@@ -4021,6 +4050,7 @@
 				322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */,
 				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
 				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
+				2E73EDF01C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m in Sources */,
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				2E73ED971C38F19B00EDB94E /* UIColor+FSPalette.m in Sources */,

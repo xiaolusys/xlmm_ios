@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="picHeader" id="U6b-Vx-4bR">
+            <rect key="frame" x="0.0" y="0.0" width="365" height="58"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQm-rt-3uE">
+                    <rect key="frame" x="15" y="10" width="48" height="48"/>
+                    <color key="backgroundColor" red="0.99607843139999996" green="0.61960784310000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="1kx-rm-8uU"/>
+                        <constraint firstAttribute="width" constant="48" id="ud2-se-7BG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="lQm-rt-3uE" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="c8n-gY-rw1"/>
+                <constraint firstItem="lQm-rt-3uE" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="15" id="dtK-dH-ZMF"/>
+            </constraints>
+            <point key="canvasLocation" x="558.5" y="358.5"/>
+        </collectionReusableView>
+    </objects>
+</document>
