@@ -2,7 +2,7 @@
 //  PicFooterCollectionReusableView.m
 //  XLMM
 //
-//  Created by 张迎 on 16/1/6.
+//  Created by 张迎 on 16/1/7.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 

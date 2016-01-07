@@ -8,10 +8,22 @@
 
 #import "PicCollectionViewCell.h"
 
+@interface PicCollectionViewCell ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
+
+@end
+
 @implementation PicCollectionViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    
+}
+
+- (void)createImageForCellImageView:(NSString *)imageUrl {
+    //图片处理小图
+    UIImage *image = [UIImage imageNamed:@"test"];
+    self.cellImageView.image = image;
 }
 
 @end

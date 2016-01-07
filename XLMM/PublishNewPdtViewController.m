@@ -11,18 +11,24 @@
 #import "PicCollectionViewCell.h"
 #import "PicHeaderCollectionReusableView.h"
 #import "PicFooterCollectionReusableView.h"
+#import "PhotoView.h"
 
 #define CELLWIDTH 80
 
 @interface PublishNewPdtViewController ()
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
-
-
+@property (nonatomic, strong)PhotoView *photoView;
 
 @end
 
 @implementation PublishNewPdtViewController
+- (PhotoView *)photoView {
+    if (!_photoView) {
+        self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    }
+    return _photoView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,22 +66,22 @@
     self.picCollectionView.delegate = self;
     self.picCollectionView.dataSource = self;
     
-    [self.picCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"picCollectionCell"];
+    [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
 }
 
 #pragma mark --collection的代理方法
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
+    return 5;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 9;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor orangeColor];
+    PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
+    [cell createImageForCellImageView:nil];
     return cell;
 }
 
@@ -83,20 +89,24 @@
     return CGSizeMake(CELLWIDTH, CELLWIDTH);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    //图片查看
+    PicCollectionViewCell *cell = [self.picCollectionView cellForItemAtIndexPath:indexPath];
+    
+    [self.photoView fillData:indexPath.row cellFrame:cell.frame];
+    [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
+    
+}
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
         //返回页眉
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
-        headerV.backgroundColor = [UIColor lightGrayColor];
-        
-//        //给header添加点击事件
-//        NSString *key = self.allKey[indexPath.section];
-//        headerV.headerLabel.text = self.headerDic[key];
         return headerV;
         
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
-        footerV.backgroundColor = [UIColor orangeColor];
+        [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:) forControlEvents:UIControlEventTouchUpInside];
         return footerV;
     }
 
@@ -107,6 +117,22 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 54);
+}
+
+#pragma mark --保存事件
+- (void)tapSaveImageToIphone:(NSMutableArray *)currentPicArr {
+    UIImageWriteToSavedPhotosAlbum([UIImage imageNamed:@"test"], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (error == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",  nil];
+        [alert show];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

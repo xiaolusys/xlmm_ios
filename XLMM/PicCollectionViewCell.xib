@@ -12,10 +12,23 @@
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="153" height="140"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KX4-sX-YNy">
+                        <rect key="frame" x="0.0" y="0.0" width="153" height="140"/>
+                    </imageView>
+                </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="0.99607843139999996" green="0.61960784310000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="KX4-sX-YNy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="C02-Si-dfe"/>
+                <constraint firstAttribute="trailing" secondItem="KX4-sX-YNy" secondAttribute="trailing" id="kaa-qk-qpq"/>
+                <constraint firstAttribute="bottom" secondItem="KX4-sX-YNy" secondAttribute="bottom" id="oFZ-pc-BMG"/>
+                <constraint firstItem="KX4-sX-YNy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="qae-KA-g65"/>
+            </constraints>
             <size key="customSize" width="153" height="140"/>
+            <connections>
+                <outlet property="cellImageView" destination="KX4-sX-YNy" id="bfD-Rs-xcI"/>
+            </connections>
             <point key="canvasLocation" x="612.5" y="414"/>
         </collectionViewCell>
     </objects>
