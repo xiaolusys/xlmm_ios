@@ -10,4 +10,12 @@
 
 @interface TixianViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *hongbaoImage1;
+@property (weak, nonatomic) IBOutlet UIImageView *hongbaoImage2;
+@property (weak, nonatomic) IBOutlet UIButton *tixianButton;
+- (IBAction)tixianClicked:(id)sender;
+
+
+
+
 @end

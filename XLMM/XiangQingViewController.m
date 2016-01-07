@@ -201,10 +201,6 @@
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-        self.rightImageView.hidden = NO;
-        
-        [self.WuliuView addGestureRecognizer:tapGesture];
 
     } else if (([statusDisplay isEqualToString:@"交易关闭"])){
         self.zhuangtaiLabel.text = @"交易关闭";
@@ -219,10 +215,6 @@
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-        self.rightImageView.hidden = NO;
-        
-        [self.WuliuView addGestureRecognizer:tapGesture];
     } else {
         // do other things
     }
