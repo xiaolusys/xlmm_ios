@@ -739,6 +739,10 @@
 		32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC181BEC95CF0036F338 /* ModifyPhoneController.xib */; };
 		32E6BC1E1BEC95F90036F338 /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */; };
 		32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */; };
+		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
+		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
+		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
+		32EAA33F1C3DFC97004055AB /* hongbaounableclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33B1C3DFC97004055AB /* hongbaounableclicked.png */; };
 		32EC42561BE85799009E5FA2 /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE91BF1B7C37D100CA67C3 /* AddAdressViewController.xib */; };
 		32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC425F1BE8A8C1009E5FA2 /* qitiantuihuo.png */; };
 		32EC42641BE8A8C1009E5FA2 /* quabguobaoyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EC42601BE8A8C1009E5FA2 /* quabguobaoyou.png */; };
@@ -1591,6 +1595,10 @@
 		32E6BC1B1BEC95F90036F338 /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
+		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
+		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
+		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
+		32EAA33B1C3DFC97004055AB /* hongbaounableclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaounableclicked.png; sourceTree = "<group>"; };
 		32EC425F1BE8A8C1009E5FA2 /* qitiantuihuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qitiantuihuo.png; sourceTree = "<group>"; };
 		32EC42601BE8A8C1009E5FA2 /* quabguobaoyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quabguobaoyou.png; sourceTree = "<group>"; };
 		32EC42611BE8A8C1009E5FA2 /* tiantian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiantian.png; sourceTree = "<group>"; };
@@ -2132,6 +2140,11 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */,
+				32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */,
+				32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */,
+				32EAA33B1C3DFC97004055AB /* hongbaounableclicked.png */,
+				32AA6D9A1C38E9A50011BB04 /* mmback_icon.png */,
 				322D25E11C38AF1800509EAD /* head_icon.png */,
 				324EA2F41C30E03800E46557 /* placeHolderImage.png */,
 				324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */,
@@ -2577,7 +2590,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32AA6D9A1C38E9A50011BB04 /* mmback_icon.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3410,6 +3422,7 @@
 				32746E2C1B74A22000816208 /* icon-xiaolu.png in Resources */,
 				3274C18A1C07129E00641C4E /* refundSuccessful.png in Resources */,
 				32746E2A1B74A22000816208 /* icon-tuihuanhuo.png in Resources */,
+				32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */,
 				322D257E1C32B92000509EAD /* songshou.png in Resources */,
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
@@ -3427,6 +3440,7 @@
 				32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */,
 				2E5600931C2D496E000AFB39 /* loading动画0024.png in Resources */,
 				2E5600A71C2D496E000AFB39 /* loading动画0042.png in Resources */,
+				32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */,
 				32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */,
 				2EB87D2E1C17FAE4001CBF3D /* UMShareEditViewControlleriPad.xib in Resources */,
 				2E5600911C2D496E000AFB39 /* loading动画0022.png in Resources */,
@@ -3701,6 +3715,7 @@
 				2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
+				32EAA33F1C3DFC97004055AB /* hongbaounableclicked.png in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				322D25CA1C32B93A00509EAD /* 圈圈加载0031.png in Resources */,
 				323D667C1C2799C200A2B955 /* retina7.png in Resources */,
@@ -3742,6 +3757,7 @@
 				322D25C51C32B93A00509EAD /* 圈圈加载0026.png in Resources */,
 				322D25711C32B66100509EAD /* MJRefresh.bundle in Resources */,
 				322D25B81C32B93A00509EAD /* 圈圈加载0013.png in Resources */,
+				32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */,
 				2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				2EB87D421C17FAE4001CBF3D /* ios-social-sdk-share-quick.html in Resources */,
