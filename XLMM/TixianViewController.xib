@@ -7,6 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TixianViewController">
             <connections>
+                <outlet property="hongbaoImage1" destination="bxa-3u-dOx" id="leq-o4-Kfg"/>
+                <outlet property="hongbaoImage2" destination="iER-3T-wu4" id="OqX-nf-OcT"/>
+                <outlet property="tixianButton" destination="Sgi-R2-2VV" id="MdE-CG-ZhH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -87,7 +90,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sgi-R2-2VV">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                            <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.96078431372549022" green="0.69411764705882351" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="h0Y-fK-fo4"/>
                             </constraints>
@@ -105,10 +108,12 @@
                                     <include reference="h0Y-fK-fo4"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <action selector="tixianClicked:" destination="-1" eventType="touchUpInside" id="oJP-6i-23w"/>
+                            </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iER-3T-wu4">
+                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaobeforeclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="iER-3T-wu4">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <color key="backgroundColor" red="0.33725490200000002" green="0.76470588240000004" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="0SE-MT-T7Z">
                                     <variation key="heightClass=regular-widthClass=compact" constant="100"/>
@@ -130,9 +135,20 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-3u-dOx">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  亲爱的小鹿妈妈们，" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-FY-xQ6">
+                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统升级中暂时只能用微信红包提现喔～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUI-5q-UjY">
+                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaobeforeclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-3u-dOx">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <color key="backgroundColor" red="0.33725490200000002" green="0.76470588240000004" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="5iG-hq-ljw">
                                     <variation key="heightClass=regular-widthClass=compact" constant="170"/>
@@ -154,18 +170,6 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  亲爱的小鹿妈妈们，" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-FY-xQ6">
-                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统升级中暂时只能用微信红包提现喔～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUI-5q-UjY">
-                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -191,9 +195,9 @@
                         <mask key="subviews">
                             <exclude reference="Sgi-R2-2VV"/>
                             <exclude reference="iER-3T-wu4"/>
-                            <exclude reference="bxa-3u-dOx"/>
                             <exclude reference="6Lk-FY-xQ6"/>
                             <exclude reference="GUI-5q-UjY"/>
+                            <exclude reference="bxa-3u-dOx"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="Dwv-ho-p5t"/>
@@ -213,9 +217,9 @@
                         <mask key="subviews">
                             <include reference="Sgi-R2-2VV"/>
                             <include reference="iER-3T-wu4"/>
-                            <include reference="bxa-3u-dOx"/>
                             <include reference="6Lk-FY-xQ6"/>
                             <include reference="GUI-5q-UjY"/>
+                            <include reference="bxa-3u-dOx"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="Dwv-ho-p5t"/>
@@ -274,7 +278,10 @@
                     <include reference="tNt-FN-wnZ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="355" y="281"/>
+            <point key="canvasLocation" x="-43" y="26"/>
         </view>
     </objects>
+    <resources>
+        <image name="hongbaobeforeclicked.png" width="344" height="207"/>
+    </resources>
 </document>
