@@ -136,24 +136,24 @@
 
 - (IBAction)tixianClicked:(id)sender {
     NSLog(@"提现");
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-//  http://192.168.1.31:9000/rest/v1/cashout
-    
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL];
-    NSLog(@"url = %@", stringurl);
-    NSDictionary *paramters = @{@"choice":type};
-    
-    [manager POST:stringurl parameters:paramters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"response = %@", responseObject);
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+////  http://192.168.1.31:9000/rest/v1/cashout
+//    
+//    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL];
+//    NSLog(@"url = %@", stringurl);
+//    NSDictionary *paramters = @{@"choice":type};
+//    
+////    [manager POST:stringurl parameters:paramters
+////          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+////              NSLog(@"response = %@", responseObject);
+////              
+////          }
+////          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+////              
+////              NSLog(@"Error: %@", error);
+////              
+////          }];
 
     
     
