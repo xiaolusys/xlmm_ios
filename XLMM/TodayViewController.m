@@ -56,6 +56,8 @@ static NSString *khead2View = @"head2View";
     BOOL _isDone;
     BOOL _isUpdate;
     
+    BOOL _updating;
+    
     CGFloat oldScrollViewTop;
     
     
@@ -143,12 +145,14 @@ static NSString *khead2View = @"head2View";
    // NSLog(@"lodeMore url = %@", nextUrl);
     if ([nextUrl isKindOfClass:[NSString class]]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            _updating = YES;
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
             [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
             
         });
     } else {
-        [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
+//        [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
     }
     
    
@@ -182,9 +186,9 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.mj_header = header;
     [self.myCollectionView.mj_header beginRefreshing];
     
-    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
   //  [footer setAutomaticallyHidden:YES];
-    self.myCollectionView.mj_footer = footer;
+//    self.myCollectionView.mj_footer = footer;
     
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
@@ -356,11 +360,7 @@ static NSString *khead2View = @"head2View";
 }
 
 
-
-
-
 #pragma mark --今题推荐数据解析
-
 
 - (void)fetchedPosterData:(NSData *)data{
     NSError *error;
@@ -406,10 +406,12 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)fetchedPromoteMorePageData:(NSData *)data{
+    _updating = NO;
     if (data == nil) {
         
         return;
     }
+    
     NSError *error = nil;
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
 //    NSLog(@"err = %@", error);
@@ -531,7 +533,7 @@ static NSString *khead2View = @"head2View";
     for (NSDictionary *childInfo in childArray) {
         PromoteModel *model = [self fillModel:childInfo];
         
-        
+    
         [childDataArray addObject:model];
         
     }
@@ -594,12 +596,7 @@ static NSString *khead2View = @"head2View";
         }
         
     }
-    
-    
-   
     return model;
-
-    
 }
 
 
@@ -884,5 +881,18 @@ static NSString *khead2View = @"head2View";
 }
 
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) return;
+    
+    if (childDataArray.count == 0) {
+        if ((ladyDataArray.count - indexPath.row < 5) && !_updating) {
+            [self loadMore];
+        };
+    }else {
+        if (childDataArray.count - indexPath.row < 5  && !_updating) {
+            [self loadMore];
+        }
+    }
+}
 
 @end

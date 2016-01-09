@@ -11,6 +11,7 @@
 @interface PicFooterCollectionReusableView : UICollectionReusableView
 
 @property (weak, nonatomic) IBOutlet UIButton *savePhotoBtn;
+@property (nonatomic, assign)NSInteger sectionNum;
 
 
 @end

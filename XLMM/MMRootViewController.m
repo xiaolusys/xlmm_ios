@@ -358,7 +358,6 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
-    
 }
 
 - (void)gotoCarts:(id)sender{

@@ -105,13 +105,14 @@
         
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
-        [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:) forControlEvents:UIControlEventTouchUpInside];
+        footerV.savePhotoBtn.tag = 100 + indexPath.section;
+        
+        [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
         return footerV;
     }
 
 }
 
- 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
@@ -121,8 +122,10 @@
 }
 
 #pragma mark --保存事件
-- (void)tapSaveImageToIphone:(NSMutableArray *)currentPicArr {
-    UIImageWriteToSavedPhotosAlbum([UIImage imageNamed:@"test"], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+- (void)tapSaveImageToIphone:(UIButton *)sender
+               currentPicArr:(NSMutableArray *)currentPicArr {
+    NSLog(@"%ld", (long)sender.tag);
+//    UIImageWriteToSavedPhotosAlbum([UIImage imageNamed:@"test"], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{

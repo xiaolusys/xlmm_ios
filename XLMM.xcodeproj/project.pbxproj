@@ -2692,7 +2692,6 @@
 				32A88E191B87191A003501EF /* XiangQingView.xib */,
 				32A81F921B8D9BF6009972B3 /* BuyCartsView.h */,
 				32A81F931B8D9BF6009972B3 /* BuyCartsView.m */,
-				32A81F951B8D9C08009972B3 /* BuyCartsView.xib */,
 				321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */,
 				321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */,
 				321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */,
@@ -3205,6 +3204,7 @@
 		32CECF8A1BA665A100FF3BD3 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				32A81F951B8D9C08009972B3 /* BuyCartsView.xib */,
 				32BA1B231BF2F1FA0000A0F2 /* SingleOrderViewCell.h */,
 				32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */,
 				32BA1B251BF2F1FA0000A0F2 /* SingleOrderViewCell.xib */,
