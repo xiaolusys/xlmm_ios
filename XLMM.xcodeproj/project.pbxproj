@@ -4345,7 +4345,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4388,7 +4388,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
