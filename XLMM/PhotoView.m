@@ -51,14 +51,16 @@
 - (void)picAddToScrollView {
     //换成对应的位置
     CGFloat smallX = self.cellFrame.origin.x + self.index * SWIDTH;
-//    CGFloat smallY = 0;
-//    
-//    if (self.cellFrame.origin.y / SHEIGHT > 1) {
+    
+    CGFloat smallY = 0;
+    if (self.cellFrame.origin.y / SHEIGHT > 1) {
 //        smallY = self.cellFrame.origin.y - (self.cellFrame.origin.y / SHEIGHT) * SHEIGHT;
-//    }else {
-//        smallY = self.cellFrame.origin.y;
-//    }
-    CGFloat smallY = self.cellFrame.origin.y;
+        smallY = self.cellFrame.origin.y - self.contentOffY;
+        NSLog(@"#########%f", self.contentOffY);
+    }else {
+        smallY = self.cellFrame.origin.y;
+    }
+//    CGFloat smallY = self.cellFrame.origin.y;
     
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
     imageIndex.image = [UIImage imageNamed:@"test"];
@@ -86,10 +88,10 @@
     
     
     
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 40, 120, 20)];
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 34, 120, 20)];
     self.pageControl.numberOfPages = self.picArr.count;
     self.pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
-    self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:120 / 256.0 green:120 / 256.0 blue:120 / 256.0 alpha:0.4];
     [self addSubview:self.pageControl];
 }
 
@@ -100,10 +102,12 @@
 
 - (void)cancelShade {
     //清除所有的照片
+    [UIView animateWithDuration:0.5 animations:^{
+        [self removeFromSuperview];
+    }];
     for (UIImageView *imageV in self.scrollView.subviews) {
         imageV.image = nil;
     }
-    [self removeFromSuperview];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

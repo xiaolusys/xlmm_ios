@@ -91,11 +91,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     //图片查看
-    PicCollectionViewCell *cell = [self.picCollectionView cellForItemAtIndexPath:indexPath];
+    PicCollectionViewCell *cell = (PicCollectionViewCell *)[self.picCollectionView cellForItemAtIndexPath:indexPath];
     
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
-    
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -111,6 +110,8 @@
     }
 
 }
+
+ 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
@@ -134,6 +135,13 @@
     }
     
 }
+
+#pragma mark -- scrollView代理
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.photoView.contentOffY = scrollView.contentOffset.y;
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

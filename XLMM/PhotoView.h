@@ -13,6 +13,8 @@
 @property (nonatomic, assign)NSInteger index;
 @property (nonatomic, assign)CGRect cellFrame;
 
+@property (nonatomic, assign)CGFloat contentOffY;
+
 - (void)fillData:(NSInteger)index
        cellFrame:(CGRect)cellFrame;
 @end
