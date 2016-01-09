@@ -44,6 +44,7 @@ static NSString *khead2View = @"head2View";
     NSInteger childListNumber;
     NSInteger ladyListNumber;
     
+    BOOL _isShouldLoad;
     
 
     NSTimer *theTimer;
@@ -132,7 +133,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)reload
 {
-    
+    _isShouldLoad = YES;
     [self downloadData123];
     //[self getQiNiuToken];
     
@@ -182,11 +183,13 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.mj_header = header;
     [self.myCollectionView.mj_header beginRefreshing];
     
-    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
-  //  [footer setAutomaticallyHidden:YES];
-    self.myCollectionView.mj_footer = footer;
+//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//  //  [footer setAutomaticallyHidden:YES];
+//    self.myCollectionView.mj_footer = footer;
     
     
+    
+    _isShouldLoad = YES;
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -433,6 +436,7 @@ static NSString *khead2View = @"head2View";
     }
   //  NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
     
+    _isShouldLoad = YES;
     [self.myCollectionView reloadData];
 
 }
@@ -771,6 +775,14 @@ static NSString *khead2View = @"head2View";
     }
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
+    
+    
+    NSLog(@"%f", scrollView.contentSize.height - scrollView.contentOffset.y);
+    CGFloat distance = scrollView.contentSize.height - scrollView.contentOffset.y;
+    if (distance < 1500 && _isShouldLoad) {
+        [self loadMore];
+        _isShouldLoad = NO;
+    }
     
     
     CGFloat marine = 120;
