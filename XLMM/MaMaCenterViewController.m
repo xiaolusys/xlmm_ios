@@ -14,7 +14,7 @@
 #import "MaMaOrderModel.h"
 #import "PublishNewPdtViewController.h"
 #import "TixianViewController.h"
-
+#import "FSLineChart.h"
 
 
 
@@ -32,6 +32,10 @@
     UILabel *levelLabel;
     UILabel *jiluLabel;
     UILabel *shouyiLabel;
+    float ticheng;
+    NSInteger dingdanshu;
+    UILabel *dingdanLabel;
+    
 }
 
 - (NSMutableArray *)dataArr {
@@ -59,7 +63,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 60) style:UITableViewStylePlain];
     self.mamaTableView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:244/255.0 alpha:1];
     UIView *headView;
@@ -100,9 +103,22 @@
     
     self.mamaTableView.delegate = self;
     self.mamaTableView.dataSource = self;
+    
+   
+    
+    dingdanLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 250, SCREENWIDTH, 40)];
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu,ticheng];
+                         
+    dingdanLabel.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
+   dingdanLabel.font = [UIFont systemFontOfSize:14];
+    dingdanLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [self.mamaTableView addSubview:dingdanLabel];
+    dingdanLabel.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
+    
     [self.view addSubview:self.mamaTableView];
     
-    [self downloadData];
+    [self downloadData];  
     
 }
 
@@ -119,28 +135,34 @@
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
     
     //mama今日订单列表
-    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/today_shops", Root_URL];
+    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
+        
+        
         NSArray *data = responseObject;
         [self maMaOrderInfoData:data];
+      
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
     //chart data
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/seven_days_num", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=7", Root_URL];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        NSMutableArray *data = responseObject;
-//        self.chartPoint = data;
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        for (id obj in data) {
-            [array addObject:obj];
+        
+        
+        NSMutableArray *data = [responseObject mutableCopy];
+        NSLog(@"%@", responseObject);
+
+        for (int i = 0; i < data.count/2; i++) {
+            [data exchangeObjectAtIndex:i withObjectAtIndex:(data.count - i - 1)];
         }
-        for (id obj in data) {
-            [array addObject:obj];
-        }
-        self.chartPoint = array;
+        
+        NSLog(@"%@", data);
+        self.chartPoint = data;
+       
+
 
         
         
@@ -180,12 +202,26 @@
 
 - (void)maMaOrderInfoData:(NSArray *)array {
     
+    [self.dataArr removeAllObjects];
+    ticheng = 0.0;
+    dingdanshu = array.count;
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
+        
+        ticheng += [orderM.ticheng_cash floatValue];
+        
+        
+        
+        
         [self.dataArr addObject:orderM];
     }
-    [self.mamaTableView reloadData];
+    NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng];
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+    
+    [self.mamaTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+  //  [self.mamaTableView reloadData];
 }
 
 - (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
@@ -216,14 +252,17 @@
 #pragma mark --TableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return (self.dataArr.count + 1);
+    if (section == 0) {
+        return 1;
+    }
+    return (self.dataArr.count);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         return 130;
     }else {
         return 80;
@@ -233,15 +272,35 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
+        
         MaMaChartTableViewCell *cell = (MaMaChartTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaChart" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (cell == nil) {
             cell = [[MaMaChartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaChart"];
+            
         }
+        
+       // cell.orderNum.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng];
+
+        
         if (self.chartPoint.count > 0) {
             [cell createChart:self.chartPoint];
+            for (int i = 0; i < 7; i++) {
+                
+                
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                btn.frame = CGRectMake((6 - i)*(SCREENWIDTH - 10)/6 - 20,44, 50, 80);
+                btn.backgroundColor = [UIColor clearColor];
+                btn.alpha = 0.2;
+                btn.tag = 100 + i;
+                [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:btn];
+                NSLog(@"%@", cell.subviews);
+                    
+            }
         }
+       
         return cell;
 
     } else {
@@ -249,12 +308,39 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (cell == nil) {
             cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
+            
         }
-        MaMaOrderModel *orderM = self.dataArr[indexPath.row - 1];
+        MaMaOrderModel *orderM = self.dataArr[indexPath.row];
         [cell fillDataOfCell:orderM];
+      
         return cell;
     }
 }
+
+- (void)buttonClicked:(UIButton *)button{
+    NSLog(@"button.tag = %d", (int) button.tag);
+    
+    
+    int days = (int)button.tag - 100;
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%d", Root_URL, days];
+    NSLog(@"urlstring = %@", urlString);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        
+        
+        NSArray *data = responseObject;
+        [self maMaOrderInfoData:data];
+       
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+    //chart data
+
+}
+
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    // [self.navigationController popViewControllerAnimated:YES];

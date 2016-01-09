@@ -21,5 +21,6 @@
 @property (nonatomic, strong)NSNumber *status;
 @property (nonatomic, strong)NSString *get_status_display;
 @property (nonatomic, strong)NSString *pic_path;
+@property (nonatomic, copy) NSString *shoptime;
 
 @end

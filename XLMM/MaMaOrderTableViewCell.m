@@ -43,6 +43,7 @@
     self.orderStatic.font = [UIFont systemFontOfSize:12];
     
     self.times.text = [NSString stringWithFormat:@"今天 %@", orderM.time_display];
+    self.times.text = orderM.shoptime;
     self.times.font = [UIFont systemFontOfSize:12];
 }
 

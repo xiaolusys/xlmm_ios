@@ -24,7 +24,7 @@
 
 - (void)createLabel {
     self.orderNum = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, [UIScreen mainScreen].bounds.size.width - 150, 30)];
-    self.orderNum.text = @"今日订单3  今日收入6.6";
+    self.orderNum.text = @"";
     self.orderNum.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
     self.orderNum.font = [UIFont systemFontOfSize:14];
     self.orderNum.textAlignment = NSTextAlignmentCenter;
@@ -33,8 +33,8 @@
 
 - (void)createChart:(NSMutableArray *)chartData {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 100)];
-    scrollView.contentSize = CGSizeMake(SCREENWIDTH * 2, 100);
-    scrollView.contentOffset = CGPointMake(SCREENWIDTH, 0);
+    scrollView.contentSize = CGSizeMake(SCREENWIDTH, 100);
+    scrollView.contentOffset = CGPointMake(0, 0);
     [self addSubview:scrollView];
     scrollView.bounces = NO;
     scrollView.showsHorizontalScrollIndicator = NO;
@@ -45,9 +45,9 @@
 
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
-    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH *2, 100)];
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 100)];
     self.lineChart.verticalGridStep = 1;
-    self.lineChart.horizontalGridStep = 14;
+    self.lineChart.horizontalGridStep = 7;
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     
@@ -61,6 +61,7 @@
     ////        return [NSString stringWithFormat:@"%.f €", value];
     //    };
     
+    self.tag = 14;
     self.lineChart.bezierSmoothing = NO;
     self.lineChart.animationDuration = 1.0;
     
