@@ -41,9 +41,17 @@
     
     self.orderStatic.text = orderM.get_status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
-    
-    self.times.text = [NSString stringWithFormat:@"今天 %@", orderM.time_display];
-    self.times.text = orderM.shoptime;
+   
+    NSMutableString *timestext= [NSMutableString stringWithString:orderM.shoptime];
+    NSRange range;
+    range = [timestext rangeOfString:@"T"];
+    [timestext replaceCharactersInRange:range withString:@" "];
+    range = NSMakeRange(0, 5);
+    [timestext deleteCharactersInRange:range];
+    range = NSMakeRange(timestext.length - 4, 3);
+    [timestext deleteCharactersInRange:range];
+   
+    self.times.text = timestext;
     self.times.font = [UIFont systemFontOfSize:12];
 }
 

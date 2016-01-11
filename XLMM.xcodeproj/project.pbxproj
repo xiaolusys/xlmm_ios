@@ -345,6 +345,8 @@
 		325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325D567E1BCE449700B12EE6 /* ArrowView.m */; };
 		325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */; };
 		325DB3611C434DB10018C421 /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */; };
+		325DB3651C43A8AB0018C421 /* TixianSucceedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */; };
+		325DB3661C43A8AB0018C421 /* TixianSucceedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */; };
 		325DF9551B69FD8600351ACA /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
 		32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6A1B6AFD23006E806A /* LogInViewController.m */; };
 		32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C6B1B6AFD23006E806A /* LogInViewController.xib */; };
@@ -1292,6 +1294,9 @@
 		325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaPersonCenterViewController.h; sourceTree = "<group>"; };
 		325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaPersonCenterViewController.m; sourceTree = "<group>"; };
 		325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
+		325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianSucceedViewController.h; sourceTree = "<group>"; };
+		325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianSucceedViewController.m; sourceTree = "<group>"; };
+		325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianSucceedViewController.xib; sourceTree = "<group>"; };
 		325DF9531B69FD8600351ACA /* PosterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterModel.h; sourceTree = "<group>"; };
 		325DF9541B69FD8600351ACA /* PosterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterModel.m; sourceTree = "<group>"; };
 		32620C691B6AFD23006E806A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -2599,6 +2604,9 @@
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
+				325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */,
+				325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */,
+				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
 				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
 				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
 			);
@@ -3721,6 +3729,7 @@
 				2E5600881C2D496E000AFB39 /* loading动画0014.png in Resources */,
 				2EB87D401C17FAE4001CBF3D /* ios-social-sdk-shake.html in Resources */,
 				32F2E9581C128E3700A98EA3 /* ios7.png in Resources */,
+				325DB3661C43A8AB0018C421 /* TixianSucceedViewController.xib in Resources */,
 				2E5600A11C2D496E000AFB39 /* loading动画0037.png in Resources */,
 				322D25CC1C32B93A00509EAD /* 圈圈加载0033.png in Resources */,
 				2E5600B21C2D496E000AFB39 /* loading动画0052.png in Resources */,
@@ -3966,6 +3975,7 @@
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
+				325DB3651C43A8AB0018C421 /* TixianSucceedViewController.m in Sources */,
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				321952921BFC7A8D00AA0AB8 /* QNUrlSafeBase64.m in Sources */,
 				3282F2811B6B5B1300E73EB9 /* SDImageCache.m in Sources */,

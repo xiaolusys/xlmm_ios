@@ -10,6 +10,8 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
+#import "TixianSucceedViewController.h"
+
 
 
 @interface TixianViewController ()
@@ -155,7 +157,8 @@
 ////              
 ////          }];
 
-    
+    TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] initWithNibName:@"TixianSucceedViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 @end

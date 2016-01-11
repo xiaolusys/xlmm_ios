@@ -352,6 +352,7 @@
     payMethod = @"alipay";
     self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
     self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+    self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
     NSLog(@"payMethod = %@", payMethod);
     
 }
@@ -363,10 +364,19 @@
     payMethod = @"wx";
     self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
     self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+    self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
     NSLog(@"payMethod = %@", payMethod);
 
 }
+- (IBAction)xiaoluqianbaoSelected:(id)sender {
+//    payMethod = @"wx";
+//    self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+//    self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+//    self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
+//    NSLog(@"payMethod = %@", payMethod);
 
+    
+}
 - (IBAction)buyClicked:(id)sender {
      NSLog(@"购买商品");
     
@@ -454,4 +464,6 @@
     }];
     
 }
+
+
 @end

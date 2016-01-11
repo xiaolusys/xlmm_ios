@@ -24,12 +24,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressZeroLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
+@property (weak, nonatomic) IBOutlet UIImageView *xiaoluimageView;
 
 - (IBAction)addAddress:(id)sender;
 - (IBAction)yhqClicked:(id)sender;
 - (IBAction)zhifubaoClicked:(id)sender;
 - (IBAction)weixinZhifuClicked:(id)sender;
 - (IBAction)buyClicked:(id)sender;
+- (IBAction)xiaoluqianbaoSelected:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *couponImageView;
 @property (weak, nonatomic) IBOutlet UIButton *couponButton;

@@ -11,9 +11,16 @@
 @interface MaMaPersonCenterViewController : UIViewController
 
 
+@property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *levelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jineLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *dingdanLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *mamaScrollView;
+@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
 
+@property (weak, nonatomic) IBOutlet UITableView *mamaTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
 
 
