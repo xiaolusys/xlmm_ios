@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface TixianSucceedViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *weixinLabel;
+@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
+- (IBAction)fabuClicked:(id)sender;
 
 @end

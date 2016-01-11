@@ -15,7 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *tixianButton;
 - (IBAction)tixianClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
 
+- (IBAction)fabuClicked:(id)sender;
 
 
 @end

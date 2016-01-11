@@ -11,8 +11,9 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "TixianSucceedViewController.h"
+#import "PublishNewPdtViewController.h"
 
-
+#define RGBCOLOR(a, b, c) [UIColor colorWithRed:245/255.0 green:166/255.0 blue:35/255.0 alpha:1]
 
 @interface TixianViewController ()
 
@@ -54,7 +55,9 @@
     
     [self disableTijiaoButton];
     
-    
+    self.fabuButton.layer.cornerRadius = 15;
+    self.fabuButton.layer.borderWidth = 1;
+    self.fabuButton.layer.borderColor = RGBCOLOR(245, 266, 35).CGColor;
     
     
     
@@ -160,5 +163,12 @@
     TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] initWithNibName:@"TixianSucceedViewController" bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+- (IBAction)fabuClicked:(id)sender {
+    
+    NSLog(@"发布产品");
+    
+    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+    [self.navigationController pushViewController:publish animated:YES];
 }
 @end
