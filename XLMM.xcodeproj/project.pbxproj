@@ -343,6 +343,8 @@
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325D567E1BCE449700B12EE6 /* ArrowView.m */; };
+		325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */; };
+		325DB3611C434DB10018C421 /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */; };
 		325DF9551B69FD8600351ACA /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
 		32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6A1B6AFD23006E806A /* LogInViewController.m */; };
 		32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C6B1B6AFD23006E806A /* LogInViewController.xib */; };
@@ -1287,6 +1289,9 @@
 		325BA11E1B68BAF0006D64BD /* MMClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MMClass.h; path = ../MMClass.h; sourceTree = "<group>"; };
 		325D567D1BCE449700B12EE6 /* ArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowView.h; sourceTree = "<group>"; };
 		325D567E1BCE449700B12EE6 /* ArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowView.m; sourceTree = "<group>"; };
+		325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaPersonCenterViewController.h; sourceTree = "<group>"; };
+		325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaPersonCenterViewController.m; sourceTree = "<group>"; };
+		325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
 		325DF9531B69FD8600351ACA /* PosterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterModel.h; sourceTree = "<group>"; };
 		325DF9541B69FD8600351ACA /* PosterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterModel.m; sourceTree = "<group>"; };
 		32620C691B6AFD23006E806A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -2588,6 +2593,9 @@
 				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
 				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
 				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
+				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
+				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
+				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
@@ -3486,6 +3494,7 @@
 				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
+				325DB3611C434DB10018C421 /* MaMaPersonCenterViewController.xib in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
 				323A056E1C0C307700F56EAB /* WuliuCompanyController.xib in Resources */,
 				32746E161B74A22000816208 /* icon-gerenzhongxin2.png in Resources */,
@@ -3935,6 +3944,7 @@
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
+				325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
 				321952981BFC7A8D00AA0AB8 /* QNUserAgent.m in Sources */,
 				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,

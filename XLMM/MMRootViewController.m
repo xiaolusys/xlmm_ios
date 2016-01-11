@@ -25,6 +25,7 @@
 #import "YouHuiQuanViewController.h"
 #import "MaMaCenterViewController.h"
 #import "XiangQingViewController.h"
+#import "MaMaPersonCenterViewController.h"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -267,7 +268,7 @@
 //    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
 //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     
-    MaMaCenterViewController *ma = [[MaMaCenterViewController alloc] initWithNibName:@"MaMaCenterViewController" bundle:nil];
+    MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
     [self.navigationController pushViewController:ma animated:YES];
 //    [self presentViewController:ma animated:YES completion:nil];
     

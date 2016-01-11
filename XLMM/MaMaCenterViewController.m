@@ -179,6 +179,7 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
+        NSLog(@"json = %@", dicJson);
     }
 }
 
