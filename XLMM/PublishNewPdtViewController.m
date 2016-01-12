@@ -13,7 +13,7 @@
 #import "PicFooterCollectionReusableView.h"
 #import "PhotoView.h"
 
-#define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 84)/3)
+#define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
 @interface PublishNewPdtViewController ()
 
@@ -53,7 +53,7 @@
 
 - (void)createCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
+   // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
     flowLayout.sectionInset = UIEdgeInsetsMake(10, 63, 10, 15);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;

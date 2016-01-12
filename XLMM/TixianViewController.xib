@@ -173,7 +173,7 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q84-DM-uQ3" userLabel="UnalbeTixianView">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q84-DM-uQ3" userLabel="UnalbeTixianView">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaounableclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="20p-vm-37l">
