@@ -257,7 +257,9 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   return (self.dataArr.count  );
+    self.tableViewHeight.constant = self.dataArr.count *80;
+    
+   return (self.dataArr.count);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

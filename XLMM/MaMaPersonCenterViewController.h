@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jineLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
 
 @property (weak, nonatomic) IBOutlet UILabel *dingdanLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *mamaScrollView;

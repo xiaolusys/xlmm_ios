@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wg5-4A-ihU">
-                    <rect key="frame" x="87" y="25" width="160" height="25"/>
+                    <rect key="frame" x="111" y="25" width="160" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="160" id="4XL-j3-g9v"/>
                         <constraint firstAttribute="height" constant="25" id="lCt-dh-4Xz"/>
@@ -22,12 +22,12 @@
             </subviews>
             <constraints>
                 <constraint firstItem="wg5-4A-ihU" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="OZ5-Lu-CZ1"/>
-                <constraint firstItem="wg5-4A-ihU" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="kW3-JR-QDP"/>
+                <constraint firstItem="wg5-4A-ihU" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" constant="24" id="kW3-JR-QDP"/>
             </constraints>
             <connections>
                 <outlet property="savePhotoBtn" destination="wg5-4A-ihU" id="WGX-41-qwp"/>
             </connections>
-            <point key="canvasLocation" x="300.5" y="315.5"/>
+            <point key="canvasLocation" x="347.5" y="309.5"/>
         </collectionReusableView>
     </objects>
     <resources>

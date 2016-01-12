@@ -16,6 +16,7 @@
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
                 <outlet property="mamaTableView" destination="jMl-fz-Jz2" id="KnF-Qb-yvl"/>
                 <outlet property="rootScrollView" destination="CZD-1f-6rH" id="kih-rd-YjN"/>
+                <outlet property="tableViewHeight" destination="07v-Uv-wcz" id="kFC-ns-4wy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
