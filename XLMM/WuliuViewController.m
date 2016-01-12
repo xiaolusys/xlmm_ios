@@ -50,7 +50,7 @@
   }
 
 - (void)fetchedWuliuData:(NSData *)responseData{
-    NSLog(@"%@",responseData);
+   // NSLog(@"%@",responseData);
     if (responseData == nil) {
         return;
     }

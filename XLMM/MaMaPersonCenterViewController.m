@@ -50,6 +50,9 @@
     self.fabuButton.layer.cornerRadius = 20;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
 
+    
+    
+    
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
     
@@ -169,7 +172,7 @@
     NSInteger days = 90 - index;
     NSLog(@"%ld天前的数据",days);
 
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(4 + index * 50, 10,2, 100)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(4 + index * 50, 10,2, [dataArray[index] integerValue] * 100/6)];
     view.backgroundColor = [UIColor orangeColor];
     [self.mamaScrollView addSubview:view];
     

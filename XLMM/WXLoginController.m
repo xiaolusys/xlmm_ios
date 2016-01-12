@@ -210,8 +210,9 @@
               if ([string isEqualToString:@"ok"]) {
                   
               } else if ([string isEqualToString:@"1"]){
-                  alterView.message = @"该手机已绑定,请使用其他手机号";
-                  [alterView show];
+//                  alterView.message = @"该手机已绑定,请使用其他手机号";
+//                  [alterView show];
+                  [self.navigationController popToRootViewControllerAnimated:YES];
               } else if ([string isEqualToString:@"false"]){
                   alterView.message = @"手机号错误,请重新输入";
                   [alterView show];
