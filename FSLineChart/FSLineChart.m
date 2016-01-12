@@ -78,7 +78,7 @@
     _margin = 5.0f;
     _axisWidth = self.frame.size.width - 2 * _margin;
     _axisHeight = self.frame.size.height - 2 * _margin;
-    _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+    _axisColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     _drawInnerGrid = YES;
     _bezierSmoothing = YES;

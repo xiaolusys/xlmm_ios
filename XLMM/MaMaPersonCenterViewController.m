@@ -23,6 +23,7 @@
     CGFloat widthOfChart;
     float ticheng;
     NSInteger dingdanshu;
+    UIView *selectedView;
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;
@@ -40,7 +41,7 @@
     // Do any additional setup after loading the view from its nib.
     dataArray = [[NSMutableArray alloc] initWithCapacity:30];
     self.dataArr = [[NSMutableArray alloc] init];
-    widthOfChart = (SCREENWIDTH)/6;
+    widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     [self.view addSubview:self.rootScrollView];
@@ -144,11 +145,11 @@
     [self.mamaTableView reloadData];
 }
 - (void)createChart:(NSMutableArray *)chartData {
-    self.mamaScrollView.contentSize = CGSizeMake(SCREENWIDTH * 15, 120);
+    self.mamaScrollView.contentSize = CGSizeMake(50 * 90 + 24, 120);
     self.mamaScrollView.contentOffset = CGPointMake(0, 0);
     self.mamaScrollView.bounces = NO;
     self.mamaScrollView.showsHorizontalScrollIndicator = NO;
-    self.mamaScrollView.contentOffset = CGPointMake(SCREENWIDTH * 14, 0);
+    self.mamaScrollView.contentOffset = CGPointMake(50 * 90 - SCREENWIDTH + 24, 0);
     //self.mamaScrollView.pagingEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
     [self.mamaScrollView addGestureRecognizer:tap];
@@ -163,10 +164,14 @@
     CGPoint location = [recognizer locationInView:recognizer.view];
     //NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
-    NSInteger index = (int)(width + SCREENWIDTH/12) / SCREENWIDTH * 6;
+    NSInteger index = (int)(width + 25) / 50;
     NSLog(@"index = %ld", index);
     NSInteger days = 90 - index;
     NSLog(@"%ld天前的数据",days);
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(4 + index * 50, 10,2, 100)];
+    view.backgroundColor = [UIColor orangeColor];
+    [self.mamaScrollView addSubview:view];
     
     
     
@@ -189,7 +194,7 @@
 
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
-    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH * 15, 120)];
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, 50 * 90 + 10, 120)];
     self.lineChart.verticalGridStep = 1;
     self.lineChart.horizontalGridStep = 90;
     self.lineChart.color = [UIColor fsOrange];
@@ -215,7 +220,7 @@
 
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=90", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=91", Root_URL];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
