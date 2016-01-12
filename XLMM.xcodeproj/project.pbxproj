@@ -353,6 +353,7 @@
 		32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C6B1B6AFD23006E806A /* LogInViewController.xib */; };
 		32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6F1B6AFD56006E806A /* RegisterViewController.m */; };
 		32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C701B6AFD56006E806A /* RegisterViewController.xib */; };
+		3262961F1C44B03F001A27E3 /* gyxlmmheadicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3262961E1C44B03F001A27E3 /* gyxlmmheadicon.png */; };
 		3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA191B6C59B700F36A8D /* ChildViewController.m */; };
 		3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */; };
 		3264EA301B6C685500F36A8D /* PeopleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */; };
@@ -1307,6 +1308,7 @@
 		32620C6E1B6AFD56006E806A /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		32620C6F1B6AFD56006E806A /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		32620C701B6AFD56006E806A /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		3262961E1C44B03F001A27E3 /* gyxlmmheadicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gyxlmmheadicon.png; sourceTree = "<group>"; };
 		3264EA181B6C59B700F36A8D /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		3264EA191B6C59B700F36A8D /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildViewController.xib; sourceTree = "<group>"; };
@@ -2173,6 +2175,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				3262961E1C44B03F001A27E3 /* gyxlmmheadicon.png */,
 				325DB3671C449B080018C421 /* hongbao100.png */,
 				32EAA3401C3E005E004055AB /* hongbao80.png */,
 				32EAA3411C3E005E004055AB /* hongbao200.png */,
@@ -3449,6 +3452,7 @@
 				2E5600941C2D496E000AFB39 /* loading动画0025.png in Resources */,
 				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
+				3262961F1C44B03F001A27E3 /* gyxlmmheadicon.png in Resources */,
 				32CDC9461BD2028F00EF5FA6 /* category.png in Resources */,
 				324EA2F31C30DC3100E46557 /* default.png in Resources */,
 				2EB87D2A1C17FAE4001CBF3D /* UMSCommentDetailController.xib in Resources */,

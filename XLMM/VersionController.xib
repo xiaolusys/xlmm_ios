@@ -38,6 +38,13 @@
                                 <constraint firstAttribute="height" constant="220" id="t7n-wh-yV9"/>
                             </constraints>
                         </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gyxlmmheadicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="HEd-dA-07g">
+                            <rect key="frame" x="127" y="0.0" width="180" height="180"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="180" id="HUG-75-iZ9"/>
+                                <constraint firstAttribute="height" constant="180" id="VY3-81-4e8"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -45,7 +52,9 @@
                         <constraint firstItem="eqk-nn-qyg" firstAttribute="centerX" secondItem="XBZ-ec-lMy" secondAttribute="centerX" constant="2" id="Dm2-uD-f2I"/>
                         <constraint firstAttribute="height" constant="360" id="GOV-wB-vBC"/>
                         <constraint firstItem="3lU-Xs-uTE" firstAttribute="centerX" secondItem="XBZ-ec-lMy" secondAttribute="centerX" id="KdP-2R-f5b"/>
+                        <constraint firstItem="HEd-dA-07g" firstAttribute="top" secondItem="XBZ-ec-lMy" secondAttribute="top" id="O7m-bJ-rXg"/>
                         <constraint firstItem="eqk-nn-qyg" firstAttribute="top" secondItem="XBZ-ec-lMy" secondAttribute="top" constant="11" id="OS2-56-s3V"/>
+                        <constraint firstItem="HEd-dA-07g" firstAttribute="centerX" secondItem="XBZ-ec-lMy" secondAttribute="centerX" constant="10" id="Ws2-oW-xvp"/>
                         <constraint firstItem="gYw-n2-Oec" firstAttribute="top" secondItem="3lU-Xs-uTE" secondAttribute="bottom" constant="4" id="sa8-pI-3eX"/>
                         <constraint firstItem="3lU-Xs-uTE" firstAttribute="top" secondItem="eqk-nn-qyg" secondAttribute="bottom" constant="4" id="tb3-eu-L7k"/>
                     </constraints>
@@ -53,13 +62,13 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海己美网络科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyS-Ul-zN8">
                     <rect key="frame" x="147" y="700" width="120" height="12"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright (c) 2015 上海己美. All rights reserved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0RY-f5-XKP">
                     <rect key="frame" x="94" y="716" width="227" height="12"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -79,5 +88,6 @@
     </objects>
     <resources>
         <image name="guanyuIcon.png" width="440" height="440"/>
+        <image name="gyxlmmheadicon.png" width="400" height="400"/>
     </resources>
 </document>
