@@ -347,6 +347,7 @@
 		325DB3611C434DB10018C421 /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */; };
 		325DB3651C43A8AB0018C421 /* TixianSucceedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */; };
 		325DB3661C43A8AB0018C421 /* TixianSucceedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */; };
+		325DB3681C449B080018C421 /* hongbao100.png in Resources */ = {isa = PBXBuildFile; fileRef = 325DB3671C449B080018C421 /* hongbao100.png */; };
 		325DF9551B69FD8600351ACA /* PosterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DF9541B69FD8600351ACA /* PosterModel.m */; };
 		32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32620C6A1B6AFD23006E806A /* LogInViewController.m */; };
 		32620C6D1B6AFD23006E806A /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32620C6B1B6AFD23006E806A /* LogInViewController.xib */; };
@@ -1297,6 +1298,7 @@
 		325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianSucceedViewController.h; sourceTree = "<group>"; };
 		325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianSucceedViewController.m; sourceTree = "<group>"; };
 		325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianSucceedViewController.xib; sourceTree = "<group>"; };
+		325DB3671C449B080018C421 /* hongbao100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbao100.png; sourceTree = "<group>"; };
 		325DF9531B69FD8600351ACA /* PosterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterModel.h; sourceTree = "<group>"; };
 		325DF9541B69FD8600351ACA /* PosterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterModel.m; sourceTree = "<group>"; };
 		32620C691B6AFD23006E806A /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -2171,6 +2173,7 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				325DB3671C449B080018C421 /* hongbao100.png */,
 				32EAA3401C3E005E004055AB /* hongbao80.png */,
 				32EAA3411C3E005E004055AB /* hongbao200.png */,
 				32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */,
@@ -3608,6 +3611,7 @@
 				322D25AD1C32B93A00509EAD /* 圈圈加载0002.png in Resources */,
 				322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
+				325DB3681C449B080018C421 /* hongbao100.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
 				322D25AE1C32B93A00509EAD /* 圈圈加载0003.png in Resources */,
 				2E5600D51C2E6418000AFB39 /* run.gif in Resources */,

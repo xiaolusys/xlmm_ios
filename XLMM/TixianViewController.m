@@ -23,8 +23,12 @@
     BOOL ishongbao1Opened;
     BOOL ishongbao2Opened;
     NSString *type;
+    float zhanghuyue;
+    float tixianjine;
     
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -57,7 +61,26 @@
     
     self.fabuButton.layer.cornerRadius = 15;
     self.fabuButton.layer.borderWidth = 1;
-    self.fabuButton.layer.borderColor = RGBCOLOR(245, 266, 35).CGColor;
+    self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
+    
+    zhanghuyue = 260;
+    self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
+    
+    if (zhanghuyue < 100) {
+        self.unableTixianView.hidden = NO;
+    } else {
+        
+        self.unableTixianView.hidden = YES;
+        
+        if (zhanghuyue >= 200) {
+            
+        } else {
+            self.hongbaoImage2.image = [UIImage imageNamed:@"hongbaounableclicked.png"];
+            self.hongbaoImage2.userInteractionEnabled = NO;
+            
+            
+        }
+    }
     
     
     
@@ -72,7 +95,8 @@
         if (ishongbao1Opened) {
             type = @"c1";
             [self enableTijiaoButton];
-            [self showHongBaoImage:self.hongbaoImage1 andImageNamed:@"hongbao80.png"];
+            [self showHongBaoImage:self.hongbaoImage1 andImageNamed:@"hongbao100.png"];
+            tixianjine = 100;
             if (ishongbao2Opened) {
                 ishongbao2Opened = !ishongbao2Opened;
                 [self hiddenHongBaoImage:self.hongbaoImage2];
@@ -88,6 +112,7 @@
             type = @"c2";
             [self enableTijiaoButton];
             [self showHongBaoImage:self.hongbaoImage2 andImageNamed:@"hongbao200.png"];
+            tixianjine = 200;
             if (ishongbao1Opened) {
                 ishongbao1Opened = !ishongbao1Opened;
                 [self hiddenHongBaoImage:self.hongbaoImage1];
@@ -114,6 +139,7 @@
 
 - (void)showHongBaoImage:(UIImageView *)imageView andImageNamed:(NSString *)name{
    imageView.image = [UIImage imageNamed:name];
+    
 }
 
 - (void)hiddenHongBaoImage:(UIImageView *)imageView{
@@ -161,6 +187,7 @@
 ////          }];
 
     TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] initWithNibName:@"TixianSucceedViewController" bundle:nil];
+    vc.tixianjine = tixianjine;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

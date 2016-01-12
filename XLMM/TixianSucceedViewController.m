@@ -36,6 +36,11 @@
     self.fabuButton.layer.cornerRadius = 15;
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = RGBCOLOR(245, 266, 35).CGColor;
+    if (self.tixianjine == 100) {
+        self.headImageView.image = [UIImage imageNamed:@"hongbao100.png"];
+    } else if (self.tixianjine == 200){
+        
+    }
     
 }
 

@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoView : UIView <UIScrollViewDelegate>
+
 @property (nonatomic, strong)NSMutableArray *picArr;
 @property (nonatomic, assign)NSInteger index;
 @property (nonatomic, assign)CGRect cellFrame;
-
 @property (nonatomic, assign)CGFloat contentOffY;
 
 - (void)fillData:(NSInteger)index

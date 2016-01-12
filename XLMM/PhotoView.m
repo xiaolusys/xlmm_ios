@@ -12,13 +12,15 @@
 #define SHEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface PhotoView ()
+
 @property (nonatomic, strong)UIScrollView *scrollView;
 @property (nonatomic, strong)UIPageControl *pageControl;
+
 @end
 
 
 @implementation PhotoView
-//懒加载
+//懒加载     懒加载。。。。。
 - (NSMutableArray *)picArr {
     if (!_picArr) {
         self.picArr = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"",nil];
@@ -26,7 +28,7 @@
     return _picArr;
 }
 
-//重写初始化方法
+//重写初始化方法 ／／初始化方法。。。
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -47,7 +49,7 @@
     
     [self picAddToScrollView];
 }
-
+//图片加入到ScrollView
 - (void)picAddToScrollView {
     //换成对应的位置
     CGFloat smallX = self.cellFrame.origin.x + self.index * SWIDTH;
@@ -78,6 +80,7 @@
     }
 }
 
+// 创建ScrollView 和 PageControl
 - (void)createScrollViewAndPageControl {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     self.scrollView.contentSize = CGSizeMake(SWIDTH * self.picArr.count, SHEIGHT);
@@ -100,6 +103,9 @@
     [self addGestureRecognizer:tap];
 }
 
+
+//点击图片返回
+
 - (void)cancelShade {
     //清除所有的照片
     [UIView animateWithDuration:0.5 animations:^{
@@ -109,7 +115,7 @@
         imageV.image = nil;
     }
 }
-
+//
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.index = self.scrollView.contentOffset.x / SWIDTH;
     self.pageControl.currentPage = self.index;

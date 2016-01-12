@@ -22,6 +22,8 @@
 
 - (void)createImageForCellImageView:(NSString *)imageUrl {
     //图片处理小图
+    
+    //图片处理小图
     UIImage *image = [UIImage imageNamed:@"test"];
     self.cellImageView.image = image;
 }
