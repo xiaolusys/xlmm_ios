@@ -212,6 +212,7 @@
     
     self.lineChart.bezierSmoothing = NO;
     self.lineChart.animationDuration = 1.0;
+    self.lineChart.drawInnerGrid = NO;
     
     [self.lineChart setChartData:chartData];
     return self.lineChart;
