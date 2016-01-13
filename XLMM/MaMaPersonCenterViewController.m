@@ -143,12 +143,7 @@
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
-        
         ticheng += [orderM.ticheng_cash floatValue];
-        
-        
-        
-        
         [self.dataArr addObject:orderM];
     }
     NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);

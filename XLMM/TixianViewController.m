@@ -63,7 +63,7 @@
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
     
-    zhanghuyue = 60;
+    zhanghuyue = 260;
     self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
     
     if (zhanghuyue < 100) {
