@@ -63,7 +63,7 @@
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
     
-    zhanghuyue = 260;
+    zhanghuyue = 60;
     self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
     
     if (zhanghuyue < 100) {
@@ -75,7 +75,7 @@
         if (zhanghuyue >= 200) {
             
         } else {
-            self.hongbaoImage2.image = [UIImage imageNamed:@"hongbaounableclicked.png"];
+            self.hongbaoImage2.image = [UIImage imageNamed:@"hongbaounused200.png"];
             self.hongbaoImage2.userInteractionEnabled = NO;
             
             
@@ -95,32 +95,32 @@
         if (ishongbao1Opened) {
             type = @"c1";
             [self enableTijiaoButton];
-            [self showHongBaoImage:self.hongbaoImage1 andImageNamed:@"hongbao100.png"];
+            [self showHongBaoImage:self.hongbaoImage1 andImageNamed:@"hongbaoopen100.png"];
             tixianjine = 100;
             if (ishongbao2Opened) {
                 ishongbao2Opened = !ishongbao2Opened;
-                [self hiddenHongBaoImage:self.hongbaoImage2];
+                [self hiddenHongBaoImage:self.hongbaoImage2 atIndex:1];
             }
         } else {
             type = nil;
             [self disableTijiaoButton];
-            [self hiddenHongBaoImage:self.hongbaoImage1];
+            [self hiddenHongBaoImage:self.hongbaoImage1 atIndex:0];
         }
     } else if(imageView.tag == 200){
         ishongbao2Opened = !ishongbao2Opened;
         if (ishongbao2Opened) {
             type = @"c2";
             [self enableTijiaoButton];
-            [self showHongBaoImage:self.hongbaoImage2 andImageNamed:@"hongbao200.png"];
+            [self showHongBaoImage:self.hongbaoImage2 andImageNamed:@"hongbaoopen200.png"];
             tixianjine = 200;
             if (ishongbao1Opened) {
                 ishongbao1Opened = !ishongbao1Opened;
-                [self hiddenHongBaoImage:self.hongbaoImage1];
+                [self hiddenHongBaoImage:self.hongbaoImage1 atIndex:0];
             }
         } else {
             type = nil;
             [self disableTijiaoButton];
-            [self hiddenHongBaoImage:self.hongbaoImage2];
+            [self hiddenHongBaoImage:self.hongbaoImage2 atIndex:1];
         }
     }
 }
@@ -142,8 +142,14 @@
     
 }
 
-- (void)hiddenHongBaoImage:(UIImageView *)imageView{
-   imageView.image = [UIImage imageNamed:@"hongbaobeforeclicked"];
+- (void)hiddenHongBaoImage:(UIImageView *)imageView atIndex:(int)index{
+    if (index == 0) {
+        imageView.image = [UIImage imageNamed:@"hongbaoclose100.png"];
+
+    } else if (index == 1) {
+        imageView.image = [UIImage imageNamed:@"hongbaoclose200.png"];
+
+    }
 }
 
 - (void)backClicked:(UIButton *)button{

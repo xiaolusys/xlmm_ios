@@ -115,7 +115,7 @@
                                 <action selector="tixianClicked:" destination="-1" eventType="touchUpInside" id="oJP-6i-23w"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaobeforeclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="iER-3T-wu4">
+                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaoclose200.png" translatesAutoresizingMaskIntoConstraints="NO" id="iER-3T-wu4">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="0SE-MT-T7Z">
@@ -150,7 +150,7 @@
                             <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaobeforeclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-3u-dOx">
+                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaoclose100.png" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-3u-dOx">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="5iG-hq-ljw">
@@ -176,7 +176,7 @@
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q84-DM-uQ3" userLabel="UnalbeTixianView">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaounableclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="20p-vm-37l">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaounused100.png" translatesAutoresizingMaskIntoConstraints="NO" id="20p-vm-37l">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="170" id="IsP-ER-Ewo"/>
@@ -195,7 +195,7 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaounableclicked.png" translatesAutoresizingMaskIntoConstraints="NO" id="CYG-3U-GTb">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbaounused200.png" translatesAutoresizingMaskIntoConstraints="NO" id="CYG-3U-GTb">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="D5q-ME-qdC"/>
@@ -447,11 +447,13 @@
                     <include reference="tNt-FN-wnZ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="166" y="24"/>
+            <point key="canvasLocation" x="-118" y="-10"/>
         </view>
     </objects>
     <resources>
-        <image name="hongbaobeforeclicked.png" width="344" height="207"/>
-        <image name="hongbaounableclicked.png" width="344" height="194"/>
+        <image name="hongbaoclose100.png" width="345" height="205"/>
+        <image name="hongbaoclose200.png" width="345" height="205"/>
+        <image name="hongbaounused100.png" width="345" height="205"/>
+        <image name="hongbaounused200.png" width="345" height="205"/>
     </resources>
 </document>
