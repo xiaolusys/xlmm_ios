@@ -131,6 +131,7 @@
     [self.dataArr removeAllObjects];
     ticheng = 0.0;
     dingdanshu = array.count;
+    NSLog(@"array = %@", array);
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
@@ -172,10 +173,6 @@
     NSInteger days = 90 - index;
     NSLog(@"%ld天前的数据",days);
 
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(4 + index * 50, 10,2, [dataArray[index] integerValue] * 100/6)];
-    view.backgroundColor = [UIColor orangeColor];
-    [self.mamaScrollView addSubview:view];
-    
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
