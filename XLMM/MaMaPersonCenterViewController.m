@@ -23,7 +23,10 @@
     CGFloat widthOfChart;
     float ticheng;
     NSInteger dingdanshu;
-    UIView *selectedView;
+    UIView *circleView;
+    UIView *lineView;
+    
+    
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;
@@ -44,6 +47,8 @@
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
+    
+    self.mamaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.rootScrollView];
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
@@ -65,6 +70,9 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.headImageView addGestureRecognizer:tap];
     self.headImageView.userInteractionEnabled = YES;
+    
+    
+
     
 }
 
@@ -150,16 +158,48 @@
 }
 - (void)createChart:(NSMutableArray *)chartData {
     self.mamaScrollView.contentSize = CGSizeMake(50 * 90 + 24, 120);
-    self.mamaScrollView.contentOffset = CGPointMake(0, 0);
     self.mamaScrollView.bounces = NO;
     self.mamaScrollView.showsHorizontalScrollIndicator = NO;
     self.mamaScrollView.contentOffset = CGPointMake(50 * 90 - SCREENWIDTH + 24, 0);
     //self.mamaScrollView.pagingEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
     [self.mamaScrollView addGestureRecognizer:tap];
+   
+     [self.mamaScrollView addSubview:[self chart2:chartData]];
     
-    [self.mamaScrollView addSubview:[self chart2:chartData]];
+    
+
+    circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
+    circleView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    circleView.layer.cornerRadius = 3;
+    [self.mamaScrollView addSubview:circleView];
+    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, 80)];
+    lineView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    [self.mamaScrollView addSubview:lineView];
+    
+    
+    
+    
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, 4524, 0.5)];
+    bottomLine.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    [self.mamaScrollView addSubview:bottomLine];
+    
+    
+    CGPoint point = [self.lineChart getPointForIndex:chartData.count - 1];
+    NSLog(@"point = %@", NSStringFromCGPoint(point));
+    
+    [self updateSelectedViewWithPoint:point];
+    
+   
 }
+- (void)updateSelectedViewWithPoint:(CGPoint)point{
+    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115 - point.y);
+}
+//CGPoint p = [self getPointForIndex:i withScale:scale];
+//UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 0.5, 115 - p.y)];
+//view.backgroundColor = [UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:1];
+//[self addSubview:view];
 
 - (void)tapClicked:(UITapGestureRecognizer *)recognizer{
  //   UIScrollView *scrollView = (UIScrollView*)recognizer.view;
@@ -174,6 +214,10 @@
     NSLog(@"%ld天前的数据",days);
 
     
+    CGPoint point = [self.lineChart getPointForIndex:index];
+    NSLog(@"point = %@", NSStringFromCGPoint(point));
+    
+    [self updateSelectedViewWithPoint:point];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
     NSLog(@"urlstring = %@", urlString);
@@ -192,6 +236,8 @@
     //chart data
 }
 
+
+
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
     self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, 50 * 90 + 10, 120)];
@@ -199,6 +245,8 @@
     self.lineChart.horizontalGridStep = 90;
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
+    
+  
     
     //    lineChart.labelForIndex = ^(NSUInteger item) {
     //         return [NSString stringWithFormat:@""];
@@ -213,8 +261,13 @@
     self.lineChart.bezierSmoothing = NO;
     self.lineChart.animationDuration = 1.0;
     self.lineChart.drawInnerGrid = NO;
+    self.lineChart.animationDuration = 0.1;
+    
     
     [self.lineChart setChartData:chartData];
+    
+    
+   
     return self.lineChart;
 }
 

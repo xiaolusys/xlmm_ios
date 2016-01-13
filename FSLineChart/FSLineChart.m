@@ -375,6 +375,11 @@
         CGPoint p = [self getPointForIndex:i withScale:scale];
         p.y +=  minBound * scale;
         
+       
+        
+        
+        
+        
         UIBezierPath* circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(p.x - _dataPointRadius, p.y - _dataPointRadius, _dataPointRadius * 2, _dataPointRadius * 2)];
         
         CAShapeLayer *fillLayer = [CAShapeLayer layer];
@@ -508,6 +513,15 @@
     _horizontalGridStep = gridStep;
 }
 
+- (CGPoint)getPointForIndex:(NSUInteger)idx{
+    
+    CGFloat minBound = [self minVerticalBound];
+    CGFloat maxBound = [self maxVerticalBound];
+    
+    CGFloat scale = _axisHeight / (maxBound - minBound);
+    return [self getPointForIndex:idx withScale:scale];
+}
+
 - (CGPoint)getPointForIndex:(NSUInteger)idx withScale:(CGFloat)scale
 {
     if(idx >= _data.count)
@@ -531,6 +545,9 @@
         for(int i=0;i<_data.count - 1;i++) {
             CGPoint controlPoint[2];
             CGPoint p = [self getPointForIndex:i withScale:scale];
+            
+           
+            
             
             // Start the path drawing
             if(i == 0)
@@ -576,10 +593,18 @@
         
     } else {
         for(int i=0;i<_data.count;i++) {
+            
+            CGPoint p = [self getPointForIndex:i withScale:scale];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 0.5, 115 - p.y)];
+            view.backgroundColor = [UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:1];
+            [self addSubview:view];
+            
+            
             if(i > 0) {
                 [path addLineToPoint:[self getPointForIndex:i withScale:scale]];
             } else {
                 [path moveToPoint:[self getPointForIndex:i withScale:scale]];
+                
             }
         }
     }

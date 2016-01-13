@@ -92,4 +92,7 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 // Clear all rendered data from the view.
 - (void)clearChartData;
 
+- (CGPoint)getPointForIndex:(NSUInteger)idx;
+
+
 @end

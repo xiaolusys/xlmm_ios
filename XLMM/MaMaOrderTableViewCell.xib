@@ -70,9 +70,17 @@
                         <color key="textColor" red="1" green="0.56862745098039214" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBg-Nn-JxT">
+                        <rect key="frame" x="0.0" y="78" width="543" height="1"/>
+                        <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="ftw-Ap-CyT"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5Eo-db-WQ6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="0xY-OY-8w2"/>
+                    <constraint firstItem="oBg-Nn-JxT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ALj-SE-auJ"/>
                     <constraint firstItem="DRQ-Fi-BlV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="AWg-b9-DXh"/>
                     <constraint firstItem="qrT-6R-obr" firstAttribute="leading" secondItem="5Eo-db-WQ6" secondAttribute="trailing" constant="10" id="EdM-di-fJu"/>
                     <constraint firstItem="PpB-VN-1ZL" firstAttribute="leading" secondItem="5Eo-db-WQ6" secondAttribute="trailing" constant="10" id="F10-vg-Bja"/>
@@ -82,7 +90,9 @@
                     <constraint firstItem="5Eo-db-WQ6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="RuO-0t-Byz"/>
                     <constraint firstItem="DRQ-Fi-BlV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="Vsa-m9-Rvs"/>
                     <constraint firstItem="qrT-6R-obr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="bvN-iE-N2j"/>
+                    <constraint firstAttribute="trailing" secondItem="oBg-Nn-JxT" secondAttribute="trailing" id="byw-eS-Siq"/>
                     <constraint firstItem="ihz-zN-TO4" firstAttribute="top" secondItem="DRQ-Fi-BlV" secondAttribute="bottom" id="k0I-fN-NkH"/>
+                    <constraint firstAttribute="bottom" secondItem="oBg-Nn-JxT" secondAttribute="bottom" id="mRf-je-ZKa"/>
                     <constraint firstItem="4Eo-nO-BlC" firstAttribute="leading" secondItem="PpB-VN-1ZL" secondAttribute="trailing" id="sfv-y0-cax"/>
                     <constraint firstItem="qrT-6R-obr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="w40-gu-0ll"/>
                     <constraint firstItem="PpB-VN-1ZL" firstAttribute="top" secondItem="qrT-6R-obr" secondAttribute="bottom" id="xc9-ZR-BKk"/>
@@ -105,7 +115,7 @@
                 <outlet property="rebate" destination="4Eo-nO-BlC" id="4ic-Gs-vVa"/>
                 <outlet property="times" destination="ihz-zN-TO4" id="dHz-jD-Q8n"/>
             </connections>
-            <point key="canvasLocation" x="144.5" y="252"/>
+            <point key="canvasLocation" x="333.5" y="247"/>
         </tableViewCell>
     </objects>
 </document>
