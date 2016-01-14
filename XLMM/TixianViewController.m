@@ -63,9 +63,10 @@
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
     
-    zhanghuyue = 260;
-    self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
+    zhanghuyue = self.cantixianjine;
     
+    self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
+    self.nameLabel.text = [NSString stringWithFormat:@"小鹿妈妈：%@", self.name];
     if (zhanghuyue < 100) {
         self.unableTixianView.hidden = NO;
     } else {

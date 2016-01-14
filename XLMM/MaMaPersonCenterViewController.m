@@ -26,6 +26,8 @@
     UIView *circleView;
     UIView *lineView;
     
+    NSString *nickName;
+    float ableTixianJine;
     
 }
 
@@ -80,6 +82,9 @@
     NSLog(@"0");
     NSLog(@"提现");
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
+    vc.cantixianjine = ableTixianJine;
+    vc.name = nickName;
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -107,7 +112,10 @@
         }
         NSDictionary *dic = [arrJson objectAtIndex:0];
         self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
+        NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
         self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
+        ableTixianJine = [[dic objectForKey:@"coulde_cashout"] floatValue];
+        nickName = [dic objectForKey:@"weikefu"];
     }
     
 }
