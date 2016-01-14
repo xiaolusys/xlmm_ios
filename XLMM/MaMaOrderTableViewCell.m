@@ -34,7 +34,7 @@
     self.purchaser.text = @"购买人：小鹿美美";
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
-    self.rebate.text = [NSString stringWithFormat:@"%@", orderM.rebeta_cash];
+    self.rebate.text = [NSString stringWithFormat:@"%.2f", [orderM.rebeta_cash floatValue]];
 //    self.rebate.textColor = [UIColor orangeColor];
     self.fanyong.text = @"反佣";
     self.fanyong.font = [UIFont systemFontOfSize:13];
