@@ -95,8 +95,8 @@
 }
 
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
-    NSLog(@"0");
-    NSLog(@"提现");
+   // NSLog(@"0");
+   // NSLog(@"提现");
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
     vc.cantixianjine = ableTixianJine;
     vc.name = nickName;
@@ -111,7 +111,7 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
+       // NSLog(@"json = %@", dicJson);
     }
 }
 
@@ -122,13 +122,13 @@
     NSError *error = nil;
     NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"dicJson = %@", arrJson);
+    //    NSLog(@"dicJson = %@", arrJson);
         if (arrJson.count == 0) {
             return;
         }
         NSDictionary *dic = [arrJson objectAtIndex:0];
         self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
-        NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
+      //  NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
         self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
         ableTixianJine = [[dic objectForKey:@"coulde_cashout"] floatValue];
         nickName = [dic objectForKey:@"weikefu"];
@@ -139,19 +139,19 @@
 #pragma mark --ScrollViewDelegate 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    NSLog(@"%f", scrollView.contentOffset.x/SCREENWIDTH);
+  //  NSLog(@"%f", scrollView.contentOffset.x/SCREENWIDTH);
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     
     
     scrollViewContentOffset = scrollView.contentOffset;
     NSInteger count = allDingdan.count;
-    NSLog(@"count = %ld", count);
+   // NSLog(@"count = %ld", count);
     
     NSInteger days = (count - page - 1)*7;
-    NSLog(@"days = %ld", days);
+  //  NSLog(@"days = %ld", days);
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
-    NSLog(@"urlstring = %@", urlString);
+  //  NSLog(@"urlstring = %@", urlString);
     
     //改变竖线的位置。。。。
     [self createChart:allDingdan];
@@ -200,14 +200,14 @@
     [self.dataArr removeAllObjects];
     ticheng = 0.0;
     dingdanshu = array.count;
-    NSLog(@"array = %@", array);
+   // NSLog(@"array = %@", array);
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
         ticheng += [orderM.ticheng_cash floatValue];
         [self.dataArr addObject:orderM];
     }
-    NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
+  //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
     self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
@@ -239,7 +239,7 @@
             [mutabledingdan exchangeObjectAtIndex:k withObjectAtIndex:mutabledingdan.count- k - 1];
         }
         
-        NSLog(@"每周订单数%@", mutabledingdan);
+       // NSLog(@"每周订单数%@", mutabledingdan);
         
         FSLineChart *linechart = [self chart2:mutabledingdan];
         [shartView addSubview:linechart];
@@ -276,7 +276,7 @@
     
     
     CGPoint point = [self.lineChart getPointForIndex:chartData.count - 1];
-    NSLog(@"point = %@", NSStringFromCGPoint(point));
+  //  NSLog(@"point = %@", NSStringFromCGPoint(point));
     
     
    
@@ -303,18 +303,18 @@
     UIView *weekView = [recognizer view];
     NSInteger week = weekView.tag - 1000;
     
-    NSLog(@"第 %ld 周订单数据", week);
+  //  NSLog(@"第 %ld 周订单数据", week);
     
-    NSLog(@"weekView subView = %@", [weekView subviews]);
+   // NSLog(@"weekView subView = %@", [weekView subviews]);
     
 
     CGPoint location = [recognizer locationInView:recognizer.view];
-    NSLog(@"location = %@", NSStringFromCGPoint(location));
+  //  NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
-    NSLog(@"width = %f", width);
+  //  NSLog(@"width = %f", width);
     int index = (int)((width + 25) / ((SCREENWIDTH - 10)/6));
     
-    NSLog(@"index = %d", index);
+  //  NSLog(@"index = %d", index);
 
     
 
@@ -325,7 +325,7 @@
 
     
     CGPoint point = [linechart getPointForIndex:index];
-    NSLog(@"point = %@", NSStringFromCGPoint(point));
+ //   NSLog(@"point = %@", NSStringFromCGPoint(point));
     
     
     circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
@@ -333,12 +333,12 @@
     
     NSInteger days = (6 - index) + (week - 1)*7;
     
-    NSLog(@"days = %ld", days);
+  //  NSLog(@"days = %ld", days);
 
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
-    NSLog(@"urlstring = %@", urlString);
+ //   NSLog(@"urlstring = %@", urlString);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -395,14 +395,14 @@
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         NSMutableArray *data = [responseObject mutableCopy];
-        NSLog(@"%@", responseObject);
+      //  NSLog(@"%@", responseObject);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < data.count; i++) {
             [weekArray addObject:data[i]];
             
             if ((i +1)%7 == 0) {
                 NSInteger sum = [self sumofoneWeek:weekArray];
-                NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
+             //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
                 }
@@ -410,7 +410,7 @@
                 [weekArray removeAllObjects];
             }
         }
-        NSLog(@"%@", allDingdan);
+       // NSLog(@"%@", allDingdan);
         scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -476,7 +476,7 @@
 }
 
 - (IBAction)sendProduct:(id)sender {
-    NSLog(@"发布产品");
+ //   NSLog(@"发布产品");
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];

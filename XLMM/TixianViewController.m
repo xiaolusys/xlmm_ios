@@ -173,7 +173,7 @@
 */
 
 - (IBAction)tixianClicked:(id)sender {
-    NSLog(@"提现");
+ //   NSLog(@"提现");
 //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 //    
 ////  http://192.168.1.31:9000/rest/v1/cashout
@@ -200,7 +200,7 @@
 }
 - (IBAction)fabuClicked:(id)sender {
     
-    NSLog(@"发布产品");
+ //   NSLog(@"发布产品");
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];

@@ -65,7 +65,7 @@
 
 - (IBAction)fabuClicked:(id)sender {
     
-    NSLog(@"发布产品");
+ //NSLog(@"发布产品");
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
