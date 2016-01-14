@@ -18,7 +18,7 @@
 
 
 
-@interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate>{
+@interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
     NSMutableArray *dataArray;
     CGFloat widthOfChart;
     float ticheng;
@@ -30,6 +30,8 @@
     float ableTixianJine;
     
     NSMutableArray *allDingdan;
+    
+    CGPoint scrollViewContentOffset;
     
     
 }
@@ -134,6 +136,43 @@
     
 }
 
+#pragma mark --ScrollViewDelegate 
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"%f", scrollView.contentOffset.x/SCREENWIDTH);
+    NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
+    
+    
+    scrollViewContentOffset = scrollView.contentOffset;
+    NSInteger count = allDingdan.count;
+    NSLog(@"count = %ld", count);
+    
+    NSInteger days = (count - page - 1)*7;
+    NSLog(@"days = %ld", days);
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+    NSLog(@"urlstring = %@", urlString);
+    
+    //改变竖线的位置。。。。
+    [self createChart:allDingdan];
+    
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        
+        
+        NSArray *data = responseObject;
+        [self maMaOrderInfoData:data];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+
+}
+
+
+
 
 - (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -179,14 +218,15 @@
     self.mamaScrollView.contentSize = CGSizeMake(SCREENWIDTH * count, 120);
     self.mamaScrollView.bounces = NO;
     self.mamaScrollView.showsHorizontalScrollIndicator = NO;
-    self.mamaScrollView.contentOffset = CGPointMake(SCREENWIDTH * count - SCREENWIDTH, 0);
+    self.mamaScrollView.delegate = self;
+    self.mamaScrollView.contentOffset = scrollViewContentOffset;
     self.mamaScrollView.pagingEnabled = YES;
     
     
     
     
     for (int i = 0; i < allDingdan.count; i++) {
-        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1), 0, SCREENWIDTH, 120)];
+        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 0, SCREENWIDTH - 40, 120)];
         
         shartView.tag = 1001 + i;
         
@@ -241,6 +281,13 @@
     
    
 }
+
+
+
+
+
+
+
 - (void)updateSelectedViewWithPoint:(CGPoint)point{
 //    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
 //    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115 - point.y);
@@ -310,7 +357,7 @@
 
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
-    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH - 40, 120)];
     self.lineChart.verticalGridStep = 1;
     self.lineChart.horizontalGridStep = 6;
     self.lineChart.color = [UIColor fsOrange];
@@ -329,9 +376,8 @@
     //    };
     
     self.lineChart.bezierSmoothing = NO;
-    self.lineChart.animationDuration = 1.0;
+    self.lineChart.animationDuration = 0.01;
     self.lineChart.drawInnerGrid = NO;
-    self.lineChart.animationDuration = 0.1;
     
     
     [self.lineChart setChartData:chartData];
@@ -365,6 +411,7 @@
             }
         }
         NSLog(@"%@", allDingdan);
+        scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
