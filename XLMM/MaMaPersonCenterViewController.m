@@ -18,13 +18,20 @@
 
 
 
-@interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate>{
+@interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
     NSMutableArray *dataArray;
     CGFloat widthOfChart;
     float ticheng;
     NSInteger dingdanshu;
-    UIView *circleView;
-    UIView *lineView;
+//    UIView *circleView;
+//    UIView *lineView;
+    
+    NSString *nickName;
+    float ableTixianJine;
+    
+    NSMutableArray *allDingdan;
+    
+    CGPoint scrollViewContentOffset;
     
     
 }
@@ -44,6 +51,7 @@
     // Do any additional setup after loading the view from its nib.
     dataArray = [[NSMutableArray alloc] initWithCapacity:30];
     self.dataArr = [[NSMutableArray alloc] init];
+    allDingdan = [[NSMutableArray alloc] init];
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
@@ -76,10 +84,23 @@
     
 }
 
+// 返回一周的订单数。。。。
+- (NSInteger)sumofoneWeek:(NSArray *)weekArray{
+    NSInteger sum = 0;
+    for (int i = 0; i < weekArray.count; i++) {
+        sum += [weekArray[i] integerValue];
+    }
+    return sum;
+    
+}
+
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
-    NSLog(@"0");
-    NSLog(@"提现");
+   // NSLog(@"0");
+   // NSLog(@"提现");
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
+    vc.cantixianjine = ableTixianJine;
+    vc.name = nickName;
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -90,7 +111,7 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
+       // NSLog(@"json = %@", dicJson);
     }
 }
 
@@ -101,16 +122,56 @@
     NSError *error = nil;
     NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"dicJson = %@", arrJson);
+    //    NSLog(@"dicJson = %@", arrJson);
         if (arrJson.count == 0) {
             return;
         }
         NSDictionary *dic = [arrJson objectAtIndex:0];
         self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
+      //  NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
         self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
+        ableTixianJine = [[dic objectForKey:@"coulde_cashout"] floatValue];
+        nickName = [dic objectForKey:@"weikefu"];
     }
     
 }
+
+#pragma mark --ScrollViewDelegate 
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+  //  NSLog(@"%f", scrollView.contentOffset.x/SCREENWIDTH);
+    NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
+    
+    
+    scrollViewContentOffset = scrollView.contentOffset;
+    NSInteger count = allDingdan.count;
+   // NSLog(@"count = %ld", count);
+    
+    NSInteger days = (count - page - 1)*7;
+  //  NSLog(@"days = %ld", days);
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+  //  NSLog(@"urlstring = %@", urlString);
+    
+    //改变竖线的位置。。。。
+    [self createChart:allDingdan];
+    
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        
+        
+        NSArray *data = responseObject;
+        [self maMaOrderInfoData:data];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+
+}
+
+
 
 
 - (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
@@ -139,57 +200,97 @@
     [self.dataArr removeAllObjects];
     ticheng = 0.0;
     dingdanshu = array.count;
-    NSLog(@"array = %@", array);
+   // NSLog(@"array = %@", array);
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
         ticheng += [orderM.ticheng_cash floatValue];
         [self.dataArr addObject:orderM];
     }
-    NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
+  //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
     self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
 }
 - (void)createChart:(NSMutableArray *)chartData {
-    self.mamaScrollView.contentSize = CGSizeMake(50 * 90 + 24, 120);
+    
+    NSInteger count = [chartData count];
+    self.mamaScrollView.contentSize = CGSizeMake(SCREENWIDTH * count, 120);
     self.mamaScrollView.bounces = NO;
     self.mamaScrollView.showsHorizontalScrollIndicator = NO;
-    self.mamaScrollView.contentOffset = CGPointMake(50 * 90 - SCREENWIDTH + 24, 0);
-    //self.mamaScrollView.pagingEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
-    [self.mamaScrollView addGestureRecognizer:tap];
-   
-     [self.mamaScrollView addSubview:[self chart2:chartData]];
+    self.mamaScrollView.delegate = self;
+    self.mamaScrollView.contentOffset = scrollViewContentOffset;
+    self.mamaScrollView.pagingEnabled = YES;
+    
+    
+    
+    
+    for (int i = 0; i < allDingdan.count; i++) {
+        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 0, SCREENWIDTH - 40, 120)];
+        
+        shartView.tag = 1001 + i;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
+        [shartView addGestureRecognizer:tap];
+        
+        NSMutableArray *mutabledingdan = [allDingdan[i] mutableCopy];
+        
+        for (int k = 0; k < mutabledingdan.count/2; k++) {
+            [mutabledingdan exchangeObjectAtIndex:k withObjectAtIndex:mutabledingdan.count- k - 1];
+        }
+        
+       // NSLog(@"每周订单数%@", mutabledingdan);
+        
+        FSLineChart *linechart = [self chart2:mutabledingdan];
+        [shartView addSubview:linechart];
+        
+        UIView * circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
+        circleView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        circleView.layer.cornerRadius = 3;
+        circleView.tag = 300;
+        [shartView addSubview:circleView];
+        UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, 80)];
+        lineView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        lineView.tag = 400;
+        [shartView addSubview:lineView];
+        
+        
+        CGPoint point = [linechart getPointForIndex:6];
+        circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+        lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+        
+        [self.mamaScrollView addSubview:shartView];
+        
+    }
     
     
 
-    circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
-    circleView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
-    circleView.layer.cornerRadius = 3;
-    [self.mamaScrollView addSubview:circleView];
-    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, 80)];
-    lineView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
-    [self.mamaScrollView addSubview:lineView];
+   
     
     
     
     
-    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, 4524, 0.5)];
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, SCREENWIDTH *allDingdan.count, 0.5)];
     bottomLine.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
     [self.mamaScrollView addSubview:bottomLine];
     
     
     CGPoint point = [self.lineChart getPointForIndex:chartData.count - 1];
-    NSLog(@"point = %@", NSStringFromCGPoint(point));
+  //  NSLog(@"point = %@", NSStringFromCGPoint(point));
     
-    [self updateSelectedViewWithPoint:point];
     
    
 }
+
+
+
+
+
+
+
 - (void)updateSelectedViewWithPoint:(CGPoint)point{
-    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
-    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115 - point.y);
+//    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+//    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115 - point.y);
 }
 //CGPoint p = [self getPointForIndex:i withScale:scale];
 //UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 0.5, 115 - p.y)];
@@ -197,25 +298,47 @@
 //[self addSubview:view];
 
 - (void)tapClicked:(UITapGestureRecognizer *)recognizer{
- //   UIScrollView *scrollView = (UIScrollView*)recognizer.view;
-   // NSLog(@"scrollView = %@", scrollView);
+
+    
+    UIView *weekView = [recognizer view];
+    NSInteger week = weekView.tag - 1000;
+    
+  //  NSLog(@"第 %ld 周订单数据", week);
+    
+   // NSLog(@"weekView subView = %@", [weekView subviews]);
+    
 
     CGPoint location = [recognizer locationInView:recognizer.view];
-    //NSLog(@"location = %@", NSStringFromCGPoint(location));
+  //  NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
-    NSInteger index = (int)(width + 25) / 50;
-    NSLog(@"index = %ld", index);
-    NSInteger days = 90 - index;
-    NSLog(@"%ld天前的数据",days);
+  //  NSLog(@"width = %f", width);
+    int index = (int)((width + 25) / ((SCREENWIDTH - 10)/6));
+    
+  //  NSLog(@"index = %d", index);
 
     
-    CGPoint point = [self.lineChart getPointForIndex:index];
-    NSLog(@"point = %@", NSStringFromCGPoint(point));
+
+    FSLineChart *linechart = [weekView subviews][0];
+    UIView *circleView = [weekView viewWithTag:300];
+    UIView *lineView = [weekView viewWithTag:400];
     
-    [self updateSelectedViewWithPoint:point];
+
+    
+    CGPoint point = [linechart getPointForIndex:index];
+ //   NSLog(@"point = %@", NSStringFromCGPoint(point));
+    
+    
+    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+    
+    NSInteger days = (6 - index) + (week - 1)*7;
+    
+  //  NSLog(@"days = %ld", days);
+
+    
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
-    NSLog(@"urlstring = %@", urlString);
+ //   NSLog(@"urlstring = %@", urlString);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -228,16 +351,15 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
-    //chart data
 }
 
 
 
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
-    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, 50 * 90 + 10, 120)];
+    self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH - 40, 120)];
     self.lineChart.verticalGridStep = 1;
-    self.lineChart.horizontalGridStep = 90;
+    self.lineChart.horizontalGridStep = 6;
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     
@@ -254,9 +376,8 @@
     //    };
     
     self.lineChart.bezierSmoothing = NO;
-    self.lineChart.animationDuration = 1.0;
+    self.lineChart.animationDuration = 0.01;
     self.lineChart.drawInnerGrid = NO;
-    self.lineChart.animationDuration = 0.1;
     
     
     [self.lineChart setChartData:chartData];
@@ -270,33 +391,31 @@
 - (void)prepareData{
     
     NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=91", Root_URL];
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        
-        
         NSMutableArray *data = [responseObject mutableCopy];
-        NSLog(@"%@", responseObject);
-        
-        for (int i = 0; i < data.count/2; i++) {
-            [data exchangeObjectAtIndex:i withObjectAtIndex:(data.count - i - 1)];
+      //  NSLog(@"%@", responseObject);
+        NSMutableArray *weekArray = [[NSMutableArray alloc] init];
+        for (int i = 0; i < data.count; i++) {
+            [weekArray addObject:data[i]];
+            
+            if ((i +1)%7 == 0) {
+                NSInteger sum = [self sumofoneWeek:weekArray];
+             //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
+                if (sum == 0) {
+                    break;
+                }
+                [allDingdan addObject:[weekArray copy]];
+                [weekArray removeAllObjects];
+            }
         }
-        
-        NSLog(@"%@", data);
-       // self.dataArr = data;
-        
-        [self createChart:data];
-
-        
-        
-        
-        
+       // NSLog(@"%@", allDingdan);
+        scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
+       [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
-
 }
 
 
@@ -357,7 +476,7 @@
 }
 
 - (IBAction)sendProduct:(id)sender {
-    NSLog(@"发布产品");
+ //   NSLog(@"发布产品");
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];

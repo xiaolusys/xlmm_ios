@@ -36,6 +36,8 @@
     NSInteger dingdanshu;
     UILabel *dingdanLabel;
     
+ 
+    
 }
 
 - (NSMutableArray *)dataArr {

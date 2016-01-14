@@ -10,6 +10,7 @@
                 <outlet property="fabuButton" destination="QWX-Ll-jCc" id="Y4q-2D-huL"/>
                 <outlet property="hongbaoImage1" destination="bxa-3u-dOx" id="leq-o4-Kfg"/>
                 <outlet property="hongbaoImage2" destination="iER-3T-wu4" id="OqX-nf-OcT"/>
+                <outlet property="nameLabel" destination="vp5-YK-Noe" id="Opp-Xf-XTj"/>
                 <outlet property="tixianButton" destination="Sgi-R2-2VV" id="MdE-CG-ZhH"/>
                 <outlet property="unableTixianView" destination="q84-DM-uQ3" id="blQ-gl-2RH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -445,7 +446,7 @@
                     <include reference="tNt-FN-wnZ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-118" y="-10"/>
+            <point key="canvasLocation" x="-380" y="-21"/>
         </view>
     </objects>
     <resources>

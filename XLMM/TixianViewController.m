@@ -63,9 +63,10 @@
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
     
-    zhanghuyue = 260;
-    self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
+    zhanghuyue = self.cantixianjine;
     
+    self.yueLabel.text = [NSString stringWithFormat:@"%.2f", zhanghuyue];
+    self.nameLabel.text = [NSString stringWithFormat:@"小鹿妈妈：%@", self.name];
     if (zhanghuyue < 100) {
         self.unableTixianView.hidden = NO;
     } else {
@@ -172,7 +173,7 @@
 */
 
 - (IBAction)tixianClicked:(id)sender {
-    NSLog(@"提现");
+ //   NSLog(@"提现");
 //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 //    
 ////  http://192.168.1.31:9000/rest/v1/cashout
@@ -199,7 +200,7 @@
 }
 - (IBAction)fabuClicked:(id)sender {
     
-    NSLog(@"发布产品");
+ //   NSLog(@"发布产品");
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
