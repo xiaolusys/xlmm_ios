@@ -17,4 +17,5 @@
 
 - (void)fillData:(NSInteger)index
        cellFrame:(CGRect)cellFrame;
+- (void)createScrollView;
 @end

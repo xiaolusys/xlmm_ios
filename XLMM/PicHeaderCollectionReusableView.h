@@ -10,4 +10,8 @@
 
 @interface PicHeaderCollectionReusableView : UICollectionReusableView
 
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *propagandaLabel;
+
 @end

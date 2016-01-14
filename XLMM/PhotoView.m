@@ -7,6 +7,7 @@
 //
 
 #import "PhotoView.h"
+#import "UIImageView+WebCache.h"
 
 #define SWIDTH [UIScreen mainScreen].bounds.size.width
 #define SHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -20,23 +21,19 @@
 
 
 @implementation PhotoView
-//懒加载     懒加载。。。。。
-- (NSMutableArray *)picArr {
-    if (!_picArr) {
-        self.picArr = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"",nil];
-    }
-    return _picArr;
-}
 
-//重写初始化方法 ／／初始化方法。。。
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor blackColor];
-        [self createScrollViewAndPageControl];
-        [self addGestureRecognizerForView];
-    }
-    return self;
+////重写初始化方法 ／／初始化方法。。。
+//- (instancetype)initWithFrame:(CGRect)frame {
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        self.backgroundColor = [UIColor blackColor];
+//    }
+//    return self;
+//}
+
+- (void)createScrollView {
+    [self createScrollViewAndPageControl];
+    [self addGestureRecognizerForView];
 }
 
 - (void)fillData:(NSInteger)index
@@ -56,26 +53,25 @@
     
     CGFloat smallY = 0;
     if (self.cellFrame.origin.y / SHEIGHT > 1) {
-//        smallY = self.cellFrame.origin.y - (self.cellFrame.origin.y / SHEIGHT) * SHEIGHT;
         smallY = self.cellFrame.origin.y - self.contentOffY;
-        NSLog(@"#########%f", self.contentOffY);
     }else {
         smallY = self.cellFrame.origin.y;
     }
-//    CGFloat smallY = self.cellFrame.origin.y;
     
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
-    imageIndex.image = [UIImage imageNamed:@"test"];
+    NSString *url = self.picArr[self.index];
+    [imageIndex sd_setImageWithURL:[NSURL URLWithString:url]];
+    
     [UIView animateWithDuration:0.3 animations:^{
-        imageIndex.frame = CGRectMake(self.index * SWIDTH, SHEIGHT * 0.5 - 200, SWIDTH, 400);
+        imageIndex.frame = CGRectMake(self.index * SWIDTH, 0, SWIDTH, SHEIGHT);
     }];
     [self.scrollView addSubview:imageIndex];
     
     //添加图片
     for (int i = 0; i < self.picArr.count; i++) {
         if (self.index == i)continue;
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH, SHEIGHT * 0.5 - 200, SWIDTH, 400)];
-        imageV.image = [UIImage imageNamed:@"test"];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH, 0, SWIDTH, SHEIGHT)];
+        [imageV sd_setImageWithURL:self.picArr[self.index]];
         [self.scrollView addSubview:imageV];
     }
 }
@@ -105,7 +101,6 @@
 
 
 //点击图片返回
-
 - (void)cancelShade {
     //清除所有的照片
     [UIView animateWithDuration:0.5 animations:^{
@@ -115,7 +110,7 @@
         imageV.image = nil;
     }
 }
-//
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.index = self.scrollView.contentOffset.x / SWIDTH;
     self.pageControl.currentPage = self.index;

@@ -22,5 +22,5 @@
 
 - (NSString *)imagePostersCompression;
 
-
+- (NSString *)imageShareNinePicture;
 @end

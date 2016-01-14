@@ -88,6 +88,7 @@
 		2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600821C2D496E000AFB39 /* loading动画009.png */; };
 		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
 		2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5D4CB01C311A6700F5D269 /* smallrun.gif */; };
+		2E612B421C476E07002F1C15 /* SharePicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E612B411C476E07002F1C15 /* SharePicModel.m */; };
 		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E63AE521C3E172D008E97BB /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63AE511C3E172D008E97BB /* PhotoView.m */; };
 		2E63AE551C3E5DCF008E97BB /* savephoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E63AE541C3E5DCF008E97BB /* savephoto.png */; };
@@ -907,6 +908,8 @@
 		2E5600821C2D496E000AFB39 /* loading动画009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画009.png"; sourceTree = "<group>"; };
 		2E5600D41C2E6418000AFB39 /* run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = run.gif; sourceTree = "<group>"; };
 		2E5D4CB01C311A6700F5D269 /* smallrun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = smallrun.gif; sourceTree = "<group>"; };
+		2E612B401C476E07002F1C15 /* SharePicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePicModel.h; sourceTree = "<group>"; };
+		2E612B411C476E07002F1C15 /* SharePicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePicModel.m; sourceTree = "<group>"; };
 		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
 		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E63AE501C3E172D008E97BB /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
@@ -1911,6 +1914,8 @@
 			children = (
 				2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */,
 				2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */,
+				2E612B401C476E07002F1C15 /* SharePicModel.h */,
+				2E612B411C476E07002F1C15 /* SharePicModel.m */,
 			);
 			name = MaMaModel;
 			sourceTree = "<group>";
@@ -4029,6 +4034,7 @@
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				2E612B421C476E07002F1C15 /* SharePicModel.m in Sources */,
 				3219529D1BFC7A8D00AA0AB8 /* QNResumeUpload.m in Sources */,
 				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
 				327FC25C1B9A77BF00F111B3 /* MMDetailsModel.m in Sources */,
@@ -4397,7 +4403,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4440,7 +4446,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -52,6 +52,12 @@
 }
 
 
+- (NSString *)imageShareNinePicture {
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/png/quality/30",self];
+    return string;
+}
+
+
 - (float)imageWidth{
     float screenwidth = [UIScreen mainScreen].bounds.size.width;
     float width;

@@ -12,6 +12,9 @@
 #import "PicHeaderCollectionReusableView.h"
 #import "PicFooterCollectionReusableView.h"
 #import "PhotoView.h"
+#import "AFNetworking.h"
+#import "MMClass.h"
+#import "SharePicModel.h"
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
@@ -20,9 +23,18 @@
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 @property (nonatomic, strong)PhotoView *photoView;
 
+@property (nonatomic, strong)NSMutableArray *dataArr;
+
 @end
 
 @implementation PublishNewPdtViewController
+
+- (NSMutableArray *)dataArr {
+    if (!_dataArr) {
+        self.dataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _dataArr;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -77,19 +89,46 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
+    
+    //网络请求
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/ninepic", Root_URL];
+    NSLog(@"%@", requestURL);
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *arrPic = responseObject;
+        [self requestData:arrPic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        //未登录处理
+    }];
+}
+
+- (void)requestData:(NSArray *)data {
+    for (NSMutableDictionary *oneTurns in data) {
+        SharePicModel *sharePic = [[SharePicModel alloc] init];
+        [sharePic setValuesForKeysWithDictionary:oneTurns];
+        
+        [self.dataArr addObject:sharePic];
+    }
+    
+    [self.picCollectionView reloadData];
 }
 
 #pragma mark --collection的代理方法
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 5;
+    return self.dataArr.count;
 }
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 9;
+    
+    SharePicModel *picModel = self.dataArr[section];
+    return picModel.pic_arry.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
-    [cell createImageForCellImageView:nil];
+    SharePicModel *picModel = self.dataArr[indexPath.section];
+    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row]];
     return cell;
 }
 
@@ -101,6 +140,12 @@
     //图片查看
     PicCollectionViewCell *cell = (PicCollectionViewCell *)[self.picCollectionView cellForItemAtIndexPath:indexPath];
     
+    //取到当前数组
+    SharePicModel *picModel = self.dataArr[indexPath.section];
+    self.photoView.picArr = [picModel.pic_arry mutableCopy];
+    self.photoView.index = indexPath.row;
+
+    [self.photoView createScrollView];
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
 }
@@ -132,26 +177,31 @@
 #pragma mark --保存事件
 - (void)tapSaveImageToIphone:(UIButton *)sender
                currentPicArr:(NSMutableArray *)currentPicArr {
-    NSLog(@"%ld", (long)sender.tag);
+    NSInteger saveIndex = sender.tag - 100;
+    SharePicModel *picModel = self.dataArr[saveIndex];
+    for (NSString *url in picModel.pic_arry) {
+//        NSLog(@"------");
+         UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:url], self, nil, nil);
+    }
+    
 //    UIImageWriteToSavedPhotosAlbum([UIImage imageNamed:@"test"], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
-    if (error == nil) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",  nil];
-        [alert show];
-    }
-    
-}
+//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+//    if (error == nil) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }else{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",  nil];
+//        [alert show];
+//    }
+//    
+//}
 
 #pragma mark -- scrollView代理
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.photoView.contentOffY = scrollView.contentOffset.y;
 }
-
 
 
 - (void)didReceiveMemoryWarning {

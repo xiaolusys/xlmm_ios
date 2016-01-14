@@ -7,6 +7,8 @@
 //
 
 #import "PicCollectionViewCell.h"
+#import "NSString+URL.h"
+#import "UIImageView+WebCache.h"
 
 @interface PicCollectionViewCell ()
 
@@ -22,10 +24,12 @@
 
 - (void)createImageForCellImageView:(NSString *)imageUrl {
     //图片处理小图
+    NSString *url = [imageUrl imageShareNinePicture];
     
-    //图片处理小图
-    UIImage *image = [UIImage imageNamed:@"test"];
-    self.cellImageView.image = image;
+//    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+//    UIImage *image = [UIImage imageNamed:url];
+//    self.cellImageView.image = image;
 }
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TixianViewController">
@@ -358,21 +358,21 @@
                             <exclude reference="q84-DM-uQ3"/>
                         </mask>
                         <mask key="constraints">
-                            <exclude reference="2Ap-ez-4k2"/>
-                            <exclude reference="9ed-kY-U3u"/>
-                            <exclude reference="agO-Vt-Hn2"/>
-                            <exclude reference="zA2-M8-jEK"/>
-                            <exclude reference="Ei4-eP-IcD"/>
-                            <exclude reference="wug-fl-97b"/>
+                            <exclude reference="Dwv-ho-p5t"/>
+                            <exclude reference="gHg-ih-oPf"/>
+                            <exclude reference="zdU-r0-EMt"/>
                             <exclude reference="68P-NY-eb5"/>
                             <exclude reference="CG9-tQ-Yy4"/>
+                            <exclude reference="Ei4-eP-IcD"/>
+                            <exclude reference="wug-fl-97b"/>
                             <exclude reference="Gqm-YZ-9xt"/>
                             <exclude reference="nZg-VY-4qY"/>
                             <exclude reference="Pzh-tD-FpI"/>
                             <exclude reference="zBf-AA-yid"/>
-                            <exclude reference="Dwv-ho-p5t"/>
-                            <exclude reference="gHg-ih-oPf"/>
-                            <exclude reference="zdU-r0-EMt"/>
+                            <exclude reference="2Ap-ez-4k2"/>
+                            <exclude reference="9ed-kY-U3u"/>
+                            <exclude reference="agO-Vt-Hn2"/>
+                            <exclude reference="zA2-M8-jEK"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -385,21 +385,21 @@
                             <include reference="q84-DM-uQ3"/>
                         </mask>
                         <mask key="constraints">
-                            <include reference="2Ap-ez-4k2"/>
-                            <include reference="9ed-kY-U3u"/>
-                            <include reference="agO-Vt-Hn2"/>
-                            <include reference="zA2-M8-jEK"/>
-                            <include reference="Ei4-eP-IcD"/>
-                            <include reference="wug-fl-97b"/>
+                            <include reference="Dwv-ho-p5t"/>
+                            <include reference="gHg-ih-oPf"/>
+                            <include reference="zdU-r0-EMt"/>
                             <include reference="68P-NY-eb5"/>
                             <include reference="CG9-tQ-Yy4"/>
+                            <include reference="Ei4-eP-IcD"/>
+                            <include reference="wug-fl-97b"/>
                             <include reference="Gqm-YZ-9xt"/>
                             <include reference="nZg-VY-4qY"/>
                             <include reference="Pzh-tD-FpI"/>
                             <include reference="zBf-AA-yid"/>
-                            <include reference="Dwv-ho-p5t"/>
-                            <include reference="gHg-ih-oPf"/>
-                            <include reference="zdU-r0-EMt"/>
+                            <include reference="2Ap-ez-4k2"/>
+                            <include reference="9ed-kY-U3u"/>
+                            <include reference="agO-Vt-Hn2"/>
+                            <include reference="zA2-M8-jEK"/>
                         </mask>
                     </variation>
                 </view>
