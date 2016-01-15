@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FSLineChart/FSLineChart.m"
-            timestampString = "474365809.686532"
+            timestampString = "474517728.447407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "513"
-            endingLineNumber = "513"
+            startingLineNumber = "516"
+            endingLineNumber = "516"
             landmarkName = "-setGridStep:"
             landmarkType = "5">
          </BreakpointContent>

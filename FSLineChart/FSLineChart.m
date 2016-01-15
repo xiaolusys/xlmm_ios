@@ -33,6 +33,8 @@
 @property (nonatomic) CGMutablePathRef initialPath;
 @property (nonatomic) CGMutablePathRef newPath;
 
+@property (nonatomic, strong) NSMutableArray *lineArray;
+
 @end
 
 @implementation FSLineChart
@@ -72,6 +74,7 @@
 - (void)setDefaultParameters
 {
     _color = [UIColor fsLightBlue];
+    _lineArray = [[NSMutableArray alloc] init];
     _fillColor = [_color colorWithAlphaComponent:0.25];
     _verticalGridStep = 3;
     _horizontalGridStep = 3;
@@ -597,6 +600,9 @@
             CGPoint p = [self getPointForIndex:i withScale:scale];
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 0.5, 115 - p.y)];
             view.backgroundColor = [UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:1];
+            
+            [self.lineArray addObject:view];
+            view.hidden = YES;
             [self addSubview:view];
             
             
@@ -620,6 +626,16 @@
     return path;
 }
 
+- (void)showLineViewAfterDelay:(NSTimeInterval)time{
+    [self performSelector:@selector(showLineView) withObject:nil afterDelay:time];
+}
+
+
+- (void)showLineView{
+    for (UIView *view in self.lineArray) {
+        view.hidden = NO;
+    }
+}
 
 
 @end
