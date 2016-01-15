@@ -68,6 +68,7 @@
     
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
     [self prepareData];
     [self createChart:dataArray];
@@ -78,9 +79,21 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.headImageView addGestureRecognizer:tap];
     self.headImageView.userInteractionEnabled = YES;
-    
-    
+}
 
+#pragma mark -获取订单记录
+
+- (void)fetchedDingdanjilu:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (!error) {
+        NSString *count = [dic objectForKey:@"count"];
+        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", [count integerValue]];
+        
+    }
     
 }
 
@@ -94,6 +107,8 @@
     
 }
 
+#pragma mark --进入提现界面
+
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
    // NSLog(@"0");
    // NSLog(@"提现");
@@ -104,6 +119,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+#pragma mark --获取历史积累收益
+
 - (void)fetchedInfoData:(NSData *)data{
     if (data == nil) {
         return;
@@ -111,9 +129,15 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-       // NSLog(@"json = %@", dicJson);
+        NSLog(@"json = %@", dicJson);
+        NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
+        self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
+        
     }
 }
+
+
+#pragma mark --获取小鹿妈妈信息：等级，账户余额， 可提现金额， 名称等。。。
 
 - (void)fetchedMaMaData:(NSData *)data{
     if (data == nil) {
@@ -181,6 +205,8 @@
         
     });
 }
+
+#pragma mark --获取今日订单数据。。。。
 - (void)prepareTableData{
     NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -195,6 +221,8 @@
     }];
 
 }
+
+//更新订单数据。
 - (void)maMaOrderInfoData:(NSArray *)array {
     
     [self.dataArr removeAllObjects];
@@ -212,6 +240,9 @@
     
     [self.mamaTableView reloadData];
 }
+
+
+ //根据订单数据 画表格。。。。
 - (void)createChart:(NSMutableArray *)chartData {
     
     NSInteger count = [chartData count];
@@ -262,59 +293,33 @@
         [self.mamaScrollView addSubview:shartView];
         
     }
-    
-    
-
-   
-    
-    
-    
-    
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, SCREENWIDTH *allDingdan.count, 0.5)];
     bottomLine.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
     [self.mamaScrollView addSubview:bottomLine];
-    
-    
-    CGPoint point = [self.lineChart getPointForIndex:chartData.count - 1];
-  //  NSLog(@"point = %@", NSStringFromCGPoint(point));
-    
-    
-   
+
 }
 
-
-
-
-
-
-
-- (void)updateSelectedViewWithPoint:(CGPoint)point{
-//    circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
-//    lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115 - point.y);
-}
-//CGPoint p = [self getPointForIndex:i withScale:scale];
-//UIView *view = [[UIView alloc] initWithFrame:CGRectMake(p.x, p.y, 0.5, 115 - p.y)];
-//view.backgroundColor = [UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:1];
-//[self addSubview:view];
-
+// 点击表格 更新数据
 - (void)tapClicked:(UITapGestureRecognizer *)recognizer{
 
     
     UIView *weekView = [recognizer view];
     NSInteger week = weekView.tag - 1000;
     
-  //  NSLog(@"第 %ld 周订单数据", week);
+    NSLog(@"第 %ld 周订单数据", week);
     
-   // NSLog(@"weekView subView = %@", [weekView subviews]);
+    NSLog(@"weekView subView = %@", [weekView subviews]);
     
 
     CGPoint location = [recognizer locationInView:recognizer.view];
   //  NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
-  //  NSLog(@"width = %f", width);
-    int index = (int)((width + 25) / ((SCREENWIDTH - 10)/6));
+    NSLog(@"width = %f", width);
+    CGFloat unitwidth = (SCREENWIDTH - 50)/6;
+    NSLog(@"unit = %.0f", unitwidth);
+    int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
-  //  NSLog(@"index = %d", index);
+    NSLog(@"index = %d", index);
 
     
 
@@ -325,7 +330,7 @@
 
     
     CGPoint point = [linechart getPointForIndex:index];
- //   NSLog(@"point = %@", NSStringFromCGPoint(point));
+   // NSLog(@"point = %@", NSStringFromCGPoint(point));
     
     
     circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
@@ -333,12 +338,11 @@
     
     NSInteger days = (6 - index) + (week - 1)*7;
     
-  //  NSLog(@"days = %ld", days);
+    NSLog(@"days = %ld", days);
 
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
- //   NSLog(@"urlstring = %@", urlString);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -354,7 +358,7 @@
 }
 
 
-
+//制作表格。。。
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
     self.lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH - 40, 120)];
@@ -387,7 +391,7 @@
     return self.lineChart;
 }
 
-
+//  获取表格数据
 - (void)prepareData{
     
     NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=91", Root_URL];
@@ -395,14 +399,14 @@
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         NSMutableArray *data = [responseObject mutableCopy];
-      //  NSLog(@"%@", responseObject);
+        NSLog(@"%@", responseObject);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < data.count; i++) {
             [weekArray addObject:data[i]];
             
             if ((i +1)%7 == 0) {
                 NSInteger sum = [self sumofoneWeek:weekArray];
-             //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
+             NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
                 }
@@ -410,7 +414,7 @@
                 [weekArray removeAllObjects];
             }
         }
-       // NSLog(@"%@", allDingdan);
+      NSLog(@"%@", allDingdan);
         scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

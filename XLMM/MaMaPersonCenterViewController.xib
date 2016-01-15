@@ -8,9 +8,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
             <connections>
                 <outlet property="dingdanLabel" destination="kFO-sq-pB1" id="9hL-w3-w2h"/>
+                <outlet property="dingdanyilu" destination="onc-IJ-A1G" id="RJV-N8-XGx"/>
                 <outlet property="fabuButton" destination="kw5-aB-9xg" id="RhS-y0-Cjy"/>
                 <outlet property="headImageView" destination="Avq-4J-csh" id="iJZ-Lz-onR"/>
                 <outlet property="headViewWidth" destination="dBP-ce-yk7" id="uka-dG-082"/>
+                <outlet property="jileishouyi" destination="9Yk-DK-N8l" id="1f9-WF-vXa"/>
                 <outlet property="jineLabel" destination="gbp-da-shj" id="REF-Du-8d0"/>
                 <outlet property="levelLabel" destination="Q51-Vc-n5R" id="WR6-R1-Ytc"/>
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
