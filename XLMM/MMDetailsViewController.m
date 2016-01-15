@@ -179,7 +179,6 @@
         contentTopHeight = 420 + 163 - 106;
     }
     
-    
     [self createCartView];
 
     [self.view addSubview:[MMLoadingAnimation sharedView]];
@@ -320,9 +319,14 @@
     }
     if ([[details objectForKey:@"note"] isKindOfClass:[NSString class]]) {
         self.canshulabel.text = [details objectForKey:@"note"];
+        
         NSString *string = [details objectForKey:@"note"];
-        NSInteger length = string.length;
-        self.canshuViewHeight.constant += length/16*15;
+        CGRect frame = self.canshulabel.frame;
+        CGSize titleSize = [string boundingRectWithSize:CGSizeMake(SCREENWIDTH - 90, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+        NSLog(@"title size = %@", NSStringFromCGSize(titleSize));
+        
+        self.canshuViewHeight.constant = frame.origin.y + titleSize.height + 20;
+        
     } else{
         self.canshulabel.text = @"无";
     }
