@@ -37,7 +37,6 @@
     NSString *skusID;  //规格id
     NSString *itemID;  //商品id
     NSString *saleTime;//上佳时间
-    UIView *frontView; //完成前显示 界面
     NSTimer *timer;    // 底部定时器
     UILabel *countLabel;// 购物车label
     NSInteger goodsCount;//购物车商品数量
@@ -123,8 +122,7 @@
     
     self.webView = nil;
     self.kuaiZhaoImage = nil;
-   // [SVProgressHUD dismiss];
-//    [MMLoadingAnimation dismissLoadingView];
+
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -165,8 +163,6 @@
 //    [SVProgressHUD setDefaultMaskType:3];
 //    
 ////    [SVProgressHUD show];
-    [self.view addSubview:[MMLoadingAnimation sharedView]];
-    [MMLoadingAnimation showLoadingView];
     // 667 736
     self.headViewwidth.constant = SCREENWIDTH;
     if (SCREENHEIGHT == 568) {
@@ -182,16 +178,12 @@
         self.bottomImageViewHeight.constant = 420 + 163;
         contentTopHeight = 420 + 163 - 106;
     }
+    
+    
     [self createCartView];
 
-    //完成前的显示界面 加载界面 可以使用加载动画
-//    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    frontView.backgroundColor = [UIColor whiteColor];
-//    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    indicatorView.frame = CGRectMake(SCREENWIDTH/2-40, 200, 80, 80);
-//    [indicatorView startAnimating];
-//    [frontView addSubview:indicatorView];
-//    [self.view addSubview:frontView];
+    [self.view addSubview:[MMLoadingAnimation sharedView]];
+
     self.addCartButton.layer.cornerRadius = 20;
     self.addCartButton.layer.borderWidth = 1;
     self.addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
@@ -201,7 +193,8 @@
     self.line5Height.constant = 0.5;
     self.line6height.constant = 0.5;
     [self downloadDetailsData];
-    
+    [MMLoadingAnimation showLoadingView];
+
     if ([WXApi isWXAppInstalled]) {
         
     } else {
