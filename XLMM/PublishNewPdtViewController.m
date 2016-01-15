@@ -15,6 +15,7 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "SharePicModel.h"
+#import "SVProgressHUD.h"
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
@@ -24,6 +25,8 @@
 @property (nonatomic, strong)PhotoView *photoView;
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
+@property (nonatomic, assign)NSInteger saveIndex;
+@property (nonatomic, strong)NSMutableArray *currentArr;
 
 @end
 
@@ -154,6 +157,8 @@
     if (kind == UICollectionElementKindSectionHeader) {
         //返回页眉
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
+        SharePicModel *picModel = self.dataArr[indexPath.section];
+        headerV.timeLabel.text = [self turnsTime:picModel.start_time];
         return headerV;
         
     }else{
@@ -166,6 +171,18 @@
 
 }
 
+- (NSString *)turnsTime:(NSString *)timeStr {
+    NSMutableString *timestext= [NSMutableString stringWithString:timeStr];
+    NSRange range;
+    range = [timestext rangeOfString:@"T"];
+    [timestext replaceCharactersInRange:range withString:@" "];
+    
+    range = NSMakeRange(0, 10);
+    [timestext deleteCharactersInRange:range];
+    range = NSMakeRange(timestext.length - 4, 3);
+    [timestext deleteCharactersInRange:range];
+    return timestext;
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
@@ -177,26 +194,51 @@
 #pragma mark --保存事件
 - (void)tapSaveImageToIphone:(UIButton *)sender
                currentPicArr:(NSMutableArray *)currentPicArr {
-    NSInteger saveIndex = sender.tag - 100;
-    SharePicModel *picModel = self.dataArr[saveIndex];
-    for (NSString *url in picModel.pic_arry) {
-//        NSLog(@"------");
-         UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:url], self, nil, nil);
-    }
     
-//    UIImageWriteToSavedPhotosAlbum([UIImage imageNamed:@"test"], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    NSInteger saveIndex = sender.tag - 100;
+    self.saveIndex = saveIndex;
+    SharePicModel *picModel = self.dataArr[saveIndex];
+    
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = picModel.title;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重写复制"];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已复制，图片正在保存" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    if (self.currentArr == nil) {
+        self.currentArr = [picModel.pic_arry mutableCopy];
+        [self saveNext];
+    }else if (self.currentArr.count > 0){
+        [self.currentArr addObjectsFromArray:picModel.pic_arry];
+    }else {
+        [self.currentArr addObjectsFromArray:picModel.pic_arry];
+        [self saveNext];
+    }
+
 }
 
-//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
-//    if (error == nil) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }else{
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",  nil];
-//        [alert show];
-//    }
-//    
-//}
+- (void)saveNext {
+    if (self.currentArr.count > 0) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
+            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:self.currentArr[0]], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+        });
+    }else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+}
+
+-(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
+    if (error) {
+//        NSLog(@"%@", error.localizedDescription);
+    }else {
+        [self.currentArr removeObjectAtIndex:0];
+    }
+    [self saveNext];
+}
 
 #pragma mark -- scrollView代理
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
