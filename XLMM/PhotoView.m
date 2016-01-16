@@ -91,27 +91,33 @@
     
     //添加图片
     for (int i = 0; i < self.picArr.count; i++) {
-        if (self.index == i)continue;
+       // if (self.index == i)continue;
     
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH, 0, SWIDTH, SHEIGHT)];
-        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]]];
-//        __block UIActivityIndicatorView *activityIndicator;
-//        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]] placeholderImage:nil options:SDWebImageProgressiveDownload progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//            
-//            if (!activityIndicator)
-//            {
-//                [imageV addSubview:activityIndicator = [UIActivityIndicatorView.alloc initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
-//                activityIndicator.center = imageV.center;
-//                [activityIndicator startAnimating];
-//            }
-//            
-//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//            
-//            [activityIndicator removeFromSuperview];
-//            activityIndicator = nil;
-//        }];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, SWIDTH, SHEIGHT)];
+
+     //   [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]]];
+        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        activityIndicator.center = imageV.center;
+        [activityIndicator startAnimating];
+
+      
+        
+    
+     
+        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [activityIndicator removeFromSuperview];
+            activityIndicator = nil;
+        }];
+        
+        
+            
+        
+        
         
         [self.scrollView addSubview:imageV];
+        
+        [self.scrollView addSubview:activityIndicator];
+
     }
 }
 
