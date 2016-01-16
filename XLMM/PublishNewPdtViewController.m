@@ -69,7 +69,6 @@
 }
 
 
-
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -96,7 +95,6 @@
     //网络请求
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/ninepic", Root_URL];
-    NSLog(@"%@", requestURL);
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
@@ -159,6 +157,7 @@
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.timeLabel.text = [self turnsTime:picModel.start_time];
+        headerV.propagandaLabel.text = picModel.title;
         return headerV;
         
     }else{

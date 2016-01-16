@@ -23,16 +23,38 @@
 @implementation PhotoView
 
 ////重写初始化方法 ／／初始化方法。。。
-//- (instancetype)initWithFrame:(CGRect)frame {
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        self.backgroundColor = [UIColor blackColor];
-//    }
-//    return self;
-//}
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
+
+- (UIScrollView *)scrollView {
+    if (!_scrollView) {
+        self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        _scrollView.contentSize = CGSizeMake(SWIDTH * self.picArr.count, SHEIGHT);
+        _scrollView.pagingEnabled = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.delegate = self;
+        [self addSubview:_scrollView];
+    }
+    return _scrollView;
+}
+
+- (UIPageControl *)pageControl {
+    if (!_pageControl) {
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 34, 120, 20)];
+        _pageControl.numberOfPages = self.picArr.count;
+        _pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+        _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:120 / 256.0 green:120 / 256.0 blue:120 / 256.0 alpha:0.4];
+        [self addSubview:_pageControl];
+    }
+    return _pageControl;
+}
 
 - (void)createScrollView {
-    [self createScrollViewAndPageControl];
     [self addGestureRecognizerForView];
 }
 
@@ -70,29 +92,29 @@
     //添加图片
     for (int i = 0; i < self.picArr.count; i++) {
         if (self.index == i)continue;
+    
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH, 0, SWIDTH, SHEIGHT)];
-        [imageV sd_setImageWithURL:self.picArr[self.index]];
+        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]]];
+//        __block UIActivityIndicatorView *activityIndicator;
+//        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]] placeholderImage:nil options:SDWebImageProgressiveDownload progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            
+//            if (!activityIndicator)
+//            {
+//                [imageV addSubview:activityIndicator = [UIActivityIndicatorView.alloc initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
+//                activityIndicator.center = imageV.center;
+//                [activityIndicator startAnimating];
+//            }
+//            
+//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//            
+//            [activityIndicator removeFromSuperview];
+//            activityIndicator = nil;
+//        }];
+        
         [self.scrollView addSubview:imageV];
     }
 }
 
-// 创建ScrollView 和 PageControl
-- (void)createScrollViewAndPageControl {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-    self.scrollView.contentSize = CGSizeMake(SWIDTH * self.picArr.count, SHEIGHT);
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.delegate = self;
-    [self addSubview:self.scrollView];
-    
-    
-    
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 34, 120, 20)];
-    self.pageControl.numberOfPages = self.picArr.count;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
-    self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:120 / 256.0 green:120 / 256.0 blue:120 / 256.0 alpha:0.4];
-    [self addSubview:self.pageControl];
-}
 
 - (void)addGestureRecognizerForView {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelShade)];

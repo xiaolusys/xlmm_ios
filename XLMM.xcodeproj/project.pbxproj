@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E2C20FE1C3E11E0005A5760 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E2C20FD1C3E11E0005A5760 /* test.png */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -826,7 +825,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2E2C20FD1C3E11E0005A5760 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -3149,7 +3147,6 @@
 			isa = PBXGroup;
 			children = (
 				2E63AE531C3E5DA1008E97BB /* MaMa */,
-				2E2C20FD1C3E11E0005A5760 /* test.png */,
 				2E5600351C2D496E000AFB39 /* loading */,
 				321928BA1BDB7E7D004EA6A7 /* New Images */,
 				32746DD41B74A22000816208 /* Images */,
@@ -3659,7 +3656,6 @@
 				8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				2E5600C31C2D496E000AFB39 /* loading动画0068.png in Resources */,
-				2E2C20FE1C3E11E0005A5760 /* test.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
 				322D25B51C32B93A00509EAD /* 圈圈加载0010.png in Resources */,
