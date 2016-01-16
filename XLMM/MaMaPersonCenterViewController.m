@@ -129,7 +129,7 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
+     //   NSLog(@"json = %@", dicJson);
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         
@@ -306,20 +306,20 @@
     UIView *weekView = [recognizer view];
     NSInteger week = weekView.tag - 1000;
     
-    NSLog(@"第 %ld 周订单数据", week);
+   // NSLog(@"第 %ld 周订单数据", week);
     
-    NSLog(@"weekView subView = %@", [weekView subviews]);
+   // NSLog(@"weekView subView = %@", [weekView subviews]);
     
 
     CGPoint location = [recognizer locationInView:recognizer.view];
   //  NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
-    NSLog(@"width = %f", width);
+   // NSLog(@"width = %f", width);
     CGFloat unitwidth = (SCREENWIDTH - 50)/6;
-    NSLog(@"unit = %.0f", unitwidth);
+  //  NSLog(@"unit = %.0f", unitwidth);
     int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
-    NSLog(@"index = %d", index);
+  //  NSLog(@"index = %d", index);
 
     
 
@@ -338,7 +338,7 @@
     
     NSInteger days = (6 - index) + (week - 1)*7;
     
-    NSLog(@"days = %ld", days);
+    //NSLog(@"days = %ld", days);
 
     
     
@@ -380,13 +380,13 @@
     //    };
     
     self.lineChart.bezierSmoothing = NO;
-    self.lineChart.animationDuration = 0.01;
+    self.lineChart.animationDuration = 1;
     self.lineChart.drawInnerGrid = NO;
     
     
     [self.lineChart setChartData:chartData];
-    
-    
+  
+    [self.lineChart showLineViewAfterDelay:self.lineChart.animationDuration];
    
     return self.lineChart;
 }
@@ -399,14 +399,14 @@
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         NSMutableArray *data = [responseObject mutableCopy];
-        NSLog(@"%@", responseObject);
+     //   NSLog(@"%@", responseObject);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < data.count; i++) {
             [weekArray addObject:data[i]];
             
             if ((i +1)%7 == 0) {
                 NSInteger sum = [self sumofoneWeek:weekArray];
-             NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
+          //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
                 }
@@ -414,7 +414,7 @@
                 [weekArray removeAllObjects];
             }
         }
-      NSLog(@"%@", allDingdan);
+     // NSLog(@"%@", allDingdan);
         scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

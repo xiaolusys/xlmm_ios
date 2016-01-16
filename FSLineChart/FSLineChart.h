@@ -93,6 +93,6 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 - (void)clearChartData;
 
 - (CGPoint)getPointForIndex:(NSUInteger)idx;
-
+- (void)showLineViewAfterDelay:(NSTimeInterval)time;
 
 @end

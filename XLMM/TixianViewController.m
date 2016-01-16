@@ -173,31 +173,55 @@
 */
 
 - (IBAction)tixianClicked:(id)sender {
- //   NSLog(@"提现");
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    
-////  http://192.168.1.31:9000/rest/v1/cashout
-//    
-//    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL];
-//    NSLog(@"url = %@", stringurl);
-//    NSDictionary *paramters = @{@"choice":type};
-//    
-////    [manager POST:stringurl parameters:paramters
-////          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-////              NSLog(@"response = %@", responseObject);
-////              
-////          }
-////          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-////              
-////              NSLog(@"Error: %@", error);
-////              
-////          }];
+    NSLog(@"提现");
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+//  http://192.168.1.31:9000/rest/v1/cashout
+    
+    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL];
+    NSLog(@"url = %@", stringurl);
+    NSDictionary *paramters = @{@"choice":type};
+    NSLog(@"paramters = %@", paramters);
+    [manager POST:stringurl parameters:paramters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"response = %@", responseObject);
+              
+           
+              NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+              if (code == 0) {
+                  TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] initWithNibName:@"TixianSucceedViewController" bundle:nil];
+                  vc.tixianjine = tixianjine;
+                  [self.navigationController pushViewController:vc animated:YES];
+              } else if (code == 1){
+                  [self alterMessage:@"参数错误"];
+                  
+              } else if (code == 2){
+                  [self alterMessage:@"不足提现金额"];
+              } else if (code == 3){
+                  [self alterMessage:@"有待审核记录不予再次提现"];
+              }
+              
+          
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
 
-    TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] initWithNibName:@"TixianSucceedViewController" bundle:nil];
-    vc.tixianjine = tixianjine;
-    [self.navigationController pushViewController:vc animated:YES];
+  
     
 }
+
+
+- (void)alterMessage:(NSString *)message{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+    
+    
+}
+
 - (IBAction)fabuClicked:(id)sender {
     
  //   NSLog(@"发布产品");
@@ -205,4 +229,6 @@
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }
+
+
 @end

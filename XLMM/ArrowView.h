@@ -10,7 +10,7 @@
 
 typedef void(^clickButton)(UIButton *button);
 
-// 箭头在不同的方向
+// 箭头在不同的方向 
 typedef NS_ENUM(NSInteger, UIArrowViewSytle)
 {
     ArrowView_Left = 0,//箭头在左边
