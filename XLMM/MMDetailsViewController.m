@@ -338,7 +338,7 @@
   
 //    [self createShareData];
    
-
+    
     [self createSizeView];
     [self createContentView];
     
