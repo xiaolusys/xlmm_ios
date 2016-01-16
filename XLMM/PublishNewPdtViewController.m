@@ -158,6 +158,9 @@
         SharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.timeLabel.text = [self turnsTime:picModel.start_time];
         headerV.propagandaLabel.text = picModel.title;
+        
+        NSString *name = [NSString stringWithFormat:@"%ldlun", (long)indexPath.section];
+        headerV.turnsImageView.image = [UIImage imageNamed:name];
         return headerV;
         
     }else{

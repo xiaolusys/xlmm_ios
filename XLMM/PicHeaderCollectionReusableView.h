@@ -14,4 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *propagandaLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *turnsImageView;
+
 @end

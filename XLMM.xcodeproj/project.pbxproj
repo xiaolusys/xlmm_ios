@@ -88,6 +88,11 @@
 		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
 		2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5D4CB01C311A6700F5D269 /* smallrun.gif */; };
 		2E612B421C476E07002F1C15 /* SharePicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E612B411C476E07002F1C15 /* SharePicModel.m */; };
+		2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */; };
+		2E612B531C4A4454002F1C15 /* 1lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */; };
+		2E612B541C4A4454002F1C15 /* 2lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */; };
+		2E612B551C4A4454002F1C15 /* 3lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B501C4A4454002F1C15 /* 3lun@2x.png */; };
+		2E612B561C4A4454002F1C15 /* 4lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B511C4A4454002F1C15 /* 4lun@2x.png */; };
 		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E63AE521C3E172D008E97BB /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63AE511C3E172D008E97BB /* PhotoView.m */; };
 		2E63AE551C3E5DCF008E97BB /* savephoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E63AE541C3E5DCF008E97BB /* savephoto.png */; };
@@ -908,6 +913,11 @@
 		2E5D4CB01C311A6700F5D269 /* smallrun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = smallrun.gif; sourceTree = "<group>"; };
 		2E612B401C476E07002F1C15 /* SharePicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePicModel.h; sourceTree = "<group>"; };
 		2E612B411C476E07002F1C15 /* SharePicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePicModel.m; sourceTree = "<group>"; };
+		2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "0lun@2x.png"; sourceTree = "<group>"; };
+		2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1lun@2x.png"; sourceTree = "<group>"; };
+		2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2lun@2x.png"; sourceTree = "<group>"; };
+		2E612B501C4A4454002F1C15 /* 3lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3lun@2x.png"; sourceTree = "<group>"; };
+		2E612B511C4A4454002F1C15 /* 4lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4lun@2x.png"; sourceTree = "<group>"; };
 		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
 		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E63AE501C3E172D008E97BB /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
@@ -1867,6 +1877,11 @@
 		2E63AE531C3E5DA1008E97BB /* MaMa */ = {
 			isa = PBXGroup;
 			children = (
+				2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */,
+				2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */,
+				2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */,
+				2E612B501C4A4454002F1C15 /* 3lun@2x.png */,
+				2E612B511C4A4454002F1C15 /* 4lun@2x.png */,
 				2E63AE541C3E5DCF008E97BB /* savephoto.png */,
 			);
 			name = MaMa;
@@ -3477,6 +3492,7 @@
 				324EA2F31C30DC3100E46557 /* default.png in Resources */,
 				2EB87D2A1C17FAE4001CBF3D /* UMSCommentDetailController.xib in Resources */,
 				32AA6D9B1C38E9A50011BB04 /* mmback_icon.png in Resources */,
+				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
@@ -3496,6 +3512,7 @@
 				32746E131B74A22000816208 /* icon-fanhui2.png in Resources */,
 				32620C721B6AFD56006E806A /* RegisterViewController.xib in Resources */,
 				32D2B78C1BDDF41C00603FCE /* address_icon.png in Resources */,
+				2E612B561C4A4454002F1C15 /* 4lun@2x.png in Resources */,
 				2E5600B51C2D496E000AFB39 /* loading动画0055.png in Resources */,
 				2E63AE5A1C3E66A5008E97BB /* PicFooterCollectionReusableView.xib in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
@@ -3523,6 +3540,7 @@
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
 				32746E291B74A22000816208 /* icon-tousujianyi.png in Resources */,
+				2E612B551C4A4454002F1C15 /* 3lun@2x.png in Resources */,
 				322D25D01C32B93A00509EAD /* 圈圈加载0037.png in Resources */,
 				2E63AE551C3E5DCF008E97BB /* savephoto.png in Resources */,
 				8E0044E41BFA03EA00AFC1DF /* TousuViewController.xib in Resources */,
@@ -3553,6 +3571,7 @@
 				321C8D9D1BD8E2110060FB62 /* NewLeftViewController.xib in Resources */,
 				3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */,
 				8E0044F41BFF09B600AFC1DF /* dingdanemptyimage.png in Resources */,
+				2E612B541C4A4454002F1C15 /* 2lun@2x.png in Resources */,
 				32746E2B1B74A22000816208 /* icon-wodejifen.png in Resources */,
 				3247FDBF1C03365900C6631D /* yiguoqi.png in Resources */,
 				32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */,
@@ -3617,6 +3636,7 @@
 				2E5600B11C2D496E000AFB39 /* loading动画0051.png in Resources */,
 				2E56008C1C2D496E000AFB39 /* loading动画0018.png in Resources */,
 				322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */,
+				2E612B531C4A4454002F1C15 /* 1lun@2x.png in Resources */,
 				2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				2EB87D3C1C17FAE4001CBF3D /* ios-social-sdk-comment-quick.html in Resources */,
