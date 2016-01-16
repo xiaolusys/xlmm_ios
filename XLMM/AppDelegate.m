@@ -66,7 +66,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
     self.isFirst = YES;
-   // [MiPushSDK registerMiPush:self type:0 connect:YES];
+    [MiPushSDK registerMiPush:self type:0 connect:YES];
 
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];

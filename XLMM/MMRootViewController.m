@@ -54,12 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    //订阅展示视图消息，将直接打开某个分支视图
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
-    //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
-  
+ 
    
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
@@ -113,7 +108,12 @@
         
         
         
-    } else {
+    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:ma animated:YES];
+        
+        
+    }else {
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
         NSString *parameter = [components lastObject];
@@ -213,6 +213,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //订阅展示视图消息，将直接打开某个分支视图
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
+    //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];

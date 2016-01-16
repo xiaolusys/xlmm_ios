@@ -45,46 +45,24 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, modelID];
         self.urlString = string;
         _childClothing = isChild;
+        [self downloadData];
+
     }
     return self;
 }
 
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
- //  self.navigationController.navigationBarHidden = NO;
-}
-
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-//    if (_isFirst) {
-//        //集成刷新控件
-//        [self setupRefresh];
-//        self.collectionView.footerHidden=NO;
-//        self.collectionView.headerHidden=NO;
-//        [self.collectionView headerBeginRefreshing];
-//        _isFirst = NO;
-//    }
-
 }
-
-
-
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     if ([theTimer isValid]) {
         [theTimer invalidate];
-        
     }
 }
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    //self.navigationController.navigationBarHidden = YES;
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,21 +76,6 @@
     [self createCollectionView];
     ratio = 8.0f/6.0f;
     [self createInfo];
-    [self downloadData];
-    
-//    [SVProgressHUD setDefaultMaskType:3];
-//    [SVProgressHUD show];
-
-//    LoadingAnimation *loadView = [[LoadingAnimation alloc]initWithFrame:self.view.frame];
-//    [self.view addSubview:loadView];
-//    
-//    [loadView runGifForImage];
-    
-//    MMLoadingAnimation *loadView = [MMLoadingAnimation sharedView];
-////    loadView.alpha = 0.5;
-//    [self.view addSubview:loadView];
-//    [MMLoadingAnimation showLoadingView];
-
 }
 
 - (void)createInfo{
@@ -140,9 +103,7 @@
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 8, 5);
-    
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
-    
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -150,8 +111,6 @@
     [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.view addSubview:[[UIView alloc] init]];
     self.collectionView.backgroundColor = [UIColor colorWithR:245 G:245 B:245 alpha:1];
-
-   // self.view.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.collectionView];
 }
 
@@ -159,7 +118,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString] options:(NSDataReadingUncached) error:nil];
         [self performSelectorOnMainThread:@selector(fetchedCollectionData:)withObject:data waitUntilDone:YES];
-        
     });
     
 }
@@ -167,27 +125,14 @@
     if (data == nil) {
       
     }
-    //[MMLoadingAnimation dismissLoadingView];
-    NSError *error;
-    
+    NSError *error = nil;
     [self.dataArray removeAllObjects];
-    
-    
-    
-    
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
-   // NSDictionary *firstDic = [collections objectAtIndex:0];
- 
-   // collectionImage = [UIImage imagewithURLString:[[[firstDic objectForKey:@"pic_path"] URLEncodedString] imageMoreCompression]];
-  
-    
-   // NSLog(@"collections = %@", collections);
     for (NSDictionary *dic in collections) {
         CollectionModel *model = [CollectionModel new];
-        
         model.agentPrice = [dic objectForKey:@"product_lowest_price"];
         model.category = [dic objectForKey:@"category"];
         model.ID = [dic objectForKey:@"id"];
@@ -205,7 +150,6 @@
         model.wareBy = [dic objectForKey:@"ware_by"];
         model.productModel = [dic objectForKey:@"product_model"];
         model.offShelfTime = [dic objectForKey:@"offshelf_time"];
-        
         [self.dataArray addObject:model];
         
     }
@@ -214,9 +158,7 @@
         [theTimer invalidate];
     }
     CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
-    
     offSheltTime = tempModel.offShelfTime;
-    
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];
     [self.collectionView reloadData];
@@ -226,9 +168,6 @@
 {
      CollectionModel *model = [self.dataArray objectAtIndex:0];
     NSString *saleTime = model.saleTime;
-  //  NSLog(@"saleTime = %@", saleTime);
-    
-    
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     formatter.dateFormat = @"YYYY-MM-dd";
     
@@ -307,7 +246,6 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.dataArray.count;
-    
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -340,16 +278,11 @@
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
     
     
-  //  [cell fillDataWithCollectionModel:[self.dataArray objectAtIndex:indexPath.row]];
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
     NSString *string = [model.picPath URLEncodedString];
     [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression])placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-      //  [SVProgressHUD dismiss];
-        
-       
-        
-//        self.navigationController.navigationBarHidden = NO;
+  
         
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
