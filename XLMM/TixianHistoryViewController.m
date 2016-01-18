@@ -74,7 +74,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         NSLog(@"error = %@", error.description);
         
     }
-    NSLog(@"json = %@", dicJson);
+ //   NSLog(@"json = %@", dicJson);
     
     NSArray *results = [dicJson objectForKey:@"results"];
     for (NSDictionary *dic in results) {
@@ -82,12 +82,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         [self.dataArray addObject:model];
     }
     
-    NSLog(@"dataArray = %@", _dataArray);
-    int i = 0;
-    for (TixianModel *model in self.dataArray) {
-        i++;
-        NSLog(@"model%i = %@", i, model);
-    }
+  
     
     [self.tableView reloadData];
     
