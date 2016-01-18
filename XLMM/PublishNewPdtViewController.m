@@ -99,7 +99,6 @@
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         //未登录处理
     }];
 }
@@ -225,7 +224,8 @@
 - (void)saveNext {
     if (self.currentArr.count > 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
-            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:self.currentArr[0]], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+            NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.currentArr[0]];
+            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:joinUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
