@@ -30,4 +30,7 @@
 - (IBAction)backClicked:(id)sender;
 - (IBAction)sendProduct:(id)sender;
 
+- (IBAction)MamaOrderClicked:(id)sender;
+
+
 @end

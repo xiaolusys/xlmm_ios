@@ -59,6 +59,8 @@ static NSString *khead2View = @"head2View";
     
     BOOL _updating;
     
+    BOOL _isFirstChild;
+    
     CGFloat oldScrollViewTop;
     
     
@@ -395,16 +397,11 @@ static NSString *khead2View = @"head2View";
 
     step1 = YES;
     if (step1 && step2) {
-        
         step1 = NO;
         step2 = NO;
         [self.myCollectionView reloadData];
         [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
-        
-
     }
-    
-    
 }
 
 - (void)fetchedPromoteMorePageData:(NSData *)data{
@@ -416,30 +413,30 @@ static NSString *khead2View = @"head2View";
     
     NSError *error = nil;
     NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//    NSLog(@"err = %@", error);
-//    NSLog(@"promote = %@", promoteDic);
     
     nextUrl = [promoteDic objectForKey:@"next"];
     NSArray *results = [promoteDic objectForKey:@"results"];
     
-    
+    NSMutableArray *reloadNum = [NSMutableArray arrayWithCapacity:0];
     
     for (NSDictionary *ladyInfo in results) {
         
         PromoteModel *model = [self fillModel:ladyInfo];
         NSDictionary *category = model.category;
-      //  NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+        
         if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
+            //女装
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:ladyDataArray.count inSection:1];
             [ladyDataArray addObject:model];
+            [reloadNum addObject:indexPath];
         } else{
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:childDataArray.count inSection:2];
             [childDataArray addObject:model];
+            [reloadNum addObject:indexPath];
         }
     }
-  //  NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
-    
-//    _isShouldLoad = YES;
-    [self.myCollectionView reloadData];
-
+    [self.myCollectionView insertItemsAtIndexPaths:reloadNum];
 }
 - (void)fetchedPromotePageData:(NSData *)data{
     
@@ -627,9 +624,10 @@ static NSString *khead2View = @"head2View";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    if (childDataArray.count == 0) {
-        return 2;
-    }
+//    if (childDataArray.count == 0) {
+//        //如果童装数据为零就返回2个分区
+//        return 2;
+//    }
     return 3;
 }
 
