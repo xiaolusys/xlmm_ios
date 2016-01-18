@@ -108,10 +108,5 @@
             </connections>
             <point key="canvasLocation" x="70" y="93"/>
         </collectionViewCell>
-        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cZm-gY-ewc">
-            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="-55" y="380"/>
-        </imageView>
     </objects>
 </document>

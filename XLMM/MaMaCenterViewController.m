@@ -109,7 +109,7 @@
    
     
     dingdanLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 250, SCREENWIDTH, 40)];
-    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu,ticheng];
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", (long)dingdanshu,ticheng];
                          
     dingdanLabel.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
    dingdanLabel.font = [UIFont systemFontOfSize:14];
@@ -179,7 +179,7 @@
         return;
     }
     NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    __unused NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSLog(@"json = %@", dicJson);
     }
@@ -220,7 +220,7 @@
         [self.dataArr addObject:orderM];
     }
     NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng];
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", (long)dingdanshu, ticheng];
     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
     
     [self.mamaTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];

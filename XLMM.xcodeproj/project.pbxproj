@@ -759,6 +759,9 @@
 		32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC181BEC95CF0036F338 /* ModifyPhoneController.xib */; };
 		32E6BC1E1BEC95F90036F338 /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */; };
 		32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */; };
+		32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */; };
+		32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */; };
+		32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B54B1C4CCDC300414F8A /* TixianModel.m */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1641,6 +1644,11 @@
 		32E6BC1B1BEC95F90036F338 /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
+		32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianHistoryViewController.h; sourceTree = "<group>"; };
+		32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianHistoryViewController.m; sourceTree = "<group>"; };
+		32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianHistoryViewController.xib; sourceTree = "<group>"; };
+		32E8B54A1C4CCDC300414F8A /* TixianModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianModel.h; sourceTree = "<group>"; };
+		32E8B54B1C4CCDC300414F8A /* TixianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianModel.m; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -1925,6 +1933,8 @@
 		2E73ED981C3A14A300EDB94E /* MaMaModel */ = {
 			isa = PBXGroup;
 			children = (
+				32E8B54A1C4CCDC300414F8A /* TixianModel.h */,
+				32E8B54B1C4CCDC300414F8A /* TixianModel.m */,
 				2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */,
 				2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */,
 				2E612B401C476E07002F1C15 /* SharePicModel.h */,
@@ -2646,6 +2656,9 @@
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
+				32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */,
+				32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */,
+				32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */,
 				325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */,
 				325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */,
 				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
@@ -3611,6 +3624,7 @@
 				8E9665761C0599CD001CF18A /* empty.png in Resources */,
 				2E5600B81C2D496E000AFB39 /* loading动画0058.png in Resources */,
 				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
+				32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
 				32F2E95D1C12AFBE00A98EA3 /* guanyuIcon.png in Resources */,
@@ -4093,6 +4107,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */,
 				2E73ED961C38F19B00EDB94E /* FSLineChart.m in Sources */,
 				322D25651C32B66100509EAD /* MJRefreshComponent.m in Sources */,
 				322D25731C32B66100509EAD /* UIScrollView+MJExtension.m in Sources */,
@@ -4166,6 +4181,7 @@
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
+				32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
 				322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */,
 				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
@@ -4419,7 +4435,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4462,7 +4478,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -91,7 +91,7 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSString *count = [dic objectForKey:@"count"];
-        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", [count integerValue]];
+        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
         
     }
     
@@ -174,7 +174,7 @@
     NSInteger days = (count - page - 1)*7;
   //  NSLog(@"days = %ld", days);
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
   //  NSLog(@"urlstring = %@", urlString);
     
     //改变竖线的位置。。。。
@@ -236,7 +236,7 @@
         [self.dataArr addObject:orderM];
     }
   //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", dingdanshu, ticheng];
+    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", (long)dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
 }
@@ -342,7 +342,7 @@
 
     
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

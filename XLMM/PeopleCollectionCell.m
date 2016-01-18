@@ -87,7 +87,6 @@
 - (void)fillData:( PromoteModel*)model{
     NSString *string = [model.picPath URLEncodedString];
 
-    
     [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
@@ -97,7 +96,8 @@
 
 
     }] ;
-
+    
+ 
     
     
     
