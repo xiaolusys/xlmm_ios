@@ -10,8 +10,13 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
+#import "TixianTableViewCell.h"
+#import "TixianModel.h"
 
-static NSString *CellIdentify = @"TixianCell";
+
+
+
+static NSString *CellIdentify = @"TixianCellIdentify";
 
 @interface TixianHistoryViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -23,6 +28,15 @@ static NSString *CellIdentify = @"TixianCell";
 
 @implementation TixianHistoryViewController
 
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return self;
+
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -43,12 +57,56 @@ static NSString *CellIdentify = @"TixianCell";
     
     [self createTableView];
     
+    [self downloadData];
+}
+
+- (void)downloadData{
+    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL] andSelector:@selector(fetchedHistoryData:)];
+}
+
+- (void)fetchedHistoryData:(NSData *)data{
+    if (data== nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error!= nil) {
+        NSLog(@"error = %@", error.description);
+        
+    }
+    NSLog(@"json = %@", dicJson);
+    
+    NSArray *results = [dicJson objectForKey:@"results"];
+    for (NSDictionary *dic in results) {
+        TixianModel *model = [TixianModel modelWithDiction:dic];
+        [self.dataArray addObject:model];
+    }
+    
+    NSLog(@"dataArray = %@", _dataArray);
+    int i = 0;
+    for (TixianModel *model in self.dataArray) {
+        i++;
+        NSLog(@"model%i = %@", i, model);
+    }
+    
+    [self.tableView reloadData];
     
 }
 
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
+}
+
 - (void)createTableView{
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.backgroundColor = [UIColor orangeColor];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+//    self.tableView.backgroundColor = [UIColor orangeColor];
     
     [self.tableView registerClass:[UITableViewCell class]
              forCellReuseIdentifier:CellIdentify];
@@ -56,7 +114,8 @@ static NSString *CellIdentify = @"TixianCell";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+     [self.tableView registerNib:[UINib nibWithNibName:@"TixianTableViewCell" bundle:nil] forCellReuseIdentifier:CellIdentify];
     [self.view addSubview:self.tableView];
     
     
@@ -68,23 +127,25 @@ static NSString *CellIdentify = @"TixianCell";
 #pragma makr --UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.dataArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
- 
-   
+    TixianTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentify];
     
-    UITableViewCell * cell = (UITableViewCell *)[tableView
-            dequeueReusableCellWithIdentifier:CellIdentify
-            forIndexPath:indexPath];
- cell.textLabel.text = @"test";
-
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    [cell fillModel:model];
+    
     return cell;
+ 
+  
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

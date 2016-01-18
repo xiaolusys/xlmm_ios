@@ -762,6 +762,8 @@
 		32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */; };
 		32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */; };
 		32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B54B1C4CCDC300414F8A /* TixianModel.m */; };
+		32E8B5841C4CE80D00414F8A /* TixianTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */; };
+		32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1649,6 +1651,9 @@
 		32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianHistoryViewController.xib; sourceTree = "<group>"; };
 		32E8B54A1C4CCDC300414F8A /* TixianModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianModel.h; sourceTree = "<group>"; };
 		32E8B54B1C4CCDC300414F8A /* TixianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianModel.m; sourceTree = "<group>"; };
+		32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianTableViewCell.h; sourceTree = "<group>"; };
+		32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianTableViewCell.m; sourceTree = "<group>"; };
+		32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianTableViewCell.xib; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -1915,6 +1920,9 @@
 				2E63AE581C3E66A5008E97BB /* PicFooterCollectionReusableView.xib */,
 				2E63AE501C3E172D008E97BB /* PhotoView.h */,
 				2E63AE511C3E172D008E97BB /* PhotoView.m */,
+				32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */,
+				32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */,
+				32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */,
 			);
 			name = MaMaView;
 			sourceTree = "<group>";
@@ -3508,6 +3516,7 @@
 				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
+				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,
@@ -4014,6 +4023,7 @@
 				322D25681C32B66100509EAD /* MJRefreshAutoGifFooter.m in Sources */,
 				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
 				2E63AE521C3E172D008E97BB /* PhotoView.m in Sources */,
+				32E8B5841C4CE80D00414F8A /* TixianTableViewCell.m in Sources */,
 				321952951BFC7A8D00AA0AB8 /* QNResponseInfo.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,

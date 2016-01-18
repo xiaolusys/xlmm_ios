@@ -17,5 +17,7 @@
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *created;
 
++ (instancetype)modelWithDiction:(NSDictionary *)dic;
+- (instancetype)initWithDiction:(NSDictionary *)dic;
 
 @end
