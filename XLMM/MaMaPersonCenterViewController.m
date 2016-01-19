@@ -16,6 +16,7 @@
 #import "AFNetworking.h"
 #import "TixianViewController.h"
 #import "MaMaOrderListViewController.h"
+#import "MaMaCarryLogViewController.h"
 
 
 @interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
@@ -63,9 +64,6 @@
     self.fabuButton.layer.cornerRadius = 20;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
 
-    
-    
-    
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
@@ -490,6 +488,11 @@
     MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
     
     [self.navigationController pushViewController:orderList animated:YES];
+}
+
+- (IBAction)MamaCarryLogClicked:(id)sender {
+    MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
+    [self.navigationController pushViewController:carry animated:YES];
 }
 
 

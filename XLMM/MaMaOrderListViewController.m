@@ -63,12 +63,14 @@
     
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/shopping", Root_URL];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"-------%@", responseObject);
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"--------%@", error);
     }];
 }
 
