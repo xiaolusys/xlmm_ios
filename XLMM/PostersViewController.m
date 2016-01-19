@@ -576,7 +576,7 @@ static NSString * ksimpleCell = @"simpleCell";
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
     model.productModel = [dic objectForKey:@"product_model"];
-     
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     
     if ([model.productModel class] == [NSNull class]) {
         model.picPath = [dic objectForKey:@"head_img"];

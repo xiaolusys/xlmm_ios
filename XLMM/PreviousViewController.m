@@ -362,6 +362,7 @@ static NSString *khead2View = @"head2View";
     model.productModel = [dic objectForKey:@"product_model"];
     model.offshelfTime = [dic objectForKey:@"offshelf_time"];
     offSheltTime = model.offshelfTime;
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     if ([model.productModel class] == [NSNull class]) {
          model.picPath = [dic objectForKey:@"head_img"];
         model.productModel = nil;

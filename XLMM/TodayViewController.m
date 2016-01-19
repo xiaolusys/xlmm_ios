@@ -577,6 +577,7 @@ static NSString *khead2View = @"head2View";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     if ([[dic objectForKey:@"product_model"]class] ==[NSNull class]) {
         model.productModel = nil;
           model.picPath = [dic objectForKey:@"head_img"];

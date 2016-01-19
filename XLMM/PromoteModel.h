@@ -27,6 +27,7 @@
 @property (nonatomic, copy)NSString *saleTime;
 @property (nonatomic, copy)NSString *memo;
 @property (nonatomic, copy)NSString *offshelfTime;
+@property (nonatomic, copy) NSString *watermark_op;
 
 
 @end

@@ -150,7 +150,10 @@
         model.wareBy = [dic objectForKey:@"ware_by"];
         model.productModel = [dic objectForKey:@"product_model"];
         model.offShelfTime = [dic objectForKey:@"offshelf_time"];
+        model.watermark_op = [dic objectForKey:@"watermark_op"];
         [self.dataArray addObject:model];
+        
+        
         
     }
     
@@ -279,9 +282,16 @@
     
     
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
     NSString *string = [model.picPath URLEncodedString];
-    [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression])placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    string = [string imageCompression];
+    
+    NSMutableString *newString = [NSMutableString stringWithString:string];
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newString appendFormat:@"&%@", model.watermark_op];
+    }
+    NSLog(@"newString = %@", newString);
+    
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:newString] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
   
         
         if (image != nil) {

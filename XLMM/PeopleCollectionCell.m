@@ -49,8 +49,16 @@
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
 
     NSString *string = [model.picPath URLEncodedString];
+    NSMutableString *newString = [NSMutableString stringWithString:[string imageCompression]];
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newString appendString:[NSString stringWithFormat:@"&%@", model.watermark_op]];
+        
+    }
+    
+    
+    NSLog(@"newString = %@", newString);
 
-    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:newString] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
@@ -86,8 +94,18 @@
 
 - (void)fillData:( PromoteModel*)model{
     NSString *string = [model.picPath URLEncodedString];
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:[string imageCompression]];
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newImageUrl appendString:[NSString stringWithFormat:@"&%@", model.watermark_op]];
+        
+    }
+    
+    
+    NSLog(@"newImageLink = %@", newImageUrl);
+    
+    
 
-    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:newImageUrl] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
