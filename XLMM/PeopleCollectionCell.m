@@ -120,11 +120,11 @@
             
             NSString *imageUrlString = [newImageUrl imageCompression];
             
-            NSLog(@"imageUrl0 = %@", imageUrlString);
+         //   NSLog(@"imageUrl0 = %@", imageUrlString);
             
             NSURL *url = [NSURL URLWithString:[imageUrlString URLEncodedString]];
             
-            NSLog(@"url = %@", url);
+          //  NSLog(@"url = %@", url);
             if (url == nil) {
                 return ;
             }
@@ -135,8 +135,8 @@
             if (imageError != nil) {
                 NSLog(@"error = %@", imageError);
             }
-            NSLog(@"imageUrl = %@", [newImageUrl imageCompression]);
-            NSLog(@"data = %@", data);
+           // NSLog(@"imageUrl = %@", [newImageUrl imageCompression]);
+          //  NSLog(@"data = %@", data);
             
             if (data != nil) {
                 UIImage *newimage = [UIImage imageWithData:data];
