@@ -702,7 +702,7 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.imageURL imagePostersCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
 
 
            

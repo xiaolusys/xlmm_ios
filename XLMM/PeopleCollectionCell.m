@@ -43,18 +43,21 @@
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
 
-    NSString *string = [model.picPath URLEncodedString];
+    NSString *string = model.picPath;
     
     NSMutableString *newString = [NSMutableString stringWithString:string];
     if (![model.watermark_op isEqualToString:@""]) {
-        [newString appendString:[NSString stringWithFormat:@"?%@", model.watermark_op]];
+        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
         
+    } else{
+        [newString appendString:@"?"];
     }
+
     
     
     NSLog(@"newString = %@", [newString imageCompression]);
 
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[newString imageCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
@@ -101,46 +104,17 @@
     }
     
     
-   // NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
+  // NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
     
     
 
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[newImageUrl imageCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         if (image != nil) {
           
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
 //            [SVProgressHUD dismiss];
-        } else {
-            
-            NSString *imageUrlString = [newImageUrl imageCompression];
-            
-         //   NSLog(@"imageUrl0 = %@", imageUrlString);
-            
-            NSURL *url = [NSURL URLWithString:[imageUrlString URLEncodedString]];
-            
-          //  NSLog(@"url = %@", url);
-            if (url == nil) {
-                return ;
-            }
-            
-            NSError *imageError = nil;
-          
-            NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&imageError];
-            if (imageError != nil) {
-                NSLog(@"error = %@", imageError);
-            }
-           // NSLog(@"imageUrl = %@", [newImageUrl imageCompression]);
-          //  NSLog(@"data = %@", data);
-            
-            if (data != nil) {
-                UIImage *newimage = [UIImage imageWithData:data];
-                
-                self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*newimage.size.height/newimage.size.width;
-                    self.imageView.image = newimage;
-                
-            }
         }
     }];
     
