@@ -20,14 +20,12 @@ static MMCartsView* _cartsView = nil;
 }
 */
 
-
 +(instancetype)sharedCartsView{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _cartsView = [[self alloc] init];
     });
     return _cartsView;
-    
 }
 
 - (id)init{

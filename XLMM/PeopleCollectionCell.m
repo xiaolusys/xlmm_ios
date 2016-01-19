@@ -37,12 +37,7 @@
 //        [SVProgressHUD show];
    
         self.headImageViewHeight.constant = (SCREENWIDTH - 15)/2*4/3;
-        
     }
-    
-
-    
-    
     return self;
 }
 
@@ -67,6 +62,7 @@
         }
         
     }] ;
+    
     
 
     
@@ -189,11 +185,7 @@
         
     } else {
         self.backView.hidden = NO;
-        
     }
-  
- 
-    
 }
 
 @end

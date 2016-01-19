@@ -93,6 +93,7 @@
 		2E612B541C4A4454002F1C15 /* 2lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */; };
 		2E612B551C4A4454002F1C15 /* 3lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B501C4A4454002F1C15 /* 3lun@2x.png */; };
 		2E612B561C4A4454002F1C15 /* 4lun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E612B511C4A4454002F1C15 /* 4lun@2x.png */; };
+		2E62D66B1C4CC66A007B20BB /* MaMaOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */; };
 		2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */; };
 		2E63AE521C3E172D008E97BB /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E63AE511C3E172D008E97BB /* PhotoView.m */; };
 		2E63AE551C3E5DCF008E97BB /* savephoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E63AE541C3E5DCF008E97BB /* savephoto.png */; };
@@ -923,6 +924,8 @@
 		2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2lun@2x.png"; sourceTree = "<group>"; };
 		2E612B501C4A4454002F1C15 /* 3lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3lun@2x.png"; sourceTree = "<group>"; };
 		2E612B511C4A4454002F1C15 /* 4lun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4lun@2x.png"; sourceTree = "<group>"; };
+		2E62D6691C4CC66A007B20BB /* MaMaOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaOrderListViewController.h; sourceTree = "<group>"; };
+		2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaOrderListViewController.m; sourceTree = "<group>"; };
 		2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithSelectedView.h"; sourceTree = "<group>"; };
 		2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageWithSelectedView.m"; sourceTree = "<group>"; };
 		2E63AE501C3E172D008E97BB /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
@@ -2672,6 +2675,8 @@
 				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
 				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
 				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
+				2E62D6691C4CC66A007B20BB /* MaMaOrderListViewController.h */,
+				2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */,
 			);
 			name = MaMaCenter;
 			sourceTree = "<group>";
@@ -4107,6 +4112,7 @@
 				3219528B1BFC7A8D00AA0AB8 /* QNALAssetFile.m in Sources */,
 				321952931BFC7A8D00AA0AB8 /* QNDns.m in Sources */,
 				2E73EDE31C3CF61F00EDB94E /* PublishNewPdtViewController.m in Sources */,
+				2E62D66B1C4CC66A007B20BB /* MaMaOrderListViewController.m in Sources */,
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				3219528D1BFC7A8D00AA0AB8 /* QNCrc32.m in Sources */,
 				32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */,

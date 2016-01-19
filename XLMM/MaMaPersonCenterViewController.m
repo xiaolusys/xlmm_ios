@@ -15,7 +15,7 @@
 #import "PublishNewPdtViewController.h"
 #import "AFNetworking.h"
 #import "TixianViewController.h"
-
+#import "MaMaOrderListViewController.h"
 
 
 @interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
@@ -484,6 +484,12 @@
     
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
+}
+
+- (IBAction)MamaOrderClicked:(id)sender {
+    MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
+    
+    [self.navigationController pushViewController:orderList animated:YES];
 }
 
 

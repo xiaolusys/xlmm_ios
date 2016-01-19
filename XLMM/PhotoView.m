@@ -82,7 +82,9 @@
     
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
     NSString *url = self.picArr[self.index];
-    [imageIndex sd_setImageWithURL:[NSURL URLWithString:url]];
+    NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
+
+    [imageIndex sd_setImageWithURL:[NSURL URLWithString:joinUrl]];
     
     [UIView animateWithDuration:0.3 animations:^{
         imageIndex.frame = CGRectMake(self.index * SWIDTH, 0, SWIDTH, SHEIGHT);
@@ -91,33 +93,22 @@
     
     //添加图片
     for (int i = 0; i < self.picArr.count; i++) {
-       // if (self.index == i)continue;
+        if (self.index == i)continue;
     
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, SWIDTH, SHEIGHT)];
 
-     //   [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]]];
         __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         activityIndicator.center = imageV.center;
         [activityIndicator startAnimating];
 
-      
-        
-    
-     
-        [imageV sd_setImageWithURL:[NSURL URLWithString:self.picArr[i]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
+        [imageV sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [activityIndicator removeFromSuperview];
             activityIndicator = nil;
         }];
-        
-        
-            
-        
-        
-        
+    
         [self.scrollView addSubview:imageV];
-        
         [self.scrollView addSubview:activityIndicator];
-
     }
 }
 
