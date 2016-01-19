@@ -232,28 +232,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/PeopleCollectionCell.m"
-            timestampString = "474812951.708278"
+            timestampString = "474863262.563098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "-fillData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/PeopleCollectionCell.m"
-            timestampString = "474813028.323301"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "-fillDataWithCollectionModel:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

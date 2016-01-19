@@ -499,7 +499,7 @@ static NSString *khead2View = @"head2View";
    
     ladyListNumber = ladyArray.count;
     if (ladyListNumber == 0) {
-        return;
+       // return;
     }
    
     for (NSDictionary *ladyInfo in ladyArray) {

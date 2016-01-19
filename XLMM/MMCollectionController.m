@@ -289,7 +289,7 @@
     if (![model.watermark_op isEqualToString:@""]) {
         [newString appendFormat:@"&%@", model.watermark_op];
     }
-    NSLog(@"newString = %@", newString);
+   // NSLog(@"newString = %@", newString);
     
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:newString] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
   
