@@ -31,6 +31,7 @@
 - (IBAction)sendProduct:(id)sender;
 
 - (IBAction)MamaOrderClicked:(id)sender;
+- (IBAction)MamaCarryLogClicked:(id)sender;
 
 
 @end
