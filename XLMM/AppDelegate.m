@@ -79,11 +79,28 @@
    
     NSLog(@"%d", self.isLaunchedByNotification);
     
+    [MobClick setLogEnabled:YES];
+    
     //version标识
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
     //填写AppKey，设置发送策略和填写渠道
     [MobClick startWithAppkey:@"5665541ee0f55aedfc0034f4" reportPolicy:BATCH channelId:nil];
+    
+    
+    
+//    Class cls = NSClassFromString(@"UMANUtil");
+//    SEL deviceIDSelector = @selector(openUDIDString);
+//    NSString *deviceID = nil;
+//    if(cls && [cls respondsToSelector:deviceIDSelector]){
+//        deviceID = [cls performSelector:deviceIDSelector];
+//    }
+//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+//                                                       options:NSJSONWritingPrettyPrinted
+//                                                         error:nil];
+//    
+//    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
     
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
