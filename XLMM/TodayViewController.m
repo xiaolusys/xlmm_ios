@@ -26,6 +26,7 @@
 #import "Reachability.h"
 #import "RESideMenu.h"
 #import "MJPullGifHeader.h"
+#import "MobClick.h"
 
 
 
@@ -77,6 +78,13 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"TodayViewPage"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"TodayViewPage"];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
