@@ -107,4 +107,8 @@
     return [UIColor colorWithR:155 G:155 B:155 alpha:1];
 }
 
++ (UIColor *)countLabelColor{
+    return [UIColor colorWithR:187 G:187 B:187 alpha:1];
+}
+
 @end

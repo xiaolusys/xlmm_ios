@@ -48,4 +48,6 @@
 + (UIColor *)youhuiquanValueColor;
 + (UIColor *)dingfanxiangqingColor;
 
++ (UIColor *)countLabelColor;
+
 @end

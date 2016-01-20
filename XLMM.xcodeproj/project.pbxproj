@@ -767,6 +767,9 @@
 		32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B54B1C4CCDC300414F8A /* TixianModel.m */; };
 		32E8B5841C4CE80D00414F8A /* TixianTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */; };
 		32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */; };
+		32E8B58A1C4F580500414F8A /* CountdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5891C4F580500414F8A /* CountdownView.m */; };
+		32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */; };
+		32E8B5921C4F605400414F8A /* UILabel+CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1663,6 +1666,11 @@
 		32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianTableViewCell.h; sourceTree = "<group>"; };
 		32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianTableViewCell.m; sourceTree = "<group>"; };
 		32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianTableViewCell.xib; sourceTree = "<group>"; };
+		32E8B5881C4F580500414F8A /* CountdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountdownView.h; sourceTree = "<group>"; };
+		32E8B5891C4F580500414F8A /* CountdownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountdownView.m; sourceTree = "<group>"; };
+		32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = countdowmBackImage.png; sourceTree = "<group>"; };
+		32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CustomLabel.h"; sourceTree = "<group>"; };
+		32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CustomLabel.m"; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -1932,6 +1940,8 @@
 				32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */,
 				32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */,
 				32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */,
+				32E8B5881C4F580500414F8A /* CountdownView.h */,
+				32E8B5891C4F580500414F8A /* CountdownView.m */,
 			);
 			name = MaMaView;
 			sourceTree = "<group>";
@@ -2707,6 +2717,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -2981,6 +2992,8 @@
 				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
 				2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */,
 				2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */,
+				32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */,
+				32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */,
 			);
 			name = cageory;
 			sourceTree = "<group>";
@@ -3530,6 +3543,7 @@
 				32AA6D9B1C38E9A50011BB04 /* mmback_icon.png in Resources */,
 				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
+				32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
@@ -4034,6 +4048,7 @@
 				322D25751C32B66100509EAD /* UIView+MJExtension.m in Sources */,
 				2E77F5651C1BF7140020C014 /* YoumengShare.m in Sources */,
 				3219528C1BFC7A8D00AA0AB8 /* QNAsyncRun.m in Sources */,
+				32E8B5921C4F605400414F8A /* UILabel+CustomLabel.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				322D25681C32B66100509EAD /* MJRefreshAutoGifFooter.m in Sources */,
 				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
@@ -4126,6 +4141,7 @@
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				3219528D1BFC7A8D00AA0AB8 /* QNCrc32.m in Sources */,
 				32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */,
+				32E8B58A1C4F580500414F8A /* CountdownView.m in Sources */,
 				3219529F1BFC7A8D00AA0AB8 /* QNUploadOption.m in Sources */,
 				3282F2821B6B5B1300E73EB9 /* SDWebImageCompat.m in Sources */,
 				2E77F5BB1C1EBBA90020C014 /* SendMessageToWeibo.m in Sources */,

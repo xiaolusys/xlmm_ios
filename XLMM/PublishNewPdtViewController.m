@@ -16,6 +16,9 @@
 #import "MMClass.h"
 #import "SharePicModel.h"
 #import "SVProgressHUD.h"
+#import "CountdownView.h"
+#import "UILabel+CustomLabel.h"
+
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
@@ -28,9 +31,16 @@
 @property (nonatomic, assign)NSInteger saveIndex;
 @property (nonatomic, strong)NSMutableArray *currentArr;
 
+
+
 @end
 
-@implementation PublishNewPdtViewController
+@implementation PublishNewPdtViewController{
+    UILabel *topLabel;
+    UILabel *infoLabel;
+    UILabel *timeLabel;
+    UIView *bottomView;
+}
 
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -60,14 +70,39 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor backgroundlightGrayColor];
     self.navigationController.navigationBarHidden = NO;
     
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
+    
+   
+    
 }
 
+- (void)showDefaultView{
+    bottomView = [[UIView alloc] initWithFrame:self.view.bounds];
+    bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
+    
+    CountdownView *countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    countdowmView.center = self.view.center;
+    
+    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 80, 90, 30) font:[UIFont systemFontOfSize:22] textColor:[UIColor countLabelColor]text:@"倒计时"];
+    [countdowmView addSubview:topLabel];
+    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, 200, 40)];
+    timeLabel.textColor = [UIColor orangeThemeColor];
+    timeLabel.text = @"01:02:20";
+    timeLabel.font = [UIFont systemFontOfSize:33];
+    timeLabel.backgroundColor = [UIColor clearColor];
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    [countdowmView addSubview:timeLabel];
+    
+    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 150, 200, 20) font:[UIFont systemFontOfSize:14] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
+    [countdowmView addSubview:infoLabel];
+    [bottomView addSubview:countdowmView];
+    [self.view addSubview:bottomView];
+}
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
@@ -100,10 +135,14 @@
         [self requestData:arrPic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //未登录处理
+        [self showDefaultView];
     }];
 }
 
 - (void)requestData:(NSArray *)data {
+    if (data.count == 0) {
+        [self showDefaultView];
+    }
     for (NSMutableDictionary *oneTurns in data) {
         SharePicModel *sharePic = [[SharePicModel alloc] init];
         [sharePic setValuesForKeysWithDictionary:oneTurns];
