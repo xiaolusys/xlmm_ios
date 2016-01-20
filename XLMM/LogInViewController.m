@@ -18,6 +18,7 @@
 #import "NSString+Encrypto.h"
 #import "WXLoginController.h"
 #import "MiPushSDK.h"
+#import "MobClick.h"
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @interface LogInViewController ()
@@ -198,6 +199,8 @@
 }
 
 - (void) loginSuccessful {
+    [MobClick profileSignInWithPUID:@"playerID"];
+    
     NSLog(@"33isBangDing = %d", isBangding);
     if (isBangding) {
         NSLog(@"跳转首页");
@@ -277,6 +280,9 @@
 }
 
 - (IBAction)loginClicked:(UIButton *)sender {
+
+//    [MobClick profileSignInWithPUID:@"playerID"];
+    
     NSLog(@"登录");
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -820,6 +820,7 @@
 		8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E61C041A53008D0C13 /* display_passwd_icon.png */; };
 		8EA825EA1C041A53008D0C13 /* hide_passwd_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */; };
 		8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA825E81C041A53008D0C13 /* weixin_icon.png */; };
+		AC1AD7DE1C4F628100A9D95D /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1AD7DC1C4F628100A9D95D /* libMobClickLibrary.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1725,6 +1726,8 @@
 		8EA825E61C041A53008D0C13 /* display_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = display_passwd_icon.png; sourceTree = "<group>"; };
 		8EA825E71C041A53008D0C13 /* hide_passwd_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide_passwd_icon.png; sourceTree = "<group>"; };
 		8EA825E81C041A53008D0C13 /* weixin_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixin_icon.png; sourceTree = "<group>"; };
+		AC1AD7DC1C4F628100A9D95D /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		AC1AD7DD1C4F628100A9D95D /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1751,6 +1754,7 @@
 				321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */,
 				2E76FFF21C180BAA008CE960 /* libWeChatSDK.a in Frameworks */,
 				3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */,
+				AC1AD7DE1C4F628100A9D95D /* libMobClickLibrary.a in Frameworks */,
 				3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */,
 				2EB87D331C17FAE4001CBF3D /* libSocialSina.a in Frameworks */,
 				2EB87D341C17FAE4001CBF3D /* libSocialQQ.a in Frameworks */,
@@ -2088,6 +2092,8 @@
 		2EB87CF01C17FAE4001CBF3D /* umeng_ios_social_sdk_4-2.4_arm64_custom */ = {
 			isa = PBXGroup;
 			children = (
+				AC1AD7DC1C4F628100A9D95D /* libMobClickLibrary.a */,
+				AC1AD7DD1C4F628100A9D95D /* MobClick.h */,
 				2EB87CF11C17FAE4001CBF3D /* UMSocial_Sdk_4.4 */,
 				2EB87D0C1C17FAE4001CBF3D /* UMSocial_Sdk_Extra_Frameworks */,
 				2EB87D1B1C17FAE4001CBF3D /* UMSocial_Sdk_Instructions */,
@@ -4356,7 +4362,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4393,7 +4399,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "76f7f56d-7df5-432c-ad78-c902a36cb423";
+				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4433,11 +4439,12 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/weibo/libWeiboSDK",
 					"$(PROJECT_DIR)/SDK",
+					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4476,11 +4483,12 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/weibo/libWeiboSDK",
 					"$(PROJECT_DIR)/SDK",
+					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8c2acccd-2fb2-4ee3-b434-35678c7bf7e0";
+				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

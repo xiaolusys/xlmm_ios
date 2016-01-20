@@ -15,6 +15,7 @@
 #import "Reachability.h"
 #import "NewLeftViewController.h"
 #import "MMDetailsViewController.h"
+#import "MobClick.h"
 
 #define login @"login"
 
@@ -77,6 +78,12 @@
     
    
     NSLog(@"%d", self.isLaunchedByNotification);
+    
+    //version标识
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    //填写AppKey，设置发送策略和填写渠道
+    [MobClick startWithAppkey:@"5665541ee0f55aedfc0034f4" reportPolicy:BATCH channelId:nil];
     
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
