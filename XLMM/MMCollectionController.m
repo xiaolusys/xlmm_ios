@@ -110,7 +110,7 @@
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.view addSubview:[[UIView alloc] init]];
-    self.collectionView.backgroundColor = [UIColor colorWithR:245 G:245 B:245 alpha:1];
+    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     [self.view addSubview:self.collectionView];
 }
 

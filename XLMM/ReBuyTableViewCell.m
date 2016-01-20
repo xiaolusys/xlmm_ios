@@ -34,7 +34,7 @@
         self = [arrayOfViews objectAtIndex:0];
         self.reBuyButton.layer.cornerRadius = 14;
         self.reBuyButton.layer.borderWidth = 1;
-        self.reBuyButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+        self.reBuyButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
         
     }
     return self;

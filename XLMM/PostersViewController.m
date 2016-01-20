@@ -125,7 +125,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
-    self.childCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     // [self downloadData];
    // [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backBtnClicked:)];
@@ -511,8 +511,8 @@ static NSString * ksimpleCell = @"simpleCell";
     if (sender.tag == 1) {
         NSLog(@"推荐排序");
         isOrder = NO;
-        [self.jiageButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
-        [self.tuijianButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
         [self.childCollectionView reloadData];
         
@@ -525,8 +525,8 @@ static NSString * ksimpleCell = @"simpleCell";
         
         [self downloadOrderData];
         
-        [self.tuijianButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
-        [self.jiageButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.backgroundColor = [UIColor clearColor];

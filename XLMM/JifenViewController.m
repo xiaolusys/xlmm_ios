@@ -53,7 +53,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     self.title = @"我的积分";
     [self createNavigationBarWithTitle:@"我的积分" selecotr:@selector(btnClicked:)];
     
-    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     
     [self createEmptyView];
@@ -245,7 +245,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     JifenReusableView * headerView = (JifenReusableView *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headViewIdentifier forIndexPath:indexPath];
     headerView.jifenValueLabel.text = [NSString stringWithFormat:@"%@", self.integralValue];
-    headerView.jifenValueLabel.textColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    headerView.jifenValueLabel.textColor = [UIColor buttonEmptyBorderColor];
     headerView.jifenValueLabel.font = [UIFont systemFontOfSize:40];
     return headerView;
 }

@@ -98,7 +98,7 @@
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
     self.addressViewWidth.constant = SCREENWIDTH;
     self.buyButton.layer.borderWidth = 1;
-    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.buyButton.layer.cornerRadius = 20;
     self.MutCatrsArray = [[NSMutableArray alloc] initWithCapacity:0];
     addressModel = [AddressModel new];
@@ -232,7 +232,7 @@
         cartOwner.myImageView.layer.masksToBounds = YES;
         cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;
-        cartOwner.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+        cartOwner.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
         
         
         [self.detailsView addSubview:cartOwner.view];

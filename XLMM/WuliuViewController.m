@@ -138,7 +138,7 @@
     timeLabel.text = timeText;
     infoLabel.text = infoText;
     
-    UIColor *normalColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+    UIColor *normalColor = [UIColor textDarkGrayColor];
     timeLabel.textColor = normalColor;
     infoLabel.textColor = normalColor;
     

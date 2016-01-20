@@ -45,7 +45,7 @@
     
     self.tijiaoButton.layer.cornerRadius = 20;
     self.tijiaoButton.layer.borderWidth = 1;
-    self.tijiaoButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.tijiaoButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     self.tijiaoButton.enabled = NO;
     
     self.automaticallyAdjustsScrollViewInsets = NO; //文本输入位置调整。

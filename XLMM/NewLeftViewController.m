@@ -121,7 +121,7 @@
     self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.quitButton.layer.cornerRadius = 18.5;
     self.touxiangImage.layer.cornerRadius = 30;
-    self.touxiangImage.layer.borderColor = [UIColor colorWithRed:253/255.0 green:203/255.0 blue:14/255.0 alpha:1].CGColor;
+    self.touxiangImage.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
     self.touxiangImage.layer.masksToBounds = YES;
     self.touxiangImage.layer.borderWidth = 1;
     if (mainSize.size.height == 480) {

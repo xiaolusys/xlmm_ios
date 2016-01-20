@@ -274,12 +274,12 @@
         [shartView addSubview:linechart];
         
         UIView * circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
-        circleView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        circleView.backgroundColor = [UIColor orangeThemeColor];
         circleView.layer.cornerRadius = 3;
         circleView.tag = 300;
         [shartView addSubview:circleView];
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, 80)];
-        lineView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        lineView.backgroundColor = [UIColor orangeThemeColor];
         lineView.tag = 400;
         [shartView addSubview:lineView];
         
@@ -292,7 +292,7 @@
         
     }
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, SCREENWIDTH *allDingdan.count, 0.5)];
-    bottomLine.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    bottomLine.backgroundColor = [UIColor lineGrayColor];
     [self.mamaScrollView addSubview:bottomLine];
 
 }

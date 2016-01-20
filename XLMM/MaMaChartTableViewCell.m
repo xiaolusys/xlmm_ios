@@ -25,7 +25,7 @@
 - (void)createLabel {
     self.orderNum = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, [UIScreen mainScreen].bounds.size.width - 150, 30)];
     self.orderNum.text = @"";
-    self.orderNum.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
+    self.orderNum.textColor = [UIColor textDarkGrayColor];
     self.orderNum.font = [UIFont systemFontOfSize:14];
     self.orderNum.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.orderNum];

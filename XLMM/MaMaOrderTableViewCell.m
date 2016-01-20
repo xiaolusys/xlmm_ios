@@ -28,14 +28,13 @@
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:orderM.pic_path]];
     self.imageV.layer.masksToBounds = YES;
     self.imageV.layer.cornerRadius = 5;
-    self.imageV.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+    self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
 //    self.purchaser.text = orderM.wxordernick;
     self.purchaser.text = @"购买人：小鹿美美";
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
     self.rebate.text = [NSString stringWithFormat:@"%.2f", [orderM.rebeta_cash floatValue]];
-//    self.rebate.textColor = [UIColor orangeColor];
     self.fanyong.text = @"反佣";
     self.fanyong.font = [UIFont systemFontOfSize:13];
     

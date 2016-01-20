@@ -10,7 +10,7 @@
 #define CIRCLEPAGE 25
 
 #import "LoadingAnimation.h"
-
+#import "UIColor+RGBColor.h"
 
 @interface LoadingAnimation()
 {
@@ -40,7 +40,7 @@
 
 - (void)createFirstAnimating {
     self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
-    self.shadeView.backgroundColor = [UIColor whiteColor];
+    self.shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
     self.shadeView.alpha = 0.5;
     [self addSubview:self.shadeView];
 

@@ -22,4 +22,30 @@
 + (UIColor *)buttonEmptyBorderColor;
 
 
++ (UIColor *)settingBackgroundColor;
++ (UIColor *)imageViewBorderColor;
++ (UIColor *)textDarkGrayColor;
+
++ (UIColor *)pothoViewBackgroundColor;
++ (UIColor *)pagecontrolBackgroundColor;
++ (UIColor *)pagecontrolCurrentIndicatorColor;
+
++ (UIColor *)youhuiquanrequireColor;
++ (UIColor *)shareViewBackgroundColor;
+
++ (UIColor *)loadingViewBackgroundColor;
+
++ (UIColor *)backgroundlightGrayColor;
++ (UIColor *)lineGrayColor;
+
++ (UIColor *)cartViewBackGround;
+
++ (UIColor *)rootViewButtonColor;
+
++ (UIColor *)countLabelTextColor;
+
++ (UIColor *)touxiangBorderColor;
++ (UIColor *)youhuiquanValueColor;
++ (UIColor *)dingfanxiangqingColor;
+
 @end

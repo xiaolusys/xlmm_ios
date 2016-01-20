@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -26,10 +26,10 @@
                     <rect key="frame" x="10" y="61" width="355" height="180"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-fZ-8y5" userLabel="空间">
-                            <rect key="frame" x="267" y="0.0" width="88" height="90"/>
+                            <rect key="frame" x="266" y="0.0" width="89" height="90"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNr-eV-Xof">
-                                    <rect key="frame" x="15.5" y="7" width="55" height="75"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNr-eV-Xof">
+                                    <rect key="frame" x="17" y="7" width="55" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="0Is-Cq-r5W"/>
                                         <constraint firstAttribute="width" constant="55" id="L1J-lv-PYf"/>
@@ -59,7 +59,7 @@
                                 <constraint firstItem="S16-an-bc0" firstAttribute="centerY" secondItem="NJ2-iI-GDB" secondAttribute="centerY" id="Kp2-tM-M7D"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-6q-wz0">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-6q-wz0">
                             <rect key="frame" x="178" y="90" width="88" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqY-MJ-5jD">
@@ -77,10 +77,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-eH-ApA">
-                            <rect key="frame" x="267" y="90" width="88" height="90"/>
+                            <rect key="frame" x="266" y="90" width="89" height="90"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIz-vk-iNw">
-                                    <rect key="frame" x="15.5" y="8" width="55" height="75"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIz-vk-iNw">
+                                    <rect key="frame" x="17" y="8" width="55" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="UrQ-fZ-eQw"/>
                                         <constraint firstAttribute="width" constant="55" id="g0Y-YK-dwn"/>
@@ -94,10 +94,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQU-jk-aHp" userLabel="朋友圈">
-                            <rect key="frame" x="89" y="0.0" width="88" height="90"/>
+                            <rect key="frame" x="89" y="0.0" width="89" height="90"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dY-kt-0lF">
-                                    <rect key="frame" x="15.5" y="8" width="55" height="75"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dY-kt-0lF">
+                                    <rect key="frame" x="17" y="8" width="55" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="9eE-bD-8lF"/>
                                         <constraint firstAttribute="height" constant="75" id="UQU-Os-Dpu"/>
@@ -110,7 +110,7 @@
                                 <constraint firstItem="4dY-kt-0lF" firstAttribute="centerY" secondItem="JQU-jk-aHp" secondAttribute="centerY" id="qZp-8Y-7ii"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kt2-Gh-Ce2" userLabel="qq">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kt2-Gh-Ce2" userLabel="qq">
                             <rect key="frame" x="178" y="0.0" width="88" height="90"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3l-vk-Rpk">
@@ -147,10 +147,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrB-X9-Sww" userLabel="复制">
-                            <rect key="frame" x="89" y="90" width="88" height="90"/>
+                            <rect key="frame" x="89" y="90" width="89" height="90"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzv-BQ-boV">
-                                    <rect key="frame" x="15.5" y="7" width="55" height="75"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzv-BQ-boV">
+                                    <rect key="frame" x="17" y="7" width="55" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="L3c-36-zGg"/>
                                         <constraint firstAttribute="width" constant="55" id="VUu-Uz-q75"/>

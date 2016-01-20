@@ -155,7 +155,7 @@
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
-    self.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     number = [self.dingdanModel.numberString intValue];
     maxNumber = [self.dingdanModel.numberString intValue];
     
@@ -171,10 +171,10 @@
     
     self.selectedReason.layer.cornerRadius = 4;
     self.selectedReason.layer.borderWidth = 0.5;
-    self.selectedReason.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.selectedReason.layer.borderColor = [UIColor lineGrayColor].CGColor;
     self.inputTextView.layer.cornerRadius = 4;
     self.inputTextView.layer.borderWidth = 0.5;
-    self.inputTextView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.inputTextView.layer.borderColor = [UIColor lineGrayColor].CGColor;
     
     self.inputTextView.clearsContextBeforeDrawing = YES;
     
@@ -211,19 +211,19 @@
     
     self.sendButton.layer.cornerRadius = 5;
     self.sendButton.layer.borderWidth = 0.5;
-    self.sendButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     self.sendImageView.layer.masksToBounds = YES;
     self.sendImageView2.layer.masksToBounds = YES;
     self.sendImageView3.layer.masksToBounds = YES;
     self.sendImageView.layer.cornerRadius = 5;
     self.sendImageView.layer.borderWidth = 0;
-    self.sendImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
     self.sendImageView2.layer.cornerRadius = 5;
     self.sendImageView2.layer.borderWidth = 0;
-    self.sendImageView2.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView2.layer.borderColor = [UIColor lineGrayColor].CGColor;
     self.sendImageView3.layer.cornerRadius = 5;
     self.sendImageView3.layer.borderWidth = 0;
-    self.sendImageView3.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.sendImageView3.layer.borderColor = [UIColor lineGrayColor].CGColor;
     
     
     
@@ -317,7 +317,7 @@
     //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
     for (int i = 0; i < 2; i++) {
         UIButton *button = (UIButton *)[selectedImageView viewWithTag:900 + i];
-        [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateHighlighted];
         
         button.showsTouchWhenHighlighted = NO;
         //  button.highlighted = NO;
@@ -358,7 +358,7 @@
     //  UIButton *button0 = (UIButton *)[reasonView viewWithTag:800];
     for (int i = 0; i < 11; i++) {
         UIButton *button = (UIButton *)[reasonView viewWithTag:800 + i];
-        [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor buttonEmptyBorderColor] forState:UIControlStateHighlighted];
         
         button.showsTouchWhenHighlighted = NO;
         //  button.highlighted = NO;
@@ -408,14 +408,14 @@
 
 - (void)enableTijiaoButton{
     self.commitButton.enabled = YES;
-    self.commitButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.commitButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 }
 
 - (void)disableTijiaoButton{
     self.commitButton.enabled = NO;
-    self.commitButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
-    self.commitButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.commitButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
+    self.commitButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
 }
 
 - (void)cancelSeleted:(UIButton *)button{

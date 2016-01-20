@@ -7,6 +7,7 @@
 //
 
 #import "MMLoadingAnimation.h"
+#import "UIColor+RGBColor.h"
 
 #define PAGE 78
 #define CIRCLEPAGE 25
@@ -77,7 +78,7 @@
     [self createFirstAnimating];
 //    [self performSelector:@selector(createSecondAnimating) withObject:nil afterDelay:1.5];
  
-    self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1.0];
+    self.backgroundColor = [[UIColor loadingViewBackgroundColor] colorWithAlphaComponent:1.0];
 }
 
 
@@ -90,7 +91,7 @@
 
 - (void)createFirstAnimating {
     self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
-    self.shadeView.backgroundColor = [UIColor whiteColor];
+    self.shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
     self.shadeView.alpha = 0.5;
 //    self.shadeView.backgroundColor = [UIColor colorWithRed:99 / 255.0 green:99 / 255.0 blue:99 / 255.0 alpha:0.2];
 

@@ -101,7 +101,6 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 
 - (void)createTableView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
-//    self.tableView.backgroundColor = [UIColor orangeColor];
     
     [self.tableView registerClass:[UITableViewCell class]
              forCellReuseIdentifier:CellIdentify];

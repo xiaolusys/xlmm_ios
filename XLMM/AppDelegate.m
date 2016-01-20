@@ -113,7 +113,7 @@
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     
    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
-    menuVC.view.backgroundColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
     menuVC.contentViewShadowColor = [UIColor blackColor];

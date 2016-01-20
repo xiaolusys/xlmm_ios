@@ -388,8 +388,8 @@
     cartsButton = [[UIButton alloc] initWithFrame:CGRectMake(15, SCREENHEIGHT - 48, 40, 40)];
     cartsButton.layer.cornerRadius = 20;
     cartsButton.layer.borderWidth = 1;
-    cartsButton.layer.borderColor = [UIColor colorWithR:38 G:38 B:46 alpha:1].CGColor;
-    cartsButton.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    cartsButton.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
+    cartsButton.backgroundColor = [UIColor cartViewBackGround];
     [cartsButton addTarget:self action:@selector(cartClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cartsButton];
     cartsButton.hidden = YES;
@@ -407,7 +407,7 @@
     countLabel.userInteractionEnabled = NO;
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
-    countLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    countLabel.backgroundColor = [UIColor countLabelTextColor];
     countLabel.layer.masksToBounds = YES;
     countLabel.font = [UIFont systemFontOfSize:14];
     countLabel.hidden = YES;
@@ -544,13 +544,13 @@
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3 * (buttonwidth + 15) + 15, 15 + i/3 * 50, buttonwidth, 35)];
         button.tag = i + 100;
 //        [button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
        // button settit
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
         button.layer.cornerRadius = 3;
-        [button.layer setBorderColor:[UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor];
+        [button.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
         //[button.layer setCornerRadius:8];
         
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -590,8 +590,8 @@
             UIButton *button = (UIButton *)[self.sizeView viewWithTag:i + 100];
             NSDictionary *dic = [normalSkus objectAtIndex:i];
             if (![[dic objectForKey:@"is_saleout"]boolValue]) {
-                [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
-                [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
+                [button.layer setBorderColor:[UIColor buttonEmptyBorderColor].CGColor];
+                [button setTitleColor:[UIColor buttonEmptyBorderColor] forState:UIControlStateNormal];
                 skusID = [[normalSkus objectAtIndex:i] objectForKey:@"id"];
                // NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             }
@@ -602,8 +602,8 @@
 //    NSLog(@"button.tag = %ld", (long)button.tag);
     for (int i = 100; i<100+normalSkus.count; i++) {
         if (button.tag == i) {
-            [button.layer setBorderColor:[UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor];
-            [button setTitleColor:[UIColor colorWithR:245 G:177 B:35 alpha:1] forState:UIControlStateNormal];
+            [button.layer setBorderColor:[UIColor buttonEmptyBorderColor].CGColor];
+            [button setTitleColor:[UIColor buttonEmptyBorderColor] forState:UIControlStateNormal];
             skusID = [[normalSkus objectAtIndex:i-100] objectForKey:@"id"];
          //   NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [agentPriceArray[i - 100] floatValue]];
@@ -611,8 +611,8 @@
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
-                [btn.layer setBorderColor:[UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor];
-                [btn setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+                [btn.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+                [btn setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
 
             }
         }

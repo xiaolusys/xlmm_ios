@@ -8,6 +8,7 @@
 
 #import "YHQCollectionCell.h"
 #import "YHQModel.h"
+#import "UIColor+RGBColor.h"
 
 
 @implementation YHQCollectionCell
@@ -55,14 +56,11 @@
     
     self.requireLabel.text = [NSString stringWithFormat:@"满%@元可以使用", useFee];
     if ([useFee intValue] == 0 && [yhqModel.status integerValue] == 0 && [yhqModel.poll_status integerValue] == 1) {
-        self.requireLabel.textColor = [UIColor colorWithRed:240/255.0 green:80/255.0 blue:80/255.0 alpha:1];
+        self.requireLabel.textColor = [UIColor youhuiquanrequireColor];
         self.requireLabel.text = @"无门槛";
     }
     self.valueLabel.text = [NSString stringWithFormat:@"%d", [couponValue intValue]];
     self.timeLabel.text = newString;
-    
-    
-    
 }
 
 @end

@@ -68,7 +68,8 @@
     [self setFootInfo];
     self.addressInfoButton.layer.cornerRadius = 13;
     self.addressInfoButton.layer.borderWidth = 0.5;
-    self.addressInfoButton.layer.borderColor = [UIColor colorWithRed:245/255.0f green:166/255.0f blue:35/255.0f alpha:1].CGColor;
+    self.addressInfoButton.layer.borderColor = [UIColor buttonEmptyBorderColor
+                                                ].CGColor;
     self.headViewWidth.constant = SCREENWIDTH;
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.backgroundColor = [UIColor blackColor];
@@ -110,7 +111,7 @@
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = 5;
     self.imageView.layer.borderWidth = 0.5;
-    self.imageView.layer.borderColor = [UIColor colorWithRed:218/255.0 green:218/255.0 blue:218/255.0 alpha:1].CGColor;
+    self.imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.circleView.layer.cornerRadius = 5;
     if (self.model.good_status == 0) {
         self.createdLabel.text = @"申请退款";

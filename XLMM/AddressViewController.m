@@ -77,7 +77,7 @@
     
     
     self.addressTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.addressTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.addressTableView.backgroundColor = [UIColor backgroundlightGrayColor];
     //self.addressTableView.d
 }
 
@@ -181,7 +181,7 @@
             cell.leadingWidth.constant = 60;
             cell.morenLabel.hidden = NO;
             cell.morenLabel.layer.borderWidth = 0.5;
-            cell.morenLabel.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+            cell.morenLabel.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
             
         } else {
             cell.morenLabel.hidden = YES;

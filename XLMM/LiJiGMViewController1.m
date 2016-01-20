@@ -108,11 +108,11 @@
     NSLog(@"urlString = %@", urlString);
     
     [self downLoadWithURLString:urlString andSelector:@selector(fetchedDetailsData:)];
-    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+    self.buyButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
 
     
     self.buyButton.layer.borderWidth = 1;
-    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.buyButton.layer.cornerRadius = 20;
  
     MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
@@ -173,7 +173,7 @@
     self.myimageView.layer.masksToBounds = YES;
     self.myimageView.layer.cornerRadius = 8;
     self.myimageView.layer.borderWidth = 0.5;
-    self.myimageView.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+    self.myimageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
     
     

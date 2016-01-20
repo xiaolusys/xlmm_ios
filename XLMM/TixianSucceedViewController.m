@@ -9,9 +9,8 @@
 #import "TixianSucceedViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "PublishNewPdtViewController.h"
+#import "UIColor+RGBColor.h"
 
-
-#define RGBCOLOR(a, b, c) [UIColor colorWithRed:245/255.0 green:166/255.0 blue:35/255.0 alpha:1]
 
 @interface TixianSucceedViewController ()
 
@@ -35,7 +34,7 @@
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
     self.fabuButton.layer.cornerRadius = 15;
     self.fabuButton.layer.borderWidth = 1;
-    self.fabuButton.layer.borderColor = RGBCOLOR(245, 266, 35).CGColor;
+    self.fabuButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     if (self.tixianjine == 100) {
         self.headImageView.image = [UIImage imageNamed:@"hongbao100.png"];
     } else if (self.tixianjine == 200){

@@ -152,7 +152,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
-    self.myCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.myCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = NO;
@@ -170,7 +170,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
     emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    emptyView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
     emptyView.hidden = YES;
     [self.containerView addSubview:emptyView];
     empty.frame = CGRectMake(0, SCREENHEIGHT/2 - 100, SCREENWIDTH, 220);
@@ -210,20 +210,21 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     NSString *imageName;
     if (indexPath.section == 0) {
         yhqModel = [self.canUsedArray objectAtIndex:indexPath.row];
-        cell.valueLabel.textColor = [UIColor colorWithR:240 G:80 B:80 alpha:1];
+        cell.valueLabel.textColor = [UIColor youhuiquanValueColor
+                                     ];
         cell.markLabel.textColor = cell.valueLabel.textColor;
-        cell.requireLabel.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        cell.requireLabel.textColor = [UIColor textDarkGrayColor];
         imageName = @"keshiyong.png";
     } else if (indexPath.section == 1){
         yhqModel = [self.expiredArray objectAtIndex:indexPath.row];
         imageName = @"yiguoqi.png";
-        cell.valueLabel.textColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+        cell.valueLabel.textColor = [UIColor lineGrayColor];
         cell.markLabel.textColor = cell.valueLabel.textColor;
         cell.requireLabel.textColor = cell.valueLabel.textColor;
     } else{
         yhqModel = [self.usedArray objectAtIndex:indexPath.row];
         imageName = @"yishiyong.png";
-        cell.valueLabel.textColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+        cell.valueLabel.textColor = [UIColor lineGrayColor];
         cell.markLabel.textColor = cell.valueLabel.textColor;
         cell.requireLabel.textColor = cell.valueLabel.textColor;
     }
