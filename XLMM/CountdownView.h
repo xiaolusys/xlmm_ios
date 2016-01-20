@@ -23,4 +23,6 @@
     
 }
 
+- (void)updateTimeView;
+
 @end

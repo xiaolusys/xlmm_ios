@@ -36,10 +36,10 @@
 @end
 
 @implementation PublishNewPdtViewController{
-    UILabel *topLabel;
-    UILabel *infoLabel;
-    UILabel *timeLabel;
+  
+    NSTimer *theTimer;
     UIView *bottomView;
+    CountdownView *countdowmView;
 }
 
 - (NSMutableArray *)dataArr {
@@ -57,6 +57,9 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
 }
 
 - (PhotoView *)photoView {
@@ -84,24 +87,12 @@
 - (void)showDefaultView{
     bottomView = [[UIView alloc] initWithFrame:self.view.bounds];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
-    
-    CountdownView *countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
     countdowmView.center = self.view.center;
-    
-    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 80, 90, 30) font:[UIFont systemFontOfSize:22] textColor:[UIColor countLabelColor]text:@"倒计时"];
-    [countdowmView addSubview:topLabel];
-    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, 200, 40)];
-    timeLabel.textColor = [UIColor orangeThemeColor];
-    timeLabel.text = @"01:02:20";
-    timeLabel.font = [UIFont systemFontOfSize:33];
-    timeLabel.backgroundColor = [UIColor clearColor];
-    timeLabel.textAlignment = NSTextAlignmentCenter;
-    [countdowmView addSubview:timeLabel];
-    
-    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 150, 200, 20) font:[UIFont systemFontOfSize:14] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
-    [countdowmView addSubview:infoLabel];
     [bottomView addSubview:countdowmView];
     [self.view addSubview:bottomView];
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
+    
 }
 
 - (void)backClickAction {

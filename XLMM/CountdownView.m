@@ -10,15 +10,21 @@
 #import "UIColor+RGBColor.h"
 #import "UILabel+CustomLabel.h"
 
+
 #define PI 3.14159265358979323846  
 
-@implementation CountdownView
+@implementation CountdownView{
+    UIBezierPath *path;
+}
 
 
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+     
+        [self initCircleView];
+        [self initLabel];
     }
     return self;
 }
@@ -27,49 +33,16 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-//    bgImageView = [[UIImageView alloc] initWithFrame:self.bounds];
    
+  
     UIImage *image = [UIImage imageNamed:@"countdowmBackImage.png"];
-    
     [image drawInRect:self.bounds];
-
- 
-  
-    //An opaque type that represents a Quartz 2D drawing environment.
-    //一个不透明类型的Quartz 2D绘画环境,相当于一个画布,你可以在上面任意绘画
-    CGContextRef context = UIGraphicsGetCurrentContext();
     
-    /*写文字*/
-    CGContextSetRGBFillColor (context,  1, 0, 0, 1.0);//设置填充颜色
-   // UIFont  *font = [UIFont boldSystemFontOfSize:15.0];//设置
-//    [@"画圆：" drawInRect:CGRectMake(10, 20, 80, 20) withFont:font];
-//    [@"画线及孤线：" drawInRect:CGRectMake(10, 80, 100, 20) withFont:font];
-//    [@"画矩形：" drawInRect:CGRectMake(10, 120, 80, 20) withFont:font];
-//    [@"画扇形和椭圆：" drawInRect:CGRectMake(10, 160, 110, 20) withFont:font];
-//    [@"画三角形：" drawInRect:CGRectMake(10, 220, 80, 20) withFont:font];
-//    [@"画圆角矩形：" drawInRect:CGRectMake(10, 260, 100, 20) withFont:font];
-//    [@"画贝塞尔曲线：" drawInRect:CGRectMake(10, 300, 100, 20) withFont:font];
-//    [@"图片：" drawInRect:CGRectMake(10, 340, 80, 20) withFont:font];
-    
-    /*画圆*/
-    //边框圆
-    [[UIColor orangeThemeColor] set];
-    CGPoint center = self.center;
-    NSLog(@"%@", NSStringFromCGPoint(center));
-    
-    CGContextSetRGBStrokeColor(context,245/255.0,166/255.0,35/255.0,1.0);//画笔线的颜色
-    CGContextSetLineWidth(context, 3.0);//线的宽度
-    //void CGContextAddArc(CGContextRef c,CGFloat x, CGFloat y,CGFloat radius,CGFloat startAngle,CGFloat endAngle, int clockwise)1弧度＝180°/π （≈57.3°） 度＝弧度×180°/π 360°＝360×π/180 ＝2π 弧度
-    // x,y为圆点坐标，radius半径，startAngle为开始的弧度，endAngle为 结束的弧度，clockwise 0为顺时针，1为逆时针。
-    CGContextAddArc(context, 125, 125, 106.5, -PI/6.0*5, 0.8*PI, 1); //添加一个圆
-    CGContextDrawPath(context, kCGPathStroke); //绘制路径
-    
-    self.alpha = 1;
-    
-  
-    [self initCircleView];
-    
-    [self initLabel];
+    UIBezierPath * path0 = [[UIBezierPath alloc] init];
+    [[UIColor orangeThemeColor]set];
+    [path0 addArcWithCenter:CGPointMake(125, 125) radius:106.5 startAngle:-PI *5/6.0 endAngle:arc4random()%100/100.0 * PI clockwise:NO];
+    path0.lineWidth = 4;
+    [path0 stroke];
 
     
 }
@@ -100,9 +73,66 @@
     [self addSubview:number6Label];
     [self addSubview:number9Label];
     [self addSubview:number12Label];
+    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 80, 90, 30) font:[UIFont systemFontOfSize:22] textColor:[UIColor countLabelColor]text:@"倒计时"];
+    [self addSubview:topLabel];
+    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, 200, 40)];
+    timeLabel.textColor = [UIColor orangeThemeColor];
+    timeLabel.text = @"       ";
+    timeLabel.font = [UIFont systemFontOfSize:33];
+    timeLabel.backgroundColor = [UIColor clearColor];
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:timeLabel];
+    
+    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 150, 200, 20) font:[UIFont systemFontOfSize:14] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
+    [self addSubview:infoLabel];
+  
+   
+}
+
+- (void)updateTimeView{
+    NSLog(@"更新数据");
+    
+    [self drawRect:self.frame];
+    
+    
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+    int nextday = day + 1;
+    
+    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:nextday];
+    [endTime setHour:10];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+    
+    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+    
+    //用来得到具体的时差
+    
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    NSString *string = nil;
     
   
+        string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
     
+    timeLabel.text = string;
 }
 
 
