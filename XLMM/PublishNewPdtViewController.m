@@ -81,15 +81,15 @@
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
-    [self showDefaultView];
+//    [self showDefaultView];
     
 }
 
 - (void)showDefaultView{
-    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
     countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
-    countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 125);
+    countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 92);
     [bottomView addSubview:countdowmView];
     [self.backView addSubview:bottomView];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
@@ -110,36 +110,15 @@
     
     self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
-    if (hour > 21) {
+    if (hour > 10) {
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
     }else {
-       
-        self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 100) collectionViewLayout:flowLayout];
-        
+        self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 180)];
+        [self.picCollectionView addSubview:self.backView];
         [self showDefaultView];
-        self.backView.backgroundColor = [UIColor redColor];
         self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
-        
-//        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//        UIView *backView = [[UIView alloc] initWithFrame:self.scrollView.frame];
-//        
-//        [self.scrollView addSubview:backView];
-//        backView.backgroundColor = [UIColor redColor];
-//        
-//        self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH,500) collectionViewLayout:flowLayout];
-//        self.picCollectionView
-//        [self.scrollView addSubview:self.picCollectionView];
-//        self.picCollectionView.backgroundColor = []
-//        [self showDefaultView];
-//        [self.view addSubview:self.scrollView];
-//        UIView *backView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 300)];
-//        backView1.backgroundColor = [UIColor grayColor];
-//        [backView1 addSubview:self.picCollectionView];
-//        [self.scrollView addSubview:self.picCollectionView];
-//        self.scrollView.contentSize = CGSizeMake(SCREENWIDTH, 1000);
-//        [self.view addSubview:self.scrollView];
         
     }
     
