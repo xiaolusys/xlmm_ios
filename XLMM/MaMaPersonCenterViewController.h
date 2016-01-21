@@ -32,6 +32,12 @@
 
 - (IBAction)MamaOrderClicked:(id)sender;
 - (IBAction)MamaCarryLogClicked:(id)sender;
+- (IBAction)erweima:(id)sender;
+
+- (IBAction)jingxuanliebiao:(id)sender;
+- (IBAction)xuanpinliebiao:(id)sender;
+
+- (IBAction)huodongzhongxin:(id)sender;
 
 
 @end

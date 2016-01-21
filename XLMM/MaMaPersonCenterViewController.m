@@ -17,6 +17,8 @@
 #import "TixianViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaMaCarryLogViewController.h"
+#import "TuijianErweimaViewController.h"
+
 
 
 @interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
@@ -493,6 +495,28 @@
 - (IBAction)MamaCarryLogClicked:(id)sender {
     MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
     [self.navigationController pushViewController:carry animated:YES];
+}
+
+- (IBAction)erweima:(id)sender {
+    
+    NSLog(@"推荐二维码");
+    
+    TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
+    [self.navigationController pushViewController:erweima animated:YES];
+    
+    
+}
+
+- (IBAction)jingxuanliebiao:(id)sender {
+    NSLog(@"我的精选");
+}
+
+- (IBAction)xuanpinliebiao:(id)sender {
+    NSLog(@"选品列表");
+}
+
+- (IBAction)huodongzhongxin:(id)sender {
+    NSLog(@"活动中心");
 }
 
 

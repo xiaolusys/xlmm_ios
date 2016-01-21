@@ -770,6 +770,9 @@
 		32E8B58A1C4F580500414F8A /* CountdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5891C4F580500414F8A /* CountdownView.m */; };
 		32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */; };
 		32E8B5921C4F605400414F8A /* UILabel+CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */; };
+		32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */; };
+		32E8B5981C50CB5900414F8A /* TuijianErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */; };
+		32E8B59A1C50CDA700414F8A /* erweimaDemo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5991C50CDA700414F8A /* erweimaDemo.png */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1672,6 +1675,10 @@
 		32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = countdowmBackImage.png; sourceTree = "<group>"; };
 		32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CustomLabel.h"; sourceTree = "<group>"; };
 		32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CustomLabel.m"; sourceTree = "<group>"; };
+		32E8B5941C50CB5900414F8A /* TuijianErweimaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuijianErweimaViewController.h; sourceTree = "<group>"; };
+		32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuijianErweimaViewController.m; sourceTree = "<group>"; };
+		32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuijianErweimaViewController.xib; sourceTree = "<group>"; };
+		32E8B5991C50CDA700414F8A /* erweimaDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = erweimaDemo.png; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -2680,6 +2687,7 @@
 		322FA9351C3BA521008DD942 /* MaMaCenter */ = {
 			isa = PBXGroup;
 			children = (
+				32E8B5931C50CA4100414F8A /* newController */,
 				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
 				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
 				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
@@ -2723,6 +2731,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32E8B5991C50CDA700414F8A /* erweimaDemo.png */,
 				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
@@ -3395,6 +3404,16 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		32E8B5931C50CA4100414F8A /* newController */ = {
+			isa = PBXGroup;
+			children = (
+				32E8B5941C50CB5900414F8A /* TuijianErweimaViewController.h */,
+				32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */,
+				32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */,
+			);
+			name = newController;
+			sourceTree = "<group>";
+		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -3641,6 +3660,7 @@
 				2EB87D3A1C17FAE4001CBF3D /* iOS-social-releasenote.html in Resources */,
 				3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */,
 				2E5600BF1C2D496E000AFB39 /* loading动画0064.png in Resources */,
+				32E8B59A1C50CDA700414F8A /* erweimaDemo.png in Resources */,
 				2EB87D301C17FAE4001CBF3D /* UMSnsAccountViewController.xib in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
@@ -3737,6 +3757,7 @@
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
 				322D25B51C32B93A00509EAD /* 圈圈加载0010.png in Resources */,
+				32E8B5981C50CB5900414F8A /* TuijianErweimaViewController.xib in Resources */,
 				325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */,
 				2E5600CD1C2D496E000AFB39 /* loading动画0077.png in Resources */,
 				2E5600B71C2D496E000AFB39 /* loading动画0057.png in Resources */,
@@ -4088,6 +4109,7 @@
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
+				32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */,
 				325DB3651C43A8AB0018C421 /* TixianSucceedViewController.m in Sources */,
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				321952921BFC7A8D00AA0AB8 /* QNUrlSafeBase64.m in Sources */,

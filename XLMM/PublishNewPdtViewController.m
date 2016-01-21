@@ -79,8 +79,7 @@
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
-    
-   
+    [self showDefaultView];
     
 }
 
