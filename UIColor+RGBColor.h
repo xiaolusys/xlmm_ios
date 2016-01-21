@@ -11,43 +11,30 @@
 @interface UIColor (RGBColor)
 
 + (UIColor *)colorWithR:(CGFloat)red G:(CGFloat)green B:(CGFloat)blue alpha:(CGFloat)alpha;
-
 + (UIColor *)buttonBorderColor;
 + (UIColor *)orangeThemeColor;
-
 + (UIColor *)buttonEnabledBackgroundColor;
 + (UIColor *)buttonDisabledBackgroundColor;
 + (UIColor *)buttonEnabledBorderColor;
 + (UIColor *)buttonDisabledBorderColor;
 + (UIColor *)buttonEmptyBorderColor;
-
-
 + (UIColor *)settingBackgroundColor;
 + (UIColor *)imageViewBorderColor;
 + (UIColor *)textDarkGrayColor;
-
 + (UIColor *)pothoViewBackgroundColor;
 + (UIColor *)pagecontrolBackgroundColor;
 + (UIColor *)pagecontrolCurrentIndicatorColor;
-
 + (UIColor *)youhuiquanrequireColor;
 + (UIColor *)shareViewBackgroundColor;
-
 + (UIColor *)loadingViewBackgroundColor;
-
 + (UIColor *)backgroundlightGrayColor;
 + (UIColor *)lineGrayColor;
-
 + (UIColor *)cartViewBackGround;
-
 + (UIColor *)rootViewButtonColor;
-
 + (UIColor *)countLabelTextColor;
-
 + (UIColor *)touxiangBorderColor;
 + (UIColor *)youhuiquanValueColor;
 + (UIColor *)dingfanxiangqingColor;
-
 + (UIColor *)countLabelColor;
 
 @end
