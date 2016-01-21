@@ -27,7 +27,7 @@
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 @property (nonatomic, strong)PhotoView *photoView;
 
-@property (nonatomic, strong)UIScrollView *scrollView;
+@property (nonatomic, strong)UIView *backView;
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, assign)NSInteger saveIndex;
@@ -84,12 +84,12 @@
 }
 
 - (void)showDefaultView{
-    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 300)];
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
-    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
     countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 125);
     [bottomView addSubview:countdowmView];
-    [self.scrollView addSubview:bottomView];
+    [self.backView addSubview:bottomView];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
     
 }
@@ -108,11 +108,14 @@
     
     self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
-    if (hour > 20) {
-        
+    if (hour > 21) {
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
     }else {
+        self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 200)];
+        [self.picCollectionView addSubview:self.backView];
+        [self showDefaultView];
+        self.backView.backgroundColor = [UIColor redColor];
         self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
         
@@ -138,7 +141,6 @@
     }
     
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:self.picCollectionView];
     
     self.picCollectionView.delegate = self;
     self.picCollectionView.dataSource = self;
@@ -160,23 +162,18 @@
 }
 
 - (NSInteger)getCurrentTime{
-    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    //    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    //    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
-    //    int hour = (int)[dateTime hour];
-        NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
-        [formatter setTimeStyle:NSDateFormatterMediumStyle];
-        NSDate *date = [NSDate date];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSInteger unitFlags = NSCalendarUnitYear |
-        NSCalendarUnitMonth |
-        NSCalendarUnitDay |
-        NSCalendarUnitHour |
-        NSCalendarUnitMinute |
-        NSCalendarUnitSecond;
-        NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
-        int hour = (int)[comps hour];
-    NSLog(@"---------%d", hour);
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+    int hour = (int)[comps hour];
     return hour;
 }
 
@@ -238,17 +235,23 @@
         SharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.timeLabel.text = [self turnsTime:picModel.start_time];
         headerV.propagandaLabel.text = picModel.title;
-        
-        NSString *name = [NSString stringWithFormat:@"%ldlun", (long)indexPath.section];
+        NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
         return headerV;
         
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
-        footerV.savePhotoBtn.tag = 100 + indexPath.section;
-        
-        [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
-        return footerV;
+        SharePicModel *picModel = self.dataArr[indexPath.section];
+        if ([picModel.could_share intValue]) {
+            footerV.savePhotoBtn.tag = 100 + indexPath.section;
+            
+            [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
+            return footerV;
+        }else {
+            footerV.savePhotoBtn.enabled = NO;
+            return footerV;
+        }
+       
     }
 
 }

@@ -15,5 +15,6 @@
 @property (nonatomic, strong)NSString* start_time;
 @property (nonatomic, strong)NSNumber* turns_num;
 @property (nonatomic, strong)NSArray* pic_arry;
+@property (nonatomic, strong)NSNumber* could_share;
 
 @end
