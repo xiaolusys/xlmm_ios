@@ -197,7 +197,6 @@
     NSCalendarUnitSecond;
  
     
-    
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
     
