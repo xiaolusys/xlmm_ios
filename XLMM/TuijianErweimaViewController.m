@@ -8,7 +8,7 @@
 
 #import "TuijianErweimaViewController.h"
 #import "UIViewController+NavigationBar.h"
-
+#import "WXApi.h"
 
 @interface TuijianErweimaViewController ()
 
@@ -76,5 +76,22 @@
 
 - (IBAction)shareImage:(id)sender {
     NSLog(@"share");
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    
+    WXImageObject *ext = [WXImageObject object];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"erweimaDemo" ofType:@"png"];
+    ext.imageData = [NSData dataWithContentsOfFile:filePath];
+    UIImage* image = [UIImage imageWithData:ext.imageData];
+    ext.imageData = UIImagePNGRepresentation(image);
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+    req.bText = NO;
+    req.message = message;
+    req.scene = 1;
+    
+    [WXApi sendReq:req];
 }
+
 @end
