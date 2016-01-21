@@ -88,7 +88,7 @@
 - (void)showDefaultView{
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 300)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
-    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
     countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 125);
     [bottomView addSubview:countdowmView];
     [self.scrollView addSubview:bottomView];
@@ -110,15 +110,17 @@
     
 //    self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
-    if (hour > 18) {
+    if (hour < 18) {
         self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
         [self.view addSubview:self.picCollectionView];
     }else {
         self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
         self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 100) collectionViewLayout:flowLayout];
         [self.scrollView addSubview:self.picCollectionView];
-        [self showDefaultView];
         [self.view addSubview:self.scrollView];
+        
+        [self showDefaultView];
+
     }
     
     self.picCollectionView.backgroundColor = [UIColor whiteColor];

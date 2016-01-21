@@ -74,38 +74,40 @@
     [endTime setMinute:0];
     [endTime setSecond:0];
     
-    
-    if (hour < 10) {
-        [self updateCircleViewWithCenter:(CGPointMake(32, 72))];
-        startAngle = PI * 7/6.0;
-        [endTime setHour:10];
-    } else if (hour >= 10 && hour < 12){
-        
-         [self updateCircleViewWithCenter:(CGPointMake(125, 19))];
-        startAngle = PI * 3/2.0;
-        [endTime setHour:12];
-        
-    } else if (hour >= 12 && hour < 14){
-         [self updateCircleViewWithCenter:(CGPointMake(217, 72))];
-        startAngle = PI * 11/6.0;
-        [endTime setHour:14];
-        
-    } else if (hour >= 14 && hour < 16){
-         [self updateCircleViewWithCenter:(CGPointMake(216, 180))];
-        startAngle = PI * 1/6.0;
-        [endTime setHour:16];
-        
-        
-    } else if (hour >= 16 && hour < 18){
-         [self updateCircleViewWithCenter:(CGPointMake(125, 231))];
-        startAngle = PI *1/2.0;
-        [endTime setHour:18];
-        
-    } else if (hour >= 18){
-        bigCircleView.hidden = YES;
-        littleCircleView.hidden = YES;
-    }
-    // 设置endAngle。。。
+    [self updateCircleViewWithCenter:CGPointMake(self.frame.size.height/2 - self.frame.size.height/4*1.732 + 11, self.frame.size.height/2 - 38)];
+    startAngle = PI * 7/6.0;
+
+//    if (hour < 10) {
+//        [self updateCircleViewWithCenter:(CGPointMake(32, 72))];
+//        
+//        [endTime setHour:10];
+//    } else if (hour >= 10 && hour < 12){
+//        
+//         [self updateCircleViewWithCenter:(CGPointMake(125, 19))];
+//        startAngle = PI * 3/2.0;
+//        [endTime setHour:12];
+//        
+//    } else if (hour >= 12 && hour < 14){
+//         [self updateCircleViewWithCenter:(CGPointMake(217, 72))];
+//        startAngle = PI * 11/6.0;
+//        [endTime setHour:14];
+//        
+//    } else if (hour >= 14 && hour < 16){
+//         [self updateCircleViewWithCenter:(CGPointMake(216, 180))];
+//        startAngle = PI * 1/6.0;
+//        [endTime setHour:16];
+//        
+//        
+//    } else if (hour >= 16 && hour < 18){
+//         [self updateCircleViewWithCenter:(CGPointMake(125, 231))];
+//        startAngle = PI *1/2.0;
+//        [endTime setHour:18];
+//        
+//    } else if (hour >= 18){
+////        bigCircleView.hidden = YES;
+////        littleCircleView.hidden = YES;
+//    }
+//    // 设置endAngle。。。
     endAngle = PI * summinete / 360.0 - PI * 0.5;
     
     todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
@@ -124,8 +126,8 @@
     timeLabel.text = string;
 
     
-    [path0 addArcWithCenter:CGPointMake(125, 125) radius:106.5 startAngle:startAngle endAngle:endAngle clockwise:NO];
-    path0.lineWidth = 4;
+    [path0 addArcWithCenter:CGPointMake(self.frame.size.width*0.5, self.frame.size.height*0.5) radius:77 startAngle:startAngle endAngle:endAngle clockwise:NO];
+    path0.lineWidth = 3;
     [path0 stroke];
 
     
@@ -153,26 +155,31 @@
 - (void)initLabel{
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
-    number3Label = [[UILabel alloc] initWithFrame:CGRectMake(240, 120, 10, 10) font:font textColor:color text:@"3"] ;
-    number9Label = [[UILabel alloc] initWithFrame:CGRectMake(0, 120, 10, 10) font:font textColor:color text:@"9"];
-    number6Label = [[UILabel alloc] initWithFrame:CGRectMake(120, 240, 10, 10) font:font textColor:color text:@"6"];
-    number12Label = [[UILabel alloc] initWithFrame:CGRectMake(118, 0, 14, 10) font:font textColor:color text:@"12"];
+    
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    
+    
+    number3Label = [[UILabel alloc] initWithFrame:CGRectMake(width - 8, height/2 - 5, 8, 10) font:font textColor:color text:@"3"] ;
+    number9Label = [[UILabel alloc] initWithFrame:CGRectMake(0, height/2 - 5, 8, 10) font:font textColor:color text:@"9"];
+    number6Label = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 5, height - 8, 10, 8) font:font textColor:color text:@"6"];
+    number12Label = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 7, 0, 14, 8) font:font textColor:color text:@"12"];
     number12Label.textColor = [UIColor orangeThemeColor];
     [self addSubview:number3Label];
     [self addSubview:number6Label];
     [self addSubview:number9Label];
     [self addSubview:number12Label];
-    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 80, 90, 30) font:[UIFont systemFontOfSize:22] textColor:[UIColor countLabelColor]text:@"倒计时"];
+    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 45, height/2 - 45, 90, 30) font:[UIFont systemFontOfSize:18] textColor:[UIColor countLabelColor]text:@"倒计时"];
     [self addSubview:topLabel];
-    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, 200, 40)];
+    timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 - 20, 160, 40)];
     timeLabel.textColor = [UIColor orangeThemeColor];
     timeLabel.text = @"       ";
-    timeLabel.font = [UIFont systemFontOfSize:33];
+    timeLabel.font = [UIFont systemFontOfSize:24];
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:timeLabel];
     
-    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 150, 200, 20) font:[UIFont systemFontOfSize:14] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
+    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 + 20, 160, 20) font:[UIFont systemFontOfSize:12] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
     [self addSubview:infoLabel];
   
    
