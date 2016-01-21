@@ -114,10 +114,8 @@
         self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
         [self.view addSubview:self.picCollectionView];
     }else {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+       
         self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 100) collectionViewLayout:flowLayout];
-        [self.scrollView addSubview:self.picCollectionView];
-        [self.view addSubview:self.scrollView];
         
         [self showDefaultView];
 
