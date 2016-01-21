@@ -27,6 +27,8 @@
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 @property (nonatomic, strong)PhotoView *photoView;
 
+@property (nonatomic, strong)UIScrollView *scrollView;
+
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, assign)NSInteger saveIndex;
 @property (nonatomic, strong)NSMutableArray *currentArr;
@@ -84,12 +86,12 @@
 }
 
 - (void)showDefaultView{
-    bottomView = [[UIView alloc] initWithFrame:self.view.bounds];
+    bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 300)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
     countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
-    countdowmView.center = self.view.center;
+    countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 125);
     [bottomView addSubview:countdowmView];
-    [self.view addSubview:bottomView];
+    [self.scrollView addSubview:bottomView];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
     
 }
@@ -106,7 +108,19 @@
     flowLayout.minimumLineSpacing = 1.5;
     
     
-    self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+//    self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+    NSInteger hour = [self getCurrentTime];
+    if (hour > 18) {
+        self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+        [self.view addSubview:self.picCollectionView];
+    }else {
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+        self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 100) collectionViewLayout:flowLayout];
+        [self.scrollView addSubview:self.picCollectionView];
+        [self showDefaultView];
+        [self.view addSubview:self.scrollView];
+    }
+    
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.picCollectionView];
     
@@ -125,14 +139,35 @@
         [self requestData:arrPic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //未登录处理
-        [self showDefaultView];
+//        [self showDefaultView];
     }];
 }
 
+- (NSInteger)getCurrentTime{
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    //    int hour = (int)[dateTime hour];
+        NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+        [formatter setTimeStyle:NSDateFormatterMediumStyle];
+        NSDate *date = [NSDate date];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSInteger unitFlags = NSCalendarUnitYear |
+        NSCalendarUnitMonth |
+        NSCalendarUnitDay |
+        NSCalendarUnitHour |
+        NSCalendarUnitMinute |
+        NSCalendarUnitSecond;
+        NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+        int hour = (int)[comps hour];
+    NSLog(@"---------%d", hour);
+    return hour;
+}
+
 - (void)requestData:(NSArray *)data {
-    if (data.count == 0) {
-        [self showDefaultView];
-    }
+//    if (data.count == 0) {
+//        [self showDefaultView];
+//    }
     for (NSMutableDictionary *oneTurns in data) {
         SharePicModel *sharePic = [[SharePicModel alloc] init];
         [sharePic setValuesForKeysWithDictionary:oneTurns];
