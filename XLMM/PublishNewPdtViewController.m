@@ -110,17 +110,36 @@
     
     self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
-    if (hour < 18) {
-        self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+    if (hour > 21) {
+        self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
     }else {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-        self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 100) collectionViewLayout:flowLayout];
-        [self.scrollView addSubview:self.picCollectionView];
-        [self.view addSubview:self.scrollView];
-        
+        self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 200)];
+        [self.picCollectionView addSubview:self.backView];
         [self showDefaultView];
-
+        self.backView.backgroundColor = [UIColor redColor];
+        self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
+        [self.view addSubview:self.picCollectionView];
+        
+//        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//        UIView *backView = [[UIView alloc] initWithFrame:self.scrollView.frame];
+//        
+//        [self.scrollView addSubview:backView];
+//        backView.backgroundColor = [UIColor redColor];
+//        
+//        self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 300, SCREENWIDTH,500) collectionViewLayout:flowLayout];
+//        self.picCollectionView
+//        [self.scrollView addSubview:self.picCollectionView];
+//        self.picCollectionView.backgroundColor = []
+//        [self showDefaultView];
+//        [self.view addSubview:self.scrollView];
+//        UIView *backView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 300, SCREENWIDTH, SCREENHEIGHT - 300)];
+//        backView1.backgroundColor = [UIColor grayColor];
+//        [backView1 addSubview:self.picCollectionView];
+//        [self.scrollView addSubview:self.picCollectionView];
+//        self.scrollView.contentSize = CGSizeMake(SCREENWIDTH, 1000);
+//        [self.view addSubview:self.scrollView];
+        
     }
     
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
