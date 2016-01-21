@@ -15,6 +15,7 @@
 
 @implementation CountdownView{
     UIBezierPath *path;
+    NSDate *todate;
 }
 
 
@@ -40,11 +41,99 @@
     
     UIBezierPath * path0 = [[UIBezierPath alloc] init];
     [[UIColor orangeThemeColor]set];
-    [path0 addArcWithCenter:CGPointMake(125, 125) radius:106.5 startAngle:-PI *5/6.0 endAngle:arc4random()%100/100.0 * PI clockwise:NO];
+    CGFloat startAngle, endAngle;
+    
+    
+    
+    
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+    int year=(int)[comps year];
+    int month =(int) [comps month];
+    int day = (int)[comps day];
+    int hour = (int)[comps hour];
+    int minute = (int)[comps minute];
+    
+    int summinete = hour * 60 + minute;
+    
+   
+    
+    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
+    [endTime setYear:year];
+    [endTime setMonth:month];
+    [endTime setDay:day];
+    [endTime setMinute:0];
+    [endTime setSecond:0];
+    
+    
+    if (hour < 10) {
+        [self updateCircleViewWithCenter:(CGPointMake(32, 72))];
+        startAngle = PI * 7/6.0;
+        [endTime setHour:10];
+    } else if (hour >= 10 && hour < 12){
+        
+         [self updateCircleViewWithCenter:(CGPointMake(125, 19))];
+        startAngle = PI * 3/2.0;
+        [endTime setHour:12];
+        
+    } else if (hour >= 12 && hour < 14){
+         [self updateCircleViewWithCenter:(CGPointMake(217, 72))];
+        startAngle = PI * 11/6.0;
+        [endTime setHour:14];
+        
+    } else if (hour >= 14 && hour < 16){
+         [self updateCircleViewWithCenter:(CGPointMake(216, 180))];
+        startAngle = PI * 1/6.0;
+        [endTime setHour:16];
+        
+        
+    } else if (hour >= 16 && hour < 18){
+         [self updateCircleViewWithCenter:(CGPointMake(125, 231))];
+        startAngle = PI *1/2.0;
+        [endTime setHour:18];
+        
+    } else if (hour >= 18){
+        bigCircleView.hidden = YES;
+        littleCircleView.hidden = YES;
+    }
+    // 设置endAngle。。。
+    endAngle = PI * summinete / 360.0 - PI * 0.5;
+    
+    todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
+
+    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
+   
+    
+    //用来得到具体的时差
+    
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    NSString *string = nil;
+    
+    
+    string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+    
+    timeLabel.text = string;
+
+    
+    [path0 addArcWithCenter:CGPointMake(125, 125) radius:106.5 startAngle:startAngle endAngle:endAngle clockwise:NO];
     path0.lineWidth = 4;
     [path0 stroke];
 
     
+}
+
+- (void)updateCircleViewWithCenter:(CGPoint)center{
+    bigCircleView.center = center;
+    littleCircleView.center = center;
 }
 
 - (void)initCircleView{
@@ -90,9 +179,8 @@
 }
 
 - (void)updateTimeView{
-    NSLog(@"更新数据");
+   // NSLog(@"更新数据");
     
-    [self drawRect:self.frame];
     
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
@@ -107,24 +195,8 @@
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
-    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
-    int year=(int)[comps year];
-    int month =(int) [comps month];
-    int day = (int)[comps day];
-    int nextday = day + 1;
+ 
     
-    // NSCalendar *cal = [NSCalendar currentCalendar];//定义一个NSCalendar对象
-    NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
-    [endTime setYear:year];
-    [endTime setMonth:month];
-    [endTime setDay:nextday];
-    [endTime setHour:10];
-    [endTime setMinute:0];
-    [endTime setSecond:0];
-    
-    NSDate *todate = [calendar dateFromComponents:endTime]; //把目标时间装载入date
-    
-    //用来得到具体的时差
     
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     NSString *string = nil;
