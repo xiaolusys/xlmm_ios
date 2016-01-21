@@ -89,7 +89,8 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSString *count = [dic objectForKey:@"count"];
-        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", [count integerValue]];
+        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
+        
     }
     
 }
@@ -171,7 +172,7 @@
     NSInteger days = (count - page - 1)*7;
   //  NSLog(@"days = %ld", days);
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
   //  NSLog(@"urlstring = %@", urlString);
     
     //改变竖线的位置。。。。
@@ -233,7 +234,7 @@
         [self.dataArr addObject:orderM];
     }
   //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", dingdanshu, ticheng];
+    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", (long)dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
 }
@@ -273,12 +274,12 @@
         [shartView addSubview:linechart];
         
         UIView * circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
-        circleView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        circleView.backgroundColor = [UIColor orangeThemeColor];
         circleView.layer.cornerRadius = 3;
         circleView.tag = 300;
         [shartView addSubview:circleView];
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, 80)];
-        lineView.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        lineView.backgroundColor = [UIColor orangeThemeColor];
         lineView.tag = 400;
         [shartView addSubview:lineView];
         
@@ -291,7 +292,7 @@
         
     }
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, SCREENWIDTH *allDingdan.count, 0.5)];
-    bottomLine.backgroundColor = [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    bottomLine.backgroundColor = [UIColor lineGrayColor];
     [self.mamaScrollView addSubview:bottomLine];
 
 }
@@ -339,7 +340,7 @@
 
     
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

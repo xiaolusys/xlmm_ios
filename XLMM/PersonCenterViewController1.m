@@ -62,7 +62,7 @@
     self.labelArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:[[UIView alloc] init]];
-    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
@@ -139,7 +139,7 @@
         UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 222, 0, 100, 35)];
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        label.textColor = [UIColor textDarkGrayColor];
         [self.labelArray addObject:label];
     }
     NSLog(@"label = %@", self.labelArray);
@@ -219,7 +219,7 @@
         label.frame = CGRectMake(SCREENWIDTH - 240, 10, 125, 16);
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
        
         
@@ -231,7 +231,7 @@
             [button setTitle:@"立即支付" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -261,7 +261,7 @@
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
             imageView.layer.borderWidth = 0.5;
-            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+            imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
             imageView.hidden = NO;
             
         }
@@ -276,7 +276,7 @@
         label.frame = CGRectMake(SCREENWIDTH - 240, 10, 125, 16);
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont systemFontOfSize:12];
-        label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+        label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
 
         cell.statusLabel.text = @"待支付";
@@ -289,7 +289,7 @@
             [button setTitle:@"立即支付" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;

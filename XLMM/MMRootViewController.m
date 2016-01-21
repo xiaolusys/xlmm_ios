@@ -329,10 +329,10 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, SCREENHEIGHT - 156, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
-    view.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    view.backgroundColor = [UIColor cartViewBackGround];
     view.layer.cornerRadius = 22;
     view.layer.borderWidth = 1;
-    view.layer.borderColor = [UIColor colorWithR:38 G:38 B:46 alpha:1].CGColor;
+    view.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
     
     
     UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
@@ -462,12 +462,12 @@
         for (int i = 100; i<104; i++) {
             if (btnTag == i) {
                 UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-              [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+              [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
                 
             }
             else{
                 UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
 
             }
         }
@@ -483,12 +483,12 @@
             for (int i = 100; i<104; i++) {
                 if (btnTag == i) {
                     UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                  [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+                  [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
                     
                 }
                 else{
                     UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                    [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
                     
                 }
             }
@@ -503,11 +503,11 @@
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
             UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
-            [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
             
         }else{
             UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         }
     }
     
@@ -532,11 +532,11 @@
    
     for (int i = 100; i<104; i++) {
         if (btnTag == i) {
-            [button setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
             
         }else{
             UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         }
     }
     

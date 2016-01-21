@@ -349,7 +349,7 @@
         owner.frontView.contentMode = UIViewContentModeScaleAspectFill;
         owner.frontView.layer.masksToBounds = YES;
         owner.frontView.layer.borderWidth = 0.5;
-        owner.frontView.layer.borderColor = [UIColor colorWithR:151 G:151 B:151 alpha:1].CGColor;
+        owner.frontView.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
         owner.frontView.layer.cornerRadius = 5;
         
         owner.nameLabel.text = model.nameString;
@@ -361,14 +361,14 @@
             if ([[refund_statusArray objectAtIndex:i] integerValue] == 0) {
                 UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
                 [button addTarget:self action:@selector(tuikuan:) forControlEvents:UIControlEventTouchUpInside];
-                [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor buttonEmptyBorderColor] forState:UIControlStateNormal];
                 button.backgroundColor = [UIColor whiteColor];
                 [button setTitle:@"申请退款" forState:UIControlStateNormal];
                 button.titleLabel.font = [UIFont systemFontOfSize:12];
                 [button.layer setBorderWidth:0.5];
                 button.tag = 200+i;
                 button.layer.cornerRadius = 12.5;
-                [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+                [button.layer setBorderColor:[UIColor buttonEmptyBorderColor].CGColor];
                 [owner.myView addSubview:button];
             } else {
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
@@ -387,33 +387,33 @@
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
             button.backgroundColor = [UIColor whiteColor];
             [button setTitle:@"确认收货" forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             [button.layer setBorderWidth:0.5];
             button.tag = 200+i;
             button.layer.cornerRadius = 12.5;
-            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
             [owner.myView addSubview:button];
         } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"交易成功"]&&
                    [[refund_statusArray objectAtIndex:i] integerValue] == 0){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
             button.backgroundColor = [UIColor whiteColor];
             [button setTitle:@"退货退款" forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             [button.layer setBorderWidth:0.5];
             button.tag = 200+i;
             button.layer.cornerRadius = 12.5;
-            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
             [owner.myView addSubview:button];
             if (model.killTitle) {
                 button.enabled = NO;
                 [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor colorWithR:155 G:155 B:155 alpha:0] forState:UIControlStateNormal];
-                button.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+                [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
+                button.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
                 CGRect rect = button.frame;
                 rect.size.width = 112;
                 rect.origin.x -= 40;
@@ -425,20 +425,20 @@
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor colorWithR:245 G:166 B:35 alpha:1] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
             button.backgroundColor = [UIColor whiteColor];
             [button setTitle:@"退货退款" forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             [button.layer setBorderWidth:0.5];
             button.tag = 200+i;
             button.layer.cornerRadius = 12.5;
-            [button.layer setBorderColor:[UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor];
+            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
             [owner.myView addSubview:button];
             if (model.killTitle) {
                 button.enabled = NO;
                 [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor colorWithR:155 G:155 B:155 alpha:0] forState:UIControlStateNormal];
-                button.layer.borderColor = [UIColor colorWithR:155 G:155 B:155 alpha:1].CGColor;
+                [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
+                button.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
                 CGRect rect = button.frame;
                 rect.size.width = 112;
                 rect.origin.x -= 40;

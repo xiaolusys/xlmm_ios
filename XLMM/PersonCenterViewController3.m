@@ -113,7 +113,7 @@
     
     
     
-    self.quanbuCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.quanbuCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     [self downloadData];
     
 //    
@@ -295,7 +295,7 @@
             [button setTitle:@"确认收货" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -308,7 +308,7 @@
             [button setTitle:@"立即支付" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -321,7 +321,7 @@
             [button setTitle:@"申请退款" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -334,7 +334,7 @@
             [button setTitle:@"退货退款" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -359,7 +359,7 @@
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
             imageView.layer.borderWidth = 0.5;
-            imageView.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+            imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
             imageView.hidden = NO;
             
         }
@@ -397,7 +397,7 @@
             [button setTitle:@"确认收货" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -410,7 +410,7 @@
             [button setTitle:@"立即支付" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -423,7 +423,7 @@
             [button setTitle:@"申请退款" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;
@@ -436,7 +436,7 @@
             [button setTitle:@"退货退款" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
             button.layer.cornerRadius = 12.5;
             button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.layer.borderWidth = 0.5;

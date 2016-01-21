@@ -106,7 +106,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
-    self.childCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     [self.view addSubview:self.containerView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -336,15 +336,15 @@ static NSString * ksimpleCell = @"simpleCell";
     if (sender.tag == 1) {
         isOrder = NO;
         [self.childCollectionView reloadData];
-        [self.jiageButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
-        [self.tuijianButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
         
         
     } else if (sender.tag == 2){
         isOrder = YES;
-        [self.tuijianButton setTitleColor:[UIColor colorWithR:74 G:74 B:74 alpha:1] forState:UIControlStateNormal];
-        [self.jiageButton setTitleColor:[UIColor colorWithR:252 G:185 B:22 alpha:1] forState:UIControlStateNormal];
+        [self.tuijianButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
         [self downloadOrderData];
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -393,7 +393,8 @@ static NSString * ksimpleCell = @"simpleCell";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
-     model.productModel = [dic objectForKey:@"product_model"];
+    model.productModel = [dic objectForKey:@"product_model"];
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     
     if ([model.productModel class] == [NSNull class]) {
         model.picPath = [dic objectForKey:@"head_img"];

@@ -110,7 +110,7 @@
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
     [self.view addSubview:[[UIView alloc] init]];
-    self.collectionView.backgroundColor = [UIColor colorWithR:245 G:245 B:245 alpha:1];
+    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     [self.view addSubview:self.collectionView];
 }
 
@@ -150,7 +150,10 @@
         model.wareBy = [dic objectForKey:@"ware_by"];
         model.productModel = [dic objectForKey:@"product_model"];
         model.offShelfTime = [dic objectForKey:@"offshelf_time"];
+        model.watermark_op = [dic objectForKey:@"watermark_op"];
         [self.dataArray addObject:model];
+        
+        
         
     }
     
@@ -279,15 +282,30 @@
     
     
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *string = model.picPath;
     
-    NSString *string = [model.picPath URLEncodedString];
-    [cell.imageView sd_setImageWithURL:kLoansRRL([string imageCompression])placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    NSMutableString *newString = [NSMutableString stringWithString:string];
+   
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
+        
+    } else{
+        [newString appendString:@"?"];
+    }
+ //   NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
+    
+   // NSLog(@"newString = %@", newString);
+    
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
   
         
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+        } else{
+            NSLog(@"error = %@", error);
         }
+        
     }] ;
     
     

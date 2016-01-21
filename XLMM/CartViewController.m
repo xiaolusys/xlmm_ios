@@ -89,13 +89,13 @@
     
     allPrice = 0.0f;
     [self.view addSubview:self.myTableView];
-    self.myTableView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.myTableView.backgroundColor = [UIColor backgroundlightGrayColor];
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backBtnClicked:)];
-    self.buyButton.backgroundColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+    self.buyButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     self.buyButton.layer.borderWidth = 1;
-    self.buyButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.buyButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.buyButton.layer.cornerRadius = 20;
     self.totalPricelabel.text =[NSString stringWithFormat:@" "];
     
@@ -256,7 +256,7 @@
             cell.cartModel= model;
             cell.delegate = self;
             cell.myImageView.layer.borderWidth = 0.5;
-            cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+            cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
@@ -290,7 +290,7 @@
             cell.cartModel= model;
             cell.delegate = self;
             cell.headImageView.layer.borderWidth = 0.5;
-            cell.headImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+            cell.headImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             cell.headImageView.layer.cornerRadius = 5;
@@ -391,7 +391,7 @@
             imageView.hidden = NO;
             
             footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
-            footerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+            footerView.backgroundColor = [UIColor backgroundlightGrayColor];
             
             return footerView;
         }
@@ -409,19 +409,19 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44)];
-        headerView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+        headerView.backgroundColor = [UIColor backgroundlightGrayColor];
         
         
         
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 160, 34)];
-        label.textColor = [UIColor colorWithR:38 G:38 B:46 alpha:1];
+        label.textColor = [UIColor settingBackgroundColor];
         label.font = [UIFont systemFontOfSize:12];
         label.text = @"可重新购买的商品";
        
         [headerView addSubview:label];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 43, SCREENWIDTH, 1)];
-        lineView.backgroundColor= [UIColor colorWithR:218 G:218 B:218 alpha:1];
+        lineView.backgroundColor= [UIColor lineGrayColor];
         [headerView addSubview:lineView];
        
         if (self.historyCarts.count == 0) {

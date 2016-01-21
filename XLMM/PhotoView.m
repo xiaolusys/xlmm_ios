@@ -7,6 +7,7 @@
 //
 
 #import "PhotoView.h"
+#import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
 
 #define SWIDTH [UIScreen mainScreen].bounds.size.width
@@ -26,7 +27,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor pothoViewBackgroundColor];
     }
     return self;
 }
@@ -47,8 +48,8 @@
     if (!_pageControl) {
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 34, 120, 20)];
         _pageControl.numberOfPages = self.picArr.count;
-        _pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
-        _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:120 / 256.0 green:120 / 256.0 blue:120 / 256.0 alpha:0.4];
+        _pageControl.currentPageIndicatorTintColor = [UIColor pagecontrolBackgroundColor];
+        _pageControl.pageIndicatorTintColor = [UIColor pagecontrolCurrentIndicatorColor];
         [self addSubview:_pageControl];
     }
     return _pageControl;

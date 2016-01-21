@@ -63,7 +63,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         label.text = @"删除";
         label.textAlignment = NSTextAlignmentRight;
-        label.textColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+        label.textColor = [UIColor buttonEnabledBackgroundColor];
         [itemButton addSubview:label];
         label.font = [UIFont systemFontOfSize:14];
         [itemButton addTarget:self action:@selector(addressDelete:) forControlEvents:UIControlEventTouchUpInside];
@@ -84,7 +84,7 @@
    // self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     
     
-    self.addressSwitch.tintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+    self.addressSwitch.tintColor = [UIColor buttonEmptyBorderColor];
     
 //    self.addressSwitch.backgroundColor=[UIColor redColor];
 //  //on 时颜色
@@ -153,14 +153,14 @@
 
 - (void)enableTijiaoButton{
     self.saveButton.enabled = YES;
-    self.saveButton.backgroundColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
-    self.saveButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+    self.saveButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.saveButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
 }
 
 - (void)disableTijiaoButton{
     self.saveButton.enabled = NO;
-    self.saveButton.backgroundColor = [UIColor colorWithR:227 G:227 B:227 alpha:1];
-    self.saveButton.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+    self.saveButton.backgroundColor = [UIColor buttonDisabledBackgroundColor];
+    self.saveButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
 }
 
 
@@ -173,7 +173,7 @@
             [self enableTijiaoButton];
             
         }
-        switch2.onTintColor = [UIColor colorWithR:245 G:166 B:35 alpha:1];
+        switch2.onTintColor = [UIColor buttonEmptyBorderColor];
         if (self.addressModel.addressID == nil) {
             NSLog(@"添加地址情况下设置为常用地址");//
 //#warning set default address

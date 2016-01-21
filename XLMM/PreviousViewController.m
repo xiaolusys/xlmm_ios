@@ -205,7 +205,7 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.showsVerticalScrollIndicator = NO;
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell2 class] forCellWithReuseIdentifier:kposterView];
-    self.myCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.myCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
@@ -362,6 +362,7 @@ static NSString *khead2View = @"head2View";
     model.productModel = [dic objectForKey:@"product_model"];
     model.offshelfTime = [dic objectForKey:@"offshelf_time"];
     offSheltTime = model.offshelfTime;
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     if ([model.productModel class] == [NSNull class]) {
          model.picPath = [dic objectForKey:@"head_img"];
         model.productModel = nil;
@@ -483,7 +484,7 @@ static NSString *khead2View = @"head2View";
             
             
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.imageURL imagePostersCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
 
             
            

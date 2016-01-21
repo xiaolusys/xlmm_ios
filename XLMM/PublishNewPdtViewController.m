@@ -16,6 +16,9 @@
 #import "MMClass.h"
 #import "SharePicModel.h"
 #import "SVProgressHUD.h"
+#import "CountdownView.h"
+#import "UILabel+CustomLabel.h"
+
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
@@ -28,9 +31,16 @@
 @property (nonatomic, assign)NSInteger saveIndex;
 @property (nonatomic, strong)NSMutableArray *currentArr;
 
+
+
 @end
 
-@implementation PublishNewPdtViewController
+@implementation PublishNewPdtViewController{
+  
+    NSTimer *theTimer;
+    UIView *bottomView;
+    CountdownView *countdowmView;
+}
 
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -47,6 +57,9 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
 }
 
 - (PhotoView *)photoView {
@@ -60,14 +73,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor backgroundlightGrayColor];
     self.navigationController.navigationBarHidden = NO;
     
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
+    
+   
+    
 }
 
+- (void)showDefaultView{
+    bottomView = [[UIView alloc] initWithFrame:self.view.bounds];
+    bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
+    countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    countdowmView.center = self.view.center;
+    [bottomView addSubview:countdowmView];
+    [self.view addSubview:bottomView];
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
+    
+}
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
@@ -100,10 +126,14 @@
         [self requestData:arrPic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //未登录处理
+        [self showDefaultView];
     }];
 }
 
 - (void)requestData:(NSArray *)data {
+    if (data.count == 0) {
+        [self showDefaultView];
+    }
     for (NSMutableDictionary *oneTurns in data) {
         SharePicModel *sharePic = [[SharePicModel alloc] init];
         [sharePic setValuesForKeysWithDictionary:oneTurns];

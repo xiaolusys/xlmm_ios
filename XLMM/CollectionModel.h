@@ -40,5 +40,7 @@
 
 @property (nonatomic, copy)NSString *offShelfTime;
 
+@property (nonatomic, copy)NSString *watermark_op;
+
 
 @end

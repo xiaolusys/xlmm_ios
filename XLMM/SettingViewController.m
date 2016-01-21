@@ -52,7 +52,7 @@
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"设置" selecotr:@selector(backClicked:)];
     self.deleteButton.layer.borderWidth = 1;
-    self.deleteButton.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
+    self.deleteButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     self.deleteButton.layer.cornerRadius = 13;
 
     [self setcacheSize];

@@ -22,7 +22,7 @@
 //   http://image.xiaolu.so/MG-1448717389408-高腰蕾丝修身短裤01.png?imageMogr2/format/jpg/quality/80
 
 - (NSString *)imageCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/%f/format/jpg/quality/90",self, [self imageWidth]];
+    NSString *string = [NSString stringWithFormat:@"%@imageMogr2/thumbnail/%.0f/format/jpg/quality/90",self, [self imageWidth]];
     return string;
 }
 
@@ -47,7 +47,7 @@
 }
 
 - (NSString *)imagePostersCompression{
-    NSString *string = [NSString stringWithFormat:@"%@",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/90",self];
     return string;
 }
 

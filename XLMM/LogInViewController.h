@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *displayHidePasswdButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *loginIngoLabel;
 
 - (IBAction)loginClicked:(UIButton *)sender;
 - (IBAction)registerClicked:(UIButton *)sender;
@@ -24,6 +25,7 @@
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender;
 - (IBAction)seePasswordButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *weixinHiddenView;
 
 - (IBAction)weixinButtonClicked:(id)sender;
 

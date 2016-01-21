@@ -31,7 +31,7 @@
     // Do any additional setup after loading the view from its nib.
     self.codeButton.layer.cornerRadius = 16;
     self.codeButton.layer.borderWidth = 1;
-    self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+    self.codeButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;
     self.commitButton.layer.cornerRadius = 20;
     self.commitButton.layer.borderWidth = 1;
     self.commitButton.layer.borderColor = [UIColor buttonBorderColor].CGColor;

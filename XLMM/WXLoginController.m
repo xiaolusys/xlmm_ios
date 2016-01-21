@@ -102,16 +102,16 @@
     self.myImageView.layer.cornerRadius = 45;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 1;
-    self.myImageView.layer.borderColor = [UIColor colorWithR:253 G:203 B:14 alpha:1].CGColor;
+    self.myImageView.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
     self.buttonLabel.text = @"获取验证码";
     
     self.codeButton.layer.cornerRadius = 16;
     self.codeButton.layer.borderWidth = 1;
-    self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
+    self.codeButton.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
     
     self.nextButton.layer.cornerRadius = 20;
     self.nextButton.layer.borderWidth = 1;
-    self.nextButton.layer.borderColor = [UIColor colorWithR:217 G:140 B:13 alpha:1].CGColor;
+    self.nextButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     
     self.skipButton.layer.cornerRadius = 20;
     self.skipButton.layer.borderWidth = 1;
@@ -257,8 +257,8 @@
     NSString *text = [NSString stringWithFormat:@"%ld秒", (long)countdownSecond];
  //   timeLabel.text = text;
     self.buttonLabel.text = text;
-    self.buttonLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
-    self.codeButton.layer.borderColor = [UIColor colorWithR:216 G:216 B:216 alpha:1].CGColor;
+    self.buttonLabel.textColor = [UIColor cartViewBackGround];
+    self.codeButton.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
 //#warning change timeLabel
     
@@ -266,8 +266,8 @@
         countdownSecond = countSecond;
         [myTimer invalidate];
         self.codeButton.enabled = YES;
-        self.codeButton.layer.borderColor = [UIColor colorWithR:245 G:177 B:35 alpha:1].CGColor;
-        self.buttonLabel.textColor = [UIColor colorWithR:245 G:177 B:35 alpha:1];
+        self.codeButton.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+        self.buttonLabel.textColor = [UIColor buttonEnabledBackgroundColor];
         self.buttonLabel.text = @"获取验证码";
         
       

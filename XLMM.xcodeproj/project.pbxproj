@@ -762,6 +762,14 @@
 		32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC181BEC95CF0036F338 /* ModifyPhoneController.xib */; };
 		32E6BC1E1BEC95F90036F338 /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */; };
 		32E6BC1F1BEC95F90036F338 /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */; };
+		32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */; };
+		32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */; };
+		32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B54B1C4CCDC300414F8A /* TixianModel.m */; };
+		32E8B5841C4CE80D00414F8A /* TixianTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */; };
+		32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */; };
+		32E8B58A1C4F580500414F8A /* CountdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5891C4F580500414F8A /* CountdownView.m */; };
+		32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */; };
+		32E8B5921C4F605400414F8A /* UILabel+CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1651,6 +1659,19 @@
 		32E6BC1B1BEC95F90036F338 /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		32E6BC1C1BEC95F90036F338 /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		32E6BC1D1BEC95F90036F338 /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
+		32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianHistoryViewController.h; sourceTree = "<group>"; };
+		32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianHistoryViewController.m; sourceTree = "<group>"; };
+		32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianHistoryViewController.xib; sourceTree = "<group>"; };
+		32E8B54A1C4CCDC300414F8A /* TixianModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianModel.h; sourceTree = "<group>"; };
+		32E8B54B1C4CCDC300414F8A /* TixianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianModel.m; sourceTree = "<group>"; };
+		32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianTableViewCell.h; sourceTree = "<group>"; };
+		32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianTableViewCell.m; sourceTree = "<group>"; };
+		32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TixianTableViewCell.xib; sourceTree = "<group>"; };
+		32E8B5881C4F580500414F8A /* CountdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountdownView.h; sourceTree = "<group>"; };
+		32E8B5891C4F580500414F8A /* CountdownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountdownView.m; sourceTree = "<group>"; };
+		32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = countdowmBackImage.png; sourceTree = "<group>"; };
+		32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CustomLabel.h"; sourceTree = "<group>"; };
+		32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CustomLabel.m"; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -1920,6 +1941,11 @@
 				2E63AE581C3E66A5008E97BB /* PicFooterCollectionReusableView.xib */,
 				2E63AE501C3E172D008E97BB /* PhotoView.h */,
 				2E63AE511C3E172D008E97BB /* PhotoView.m */,
+				32E8B5811C4CE80D00414F8A /* TixianTableViewCell.h */,
+				32E8B5821C4CE80D00414F8A /* TixianTableViewCell.m */,
+				32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */,
+				32E8B5881C4F580500414F8A /* CountdownView.h */,
+				32E8B5891C4F580500414F8A /* CountdownView.m */,
 			);
 			name = MaMaView;
 			sourceTree = "<group>";
@@ -1938,6 +1964,8 @@
 		2E73ED981C3A14A300EDB94E /* MaMaModel */ = {
 			isa = PBXGroup;
 			children = (
+				32E8B54A1C4CCDC300414F8A /* TixianModel.h */,
+				32E8B54B1C4CCDC300414F8A /* TixianModel.m */,
 				2E73ED991C3A14C700EDB94E /* MaMaOrderModel.h */,
 				2E73ED9A1C3A14C700EDB94E /* MaMaOrderModel.m */,
 				2E612B401C476E07002F1C15 /* SharePicModel.h */,
@@ -2663,6 +2691,9 @@
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
+				32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */,
+				32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */,
+				32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */,
 				325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */,
 				325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */,
 				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
@@ -2692,6 +2723,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -2966,6 +2998,8 @@
 				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
 				2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */,
 				2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */,
+				32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */,
+				32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */,
 			);
 			name = cageory;
 			sourceTree = "<group>";
@@ -3515,7 +3549,9 @@
 				32AA6D9B1C38E9A50011BB04 /* mmback_icon.png in Resources */,
 				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
+				32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
+				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,
@@ -3632,6 +3668,7 @@
 				8E9665761C0599CD001CF18A /* empty.png in Resources */,
 				2E5600B81C2D496E000AFB39 /* loading动画0058.png in Resources */,
 				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
+				32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
 				32F2E95D1C12AFBE00A98EA3 /* guanyuIcon.png in Resources */,
@@ -4017,10 +4054,12 @@
 				322D25751C32B66100509EAD /* UIView+MJExtension.m in Sources */,
 				2E77F5651C1BF7140020C014 /* YoumengShare.m in Sources */,
 				3219528C1BFC7A8D00AA0AB8 /* QNAsyncRun.m in Sources */,
+				32E8B5921C4F605400414F8A /* UILabel+CustomLabel.m in Sources */,
 				32746E721B74B5C600816208 /* UIColor+RGBColor.m in Sources */,
 				322D25681C32B66100509EAD /* MJRefreshAutoGifFooter.m in Sources */,
 				32BA1B261BF2F1FA0000A0F2 /* SingleOrderViewCell.m in Sources */,
 				2E63AE521C3E172D008E97BB /* PhotoView.m in Sources */,
+				32E8B5841C4CE80D00414F8A /* TixianTableViewCell.m in Sources */,
 				321952951BFC7A8D00AA0AB8 /* QNResponseInfo.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,
@@ -4108,6 +4147,7 @@
 				3282F2841B6B5B1300E73EB9 /* SDWebImageDownloader.m in Sources */,
 				3219528D1BFC7A8D00AA0AB8 /* QNCrc32.m in Sources */,
 				32746DCB1B7438FC00816208 /* CollectionModel.m in Sources */,
+				32E8B58A1C4F580500414F8A /* CountdownView.m in Sources */,
 				3219529F1BFC7A8D00AA0AB8 /* QNUploadOption.m in Sources */,
 				3282F2821B6B5B1300E73EB9 /* SDWebImageCompat.m in Sources */,
 				2E77F5BB1C1EBBA90020C014 /* SendMessageToWeibo.m in Sources */,
@@ -4115,6 +4155,7 @@
 				32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */,
 				3264EA1B1B6C59B700F36A8D /* ChildViewController.m in Sources */,
 				32620C711B6AFD56006E806A /* RegisterViewController.m in Sources */,
+				32E8B54C1C4CCDC300414F8A /* TixianModel.m in Sources */,
 				2E73ED961C38F19B00EDB94E /* FSLineChart.m in Sources */,
 				322D25651C32B66100509EAD /* MJRefreshComponent.m in Sources */,
 				322D25731C32B66100509EAD /* UIScrollView+MJExtension.m in Sources */,
@@ -4190,6 +4231,7 @@
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
+				32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
 				322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */,
 				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
@@ -4362,7 +4404,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4399,7 +4441,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4444,7 +4486,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4488,7 +4530,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "92dd7e83-5d8a-45bb-8084-740410d7eee1";
+				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

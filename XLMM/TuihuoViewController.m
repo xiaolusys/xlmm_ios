@@ -59,7 +59,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [self.collectionView registerClass:[TuihuoCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
-    self.collectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     //[self createInfo];
     [self createNavigationBarWithTitle:@"退款退货" selecotr:@selector(backBtnClicked:)];
 
@@ -284,7 +284,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         cell.myImageView.layer.masksToBounds = YES;
         cell.myImageView.layer.cornerRadius = 5;
         cell.myImageView.layer.borderWidth = 0.5;
-        cell.myImageView.layer.borderColor = [UIColor colorWithR:218 G:218 B:218 alpha:1].CGColor;
+        cell.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
         
     }
     cell.titleLabel.text = model.title;

@@ -43,13 +43,22 @@
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
 
-    NSString *string = [model.picPath URLEncodedString];
+    NSString *string = model.picPath;
     
-    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        [UIView animateWithDuration:2.0f animations:^{
-//            self.imageView.alpha = 1.0;
-//        }];
+    NSMutableString *newString = [NSMutableString stringWithString:string];
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
         
+    } else{
+        [newString appendString:@"?"];
+    }
+
+    
+    
+    NSLog(@"newString = %@", [newString imageCompression]);
+
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
@@ -84,22 +93,36 @@
 }
 
 - (void)fillData:( PromoteModel*)model{
-    NSString *string = [model.picPath URLEncodedString];
-
-    self.imageView.alpha = 0.0;
-    [self.imageView sd_setImageWithURL:kLoansRRL([string imageCompression]) placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    NSString *string = model.picPath;
+    
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
+    if (![model.watermark_op isEqualToString:@""]) {
+        [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
         
-        [UIView animateWithDuration:0.3f animations:^{
-            self.imageView.alpha = 1.0;
-        }];
+    } else{
+        [newImageUrl appendString:@"?"];
+    }
+    
+    
+  // NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
+    
+    
+
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         if (image != nil) {
+          
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
 //            [SVProgressHUD dismiss];
         }
-    }] ;
-
+    }];
+    
+ 
+    
+    
+    
+    
     self.nameLabel.text = model.name;
     
     if ([model.agentPrice integerValue]!=[model.agentPrice floatValue]) {

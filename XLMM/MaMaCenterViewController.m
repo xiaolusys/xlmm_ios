@@ -66,7 +66,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mamaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 60) style:UITableViewStylePlain];
-    self.mamaTableView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:244/255.0 alpha:1];
+    self.mamaTableView.backgroundColor = [UIColor backgroundlightGrayColor];
     UIView *headView;
     
     NSLog(@"%f, %f",self.view.frame.size.width, self.view.frame.size.height );
@@ -109,14 +109,14 @@
    
     
     dingdanLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 250, SCREENWIDTH, 40)];
-    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu,ticheng];
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", (long)dingdanshu,ticheng];
                          
-    dingdanLabel.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
+    dingdanLabel.textColor = [UIColor textDarkGrayColor];
    dingdanLabel.font = [UIFont systemFontOfSize:14];
     dingdanLabel.textAlignment = NSTextAlignmentCenter;
     
     [self.mamaTableView addSubview:dingdanLabel];
-    dingdanLabel.textColor = [UIColor colorWithRed: 98/256.0 green: 98/256.0 blue:98/256.0 alpha:1.0];
+    dingdanLabel.textColor = [UIColor textDarkGrayColor];
     
     [self.view addSubview:self.mamaTableView];
     
@@ -179,7 +179,7 @@
         return;
     }
     NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    __unused NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSLog(@"json = %@", dicJson);
     }
@@ -220,7 +220,7 @@
         [self.dataArr addObject:orderM];
     }
     NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng];
+    dingdanLabel.text = [NSString stringWithFormat:@"今日订单%ld 今日收入%.2f", (long)dingdanshu, ticheng];
     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
     
     [self.mamaTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];

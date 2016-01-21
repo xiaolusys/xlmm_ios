@@ -141,7 +141,7 @@
         [sizeView0 addSubview:headview];
     
     
-        headview.backgroundColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+        headview.backgroundColor = [UIColor cartViewBackGround];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, labelWidth, labelHeight)];
         //[label sizeToFit];
       //  label.backgroundColor = [UIColor redColor];
@@ -174,11 +174,11 @@
     
             if (i == mutableSize.count -1) {
                 UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, sizeViewHeight - 1, SCREENWIDTH, 1)];
-                line.backgroundColor = [UIColor colorWithR:222 G:223 B:224 alpha:1];
+                line.backgroundColor = [UIColor backgroundlightGrayColor];
                 [sizeView addSubview:line];
             } else {
                 UIView *line = [[UIView alloc] initWithFrame:CGRectMake(8, sizeViewHeight - 1, SCREENWIDTH - 16, 1)];
-                line.backgroundColor = [UIColor colorWithR:222 G:223 B:224 alpha:1];
+                line.backgroundColor = [UIColor backgroundlightGrayColor];
                 [sizeView addSubview:line];
             }
     
@@ -194,7 +194,7 @@
             //[label sizeToFit];
             //  label.backgroundColor = [UIColor redColor];
             label.text = [mutableSizeName objectAtIndex:i];
-            label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+            label.textColor = [UIColor cartViewBackGround];
             label.font = [UIFont systemFontOfSize:12];
             label.textAlignment = NSTextAlignmentCenter;
             label.numberOfLines = 0;
@@ -204,7 +204,7 @@
                 //[label sizeToFit];
                 //  label.backgroundColor = [UIColor redColor];
                 label.text = [[mutableSize objectAtIndex:i] objectForKey:[orderKeyArray objectAtIndex:j]];
-                label.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+                label.textColor = [UIColor cartViewBackGround];
                 label.font = [UIFont systemFontOfSize:9];
                 label.textAlignment = NSTextAlignmentCenter;
                 label.numberOfLines = 0;

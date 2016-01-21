@@ -26,6 +26,7 @@
 #import "Reachability.h"
 #import "RESideMenu.h"
 #import "MJPullGifHeader.h"
+#import "MobClick.h"
 
 
 
@@ -77,6 +78,13 @@ static NSString *khead2View = @"head2View";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"TodayViewPage"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"TodayViewPage"];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -334,7 +342,7 @@ static NSString *khead2View = @"head2View";
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
     self.myCollectionView.showsVerticalScrollIndicator = NO;
-    self.myCollectionView.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    self.myCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     [self.myCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
     [self.myCollectionView registerClass:[PosterCollectionCell2 class] forCellWithReuseIdentifier:kposterView];
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
@@ -496,7 +504,7 @@ static NSString *khead2View = @"head2View";
    
     ladyListNumber = ladyArray.count;
     if (ladyListNumber == 0) {
-        return;
+       // return;
     }
    
     for (NSDictionary *ladyInfo in ladyArray) {
@@ -574,6 +582,7 @@ static NSString *khead2View = @"head2View";
     model.remainNum = [dic objectForKey:@"remain_num"];
     model.saleTime = [dic objectForKey:@"sale_time"];
     model.wareBy = [dic objectForKey:@"ware_by"];
+    model.watermark_op = [dic objectForKey:@"watermark_op"];
     if ([[dic objectForKey:@"product_model"]class] ==[NSNull class]) {
         model.productModel = nil;
           model.picPath = [dic objectForKey:@"head_img"];
@@ -701,7 +710,7 @@ static NSString *khead2View = @"head2View";
             
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL imagePostersCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.imageURL imagePostersCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
 
 
            

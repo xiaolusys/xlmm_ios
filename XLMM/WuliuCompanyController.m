@@ -107,9 +107,9 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0,SCREENWIDTH , 25)];
-    view.backgroundColor = [UIColor colorWithR:243 G:243 B:244 alpha:1];
+    view.backgroundColor = [UIColor backgroundlightGrayColor];
     UILabel *label = [[UILabel alloc] init];
-    label.textColor = [UIColor colorWithR:155 G:155 B:155 alpha:1];
+    label.textColor = [UIColor dingfanxiangqingColor];
     label.frame = CGRectMake(8, 0, 40, 25);
     label.font = [UIFont systemFontOfSize:16];
     label.text = self.HeaderArray[section];

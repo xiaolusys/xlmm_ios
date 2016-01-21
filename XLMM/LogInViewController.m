@@ -90,6 +90,19 @@
     self.loginButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     [self.loginButton.layer setBorderWidth:1];
     
+    [self setloginView];
+    
+}
+
+- (void)setloginView{
+    if ([WXApi isWXAppInstalled]) {
+        self.weixinHiddenView.hidden = YES;
+    } else {
+        self.weixinHiddenView.hidden = NO;
+        self.loginIngoLabel.text = @"短信验证码登录";
+        
+        
+    }
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -205,6 +218,7 @@
     if (isBangding) {
         NSLog(@"跳转首页");
         if (isSettingPsd == YES) {
+            
             
             [self.navigationController popViewControllerAnimated:YES];
             
@@ -363,7 +377,7 @@
 //                            
 //                            
 //                        }];
-//
+
                   
                   
                   [self.navigationController popViewControllerAnimated:NO];

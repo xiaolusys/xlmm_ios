@@ -12,8 +12,9 @@
 #import "AFNetworking.h"
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
+#import "TixianHistoryViewController.h"
 
-#define RGBCOLOR(a, b, c) [UIColor colorWithRed:245/255.0 green:166/255.0 blue:35/255.0 alpha:1]
+
 
 @interface TixianViewController ()
 
@@ -61,7 +62,7 @@
     
     self.fabuButton.layer.cornerRadius = 15;
     self.fabuButton.layer.borderWidth = 1;
-    self.fabuButton.layer.borderColor = RGBCOLOR(245, 166, 35).CGColor;
+    self.fabuButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     
     zhanghuyue = self.cantixianjine;
     
@@ -84,6 +85,30 @@
     }
      
     
+    [self createRightButonItem];
+    
+}
+
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    label.textColor = [UIColor textDarkGrayColor];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentRight;
+    [rightBtn addSubview:label];
+    label.text = @"提现历史";
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)rightClicked:(UIButton *)button{
+    NSLog(@"历史提现");
+    TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
+    
+    
+    
+    [self.navigationController pushViewController:historyVC animated:YES];
     
     
 }
