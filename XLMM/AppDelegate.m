@@ -114,9 +114,6 @@
     
     
     
-
-
-    
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
