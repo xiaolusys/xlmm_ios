@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
@@ -355,22 +355,22 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="Tbb-YI-qal"/>
-                                            <exclude reference="G7d-B2-4t7"/>
-                                            <exclude reference="fzA-ks-YCP"/>
-                                            <exclude reference="j61-1B-Mdd"/>
-                                            <exclude reference="05n-tW-Has"/>
-                                            <exclude reference="M5V-Bb-jBV"/>
-                                            <exclude reference="SP1-Rz-e4H"/>
-                                            <exclude reference="rDk-9U-7B6"/>
                                             <exclude reference="3EO-wN-XLq"/>
                                             <exclude reference="Ez3-K0-gpL"/>
                                             <exclude reference="KIa-m3-gq5"/>
                                             <exclude reference="czG-Xk-JBC"/>
+                                            <exclude reference="05n-tW-Has"/>
+                                            <exclude reference="M5V-Bb-jBV"/>
+                                            <exclude reference="SP1-Rz-e4H"/>
+                                            <exclude reference="rDk-9U-7B6"/>
                                             <exclude reference="2P8-7n-bxD"/>
                                             <exclude reference="OtS-Ac-TqC"/>
                                             <exclude reference="bHC-sE-WSo"/>
                                             <exclude reference="jhw-Td-68W"/>
                                             <exclude reference="kay-W8-evB"/>
+                                            <exclude reference="G7d-B2-4t7"/>
+                                            <exclude reference="fzA-ks-YCP"/>
+                                            <exclude reference="j61-1B-Mdd"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -382,22 +382,22 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="Tbb-YI-qal"/>
-                                            <include reference="G7d-B2-4t7"/>
-                                            <include reference="fzA-ks-YCP"/>
-                                            <include reference="j61-1B-Mdd"/>
-                                            <include reference="05n-tW-Has"/>
-                                            <include reference="M5V-Bb-jBV"/>
-                                            <include reference="SP1-Rz-e4H"/>
-                                            <include reference="rDk-9U-7B6"/>
                                             <include reference="3EO-wN-XLq"/>
                                             <include reference="Ez3-K0-gpL"/>
                                             <include reference="KIa-m3-gq5"/>
                                             <include reference="czG-Xk-JBC"/>
+                                            <include reference="05n-tW-Has"/>
+                                            <include reference="M5V-Bb-jBV"/>
+                                            <include reference="SP1-Rz-e4H"/>
+                                            <include reference="rDk-9U-7B6"/>
                                             <include reference="2P8-7n-bxD"/>
                                             <include reference="OtS-Ac-TqC"/>
                                             <include reference="bHC-sE-WSo"/>
                                             <include reference="jhw-Td-68W"/>
                                             <include reference="kay-W8-evB"/>
+                                            <include reference="G7d-B2-4t7"/>
+                                            <include reference="fzA-ks-YCP"/>
+                                            <include reference="j61-1B-Mdd"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -452,22 +452,22 @@
                                 <mask key="constraints">
                                     <exclude reference="dBP-ce-yk7"/>
                                     <exclude reference="oNN-no-Dn1"/>
-                                    <exclude reference="eSd-xp-W1G"/>
-                                    <exclude reference="fcO-w0-WIw"/>
-                                    <exclude reference="Sjr-eW-4Pe"/>
-                                    <exclude reference="vkn-Ka-Lj0"/>
-                                    <exclude reference="tB0-Uy-FHJ"/>
-                                    <exclude reference="z12-pt-RU5"/>
                                     <exclude reference="0r2-vC-WdW"/>
                                     <exclude reference="isc-2M-1vM"/>
                                     <exclude reference="b3G-Ov-enC"/>
                                     <exclude reference="jul-oC-C2S"/>
+                                    <exclude reference="Sjr-eW-4Pe"/>
+                                    <exclude reference="vkn-Ka-Lj0"/>
                                     <exclude reference="UVH-h9-Hd6"/>
                                     <exclude reference="qt8-9f-1ig"/>
+                                    <exclude reference="tB0-Uy-FHJ"/>
+                                    <exclude reference="z12-pt-RU5"/>
                                     <exclude reference="B8g-b3-3fw"/>
                                     <exclude reference="Cb3-IR-DrZ"/>
                                     <exclude reference="R2u-Rf-BwK"/>
                                     <exclude reference="Xd4-BA-8vN"/>
+                                    <exclude reference="eSd-xp-W1G"/>
+                                    <exclude reference="fcO-w0-WIw"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -483,22 +483,22 @@
                                 <mask key="constraints">
                                     <include reference="dBP-ce-yk7"/>
                                     <include reference="oNN-no-Dn1"/>
-                                    <include reference="eSd-xp-W1G"/>
-                                    <include reference="fcO-w0-WIw"/>
-                                    <include reference="Sjr-eW-4Pe"/>
-                                    <include reference="vkn-Ka-Lj0"/>
-                                    <include reference="tB0-Uy-FHJ"/>
-                                    <include reference="z12-pt-RU5"/>
                                     <include reference="0r2-vC-WdW"/>
                                     <include reference="isc-2M-1vM"/>
                                     <include reference="b3G-Ov-enC"/>
                                     <include reference="jul-oC-C2S"/>
+                                    <include reference="Sjr-eW-4Pe"/>
+                                    <include reference="vkn-Ka-Lj0"/>
                                     <include reference="UVH-h9-Hd6"/>
                                     <include reference="qt8-9f-1ig"/>
+                                    <include reference="tB0-Uy-FHJ"/>
+                                    <include reference="z12-pt-RU5"/>
                                     <include reference="B8g-b3-3fw"/>
                                     <include reference="Cb3-IR-DrZ"/>
                                     <include reference="R2u-Rf-BwK"/>
                                     <include reference="Xd4-BA-8vN"/>
+                                    <include reference="eSd-xp-W1G"/>
+                                    <include reference="fcO-w0-WIw"/>
                                 </mask>
                             </variation>
                         </view>
