@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MaMaCarryLogViewController : UIViewController
+@interface MaMaCarryLogViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong)NSString *earningsRecord;
 
 @end

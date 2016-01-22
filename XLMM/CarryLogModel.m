@@ -10,8 +10,8 @@
 
 @implementation CarryLogModel
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    if ([key isEqualToString:@"id"]) {
-        self.carryId = value;
-    }
+//    if ([key isEqualToString:@"id"]) {
+//        self.carryId = value;
+//    }
 }
 @end

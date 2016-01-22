@@ -31,12 +31,10 @@
     self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
 //    self.purchaser.text = orderM.wxordernick;
-    self.purchaser.text = @"购买人：小鹿美美";
+    self.purchaser.text = @"小公举购买";
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
     self.rebate.text = [NSString stringWithFormat:@"%.2f", [orderM.rebeta_cash floatValue]];
-    self.fanyong.text = @"反佣";
-    self.fanyong.font = [UIFont systemFontOfSize:13];
     
     self.orderStatic.text = orderM.get_status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
@@ -45,7 +43,7 @@
     NSRange range;
     range = [timestext rangeOfString:@"T"];
     [timestext replaceCharactersInRange:range withString:@" "];
-    range = NSMakeRange(0, 5);
+    range = NSMakeRange(0, 10);
     [timestext deleteCharactersInRange:range];
     range = NSMakeRange(timestext.length - 4, 3);
     [timestext deleteCharactersInRange:range];

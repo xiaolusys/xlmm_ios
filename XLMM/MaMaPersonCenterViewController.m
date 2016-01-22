@@ -37,11 +37,15 @@
     CGPoint scrollViewContentOffset;
     
     
+    
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
+
+@property (nonatomic, strong)NSString *earningsRecord;
+@property (nonatomic, strong)NSString *orderRecord;
 
 @end
 
@@ -92,7 +96,7 @@
     if (!error) {
         NSString *count = [dic objectForKey:@"count"];
         self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
-        
+        self.orderRecord = self.dingdanLabel.text;
     }
     
 }
@@ -132,7 +136,7 @@
      //   NSLog(@"json = %@", dicJson);
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
-        
+        self.earningsRecord = self.jileishouyi.text;
     }
 }
 
@@ -213,7 +217,6 @@
     [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         
-        
         NSArray *data = responseObject;
         [self maMaOrderInfoData:data];
         
@@ -228,15 +231,13 @@
     [self.dataArr removeAllObjects];
     ticheng = 0.0;
     dingdanshu = array.count;
-   // NSLog(@"array = %@", array);
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
         ticheng += [orderM.ticheng_cash floatValue];
         [self.dataArr addObject:orderM];
     }
-  //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", (long)dingdanshu, ticheng];
+    self.dingdanLabel.text = [NSString stringWithFormat:@"订单 %ld    收入 %.2f", (long)dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
 }
@@ -367,18 +368,6 @@
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     
-  
-    
-    //    lineChart.labelForIndex = ^(NSUInteger item) {
-    //         return [NSString stringWithFormat:@""];
-    ////        return [NSString stringWithFormat:@"%lu%%",(unsigned long)item];
-    //    };
-    //
-    //    lineChart.labelForValue = ^(CGFloat value) {
-    //        return [NSString stringWithFormat:@""];
-    ////        return [NSString stringWithFormat:@"%.f €", value];
-    //    };
-    
     self.lineChart.bezierSmoothing = NO;
     self.lineChart.animationDuration = 1;
     self.lineChart.drawInnerGrid = NO;
@@ -494,6 +483,7 @@
 
 - (IBAction)MamaCarryLogClicked:(id)sender {
     MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
+    carry.earningsRecord = self.earningsRecord;
     [self.navigationController pushViewController:carry animated:YES];
 }
 

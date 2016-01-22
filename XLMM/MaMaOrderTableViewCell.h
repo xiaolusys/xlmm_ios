@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *rebate;
 @property (weak, nonatomic) IBOutlet UILabel *orderStatic;
 @property (weak, nonatomic) IBOutlet UILabel *times;
-@property (weak, nonatomic) IBOutlet UILabel *fanyong;
 
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM;
