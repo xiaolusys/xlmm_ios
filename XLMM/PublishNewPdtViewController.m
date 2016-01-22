@@ -27,7 +27,7 @@
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 @property (nonatomic, strong)PhotoView *photoView;
 
-@property (nonatomic, strong)UIView *backView;
+@property (nonatomic, strong)UIView *watchesView;
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, assign)NSInteger saveIndex;
@@ -81,17 +81,15 @@
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
-//    [self showDefaultView];
-    
 }
 
 - (void)showDefaultView{
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
     countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
-    countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 92);
+    countdowmView.center = CGPointMake(SCREENWIDTH * 0.5, 100);
     [bottomView addSubview:countdowmView];
-    [self.backView addSubview:bottomView];
+    [self.watchesView addSubview:bottomView];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
     
 }
@@ -114,8 +112,9 @@
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
     }else {
-        self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 180)];
-        [self.picCollectionView addSubview:self.backView];
+        self.watchesView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 200)];
+        self.watchesView.backgroundColor = [UIColor backgroundlightGrayColor];
+        [self.picCollectionView addSubview:self.watchesView];
         [self showDefaultView];
         self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
@@ -244,7 +243,7 @@
     range = [timestext rangeOfString:@"T"];
     [timestext replaceCharactersInRange:range withString:@" "];
     
-    range = NSMakeRange(0, 10);
+    range = NSMakeRange(0, 5);
     [timestext deleteCharactersInRange:range];
     range = NSMakeRange(timestext.length - 4, 3);
     [timestext deleteCharactersInRange:range];
