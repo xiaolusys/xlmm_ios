@@ -36,5 +36,6 @@
 + (UIColor *)youhuiquanValueColor;
 + (UIColor *)dingfanxiangqingColor;
 + (UIColor *)countLabelColor;
++ (UIColor *)buttonTitleColor;
 
 @end

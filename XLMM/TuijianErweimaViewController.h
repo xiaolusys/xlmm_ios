@@ -10,6 +10,7 @@
 
 @interface TuijianErweimaViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (copy, nonatomic) NSString *imagelink;
 - (IBAction)saveImage:(id)sender;
 - (IBAction)shareImage:(id)sender;
 

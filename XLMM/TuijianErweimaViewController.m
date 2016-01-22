@@ -9,6 +9,9 @@
 #import "TuijianErweimaViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
+#import "MMClass.h"
+
+
 
 @interface TuijianErweimaViewController ()
 
@@ -34,6 +37,28 @@
     self.title = @"二维码";
     UIImage * image = [UIImage imageNamed:@"erweimaDemo.png"];
     self.imageView.image = image;
+    [self downloadImage];
+    
+}
+
+- (void)downloadImage{
+    NSString *imagelink = [NSString stringWithFormat:@"%@%@", Root_URL, self.imagelink];
+    NSLog(@"imagelink = %@", imagelink);
+   // imagelink = @"http://192.168.1.31:9000/media/mm/coupon.png";
+    UIImage *image = [UIImage imagewithURLString:imagelink];
+    NSLog(@"image = %@", image);
+    NSError *error = nil;
+    
+    NSURL *url = [NSURL URLWithString:imagelink];
+    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
+    if (error == nil) {
+        NSLog(@"data = %@", data);
+    } else{
+        NSLog(@"error = %@", error);
+    }
+    image = [UIImage imageWithData:data];
+    self.imageView.image = image;
+    
     
     
 }

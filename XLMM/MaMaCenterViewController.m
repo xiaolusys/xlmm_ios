@@ -35,7 +35,7 @@
     float ticheng;
     NSInteger dingdanshu;
     UILabel *dingdanLabel;
-    
+    NSString *share_mmcode;
  
     
 }
@@ -181,7 +181,7 @@
     NSError *error = nil;
     __unused NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
+    
     }
 }
 
