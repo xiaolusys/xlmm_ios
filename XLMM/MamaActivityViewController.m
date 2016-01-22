@@ -41,12 +41,13 @@
     
     NSMutableArray *colors = [[NSMutableArray alloc] initWithCapacity:4];
     [colors addObject:@"红色"];
-    [colors addObject:@"卡其色"];
-    [colors addObject:@"浅蓝色"];
-    [colors addObject:@"杏黄色"];
+    [colors addObject:@"黄色"];
+    [colors addObject:@"蓝色"];
+    [colors addObject:@"绿色"];
     [colors addObject:@"黑色"];
     [colors addObject:@"白色"];
-    [colors addObject:@"其它"];
+    [colors addObject:@"紫色"];
+    
     self.colorArray = colors;
     
     NSMutableArray *size = [[NSMutableArray alloc] initWithCapacity:4];
@@ -56,7 +57,8 @@
      [size addObject:@"XL"];
      [size addObject:@"XXL"];
      [size addObject:@"XXXL"];
-     [size addObject:@"其他"];
+     [size addObject:@"XXXXL"];
+    
     self.sizeArray = size;
     
     NSLog(@"%@\n%@", self.colorArray, self.sizeArray);
