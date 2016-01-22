@@ -56,8 +56,12 @@
     
     NSLog(@"newString = %@", [newString imageCompression]);
 
+    self.imageView.alpha = 0.0;
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
+        [UIView animateWithDuration:0.3f animations:^{
+            self.imageView.alpha = 1.0;
+        }];
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             self.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
