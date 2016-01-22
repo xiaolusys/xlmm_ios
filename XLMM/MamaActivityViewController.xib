@@ -289,20 +289,40 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tnu-M9-QHO" userLabel="Help View">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Cd-Pu-ZwE">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="0Cd-Pu-ZwE" firstAttribute="centerX" secondItem="Tnu-M9-QHO" secondAttribute="centerX" id="HpU-yb-kqC"/>
                                         <constraint firstAttribute="height" id="VGL-4Y-jJ0">
                                             <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                                         </constraint>
+                                        <constraint firstItem="0Cd-Pu-ZwE" firstAttribute="top" secondItem="Tnu-M9-QHO" secondAttribute="top" constant="10" id="Wlq-1w-fkh"/>
                                     </constraints>
                                     <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="0Cd-Pu-ZwE"/>
+                                        </mask>
                                         <mask key="constraints">
                                             <exclude reference="VGL-4Y-jJ0"/>
+                                            <exclude reference="HpU-yb-kqC"/>
+                                            <exclude reference="Wlq-1w-fkh"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="0Cd-Pu-ZwE"/>
+                                        </mask>
                                         <mask key="constraints">
                                             <include reference="VGL-4Y-jJ0"/>
+                                            <include reference="HpU-yb-kqC"/>
+                                            <include reference="Wlq-1w-fkh"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -477,7 +497,7 @@
                 <constraint firstAttribute="bottom" secondItem="Zco-6b-Pry" secondAttribute="bottom" constant="10" id="heb-YD-8tf"/>
                 <constraint firstAttribute="trailing" secondItem="lmR-Rb-sFG" secondAttribute="trailing" id="qrv-Y3-FA9"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="xtv-cv-n1K"/>
@@ -516,6 +536,7 @@
                     <include reference="heb-YD-8tf"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="561" y="454"/>
         </view>
     </objects>
     <resources>

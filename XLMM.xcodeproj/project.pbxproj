@@ -776,6 +776,8 @@
 		32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */; };
 		32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */; };
 		32E8B5A11C52023E00414F8A /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A01C52023E00414F8A /* Unknown.jpeg */; };
+		32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */; };
+		32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1686,6 +1688,9 @@
 		32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamaActivityViewController.m; sourceTree = "<group>"; };
 		32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaActivityViewController.xib; sourceTree = "<group>"; };
 		32E8B5A01C52023E00414F8A /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Unknown.jpeg; sourceTree = "<group>"; };
+		32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityErweimaViewController.h; sourceTree = "<group>"; };
+		32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityErweimaViewController.m; sourceTree = "<group>"; };
+		32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityErweimaViewController.xib; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -3421,6 +3426,9 @@
 				32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */,
 				32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */,
 				32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */,
+				32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */,
+				32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */,
+				32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */,
 			);
 			name = newController;
 			sourceTree = "<group>";
@@ -3585,6 +3593,7 @@
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,
+				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
@@ -4098,6 +4107,7 @@
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
+				32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */,

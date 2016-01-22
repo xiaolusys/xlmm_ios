@@ -1,24 +1,23 @@
 //
-//  TuijianErweimaViewController.m
+//  ActivityErweimaViewController.m
 //  XLMM
 //
-//  Created by younishijie on 16/1/21.
+//  Created by younishijie on 16/1/22.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "TuijianErweimaViewController.h"
+#import "ActivityErweimaViewController.h"
+#import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
-#import "MMClass.h"
 
 
 
-@interface TuijianErweimaViewController ()
+@interface ActivityErweimaViewController ()
 
 @end
 
-@implementation TuijianErweimaViewController{
-}
+@implementation ActivityErweimaViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -27,19 +26,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"二维码";
-    UIImage * image = [UIImage imageNamed:@"erweimaDemo.png"];
-    [self createNavigationBarWithTitle:@"推荐二维码" selecotr:@selector(backClicked:)];
-    
-    self.imageView.image = image;
-    [self downloadImage];
+    [self createNavigationBarWithTitle:@"活动二维码" selecotr:@selector(backClicked:)];
     self.saveButton.layer.cornerRadius = 15;
     self.saveButton.layer.borderWidth = 1;
     self.saveButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
@@ -48,32 +41,12 @@
     self.shareButton.layer.borderWidth = 1;
     self.shareButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     
+    
+    
 }
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)downloadImage{
-    NSString *imagelink = [NSString stringWithFormat:@"%@%@", Root_URL, self.imagelink];
-    NSLog(@"imagelink = %@", imagelink);
-   // imagelink = @"http://192.168.1.31:9000/media/mm/coupon.png";
-    UIImage *image = [UIImage imagewithURLString:imagelink];
-    NSLog(@"image = %@", image);
-    NSError *error = nil;
-    
-    NSURL *url = [NSURL URLWithString:imagelink];
-    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
-    if (error == nil) {
-        NSLog(@"data = %@", data);
-    } else{
-        NSLog(@"error = %@", error);
-    }
-    image = [UIImage imageWithData:data];
-    self.imageView.image = image;
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,14 +79,17 @@
     
 }
 
-- (IBAction)saveImage:(id)sender {
+- (IBAction)saveClicked:(id)sender {
+    NSLog(@"save");
     NSLog(@"save");
     
-     UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+
 }
 
-- (IBAction)shareImage:(id)sender {
+- (IBAction)shareClicked:(id)sender {
     NSLog(@"share");
+    
     
     WXMediaMessage *message = [WXMediaMessage message];
     
@@ -130,6 +106,6 @@
     req.scene = 1;
     
     [WXApi sendReq:req];
-}
 
+}
 @end

@@ -9,6 +9,8 @@
 #import "MamaActivityViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
+#import "ActivityErweimaViewController.h"
+
 
 #define button_border_width 1
 #define button_distance 8
@@ -79,6 +81,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"活动界面";
+    [self createNavigationBarWithTitle:@"活动界面" selecotr:@selector(backClicked:)];
+    
     self.scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.scrollView];
     [self createColorView];
@@ -92,6 +96,10 @@
     [self.commitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self disableTijiaoButton];
     
+}
+
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)enableTijiaoButton{
     self.commitButton.enabled = YES;
@@ -226,6 +234,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         NSLog(@"确定");
+        ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
+        
+        [self.navigationController pushViewController:erweimaVC animated:YES];
+        
     }
 }
 @end
