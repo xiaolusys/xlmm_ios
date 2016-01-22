@@ -75,8 +75,7 @@
     [endTime setSecond:0];
     [endTime setHour:10];
     
-    [self updateCircleViewWithCenter:CGPointMake(self.frame.size.height/2 - self.frame.size.height/4*1.732 + 11, self.frame.size.height/2 - 38)];
-    startAngle = PI * 7/6.0;
+   
 
 //    if (hour < 10) {
 //        [self updateCircleViewWithCenter:(CGPointMake(32, 72))];

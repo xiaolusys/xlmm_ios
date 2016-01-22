@@ -773,6 +773,8 @@
 		32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */; };
 		32E8B5981C50CB5900414F8A /* TuijianErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */; };
 		32E8B59A1C50CDA700414F8A /* erweimaDemo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5991C50CDA700414F8A /* erweimaDemo.png */; };
+		32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */; };
+		32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1679,6 +1681,9 @@
 		32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuijianErweimaViewController.m; sourceTree = "<group>"; };
 		32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuijianErweimaViewController.xib; sourceTree = "<group>"; };
 		32E8B5991C50CDA700414F8A /* erweimaDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = erweimaDemo.png; sourceTree = "<group>"; };
+		32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamaActivityViewController.h; sourceTree = "<group>"; };
+		32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamaActivityViewController.m; sourceTree = "<group>"; };
+		32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaActivityViewController.xib; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -3410,6 +3415,9 @@
 				32E8B5941C50CB5900414F8A /* TuijianErweimaViewController.h */,
 				32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */,
 				32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */,
+				32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */,
+				32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */,
+				32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */,
 			);
 			name = newController;
 			sourceTree = "<group>";
@@ -3778,6 +3786,7 @@
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				2E5600BC1C2D496E000AFB39 /* loading动画0061.png in Resources */,
+				32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */,
 				2E5600C71C2D496E000AFB39 /* loading动画0071.png in Resources */,
 				322D25C81C32B93A00509EAD /* 圈圈加载0029.png in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
@@ -4206,6 +4215,7 @@
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
+				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,

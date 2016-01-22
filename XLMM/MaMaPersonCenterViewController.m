@@ -18,6 +18,8 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaCarryLogViewController.h"
 #import "TuijianErweimaViewController.h"
+#import "MamaActivityViewController.h"
+
 
 
 
@@ -517,6 +519,9 @@
 
 - (IBAction)huodongzhongxin:(id)sender {
     NSLog(@"活动中心");
+    
+    MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
+    [self.navigationController pushViewController:activityVC animated:YES];
 }
 
 
