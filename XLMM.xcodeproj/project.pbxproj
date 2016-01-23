@@ -778,6 +778,8 @@
 		32E8B5A11C52023E00414F8A /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A01C52023E00414F8A /* Unknown.jpeg */; };
 		32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */; };
 		32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */; };
+		32E8B5AA1C532F8200414F8A /* ActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5A81C532F8200414F8A /* ActivityViewController2.m */; };
+		32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1691,6 +1693,9 @@
 		32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityErweimaViewController.h; sourceTree = "<group>"; };
 		32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityErweimaViewController.m; sourceTree = "<group>"; };
 		32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityErweimaViewController.xib; sourceTree = "<group>"; };
+		32E8B5A71C532F8200414F8A /* ActivityViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController2.h; sourceTree = "<group>"; };
+		32E8B5A81C532F8200414F8A /* ActivityViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController2.m; sourceTree = "<group>"; };
+		32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityViewController2.xib; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -3426,6 +3431,9 @@
 				32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */,
 				32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */,
 				32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */,
+				32E8B5A71C532F8200414F8A /* ActivityViewController2.h */,
+				32E8B5A81C532F8200414F8A /* ActivityViewController2.m */,
+				32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */,
 				32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */,
 				32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */,
 				32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */,
@@ -3588,6 +3596,7 @@
 				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */,
+				32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
@@ -4252,6 +4261,7 @@
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
+				32E8B5AA1C532F8200414F8A /* ActivityViewController2.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				322D257B1C32B7C700509EAD /* MJPullGifHeader.m in Sources */,
 				322D25741C32B66100509EAD /* UIScrollView+MJRefresh.m in Sources */,

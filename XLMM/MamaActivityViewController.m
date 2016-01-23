@@ -52,12 +52,12 @@
     
     NSMutableArray *size = [[NSMutableArray alloc] initWithCapacity:4];
     [size addObject:@"S"];
-     [size addObject:@"M"];
-     [size addObject:@"L"];
-     [size addObject:@"XL"];
-     [size addObject:@"XXL"];
-     [size addObject:@"XXXL"];
-     [size addObject:@"XXXXL"];
+    [size addObject:@"M"];
+    [size addObject:@"L"];
+    [size addObject:@"XL"];
+    [size addObject:@"XXL"];
+    [size addObject:@"XXXL"];
+    [size addObject:@"XXXXL"];
     
     self.sizeArray = size;
     
