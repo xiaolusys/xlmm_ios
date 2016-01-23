@@ -779,6 +779,13 @@
 		32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */; };
 		32E8B5981C50CB5900414F8A /* TuijianErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */; };
 		32E8B59A1C50CDA700414F8A /* erweimaDemo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5991C50CDA700414F8A /* erweimaDemo.png */; };
+		32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */; };
+		32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */; };
+		32E8B5A11C52023E00414F8A /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A01C52023E00414F8A /* Unknown.jpeg */; };
+		32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */; };
+		32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */; };
+		32E8B5AA1C532F8200414F8A /* ActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E8B5A81C532F8200414F8A /* ActivityViewController2.m */; };
+		32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */; };
 		32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */; };
 		32EAA33D1C3DFC97004055AB /* hongbaobeforeclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */; };
 		32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */; };
@@ -1693,6 +1700,16 @@
 		32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuijianErweimaViewController.m; sourceTree = "<group>"; };
 		32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuijianErweimaViewController.xib; sourceTree = "<group>"; };
 		32E8B5991C50CDA700414F8A /* erweimaDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = erweimaDemo.png; sourceTree = "<group>"; };
+		32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamaActivityViewController.h; sourceTree = "<group>"; };
+		32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamaActivityViewController.m; sourceTree = "<group>"; };
+		32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaActivityViewController.xib; sourceTree = "<group>"; };
+		32E8B5A01C52023E00414F8A /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Unknown.jpeg; sourceTree = "<group>"; };
+		32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityErweimaViewController.h; sourceTree = "<group>"; };
+		32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityErweimaViewController.m; sourceTree = "<group>"; };
+		32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityErweimaViewController.xib; sourceTree = "<group>"; };
+		32E8B5A71C532F8200414F8A /* ActivityViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController2.h; sourceTree = "<group>"; };
+		32E8B5A81C532F8200414F8A /* ActivityViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController2.m; sourceTree = "<group>"; };
+		32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityViewController2.xib; sourceTree = "<group>"; };
 		32EAA3381C3DFC97004055AB /* hongbaoafterclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaoafterclicked.png; sourceTree = "<group>"; };
 		32EAA3391C3DFC97004055AB /* hongbaobeforeclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaobeforeclicked.png; sourceTree = "<group>"; };
 		32EAA33A1C3DFC97004055AB /* hongbaofanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hongbaofanicon.png; sourceTree = "<group>"; };
@@ -2279,6 +2296,9 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32E8B5991C50CDA700414F8A /* erweimaDemo.png */,
+				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
+				32E8B5A01C52023E00414F8A /* Unknown.jpeg */,
 				326296491C45F627001A27E3 /* hongbaoclose100.png */,
 				3262964A1C45F627001A27E3 /* hongbaoclose200.png */,
 				3262964B1C45F627001A27E3 /* hongbaoopen100.png */,
@@ -2753,8 +2773,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32E8B5991C50CDA700414F8A /* erweimaDemo.png */,
-				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3432,6 +3450,15 @@
 				32E8B5941C50CB5900414F8A /* TuijianErweimaViewController.h */,
 				32E8B5951C50CB5900414F8A /* TuijianErweimaViewController.m */,
 				32E8B5961C50CB5900414F8A /* TuijianErweimaViewController.xib */,
+				32E8B59B1C51BD5600414F8A /* MamaActivityViewController.h */,
+				32E8B59C1C51BD5600414F8A /* MamaActivityViewController.m */,
+				32E8B59D1C51BD5600414F8A /* MamaActivityViewController.xib */,
+				32E8B5A71C532F8200414F8A /* ActivityViewController2.h */,
+				32E8B5A81C532F8200414F8A /* ActivityViewController2.m */,
+				32E8B5A91C532F8200414F8A /* ActivityViewController2.xib */,
+				32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */,
+				32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */,
+				32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */,
 			);
 			name = newController;
 			sourceTree = "<group>";
@@ -3591,11 +3618,13 @@
 				2E612B521C4A4454002F1C15 /* 0lun@2x.png in Resources */,
 				32EC42631BE8A8C1009E5FA2 /* qitiantuihuo.png in Resources */,
 				32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */,
+				32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */,
 				2E5600CC1C2D496E000AFB39 /* loading动画0076.png in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,
+				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
@@ -3647,6 +3676,7 @@
 				32DE21BE1BF1BD5E00999ECA /* ChiMaBiaoViewController.xib in Resources */,
 				32746E251B74A22000816208 /* icon-shengyu3.png in Resources */,
 				32151C011B96EA4A003569D7 /* read_me.txt in Resources */,
+				32E8B5A11C52023E00414F8A /* Unknown.jpeg in Resources */,
 				325DB3611C434DB10018C421 /* MaMaPersonCenterViewController.xib in Resources */,
 				32746E381B74A22000816208 /* youhuiquan-kv.png in Resources */,
 				323A056E1C0C307700F56EAB /* WuliuCompanyController.xib in Resources */,
@@ -3803,6 +3833,7 @@
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				2E5600BC1C2D496E000AFB39 /* loading动画0061.png in Resources */,
+				32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */,
 				2E5600C71C2D496E000AFB39 /* loading动画0071.png in Resources */,
 				322D25C81C32B93A00509EAD /* 圈圈加载0029.png in Resources */,
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
@@ -4111,6 +4142,7 @@
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
+				32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */,
@@ -4233,6 +4265,7 @@
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
+				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
@@ -4255,6 +4288,7 @@
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
+				32E8B5AA1C532F8200414F8A /* ActivityViewController2.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				322D257B1C32B7C700509EAD /* MJPullGifHeader.m in Sources */,
 				322D25741C32B66100509EAD /* UIScrollView+MJRefresh.m in Sources */,
@@ -4454,7 +4488,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
+				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4491,7 +4525,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
+				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4536,7 +4570,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
+				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4580,7 +4614,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cc3455be-715b-4c63-94d2-25d18cb48201";
+				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

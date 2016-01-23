@@ -1,4 +1,4 @@
-//
+
 //  MaMaPersonCenterViewController.m
 //  XLMM
 //
@@ -18,6 +18,9 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaCarryLogViewController.h"
 #import "TuijianErweimaViewController.h"
+#import "MamaActivityViewController.h"
+#import "ActivityViewController2.h"
+
 
 
 
@@ -35,6 +38,8 @@
     NSMutableArray *allDingdan;
     
     CGPoint scrollViewContentOffset;
+    
+    NSString *share_mmcode;
     
     
     
@@ -133,9 +138,12 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-     //   NSLog(@"json = %@", dicJson);
+        NSLog(@"json = %@", dicJson);
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
+        share_mmcode = [dicJson objectForKey:@"share_mmcode"];
+        
+        
         self.earningsRecord = self.jileishouyi.text;
     }
 }
@@ -490,6 +498,8 @@
     NSLog(@"推荐二维码");
     
     TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
+    
+    erweima.imagelink = share_mmcode;
     [self.navigationController pushViewController:erweima animated:YES];
     
     
@@ -505,6 +515,9 @@
 
 - (IBAction)huodongzhongxin:(id)sender {
     NSLog(@"活动中心");
+    
+    ActivityViewController2 *activityVC = [[ActivityViewController2 alloc] init];
+    [self.navigationController pushViewController:activityVC animated:YES];
 }
 
 

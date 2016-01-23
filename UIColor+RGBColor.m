@@ -111,4 +111,8 @@
     return [UIColor colorWithR:187 G:187 B:187 alpha:1];
 }
 
++ (UIColor *)buttonTitleColor{
+    return [UIColor colorWithR:74 G:74 B:74 alpha:1];
+}
+
 @end
