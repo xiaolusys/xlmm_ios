@@ -530,7 +530,6 @@
 - (void)clickShareView {
     MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
     [self.navigationController pushViewController:share animated:YES];
-    NSLog(@"分享补贴");
 }
 
 @end

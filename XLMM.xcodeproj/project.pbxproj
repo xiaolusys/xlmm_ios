@@ -1880,6 +1880,114 @@
 			name = NewMaMaView;
 			sourceTree = "<group>";
 		};
+		181C74A01C53691A00375DF8 /* MaMaVersion1 */ = {
+			isa = PBXGroup;
+			children = (
+				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
+				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
+				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
+				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
+				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
+				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
+				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
+				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
+				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
+				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
+				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
+				32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */,
+				32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */,
+				32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */,
+				325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */,
+				325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */,
+				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
+				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
+				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
+				2E62D6691C4CC66A007B20BB /* MaMaOrderListViewController.h */,
+				2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */,
+				2E62D66C1C4DE059007B20BB /* MaMaCarryLogViewController.h */,
+				2E62D66D1C4DE059007B20BB /* MaMaCarryLogViewController.m */,
+			);
+			name = MaMaVersion1;
+			sourceTree = "<group>";
+		};
+		181C74A11C53699700375DF8 /* CartView */ = {
+			isa = PBXGroup;
+			children = (
+				32CECF8C1BA6669C00FF3BD3 /* MMCartsView.h */,
+				32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */,
+				32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */,
+				3264EA2C1B6C685500F36A8D /* PeopleCollectionCell.h */,
+				3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */,
+				3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */,
+				32BDE4801B85620F00FBEC25 /* AddressTableCell.h */,
+				32BDE4811B85620F00FBEC25 /* AddressTableCell.m */,
+				32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */,
+				32A88E161B8718F9003501EF /* XiangQingView.h */,
+				32A88E171B8718F9003501EF /* XiangQingView.m */,
+				32A88E191B87191A003501EF /* XiangQingView.xib */,
+				32A81F921B8D9BF6009972B3 /* BuyCartsView.h */,
+				32A81F931B8D9BF6009972B3 /* BuyCartsView.m */,
+				321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */,
+				321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */,
+				321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */,
+				32FE087F1BF47E380072CCEC /* ReBuyTableViewCell.h */,
+				32FE08801BF47E380072CCEC /* ReBuyTableViewCell.m */,
+				32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */,
+				2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */,
+				2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */,
+				326C4E0E1C2D4EF000A79359 /* MMLoadingAnimation.h */,
+				326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */,
+				322D25791C32B7C700509EAD /* MJPullGifHeader.h */,
+				322D257A1C32B7C700509EAD /* MJPullGifHeader.m */,
+			);
+			name = CartView;
+			sourceTree = "<group>";
+		};
+		181C74A21C5369C900375DF8 /* AppleVersion1 */ = {
+			isa = PBXGroup;
+			children = (
+				320B300A1BB93E46006C4FC4 /* YHQModel.h */,
+				320B300B1BB93E46006C4FC4 /* YHQModel.m */,
+				32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */,
+				32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */,
+				32A288CF1B943EB4006DC949 /* PromoteModel.h */,
+				32A288D01B943EB4006DC949 /* PromoteModel.m */,
+				327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */,
+				327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */,
+				325DF9531B69FD8600351ACA /* PosterModel.h */,
+				325DF9541B69FD8600351ACA /* PosterModel.m */,
+				3264EA311B6C850100F36A8D /* PeopleModel.h */,
+				3264EA321B6C850100F36A8D /* PeopleModel.m */,
+				32746DC91B7438FC00816208 /* CollectionModel.h */,
+				32746DCA1B7438FC00816208 /* CollectionModel.m */,
+				32746DD11B74884B00816208 /* DetailsModel.h */,
+				32746DD21B74884B00816208 /* DetailsModel.m */,
+				32CE91C21B7C491E00CA67C3 /* AddressModel.h */,
+				32CE91C31B7C491E00CA67C3 /* AddressModel.m */,
+				32891B621B81EA96007E562A /* ShoppingCartModel.h */,
+				32891B631B81EA96007E562A /* ShoppingCartModel.m */,
+				32A88E131B86C840003501EF /* DingdanModel.h */,
+				32A88E141B86C840003501EF /* DingdanModel.m */,
+				32A88E1B1B8729F8003501EF /* DingDanXiangQingModel.h */,
+				32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */,
+				32A88E1E1B872CB5003501EF /* PerDingdanModel.h */,
+				32A88E1F1B872CB5003501EF /* PerDingdanModel.m */,
+				3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */,
+				3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */,
+				32A81F8F1B8D963C009972B3 /* BuyModel.h */,
+				32A81F901B8D963C009972B3 /* BuyModel.m */,
+				327FC25D1B9AEC2F00F111B3 /* CartModel.h */,
+				327FC25E1B9AEC2F00F111B3 /* CartModel.m */,
+				32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */,
+				32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */,
+				32CC7C831B9FFF2F00475E2E /* OrderModel.h */,
+				32CC7C841B9FFF2F00475E2E /* OrderModel.m */,
+				32BC3CB01BD4E271008ADAA2 /* NewCartsModel.h */,
+				32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */,
+			);
+			name = AppleVersion1;
+			sourceTree = "<group>";
+		};
 		2E5600351C2D496E000AFB39 /* loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -2750,30 +2858,8 @@
 		322FA9351C3BA521008DD942 /* MaMaCenter */ = {
 			isa = PBXGroup;
 			children = (
-				32E8B5931C50CA4100414F8A /* newController */,
-				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
-				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
-				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
-				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
-				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
-				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
-				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
-				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
-				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
-				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
-				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
-				32E8B5451C4CC8A300414F8A /* TixianHistoryViewController.h */,
-				32E8B5461C4CC8A300414F8A /* TixianHistoryViewController.m */,
-				32E8B5471C4CC8A300414F8A /* TixianHistoryViewController.xib */,
-				325DB3621C43A8AB0018C421 /* TixianSucceedViewController.h */,
-				325DB3631C43A8AB0018C421 /* TixianSucceedViewController.m */,
-				325DB3641C43A8AB0018C421 /* TixianSucceedViewController.xib */,
-				2E73EDE11C3CF61E00EDB94E /* PublishNewPdtViewController.h */,
-				2E73EDE21C3CF61F00EDB94E /* PublishNewPdtViewController.m */,
-				2E62D6691C4CC66A007B20BB /* MaMaOrderListViewController.h */,
-				2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */,
-				2E62D66C1C4DE059007B20BB /* MaMaCarryLogViewController.h */,
-				2E62D66D1C4DE059007B20BB /* MaMaCarryLogViewController.m */,
+				181C74A01C53691A00375DF8 /* MaMaVersion1 */,
+				32E8B5931C50CA4100414F8A /* NewController */,
 			);
 			name = MaMaCenter;
 			sourceTree = "<group>";
@@ -2859,33 +2945,8 @@
 			children = (
 				181C74981C53608500375DF8 /* NewMaMaView */,
 				2E73ED861C38D2F100EDB94E /* MaMaView */,
+				181C74A11C53699700375DF8 /* CartView */,
 				32CECF8A1BA665A100FF3BD3 /* Custom Cells */,
-				32CECF8C1BA6669C00FF3BD3 /* MMCartsView.h */,
-				32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */,
-				32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */,
-				3264EA2C1B6C685500F36A8D /* PeopleCollectionCell.h */,
-				3264EA2D1B6C685500F36A8D /* PeopleCollectionCell.m */,
-				3264EA2E1B6C685500F36A8D /* PeopleCollectionCell.xib */,
-				32BDE4801B85620F00FBEC25 /* AddressTableCell.h */,
-				32BDE4811B85620F00FBEC25 /* AddressTableCell.m */,
-				32BDE4821B85620F00FBEC25 /* AddressTableCell.xib */,
-				32A88E161B8718F9003501EF /* XiangQingView.h */,
-				32A88E171B8718F9003501EF /* XiangQingView.m */,
-				32A88E191B87191A003501EF /* XiangQingView.xib */,
-				32A81F921B8D9BF6009972B3 /* BuyCartsView.h */,
-				32A81F931B8D9BF6009972B3 /* BuyCartsView.m */,
-				321EA3971BE2279D009A45DE /* CartTableCellTableViewCell1.h */,
-				321EA3981BE2279D009A45DE /* CartTableCellTableViewCell1.m */,
-				321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */,
-				32FE087F1BF47E380072CCEC /* ReBuyTableViewCell.h */,
-				32FE08801BF47E380072CCEC /* ReBuyTableViewCell.m */,
-				32FE08811BF47E380072CCEC /* ReBuyTableViewCell.xib */,
-				2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */,
-				2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */,
-				326C4E0E1C2D4EF000A79359 /* MMLoadingAnimation.h */,
-				326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */,
-				322D25791C32B7C700509EAD /* MJPullGifHeader.h */,
-				322D257A1C32B7C700509EAD /* MJPullGifHeader.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3004,44 +3065,7 @@
 			isa = PBXGroup;
 			children = (
 				2E73ED981C3A14A300EDB94E /* MaMaModel */,
-				320B300A1BB93E46006C4FC4 /* YHQModel.h */,
-				320B300B1BB93E46006C4FC4 /* YHQModel.m */,
-				32BC3CAD1BD4D8C9008ADAA2 /* HistoryCartsModel.h */,
-				32BC3CAE1BD4D8C9008ADAA2 /* HistoryCartsModel.m */,
-				32A288CF1B943EB4006DC949 /* PromoteModel.h */,
-				32A288D01B943EB4006DC949 /* PromoteModel.m */,
-				327FC25A1B9A77BF00F111B3 /* MMDetailsModel.h */,
-				327FC25B1B9A77BF00F111B3 /* MMDetailsModel.m */,
-				325DF9531B69FD8600351ACA /* PosterModel.h */,
-				325DF9541B69FD8600351ACA /* PosterModel.m */,
-				3264EA311B6C850100F36A8D /* PeopleModel.h */,
-				3264EA321B6C850100F36A8D /* PeopleModel.m */,
-				32746DC91B7438FC00816208 /* CollectionModel.h */,
-				32746DCA1B7438FC00816208 /* CollectionModel.m */,
-				32746DD11B74884B00816208 /* DetailsModel.h */,
-				32746DD21B74884B00816208 /* DetailsModel.m */,
-				32CE91C21B7C491E00CA67C3 /* AddressModel.h */,
-				32CE91C31B7C491E00CA67C3 /* AddressModel.m */,
-				32891B621B81EA96007E562A /* ShoppingCartModel.h */,
-				32891B631B81EA96007E562A /* ShoppingCartModel.m */,
-				32A88E131B86C840003501EF /* DingdanModel.h */,
-				32A88E141B86C840003501EF /* DingdanModel.m */,
-				32A88E1B1B8729F8003501EF /* DingDanXiangQingModel.h */,
-				32A88E1C1B8729F8003501EF /* DingDanXiangQingModel.m */,
-				32A88E1E1B872CB5003501EF /* PerDingdanModel.h */,
-				32A88E1F1B872CB5003501EF /* PerDingdanModel.m */,
-				3299D84D1B8C5836000AA744 /* LiJiBuyModel.h */,
-				3299D84E1B8C5836000AA744 /* LiJiBuyModel.m */,
-				32A81F8F1B8D963C009972B3 /* BuyModel.h */,
-				32A81F901B8D963C009972B3 /* BuyModel.m */,
-				327FC25D1B9AEC2F00F111B3 /* CartModel.h */,
-				327FC25E1B9AEC2F00F111B3 /* CartModel.m */,
-				32FF9A2D1B9FDC0B0001F314 /* TuihuoModel.h */,
-				32FF9A2E1B9FDC0B0001F314 /* TuihuoModel.m */,
-				32CC7C831B9FFF2F00475E2E /* OrderModel.h */,
-				32CC7C841B9FFF2F00475E2E /* OrderModel.m */,
-				32BC3CB01BD4E271008ADAA2 /* NewCartsModel.h */,
-				32BC3CB11BD4E271008ADAA2 /* NewCartsModel.m */,
+				181C74A21C5369C900375DF8 /* AppleVersion1 */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3466,7 +3490,7 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		32E8B5931C50CA4100414F8A /* newController */ = {
+		32E8B5931C50CA4100414F8A /* NewController */ = {
 			isa = PBXGroup;
 			children = (
 				32E8B5941C50CB5900414F8A /* TuijianErweimaViewController.h */,
@@ -3484,7 +3508,7 @@
 				181C74951C535D5600375DF8 /* MaMaShareSubsidiesViewController.h */,
 				181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */,
 			);
-			name = newController;
+			name = NewController;
 			sourceTree = "<group>";
 		};
 		32F3D94F1B6CCA41008530BA /* AFNetworking */ = {
