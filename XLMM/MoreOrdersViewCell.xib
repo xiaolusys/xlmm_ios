@@ -30,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="配送中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49t-MT-lfr">
-                                <rect key="frame" x="264" y="10" width="36" height="15"/>
+                                <rect key="frame" x="331" y="10" width="36" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="49t-MT-lfr" secondAttribute="trailing" constant="75" id="0XC-Zd-2Xn"/>
+                            <constraint firstAttribute="trailing" secondItem="49t-MT-lfr" secondAttribute="trailing" constant="8" id="0XC-Zd-2Xn"/>
                             <constraint firstItem="49t-MT-lfr" firstAttribute="centerY" secondItem="K58-Lv-rO8" secondAttribute="centerY" id="Bn3-Qk-hPn"/>
                             <constraint firstItem="XaX-z7-EkR" firstAttribute="centerY" secondItem="K58-Lv-rO8" secondAttribute="centerY" id="JN6-sh-Nxo"/>
                             <constraint firstItem="XaX-z7-EkR" firstAttribute="centerY" secondItem="rLy-xI-cW2" secondAttribute="centerY" id="MCt-cG-7JC"/>

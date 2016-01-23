@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MamaActivityViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIView *imageView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidth;

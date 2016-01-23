@@ -16,7 +16,11 @@
 #define button_border_width 1
 #define button_distance 8
 
-@interface MamaActivityViewController ()<UIAlertViewDelegate>
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 568
+#define IMAGEVIEW_COUNT 3
+
+@interface MamaActivityViewController ()<UIAlertViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSArray *colorArray;
 @property (nonatomic, copy) NSArray *sizeArray;
@@ -27,6 +31,16 @@
 @implementation MamaActivityViewController{
     NSString *colorparam;
     NSString *sizeparam;
+    
+    
+    UIScrollView *_imageScrollView;
+    UIImageView *_leftImageView;
+    UIImageView *_centerImageView;
+    UIImageView *_rightImageView;
+    UILabel *_label;
+    NSMutableDictionary *_imageData;//图片数据
+    int _currentImageIndex;//当前图片索引
+    int _imageCount;//图片总数
     
 }
 
@@ -99,7 +113,115 @@
     [self.commitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self disableTijiaoButton];
     
+    [self loadImageData];
+    //添加滚动控件
+    [self addScrollView];
+    //添加图片控件
+    [self addImageViews];
+    //添加分页控件
+    [self addPageControl];
+    //添加图片信息描述控件
+    //加载默认图片
+    [self setDefaultImage];
+    
 }
+
+#pragma mark 加载图片数据
+-(void)loadImageData{
+    //读取程序包路径中的资源文件
+    _imageCount= (int)self.colorArray.count;
+}
+
+#pragma mark 添加控件
+-(void)addScrollView{
+    _imageScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
+    [self.imageView addSubview:_imageScrollView];
+    //设置代理
+    _imageScrollView.delegate=self;
+    _imageScrollView.tag = 8888;
+    //设置contentSize
+    _imageScrollView.contentSize=CGSizeMake(SCREENWIDTH*IMAGEVIEW_COUNT, SCREENWIDTH) ;
+    //设置当前显示的位置为中间图片
+    [_imageScrollView setContentOffset:CGPointMake(SCREENWIDTH, 0) animated:NO];
+    //设置分页
+    _imageScrollView.pagingEnabled=YES;
+    //去掉滚动条
+    _imageScrollView.showsHorizontalScrollIndicator=NO;
+}
+
+#pragma mark 添加图片三个控件
+-(void)addImageViews{
+    _leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH)];
+    _leftImageView.contentMode=UIViewContentModeScaleAspectFit;
+    [_imageScrollView addSubview:_leftImageView];
+    _centerImageView=[[UIImageView alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENWIDTH)];
+    _centerImageView.contentMode=UIViewContentModeScaleAspectFit;
+    [_imageScrollView addSubview:_centerImageView];
+    _rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(2*SCREENWIDTH, 0, SCREENWIDTH, SCREENWIDTH)];
+    _rightImageView.contentMode=UIViewContentModeScaleAspectFit;
+    [_imageScrollView addSubview:_rightImageView];
+    
+}
+#pragma mark 设置默认显示图片
+-(void)setDefaultImage{
+    //加载默认图片
+    _leftImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+    _centerImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+    _rightImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+    _currentImageIndex=0;
+    //设置当前页
+}
+
+#pragma mark 添加分页控件
+-(void)addPageControl{
+       //设置颜色
+    _pageControl.pageIndicatorTintColor=[UIColor colorWithRed:193/255.0 green:219/255.0 blue:249/255.0 alpha:1];
+    //设置当前页颜色
+    _pageControl.currentPageIndicatorTintColor=[UIColor orangeThemeColor];
+    //设置总页数
+    _pageControl.numberOfPages=_imageCount;
+    
+    _pageControl.currentPage=_currentImageIndex;
+}
+
+
+
+#pragma mark 滚动停止事件
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
+    if (scrollView.tag == 8888) {
+        
+        
+        //重新加载图片
+        [self reloadImage];
+        //移动到中间
+        [_imageScrollView setContentOffset:CGPointMake(SCREENWIDTH, 0) animated:NO];
+        //设置分页
+        _pageControl.currentPage=_currentImageIndex;
+        //设置描述
+    }
+   
+}
+
+#pragma mark 重新加载图片
+-(void)reloadImage{
+    int leftImageIndex,rightImageIndex;
+    CGPoint offset=[_imageScrollView contentOffset];
+    if (offset.x>SCREENWIDTH) { //向右滑动
+        _currentImageIndex=(_currentImageIndex+1)%_imageCount;
+    }else if(offset.x<SCREENWIDTH){ //向左滑动
+        _currentImageIndex=(_currentImageIndex+_imageCount-1)%_imageCount;
+    }
+    //UIImageView *centerImageView=(UIImageView *)[_scrollView viewWithTag:2];
+    _centerImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+    
+    //重新设置左右图片
+    leftImageIndex=(_currentImageIndex+_imageCount-1)%_imageCount;
+    rightImageIndex=(_currentImageIndex+1)%_imageCount;
+    _leftImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+    _rightImageView.image=[UIImage imageNamed:@"Unknown.jpeg"];
+}
+
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

@@ -30,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="配送中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7T6-B8-gMg">
-                                <rect key="frame" x="264" y="10" width="36" height="15"/>
+                                <rect key="frame" x="331" y="10" width="36" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -43,7 +43,7 @@
                             <constraint firstItem="3uG-Yo-MAB" firstAttribute="leading" secondItem="AX1-h3-5vr" secondAttribute="leading" constant="10" id="9YX-XQ-dQZ"/>
                             <constraint firstItem="Jol-4n-UFI" firstAttribute="centerY" secondItem="AX1-h3-5vr" secondAttribute="centerY" id="Bw2-Jc-0Pz"/>
                             <constraint firstAttribute="height" constant="35" id="QH8-gR-Pia"/>
-                            <constraint firstAttribute="trailing" secondItem="7T6-B8-gMg" secondAttribute="trailing" constant="75" id="m28-Zg-L1n"/>
+                            <constraint firstAttribute="trailing" secondItem="7T6-B8-gMg" secondAttribute="trailing" constant="8" id="m28-Zg-L1n"/>
                             <constraint firstItem="7T6-B8-gMg" firstAttribute="centerY" secondItem="AX1-h3-5vr" secondAttribute="centerY" id="x83-IC-ri0"/>
                         </constraints>
                     </view>

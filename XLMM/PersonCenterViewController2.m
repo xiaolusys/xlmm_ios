@@ -136,26 +136,26 @@
         } else if ([string isEqualToString:@"确认签收"]){
             cell.statusLabel.text = @"已签收";
         }
-       for (int i = 0; i < self.dataArray.count; i++) {
-            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
-            NSLog(@"btn ->%@", btn);
-            [btn removeFromSuperview];
-        }
-        if ([string isEqualToString:@"已付款"]) {
-            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
-
-            [cell.contentView addSubview:button];
-        }  else if ([string isEqualToString:@"已发货"]) {
-            NSLog(@"已经发货");
-            UIButton *button = [self buttonWithTitle:@"确认签收" andTag:indexPath.row + 100];
-
-            [cell.contentView addSubview:button];
-        } else if ([string isEqualToString:@"确认签收"]) {
-            NSLog(@"已签收");
-            UIButton *button = [self buttonWithTitle:@"退货退款" andTag:indexPath.row + 100];
-
-            [cell.contentView addSubview:button];
-        }
+//       for (int i = 0; i < self.dataArray.count; i++) {
+//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+//            NSLog(@"btn ->%@", btn);
+//            [btn removeFromSuperview];
+//        }
+//        if ([string isEqualToString:@"已付款"]) {
+//            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
+//
+//            [cell.contentView addSubview:button];
+//        }  else if ([string isEqualToString:@"已发货"]) {
+//            NSLog(@"已经发货");
+//            UIButton *button = [self buttonWithTitle:@"确认签收" andTag:indexPath.row + 100];
+//
+//            [cell.contentView addSubview:button];
+//        } else if ([string isEqualToString:@"确认签收"]) {
+//            NSLog(@"已签收");
+//            UIButton *button = [self buttonWithTitle:@"退货退款" andTag:indexPath.row + 100];
+//
+//            [cell.contentView addSubview:button];
+//        }
         
         return cell;
     }
@@ -181,10 +181,10 @@
             imageView.hidden = NO;
             
         }
-        for (int i = 0; i < self.dataArray.count; i++) {
-            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
-            [btn removeFromSuperview];
-        }
+//        for (int i = 0; i < self.dataArray.count; i++) {
+//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+//            [btn removeFromSuperview];
+//        }
        
          NSString *string = [diction objectForKey:@"status_display"];
         if ([string isEqualToString:@"已付款"]) {
@@ -192,21 +192,21 @@
         } else if ([string isEqualToString:@"已发货"]){
             cell.statusLabel.text = @"配送中";
         }
-        if ([string isEqualToString:@"已付款"]) {
-            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
-
-            [cell.contentView addSubview:button];
-        }else if ([string isEqualToString:@"已发货"]){
-            UIButton *button = [self buttonWithTitle:@"确认签收" andTag:indexPath.row + 100];
-
-            [cell.contentView addSubview:button];
-         
-        } else if ([string isEqualToString:@"确认签收"]) {
-            NSLog(@"已签收");
-            UIButton *button = [self buttonWithTitle:@"退货退款" andTag:indexPath.row + 100];
-            
-            [cell.contentView addSubview:button];
-        }
+//        if ([string isEqualToString:@"已付款"]) {
+//            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
+//
+//            [cell.contentView addSubview:button];
+//        }else if ([string isEqualToString:@"已发货"]){
+//            UIButton *button = [self buttonWithTitle:@"确认签收" andTag:indexPath.row + 100];
+//
+//            [cell.contentView addSubview:button];
+//         
+//        } else if ([string isEqualToString:@"确认签收"]) {
+//            NSLog(@"已签收");
+//            UIButton *button = [self buttonWithTitle:@"退货退款" andTag:indexPath.row + 100];
+//            
+//            [cell.contentView addSubview:button];
+//        }
         
         return cell;
     }

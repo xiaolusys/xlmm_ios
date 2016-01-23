@@ -266,10 +266,10 @@
             
         }
         for (int i = 0; i < self.dataArray.count; i++) {
-            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+           // UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
             UILabel *label = (UILabel *)[cell.contentView viewWithTag:i + 10000];
             [label removeFromSuperview];
-            [btn removeFromSuperview];
+            //[btn removeFromSuperview];
         }
         UILabel *label = [self.labelArray objectAtIndex:indexPath.row];
         label.tag = indexPath.row + 10000;
@@ -280,24 +280,24 @@
         [cell.contentView addSubview:label];
 
         cell.statusLabel.text = @"待支付";
-        NSString *string = [diction objectForKey:@"status_display"];
+      //  NSString *string = [diction objectForKey:@"status_display"];
         
-        if ([string isEqualToString:@"待付款"]) {
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-            button.tag = indexPath.row +100;
-            
-            [button setTitle:@"立即支付" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-            button.layer.cornerRadius = 12.5;
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-            
-            button.userInteractionEnabled = NO;
-            [cell.contentView addSubview:button];
-        }
+//        if ([string isEqualToString:@"待付款"]) {
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//            
+//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            
+//            button.userInteractionEnabled = NO;
+//            [cell.contentView addSubview:button];
+//        }
         
      
         return cell;

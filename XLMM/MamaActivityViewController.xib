@@ -10,8 +10,10 @@
                 <outlet property="colorView" destination="y5t-Zc-BfB" id="pcE-wq-Nij"/>
                 <outlet property="colorViewHeight" destination="3fG-HS-A4a" id="SUS-YW-aTP"/>
                 <outlet property="commitButton" destination="Zco-6b-Pry" id="B85-vr-iG2"/>
+                <outlet property="imageView" destination="CFI-aa-bvl" id="eaE-Sk-9Pt"/>
                 <outlet property="imageViewHeight" destination="4iq-5e-8pm" id="bHg-Vb-1fZ"/>
                 <outlet property="imageViewWidth" destination="aGg-Td-th0" id="NFO-4C-rCM"/>
+                <outlet property="pageControl" destination="f2x-TN-RvI" id="FQ6-NO-OQp"/>
                 <outlet property="scrollView" destination="xtv-cv-n1K" id="Hta-Kc-F8Y"/>
                 <outlet property="sizeView" destination="oi9-Uu-Aaa" id="0I2-f7-fmV"/>
                 <outlet property="sizeViewHeight" destination="Nd0-da-7A8" id="v0h-E7-ew1"/>
@@ -32,44 +34,37 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFI-aa-bvl" userLabel="Image View">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Unknown.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="XjM-4P-Bcd">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                            <color key="backgroundColor" red="0.94117647059999998" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        </imageView>
+                                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-TN-RvI">
+                                            <rect key="frame" x="-19" y="-18" width="39" height="37"/>
+                                        </pageControl>
                                     </subviews>
                                     <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstItem="XjM-4P-Bcd" firstAttribute="leading" secondItem="CFI-aa-bvl" secondAttribute="leading" id="3Gb-EX-sZk"/>
                                         <constraint firstAttribute="height" constant="414" id="4iq-5e-8pm"/>
-                                        <constraint firstAttribute="trailing" secondItem="XjM-4P-Bcd" secondAttribute="trailing" id="LF3-Aa-aFy"/>
                                         <constraint firstAttribute="width" constant="320" id="aGg-Td-th0"/>
-                                        <constraint firstItem="XjM-4P-Bcd" firstAttribute="top" secondItem="CFI-aa-bvl" secondAttribute="top" id="jlG-V6-gCN"/>
-                                        <constraint firstAttribute="bottom" secondItem="XjM-4P-Bcd" secondAttribute="bottom" id="ynG-FG-fcN"/>
+                                        <constraint firstAttribute="bottom" secondItem="f2x-TN-RvI" secondAttribute="bottom" id="aTb-04-AZQ"/>
+                                        <constraint firstItem="f2x-TN-RvI" firstAttribute="centerX" secondItem="CFI-aa-bvl" secondAttribute="centerX" id="mr1-TJ-Tuh"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
-                                            <exclude reference="XjM-4P-Bcd"/>
+                                            <exclude reference="f2x-TN-RvI"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="4iq-5e-8pm"/>
                                             <exclude reference="aGg-Td-th0"/>
-                                            <exclude reference="3Gb-EX-sZk"/>
-                                            <exclude reference="LF3-Aa-aFy"/>
-                                            <exclude reference="jlG-V6-gCN"/>
-                                            <exclude reference="ynG-FG-fcN"/>
+                                            <exclude reference="aTb-04-AZQ"/>
+                                            <exclude reference="mr1-TJ-Tuh"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
-                                            <include reference="XjM-4P-Bcd"/>
+                                            <include reference="f2x-TN-RvI"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="4iq-5e-8pm"/>
                                             <include reference="aGg-Td-th0"/>
-                                            <include reference="3Gb-EX-sZk"/>
-                                            <include reference="LF3-Aa-aFy"/>
-                                            <include reference="jlG-V6-gCN"/>
-                                            <include reference="ynG-FG-fcN"/>
+                                            <include reference="aTb-04-AZQ"/>
+                                            <include reference="mr1-TJ-Tuh"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -776,7 +771,4 @@
             <point key="canvasLocation" x="422" y="659"/>
         </view>
     </objects>
-    <resources>
-        <image name="Unknown.jpeg" width="600" height="600"/>
-    </resources>
 </document>
