@@ -17,6 +17,9 @@
 		181C749C1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */; };
 		181C749D1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */; };
 		181C749F1C53678400375DF8 /* mamaShare.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C749E1C53678400375DF8 /* mamaShare.png */; };
+		181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */; };
+		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
+		181C74AA1C536E3800375DF8 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -876,6 +879,11 @@
 		181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShareSubsidiesViewCell.m; sourceTree = "<group>"; };
 		181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaShareSubsidiesViewCell.xib; sourceTree = "<group>"; };
 		181C749E1C53678400375DF8 /* mamaShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaShare.png; sourceTree = "<group>"; };
+		181C74A31C536C7600375DF8 /* ProductSelectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListViewController.h; sourceTree = "<group>"; };
+		181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListViewController.m; sourceTree = "<group>"; };
+		181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell.h; sourceTree = "<group>"; };
+		181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell.m; sourceTree = "<group>"; };
+		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -1876,6 +1884,9 @@
 				181C74991C5360C500375DF8 /* MaMaShareSubsidiesViewCell.h */,
 				181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */,
 				181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */,
+				181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */,
+				181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */,
+				181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */,
 			);
 			name = NewMaMaView;
 			sourceTree = "<group>";
@@ -3507,6 +3518,8 @@
 				32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */,
 				181C74951C535D5600375DF8 /* MaMaShareSubsidiesViewController.h */,
 				181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */,
+				181C74A31C536C7600375DF8 /* ProductSelectionListViewController.h */,
+				181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
@@ -3757,6 +3770,7 @@
 				2E5600BB1C2D496E000AFB39 /* loading动画0060.png in Resources */,
 				2E5600A31C2D496E000AFB39 /* loading动画0039.png in Resources */,
 				2E5600B41C2D496E000AFB39 /* loading动画0054.png in Resources */,
+				181C74AA1C536E3800375DF8 /* ProductSelectionListCell.xib in Resources */,
 				2EB87D3A1C17FAE4001CBF3D /* iOS-social-releasenote.html in Resources */,
 				3274C16B1C03452800641C4E /* emptyJifenView.xib in Resources */,
 				2E5600BF1C2D496E000AFB39 /* loading动画0064.png in Resources */,
@@ -4219,6 +4233,7 @@
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
 				32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */,
+				181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */,
 				325DB3651C43A8AB0018C421 /* TixianSucceedViewController.m in Sources */,
 				329E8A981BB64A32008AA0B6 /* NSString+Encrypto.m in Sources */,
 				321952921BFC7A8D00AA0AB8 /* QNUrlSafeBase64.m in Sources */,
@@ -4318,6 +4333,7 @@
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
 				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
+				181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
 				322FA9401C3CA9CC008DD942 /* TixianViewController.m in Sources */,

@@ -21,6 +21,7 @@
 #import "MamaActivityViewController.h"
 #import "ActivityViewController2.h"
 #import "MaMaShareSubsidiesViewController.h"
+#import "ProductSelectionListViewController.h"
 
 
 
@@ -517,7 +518,8 @@
 }
 
 - (IBAction)xuanpinliebiao:(id)sender {
-    NSLog(@"选品列表");
+    ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
+    [self.navigationController pushViewController:product animated:YES];
 }
 
 - (IBAction)huodongzhongxin:(id)sender {
