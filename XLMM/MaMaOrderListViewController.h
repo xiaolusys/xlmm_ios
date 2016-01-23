@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MaMaOrderListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-
+@property (nonatomic, strong)NSString *orderRecord;
 @end

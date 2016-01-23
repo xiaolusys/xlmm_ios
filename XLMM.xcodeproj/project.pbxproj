@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181C74881C51F28300375DF8 /* CarryLogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74861C51F28300375DF8 /* CarryLogTableViewCell.m */; };
+		181C74891C51F28300375DF8 /* CarryLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74871C51F28300375DF8 /* CarryLogTableViewCell.xib */; };
+		181C748C1C5202DF00375DF8 /* CarryLogHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C748B1C5202DF00375DF8 /* CarryLogHeaderView.m */; };
+		181C74901C52030200375DF8 /* CarryLogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C748F1C52030200375DF8 /* CarryLogHeaderView.xib */; };
+		181C74931C52152800375DF8 /* mamayong.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C74911C52152800375DF8 /* mamayong.png */; };
+		181C74941C52152800375DF8 /* mamabu.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C74921C52152800375DF8 /* mamabu.png */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -852,6 +858,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		181C74851C51F28300375DF8 /* CarryLogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarryLogTableViewCell.h; sourceTree = "<group>"; };
+		181C74861C51F28300375DF8 /* CarryLogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarryLogTableViewCell.m; sourceTree = "<group>"; };
+		181C74871C51F28300375DF8 /* CarryLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarryLogTableViewCell.xib; sourceTree = "<group>"; };
+		181C748A1C5202DF00375DF8 /* CarryLogHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarryLogHeaderView.h; sourceTree = "<group>"; };
+		181C748B1C5202DF00375DF8 /* CarryLogHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarryLogHeaderView.m; sourceTree = "<group>"; };
+		181C748F1C52030200375DF8 /* CarryLogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarryLogHeaderView.xib; sourceTree = "<group>"; };
+		181C74911C52152800375DF8 /* mamayong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamayong.png; sourceTree = "<group>"; };
+		181C74921C52152800375DF8 /* mamabu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamabu.png; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -1941,6 +1955,8 @@
 				2E612B501C4A4454002F1C15 /* 3lun@2x.png */,
 				2E612B511C4A4454002F1C15 /* 4lun@2x.png */,
 				2E63AE541C3E5DCF008E97BB /* savephoto.png */,
+				181C74911C52152800375DF8 /* mamayong.png */,
+				181C74921C52152800375DF8 /* mamabu.png */,
 			);
 			name = MaMa;
 			sourceTree = "<group>";
@@ -1970,6 +1986,12 @@
 				32E8B5831C4CE80D00414F8A /* TixianTableViewCell.xib */,
 				32E8B5881C4F580500414F8A /* CountdownView.h */,
 				32E8B5891C4F580500414F8A /* CountdownView.m */,
+				181C74851C51F28300375DF8 /* CarryLogTableViewCell.h */,
+				181C74861C51F28300375DF8 /* CarryLogTableViewCell.m */,
+				181C74871C51F28300375DF8 /* CarryLogTableViewCell.xib */,
+				181C748A1C5202DF00375DF8 /* CarryLogHeaderView.h */,
+				181C748B1C5202DF00375DF8 /* CarryLogHeaderView.m */,
+				181C748F1C52030200375DF8 /* CarryLogHeaderView.xib */,
 			);
 			name = MaMaView;
 			sourceTree = "<group>";
@@ -3693,6 +3715,7 @@
 				32E8B59A1C50CDA700414F8A /* erweimaDemo.png in Resources */,
 				2EB87D301C17FAE4001CBF3D /* UMSnsAccountViewController.xib in Resources */,
 				32746E231B74A22000816208 /* icon-shengyu.png in Resources */,
+				181C74891C51F28300375DF8 /* CarryLogTableViewCell.xib in Resources */,
 				32A288BF1B942F53006DC949 /* Head1View.xib in Resources */,
 				32746E201B74A22000816208 /* icon-quanbudingdan.png in Resources */,
 				2E5600C61C2D496E000AFB39 /* loading动画0070.png in Resources */,
@@ -3721,6 +3744,7 @@
 				32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
+				181C74931C52152800375DF8 /* mamayong.png in Resources */,
 				32F2E95D1C12AFBE00A98EA3 /* guanyuIcon.png in Resources */,
 				329E8A951BB648A3008AA0B6 /* WXLoginController.xib in Resources */,
 				2E56008A1C2D496E000AFB39 /* loading动画0016.png in Resources */,
@@ -3804,6 +3828,7 @@
 				2E56008D1C2D496E000AFB39 /* loading动画0019.png in Resources */,
 				32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */,
 				2E5600AF1C2D496E000AFB39 /* loading动画005.png in Resources */,
+				181C74901C52030200375DF8 /* CarryLogHeaderView.xib in Resources */,
 				32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */,
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
@@ -3963,6 +3988,7 @@
 				2E5600901C2D496E000AFB39 /* loading动画0021.png in Resources */,
 				321928DC1BDB7EB8004EA6A7 /* score.png in Resources */,
 				322D25B61C32B93A00509EAD /* 圈圈加载0011.png in Resources */,
+				181C74941C52152800375DF8 /* mamabu.png in Resources */,
 				32746E361B74A22000816208 /* yifu.png in Resources */,
 				322D25C51C32B93A00509EAD /* 圈圈加载0026.png in Resources */,
 				322D25711C32B66100509EAD /* MJRefresh.bundle in Resources */,
@@ -4163,6 +4189,7 @@
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
+				181C748C1C5202DF00375DF8 /* CarryLogHeaderView.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
 				2E612B421C476E07002F1C15 /* SharePicModel.m in Sources */,
 				3219529D1BFC7A8D00AA0AB8 /* QNResumeUpload.m in Sources */,
@@ -4272,6 +4299,7 @@
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
+				181C74881C51F28300375DF8 /* CarryLogTableViewCell.m in Sources */,
 				32BC3CB21BD4E271008ADAA2 /* NewCartsModel.m in Sources */,
 				2E73EDEB1C3D160F00EDB94E /* PicCollectionViewCell.m in Sources */,
 				323A056D1C0C307700F56EAB /* WuliuCompanyController.m in Sources */,

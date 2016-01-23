@@ -43,11 +43,15 @@
     
     
     
+    
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
+
+@property (nonatomic, strong)NSString *earningsRecord;
+@property (nonatomic, strong)NSString *orderRecord;
 
 @end
 
@@ -98,7 +102,7 @@
     if (!error) {
         NSString *count = [dic objectForKey:@"count"];
         self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
-        
+        self.orderRecord = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
     }
     
 }
@@ -221,7 +225,6 @@
     [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         
-        
         NSArray *data = responseObject;
         [self maMaOrderInfoData:data];
         
@@ -236,15 +239,13 @@
     [self.dataArr removeAllObjects];
     ticheng = 0.0;
     dingdanshu = array.count;
-   // NSLog(@"array = %@", array);
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];
         ticheng += [orderM.ticheng_cash floatValue];
         [self.dataArr addObject:orderM];
     }
-  //  NSLog(@"今日订单%ld 今日收入%.2f", dingdanshu, ticheng);
-    self.dingdanLabel.text = [NSString stringWithFormat:@"今日订单 %ld    今日收入 %.2f", (long)dingdanshu, ticheng];
+    self.dingdanLabel.text = [NSString stringWithFormat:@"订单 %ld    收入 %.2f", (long)dingdanshu, ticheng];
     
     [self.mamaTableView reloadData];
 }
@@ -375,18 +376,6 @@
     self.lineChart.color = [UIColor fsOrange];
     self.lineChart.fillColor = nil;
     
-  
-    
-    //    lineChart.labelForIndex = ^(NSUInteger item) {
-    //         return [NSString stringWithFormat:@""];
-    ////        return [NSString stringWithFormat:@"%lu%%",(unsigned long)item];
-    //    };
-    //
-    //    lineChart.labelForValue = ^(CGFloat value) {
-    //        return [NSString stringWithFormat:@""];
-    ////        return [NSString stringWithFormat:@"%.f €", value];
-    //    };
-    
     self.lineChart.bezierSmoothing = NO;
     self.lineChart.animationDuration = 1;
     self.lineChart.drawInnerGrid = NO;
@@ -488,20 +477,19 @@
 }
 
 - (IBAction)sendProduct:(id)sender {
- //   NSLog(@"发布产品");
-    
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }
 
 - (IBAction)MamaOrderClicked:(id)sender {
     MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
-    
+    orderList.orderRecord = self.orderRecord;
     [self.navigationController pushViewController:orderList animated:YES];
 }
 
 - (IBAction)MamaCarryLogClicked:(id)sender {
     MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
+    carry.earningsRecord = self.earningsRecord;
     [self.navigationController pushViewController:carry animated:YES];
 }
 
