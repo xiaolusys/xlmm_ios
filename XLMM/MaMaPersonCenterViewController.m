@@ -20,6 +20,7 @@
 #import "TuijianErweimaViewController.h"
 #import "MamaActivityViewController.h"
 #import "ActivityViewController2.h"
+#import "MaMaShareSubsidiesViewController.h"
 
 
 
@@ -74,6 +75,11 @@
     self.fabuButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.fabuButton.layer.cornerRadius = 20;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
+    
+    //点击分享补贴
+    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
+    [self.shareSubsidies addGestureRecognizer:tapShare];
+    
 
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
@@ -89,6 +95,7 @@
     [self.headImageView addGestureRecognizer:tap];
     self.headImageView.userInteractionEnabled = YES;
 }
+
 
 #pragma mark -获取订单记录
 
@@ -520,5 +527,10 @@
     [self.navigationController pushViewController:activityVC animated:YES];
 }
 
+- (void)clickShareView {
+    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
+    [self.navigationController pushViewController:share animated:YES];
+    NSLog(@"分享补贴");
+}
 
 @end

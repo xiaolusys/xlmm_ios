@@ -13,6 +13,10 @@
 		181C74901C52030200375DF8 /* CarryLogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C748F1C52030200375DF8 /* CarryLogHeaderView.xib */; };
 		181C74931C52152800375DF8 /* mamayong.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C74911C52152800375DF8 /* mamayong.png */; };
 		181C74941C52152800375DF8 /* mamabu.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C74921C52152800375DF8 /* mamabu.png */; };
+		181C74971C535D5600375DF8 /* MaMaShareSubsidiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */; };
+		181C749C1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */; };
+		181C749D1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */; };
+		181C749F1C53678400375DF8 /* mamaShare.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C749E1C53678400375DF8 /* mamaShare.png */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -866,6 +870,12 @@
 		181C748F1C52030200375DF8 /* CarryLogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarryLogHeaderView.xib; sourceTree = "<group>"; };
 		181C74911C52152800375DF8 /* mamayong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamayong.png; sourceTree = "<group>"; };
 		181C74921C52152800375DF8 /* mamabu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamabu.png; sourceTree = "<group>"; };
+		181C74951C535D5600375DF8 /* MaMaShareSubsidiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShareSubsidiesViewController.h; sourceTree = "<group>"; };
+		181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShareSubsidiesViewController.m; sourceTree = "<group>"; };
+		181C74991C5360C500375DF8 /* MaMaShareSubsidiesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShareSubsidiesViewCell.h; sourceTree = "<group>"; };
+		181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShareSubsidiesViewCell.m; sourceTree = "<group>"; };
+		181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaShareSubsidiesViewCell.xib; sourceTree = "<group>"; };
+		181C749E1C53678400375DF8 /* mamaShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaShare.png; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -1860,6 +1870,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181C74981C53608500375DF8 /* NewMaMaView */ = {
+			isa = PBXGroup;
+			children = (
+				181C74991C5360C500375DF8 /* MaMaShareSubsidiesViewCell.h */,
+				181C749A1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m */,
+				181C749B1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib */,
+			);
+			name = NewMaMaView;
+			sourceTree = "<group>";
+		};
 		2E5600351C2D496E000AFB39 /* loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -1956,6 +1976,7 @@
 				2E612B511C4A4454002F1C15 /* 4lun@2x.png */,
 				2E63AE541C3E5DCF008E97BB /* savephoto.png */,
 				181C74911C52152800375DF8 /* mamayong.png */,
+				181C749E1C53678400375DF8 /* mamaShare.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
 			);
 			name = MaMa;
@@ -2836,6 +2857,7 @@
 		325DF9451B69BCE200351ACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				181C74981C53608500375DF8 /* NewMaMaView */,
 				2E73ED861C38D2F100EDB94E /* MaMaView */,
 				32CECF8A1BA665A100FF3BD3 /* Custom Cells */,
 				32CECF8C1BA6669C00FF3BD3 /* MMCartsView.h */,
@@ -3459,6 +3481,8 @@
 				32E8B5A21C5214E100414F8A /* ActivityErweimaViewController.h */,
 				32E8B5A31C5214E100414F8A /* ActivityErweimaViewController.m */,
 				32E8B5A41C5214E100414F8A /* ActivityErweimaViewController.xib */,
+				181C74951C535D5600375DF8 /* MaMaShareSubsidiesViewController.h */,
+				181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */,
 			);
 			name = newController;
 			sourceTree = "<group>";
@@ -3893,6 +3917,7 @@
 				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,
 				2E5600AC1C2D496E000AFB39 /* loading动画0047.png in Resources */,
 				3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */,
+				181C749F1C53678400375DF8 /* mamaShare.png in Resources */,
 				2E77F56A1C1C10900020C014 /* YoumengShare.xib in Resources */,
 				2E5600AE1C2D496E000AFB39 /* loading动画0049.png in Resources */,
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
@@ -3958,6 +3983,7 @@
 				322D25C11C32B93A00509EAD /* 圈圈加载0022.png in Resources */,
 				2E5600B91C2D496E000AFB39 /* loading动画0059.png in Resources */,
 				32D2B78F1BDDF41C00603FCE /* weixinzhifu.png in Resources */,
+				181C749D1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.xib in Resources */,
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				326296531C45F627001A27E3 /* hongbaounused100.png in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
@@ -4123,6 +4149,7 @@
 				2E7C03831C2BBBC3004047BB /* MaMaViewController.m in Sources */,
 				32BDE4831B85620F00FBEC25 /* AddressTableCell.m in Sources */,
 				321952A01BFC7A8D00AA0AB8 /* QNUpToken.m in Sources */,
+				181C749C1C5360C500375DF8 /* MaMaShareSubsidiesViewCell.m in Sources */,
 				2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */,
 				32F3D96A1B6CCA41008530BA /* AFURLConnectionOperation.m in Sources */,
 				321C8DA11BD8E22A0060FB62 /* SettingViewController.m in Sources */,
@@ -4294,6 +4321,7 @@
 				322D25741C32B66100509EAD /* UIScrollView+MJRefresh.m in Sources */,
 				3282F28E1B6B5B1300E73EB9 /* UIView+WebCacheOperation.m in Sources */,
 				32A2884A1B93E2AC006DC949 /* RECommonFunctions.m in Sources */,
+				181C74971C535D5600375DF8 /* MaMaShareSubsidiesViewController.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,

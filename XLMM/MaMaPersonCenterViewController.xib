@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
@@ -18,6 +18,7 @@
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
                 <outlet property="mamaTableView" destination="jMl-fz-Jz2" id="KnF-Qb-yvl"/>
                 <outlet property="rootScrollView" destination="CZD-1f-6rH" id="kih-rd-YjN"/>
+                <outlet property="shareSubsidies" destination="aPq-Lp-7py" id="PR1-Oq-0x3"/>
                 <outlet property="tableViewHeight" destination="07v-Uv-wcz" id="kFC-ns-4wy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -543,18 +544,114 @@
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aPq-Lp-7py">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamaShare.png" translatesAutoresizingMaskIntoConstraints="NO" id="3CH-AU-ZEZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="33" id="TSP-Vf-q2J"/>
+                                        <constraint firstAttribute="height" constant="33" id="WA4-cl-Nw8"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="TSP-Vf-q2J"/>
+                                            <exclude reference="WA4-cl-Nw8"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="TSP-Vf-q2J"/>
+                                            <include reference="WA4-cl-Nw8"/>
+                                        </mask>
+                                    </variation>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享补贴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gct-Ls-I2u">
+                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="TSv-78-XL6"/>
+                                        <constraint firstAttribute="width" constant="180" id="qC7-OB-tnY"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="TSv-78-XL6"/>
+                                            <exclude reference="qC7-OB-tnY"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                        <rect key="frame" x="53" y="2" width="180" height="21"/>
+                                        <mask key="constraints">
+                                            <include reference="TSv-78-XL6"/>
+                                            <include reference="qC7-OB-tnY"/>
+                                        </mask>
+                                    </variation>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19位用户通过点击你的分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6c2-dM-kyA">
+                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="m8p-Bh-3wT"/>
+                                        <constraint firstAttribute="width" constant="180" id="zNg-mA-108">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="220"/>
+                                        </constraint>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="m8p-Bh-3wT"/>
+                                            <exclude reference="zNg-mA-108"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="m8p-Bh-3wT"/>
+                                            <include reference="zNg-mA-108"/>
+                                        </mask>
+                                    </variation>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" red="0.96078431369999995" green="0.69411764710000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstItem="Gct-Ls-I2u" firstAttribute="top" secondItem="aPq-Lp-7py" secondAttribute="top" constant="2" id="cIG-I2-3Gt"/>
+                                <constraint firstItem="Gct-Ls-I2u" firstAttribute="leading" secondItem="3CH-AU-ZEZ" secondAttribute="trailing" constant="10" id="cpl-hF-jUX"/>
+                                <constraint firstItem="3CH-AU-ZEZ" firstAttribute="top" secondItem="aPq-Lp-7py" secondAttribute="top" constant="6" id="dTK-q7-CoS"/>
                                 <constraint firstAttribute="height" constant="45" id="nDP-6Y-x8B"/>
+                                <constraint firstAttribute="bottom" secondItem="6c2-dM-kyA" secondAttribute="bottom" constant="3" id="rgt-a0-nvc"/>
+                                <constraint firstItem="6c2-dM-kyA" firstAttribute="leading" secondItem="3CH-AU-ZEZ" secondAttribute="trailing" constant="10" id="tma-ws-ryk"/>
+                                <constraint firstItem="3CH-AU-ZEZ" firstAttribute="leading" secondItem="aPq-Lp-7py" secondAttribute="leading" constant="10" id="uiZ-nM-fWd"/>
                             </constraints>
                             <variation key="default">
+                                <mask key="subviews">
+                                    <exclude reference="3CH-AU-ZEZ"/>
+                                    <exclude reference="Gct-Ls-I2u"/>
+                                    <exclude reference="6c2-dM-kyA"/>
+                                </mask>
                                 <mask key="constraints">
                                     <exclude reference="nDP-6Y-x8B"/>
+                                    <exclude reference="dTK-q7-CoS"/>
+                                    <exclude reference="uiZ-nM-fWd"/>
+                                    <exclude reference="cIG-I2-3Gt"/>
+                                    <exclude reference="cpl-hF-jUX"/>
+                                    <exclude reference="rgt-a0-nvc"/>
+                                    <exclude reference="tma-ws-ryk"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="subviews">
+                                    <include reference="3CH-AU-ZEZ"/>
+                                    <include reference="Gct-Ls-I2u"/>
+                                    <include reference="6c2-dM-kyA"/>
+                                </mask>
                                 <mask key="constraints">
                                     <include reference="nDP-6Y-x8B"/>
+                                    <include reference="dTK-q7-CoS"/>
+                                    <include reference="uiZ-nM-fWd"/>
+                                    <include reference="cIG-I2-3Gt"/>
+                                    <include reference="cpl-hF-jUX"/>
+                                    <include reference="rgt-a0-nvc"/>
+                                    <include reference="tma-ws-ryk"/>
                                 </mask>
                             </variation>
                         </view>
@@ -591,9 +688,6 @@
                             <exclude reference="aPq-Lp-7py"/>
                         </mask>
                         <mask key="constraints">
-                            <exclude reference="AC7-dT-ZQc"/>
-                            <exclude reference="SRm-HE-aot"/>
-                            <exclude reference="tdN-Ky-PJe"/>
                             <exclude reference="ED6-vq-I9r"/>
                             <exclude reference="YY6-Va-ns1"/>
                             <exclude reference="fGj-bH-jQz"/>
@@ -604,6 +698,9 @@
                             <exclude reference="kVX-Zh-GPH"/>
                             <exclude reference="nQu-2U-TIz"/>
                             <exclude reference="yCR-Eh-csQ"/>
+                            <exclude reference="AC7-dT-ZQc"/>
+                            <exclude reference="SRm-HE-aot"/>
+                            <exclude reference="tdN-Ky-PJe"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -614,9 +711,6 @@
                             <include reference="aPq-Lp-7py"/>
                         </mask>
                         <mask key="constraints">
-                            <include reference="AC7-dT-ZQc"/>
-                            <include reference="SRm-HE-aot"/>
-                            <include reference="tdN-Ky-PJe"/>
                             <include reference="ED6-vq-I9r"/>
                             <include reference="YY6-Va-ns1"/>
                             <include reference="fGj-bH-jQz"/>
@@ -627,6 +721,9 @@
                             <include reference="kVX-Zh-GPH"/>
                             <include reference="nQu-2U-TIz"/>
                             <include reference="yCR-Eh-csQ"/>
+                            <include reference="AC7-dT-ZQc"/>
+                            <include reference="SRm-HE-aot"/>
+                            <include reference="tdN-Ky-PJe"/>
                         </mask>
                     </variation>
                 </scrollView>
@@ -747,6 +844,7 @@
     </objects>
     <resources>
         <image name="head_icon.png" width="140" height="140"/>
+        <image name="mamaShare.png" width="70" height="70"/>
         <image name="mmback_icon.png" width="80" height="80"/>
     </resources>
 </document>

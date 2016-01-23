@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityErweimaViewController">
@@ -117,8 +117,6 @@
                     <exclude reference="oN7-aL-uVK"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="hZc-ta-y3V"/>
-                    <exclude reference="ijK-q1-E7f"/>
                     <exclude reference="91R-Bi-X27"/>
                     <exclude reference="wPO-62-8dJ"/>
                     <exclude reference="TIo-i1-mil"/>
@@ -126,6 +124,8 @@
                     <exclude reference="ry0-81-aKL"/>
                     <exclude reference="abY-jd-BOs"/>
                     <exclude reference="d9C-3p-I2N"/>
+                    <exclude reference="hZc-ta-y3V"/>
+                    <exclude reference="ijK-q1-E7f"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -136,8 +136,6 @@
                     <include reference="oN7-aL-uVK"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="hZc-ta-y3V"/>
-                    <include reference="ijK-q1-E7f"/>
                     <include reference="91R-Bi-X27"/>
                     <include reference="wPO-62-8dJ"/>
                     <include reference="TIo-i1-mil"/>
@@ -145,6 +143,8 @@
                     <include reference="ry0-81-aKL"/>
                     <include reference="abY-jd-BOs"/>
                     <include reference="d9C-3p-I2N"/>
+                    <include reference="hZc-ta-y3V"/>
+                    <include reference="ijK-q1-E7f"/>
                 </mask>
             </variation>
         </view>
