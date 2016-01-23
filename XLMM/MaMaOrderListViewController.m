@@ -67,6 +67,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
     //添加header
@@ -187,7 +188,7 @@
     MaMaOrderModel *orderM = orderArr[indexPath.row];
     MaMaOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaMaOrder"];
     if (!cell) {
-        cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"MaMaOrder"];
+        cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
     }
     [cell fillDataOfCell:orderM];
     return cell;
