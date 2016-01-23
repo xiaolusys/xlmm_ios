@@ -43,7 +43,6 @@
     
     
     
-    
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;
@@ -145,6 +144,7 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         
         
+        self.earningsRecord = self.jileishouyi.text;
     }
 }
 

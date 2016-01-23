@@ -2296,6 +2296,9 @@
 		321928BA1BDB7E7D004EA6A7 /* New Images */ = {
 			isa = PBXGroup;
 			children = (
+				32E8B5991C50CDA700414F8A /* erweimaDemo.png */,
+				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
+				32E8B5A01C52023E00414F8A /* Unknown.jpeg */,
 				326296491C45F627001A27E3 /* hongbaoclose100.png */,
 				3262964A1C45F627001A27E3 /* hongbaoclose200.png */,
 				3262964B1C45F627001A27E3 /* hongbaoopen100.png */,
@@ -2770,9 +2773,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				32E8B5991C50CDA700414F8A /* erweimaDemo.png */,
-				32E8B58B1C4F59DA00414F8A /* countdowmBackImage.png */,
-				32E8B5A01C52023E00414F8A /* Unknown.jpeg */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,

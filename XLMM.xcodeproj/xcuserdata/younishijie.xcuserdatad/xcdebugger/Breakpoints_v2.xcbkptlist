@@ -173,7 +173,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
             endingLineNumber = "234"
-            landmarkName = "-maMaOrderInfoData:"
+            landmarkName = "-prepareTableData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -333,7 +333,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "512"
             endingLineNumber = "512"
-            landmarkName = "-erweima:"
+            landmarkName = "-xuanpinliebiao:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -365,8 +365,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "132"
             endingLineNumber = "132"
-            landmarkName = "-fetchedInfoData:"
-            landmarkType = "5">
+            landmarkName = "@implementation MaMaPersonCenterViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
