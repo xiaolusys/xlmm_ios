@@ -15,6 +15,7 @@
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
 
+
 @interface MaMaCarryLogViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, strong)NSMutableDictionary *dataDic;
@@ -169,14 +170,14 @@ static NSString *cellIdentifier = @"carryLogCell";
     //计算金额
     NSString *key = self.dataArr[section];
     NSMutableArray *orderArr = self.dataDic[key];
-    int total = 0;
+    float total = 0.0;
     NSString *date;
     for (CarryLogModel *model in orderArr) {
-        total = [model.sum_value intValue] + total;
+        total = [model.sum_value floatValue] + total;
         date = model.carry_date;
     }
     
-    [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%d", total]];
+    [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%.2f", total]];
     return headerV;
 }
 

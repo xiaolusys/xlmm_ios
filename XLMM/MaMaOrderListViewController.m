@@ -13,6 +13,7 @@
 #import "MaMaOrderModel.h"
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
+#import "MJRefresh.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -70,6 +71,15 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+    
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/shopping", Root_URL];
     
@@ -108,8 +118,16 @@
 //将日期去掉－
 - (NSString *)dateDeal:(NSString *)str {
     NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *date = strarray[0];
+    NSString *year = strarray[0];
+    NSString *date = [year stringByReplacingOccurrencesOfString:@"-" withString:@""];
     return date;
+}
+
+//只含有年月日
+- (NSString *)yearDeal:(NSString *)str {
+    NSArray *strarray = [str componentsSeparatedByString:@"T"];
+    NSString *year = strarray[0];
+    return year;
 }
 
 //将所有的key排序
@@ -126,6 +144,16 @@
     return keyArr;
 }
 
+//加载更多
+- (void)loadMore {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.tableView.mj_footer endRefreshing];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
 
 #pragma mark ---UItableView的代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -145,7 +173,7 @@
     if (!cell) {
         cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"MaMaOrder"];
     }
-    cell.orderStatic.text = orderM.get_status_display;
+    [cell fillDataOfCell:orderM];
     return cell;
 }
 
@@ -163,14 +191,13 @@
     //计算金额
     NSString *key = self.dataArr[section];
     NSMutableArray *orderArr = self.dataDic[key];
-    int total = 0;
+    float total = 0.0;
     NSString *date;
     for (MaMaOrderModel *model in orderArr) {
-        total = [model.rebeta_cash intValue] + total;
-        date = [self dateDeal:model.shoptime];
+        total = [model.rebeta_cash floatValue] + total;
+        date = [self yearDeal:model.shoptime];
     }
-    
-    [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%d", total]];
+    [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%.2f", total]];
     return headerV;
 }
 
