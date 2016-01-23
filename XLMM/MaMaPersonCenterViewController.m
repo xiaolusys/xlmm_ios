@@ -516,7 +516,7 @@
 - (IBAction)huodongzhongxin:(id)sender {
     NSLog(@"活动中心");
     
-    ActivityViewController2 *activityVC = [[ActivityViewController2 alloc] init];
+    MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
     [self.navigationController pushViewController:activityVC animated:YES];
 }
 

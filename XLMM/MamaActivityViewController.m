@@ -10,6 +10,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "ActivityErweimaViewController.h"
+#import "ChiMaBiaoViewController.h"
 
 
 #define button_border_width 1
@@ -61,7 +62,7 @@
     
     self.sizeArray = size;
     
-    NSLog(@"%@\n%@", self.colorArray, self.sizeArray);
+   // NSLog(@"%@\n%@", self.colorArray, self.sizeArray);
     
     
     
@@ -154,7 +155,7 @@
 - (void)colorSelected:(id)sender{
     UIButton *button = (UIButton *)sender;
     NSInteger index = button.tag - 1000;
-    NSLog(@"index = %@", self.colorArray[index]);
+  //  NSLog(@"index = %@", self.colorArray[index]);
     colorparam = self.colorArray[index];
     if (colorparam && sizeparam) {
         [self enableTijiaoButton];
@@ -176,7 +177,7 @@
 - (void)sizeSelected:(id)sender{
     UIButton *button = (UIButton *)sender;
     NSInteger index = button.tag - 2000;
-    NSLog(@"index = %@", self.sizeArray[index]);
+  //  NSLog(@"index = %@", self.sizeArray[index]);
     sizeparam = self.sizeArray[index];
     if (colorparam && sizeparam) {
         [self enableTijiaoButton];
@@ -233,9 +234,16 @@
     [alterView show];
 }
 
+- (IBAction)chimabiao:(id)sender {
+    
+    ChiMaBiaoViewController *chimaVC = [[ChiMaBiaoViewController alloc] init];
+    [self.navigationController pushViewController:chimaVC animated:YES];
+    
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-        NSLog(@"确定");
+       // NSLog(@"确定");
         ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
         
         [self.navigationController pushViewController:erweimaVC animated:YES];

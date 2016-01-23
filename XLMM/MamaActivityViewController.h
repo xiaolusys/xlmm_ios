@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIView *sizeView;
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
 - (IBAction)commitClicked:(id)sender;
+- (IBAction)chimabiao:(id)sender;
 
 
 @end
