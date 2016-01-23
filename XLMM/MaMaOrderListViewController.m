@@ -68,6 +68,22 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
     [self.view addSubview:self.tableView];
+    
+    //添加header
+    UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 25, 100, 20)];
+    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = @"订单记录";
+    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 75, 45, 150, 50)];
+    moneyLabel.textColor = [UIColor orangeThemeColor];
+    moneyLabel.font = [UIFont systemFontOfSize:35];
+    moneyLabel.textAlignment = NSTextAlignmentCenter;
+    moneyLabel.text = self.orderRecord;
+    [headerV addSubview:titleLabel];
+    [headerV addSubview:moneyLabel];
+    headerV.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableHeaderView = headerV;
 
     [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     

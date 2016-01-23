@@ -96,7 +96,7 @@
     if (!error) {
         NSString *count = [dic objectForKey:@"count"];
         self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
-        self.orderRecord = self.dingdanLabel.text;
+        self.orderRecord = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
     }
     
 }
@@ -469,15 +469,13 @@
 }
 
 - (IBAction)sendProduct:(id)sender {
- //   NSLog(@"发布产品");
-    
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }
 
 - (IBAction)MamaOrderClicked:(id)sender {
     MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
-    
+    orderList.orderRecord = self.orderRecord;
     [self.navigationController pushViewController:orderList animated:YES];
 }
 
