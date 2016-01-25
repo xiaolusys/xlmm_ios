@@ -98,8 +98,8 @@ static NSString *cellIdentifier = @"productSelection";
 - (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
     if (btn.selected) {
         //网络请求
-        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
-        NSDictionary *parameters = @{@"id":@"456"};
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
+        NSDictionary *parameters = @{@"product":@"13451"};
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"JSON: %@", responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -110,7 +110,13 @@ static NSString *cellIdentifier = @"productSelection";
         btn.selected = NO;
     }else {
         //网络请求
-        
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
+        NSDictionary *parameters = @{@"product":@"13451"};
+        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"JSON: %@", responseObject);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
         //已上架
         [SVProgressHUD showSuccessWithStatus:@"上架成功"];
         btn.selected = YES;
