@@ -400,7 +400,7 @@
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
     NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO};
+    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 

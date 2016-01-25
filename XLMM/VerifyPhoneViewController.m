@@ -198,7 +198,7 @@
     NSLog(@"paramters = %@", parameters);
     
     NSString *stringurl = nil;
-    NSLog(@"---%@", self.config[@"isRegister"]);
+    NSLog(@" isRegister---%d", [self.config[@"isRegister"] boolValue]);
     
     if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO)
     {
@@ -341,7 +341,7 @@
     
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
-    if (self.config[@"isMessageLogin"]) {
+    if ([self.config[@"isMessageLogin"] boolValue]) {
         
         NSDictionary *parameters = @{@"mobile":phoneNumber,
                                      @"sms_code":vcode};
