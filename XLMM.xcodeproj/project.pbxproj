@@ -20,6 +20,8 @@
 		181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */; };
 		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
 		181C74AA1C536E3800375DF8 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
+		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
+		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600361C2D496E000AFB39 /* loading动画001.png */; };
 		2E5600841C2D496E000AFB39 /* loading动画0010.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600371C2D496E000AFB39 /* loading动画0010.png */; };
@@ -884,6 +886,10 @@
 		181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell.h; sourceTree = "<group>"; };
 		181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell.m; sourceTree = "<group>"; };
 		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
+		18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaSelectProduct.h; sourceTree = "<group>"; };
+		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
+		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
+		18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShopViewController.m; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600361C2D496E000AFB39 /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
@@ -2158,6 +2164,8 @@
 				2E612B411C476E07002F1C15 /* SharePicModel.m */,
 				2E62D66F1C4DE569007B20BB /* CarryLogModel.h */,
 				2E62D6701C4DE569007B20BB /* CarryLogModel.m */,
+				18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */,
+				18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */,
 			);
 			name = MaMaModel;
 			sourceTree = "<group>";
@@ -3520,6 +3528,8 @@
 				181C74961C535D5600375DF8 /* MaMaShareSubsidiesViewController.m */,
 				181C74A31C536C7600375DF8 /* ProductSelectionListViewController.h */,
 				181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */,
+				18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */,
+				18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
@@ -4206,6 +4216,7 @@
 				321952951BFC7A8D00AA0AB8 /* QNResponseInfo.m in Sources */,
 				32F3D96D1B6CCA41008530BA /* AFURLSessionManager.m in Sources */,
 				322D25631C32B66100509EAD /* MJRefreshAutoFooter.m in Sources */,
+				18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */,
 				32F3D96B1B6CCA41008530BA /* AFURLRequestSerialization.m in Sources */,
 				32E8B5A51C5214E100414F8A /* ActivityErweimaViewController.m in Sources */,
 				32A288C31B942F6B006DC949 /* Head2View.m in Sources */,
@@ -4257,6 +4268,7 @@
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
 				181C748C1C5202DF00375DF8 /* CarryLogHeaderView.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
+				18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */,
 				2E612B421C476E07002F1C15 /* SharePicModel.m in Sources */,
 				3219529D1BFC7A8D00AA0AB8 /* QNResumeUpload.m in Sources */,
 				329E8A941BB648A3008AA0B6 /* WXLoginController.m in Sources */,
@@ -4556,7 +4568,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4593,7 +4605,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4638,7 +4650,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4682,7 +4694,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "446f4463-6d0c-4a78-9066-6b8ebbff280f";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

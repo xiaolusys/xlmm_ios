@@ -1,28 +1,25 @@
 //
-//  ProductSelectionListViewController.m
+//  MaMaShopViewController.m
 //  XLMM
 //
-//  Created by apple on 16/1/23.
+//  Created by apple on 16/1/25.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "ProductSelectionListViewController.h"
+#import "MaMaShopViewController.h"
 #import "UIViewController+NavigationBar.h"
-#import "ProductSelectionListCell.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 #import "AFNetworking.h"
-#import "MaMaSelectProduct.h"
+#import "ProductSelectionListCell.h"
 
-
-@interface ProductSelectionListViewController ()
+@interface MaMaShopViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
 @end
 
 static NSString *cellIdentifier = @"productSelection";
-@implementation ProductSelectionListViewController
+@implementation MaMaShopViewController
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         self.dataArr = [NSMutableArray arrayWithCapacity:0];
@@ -43,79 +40,44 @@ static NSString *cellIdentifier = @"productSelection";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     
-    [self createNavigationBarWithTitle:@"选品上架" selecotr:@selector(backClickAction)];
+    [self createNavigationBarWithTitle:@"我的店铺" selecotr:@selector(backClickAction)];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 250;
+    self.tableView.rowHeight = 118;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro.json", Root_URL];
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self dealData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
+//    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+////        [self dealData:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+
 }
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark --数据处理
-- (void)dealData:(NSDictionary *)dataDic {
-    NSArray *results = dataDic[@"results"];
-    for (NSDictionary *pdt in results) {
-        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
-        [productM setValuesForKeysWithDictionary:pdt];
-        [self.dataArr addObject:productM];
-    }
-    [self.tableView reloadData];
-}
-
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataArr.count;
+    return 20;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.delegate = self;
-    MaMaSelectProduct *product = self.dataArr[indexPath.row];
+//    MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
         cell = [[ProductSelectionListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    [cell fillCell:product];
+//    [cell fillCell:product];
     return cell;
 }
-
-
-#pragma mark ---cell的代理方法
-- (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
-    if (btn.selected) {
-        //网络请求
-        
-        //已经下架
-        [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-        btn.selected = NO;
-    }else {
-        //网络请求
-        
-        //已上架
-        [SVProgressHUD showSuccessWithStatus:@"上架成功"];
-        btn.selected = YES;
-    }
-}
-
-//#pragma mark --上下架的网络请求
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

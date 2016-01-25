@@ -22,6 +22,7 @@
 #import "ActivityViewController2.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "ProductSelectionListViewController.h"
+#import "MaMaShopViewController.h"
 
 
 
@@ -514,7 +515,8 @@
 }
 
 - (IBAction)jingxuanliebiao:(id)sender {
-    NSLog(@"我的精选");
+    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
+    [self.navigationController pushViewController:shop animated:YES];
 }
 
 - (IBAction)xuanpinliebiao:(id)sender {
