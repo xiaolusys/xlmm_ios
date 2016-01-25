@@ -238,11 +238,15 @@ static NSString *khead2View = @"head2View";
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
     
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    double doubleCurrentVersion = [currentVersion doubleValue];
+  
+    NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    double doubleCurrentVersion = [app_Version doubleValue];
+    
     double doubleUpdateVersion = [self.latestVersion doubleValue];
     NSLog(@"%f %f", doubleCurrentVersion, doubleUpdateVersion);
     
+    
+ 
     if (doubleCurrentVersion < doubleUpdateVersion) {
         
         UIAlertView *alert;
