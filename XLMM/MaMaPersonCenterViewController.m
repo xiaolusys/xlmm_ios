@@ -233,9 +233,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        
-        NSArray *data = responseObject;
-        [self maMaOrderInfoData:data];
+        [self maMaOrderInfoData:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
@@ -243,11 +241,14 @@
 }
 
 //更新订单数据。
-- (void)maMaOrderInfoData:(NSArray *)array {
+- (void)maMaOrderInfoData:(NSDictionary *)dic {
     
     [self.dataArr removeAllObjects];
+    NSArray *array = dic[@"shops"];
+    if (array.count == 0) return;
     ticheng = 0.0;
     dingdanshu = array.count;
+    
     for (NSDictionary *orderDic in array) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:orderDic];

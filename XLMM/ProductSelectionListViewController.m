@@ -50,12 +50,12 @@ static NSString *cellIdentifier = @"productSelection";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 250;
+    self.tableView.rowHeight = 118;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro.json", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -68,9 +68,8 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 #pragma mark --数据处理
-- (void)dealData:(NSDictionary *)dataDic {
-    NSArray *results = dataDic[@"results"];
-    for (NSDictionary *pdt in results) {
+- (void)dealData:(NSArray *)data {
+    for (NSDictionary *pdt in data) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         [productM setValuesForKeysWithDictionary:pdt];
         [self.dataArr addObject:productM];
@@ -99,7 +98,13 @@ static NSString *cellIdentifier = @"productSelection";
 - (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
     if (btn.selected) {
         //网络请求
-        
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
+        NSDictionary *parameters = @{@"id":@"456"};
+        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"JSON: %@", responseObject);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
         //已经下架
         [SVProgressHUD showSuccessWithStatus:@"下架成功"];
         btn.selected = NO;
