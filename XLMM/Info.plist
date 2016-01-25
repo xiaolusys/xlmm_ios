@@ -100,7 +100,7 @@
 	<key>MiSDKAppKey</key>
 	<string>5841742390405</string>
 	<key>MiSDKRun</key>
-	<string>Debug</string>
+	<string>Online</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

@@ -79,7 +79,7 @@
     countdownSecond = countSecond;
     
     
-    self.title = @"手机绑定";
+
     [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClicked:)];
     NSLog(@"用户信息 = %@", self.userInfo);
     self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];

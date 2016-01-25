@@ -126,7 +126,7 @@
     
     __unused long time = [timeSp integerValue];
     NSLog(@"time = %ld", (long)time);
-    
+    randomstring = [[NSMutableString alloc] initWithCapacity:0];
     for (int i = 0; i<8; i++) {
         index = arc4random()%count;
         // NSLog(@"index = %d", index);
@@ -161,11 +161,9 @@
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    //  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    //  [self showAlertWait];
+
     
     NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-    NSLog(@"data");
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
     
     
@@ -176,20 +174,20 @@
     if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
         
         if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
-            NSLog(@"未绑定手机号码");
+//            NSLog(@"未绑定手机号码");
             isBangding = NO;
-            
-            NSLog(@"%@", [dictionary objectForKey:@"info"]);
-            NSLog(@"11isBangDing = %d", isBangding);
+//            
+//            NSLog(@"%@", [dictionary objectForKey:@"info"]);
+//            NSLog(@"11isBangDing = %d", isBangding);
             
             
         } else {
-            NSLog(@"22已绑定手机号码");
+//            NSLog(@"22已绑定手机号码");
             isBangding = YES;
             
             phoneNumber = [[dictionary objectForKey:@"info"] objectForKey:@"mobile"];
-            NSLog(@"%@", phoneNumber);
-            NSLog(@"22isBangDing = %d", isBangding);
+//            NSLog(@"%@", phoneNumber);
+//            NSLog(@"22isBangDing = %d", isBangding);
             //  http://m.xiaolu.so/rest/v1/users/need_set_info
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/need_set_info", Root_URL];
             NSLog(@"string = %@", string);
@@ -197,7 +195,6 @@
             NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSLog(@"%@", result);
             if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
-                // isBangding = NO;
                 isSettingPsd = NO;
             } else {
                 isSettingPsd = YES;
@@ -225,7 +222,7 @@
         } else {
             
             NSLog(@"请绑定手机");
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil phoneNumber:phoneNumber];
             wxloginVC.userInfo = dic;
             [self.navigationController pushViewController:wxloginVC animated:YES];
         }
@@ -254,6 +251,8 @@
         [mutable addObject:string];
     }
     NSArray *array = [NSArray arrayWithArray:mutable];
+    
+    NSLog(@"array = %@", array);
     return array;
 }
 
@@ -346,37 +345,37 @@
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
                   
                   
-//                  NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-//                  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//                  
-//                  
-//                  
-//                  NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-//                  
-//             
-//                  
-//                  NSLog(@"urlStr = %@", urlString);
-//                  NSLog(@"params = %@", params);
-//
-//                  [manager POST:urlString parameters:params
-//                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                            //  NSError *error;
-//                            NSLog(@"JSON: %@", responseObject);
-//                            NSString *user_account = [responseObject objectForKey:@"user_account"];
-//                            NSLog(@"user_account = %@", user_account);
-//                            if ([user_account isEqualToString:@""]) {
-//                                
-//                            } else {
-//                                [MiPushSDK setAccount:user_account];
-//                            }
-//                            
-//                            
-//                        }
-//                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                            NSLog(@"Error: %@", error);
-//                            
-//                            
-//                        }];
+                  NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+                  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                  
+                  
+                  
+                  NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+                  
+             
+                  
+                  NSLog(@"urlStr = %@", urlString);
+                  NSLog(@"params = %@", params);
+
+                  [manager POST:urlString parameters:params
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            //  NSError *error;
+                            NSLog(@"JSON: %@", responseObject);
+                            NSString *user_account = [responseObject objectForKey:@"user_account"];
+                            NSLog(@"user_account = %@", user_account);
+                            if ([user_account isEqualToString:@""]) {
+                                
+                            } else {
+                                [MiPushSDK setAccount:user_account];
+                            }
+                            
+                            
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            NSLog(@"Error: %@", error);
+                            
+                            
+                        }];
 
                   
                   

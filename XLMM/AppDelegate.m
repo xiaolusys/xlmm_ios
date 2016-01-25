@@ -67,7 +67,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
     self.isFirst = YES;
-   // [MiPushSDK registerMiPush:self type:0 connect:YES];
+   [MiPushSDK registerMiPush:self type:0 connect:YES];
 
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -284,21 +284,23 @@
     NSString *target_url = nil;
     target_url = [data objectForKey:@"target_url"];
     
-    
+    if (target_url != nil) {
+        if (self.isLaunchedByNotification == YES) {
+            
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        }
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+        }
+
+    }
    
-    if (self.isLaunchedByNotification == YES) {
-        
-       
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-        return;
-    }
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
-        return;
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-    }
-  
+    
 
 }
 
