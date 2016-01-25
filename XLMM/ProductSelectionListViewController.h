@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductSelectionListCell.h"
 
-@interface ProductSelectionListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface ProductSelectionListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, ProductSelectionListCellDelegate>
 
 @end
