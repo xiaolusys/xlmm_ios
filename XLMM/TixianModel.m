@@ -24,7 +24,7 @@
 }
 
 - (NSString *)description{
-    NSString *string = [NSString stringWithFormat:@"xlmm:%ld\nvalue_money:%.2f\nget_status_display:%@\nstatus:%@\ncreate:%@\n\n", self.xlmm, self.value_money, self.get_status_display, self.status, self.created];
+    NSString *string = [NSString stringWithFormat:@"xlmm:%ld\nvalue_money:%.2f\nget_status_display:%@\nstatus:%@\ncreate:%@\n\n", (long)self.xlmm, self.value_money, self.get_status_display, self.status, self.created];
     return string;
 }
 
