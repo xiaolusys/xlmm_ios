@@ -25,6 +25,9 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *mamaTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
+@property (weak, nonatomic) IBOutlet UIView *shareSubsidies;
+
+
 
 
 - (IBAction)backClicked:(id)sender;

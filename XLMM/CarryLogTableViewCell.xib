@@ -51,14 +51,24 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S3g-AH-H1H">
+                        <rect key="frame" x="0.0" y="79" width="460" height="1"/>
+                        <color key="backgroundColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Hya-V1-fCC"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="S3g-AH-H1H" secondAttribute="bottom" id="3RB-PU-LOg"/>
+                    <constraint firstItem="S3g-AH-H1H" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9rC-jR-w6s"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="top" secondItem="f0i-YC-mX6" secondAttribute="bottom" id="LEo-YT-Q29"/>
                     <constraint firstItem="6Wx-cb-dGX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="R8D-0T-CZ7"/>
                     <constraint firstAttribute="trailing" secondItem="6Wx-cb-dGX" secondAttribute="trailing" constant="10" id="ZVs-d7-JLU"/>
                     <constraint firstItem="f0i-YC-mX6" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="fJv-xg-MM9"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="jXm-fu-5Rl"/>
                     <constraint firstItem="UH8-Hz-gts" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="qmX-1X-QEW"/>
+                    <constraint firstAttribute="trailing" secondItem="S3g-AH-H1H" secondAttribute="trailing" id="uJ1-pB-jMR"/>
                     <constraint firstItem="UH8-Hz-gts" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="wLs-DK-Tdz"/>
                     <constraint firstItem="f0i-YC-mX6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="wWz-g8-N1c"/>
                 </constraints>

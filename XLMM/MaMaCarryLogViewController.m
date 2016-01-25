@@ -72,6 +72,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -50, 0);
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"CarryLogTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
@@ -159,7 +160,6 @@ static NSString *cellIdentifier = @"carryLogCell";
         cell = [[CarryLogTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     [cell fillCarryModel:carryLogM];
-    
     return cell;
 }
 
