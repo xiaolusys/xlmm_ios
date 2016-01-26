@@ -56,6 +56,8 @@ static NSString *cellIdentifier = @"shareSubsidies";
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"MaMaShareSubsidiesViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 25, 100, 20)];
     titleLabel.font = [UIFont systemFontOfSize:14];
@@ -86,7 +88,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MaMaShareSubsidiesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[MaMaShareSubsidiesViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[MaMaShareSubsidiesViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
 //    [cell fillCarryModel:carryLogM];
     return cell;

@@ -21,6 +21,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *productName;
 @property (weak, nonatomic) IBOutlet UIButton *addBtnClick;
 
+//商品ID
+@property (strong, nonatomic) NSString *pdtID;
+//Model对象
+@property (strong, nonatomic) MaMaSelectProduct *pdtModel;
 
 //代理对象
 @property (nonatomic, strong) id<ProductSelectionListCellDelegate>delegate;
@@ -28,4 +32,6 @@
 - (IBAction)addPdtOrDeleteAction:(id)sender;
 
 - (void)fillCell:(MaMaSelectProduct *)product;
+//我的精选
+- (void)fillMyChoice:(MaMaSelectProduct *)product;
 @end
