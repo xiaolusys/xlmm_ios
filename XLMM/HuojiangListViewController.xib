@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HuojiangListViewController">
             <connections>
+                <outlet property="tableView" destination="RZV-aV-srA" id="MoX-Tf-vJL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,31 +16,45 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RZV-aV-srA">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RZV-aV-srA">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="CFH-jO-VO5">
+                            <variation key="heightClass=regular-widthClass=compact" constant="136"/>
+                        </constraint>
+                        <constraint firstAttribute="height" constant="400" id="M15-oW-YMO"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="CFH-jO-VO5"/>
+                            <exclude reference="M15-oW-YMO"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="CFH-jO-VO5"/>
+                            <include reference="M15-oW-YMO"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="xWt-pF-8UF"/>
                         <outlet property="delegate" destination="-1" id="MB9-XU-Uz3"/>
                     </connections>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="RZV-aV-srA" secondAttribute="trailing" id="3Zx-zl-82W"/>
-                <constraint firstItem="RZV-aV-srA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9gH-mB-RRU"/>
-                <constraint firstItem="RZV-aV-srA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DiZ-jH-oW8"/>
-                <constraint firstAttribute="bottom" secondItem="RZV-aV-srA" secondAttribute="bottom" id="b7g-hu-trP"/>
+                <constraint firstItem="RZV-aV-srA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="cPK-pT-L38"/>
+                <constraint firstItem="RZV-aV-srA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hZn-ew-Z7h"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="RZV-aV-srA"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="3Zx-zl-82W"/>
-                    <exclude reference="9gH-mB-RRU"/>
-                    <exclude reference="DiZ-jH-oW8"/>
-                    <exclude reference="b7g-hu-trP"/>
+                    <exclude reference="cPK-pT-L38"/>
+                    <exclude reference="hZn-ew-Z7h"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -47,10 +62,8 @@
                     <include reference="RZV-aV-srA"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="3Zx-zl-82W"/>
-                    <include reference="9gH-mB-RRU"/>
-                    <include reference="DiZ-jH-oW8"/>
-                    <include reference="b7g-hu-trP"/>
+                    <include reference="cPK-pT-L38"/>
+                    <include reference="hZn-ew-Z7h"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="272" y="68"/>
