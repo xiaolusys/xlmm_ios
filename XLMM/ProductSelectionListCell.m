@@ -14,8 +14,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
-    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+//    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
+//    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -26,14 +26,33 @@
 
 - (IBAction)addPdtOrDeleteAction:(id)sender {
     if (self.delegate) {
-        [self.delegate productSelectionListBtnClick:sender btn:sender];
+        [self.delegate productSelectionListBtnClick:self btn:sender];
     }
 }
 
+//选品列表
 - (void)fillCell:(MaMaSelectProduct *)product {
+    self.pdtModel = product;
     [self.picImageView sd_setImageWithURL:[NSURL URLWithString:product.head_img]];
-    NSLog(@"%@", product.name);
     self.productName.text = product.name;
+    
+    self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
+    if ([product.in_customer_shop intValue]) {
+        self.addBtnClick.selected = YES;
+        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+    }else {
+        self.addBtnClick.selected = NO;
+        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
+    }
+}
+
+//我的精选
+- (void)fillMyChoice:(MaMaSelectProduct *)product {
+    self.pdtModel = product;
+    self.productName.text = product.name;
+    self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
+    self.addBtnClick.selected = YES;
+    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }
 
 @end

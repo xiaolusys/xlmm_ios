@@ -16,9 +16,13 @@
 
 
 @interface ProductSelectionListViewController ()
+{
+    int count;
+}
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
+
 @end
 
 static NSString *cellIdentifier = @"productSelection";
@@ -48,6 +52,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self createNavigationBarWithTitle:@"选品上架" selecotr:@selector(backClickAction)];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 118;
@@ -74,7 +79,9 @@ static NSString *cellIdentifier = @"productSelection";
         [productM setValuesForKeysWithDictionary:pdt];
         [self.dataArr addObject:productM];
     }
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView reloadData];
+    
 }
 
 #pragma mark -- uitableView代理
@@ -83,11 +90,23 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
+    if (count < 6) {
+        CGPoint originPoint = cell.center;
+        cell.center = CGPointMake(SCREENWIDTH, originPoint.y);
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            cell.center = CGPointMake(SCREENWIDTH * 0.5, originPoint.y);
+        }];
+        count++;
+    }
+    
     MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
-        cell = [[ProductSelectionListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ProductSelectionListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
     }
     [cell fillCell:product];
     return cell;
@@ -96,31 +115,39 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark ---cell的代理方法
 - (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
+    [SVProgressHUD showWithStatus:@"加载中，请稍后..."];
     if (btn.selected) {
         //网络请求
-        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
-        NSDictionary *parameters = @{@"id":@"456"};
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
+        NSDictionary *parameters = @{@"product":cell.pdtID};
+        
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"JSON: %@", responseObject);
+            [SVProgressHUD showSuccessWithStatus:@"下架成功"];
+            btn.selected = NO;
+            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
+            //修改数据源中的数据
+            cell.pdtModel.in_customer_shop = @0;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+            NSLog(@"上下架－－Error: %@", error);
         }];
-        //已经下架
-        [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-        btn.selected = NO;
+        
     }else {
         //网络请求
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
+        NSDictionary *parameters = @{@"product":cell.pdtID};
+        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            //已上架
+            [SVProgressHUD showSuccessWithStatus:@"上架成功"];
+            btn.selected = YES;
+            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+            //修改数据源中的数据
+            cell.pdtModel.in_customer_shop = @1;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"上下架－－Error: %@", error);
+        }];
         
-        //已上架
-        [SVProgressHUD showSuccessWithStatus:@"上架成功"];
-        btn.selected = YES;
     }
 }
-
-//#pragma mark --上下架的网络请求
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

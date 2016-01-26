@@ -13,6 +13,10 @@
 @property (nonatomic, strong)NSNumber *productId;
 @property (nonatomic, strong)NSString *head_img;
 @property (nonatomic, strong)NSString *name;
+//@property (nonatomic, assign)BOOL in_customer_shop;
 
+@property (nonatomic, strong)NSNumber *in_customer_shop;
+
+@property (nonatomic, strong)NSNumber *status;
 
 @end

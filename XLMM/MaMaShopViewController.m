@@ -11,6 +11,7 @@
 #import "MMClass.h"
 #import "AFNetworking.h"
 #import "ProductSelectionListCell.h"
+#import "MaMaSelectProduct.h"
 
 @interface MaMaShopViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -51,13 +52,22 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
-//    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-////        [self dealData:responseObject];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros", Root_URL];
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self dealData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
+#pragma mark --数据处理
+- (void)dealData:(NSArray *)data {
+    for (NSDictionary *pdt in data) {
+//        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
+//        [productM setValuesForKeysWithDictionary:pdt];
+//        [self.dataArr addObject:productM];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)backClickAction {
@@ -66,18 +76,42 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//    MaMaSelectProduct *product = self.dataArr[indexPath.row];
+    cell.delegate = self;
+    MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
         cell = [[ProductSelectionListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-//    [cell fillCell:product];
+    [cell fillMyChoice:product];
     return cell;
 }
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+#pragma mark-- cell的代理方法
+- (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
+    //网络请求
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
+    NSDictionary *parameters = @{@"product":cell.pdtID};
+    
+    [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.dataArr removeObject:cell.pdtModel];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"店铺－－Error: %@", error);
+    }];
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
