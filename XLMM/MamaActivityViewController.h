@@ -22,5 +22,6 @@
 - (IBAction)commitClicked:(id)sender;
 - (IBAction)chimabiao:(id)sender;
 
+- (IBAction)huojianglistClicked:(id)sender;
 
 @end

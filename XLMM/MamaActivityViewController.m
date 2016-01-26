@@ -11,6 +11,7 @@
 #import "MMClass.h"
 #import "ActivityErweimaViewController.h"
 #import "ChiMaBiaoViewController.h"
+#import "HuojiangListViewController.h"
 
 
 #define button_border_width 1
@@ -361,6 +362,11 @@
     ChiMaBiaoViewController *chimaVC = [[ChiMaBiaoViewController alloc] init];
     [self.navigationController pushViewController:chimaVC animated:YES];
     
+}
+
+- (IBAction)huojianglistClicked:(id)sender {
+    HuojiangListViewController *listVC = [[HuojiangListViewController alloc] init];
+    [self.navigationController pushViewController:listVC animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

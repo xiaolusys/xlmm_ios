@@ -45,6 +45,7 @@
     
     CGRect frame;
     NSInteger _currentIndex;
+    UIBarButtonItem *rightItem;
 }
 
 @end
@@ -79,7 +80,9 @@
     NSLog(@"userInfo = %@", notification.userInfo);
     NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
     
-   
+    if (target_url == nil) {
+        return;
+    }
     
     NSLog(@"target_url = %@", target_url);
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
@@ -262,8 +265,9 @@
     UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
     rightImageView.frame = CGRectMake(18, 11, 26, 26);
     [rightBtn addSubview:rightImageView];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    
+   self.navigationItem.rightBarButtonItem = rightItem;
 
 
     [self.view addSubview:[[UIView alloc] init]];
@@ -273,8 +277,37 @@
 //    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
 //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     
-    MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-    [self.navigationController pushViewController:ma animated:YES];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL islogin = [defaults boolForKey:kIsLogin];
+    if (islogin == YES) {
+        
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+        NSError *error = nil;
+        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"error = %@", error);
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"json = %@", json);
+        if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
+            MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            [self.navigationController pushViewController:ma animated:YES];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alertView show];
+        }
+        
+        
+        
+
+    } else {
+        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+    
+            [self.navigationController pushViewController:loginVC animated:YES];
+        
+    }
+    
+    
+
 //    [self presentViewController:ma animated:YES completion:nil];
     
 }
