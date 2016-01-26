@@ -153,6 +153,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CarryLogTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *order = self.dataDic[key];
     CarryLogModel *carryLogM = order[indexPath.row];

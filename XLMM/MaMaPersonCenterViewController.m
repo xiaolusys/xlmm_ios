@@ -206,8 +206,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        
-        
+    
         NSArray *data = responseObject;
         [self maMaOrderInfoData:data];
         
