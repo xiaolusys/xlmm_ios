@@ -54,7 +54,7 @@ static NSString *cellIdentifier = @"productSelection";
     
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        [self dealData:responseObject];
+        [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -62,7 +62,7 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
-    for (NSDictionary *pdt in data) {
+    for ( NSDictionary *pdt in data) {
 //        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
 //        [productM setValuesForKeysWithDictionary:pdt];
 //        [self.dataArr addObject:productM];
@@ -90,22 +90,25 @@ static NSString *cellIdentifier = @"productSelection";
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
+
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleDelete;
 //}
 //
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return YES;
+//- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+//    [super setEditing:editing animated:animated];
+//    [self.tableView setEditing:editing animated:animated];
 //}
 #pragma mark-- cell的代理方法
 - (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
     NSDictionary *parameters = @{@"product":cell.pdtID};
+//    NSArray *rows = [NSArray arrayWithObject:indexPath];
     
     [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
         [self.dataArr removeObject:cell.pdtModel];
-        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"店铺－－Error: %@", error);
     }];
