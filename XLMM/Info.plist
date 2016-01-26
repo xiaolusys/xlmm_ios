@@ -66,7 +66,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqzoneopensdk</string>
@@ -100,7 +100,7 @@
 	<key>MiSDKAppKey</key>
 	<string>5841742390405</string>
 	<key>MiSDKRun</key>
-	<string>Debuge</string>
+	<string>Online</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
