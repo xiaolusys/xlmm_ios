@@ -208,8 +208,7 @@
         if (!responseObject)return ;
         
         
-        NSArray *data = responseObject;
-        [self maMaOrderInfoData:data];
+        [self maMaOrderInfoData:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
@@ -369,8 +368,7 @@
         if (!responseObject)return ;
         
         
-        NSArray *data = responseObject;
-        [self maMaOrderInfoData:data];
+        [self maMaOrderInfoData:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];

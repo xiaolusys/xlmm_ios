@@ -79,7 +79,9 @@
     NSLog(@"userInfo = %@", notification.userInfo);
     NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
     
-   
+    if (target_url == nil) {
+        return;
+    }
     
     NSLog(@"target_url = %@", target_url);
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
