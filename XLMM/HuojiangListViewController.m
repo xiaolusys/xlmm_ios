@@ -101,6 +101,13 @@
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.textLabel.text = [NSString stringWithFormat:@"13%d****%d%d%d%d", arc4random()%10, arc4random()%10, arc4random()%10, arc4random()%10, arc4random()%10];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.imageView.image = [UIImage imageNamed:@"head_icon.png"];
+    cell.imageView.frame = CGRectMake(0, 0, 16, 16);
+    if (indexPath.row == 20) {
+        cell.textLabel.textColor = [UIColor redColor];
+    }
+    
+    
     return cell;
 }
 

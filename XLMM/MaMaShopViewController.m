@@ -62,7 +62,7 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
-    for (NSDictionary *pdt in data) {
+    for (__unused NSDictionary *pdt in data) {
 //        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
 //        [productM setValuesForKeysWithDictionary:pdt];
 //        [self.dataArr addObject:productM];
