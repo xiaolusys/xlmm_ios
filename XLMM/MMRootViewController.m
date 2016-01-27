@@ -286,6 +286,9 @@
         NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
         NSLog(@"error = %@", error);
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        if (data == nil) {
+            return;
+        }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {

@@ -573,6 +573,10 @@
 		32CE91C71B7C5CE700CA67C3 /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */; };
 		32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */; };
 		32CECF901BA666AD00FF3BD3 /* MMCartsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */; };
+		32CFD5C31C588F7F00C6203E /* FensiListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CFD5C11C588F7F00C6203E /* FensiListViewController.m */; };
+		32CFD5C41C588F7F00C6203E /* FensiListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CFD5C21C588F7F00C6203E /* FensiListViewController.xib */; };
+		32CFD5C81C589F0500C6203E /* FensiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CFD5C61C589F0500C6203E /* FensiTableViewCell.m */; };
+		32CFD5C91C589F0500C6203E /* FensiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CFD5C71C589F0500C6203E /* FensiTableViewCell.xib */; };
 		32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */; };
 		32D2B78C1BDDF41C00603FCE /* address_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B7871BDDF41C00603FCE /* address_icon.png */; };
 		32D2B78D1BDDF41C00603FCE /* selected_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D2B7881BDDF41C00603FCE /* selected_icon.png */; };
@@ -1495,6 +1499,12 @@
 		32CECF8C1BA6669C00FF3BD3 /* MMCartsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCartsView.h; sourceTree = "<group>"; };
 		32CECF8D1BA6669C00FF3BD3 /* MMCartsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCartsView.m; sourceTree = "<group>"; };
 		32CECF8F1BA666AD00FF3BD3 /* MMCartsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCartsView.xib; sourceTree = "<group>"; };
+		32CFD5C01C588F7F00C6203E /* FensiListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FensiListViewController.h; sourceTree = "<group>"; };
+		32CFD5C11C588F7F00C6203E /* FensiListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FensiListViewController.m; sourceTree = "<group>"; };
+		32CFD5C21C588F7F00C6203E /* FensiListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FensiListViewController.xib; sourceTree = "<group>"; };
+		32CFD5C51C589F0500C6203E /* FensiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FensiTableViewCell.h; sourceTree = "<group>"; };
+		32CFD5C61C589F0500C6203E /* FensiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FensiTableViewCell.m; sourceTree = "<group>"; };
+		32CFD5C71C589F0500C6203E /* FensiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FensiTableViewCell.xib; sourceTree = "<group>"; };
 		32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
 		32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
 		32D2B7871BDDF41C00603FCE /* address_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address_icon.png; sourceTree = "<group>"; };
@@ -1702,6 +1712,9 @@
 				181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */,
 				181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */,
 				181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */,
+				32CFD5C51C589F0500C6203E /* FensiTableViewCell.h */,
+				32CFD5C61C589F0500C6203E /* FensiTableViewCell.m */,
+				32CFD5C71C589F0500C6203E /* FensiTableViewCell.xib */,
 			);
 			name = NewMaMaView;
 			sourceTree = "<group>";
@@ -3341,6 +3354,9 @@
 				32E8B5AC1C56474B00414F8A /* HuojiangListViewController.h */,
 				32E8B5AD1C56474B00414F8A /* HuojiangListViewController.m */,
 				32E8B5AE1C56474B00414F8A /* HuojiangListViewController.xib */,
+				32CFD5C01C588F7F00C6203E /* FensiListViewController.h */,
+				32CFD5C11C588F7F00C6203E /* FensiListViewController.m */,
+				32CFD5C21C588F7F00C6203E /* FensiListViewController.xib */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
@@ -3593,6 +3609,7 @@
 				32746E241B74A22000816208 /* icon-shengyu2.png in Resources */,
 				2E5600AD1C2D496E000AFB39 /* loading动画0048.png in Resources */,
 				322D25D51C32B93A00509EAD /* 圈圈加载0042.png in Resources */,
+				32CFD5C91C589F0500C6203E /* FensiTableViewCell.xib in Resources */,
 				2E5600C81C2D496E000AFB39 /* loading动画0072.png in Resources */,
 				328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */,
 				32703F1D1BEB5D39002AFC6D /* Icon-60@2x.png in Resources */,
@@ -3696,6 +3713,7 @@
 				2E5600AF1C2D496E000AFB39 /* loading动画005.png in Resources */,
 				181C74901C52030200375DF8 /* CarryLogHeaderView.xib in Resources */,
 				32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */,
+				32CFD5C41C588F7F00C6203E /* FensiListViewController.xib in Resources */,
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				2E5600BC1C2D496E000AFB39 /* loading动画0061.png in Resources */,
@@ -3966,6 +3984,7 @@
 				325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */,
 				32E8B5AF1C56474B00414F8A /* HuojiangListViewController.m in Sources */,
 				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
+				32CFD5C81C589F0500C6203E /* FensiTableViewCell.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
@@ -4052,6 +4071,7 @@
 				181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */,
 				321952C31BFC7AF800AA0AB8 /* QNNetworkInfo.m in Sources */,
 				32CC7C851B9FFF2F00475E2E /* OrderModel.m in Sources */,
+				32CFD5C31C588F7F00C6203E /* FensiListViewController.m in Sources */,
 				322FA9401C3CA9CC008DD942 /* TixianViewController.m in Sources */,
 				325B1E871BE4A2300027B3E3 /* UIImage+ColorImage.m in Sources */,
 				32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */,

@@ -535,6 +535,18 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     
+    
+    NSString *urlString = [url absoluteString];
+    NSLog(@"url = %@", urlString);
+    NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
+    NSURL *url1 = [NSURL URLWithString:newUrl];
+    
+    NSString *paramString = [url1 query];
+    NSLog(@"param = %@", paramString);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:paramString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alertView show];
+    
+    
    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                
@@ -555,7 +567,10 @@
                }
            }];
 //    return [UMSocialSnsService handleOpenURL:url];
-    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];;
+    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+    
+    
+    
 
 }
     
