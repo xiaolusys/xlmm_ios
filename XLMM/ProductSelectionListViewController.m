@@ -90,9 +90,9 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
+
     if (count < 6) {
         CGPoint originPoint = cell.center;
         cell.center = CGPointMake(SCREENWIDTH, originPoint.y);

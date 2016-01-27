@@ -17,6 +17,8 @@
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
+
+@property (nonatomic, assign)BOOL isRequest;
 @end
 
 static NSString *cellIdentifier = @"productSelection";
@@ -42,6 +44,8 @@ static NSString *cellIdentifier = @"productSelection";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.isRequest = NO;
+    
     [self createNavigationBarWithTitle:@"我的店铺" selecotr:@selector(backClickAction)];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
@@ -63,9 +67,9 @@ static NSString *cellIdentifier = @"productSelection";
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
     for ( NSDictionary *pdt in data) {
-//        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
-//        [productM setValuesForKeysWithDictionary:pdt];
-//        [self.dataArr addObject:productM];
+        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
+        [productM setValuesForKeysWithDictionary:pdt];
+        [self.dataArr addObject:productM];
     }
     [self.tableView reloadData];
 }
@@ -90,25 +94,21 @@ static NSString *cellIdentifier = @"productSelection";
     return cell;
 }
 
-
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return UITableViewCellEditingStyleDelete;
-//}
-//
-//- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
-//    [super setEditing:editing animated:animated];
-//    [self.tableView setEditing:editing animated:animated];
-//}
 #pragma mark-- cell的代理方法
 - (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
+    if (self.isRequest)return;
+    self.isRequest = YES;
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
     NSDictionary *parameters = @{@"product":cell.pdtID};
-//    NSArray *rows = [NSArray arrayWithObject:indexPath];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSArray *rows = [NSArray arrayWithObject:indexPath];
     
     [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
+        self.isRequest = NO;
         [self.dataArr removeObject:cell.pdtModel];
+        [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"店铺－－Error: %@", error);
     }];
