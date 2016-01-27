@@ -23,6 +23,7 @@
 #import "MaMaShareSubsidiesViewController.h"
 #import "ProductSelectionListViewController.h"
 #import "MaMaShopViewController.h"
+#import "FensiListViewController.h"
 
 
 
@@ -96,8 +97,19 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.headImageView addGestureRecognizer:tap];
     self.headImageView.userInteractionEnabled = YES;
+    
+    self.fensiLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
+    [self.fensiLabel addGestureRecognizer:tap1];
+    
 }
 
+
+- (void)fensiList:(UITapGestureRecognizer *)recognizer{
+    NSLog(@"fensi");
+    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
+    [self.navigationController pushViewController:fensiVC animated:YES];
+}
 
 #pragma mark -获取订单记录
 

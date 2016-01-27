@@ -11,6 +11,7 @@
 @interface MaMaPersonCenterViewController : UIViewController
 
 
+@property (weak, nonatomic) IBOutlet UILabel *fensiLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jineLabel;

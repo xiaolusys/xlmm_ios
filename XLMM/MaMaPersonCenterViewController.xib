@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
@@ -10,6 +10,7 @@
                 <outlet property="dingdanLabel" destination="kFO-sq-pB1" id="9hL-w3-w2h"/>
                 <outlet property="dingdanyilu" destination="onc-IJ-A1G" id="RJV-N8-XGx"/>
                 <outlet property="fabuButton" destination="kw5-aB-9xg" id="RhS-y0-Cjy"/>
+                <outlet property="fensiLabel" destination="P5R-d7-Gr2" id="GQV-vW-xj3"/>
                 <outlet property="headImageView" destination="Avq-4J-csh" id="iJZ-Lz-onR"/>
                 <outlet property="headViewWidth" destination="dBP-ce-yk7" id="uka-dG-082"/>
                 <outlet property="jileishouyi" destination="9Yk-DK-N8l" id="1f9-WF-vXa"/>
@@ -411,7 +412,7 @@
                             </subviews>
                             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="P5R-d7-Gr2" firstAttribute="top" secondItem="Avq-4J-csh" secondAttribute="bottom" constant="8" id="0r2-vC-WdW"/>
+                                <constraint firstItem="P5R-d7-Gr2" firstAttribute="top" secondItem="Avq-4J-csh" secondAttribute="bottom" constant="16" id="0r2-vC-WdW"/>
                                 <constraint firstAttribute="bottom" secondItem="4ID-ID-LFF" secondAttribute="bottom" id="B8g-b3-3fw"/>
                                 <constraint firstItem="4ID-ID-LFF" firstAttribute="top" secondItem="2rp-TN-hE4" secondAttribute="bottom" constant="4" id="Cb3-IR-DrZ">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -420,8 +421,8 @@
                                 <constraint firstItem="Q51-Vc-n5R" firstAttribute="centerX" secondItem="Avq-4J-csh" secondAttribute="centerX" id="Sjr-eW-4Pe"/>
                                 <constraint firstItem="gbp-da-shj" firstAttribute="centerX" secondItem="vkd-Tf-mwI" secondAttribute="centerX" id="UVH-h9-Hd6"/>
                                 <constraint firstItem="4ID-ID-LFF" firstAttribute="leading" secondItem="vkd-Tf-mwI" secondAttribute="leading" id="Xd4-BA-8vN"/>
-                                <constraint firstItem="Pde-lL-geW" firstAttribute="top" secondItem="Avq-4J-csh" secondAttribute="bottom" constant="34" id="b3G-Ov-enC">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="32"/>
+                                <constraint firstItem="Pde-lL-geW" firstAttribute="top" secondItem="Avq-4J-csh" secondAttribute="bottom" constant="44" id="b3G-Ov-enC">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="44"/>
                                 </constraint>
                                 <constraint firstAttribute="width" constant="414" id="dBP-ce-yk7"/>
                                 <constraint firstItem="Avq-4J-csh" firstAttribute="top" secondItem="vkd-Tf-mwI" secondAttribute="top" constant="50" id="eSd-xp-W1G"/>
@@ -430,7 +431,7 @@
                                 <constraint firstItem="Pde-lL-geW" firstAttribute="centerX" secondItem="vkd-Tf-mwI" secondAttribute="centerX" id="jul-oC-C2S"/>
                                 <constraint firstAttribute="height" constant="350" id="oNN-no-Dn1"/>
                                 <constraint firstItem="gbp-da-shj" firstAttribute="top" secondItem="Pde-lL-geW" secondAttribute="bottom" constant="11" id="qt8-9f-1ig">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
                                 <constraint firstItem="2rp-TN-hE4" firstAttribute="leading" secondItem="vkd-Tf-mwI" secondAttribute="leading" constant="87" id="tB0-Uy-FHJ">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -579,8 +580,7 @@
                                             <exclude reference="qC7-OB-tnY"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="53" y="2" width="180" height="21"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="constraints">
                                             <include reference="TSv-78-XL6"/>
                                             <include reference="qC7-OB-tnY"/>
@@ -630,12 +630,12 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="nDP-6Y-x8B"/>
-                                    <exclude reference="dTK-q7-CoS"/>
-                                    <exclude reference="uiZ-nM-fWd"/>
-                                    <exclude reference="cIG-I2-3Gt"/>
-                                    <exclude reference="cpl-hF-jUX"/>
                                     <exclude reference="rgt-a0-nvc"/>
                                     <exclude reference="tma-ws-ryk"/>
+                                    <exclude reference="cIG-I2-3Gt"/>
+                                    <exclude reference="cpl-hF-jUX"/>
+                                    <exclude reference="dTK-q7-CoS"/>
+                                    <exclude reference="uiZ-nM-fWd"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -646,12 +646,12 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="nDP-6Y-x8B"/>
-                                    <include reference="dTK-q7-CoS"/>
-                                    <include reference="uiZ-nM-fWd"/>
-                                    <include reference="cIG-I2-3Gt"/>
-                                    <include reference="cpl-hF-jUX"/>
                                     <include reference="rgt-a0-nvc"/>
                                     <include reference="tma-ws-ryk"/>
+                                    <include reference="cIG-I2-3Gt"/>
+                                    <include reference="cpl-hF-jUX"/>
+                                    <include reference="dTK-q7-CoS"/>
+                                    <include reference="uiZ-nM-fWd"/>
                                 </mask>
                             </variation>
                         </view>
