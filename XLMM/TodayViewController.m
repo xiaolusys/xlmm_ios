@@ -27,7 +27,7 @@
 #import "RESideMenu.h"
 #import "MJPullGifHeader.h"
 #import "MobClick.h"
-
+#import "UIViewController+NavigationBar.h"
 
 
 static NSString *ksimpleCell = @"simpleCell";
@@ -35,6 +35,8 @@ static NSString *kposterView = @"posterView";
 static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
 
+
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 @interface TodayViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UIAlertViewDelegate>
 {
@@ -146,7 +148,7 @@ static NSString *khead2View = @"head2View";
 - (void)reload
 {
 //    _isShouldLoad = YES;
-    [self downloadData123];
+    [self downloadData];
     //[self getQiNiuToken];
     
 }
@@ -203,13 +205,13 @@ static NSString *khead2View = @"head2View";
     
     
 //    _isShouldLoad = YES;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        [self performSelectorOnMainThread:@selector(fetchedUpdateData:)withObject:data waitUntilDone:YES];
-        
-    });
+  //  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
+    [self downLoadWithURLString:UPDATE_URLSTRING andSelector:@selector(fetchedUpdateData:)];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:url];
+//        [self performSelectorOnMainThread:@selector(fetchedUpdateData:)withObject:data waitUntilDone:YES];
+//        
+//    });
   
 
 }
@@ -270,10 +272,8 @@ static NSString *khead2View = @"head2View";
 }
 
 - (void)saveCurrentState{
-    NSLog(@"enterBackground");
 }
 - (void)restoreCurrentState{
-    NSLog(@"还原状态");
     if (self.navigationController.isNavigationBarHidden) {
         [self.delegate hiddenNavigation];
         
@@ -359,19 +359,21 @@ static NSString *khead2View = @"head2View";
 }
 
 
-- (void)downloadData123{
+- (void)downloadData{
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging.json?page_size=10",Root_URL];
     //NSLog(@"string = %@", urlStr);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-        [self performSelectorOnMainThread:@selector(fetchedPromotePageData:)withObject:data waitUntilDone:YES];
-        
-    });
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_POSTERS_URL]];
-        [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
-        
-    });
+    [self downLoadWithURLString:urlStr andSelector:@selector(fetchedPromotePageData:)];
+    [self downLoadWithURLString:kTODAY_POSTERS_URL andSelector:@selector(fetchedPosterData:)];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+//        [self performSelectorOnMainThread:@selector(fetchedPromotePageData:)withObject:data waitUntilDone:YES];
+//        
+//    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_POSTERS_URL]];
+//        [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
+//        
+//    });
     
 }
 
@@ -433,7 +435,7 @@ static NSString *khead2View = @"head2View";
     
     for (NSDictionary *ladyInfo in results) {
         
-        PromoteModel *model = [self fillModel:ladyInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         NSDictionary *category = model.category;
         
         if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
@@ -470,7 +472,7 @@ static NSString *khead2View = @"head2View";
     
     for (NSDictionary *ladyInfo in results) {
         
-        PromoteModel *model = [self fillModel:ladyInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         NSDictionary *category = model.category;
        // NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
         if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
@@ -512,7 +514,7 @@ static NSString *khead2View = @"head2View";
     }
    
     for (NSDictionary *ladyInfo in ladyArray) {
-        PromoteModel *model = [self fillModel:ladyInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         
         
         [ladyDataArray addObject:model];
@@ -543,7 +545,7 @@ static NSString *khead2View = @"head2View";
    
     
     for (NSDictionary *childInfo in childArray) {
-        PromoteModel *model = [self fillModel:childInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:childInfo];
         
     
         [childDataArray addObject:model];
@@ -570,47 +572,47 @@ static NSString *khead2View = @"head2View";
 
 
 
-- (PromoteModel *)fillModel:(NSDictionary *)dic{
-    PromoteModel *model = [PromoteModel new];
-    model.name = [dic objectForKey:@"name"];
-    
-    model.Url = [dic objectForKey:@"url"];
-    model.agentPrice = [dic objectForKey:@"lowest_price"];
-    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
-    model.outerID = [dic objectForKey:@"outer_id"];
-    model.isNewgood = [dic objectForKey:@"is_newgood"];
-    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
-    model.isSaleout = [dic objectForKey:@"is_saleout"];
-    model.ID = [dic objectForKey:@"id"];
-    model.category = [dic objectForKey:@"category"];
-    model.remainNum = [dic objectForKey:@"remain_num"];
-    model.saleTime = [dic objectForKey:@"sale_time"];
-    model.wareBy = [dic objectForKey:@"ware_by"];
-    model.watermark_op = [dic objectForKey:@"watermark_op"];
-    if ([[dic objectForKey:@"product_model"]class] == [NSNull class]) {
-        model.productModel = nil;
-          model.picPath = [dic objectForKey:@"head_img"];
-        model.productModel = nil;
-        
-    } else{
-        model.productModel = [dic objectForKey:@"product_model"];
-        
-        
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-            model.picPath = [dic objectForKey:@"head_img"];
-            
-        } else{
-            if ([[model.productModel objectForKey:@"head_imgs"] count] != 0) {
-                model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-                
-            }
-            model.name = [model.productModel objectForKey:@"name"];
-            
-        }
-        
-    }
-    return model;
-}
+//- (PromoteModel *)fillModel:(NSDictionary *)dic{
+//    PromoteModel *model = [PromoteModel new];
+//    model.name = [dic objectForKey:@"name"];
+//    
+//    model.Url = [dic objectForKey:@"url"];
+//    model.agentPrice = [dic objectForKey:@"lowest_price"];
+//    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
+//    model.outerID = [dic objectForKey:@"outer_id"];
+//    model.isNewgood = [dic objectForKey:@"is_newgood"];
+//    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+//    model.isSaleout = [dic objectForKey:@"is_saleout"];
+//    model.ID = [dic objectForKey:@"id"];
+//    model.category = [dic objectForKey:@"category"];
+//    model.remainNum = [dic objectForKey:@"remain_num"];
+//    model.saleTime = [dic objectForKey:@"sale_time"];
+//    model.wareBy = [dic objectForKey:@"ware_by"];
+//    model.watermark_op = [dic objectForKey:@"watermark_op"];
+//    if ([[dic objectForKey:@"product_model"]class] == [NSNull class]) {
+//        model.productModel = nil;
+//          model.picPath = [dic objectForKey:@"head_img"];
+//        model.productModel = nil;
+//        
+//    } else{
+//        model.productModel = [dic objectForKey:@"product_model"];
+//        
+//        
+//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+//            model.picPath = [dic objectForKey:@"head_img"];
+//            
+//        } else{
+//            if ([[model.productModel objectForKey:@"head_imgs"] count] != 0) {
+//                model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+//                
+//            }
+//            model.name = [model.productModel objectForKey:@"name"];
+//            
+//        }
+//        
+//    }
+//    return model;
+//}
 
 
 
