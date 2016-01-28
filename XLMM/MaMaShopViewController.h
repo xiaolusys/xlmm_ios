@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ProductSelectionListCell.h"
+#import "UMSocial.h"
 
-@interface MaMaShopViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ProductSelectionListCellDelegate>
+@interface MaMaShopViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ProductSelectionListCellDelegate, UMSocialUIDelegate>
 
 @end

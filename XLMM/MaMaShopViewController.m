@@ -12,6 +12,8 @@
 #import "AFNetworking.h"
 #import "ProductSelectionListCell.h"
 #import "MaMaSelectProduct.h"
+#import "ShopPreviousViewController.h"
+#import "WXApi.h"
 
 @interface MaMaShopViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -48,6 +50,11 @@ static NSString *cellIdentifier = @"productSelection";
     
     [self createNavigationBarWithTitle:@"我的店铺" selecotr:@selector(backClickAction)];
     
+    UIBarButtonItem *rightItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(previewAction)];
+
+    UIBarButtonItem *rightItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareAction)];
+    self.navigationItem.rightBarButtonItems = @[rightItem2, rightItem1];
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -61,6 +68,22 @@ static NSString *cellIdentifier = @"productSelection";
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+    }];
+}
+
+//预览
+- (void)previewAction {
+    ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
+    [self.navigationController pushViewController:previous animated:YES];
+}
+
+//分享
+- (void)shareAction {
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeText;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"小鹿妈妈店铺分享" image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        if (response.responseCode == UMSResponseCodeSuccess) {
+        }
     }];
 }
 

@@ -20,6 +20,7 @@
 		181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */; };
 		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
 		181C74AA1C536E3800375DF8 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
+		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
@@ -715,6 +716,8 @@
 		181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell.h; sourceTree = "<group>"; };
 		181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell.m; sourceTree = "<group>"; };
 		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
+		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
+		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaSelectProduct.h; sourceTree = "<group>"; };
 		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
 		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
@@ -3351,6 +3354,8 @@
 				181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */,
 				18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */,
 				18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */,
+				18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */,
+				18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */,
 				32E8B5AC1C56474B00414F8A /* HuojiangListViewController.h */,
 				32E8B5AD1C56474B00414F8A /* HuojiangListViewController.m */,
 				32E8B5AE1C56474B00414F8A /* HuojiangListViewController.xib */,
@@ -4100,6 +4105,7 @@
 				181C74971C535D5600375DF8 /* MaMaShareSubsidiesViewController.m in Sources */,
 				3282F2861B6B5B1300E73EB9 /* SDWebImageManager.m in Sources */,
 				32151BF91B96CFD4003569D7 /* MMDetailsViewController.m in Sources */,
+				18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */,
 				32A81F941B8D9BF6009972B3 /* BuyCartsView.m in Sources */,
 				325DF9551B69FD8600351ACA /* PosterModel.m in Sources */,
 				3264EA331B6C850100F36A8D /* PeopleModel.m in Sources */,
@@ -4203,7 +4209,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4240,7 +4246,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4285,7 +4291,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4329,7 +4335,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
