@@ -42,5 +42,7 @@
 
 @property (nonatomic, copy)NSString *watermark_op;
 
+- (instancetype)initWithDiction:(NSDictionary *)dic;
+
 
 @end

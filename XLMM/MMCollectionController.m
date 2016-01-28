@@ -16,7 +16,7 @@
 #import "SVProgressHUD.h"
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
-
+#import "UIViewController+NavigationBar.h"
 
 
 
@@ -32,10 +32,8 @@
     NSTimer *theTimer;
     UILabel *titleLabel;
     NSString *offSheltTime;
-    float ratio;
-    int count;
+    CGFloat ratio;
     BOOL _isFirst;
-    UIImage *collectionImage;
     
 }
 
@@ -45,7 +43,7 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, modelID];
         self.urlString = string;
         _childClothing = isChild;
-        [self downloadData];
+        [self downLoadWithURLString:string andSelector:@selector(fetchedCollectionData:)];
 
     }
     return self;
@@ -55,10 +53,15 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+   
+}
+
+- (void)dealloc{
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -68,13 +71,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"商品集合";
-    count = 0;
-    _isFirst = YES;
     //self.view.backgroundColor = [UIColor redColor];
     self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    
+    ratio = 0.0;
+    _isFirst = YES;
     [self createCollectionView];
-    ratio = 8.0f/6.0f;
     [self createInfo];
 }
 
@@ -114,57 +115,39 @@
     [self.view addSubview:self.collectionView];
 }
 
-- (void)downloadData{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_urlString] options:(NSDataReadingUncached) error:nil];
-        [self performSelectorOnMainThread:@selector(fetchedCollectionData:)withObject:data waitUntilDone:YES];
-    });
-    
-}
 - (void)fetchedCollectionData:(NSData *)data{
     if (data == nil) {
       
     }
     NSError *error = nil;
-    [self.dataArray removeAllObjects];
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"collections = %@", collections);
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
     for (NSDictionary *dic in collections) {
-        CollectionModel *model = [CollectionModel new];
-        model.agentPrice = [dic objectForKey:@"product_lowest_price"];
-        model.category = [dic objectForKey:@"category"];
-        model.ID = [dic objectForKey:@"id"];
-        model.isNewgood = [dic objectForKey:@"is_newgood"];
-        model.isSaleopen = [dic objectForKey:@"is_saleopen"];
-        model.isSaleout = [dic objectForKey:@"is_saleout"];
-        model.memo = [dic objectForKey:@"memo"];
-        model.name = [dic objectForKey:@"name"];
-        model.outerId = [dic objectForKey:@"outer_id"];
-        model.picPath = [dic objectForKey:@"pic_path"];
-        model.remainNum = [dic objectForKey:@"remain_num"];
-        model.saleTime = [dic objectForKey:@"sale_time"];
-        model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
-        model.url = [dic objectForKey:@"url"];
-        model.wareBy = [dic objectForKey:@"ware_by"];
-        model.productModel = [dic objectForKey:@"product_model"];
-        model.offShelfTime = [dic objectForKey:@"offshelf_time"];
-        model.watermark_op = [dic objectForKey:@"watermark_op"];
-        [self.dataArray addObject:model];
-        
-        
-        
+    CollectionModel *model = [[CollectionModel alloc] initWithDiction:dic];
+     [self.dataArray addObject:model];
     }
     
-    if ([theTimer isValid]) {
-        [theTimer invalidate];
-    }
     CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
     offSheltTime = tempModel.offShelfTime;
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];
     [self.collectionView reloadData];
+    
+    [self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
+    
+    
+    
+}
+
+- (void)reload{
+    if (ratio > 1) {
+        
+    } else {
+        [self.collectionView reloadData];
+    }
 }
 
 - (void)timerFireMethod:(NSTimer*)theTimer
@@ -253,19 +236,23 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
-    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
-   // NSLog(@"imageUrl = %@", string);
-    UIImage *image = [UIImage imagewithURLString:string];
-    if (image != nil) {
-     //   NSLog(@"image = %@", image);
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
+//    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    
+//    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
+//   // NSLog(@"imageUrl = %@", string);
+//    UIImage *image = [UIImage imagewithURLString:string];
+//    if (image != nil) {
+//     //   NSLog(@"image = %@", image);
+//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
+//    }
+    if (ratio == 0) {
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+        
+    } else {
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *ratio+ 60);
     }
     
     
-    
-    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 
     
 }
@@ -292,10 +279,10 @@
     } else{
         [newString appendString:@"?"];
     }
- //   NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
+    NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
     
-   // NSLog(@"newString = %@", newString);
-    cell.imageView.alpha = 0.0f;
+    NSLog(@"newString = %@", newString);
+    cell.imageView.alpha = 1.0f;
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             cell.imageView.alpha = 1.0;
@@ -304,15 +291,20 @@
         if (image != nil) {
             //自适应图片高度 ,图片宽度固定高度自适应。。。。。
             cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+            ratio = image.size.height/image.size.width;
+            
+            
+            
         } else{
             NSLog(@"error = %@", error);
         }
         
     }] ;
-    
-    
-    
     cell.nameLabel.text = model.name;
+//    if (_isFirst == YES) {
+//        _isFirst = NO;
+//        return nil;
+//    }
     
     
     if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
@@ -333,11 +325,6 @@
     } else{
         cell.backView.hidden = NO;
     }
-
-    
-    
-    
-    
     return cell;
 
 }
