@@ -107,7 +107,7 @@
     }
     
     
-  // NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
+   //NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
     
     
     self.imageView.alpha = 0.0;

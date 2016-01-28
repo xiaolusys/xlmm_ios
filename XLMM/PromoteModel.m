@@ -28,6 +28,7 @@
         _wareBy = [dic objectForKey:@"ware_by"];
         _productModel = [dic objectForKey:@"product_model"];
         _watermark_op = [dic objectForKey:@"watermark_op"];
+        _offshelfTime = [dic objectForKey:@"offshelf_time"];
         if ([_productModel class] == [NSNull class]) {
             _picPath = [dic objectForKey:@"head_img"];
             _productModel = nil;
