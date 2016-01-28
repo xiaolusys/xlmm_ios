@@ -15,14 +15,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamabu.png" translatesAutoresizingMaskIntoConstraints="NO" id="fjd-MS-9wj">
-                        <rect key="frame" x="18" y="10" width="60" height="60"/>
+                        <rect key="frame" x="10" y="20" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="4iw-Hb-krf"/>
-                            <constraint firstAttribute="height" constant="60" id="tif-w0-Eu6"/>
+                            <constraint firstAttribute="width" constant="40" id="4iw-Hb-krf"/>
+                            <constraint firstAttribute="height" constant="40" id="tif-w0-Eu6"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-01-18 16:12:32" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRH-Ko-E80">
-                        <rect key="frame" x="88" y="10" width="180" height="25"/>
+                        <rect key="frame" x="60" y="10" width="180" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="180" id="GZG-fN-MOA"/>
                             <constraint firstAttribute="height" constant="25" id="O88-Cn-KbA"/>
@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户通过微信链接点击进入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an0-UW-U36">
-                        <rect key="frame" x="88" y="35" width="200" height="35"/>
+                        <rect key="frame" x="60" y="35" width="200" height="35"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="S48-QD-6jL"/>
                             <constraint firstAttribute="height" constant="35" id="cit-0e-EKM"/>
@@ -41,7 +41,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＋0.02" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmG-XA-dvq">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＋0.02" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmG-XA-dvq">
                         <rect key="frame" x="440" y="15" width="60" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="1cn-PT-PDN"/>
@@ -53,9 +53,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="fjd-MS-9wj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="HHZ-mP-BsU"/>
+                    <constraint firstItem="fjd-MS-9wj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="HHZ-mP-BsU"/>
                     <constraint firstItem="an0-UW-U36" firstAttribute="top" secondItem="GRH-Ko-E80" secondAttribute="bottom" id="IZo-s6-UdI"/>
-                    <constraint firstItem="fjd-MS-9wj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="QsK-Lm-bNI"/>
+                    <constraint firstItem="fjd-MS-9wj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="QsK-Lm-bNI"/>
                     <constraint firstItem="DmG-XA-dvq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="XBi-f2-CZT"/>
                     <constraint firstItem="GRH-Ko-E80" firstAttribute="leading" secondItem="fjd-MS-9wj" secondAttribute="trailing" constant="10" id="YMr-ih-48e"/>
                     <constraint firstItem="an0-UW-U36" firstAttribute="leading" secondItem="fjd-MS-9wj" secondAttribute="trailing" constant="10" id="agX-jm-EjC"/>

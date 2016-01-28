@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuijianErweimaViewController">
@@ -112,14 +112,14 @@
                     <exclude reference="jcn-bQ-wWm"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="fWx-z8-J6O"/>
-                    <exclude reference="tzf-Ii-REi"/>
                     <exclude reference="mrS-ih-iz7"/>
                     <exclude reference="xpe-XZ-xED"/>
                     <exclude reference="Gfq-29-IRi"/>
                     <exclude reference="QD3-h6-Tma"/>
                     <exclude reference="Ymc-9k-fcy"/>
                     <exclude reference="tka-hr-rfm"/>
+                    <exclude reference="fWx-z8-J6O"/>
+                    <exclude reference="tzf-Ii-REi"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -129,14 +129,14 @@
                     <include reference="jcn-bQ-wWm"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="fWx-z8-J6O"/>
-                    <include reference="tzf-Ii-REi"/>
                     <include reference="mrS-ih-iz7"/>
                     <include reference="xpe-XZ-xED"/>
                     <include reference="Gfq-29-IRi"/>
                     <include reference="QD3-h6-Tma"/>
                     <include reference="Ymc-9k-fcy"/>
                     <include reference="tka-hr-rfm"/>
+                    <include reference="fWx-z8-J6O"/>
+                    <include reference="tzf-Ii-REi"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="260.5" y="326.5"/>

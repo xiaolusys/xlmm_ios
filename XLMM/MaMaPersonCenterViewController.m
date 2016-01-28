@@ -56,6 +56,11 @@
 @property (nonatomic, strong)NSString *earningsRecord;
 @property (nonatomic, strong)NSString *orderRecord;
 
+//分享点击补贴
+@property (weak, nonatomic) IBOutlet UILabel *clickNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *clickMoney;
+@property (weak, nonatomic) IBOutlet UIView *clickView;
+
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -254,6 +259,19 @@
 - (void)maMaOrderInfoData:(NSDictionary *)dic {
     
     [self.dataArr removeAllObjects];
+    
+    //点击补贴
+    NSNumber *clicks = dic[@"clicks"];
+//    NSLog(@"----%@, %d", clicks, [clicks intValue]);
+    if ([clicks intValue] > 0) {
+        self.clickView.hidden = NO;
+        self.clickNumLabel.text = [NSString stringWithFormat:@"%@用户通过点击你的分享", dic[@"clicks"]];
+        self.clickMoney.text = [NSString stringWithFormat:@"+%@",  dic[@"click_money"]];
+    }else {
+        self.clickView.hidden = YES;
+        
+    }
+    
     NSArray *array = dic[@"shops"];
     if (array.count == 0) return;
     ticheng = 0.0;
@@ -535,8 +553,6 @@
 }
 
 - (IBAction)huodongzhongxin:(id)sender {
-    NSLog(@"活动中心");
-    
     MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
     [self.navigationController pushViewController:activityVC animated:YES];
 }
