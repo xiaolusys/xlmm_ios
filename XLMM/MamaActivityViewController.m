@@ -125,6 +125,24 @@
     //加载默认图片
     [self setDefaultImage];
     
+    [self downloadData];
+    
+}
+
+- (void)downloadData{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/freesample", Root_URL];
+    
+    [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
+}
+
+- (void)fetchedData:(NSData *)data{
+    
+    if(data == nil) return;
+    NSError *error = nil;
+    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error == nil) {
+        NSLog(@"data = %@", dicJson);
+    }
 }
 
 #pragma mark 加载图片数据
