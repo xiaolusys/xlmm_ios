@@ -363,17 +363,17 @@ static NSString * ksimpleCell = @"simpleCell";
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
 
-
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
-    });
-}
+//
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//        
+//    });
+//}
 
 - (void)downloadData{
     [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
@@ -406,7 +406,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     
     for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [self fillModel:ladyInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         
         [_dataArray addObject:model];
         
@@ -550,7 +550,7 @@ static NSString * ksimpleCell = @"simpleCell";
     // MMLOG(json);
     NSArray *array = [json objectForKey:@"results"];
     for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [self fillModel:ladyInfo];
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         
         
         [self.orderDataArray addObject:model];
@@ -560,41 +560,41 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView reloadData];
 }
 
-- (PromoteModel *)fillModel:(NSDictionary *)dic{
-    PromoteModel *model = [PromoteModel new];
-    model.ID = [dic objectForKey:@"id"];
-    
-    model.name = [dic objectForKey:@"name"];
-    model.Url = [dic objectForKey:@"url"];
-    model.agentPrice = [dic objectForKey:@"lowest_price"];
-    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
-    model.outerID = [dic objectForKey:@"outer_id"];
-    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
-    model.isSaleout = [dic objectForKey:@"is_saleout"];
-    model.category = [dic objectForKey:@"category"];
-    model.remainNum = [dic objectForKey:@"remain_num"];
-    model.saleTime = [dic objectForKey:@"sale_time"];
-    model.wareBy = [dic objectForKey:@"ware_by"];
-    model.productModel = [dic objectForKey:@"product_model"];
-    model.watermark_op = [dic objectForKey:@"watermark_op"];
-    
-    if ([model.productModel class] == [NSNull class]) {
-        model.picPath = [dic objectForKey:@"head_img"];
-        model.productModel = nil;
-        NSLog(@"productModel is null.");
-        return model;
-    }
-
-    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-        //  NSLog(@"没有集合页");
-        model.picPath = [dic objectForKey:@"head_img"];
-    } else{
-        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
-        model.name = [model.productModel objectForKey:@"name"];
-        //  NSLog(@"----集合页----");
-    }
-    return model;
-}
+//- (PromoteModel *)fillModel:(NSDictionary *)dic{
+//    PromoteModel *model = [PromoteModel new];
+//    model.ID = [dic objectForKey:@"id"];
+//    
+//    model.name = [dic objectForKey:@"name"];
+//    model.Url = [dic objectForKey:@"url"];
+//    model.agentPrice = [dic objectForKey:@"lowest_price"];
+//    model.stdSalePrice = [dic objectForKey:@"std_sale_price"];
+//    model.outerID = [dic objectForKey:@"outer_id"];
+//    model.isSaleopen = [dic objectForKey:@"is_saleopen"];
+//    model.isSaleout = [dic objectForKey:@"is_saleout"];
+//    model.category = [dic objectForKey:@"category"];
+//    model.remainNum = [dic objectForKey:@"remain_num"];
+//    model.saleTime = [dic objectForKey:@"sale_time"];
+//    model.wareBy = [dic objectForKey:@"ware_by"];
+//    model.productModel = [dic objectForKey:@"product_model"];
+//    model.watermark_op = [dic objectForKey:@"watermark_op"];
+//    
+//    if ([model.productModel class] == [NSNull class]) {
+//        model.picPath = [dic objectForKey:@"head_img"];
+//        model.productModel = nil;
+//        NSLog(@"productModel is null.");
+//        return model;
+//    }
+//
+//    if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+//        //  NSLog(@"没有集合页");
+//        model.picPath = [dic objectForKey:@"head_img"];
+//    } else{
+//        model.picPath = [[model.productModel objectForKey:@"head_imgs"] objectAtIndex:0];
+//        model.name = [model.productModel objectForKey:@"name"];
+//        //  NSLog(@"----集合页----");
+//    }
+//    return model;
+//}
 
 
 
