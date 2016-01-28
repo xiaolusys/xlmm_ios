@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
             <connections>
                 <outlet property="clickMoney" destination="LH9-6Q-7Sz" id="oPm-AF-AI2"/>
                 <outlet property="clickNumLabel" destination="6c2-dM-kyA" id="ZDB-wE-yEJ"/>
-                <outlet property="clickView" destination="aPq-Lp-7py" id="Qbz-PG-Grw"/>
                 <outlet property="clickedViewHeight" destination="nDP-6Y-x8B" id="rJd-gQ-GGB"/>
                 <outlet property="dingdanLabel" destination="kFO-sq-pB1" id="9hL-w3-w2h"/>
                 <outlet property="dingdanyilu" destination="onc-IJ-A1G" id="RJV-N8-XGx"/>
@@ -23,6 +22,7 @@
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
                 <outlet property="mamaTableView" destination="jMl-fz-Jz2" id="KnF-Qb-yvl"/>
                 <outlet property="rootScrollView" destination="CZD-1f-6rH" id="kih-rd-YjN"/>
+                <outlet property="shareSubsidies" destination="aPq-Lp-7py" id="c1C-Tj-Na6"/>
                 <outlet property="tableViewHeight" destination="07v-Uv-wcz" id="kFC-ns-4wy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

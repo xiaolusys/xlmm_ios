@@ -85,6 +85,12 @@
     [headerV addSubview:titleLabel];
     [headerV addSubview:moneyLabel];
     headerV.backgroundColor = [UIColor whiteColor];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, 1)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineView.alpha = 0.3;
+    [headerV addSubview:lineView];
+    
     self.tableView.tableHeaderView = headerV;
 
     [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];

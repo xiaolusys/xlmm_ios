@@ -10,11 +10,15 @@
 #import "UIViewController+NavigationBar.h"
 #import "MaMaShareSubsidiesViewCell.h"
 #import "MMClass.h"
+#import "AFNetworking.h"
+#import "ShareClickModel.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
+
+@property (nonatomic, strong)UILabel *moneyText;
 @end
 
 static NSString *cellIdentifier = @"shareSubsidies";
@@ -44,7 +48,17 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
     [self createNavigationBarWithTitle:@"分享补贴" selecotr:@selector(backClickAction)];
     [self createTableView];
-
+    
+    //网络请求
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/clicklog/click_by_day?days=%ld", Root_URL, (long)self.clickDate];
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return ;
+        
+        [self dataDeal:responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:%@", error);
+    }];
 }
 
 - (void)createTableView {
@@ -58,7 +72,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 165)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 25, 100, 20)];
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -67,10 +81,30 @@ static NSString *cellIdentifier = @"shareSubsidies";
     moneyLabel.textColor = [UIColor orangeThemeColor];
     moneyLabel.font = [UIFont systemFontOfSize:35];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    moneyLabel.text = @"10.00";
+    moneyLabel.text = [NSString stringWithFormat:@"%@", self.todayMoney];
     [headerV addSubview:titleLabel];
     [headerV addSubview:moneyLabel];
     headerV.backgroundColor = [UIColor whiteColor];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, 1)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineView.alpha = 0.3;
+    [headerV addSubview:lineView];
+    CGFloat lineViewY = CGRectGetMaxY(lineView.frame);
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, lineViewY + 13, 18, 18)];
+    imageV.image = [UIImage imageNamed:@"totalClick.png"];
+    [headerV addSubview:imageV];
+    CGFloat imageVX = CGRectGetMaxX(imageV.frame) + 10;
+    UILabel *totalText = [[UILabel alloc] initWithFrame:CGRectMake(imageVX, lineViewY + 7, 80, 30)];
+    totalText.text = @"历史累积";
+    totalText.font = [UIFont systemFontOfSize:14];
+    [headerV addSubview:totalText];
+    self.moneyText = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH - 110, lineViewY + 7, 100, 30)];
+    self.moneyText.font = [UIFont systemFontOfSize:18];
+    self.moneyText.textAlignment = NSTextAlignmentRight;
+    [headerV addSubview:self.moneyText];
+    
     self.tableView.tableHeaderView = headerV;
     
     [self.view addSubview:self.tableView];
@@ -80,18 +114,32 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark 数据处理
+- (void)dataDeal:(NSDictionary *)dic {
+    NSArray *clicks = dic[@"results"];
+    self.moneyText.text = [NSString stringWithFormat:@"%@", dic[@"all_income"]];
+    for (NSDictionary *click in clicks) {
+        ShareClickModel *clickM = [[ShareClickModel alloc] init];
+        [clickM setValuesForKeysWithDictionary:click];
+        [self.dataArr addObject:clickM];
+    }
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark UItabelView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ShareClickModel *clickModel = self.dataArr[indexPath.row];
     MaMaShareSubsidiesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (!cell) {
         cell = [[MaMaShareSubsidiesViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-//    [cell fillCarryModel:carryLogM];
+    [cell fillCell:clickModel];
     return cell;
 }
 

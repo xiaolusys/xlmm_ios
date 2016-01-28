@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ShareClickModel;
 @interface MaMaShareSubsidiesViewCell : UITableViewCell
 
+
+@property (weak, nonatomic) IBOutlet UILabel *click_time;
+@property (weak, nonatomic) IBOutlet UILabel *click_way;
+@property (weak, nonatomic) IBOutlet UILabel *click_money;
+
+- (void)fillCell:(ShareClickModel *)clickModel;
 @end
