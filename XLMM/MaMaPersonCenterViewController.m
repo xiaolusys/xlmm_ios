@@ -273,7 +273,13 @@
     }
     
     NSArray *array = dic[@"shops"];
-    if (array.count == 0) return;
+    if (array.count == 0){
+        
+        [self.mamaTableView reloadData];
+        return;
+
+    }
+        
     ticheng = 0.0;
     dingdanshu = array.count;
     
@@ -398,6 +404,8 @@
         
         
         [self maMaOrderInfoData:responseObject];
+        
+        NSLog(@"%@", responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
