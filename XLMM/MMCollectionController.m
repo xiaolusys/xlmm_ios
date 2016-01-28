@@ -296,6 +296,10 @@
             
             
         } else{
+//            cell.imageView.image = [UIImage imagewithURLString:[[newString imageCompression] URLEncodedString]];
+//            UIImage *image = cell.imageView.image;
+//            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+
             NSLog(@"error = %@", error);
         }
         
