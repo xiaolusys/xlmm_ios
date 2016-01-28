@@ -42,7 +42,7 @@
     UIBezierPath * path0 = [[UIBezierPath alloc] init];
     [[UIColor orangeThemeColor]set];
     CGFloat startAngle, endAngle;
-    
+    startAngle = PI * 7 /6.0;
     
     
     
@@ -75,7 +75,7 @@
     [endTime setSecond:0];
     [endTime setHour:10];
     
-   
+   [self updateCircleViewWithCenter:(CGPointMake(24, 52))];
 
 //    if (hour < 10) {
 //        [self updateCircleViewWithCenter:(CGPointMake(32, 72))];
