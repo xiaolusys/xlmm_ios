@@ -21,6 +21,8 @@
 		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
 		181C74AA1C536E3800375DF8 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
+		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
+		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
@@ -718,6 +720,9 @@
 		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
+		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
+		18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareClickModel.m; sourceTree = "<group>"; };
+		18CD7BCA1C5A149C0024B447 /* totalClick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = totalClick.png; sourceTree = "<group>"; };
 		18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaSelectProduct.h; sourceTree = "<group>"; };
 		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
 		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
@@ -1928,6 +1933,7 @@
 				181C74911C52152800375DF8 /* mamayong.png */,
 				181C749E1C53678400375DF8 /* mamaShare.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
+				18CD7BCA1C5A149C0024B447 /* totalClick.png */,
 			);
 			name = MaMa;
 			sourceTree = "<group>";
@@ -1991,6 +1997,8 @@
 				2E62D6701C4DE569007B20BB /* CarryLogModel.m */,
 				18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */,
 				18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */,
+				18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */,
+				18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */,
 			);
 			name = MaMaModel;
 			sourceTree = "<group>";
@@ -3587,6 +3595,7 @@
 				8E0044F41BFF09B600AFC1DF /* dingdanemptyimage.png in Resources */,
 				2E612B541C4A4454002F1C15 /* 2lun@2x.png in Resources */,
 				32746E2B1B74A22000816208 /* icon-wodejifen.png in Resources */,
+				18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */,
 				3247FDBF1C03365900C6631D /* yiguoqi.png in Resources */,
 				32ECAAD01BFEF30900A21CE7 /* PostImageView.xib in Resources */,
 				32746E321B74A22000816208 /* logo.png in Resources */,
@@ -4062,6 +4071,7 @@
 				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,
 				3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */,
 				32620C6C1B6AFD23006E806A /* LogInViewController.m in Sources */,
+				18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */,
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
 				322D25641C32B66100509EAD /* MJRefreshBackFooter.m in Sources */,

@@ -63,6 +63,11 @@
                     <constraint firstItem="GRH-Ko-E80" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="pdx-T2-Ckb"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="click_money" destination="DmG-XA-dvq" id="w6y-di-ae4"/>
+                <outlet property="click_time" destination="GRH-Ko-E80" id="qO4-H0-rUZ"/>
+                <outlet property="click_way" destination="an0-UW-U36" id="lPd-EU-m1W"/>
+            </connections>
             <point key="canvasLocation" x="629" y="416.5"/>
         </tableViewCell>
     </objects>

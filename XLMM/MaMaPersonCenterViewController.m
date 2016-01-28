@@ -24,6 +24,7 @@
 #import "ProductSelectionListViewController.h"
 #import "MaMaShopViewController.h"
 #import "FensiListViewController.h"
+#import "MaMaShareSubsidiesViewController.h"
 
 
 
@@ -45,7 +46,8 @@
     
     NSString *share_mmcode;
     
-    
+    NSNumber *_money;
+    NSInteger _clickDate;
     
 }
 
@@ -59,7 +61,6 @@
 //分享点击补贴
 @property (weak, nonatomic) IBOutlet UILabel *clickNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *clickMoney;
-@property (weak, nonatomic) IBOutlet UIView *clickView;
 
 @end
 
@@ -262,14 +263,18 @@
     
     //点击补贴
     NSNumber *clicks = dic[@"clicks"];
-//    NSLog(@"----%@, %d", clicks, [clicks intValue]);
+    
+    _money = dic[@"click_money"];
     if ([clicks intValue] > 0) {
-        self.clickView.hidden = NO;
+        self.shareSubsidies.hidden = NO;
+        self.clickedViewHeight.constant = 45;
         self.clickNumLabel.text = [NSString stringWithFormat:@"%@用户通过点击你的分享", dic[@"clicks"]];
+        
+        
         self.clickMoney.text = [NSString stringWithFormat:@"+%@",  dic[@"click_money"]];
     }else {
-        self.clickView.hidden = YES;
-        
+        self.shareSubsidies.hidden = YES;
+        self.clickedViewHeight.constant = 0;
     }
     
     NSArray *array = dic[@"shops"];
@@ -387,7 +392,7 @@
     
     //NSLog(@"days = %ld", days);
 
-    
+    _clickDate = days;
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
     
@@ -456,12 +461,6 @@
     }];
 }
 
-
-
-
-
-
-
 #pragma mark --TableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -484,13 +483,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (cell == nil) {
             cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
-            
         }
         MaMaOrderModel *orderM = self.dataArr[indexPath.row];
         [cell fillDataOfCell:orderM];
         
         return cell;
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -509,7 +506,6 @@
 */
 
 - (IBAction)backClicked:(id)sender {
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -559,6 +555,8 @@
 
 - (void)clickShareView {
     MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
+    share.clickDate = _clickDate;
+    share.todayMoney = _money;
     [self.navigationController pushViewController:share animated:YES];
 }
 

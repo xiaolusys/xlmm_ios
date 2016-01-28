@@ -39,16 +39,16 @@
     self.orderStatic.text = orderM.get_status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
    
-    NSMutableString *timestext= [NSMutableString stringWithString:orderM.shoptime];
-    NSRange range;
-    range = [timestext rangeOfString:@"T"];
-    [timestext replaceCharactersInRange:range withString:@" "];
-    range = NSMakeRange(0, 10);
-    [timestext deleteCharactersInRange:range];
-    range = NSMakeRange(timestext.length - 4, 3);
-    [timestext deleteCharactersInRange:range];
+//    NSMutableString *timestext= [NSMutableString stringWithString:orderM.shoptime];
+//    NSRange range;
+//    range = [timestext rangeOfString:@"T"];
+//    [timestext replaceCharactersInRange:range withString:@" "];
+//    range = NSMakeRange(0, 10);
+//    [timestext deleteCharactersInRange:range];
+//    range = NSMakeRange(timestext.length - 4, 3);
+//    [timestext deleteCharactersInRange:range];
    
-    self.times.text = timestext;
+    self.times.text = orderM.time_display;
     self.times.font = [UIFont systemFontOfSize:12];
 }
 
