@@ -10,6 +10,7 @@
 
 @interface MaMaPersonCenterViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *clickedViewHeight;
 
 @property (weak, nonatomic) IBOutlet UILabel *fensiLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;

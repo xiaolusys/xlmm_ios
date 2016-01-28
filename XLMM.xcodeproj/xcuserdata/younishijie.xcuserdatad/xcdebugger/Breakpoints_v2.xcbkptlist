@@ -109,7 +109,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "346"
             endingLineNumber = "346"
-            landmarkName = "-tapClicked:"
+            landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
