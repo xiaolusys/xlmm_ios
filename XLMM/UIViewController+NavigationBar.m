@@ -25,17 +25,19 @@
     [button addSubview:imageView];
     [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    button.backgroundColor = [UIColor orangeColor];
-    
-//    
-//    if(([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0?20:0)){
-//        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//        negativeSpacer.width = -16;
-//        self.navigationItem.leftBarButtonItems = @[negativeSpacer, leftItem];
-//    }else {
-//     self.navigationItem.leftBarButtonItem = leftItem;
-//    }
+
     self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data == nil) {
+            return ;
+        }
+        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+        
+    });
 }
 
 @end

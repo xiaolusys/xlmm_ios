@@ -41,10 +41,43 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)cancelTixian:(UIButton *)button{
+    NSLog(@"取消");
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/cashout/cancal_cashout", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    //  http://192.168.1.31:9000/rest/v1/cashout
+    
+    NSLog(@"url = %@", string);
+    NSDictionary *paramters = @{@"id":@68};
+    NSLog(@"paramters = %@", paramters);
+    [manager POST:string parameters:paramters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"response = %@", responseObject);
+              if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                  [alertView show];
+              } else if ([[responseObject objectForKey:@"code"] integerValue] == 0){
+                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                  [alertView show];
+              }
+     
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
+    
+
     
    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hongbaoClicked:)];
@@ -87,6 +120,12 @@
     
     [self createRightButonItem];
     
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+//    button.frame = CGRectMake(0, 0, 44, 44);
+//    [button setTitle:@"取消提现" forState:UIControlStateNormal];
+//    [button addTarget:self action:@selector(cancelTixian:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void) createRightButonItem{

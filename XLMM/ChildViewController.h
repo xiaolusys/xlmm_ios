@@ -9,30 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "MMNavigationDelegate.h"
 
-@interface ChildViewController : UIViewController<
-                                    UICollectionViewDataSource,
-                                    UICollectionViewDelegateFlowLayout,
-UICollectionViewDelegate>{
+@interface ChildViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>{
 }
 
 @property (nonatomic, assign) id<MMNavigationDelegate>delegate;
-
 @property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
-
 @property (assign, nonatomic) BOOL isRoot;
 @property (copy, nonatomic) NSString *urlString;
 @property (copy, nonatomic) NSString *orderUrlString;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistant;
-
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-
 @property (weak, nonatomic) IBOutlet UICollectionView *childCollectionView;
-
-
 - (IBAction)btnClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *jiageButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
 
 

@@ -29,5 +29,6 @@
 @property (nonatomic, copy)NSString *offshelfTime;
 @property (nonatomic, copy) NSString *watermark_op;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dic;
 
 @end

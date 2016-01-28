@@ -11,6 +11,6 @@
 @interface UIViewController (NavigationBar)
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector;
-
+- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor;
 
 @end

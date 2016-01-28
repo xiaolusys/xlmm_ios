@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIView *btnView;
 
 - (IBAction)btnClicked:(id)sender;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
 @end
