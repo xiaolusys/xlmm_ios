@@ -98,18 +98,18 @@
     
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, SWIDTH, SHEIGHT)];
 
-        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        activityIndicator.center = imageV.center;
-        [activityIndicator startAnimating];
+//        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//        activityIndicator.center = imageV.center;
+//        [activityIndicator startAnimating];
 
         NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
         [imageV sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [activityIndicator removeFromSuperview];
-            activityIndicator = nil;
+//            [activityIndicator removeFromSuperview];
+//            activityIndicator = nil;
         }];
     
         [self.scrollView addSubview:imageV];
-        [self.scrollView addSubview:activityIndicator];
+//        [self.scrollView addSubview:activityIndicator];
     }
 }
 

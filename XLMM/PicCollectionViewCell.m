@@ -27,7 +27,7 @@
     NSString *url = [imageUrl imageShareCompression];
     
 //    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.cellImageView.contentMode = UIViewContentModeScaleAspectFill;
 //    UIImage *image = [UIImage imageNamed:url];
 //    self.cellImageView.image = image;

@@ -146,8 +146,6 @@
 #pragma mark --进入提现界面
 
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
-   // NSLog(@"0");
-   // NSLog(@"提现");
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
     vc.cantixianjine = ableTixianJine;
     vc.name = nickName;
@@ -169,8 +167,6 @@
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
-        
-        
         self.earningsRecord = self.jileishouyi.text;
     }
 }
