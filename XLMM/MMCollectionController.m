@@ -237,17 +237,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-//    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-//    
-//    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
-//   // NSLog(@"imageUrl = %@", string);
-//    UIImage *image = [UIImage imagewithURLString:string];
-//    if (image != nil) {
-//     //   NSLog(@"image = %@", image);
-//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
-//    }
-    if (ratio == 0) {
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
+   // NSLog(@"imageUrl = %@", string);
+    UIImage *image = [UIImage imagewithURLString:string];
+    if (image != nil) {
+     //   NSLog(@"image = %@", image);
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
     } else {
         return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 
