@@ -13,11 +13,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
-//    NSLog(@"---------test--------");
-//    self.savePhotoBtn.layer.cornerRadius = 10;
-//    self.savePhotoBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-//    self.savePhotoBtn.layer.borderWidth = 1.0;
-//    self.savePhotoBtn.layer.cornerRadius = 10;
+    self.savePhotoBtn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    self.savePhotoBtn.layer.borderWidth = 1.0;
+    self.savePhotoBtn.layer.cornerRadius = 18;
+    self.savePhotoBtn.titleLabel.textColor = [UIColor buttonEmptyBorderColor];
 }
 
 @end

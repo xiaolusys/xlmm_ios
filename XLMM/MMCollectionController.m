@@ -25,7 +25,7 @@
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)UICollectionView *collectionView;
 
-
+@property (nonatomic, assign)NSInteger count;
 @end
 
 @implementation MMCollectionController{
@@ -134,6 +134,7 @@
     offSheltTime = tempModel.offShelfTime;
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [self timerFireMethod:theTimer];
+    
     [self.collectionView reloadData];
     
     [self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
@@ -247,7 +248,6 @@
 //    }
     if (ratio == 0) {
         return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
-        
     } else {
         return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *ratio+ 60);
     }

@@ -118,7 +118,7 @@ static NSString *cellIdentifier = @"productSelection";
     [SVProgressHUD showWithStatus:@"加载中，请稍后..."];
     if (btn.selected) {
         //网络请求
-        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
         NSDictionary *parameters = @{@"product":cell.pdtID};
         
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -133,7 +133,7 @@ static NSString *cellIdentifier = @"productSelection";
         
     }else {
         //网络请求
-        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/add_pro_to_shop", Root_URL];
+        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/add_pro_to_shop", Root_URL];
         NSDictionary *parameters = @{@"product":cell.pdtID};
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //已上架

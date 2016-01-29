@@ -63,7 +63,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -122,7 +122,7 @@ static NSString *cellIdentifier = @"productSelection";
     if (self.isRequest)return;
     self.isRequest = YES;
     //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/cushoppros/remove_pro_from_shop", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
     NSDictionary *parameters = @{@"product":cell.pdtID};
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

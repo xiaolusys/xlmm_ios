@@ -23,6 +23,7 @@
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
+		18D22E3A1C5B4EF200ECE45C /* zhanwei.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D22E391C5B4EF200ECE45C /* zhanwei.png */; };
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
@@ -723,6 +724,7 @@
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
 		18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareClickModel.m; sourceTree = "<group>"; };
 		18CD7BCA1C5A149C0024B447 /* totalClick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = totalClick.png; sourceTree = "<group>"; };
+		18D22E391C5B4EF200ECE45C /* zhanwei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanwei.png; sourceTree = "<group>"; };
 		18DCB2D81C55F4F800B7FBA9 /* MaMaSelectProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaSelectProduct.h; sourceTree = "<group>"; };
 		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
 		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
@@ -1934,6 +1936,7 @@
 				181C749E1C53678400375DF8 /* mamaShare.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
 				18CD7BCA1C5A149C0024B447 /* totalClick.png */,
+				18D22E391C5B4EF200ECE45C /* zhanwei.png */,
 			);
 			name = MaMa;
 			sourceTree = "<group>";
@@ -3793,6 +3796,7 @@
 				3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */,
 				181C749F1C53678400375DF8 /* mamaShare.png in Resources */,
 				2E77F56A1C1C10900020C014 /* YoumengShare.xib in Resources */,
+				18D22E3A1C5B4EF200ECE45C /* zhanwei.png in Resources */,
 				2E5600AE1C2D496E000AFB39 /* loading动画0049.png in Resources */,
 				32DE21C61BF1DE2A00999ECA /* leftArrowIcon.png in Resources */,
 				3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */,
@@ -4219,7 +4223,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4256,7 +4260,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4301,7 +4305,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4345,7 +4349,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d7d4801-886f-4994-b502-69e893e801ed";
+				PROVISIONING_PROFILE = "2f8e2bd0-5732-4c46-8c4a-6f31d4653a08";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

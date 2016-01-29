@@ -133,7 +133,7 @@
     
     //网络请求
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/ninepic", Root_URL];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
@@ -160,9 +160,6 @@
 }
 
 - (void)requestData:(NSArray *)data {
-//    if (data.count == 0) {
-//        [self showDefaultView];
-//    }
     
     for (NSMutableDictionary *oneTurns in data) {
         SharePicModel *sharePic = [[SharePicModel alloc] init];
@@ -225,12 +222,14 @@
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
         if ([picModel.could_share intValue]) {
+            footerV.savePhotoBtn.userInteractionEnabled=YES;
+            footerV.savePhotoBtn.alpha=1.0;
             footerV.savePhotoBtn.tag = 100 + indexPath.section;
-            
             [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
             return footerV;
         }else {
-            footerV.savePhotoBtn.enabled = NO;
+            footerV.savePhotoBtn.userInteractionEnabled=NO;
+            footerV.savePhotoBtn.alpha=0.5;
             return footerV;
         }
        
@@ -270,9 +269,9 @@
     NSString *str = picModel.title;
     [pab setString:str];
     if (pab == nil) {
-        [SVProgressHUD showErrorWithStatus:@"请重写复制"];
+        [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已复制，图片正在保存" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
     if (self.currentArr == nil) {
@@ -293,9 +292,6 @@
             NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.currentArr[0]];
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:joinUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
-    }else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
     }
 }
 
