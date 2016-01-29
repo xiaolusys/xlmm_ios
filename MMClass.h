@@ -70,6 +70,7 @@
 - (void)menuVCPushSide;
 
 @end
+
 #pragma mark --URLs--
 #define kTODAY_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/today.json",Root_URL]
 #define kPREVIOUS_POSTERS_URL [NSString stringWithFormat:@"%@/rest/v1/posters/previous.json",Root_URL]

@@ -314,8 +314,6 @@
 		322D25D51C32B93A00509EAD /* 圈圈加载0042.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25A91C32B93A00509EAD /* 圈圈加载0042.png */; };
 		322D25D61C32B93A00509EAD /* 圈圈加载0043.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */; };
 		322D25D71C32B93A00509EAD /* 圈圈加载0044.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */; };
-		322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D25D91C35289700509EAD /* MaMaCenterViewController.m */; };
-		322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */; };
 		322D25E21C38AF1800509EAD /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D25E11C38AF1800509EAD /* head_icon.png */; };
 		322FA9401C3CA9CC008DD942 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322FA93E1C3CA9CC008DD942 /* TixianViewController.m */; };
 		322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */; };
@@ -1146,9 +1144,6 @@
 		322D25A91C32B93A00509EAD /* 圈圈加载0042.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0042.png"; sourceTree = "<group>"; };
 		322D25AA1C32B93A00509EAD /* 圈圈加载0043.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0043.png"; sourceTree = "<group>"; };
 		322D25AB1C32B93A00509EAD /* 圈圈加载0044.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0044.png"; sourceTree = "<group>"; };
-		322D25D81C35289700509EAD /* MaMaCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaCenterViewController.h; sourceTree = "<group>"; };
-		322D25D91C35289700509EAD /* MaMaCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaCenterViewController.m; sourceTree = "<group>"; };
-		322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaCenterViewController.xib; sourceTree = "<group>"; };
 		322D25DF1C3532A200509EAD /* MaMaHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHeadView.xib; sourceTree = "<group>"; };
 		322D25E11C38AF1800509EAD /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
 		322FA93D1C3CA9CC008DD942 /* TixianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TixianViewController.h; sourceTree = "<group>"; };
@@ -1734,9 +1729,6 @@
 			children = (
 				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
 				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
-				322D25D81C35289700509EAD /* MaMaCenterViewController.h */,
-				322D25D91C35289700509EAD /* MaMaCenterViewController.m */,
-				322D25DA1C35289700509EAD /* MaMaCenterViewController.xib */,
 				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
 				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
 				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
@@ -3885,7 +3877,6 @@
 				2EB87D3D1C17FAE4001CBF3D /* ios-social-sdk-like.html in Resources */,
 				3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */,
 				322D257F1C32B92000509EAD /* xiala.png in Resources */,
-				322D25DC1C35289700509EAD /* MaMaCenterViewController.xib in Resources */,
 				2E5600B01C2D496E000AFB39 /* loading动画0050.png in Resources */,
 				32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */,
 				2E5600CF1C2D496E000AFB39 /* loading动画009.png in Resources */,
@@ -4141,7 +4132,6 @@
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
-				322D25DB1C35289700509EAD /* MaMaCenterViewController.m in Sources */,
 				322D25671C32B66100509EAD /* MJRefreshHeader.m in Sources */,
 				3265DAB01C1667BD0095BC94 /* SVRadialGradientLayer.m in Sources */,
 				2E73EDF01C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m in Sources */,

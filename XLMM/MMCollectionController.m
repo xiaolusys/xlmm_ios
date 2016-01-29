@@ -121,7 +121,7 @@
     }
     NSError *error = nil;
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"collections = %@", collections);
+   // NSLog(@"collections = %@", collections);
     if (error != nil) {
         NSLog(@"error = %@", error);
     }
@@ -137,7 +137,7 @@
     
     [self.collectionView reloadData];
     
-    [self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
+    //[self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
     
     
     
@@ -249,9 +249,19 @@
     if (ratio == 0) {
         return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     } else {
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *ratio+ 60);
+        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+
     }
     
+    
+//    
+//    if (ratio == 0) {
+//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+//        
+//    } else {
+//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *ratio+ 60);
+//    }
+//    
     
 
     
@@ -279,9 +289,9 @@
     } else{
         [newString appendString:@"?"];
     }
-    NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
-    
-    NSLog(@"newString = %@", newString);
+//    NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
+//    
+//    NSLog(@"newString = %@", newString);
     cell.imageView.alpha = 1.0f;
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
@@ -296,6 +306,10 @@
             
             
         } else{
+//            cell.imageView.image = [UIImage imagewithURLString:[[newString imageCompression] URLEncodedString]];
+//            UIImage *image = cell.imageView.image;
+//            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
+
             NSLog(@"error = %@", error);
         }
         

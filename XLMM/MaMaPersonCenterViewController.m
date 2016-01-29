@@ -83,7 +83,7 @@
     self.fabuButton.layer.borderWidth = 1;
     self.fabuButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.fabuButton.layer.cornerRadius = 20;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/xlmm", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
     
     //点击分享补贴
     UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
@@ -91,8 +91,8 @@
     
 
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
-    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
-    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
     [self prepareData];
     [self createChart:dataArray];
@@ -209,7 +209,7 @@
     NSInteger days = (count - page - 1)*7;
   //  NSLog(@"days = %ld", days);
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
   //  NSLog(@"urlstring = %@", urlString);
     
     //改变竖线的位置。。。。
@@ -241,7 +241,7 @@
 
 #pragma mark --获取今日订单数据。。。。
 - (void)prepareTableData{
-    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day", Root_URL];
+    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
@@ -396,7 +396,7 @@
 
     _clickDate = days;
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -437,7 +437,7 @@
 //  获取表格数据
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/shopping/days_num?days=91", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/days_num?days=91", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;

@@ -875,7 +875,7 @@
        kLinkDescription = shareDesc;
 
     } else{
-        kLinkDescription = @"小鹿妹妹";
+        kLinkDescription = @"小鹿美美";
     }
     __unused NSString *kLinkTitle = shareTitle;
     WXWebpageObject *ext = [WXWebpageObject object];
