@@ -307,7 +307,10 @@
     self.mamaScrollView.contentOffset = scrollViewContentOffset;
     self.mamaScrollView.pagingEnabled = YES;
     
-    
+    NSArray *array = self.mamaScrollView.subviews;
+    for (UIView *view in array) {
+        [view removeFromSuperview];
+    }
     
     
     for (int i = 0; i < allDingdan.count; i++) {
