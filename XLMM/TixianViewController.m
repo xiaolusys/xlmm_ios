@@ -43,7 +43,7 @@
 
 - (void)cancelTixian:(UIButton *)button{
     NSLog(@"取消");
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/cashout/cancal_cashout", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     //  http://192.168.1.31:9000/rest/v1/cashout
@@ -242,7 +242,7 @@
     
 //  http://192.168.1.31:9000/rest/v1/cashout
     
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL];
+    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
     NSLog(@"url = %@", stringurl);
     NSDictionary *paramters = @{@"choice":type};
     NSLog(@"paramters = %@", paramters);

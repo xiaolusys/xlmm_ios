@@ -61,7 +61,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 - (void)downloadData{
-    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/cashout", Root_URL] andSelector:@selector(fetchedHistoryData:)];
+    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL] andSelector:@selector(fetchedHistoryData:)];
 }
 
 - (void)fetchedHistoryData:(NSData *)data{

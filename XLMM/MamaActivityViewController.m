@@ -130,7 +130,7 @@
 }
 
 - (void)downloadData{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/freesample", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_proinfo", Root_URL];
     
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
 }

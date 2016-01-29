@@ -133,7 +133,7 @@
     
     //网络请求
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/ninepic", Root_URL];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];

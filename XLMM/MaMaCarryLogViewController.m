@@ -58,7 +58,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     [self createTableView];
     
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/carrylog/get_carryinlog", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog/get_carryinlog", Root_URL];
     
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;

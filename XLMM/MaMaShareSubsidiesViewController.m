@@ -50,7 +50,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [self createTableView];
     
     //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/clicklog/click_by_day?days=%ld", Root_URL, (long)self.clickDate];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/clicklog/click_by_day?days=%ld", Root_URL, (long)self.clickDate];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         
