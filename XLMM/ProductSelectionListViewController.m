@@ -60,7 +60,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/products/my_choice_pro", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

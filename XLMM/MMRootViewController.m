@@ -23,7 +23,6 @@
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
-#import "MaMaCenterViewController.h"
 #import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
 
