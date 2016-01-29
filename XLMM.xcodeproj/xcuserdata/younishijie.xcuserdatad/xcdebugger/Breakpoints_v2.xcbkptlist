@@ -93,8 +93,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "245"
             endingLineNumber = "245"
-            landmarkName = "@implementation MaMaPersonCenterViewController"
-            landmarkType = "3">
+            landmarkName = "-prepareTableData"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -414,6 +414,22 @@
             startingLineNumber = "133"
             endingLineNumber = "133"
             landmarkName = "-downloadData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/MaMaPersonCenterViewController.m"
+            timestampString = "475751494.162931"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
+            landmarkName = "-maMaOrderInfoData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

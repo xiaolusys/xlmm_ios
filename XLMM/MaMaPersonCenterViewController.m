@@ -275,7 +275,7 @@
     
     NSArray *array = dic[@"shops"];
     if (array.count == 0){
-        
+        self.dingdanLabel.text = @"订单 0      收入 0.00";
         [self.mamaTableView reloadData];
         return;
 
