@@ -163,7 +163,7 @@
 }
 
 - (void)createBackView{
-    backView = [[UIView alloc] initWithFrame:self.view.bounds];
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.alpha = 0.3;
     backView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:backView];
@@ -414,9 +414,69 @@
 
 - (IBAction)commitClicked:(id)sender {
     NSLog(@"颜色：%@， 尺码：%@",colorparam, sizeparam);
-    NSString *message = [NSString stringWithFormat:@"确定要选择颜色为%@，尺码为%@的商品吗", colorparam, sizeparam];
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [alterView show];
+//    NSString *message = [NSString stringWithFormat:@"确定要选择颜色为%@，尺码为%@的商品吗", colorparam, sizeparam];
+//    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    [alterView show];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    
+    
+    
+    NSDictionary *parameters = @{@"vipcode":@"abc123",
+                                 @"outer_id":@"90061232563",
+                                 @"sku_code":@"xl",
+                                 @"mobile":@"13816404857"
+                                 };
+    NSLog(@"parameters = %@", parameters);
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order", Root_URL];
+    
+    
+    [manager POST:string parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              //  NSError *error;
+              NSLog(@"JSON: %@", responseObject);
+              shareInfo = responseObject;
+              
+              
+              
+              shareView = [MamaShareView new];
+              
+              
+              
+              NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
+              shareView = array[0];
+              shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+              NSLog(@"shareView  = %@", shareView.subviews);
+              
+              [self.navigationController setNavigationBarHidden:YES animated:YES];
+              
+              [UIView animateWithDuration:0.3 animations:^{
+                  shareView.frame = self.view.bounds;
+              }];
+              backView.hidden = NO;
+              [self.view addSubview:shareView];
+              
+              
+              
+              
+              
+              
+              [self createShareButtonTarget];
+              
+              
+              
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              
+              
+          }];
+
 }
 
 - (IBAction)chimabiao:(id)sender {
@@ -563,54 +623,90 @@
         }
         case 101:{
             
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"pyq",[shareInfo objectForKey:@"vipcode"]];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
             self.shareImage = [UIImage imageNamed:@"logo.png"];
               NSLog(@"朋友圈");
+            
+            [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
+            
+            [self cancleBtnClicked:nil];
             break;
         }
         case 102:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq",[shareInfo objectForKey:@"vipcode"]];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
             self.shareImage = [UIImage imageNamed:@"logo.png"];
               NSLog(@"qq");
             
+            [UMSocialData defaultData].extConfig.qqData.url = self.url;
+            [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+            
+            [self cancleBtnClicked:nil];
             
             break;
         }
         case 103:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq",[shareInfo objectForKey:@"vipcode"]];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
             self.shareImage = [UIImage imageNamed:@"logo.png"];
               NSLog(@"qq空间");
+            [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
+            [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
             
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+            
+            [self cancleBtnClicked:nil];
             
             break;
         }
         case 104:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"txwb",[shareInfo objectForKey:@"vipcode"]];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
             self.shareImage = [UIImage imageNamed:@"logo.png"];
               NSLog(@"微博");
+            NSData *data = UIImagePNGRepresentation(self.shareImage);
+            //self.shareImage.
+            self.imageD = [NSData dataWithContentsOfFile:@"logo.png"];
+            NSLog(@"data = %@", self.imageD);
+            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
             
+            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:data];
+            
+          //  [self cancleBtnClicked:nil];
             
             break;
         }
         case 105:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"web",[shareInfo objectForKey:@"vipcode"]];
             NSLog(@"url = %@", self.url);
-            self.titleStr = @"小鹿妈妈";
-            self.des = @"小鹿妈妈。。。。";
-            self.shareImage = [UIImage imageNamed:@"logo.png"];
-            
+           
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            NSString *str = self.url;
+            [pab setString:str];
+            if (pab == nil) {
+                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+            }else
+            {
+                [SVProgressHUD showSuccessWithStatus:@"已复制"];
+            }
+            [self cancleBtnClicked:nil];
             
               NSLog(@"复制");
             break;
@@ -630,6 +726,18 @@
             
     }
 }
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        NSLog(@"－－－－－－－－－分享成功");
+    }else {
+        NSLog(@"－－－－－－－－分享失败");
+    }
+}
+
 
 - (void)cancleBtnClicked:(UIButton *)button{
     NSLog(@"quxiao");

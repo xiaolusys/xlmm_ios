@@ -628,6 +628,7 @@
         NSURL *url = [NSURL URLWithString:string];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"DELETE"];
+        
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         [connection start];
     }
