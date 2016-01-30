@@ -144,6 +144,7 @@
 }
 
 - (void)reload{
+    
     if (ratio > 1) {
         
     } else {
