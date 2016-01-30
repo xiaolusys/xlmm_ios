@@ -356,6 +356,7 @@
 		324EA2F71C30E03800E46557 /* placeHolderPosterImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */; };
 		32558A9F1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */; };
 		32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */; };
+		325A91C71C5C4CC100629C9F /* FanceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325A91C61C5C4CC100629C9F /* FanceModel.m */; };
 		325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
 		325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
@@ -1196,6 +1197,8 @@
 		32558A9C1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingTuiHuoController.h; sourceTree = "<group>"; };
 		32558A9D1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingTuiHuoController.m; sourceTree = "<group>"; };
 		32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShenQingTuiHuoController.xib; sourceTree = "<group>"; };
+		325A91C51C5C4CC100629C9F /* FanceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FanceModel.h; sourceTree = "<group>"; };
+		325A91C61C5C4CC100629C9F /* FanceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FanceModel.m; sourceTree = "<group>"; };
 		325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorImage.h"; sourceTree = "<group>"; };
 		325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorImage.m"; sourceTree = "<group>"; };
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1994,6 +1997,8 @@
 				18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */,
 				18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */,
 				18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */,
+				325A91C51C5C4CC100629C9F /* FanceModel.h */,
+				325A91C61C5C4CC100629C9F /* FanceModel.m */,
 			);
 			name = MaMaModel;
 			sourceTree = "<group>";
@@ -4129,6 +4134,7 @@
 				3265DAAD1C1667BD0095BC94 /* SVIndefiniteAnimatedView.m in Sources */,
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
+				325A91C71C5C4CC100629C9F /* FanceModel.m in Sources */,
 				32DE21BD1BF1BD5E00999ECA /* ChiMaBiaoViewController.m in Sources */,
 				32E8B5481C4CC8A300414F8A /* TixianHistoryViewController.m in Sources */,
 				321952C41BFC7AF800AA0AB8 /* QNRecord.m in Sources */,
