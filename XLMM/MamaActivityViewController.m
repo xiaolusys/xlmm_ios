@@ -12,6 +12,8 @@
 #import "ActivityErweimaViewController.h"
 #import "ChiMaBiaoViewController.h"
 #import "HuojiangListViewController.h"
+#import "AFNetworking.h"
+
 
 
 #define button_border_width 1
@@ -389,10 +391,42 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-       // NSLog(@"确定");
-        ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
+        NSLog(@"确定");
         
-        [self.navigationController pushViewController:erweimaVC animated:YES];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+   
+        
+        
+        NSDictionary *parameters = @{@"vipcode":@"abc123",
+                                     @"outer_id":@"90061232563",
+                                     @"sku_code":@"xl",
+                                     @"mobile":@"13816404857"
+                                     };
+        NSLog(@"parameters = %@", parameters);
+        
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order", Root_URL];
+        
+        
+        [manager POST:string parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  //  NSError *error;
+                  NSLog(@"JSON: %@", responseObject);
+                  
+               
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  
+                  
+              }];
+
+        
+//        ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:erweimaVC animated:YES];
         
     }
 }

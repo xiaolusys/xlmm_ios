@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HuojiangListViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
