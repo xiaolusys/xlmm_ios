@@ -562,6 +562,8 @@
 		32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE4901B85CD1100FBEC25 /* TousuViewController.m */; };
 		32BE33941BDA0A720078C8B0 /* testImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32BE33931BDA0A720078C8B0 /* testImage.jpg */; };
 		32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; };
+		32C1340D1C5C8C2700922DC2 /* MamaShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C1340C1C5C8C2700922DC2 /* MamaShareView.m */; };
+		32C1340F1C5C8C4600922DC2 /* MamaShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */; };
 		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; };
 		32C74C4B1BE7425E00E25A7C /* SetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C74C491BE7425E00E25A7C /* SetPasswordController.m */; };
 		32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */; };
@@ -1484,6 +1486,9 @@
 		32BDE4901B85CD1100FBEC25 /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
 		32BDE4911B85CD1100FBEC25 /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
 		32BE33931BDA0A720078C8B0 /* testImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testImage.jpg; sourceTree = "<group>"; };
+		32C1340B1C5C8C2700922DC2 /* MamaShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamaShareView.h; sourceTree = "<group>"; };
+		32C1340C1C5C8C2700922DC2 /* MamaShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamaShareView.m; sourceTree = "<group>"; };
+		32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaShareView.xib; sourceTree = "<group>"; };
 		32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiaolufont.ttf; sourceTree = "<group>"; };
 		32C74C481BE7425E00E25A7C /* SetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPasswordController.h; sourceTree = "<group>"; };
 		32C74C491BE7425E00E25A7C /* SetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPasswordController.m; sourceTree = "<group>"; };
@@ -1723,6 +1728,9 @@
 				32CFD5C51C589F0500C6203E /* FensiTableViewCell.h */,
 				32CFD5C61C589F0500C6203E /* FensiTableViewCell.m */,
 				32CFD5C71C589F0500C6203E /* FensiTableViewCell.xib */,
+				32C1340B1C5C8C2700922DC2 /* MamaShareView.h */,
+				32C1340C1C5C8C2700922DC2 /* MamaShareView.m */,
+				32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */,
 			);
 			name = NewMaMaView;
 			sourceTree = "<group>";
@@ -3893,6 +3901,7 @@
 				322D25C51C32B93A00509EAD /* 圈圈加载0026.png in Resources */,
 				322D25711C32B66100509EAD /* MJRefresh.bundle in Resources */,
 				322D25B81C32B93A00509EAD /* 圈圈加载0013.png in Resources */,
+				32C1340F1C5C8C4600922DC2 /* MamaShareView.xib in Resources */,
 				32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */,
 				2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
@@ -4026,6 +4035,7 @@
 				321C8D971BD87C4B0060FB62 /* PurchaseViewController1.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				3274C16F1C03FC7400641C4E /* VerifyPhoneViewController.m in Sources */,
+				32C1340D1C5C8C2700922DC2 /* MamaShareView.m in Sources */,
 				3219529C1BFC7A8D00AA0AB8 /* QNFormUpload.m in Sources */,
 				32DE21C21BF1BD7F00999ECA /* XidiShuomingViewController.m in Sources */,
 				32BA1B2B1BF2F21B0000A0F2 /* MoreOrdersViewCell.m in Sources */,
