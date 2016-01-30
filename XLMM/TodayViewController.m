@@ -99,8 +99,6 @@ static NSString *khead2View = @"head2View";
     
     if (_isFirst) {
         //集成刷新控件
-
-
         _isFirst = NO;
         _isUpdate = YES;
     }
@@ -150,7 +148,6 @@ static NSString *khead2View = @"head2View";
 //    _isShouldLoad = YES;
     [self downloadData];
     //[self getQiNiuToken];
-    
 }
 
 - (void)loadMore
@@ -158,14 +155,14 @@ static NSString *khead2View = @"head2View";
    // NSLog(@"lodeMore url = %@", nextUrl);
     if ([nextUrl isKindOfClass:[NSString class]]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             _updating = YES;
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
             [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
-            
         });
     } else {
-//        [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+            [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
+        }
     }
     
    
@@ -198,6 +195,13 @@ static NSString *khead2View = @"head2View";
     header.lastUpdatedTimeLabel.hidden = YES;
     self.myCollectionView.mj_header = header;
     [self.myCollectionView.mj_header beginRefreshing];
+    
+    //判断系统版本
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+        MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+          [footer setAutomaticallyHidden:YES];
+            self.myCollectionView.mj_footer = footer;
+    }
     
 //    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
   //  [footer setAutomaticallyHidden:YES];
@@ -444,13 +448,25 @@ static NSString *khead2View = @"head2View";
             [ladyDataArray addObject:model];
             [reloadNum addObject:indexPath];
         } else{
-            
+//            if (childDataArray.count == 0 ) {
+//                NSIndexSet *set = [NSIndexSet indexSetWithIndex:1];
+//                
+//                [self.myCollectionView insertSections:set];
+//            }
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:childDataArray.count inSection:2];
             [childDataArray addObject:model];
             [reloadNum addObject:indexPath];
         }
     }
+    
     [self.myCollectionView insertItemsAtIndexPaths:reloadNum];
+
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+//        [self.myCollectionView reloadData];
+//    }else {
+//        [self.myCollectionView insertItemsAtIndexPaths:reloadNum];
+//    }
+    
 }
 - (void)fetchedPromotePageData:(NSData *)data{
     
@@ -570,8 +586,6 @@ static NSString *khead2View = @"head2View";
     
 }
 
-
-
 //- (PromoteModel *)fillModel:(NSDictionary *)dic{
 //    PromoteModel *model = [PromoteModel new];
 //    model.name = [dic objectForKey:@"name"];
@@ -638,10 +652,15 @@ static NSString *khead2View = @"head2View";
 #pragma mark --UICollectionViewDelegate--
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    
-//    if (childDataArray.count == 0) {
-//        //如果童装数据为零就返回2个分区
-//        return 2;
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+//        if (childDataArray.count == 0) {
+//            //如果童装数据为零就返回2个分区
+//            return 2;
+//        }else {
+//            return 3;
+//        }
+//    }else {
+//        return 3;
 //    }
     return 3;
 }
@@ -908,6 +927,8 @@ static NSString *khead2View = @"head2View";
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) return;
     
+    NSLog(@"%ld", (long)indexPath.section);
+    
     if (childDataArray.count == 0) {
         if ((ladyDataArray.count - indexPath.row < 5) && !_updating) {
             [self loadMore];
@@ -918,5 +939,6 @@ static NSString *khead2View = @"head2View";
         }
     }
 }
+
 
 @end
