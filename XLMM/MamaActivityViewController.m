@@ -12,6 +12,28 @@
 #import "ActivityErweimaViewController.h"
 #import "ChiMaBiaoViewController.h"
 #import "HuojiangListViewController.h"
+#import "AFNetworking.h"
+
+#import "MMDetailsViewController.h"
+#import "MMDetailsModel.h"
+#import "LogInViewController.h"
+#import "MMClass.h"
+#import "CartViewController.h"
+#import "AFNetworking.h"
+#import "ChiMaBiaoViewController.h"
+#import "XidiShuomingViewController.h"
+#import "WXApi.h"
+#import "UIImage+UIImageExt.h"
+#import "NSString+URL.h"
+#import "UIImage+ImageWithUrl.h"
+#import "UIColor+RGBColor.h"
+#import "UIImageView+WebCache.h"
+#import "SVProgressHUD.h"
+#import "YoumengShare.h"
+#import "SendMessageToWeibo.h"
+#import "UIImage+ImageWithSelectedView.h"
+#import "MMLoadingAnimation.h"
+#import "MamaShareView.h"
 
 
 #define button_border_width 1
@@ -25,6 +47,12 @@
 
 @property (nonatomic, copy) NSArray *colorArray;
 @property (nonatomic, copy) NSArray *sizeArray;
+
+@property (nonatomic, strong)NSString *titleStr;
+@property (nonatomic, strong)NSString *des;
+@property (nonatomic, strong)UIImage *shareImage;
+@property (nonatomic, strong)NSString *url;
+@property (nonatomic, strong)NSData *imageD;
 
 
 @end
@@ -42,6 +70,9 @@
     NSMutableDictionary *_imageData;//图片数据
     int _currentImageIndex;//当前图片索引
     int _imageCount;//图片总数
+    MamaShareView *shareView;
+    UIView *backView;
+    NSDictionary *shareInfo;
     
 }
 
@@ -127,7 +158,20 @@
     
     [self downloadData];
     
+    [self createBackView];
+    
 }
+
+- (void)createBackView{
+    backView = [[UIView alloc] initWithFrame:self.view.bounds];
+    backView.alpha = 0.3;
+    backView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:backView];
+    backView.hidden = YES;
+    
+}
+
+
 
 - (void)downloadData{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_proinfo", Root_URL];
@@ -389,11 +433,216 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-       // NSLog(@"确定");
-        ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
+        NSLog(@"确定");
         
-        [self.navigationController pushViewController:erweimaVC animated:YES];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+   
+        
+        
+        NSDictionary *parameters = @{@"vipcode":@"abc123",
+                                     @"outer_id":@"90061232563",
+                                     @"sku_code":@"xl",
+                                     @"mobile":@"13816404857"
+                                     };
+        NSLog(@"parameters = %@", parameters);
+        
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order", Root_URL];
+        
+        
+        [manager POST:string parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  //  NSError *error;
+                  NSLog(@"JSON: %@", responseObject);
+                  shareInfo = responseObject;
+                
+                  
+                  
+                  shareView = [MamaShareView new];
+                  
+
+                  
+                  NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
+                  shareView = array[0];
+                  shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+                  NSLog(@"shareView  = %@", shareView.subviews);
+                  
+                  [self.navigationController setNavigationBarHidden:YES animated:YES];
+                  
+                  [UIView animateWithDuration:0.3 animations:^{
+                      shareView.frame = self.view.bounds;
+                  }];
+                  backView.hidden = NO;
+                  [self.view addSubview:shareView];
+                  
+                  
+                  
+             
+                  
+                  
+                  [self createShareButtonTarget];
+                  
+                  
+                  
+                  
+               
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  
+                  
+              }];
+
+        
+//        ActivityErweimaViewController *erweimaVC = [[ActivityErweimaViewController alloc] init];
+//        
+//        [self.navigationController pushViewController:erweimaVC animated:YES];
         
     }
+}
+
+- (void)createShareButtonTarget{
+    UIView *view = (UIView *)[shareView.subviews objectAtIndex:0];
+    view.layer.cornerRadius = 20;
+   // shareView.cancleBtn.layer.masksToBounds = YES;
+    shareView.cancleBtn.layer.cornerRadius = 20;
+    shareView.cancleBtn.layer.borderWidth = 1;
+    shareView.cancleBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    
+    [shareView.cancleBtn addTarget:self action:@selector(cancleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    shareView.weixinBtn.tag = 100;
+    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    shareView.friendBtn.tag = 101;
+    shareView.qqBtn.tag = 102;
+    shareView.spaceBtn.tag = 103;
+    shareView.weiboBtn.tag = 104;
+    shareView.fuzhiBtn.tag = 105;
+    shareView.wxkuaizhaoBtn.tag = 106;
+    shareView.wxkuaizhaoBtn.hidden = YES;
+    shareView.friendkuaizhaoBtn.tag = 107;
+    shareView.friendkuaizhaoBtn.hidden = YES;
+    
+    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.friendBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.qqBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.spaceBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.weiboBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.fuzhiBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.wxkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.friendkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
+    
+}
+
+- (void)shareClicked:(UIButton *)button{
+    switch (button.tag) {
+        case 100:{
+            NSLog(@"微信");
+              self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+       
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
+            
+            [self cancleBtnClicked:nil];
+            break;
+        }
+        case 101:{
+            
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+              NSLog(@"朋友圈");
+            break;
+        }
+        case 102:{
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+              NSLog(@"qq");
+            
+            
+            break;
+        }
+        case 103:{
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+              NSLog(@"qq空间");
+            
+            
+            break;
+        }
+        case 104:{
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+              NSLog(@"微博");
+            
+            
+            break;
+        }
+        case 105:{
+            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+            NSLog(@"url = %@", self.url);
+            self.titleStr = @"小鹿妈妈";
+            self.des = @"小鹿妈妈。。。。";
+            self.shareImage = [UIImage imageNamed:@"logo.png"];
+            
+            
+              NSLog(@"复制");
+            break;
+        }
+        case 106:{
+              NSLog(@"微信快照");
+            break;
+        }
+        case 107:{
+              NSLog(@"朋友圈快照");
+            break;
+        }
+        default:{
+              NSLog(@"其他");
+            break;
+        }
+            
+    }
+}
+
+- (void)cancleBtnClicked:(UIButton *)button{
+    NSLog(@"quxiao");
+    [UIView animateWithDuration:0.3 animations:^{
+        shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    } completion:^(BOOL finished) {
+   
+        [shareView removeFromSuperview];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        backView.hidden = YES;
+    }];
+    
+   
+    
 }
 @end

@@ -153,7 +153,7 @@ static NSString *khead2View = @"head2View";
     NSString *string = nil;
     NSDate *todate;
 
-    if ([offSheltTime class] == [NSNull class] ) {
+    if ([offSheltTime class] == [NSNull class] || offSheltTime == nil) {
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
         [endTime setMonth:month];

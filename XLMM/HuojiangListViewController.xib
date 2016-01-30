@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HuojiangListViewController">
             <connections>
-                <outlet property="tableView" destination="RZV-aV-srA" id="MoX-Tf-vJL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="KSB-HT-MBH" id="ItR-IB-e4d"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -16,57 +16,41 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RZV-aV-srA">
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSB-HT-MBH">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="400" id="CFH-jO-VO5">
-                            <variation key="heightClass=regular-widthClass=compact" constant="180"/>
-                        </constraint>
-                        <constraint firstAttribute="height" constant="400" id="M15-oW-YMO"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="CFH-jO-VO5"/>
-                            <exclude reference="M15-oW-YMO"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="CFH-jO-VO5"/>
-                            <include reference="M15-oW-YMO"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="xWt-pF-8UF"/>
-                        <outlet property="delegate" destination="-1" id="MB9-XU-Uz3"/>
-                    </connections>
-                </tableView>
+                    <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
+                </webView>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="RZV-aV-srA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="cPK-pT-L38"/>
-                <constraint firstItem="RZV-aV-srA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hZn-ew-Z7h"/>
+                <constraint firstAttribute="trailing" secondItem="KSB-HT-MBH" secondAttribute="trailing" id="Qs2-F5-K8m"/>
+                <constraint firstItem="KSB-HT-MBH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oYc-K8-Plr"/>
+                <constraint firstItem="KSB-HT-MBH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oes-Q7-bVA"/>
+                <constraint firstAttribute="bottom" secondItem="KSB-HT-MBH" secondAttribute="bottom" id="xq1-bO-DVD"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="RZV-aV-srA"/>
+                    <exclude reference="KSB-HT-MBH"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="cPK-pT-L38"/>
-                    <exclude reference="hZn-ew-Z7h"/>
+                    <exclude reference="Qs2-F5-K8m"/>
+                    <exclude reference="oYc-K8-Plr"/>
+                    <exclude reference="oes-Q7-bVA"/>
+                    <exclude reference="xq1-bO-DVD"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="RZV-aV-srA"/>
+                    <include reference="KSB-HT-MBH"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="cPK-pT-L38"/>
-                    <include reference="hZn-ew-Z7h"/>
+                    <include reference="Qs2-F5-K8m"/>
+                    <include reference="oYc-K8-Plr"/>
+                    <include reference="oes-Q7-bVA"/>
+                    <include reference="xq1-bO-DVD"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="272" y="68"/>
+            <point key="canvasLocation" x="108" y="-27"/>
         </view>
     </objects>
 </document>

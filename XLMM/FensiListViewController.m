@@ -9,14 +9,26 @@
 #import "FensiListViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "FensiTableViewCell.h"
+#import "MMClass.h"
+#import "FanceModel.h"
 
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 
 @end
 
 @implementation FensiListViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -35,7 +47,47 @@
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(backClicked:)];
     [self.view addSubview:self.tableView];
+    
+    [self downloadData];
 }
+
+- (void)downloadData{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/fanlist", Root_URL];
+    NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
+    
+}
+
+- (void)fetchedData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error == nil) {
+        if (array.count == 0) {
+            NSLog(@"您的粉丝列表为空");
+        } else {
+            //生成粉丝列表。。。
+            [self createFanlistWithArray:array];
+        }
+    } else {
+        NSLog(@"error = %@", error);
+    }
+    
+}
+
+- (void)createFanlistWithArray:(NSArray *)array{
+    for (NSDictionary *dic in array) {
+        FanceModel *fan = [[FanceModel alloc] initWithInfo:dic];
+        [self.dataArray addObject:fan];
+    }
+    NSLog(@"dataArray = %@", self.dataArray);
+    [self.tableView reloadData];
+}
+
+
+
 - (void)backClicked:(UIButton *)button{
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -50,7 +102,7 @@
 #pragma mark --UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 30;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
