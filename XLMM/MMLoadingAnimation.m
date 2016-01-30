@@ -9,17 +9,36 @@
 #import "MMLoadingAnimation.h"
 #import "UIColor+RGBColor.h"
 
-#define PAGE 78
+#define PAGE 21
 #define CIRCLEPAGE 25
 
 @interface MMLoadingAnimation()
 
 @property(nonatomic, strong)UIImageView *imageV;
 @property(nonatomic, strong)UIView *shadeView;
+@property(nonatomic, strong)NSMutableArray *imgArr;
 
 @end
 
 @implementation MMLoadingAnimation{
+}
+
+- (UIImageView *)imageV {
+    if (!_imageV) {
+        self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
+        _imageV.contentMode = UIViewContentModeScaleAspectFit;
+        _imageV.alpha = 1.0;
+    }
+    return _imageV;
+}
+
+- (UIView *)shadeView {
+    if (!_shadeView) {
+        self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
+        _shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
+        _shadeView.alpha = 0.5;
+    }
+    return _shadeView;
 }
 
 
@@ -69,15 +88,15 @@
 }
 
 -(void)startLoadingAnimating {
-    self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
-    self.imageV.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageV.alpha = 1.0;
+//    self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
+    
     
     [self addSubview:self.imageV];
 
     [self createFirstAnimating];
 //    [self performSelector:@selector(createSecondAnimating) withObject:nil afterDelay:1.5];
- 
+    
+
     self.backgroundColor = [[UIColor loadingViewBackgroundColor] colorWithAlphaComponent:1.0];
 }
 
@@ -90,13 +109,13 @@
 }
 
 - (void)createFirstAnimating {
-    self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
-    self.shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
-    self.shadeView.alpha = 0.5;
+//    self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
+//    self.shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
+//    self.shadeView.alpha = 0.5;
 //    self.shadeView.backgroundColor = [UIColor colorWithRed:99 / 255.0 green:99 / 255.0 blue:99 / 255.0 alpha:0.2];
-
     
     [self addSubview:self.shadeView];
+    
     
     NSMutableArray *imgArr = [NSMutableArray array];
     NSString *name = nil;
@@ -118,7 +137,7 @@
     [UIView setAnimationDuration:1.5];
     self.shadeView.frame = CGRectMake(self.frame.size.width * 0.5 + 38, self.frame.size.height * 0.5 + 23, 76, 40);
     [UIView commitAnimations];
-    
+//
     [self.imageV startAnimating];
 }
 
@@ -141,14 +160,12 @@
 
 
 - (void)runGifForImage {
-//
-    
-   // UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
-//    webView.backgroundColor = [UIColor redColor];
-//    webView.scalesPageToFit = YES;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"run" ofType:@"gif"]];
-//    [webView loadData:data MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
-//    [self addSubview:webView];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+    webView.backgroundColor = [UIColor redColor];
+    webView.scalesPageToFit = YES;
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"run" ofType:@"gif"]];
+    [webView loadData:data MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
+    [self addSubview:webView];
 }
 
 @end
