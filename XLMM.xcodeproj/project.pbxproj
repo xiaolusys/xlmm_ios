@@ -544,6 +544,7 @@
 		32E20B5B1C5EFCC7009D1726 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
 		32E20B5D1C5F29E0009D1726 /* uparrowicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E20B5C1C5F29E0009D1726 /* uparrowicon.png */; };
 		32E20B5F1C5F29EE009D1726 /* downarrowicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E20B5E1C5F29EE009D1726 /* downarrowicon.png */; };
+		32E20B611C5F2DA4009D1726 /* selectedImageView.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E20B601C5F2DA4009D1726 /* selectedImageView.png */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
 		32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E4D5331B9FCFB1001230F4 /* JiFenCollectionCell.m */; };
@@ -1433,6 +1434,7 @@
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
 		32E20B5C1C5F29E0009D1726 /* uparrowicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uparrowicon.png; sourceTree = "<group>"; };
 		32E20B5E1C5F29EE009D1726 /* downarrowicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downarrowicon.png; sourceTree = "<group>"; };
+		32E20B601C5F2DA4009D1726 /* selectedImageView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectedImageView.png; sourceTree = "<group>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32E329621B708A4000A6F0BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		32E4D5321B9FCFB1001230F4 /* JiFenCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenCollectionCell.h; sourceTree = "<group>"; };
@@ -2573,6 +2575,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				32E20B601C5F2DA4009D1726 /* selectedImageView.png */,
 				32E20B5E1C5F29EE009D1726 /* downarrowicon.png */,
 				32E20B5C1C5F29E0009D1726 /* uparrowicon.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
@@ -3625,6 +3628,7 @@
 				32EAA3421C3E005E004055AB /* hongbao80.png in Resources */,
 				8E0044ED1BFF01B900AFC1DF /* EmptyDefault.xib in Resources */,
 				322D25D21C32B93A00509EAD /* 圈圈加载0039.png in Resources */,
+				32E20B611C5F2DA4009D1726 /* selectedImageView.png in Resources */,
 				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */,

@@ -19,6 +19,8 @@
 @interface ProductSelectionListViewController ()
 {
     int count;
+   
+    int category;
 }
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
@@ -29,6 +31,12 @@
 @property (nonatomic, strong) UIButton *orderByPriceButton;
 @property (nonatomic, strong) UIButton *orderBySaleButon;
 @property (nonatomic, strong) UIImageView *selectImageView;
+
+@property (nonatomic, strong) UIView *selectedView;
+@property (nonatomic, strong) UIButton *firstButton;
+@property (nonatomic, strong) UIButton *secondButton;
+@property (nonatomic, strong) UIImageView *backImageView;
+
 
 
 @end
@@ -63,7 +71,8 @@ static NSString *cellIdentifier = @"productSelection";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 118;
+    self.tableView.rowHeight = 96;
+    category = 0;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
@@ -90,7 +99,10 @@ static NSString *cellIdentifier = @"productSelection";
     [self.headView addSubview:self.allButton];
     
     self.selectImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2 +15, 12, 12, 12)];
-    self.selectImageView.backgroundColor = [UIColor orangeColor];
+    self.selectImageView.backgroundColor = [UIColor clearColor];
+    
+    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon.png"];
+    
     [self.allButton addSubview:self.selectImageView];
     
     
@@ -106,13 +118,176 @@ static NSString *cellIdentifier = @"productSelection";
     self.orderBySaleButon.frame = CGRectMake(width + width, 0, width, height);
     [self.headView addSubview:self.orderBySaleButon];
     
+    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, height - 1, SCREENWIDTH, 1)];
     lineView.backgroundColor = [UIColor lineGrayColor];
     [self.headView addSubview:lineView];
     
+    [self.allButton addTarget:self action:@selector(selectedClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.orderByPriceButton addTarget:self action:@selector(yongjinorder:) forControlEvents:UIControlEventTouchUpInside];
+    [self.orderBySaleButon addTarget:self action:@selector(xiangliangorder:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self createSeletedView];
     
 }
 
+- (void)yongjinorder:(UIButton *)button{
+    [self downloadOrderlist1];
+}
+
+- (void)xiangliangorder:(UIButton *)button{
+    [self downloadOrderlist2];
+}
+
+- (void)selectedClicked:(UIButton *)button{
+    self.selectedView.hidden = NO;
+    self.selectImageView.image = [UIImage imageNamed:@"uparrowicon.png"];
+}
+
+- (void)createSeletedView{
+    CGFloat width = 75;
+    CGFloat height = 100;
+    CGFloat originX = SCREENWIDTH/6 - 30;
+    CGFloat originY = 90;
+    
+
+    self.selectedView = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
+    self.backImageView = [[UIImageView alloc ] initWithFrame:self.selectedView.bounds];
+    self.backImageView.image = [UIImage imageNamed:@"selectedImageView.png"];
+    [self.selectedView addSubview:self.backImageView];
+    [self.view addSubview:self.selectedView];
+    self.selectedView.hidden = YES;
+    
+    self.secondButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 60, width, 44)];
+    [self.secondButton setTitle:@"童装" forState:UIControlStateNormal];
+    [self.secondButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.selectedView addSubview:self.secondButton];
+   
+    self.firstButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, width, 44)];
+    [self.firstButton setTitle:@"女装" forState:UIControlStateNormal];
+    [self.firstButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.selectedView addSubview:self.firstButton];
+    
+    [self.firstButton addTarget:self action:@selector(firstbuttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.secondButton addTarget:self action:@selector(secondButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)hiddeSeletedView{
+    self.selectedView.hidden = YES;
+    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+    
+    
+}
+- (void)performSelector:(SEL)aSelector title1:(NSString *)title1 title2:(NSString *)title2 title3:(NSString*)title3{
+    if ([self respondsToSelector:aSelector]) {
+        [self performSelector:aSelector withObject:nil];
+    }
+    [self hiddeSeletedView];
+    [self.allButton setTitle:title1 forState:UIControlStateNormal];
+    [self.firstButton setTitle:title2 forState:UIControlStateNormal];
+    [self.secondButton setTitle:title3 forState:UIControlStateNormal];
+    
+    
+}
+- (void)firstbuttonClicked:(UIButton *)button{
+   
+    if ([self.firstButton.currentTitle isEqualToString:@"女装"]) {
+        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
+      
+    } else if ([self.firstButton.currentTitle isEqualToString:@"全部"]){
+        [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+       
+    }
+   
+}
+- (void)secondButtonClicked:(UIButton *)button{
+    if ([self.secondButton.currentTitle isEqualToString:@"女装"]) {
+        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
+      
+        
+    } else if ([self.secondButton.currentTitle isEqualToString:@"童装"]){
+        [self performSelector:@selector(downloadChildliat) title1:@"童装" title2:@"全部" title3:@"女装"];
+    
+    }
+    
+    
+    
+    
+}
+
+- (void)fetchedDatalist:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"error = %@", error);
+        return;
+    }
+    if (array.count == 0) {
+        return;
+    }
+  //  NSLog(@"list = %@", array);
+    [self.dataArr removeAllObjects];
+    for (NSDictionary *pdt in array) {
+        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
+        [productM setValuesForKeysWithDictionary:pdt];
+        [self.dataArr addObject:productM];
+    }
+    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.tableView reloadData];
+}
+
+
+
+- (void)downloadAlllist{
+  //  NSLog(@"all");
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    category = 0;
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+  //  NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    
+}
+- (void)downloadChildliat{
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+  //  NSLog(@"child");
+    category = 1;
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+   // NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    
+}
+- (void)downloadLadylist{
+   // NSLog(@"lady");
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    category = 2;
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+  //  NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+}
+
+- (void)downloadOrderlist1{
+    [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+  //  NSLog(@"yongjin");
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
+   // NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+}
+- (void)downloadOrderlist2{
+    [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+   // NSLog(@"xiaoliang");
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"lock_num"];
+  //  NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+}
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
