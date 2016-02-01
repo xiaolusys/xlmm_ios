@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WA1-We-DxX">
-                        <rect key="frame" x="295" y="36" width="60" height="24"/>
+                        <rect key="frame" x="295" y="62" width="60" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="GSQ-LB-v5m"/>
                             <constraint firstAttribute="height" constant="24" id="bLR-jY-50z"/>
@@ -100,7 +100,6 @@
                     <constraint firstItem="Dwf-Xj-ilj" firstAttribute="top" secondItem="iWP-Xq-uYo" secondAttribute="top" constant="10" id="FGh-oM-dmE"/>
                     <constraint firstItem="M2d-dN-QhO" firstAttribute="top" secondItem="iWP-Xq-uYo" secondAttribute="top" constant="8" id="H3k-t7-LvP"/>
                     <constraint firstItem="tVB-ip-DDo" firstAttribute="top" secondItem="sfp-yx-Raj" secondAttribute="bottom" constant="8" id="O8x-AA-Bun"/>
-                    <constraint firstItem="WA1-We-DxX" firstAttribute="centerY" secondItem="iWP-Xq-uYo" secondAttribute="centerY" id="QCE-1n-bi5"/>
                     <constraint firstItem="9fD-rZ-rti" firstAttribute="leading" secondItem="tVB-ip-DDo" secondAttribute="trailing" constant="15" id="T1c-yB-lb4"/>
                     <constraint firstItem="mwN-Nn-IqC" firstAttribute="bottom" secondItem="sfp-yx-Raj" secondAttribute="bottom" constant="-2" id="VKf-XV-ich"/>
                     <constraint firstItem="N0m-gF-g8B" firstAttribute="leading" secondItem="mwN-Nn-IqC" secondAttribute="trailing" constant="8" id="Vy3-Bz-uIU"/>
@@ -111,6 +110,7 @@
                     <constraint firstItem="sfp-yx-Raj" firstAttribute="top" secondItem="Dwf-Xj-ilj" secondAttribute="bottom" constant="8" id="nfG-qU-vRe"/>
                     <constraint firstItem="zUp-6J-41g" firstAttribute="bottom" secondItem="N0m-gF-g8B" secondAttribute="bottom" id="pY5-cq-24J"/>
                     <constraint firstItem="tVB-ip-DDo" firstAttribute="leading" secondItem="sfp-yx-Raj" secondAttribute="leading" id="pwW-h0-4oL"/>
+                    <constraint firstItem="WA1-We-DxX" firstAttribute="centerY" secondItem="9fD-rZ-rti" secondAttribute="centerY" id="yKb-cb-Tyv"/>
                     <constraint firstItem="sfp-yx-Raj" firstAttribute="leading" secondItem="Dwf-Xj-ilj" secondAttribute="leading" id="ziD-gI-laR"/>
                 </constraints>
             </tableViewCellContentView>

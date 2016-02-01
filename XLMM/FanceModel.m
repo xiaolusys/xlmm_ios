@@ -14,9 +14,9 @@
 - (instancetype)initWithInfo:(NSDictionary *)info{
     self = [super init];
     if (self) {
-//        _fanID = [[info objectForKey:@""] integerValue];
-//        _name = [info objectForKey:@""];
-//        _imagelink = [info objectForKey:@""];
+        _fanID = [[info objectForKey:@"id"] integerValue];
+        _name = [info objectForKey:@"nick"];
+        _imagelink = [info objectForKey:@"thumbnail"];
     }
     return self;
 }

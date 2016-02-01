@@ -116,10 +116,12 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"FensiTableViewCell" owner:self options:nil] lastObject];
     }
+    FanceModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    cell.imageView.backgroundColor = [UIColor redColor];
-//    cell.textLabel.text = @"test";
+
     return cell;
 }
 

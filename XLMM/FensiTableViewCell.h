@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FanceModel.h"
 
 @interface FensiTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UIImageView *picImageView;
+- (void)fillData:(FanceModel *)model;
 
 @end

@@ -54,6 +54,10 @@
                     <constraint firstItem="dQX-wV-vJn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="w4c-3b-fmG"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="name" destination="PmZ-j0-Y7M" id="hAe-RV-XKh"/>
+                <outlet property="picImageView" destination="dQX-wV-vJn" id="ls7-eh-Bz2"/>
+            </connections>
             <point key="canvasLocation" x="559" y="343"/>
         </tableViewCell>
     </objects>
