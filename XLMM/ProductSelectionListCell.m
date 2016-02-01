@@ -9,6 +9,7 @@
 #import "ProductSelectionListCell.h"
 #import "MaMaSelectProduct.h"
 #import "UIImageView+WebCache.h"
+#import "UIColor+RGBColor.h"
 
 @implementation ProductSelectionListCell
 
@@ -16,6 +17,25 @@
     // Initialization code
 //    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
 //    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+}
+ 
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _addBtnClick.layer.cornerRadius = 15;
+        _addBtnClick.layer.borderWidth = 0.5;
+        _addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    }
+    return self;
+}
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        _addBtnClick.layer.cornerRadius = 15;
+        _addBtnClick.layer.borderWidth = 0.5;
+        _addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    }
+    return self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,14 +55,24 @@
     self.pdtModel = product;
     [self.picImageView sd_setImageWithURL:[NSURL URLWithString:product.head_img]];
     self.productName.text = product.name;
+    self.addBtnClick.layer.cornerRadius = 12;
+    self.addBtnClick.layer.borderWidth = 0.5;
+    self.addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    self.picImageView.layer.cornerRadius = 8;
+    self.picImageView.layer.masksToBounds = YES;
+    self.picImageView.layer.borderWidth = 0.5;
+    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     if ([product.in_customer_shop intValue]) {
-        self.addBtnClick.selected = YES;
-        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+       self.addBtnClick.selected = YES;
+        [self.addBtnClick setTitle:@"下架" forState:UIControlStateNormal];
+//        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
     }else {
         self.addBtnClick.selected = NO;
-        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
+        [self.addBtnClick setTitle:@"上架" forState:UIControlStateNormal];
+        
+//        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
     }
 }
 
@@ -52,7 +82,16 @@
     self.productName.text = product.name;
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     self.addBtnClick.selected = YES;
-    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+    self.addBtnClick.layer.cornerRadius = 12;
+    self.addBtnClick.layer.borderWidth = 0.5;
+    self.addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    [self.addBtnClick setTitle:@"下架" forState:UIControlStateNormal];
+    self.picImageView.layer.cornerRadius = 8;
+    self.picImageView.layer.masksToBounds = YES;
+    self.picImageView.layer.borderWidth = 0.5;
+    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    
+    //[self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }
 
 @end

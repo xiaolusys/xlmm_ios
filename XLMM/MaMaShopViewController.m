@@ -15,12 +15,16 @@
 #import "ShopPreviousViewController.h"
 #import "WXApi.h"
 
+
 @interface MaMaShopViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, assign)BOOL isRequest;
+
+
+
 @end
 
 static NSString *cellIdentifier = @"productSelection";
@@ -59,6 +63,7 @@ static NSString *cellIdentifier = @"productSelection";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 118;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
@@ -70,6 +75,8 @@ static NSString *cellIdentifier = @"productSelection";
         
     }];
 }
+
+
 
 //预览
 - (void)previewAction {
@@ -104,6 +111,10 @@ static NSString *cellIdentifier = @"productSelection";
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 96;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
