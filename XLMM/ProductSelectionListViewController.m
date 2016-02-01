@@ -238,6 +238,7 @@ static NSString *cellIdentifier = @"productSelection";
     }
     //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView reloadData];
+    [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
 }
 
 
@@ -317,15 +318,15 @@ static NSString *cellIdentifier = @"productSelection";
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
 
-    if (count < 6) {
-        CGPoint originPoint = cell.center;
-        cell.center = CGPointMake(SCREENWIDTH, originPoint.y);
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            cell.center = CGPointMake(SCREENWIDTH * 0.5, originPoint.y);
-        }];
-        count++;
-    }
+//    if (count < 6) {
+//        CGPoint originPoint = cell.center;
+//        cell.center = CGPointMake(SCREENWIDTH, originPoint.y);
+//        
+//        [UIView animateWithDuration:0.5 animations:^{
+//            cell.center = CGPointMake(SCREENWIDTH * 0.5, originPoint.y);
+//        }];
+//        count++;
+//    }
     
     MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
