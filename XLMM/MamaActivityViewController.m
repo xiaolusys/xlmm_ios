@@ -74,6 +74,13 @@
     UIView *backView;
     NSDictionary *shareInfo;
     
+    NSString *userId;
+    NSString *mobile;
+    NSString *vipcode;
+    NSString *outer_id;
+    NSString *sku_code;
+    
+    
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -97,16 +104,16 @@
     
     self.colorArray = colors;
     
-    NSMutableArray *size = [[NSMutableArray alloc] initWithCapacity:4];
-    [size addObject:@"S"];
-    [size addObject:@"M"];
-    [size addObject:@"L"];
-    [size addObject:@"XL"];
-    [size addObject:@"XXL"];
-    [size addObject:@"XXXL"];
-    [size addObject:@"XXXXL"];
-    
-    self.sizeArray = size;
+//    NSMutableArray *size = [[NSMutableArray alloc] initWithCapacity:4];
+//    [size addObject:@"S"];
+//    [size addObject:@"M"];
+//    [size addObject:@"L"];
+//    [size addObject:@"XL"];
+//    [size addObject:@"XXL"];
+//    [size addObject:@"XXXL"];
+//    [size addObject:@"XXXXL"];
+//    
+//    self.sizeArray = size;
     
    // NSLog(@"%@\n%@", self.colorArray, self.sizeArray);
     
@@ -135,7 +142,7 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.scrollView];
     [self createColorView];
-    [self createSizeView];
+//    [self createSizeView];
     
     self.imageViewWidth.constant = SCREENWIDTH;
     self.imageViewHeight.constant = SCREENWIDTH;
@@ -175,18 +182,36 @@
 
 - (void)downloadData{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_proinfo", Root_URL];
+    NSString *userString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [self downLoadWithURLString:userString andSelector:@selector(fetchedUserData:)];
     
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
+}
+
+- (void)fetchedUserData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    userId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+    mobile = [dic objectForKey:@"mobile"];
+    
+    
 }
 
 - (void)fetchedData:(NSData *)data{
     
     if(data == nil) return;
     NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSArray *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error == nil) {
         NSLog(@"data = %@", dicJson);
     }
+    NSDictionary *dic = dicJson[0];
+    outer_id = [[dic objectForKey:@"sample"] objectForKey:@"outer_id"];
+    self.sizeArray = [dic objectForKey:@"skus"];
+    [self createSizeView];
+    
 }
 
 #pragma mark 加载图片数据
@@ -364,6 +389,7 @@
     NSInteger index = button.tag - 2000;
   //  NSLog(@"index = %@", self.sizeArray[index]);
     sizeparam = self.sizeArray[index];
+    sku_code = [self.sizeArray[index] objectForKey:@"sku_code"];
     if (colorparam && sizeparam) {
         [self enableTijiaoButton];
     }
@@ -387,7 +413,8 @@
     CGFloat height = 40;
     for (int i = 0; i < self.sizeArray.count; i++) {
         CGRect rect = CGRectMake(button_distance + i%3 * (button_distance + width), button_distance + i/3 * (button_distance + height), width, height);
-        UIButton *button = [self buttonWithFrame:rect title:self.sizeArray[i]];
+        NSString *title = [self.sizeArray[i] objectForKey:@"sku_code"];
+        UIButton *button = [self buttonWithFrame:rect title:title];
         button.tag = i + 2000;
         [button addTarget:self action:@selector(sizeSelected:) forControlEvents:UIControlEventTouchUpInside
          ];
@@ -425,9 +452,10 @@
     
     
     NSDictionary *parameters = @{@"vipcode":@"abc123",
-                                 @"outer_id":@"90061232563",
-                                 @"sku_code":@"xl",
-                                 @"mobile":@"13816404857"
+                                 @"outer_id":outer_id,
+                                 @"sku_code":sku_code,
+                                 @"mobile":mobile,
+                                 @"from_customer":userId
                                  };
     NSLog(@"parameters = %@", parameters);
     
