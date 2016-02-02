@@ -451,11 +451,9 @@
     
     
     
-    NSDictionary *parameters = @{@"vipcode":@"abc123",
-                                 @"outer_id":outer_id,
+    NSDictionary *parameters = @{@"outer_id":outer_id,
                                  @"sku_code":sku_code,
-                                 @"mobile":mobile,
-                                 @"from_customer":userId
+                                 @"mobile":mobile
                                  };
     NSLog(@"parameters = %@", parameters);
     
@@ -633,7 +631,8 @@
     switch (button.tag) {
         case 100:{
             NSLog(@"微信");
-              self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp",[shareInfo objectForKey:@"vipcode"]];
+              self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp"];
+            
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -651,7 +650,7 @@
         }
         case 101:{
             
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"pyq",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"pyq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -669,7 +668,7 @@
             break;
         }
         case 102:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -686,7 +685,7 @@
             break;
         }
         case 103:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -703,7 +702,7 @@
             break;
         }
         case 104:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"txwb",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"txwb"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -722,7 +721,7 @@
             break;
         }
         case 105:{
-            self.url = [NSString stringWithFormat:@"%@%@?ufrom=%@&vipcode=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"web",[shareInfo objectForKey:@"vipcode"]];
+            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"web"];
             NSLog(@"url = %@", self.url);
            
             UIPasteboard *pab = [UIPasteboard generalPasteboard];

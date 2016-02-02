@@ -238,18 +238,18 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
-    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
-   // NSLog(@"imageUrl = %@", string);
-    UIImage *image = [UIImage imagewithURLString:string];
-    if (image != nil) {
-     //   NSLog(@"image = %@", image);
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
-    } else {
-        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
-
-    }
+//    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    
+//    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
+//   // NSLog(@"imageUrl = %@", string);
+//    UIImage *image = [UIImage imagewithURLString:string];
+//    if (image != nil) {
+//     //   NSLog(@"image = %@", image);
+//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
+//    } else {
+//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+//
+//    }
     
     
 //    
@@ -261,7 +261,7 @@
 //    }
 //    
     
-
+return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     
 }
 
@@ -290,34 +290,18 @@
 //    NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
 //    
 //    NSLog(@"newString = %@", newString);
-    cell.imageView.alpha = 1.0f;
+    cell.imageView.alpha = 0.0f;
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             cell.imageView.alpha = 1.0;
         }];
         
-        if (image != nil) {
-            //自适应图片高度 ,图片宽度固定高度自适应。。。。。
-            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
-            ratio = image.size.height/image.size.width;
-            
-            
-            
-        } else{
-//            cell.imageView.image = [UIImage imagewithURLString:[[newString imageCompression] URLEncodedString]];
-//            UIImage *image = cell.imageView.image;
-//            cell.headImageViewHeight.constant = (SCREENWIDTH-15)/2*image.size.height/image.size.width;
-
-            NSLog(@"error = %@", error);
-        }
         
     }] ;
     cell.nameLabel.text = model.name;
-//    if (_isFirst == YES) {
-//        _isFirst = NO;
-//        return nil;
-//    }
-    
+
     
     if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
