@@ -631,12 +631,15 @@
     switch (button.tag) {
         case 100:{
             NSLog(@"微信");
-              self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp"];
+              self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"wxapp"];
             
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
-            self.shareImage = [UIImage imageNamed:@"logo.png"];
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@", Root_URL, [shareInfo objectForKey:@"link_qrcode"]];
+            NSLog(@"imageurl = %@", imageUrl);
+            
+            self.shareImage = [UIImage imagewithURLString:imageUrl];
        
             [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
@@ -650,12 +653,14 @@
         }
         case 101:{
             
-            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"pyq"];
+            self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"pyq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
-            self.shareImage = [UIImage imageNamed:@"logo.png"];
-              NSLog(@"朋友圈");
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@", Root_URL, [shareInfo objectForKey:@"link_qrcode"]];
+            NSLog(@"imageurl = %@", imageUrl);
+            
+            self.shareImage = [UIImage imagewithURLString:imageUrl];              NSLog(@"朋友圈");
             
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
             [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
@@ -668,13 +673,14 @@
             break;
         }
         case 102:{
-            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
+            self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
-            self.shareImage = [UIImage imageNamed:@"logo.png"];
-              NSLog(@"qq");
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@", Root_URL, [shareInfo objectForKey:@"link_qrcode"]];
+            NSLog(@"imageurl = %@", imageUrl);
             
+            self.shareImage = [UIImage imagewithURLString:imageUrl];
             [UMSocialData defaultData].extConfig.qqData.url = self.url;
             [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -685,11 +691,16 @@
             break;
         }
         case 103:{
-            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
+            self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"qq"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
-            self.shareImage = [UIImage imageNamed:@"logo.png"];
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@", Root_URL, [shareInfo objectForKey:@"link_qrcode"]];
+            NSLog(@"imageurl = %@", imageUrl);
+                                  
+            self.shareImage = [UIImage imagewithURLString:imageUrl];
+            
+            
               NSLog(@"qq空间");
             [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
             [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
@@ -702,7 +713,7 @@
             break;
         }
         case 104:{
-            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"txwb"];
+            self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"txwb"];
             NSLog(@"url = %@", self.url);
             self.titleStr = @"小鹿妈妈";
             self.des = @"小鹿妈妈。。。。";
@@ -721,7 +732,7 @@
             break;
         }
         case 105:{
-            self.url = [NSString stringWithFormat:@"%@%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"web"];
+            self.url = [NSString stringWithFormat:@"%@/%@&ufrom=%@", Root_URL, [shareInfo objectForKey:@"share_link"], @"web"];
             NSLog(@"url = %@", self.url);
            
             UIPasteboard *pab = [UIPasteboard generalPasteboard];

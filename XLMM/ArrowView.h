@@ -17,17 +17,20 @@ typedef NS_ENUM(NSInteger, UIArrowViewSytle)
     ArrowView_Right = 1,//箭头在右边
     ArrowView_Top = 2,//箭头在顶边
     ArrowView_Bottom = 3,//箭头在底边
+
 };
 
 #import <UIKit/UIKit.h>
 
-@interface ArrowView : UIControl
+@interface ArrowView : UIControl{
+}
 
 @property(nonatomic,assign)NSInteger style;
 @property (nonatomic, assign) CGFloat height;
 
 // block 语句
 @property(nonatomic,weak)clickButton selectBlock;
+
 
 //创建 View
 
