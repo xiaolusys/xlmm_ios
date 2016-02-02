@@ -18,6 +18,8 @@
     // Initialization code
 }
 
+
+
 - (void)fillData:(FanceModel *)model{
     [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.imagelink URLEncodedString]]];
     self.picImageView.layer.cornerRadius = 8;
