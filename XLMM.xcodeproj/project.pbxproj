@@ -293,6 +293,7 @@
 		3249B98B1B6F38410086D030 /* PersonCenterViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B9891B6F38410086D030 /* PersonCenterViewController2.xib */; };
 		3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 3249B98D1B6F38500086D030 /* PersonCenterViewController3.m */; };
 		3249B9901B6F38500086D030 /* PersonCenterViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3249B98E1B6F38500086D030 /* PersonCenterViewController3.xib */; };
+		324BFCE11C61DC880055C984 /* MMAdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 324BFCE01C61DC880055C984 /* MMAdvertiseView.m */; };
 		324EA2F31C30DC3100E46557 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 324EA2F21C30DC3100E46557 /* default.png */; };
 		324EA2F61C30E03800E46557 /* placeHolderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 324EA2F41C30E03800E46557 /* placeHolderImage.png */; };
 		324EA2F71C30E03800E46557 /* placeHolderPosterImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */; };
@@ -1082,6 +1083,8 @@
 		3249B98C1B6F38500086D030 /* PersonCenterViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterViewController3.h; sourceTree = "<group>"; };
 		3249B98D1B6F38500086D030 /* PersonCenterViewController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCenterViewController3.m; sourceTree = "<group>"; };
 		3249B98E1B6F38500086D030 /* PersonCenterViewController3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonCenterViewController3.xib; sourceTree = "<group>"; };
+		324BFCDF1C61DC880055C984 /* MMAdvertiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAdvertiseView.h; sourceTree = "<group>"; };
+		324BFCE01C61DC880055C984 /* MMAdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAdvertiseView.m; sourceTree = "<group>"; };
 		324EA2F21C30DC3100E46557 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		324EA2F41C30E03800E46557 /* placeHolderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHolderImage.png; sourceTree = "<group>"; };
 		324EA2F51C30E03800E46557 /* placeHolderPosterImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHolderPosterImage.png; sourceTree = "<group>"; };
@@ -2640,6 +2643,8 @@
 		325DF9451B69BCE200351ACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				324BFCDF1C61DC880055C984 /* MMAdvertiseView.h */,
+				324BFCE01C61DC880055C984 /* MMAdvertiseView.m */,
 				181C74981C53608500375DF8 /* NewMaMaView */,
 				2E73ED861C38D2F100EDB94E /* MaMaView */,
 				181C74A11C53699700375DF8 /* CartView */,
@@ -3720,6 +3725,7 @@
 				8E0044EA1BFC5B9E00AFC1DF /* ChangeNicknameViewController.m in Sources */,
 				32A288D11B943EB4006DC949 /* PromoteModel.m in Sources */,
 				32BC3CAF1BD4D8C9008ADAA2 /* HistoryCartsModel.m in Sources */,
+				324BFCE11C61DC880055C984 /* MMAdvertiseView.m in Sources */,
 				321952C21BFC7AF800AA0AB8 /* QNDomain.m in Sources */,
 				3299D84F1B8C5836000AA744 /* LiJiBuyModel.m in Sources */,
 				2E7C03831C2BBBC3004047BB /* MaMaViewController.m in Sources */,

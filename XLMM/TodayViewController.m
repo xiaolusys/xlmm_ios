@@ -28,6 +28,8 @@
 #import "MJPullGifHeader.h"
 #import "MobClick.h"
 #import "UIViewController+NavigationBar.h"
+#import "MMAdvertiseView.h"
+
 
 
 static NSString *ksimpleCell = @"simpleCell";
@@ -72,6 +74,7 @@ static NSString *khead2View = @"head2View";
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 @property (nonatomic, retain) UICollectionView *myCollectionView;
+@property (nonatomic, strong) NSMutableArray *posterImages;
 
 @end
 
@@ -397,6 +400,13 @@ static NSString *khead2View = @"head2View";
     ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
     ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
     ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
+    
+    self.posterImages = [[NSMutableArray alloc] init];
+    UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
+    UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
+    [self.posterImages addObject:image0];
+    [self.posterImages addObject:image1];
+    
     [posterDataArray addObject:ladyModel];
     [posterDataArray addObject:childModel];
 
@@ -714,6 +724,7 @@ static NSString *khead2View = @"head2View";
         PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (indexPath.section == 0) {
+        
        
       
         PosterCollectionCell2 *cell = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
@@ -723,10 +734,24 @@ static NSString *khead2View = @"head2View";
         
             PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.imageURL imagePostersCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
+            
+            MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:cell.bounds andImages:self.posterImages];
+            
+            [cell.contentView addSubview:adView];
+            
 
 
+            
            
         }
+        NSLog(@"index row = %ld", indexPath.row);
+        
+        if (indexPath.row == 0) {
+            cell.contentView.hidden = NO;
+        } else {
+            cell.contentView.hidden = YES;
+        }
+        
         return cell;
        
     }
