@@ -168,22 +168,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/LogInViewController.m"
-            timestampString = "475391878.698157"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
-            landmarkName = "-randomArray"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/LogInViewController.m"
             timestampString = "475386595.032015"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

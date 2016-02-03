@@ -31,6 +31,10 @@ static NSString * ksimpleCell = @"simpleCell";
     BOOL _isFirst;
     CGFloat oldScrollViewTop;
     
+    BOOL _isupdate;
+    NSString *nextUrl;
+    
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -74,6 +78,42 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)loadMore
 {
+    
+    NSLog(@"lodeMore url = %@", nextUrl);
+    if ([nextUrl isKindOfClass:[NSString class]]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
+            [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
+        });
+    }
+//     else {
+//        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+//            [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
+//        }
+//    }
+    
+    
+    
+}
+
+- (void)fetchedPromoteMorePageData:(NSData *)data{
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (json == nil) {
+        return;
+    }
+    NSArray *array = [json objectForKey:@"results"];
+    nextUrl = [json objectForKey:@"next"];
+    _isupdate = YES;
+    if (array.count == 0) {
+        return;
+    }
+    for (NSDictionary *ladyInfo in array) {
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        [_dataArray addObject:model];
+    }
+    [self.childCollectionView reloadData];
 }
 
 
@@ -88,6 +128,7 @@ static NSString * ksimpleCell = @"simpleCell";
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _isFirst = YES;
+    _isupdate = YES;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
 
@@ -141,6 +182,8 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView.mj_header endRefreshing];
 }
 
+
+
 - (void)fatchedChildListData:(NSData *)responseData{
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     NSError *error;
@@ -149,6 +192,8 @@ static NSString * ksimpleCell = @"simpleCell";
         return;
     }
     NSArray *array = [json objectForKey:@"results"];
+    nextUrl = [json objectForKey:@"next"];
+    _isupdate = YES;
     if (array.count == 0) {
         return;
     }
@@ -262,6 +307,11 @@ static NSString * ksimpleCell = @"simpleCell";
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
+        [self loadMore];
+        _isupdate = NO;
+        
+    }
     
     CGFloat marine = 5;
     if (temp > marine) {
