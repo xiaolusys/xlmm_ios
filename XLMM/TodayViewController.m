@@ -29,6 +29,8 @@
 #import "MobClick.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMAdvertiseView.h"
+#import "HuodongViewController.h"
+
 
 
 
@@ -869,12 +871,17 @@ static NSString *khead2View = @"head2View";
             
             
         } else{
-            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-            childVC.urlString = kCHILD_LIST_URL;
-            childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-            childVC.titleName = @"潮童装区";
-            childVC.childClothing = YES;
-            [self.navigationController pushViewController:childVC animated:YES];
+//            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+//            childVC.urlString = kCHILD_LIST_URL;
+//            childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+//            childVC.titleName = @"潮童装区";
+//            childVC.childClothing = YES;
+//            [self.navigationController pushViewController:childVC animated:YES];
+            
+            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            
+            [self.navigationController pushViewController:huodongVC animated:YES];
+            
             
         }
         
