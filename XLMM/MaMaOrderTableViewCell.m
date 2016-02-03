@@ -30,11 +30,11 @@
     self.imageV.layer.cornerRadius = 5;
     self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
-//    self.purchaser.text = orderM.wxordernick;
-    self.purchaser.text = @"小公举购买";
+   self.purchaser.text = orderM.wxordernick;
+//    self.purchaser.text = orderM.linkname;
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
-    self.rebate.text = [NSString stringWithFormat:@"%.2f", [orderM.rebeta_cash floatValue]];
+    self.rebate.text = [NSString stringWithFormat:@"%.2f", [orderM.ticheng_cash floatValue]];
     
     self.orderStatic.text = orderM.get_status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];

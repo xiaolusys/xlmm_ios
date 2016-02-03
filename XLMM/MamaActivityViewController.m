@@ -200,13 +200,17 @@
 }
 
 - (void)fetchedData:(NSData *)data{
-    
+    NSLog(@"data = %@", data);
     if(data == nil) return;
     NSError *error = nil;
     NSArray *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error == nil) {
         NSLog(@"data = %@", dicJson);
     }
+    if (dicJson.count == 0) {
+        return;
+    }
+   
     NSDictionary *dic = dicJson[0];
     outer_id = [[dic objectForKey:@"sample"] objectForKey:@"outer_id"];
     self.sizeArray = [dic objectForKey:@"skus"];

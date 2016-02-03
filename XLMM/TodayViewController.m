@@ -58,7 +58,6 @@ static NSString *khead2View = @"head2View";
     BOOL step1;
     BOOL step2;
     BOOL _isDone;
-    BOOL _isUpdate;
     
     BOOL _updating;
     
@@ -100,7 +99,6 @@ static NSString *khead2View = @"head2View";
     if (_isFirst) {
         //集成刷新控件
         _isFirst = NO;
-        _isUpdate = YES;
     }
     
 }
@@ -364,21 +362,10 @@ static NSString *khead2View = @"head2View";
 
 
 - (void)downloadData{
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging.json?page_size=10",Root_URL];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging?page_size=10",Root_URL];
     //NSLog(@"string = %@", urlStr);
     [self downLoadWithURLString:urlStr andSelector:@selector(fetchedPromotePageData:)];
     [self downLoadWithURLString:kTODAY_POSTERS_URL andSelector:@selector(fetchedPosterData:)];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-//        [self performSelectorOnMainThread:@selector(fetchedPromotePageData:)withObject:data waitUntilDone:YES];
-//        
-//    });
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kTODAY_POSTERS_URL]];
-//        [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
-//        
-//    });
-    
 }
 
 

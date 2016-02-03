@@ -29,7 +29,7 @@ static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
 
 
-@interface PreviousViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface PreviousViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 {
     UIView *ladyPoster;
     UIView *childPoster;
@@ -50,6 +50,9 @@ static NSString *khead2View = @"head2View";
     
     BOOL isHidden;
     CGFloat oldScrollViewTop;
+    
+    NSString *nextUrl;
+    BOOL _update;
     
 }
 
@@ -81,6 +84,73 @@ static NSString *khead2View = @"head2View";
 
 - (void)loadMore
 {
+     NSLog(@"lodeMore url = %@", nextUrl);
+    if ([nextUrl isKindOfClass:[NSString class]]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
+            [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
+        });
+    } else {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+            [self.myCollectionView.mj_footer endRefreshingWithNoMoreData];
+        }
+    }
+    
+    
+    
+    [self performSelector:@selector(stopFootRefresh) withObject:nil afterDelay:2];
+}
+
+- (void)fetchedPromoteMorePageData:(NSData *)data{
+//    _updating = NO;
+    if (data == nil) {
+        
+        return;
+    }
+    
+    NSError *error = nil;
+    NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    
+    nextUrl = [promoteDic objectForKey:@"next"];
+    NSArray *results = [promoteDic objectForKey:@"results"];
+    
+    NSMutableArray *reloadNum = [NSMutableArray arrayWithCapacity:0];
+    _update = YES;
+    for (NSDictionary *ladyInfo in results) {
+        
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        NSDictionary *category = model.category;
+        
+        if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
+            //女装
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:ladyDataArray.count inSection:1];
+            [ladyDataArray addObject:model];
+            [reloadNum addObject:indexPath];
+        } else{
+            //            if (childDataArray.count == 0 ) {
+            //                NSIndexSet *set = [NSIndexSet indexSetWithIndex:1];
+            //
+            //                [self.myCollectionView insertSections:set];
+            //            }
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:childDataArray.count inSection:2];
+            [childDataArray addObject:model];
+            [reloadNum addObject:indexPath];
+        }
+    }
+    
+    [self.myCollectionView insertItemsAtIndexPaths:reloadNum];
+    
+    //    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+    //        [self.myCollectionView reloadData];
+    //    }else {
+    //        [self.myCollectionView insertItemsAtIndexPaths:reloadNum];
+    //    }
+    
+}
+
+
+- (void)stopFootRefresh{
+    [self.myCollectionView.mj_footer endRefreshing];
 }
 
 
@@ -97,7 +167,7 @@ static NSString *khead2View = @"head2View";
     step2 = NO;
     _isFirst = YES;
     isqiangGuang = NO;
-    
+    _update = YES;
     //  myTimeLabelString = @"剩余1天23小时23分59秒";
     
     [self createCollectionView];
@@ -111,6 +181,9 @@ static NSString *khead2View = @"head2View";
     header.lastUpdatedTimeLabel.hidden = YES;
     self.myCollectionView.mj_header = header;
     [self.myCollectionView.mj_header beginRefreshing];
+//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    [footer setAutomaticallyHidden:YES];
+//    self.myCollectionView.mj_footer = footer;
 
     
 }
@@ -198,7 +271,7 @@ static NSString *khead2View = @"head2View";
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
-    
+    self.myCollectionView.delegate = self;
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.myCollectionView.delegate = self;
@@ -221,21 +294,57 @@ static NSString *khead2View = @"head2View";
 
 - (void)downloadData{
     
-    [self downLoadWithURLString:kPREVIOUS_POSTERS_URL andSelector:@selector(fetchedPosterData:)];
-    [self downLoadWithURLString:kPREVIOUS_PROMOTE_URL andSelector:@selector(fetchedPromoteData:)];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous_paging?page_size=10",Root_URL];
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_PROMOTE_URL]];
-//        [self performSelectorOnMainThread:@selector(fetchedPromoteData:)withObject:data waitUntilDone:YES];
-//        
-//    });
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kPREVIOUS_POSTERS_URL]];
-//        [self performSelectorOnMainThread:@selector(fetchedPosterData:)withObject:data waitUntilDone:YES];
-//        
-//    });
+    
+    [self downLoadWithURLString:kPREVIOUS_POSTERS_URL andSelector:@selector(fetchedPosterData:)];
+    [self downLoadWithURLString:urlStr andSelector:@selector(fetchedPromotePageData:)];
+}
+- (void)fetchedPromotePageData:(NSData *)data{
+    
+    [childDataArray removeAllObjects];
+    [ladyDataArray removeAllObjects];
+    if (data == nil) {
+        
+        return;
+    }
+    _update = YES;
+    NSError *error = nil;
+    NSDictionary * promoteDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    //    NSLog(@"err = %@", error);
+    //     NSLog(@"promote = %@", promoteDic);
+    
+    nextUrl = [promoteDic objectForKey:@"next"];
+    NSArray *results = [promoteDic objectForKey:@"results"];
+    
+    
+    
+    for (NSDictionary *ladyInfo in results) {
+        
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        NSDictionary *category = model.category;
+        // NSLog(@"cid = %@ , parent_id = %@", [category objectForKey:@"cid"], [category objectForKey:@"parent_cid"]);
+        if ([[category objectForKey:@"cid"] integerValue] == 8 || [[category objectForKey:@"parent_cid"] integerValue] == 8) {
+            [ladyDataArray addObject:model];
+        } else{
+            [childDataArray addObject:model];
+        }
+    }
+    // NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
+    
+    
+    step2 = YES;
+    if (step1 && step2) {
+        step1 = NO;
+        step2 = NO;
+        [self.myCollectionView reloadData];
+        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
+        
+    }
     
 }
+
+
 
 
 
@@ -429,12 +538,11 @@ static NSString *khead2View = @"head2View";
             return 2;
         }
         return ladyDataArray.count;
-   
+        
     } else if (section == 2){
-        if (childDataArray.count == 0) {
-            return 2;
-        }
+        
         return childDataArray.count;
+        
         
     }
     return 0;
@@ -562,6 +670,15 @@ static NSString *khead2View = @"head2View";
     if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
         return;
     }
+    
+   
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _update) {
+        [self loadMore];
+        _update = NO;
+        
+    }
+    
+    
     CGPoint point = scrollView.contentOffset;
     CGFloat temp = oldScrollViewTop - point.y;
     

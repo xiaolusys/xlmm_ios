@@ -119,6 +119,7 @@
 - (void)dataAnalysis:(NSDictionary *)data {
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
+    NSLog(@"data = %@", data);
     for (NSDictionary *order in results) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:order];
@@ -219,7 +220,7 @@
     float total = 0.0;
     NSString *date;
     for (MaMaOrderModel *model in orderArr) {
-        total = [model.rebeta_cash floatValue] + total;
+        total = [model.ticheng_cash floatValue] + total;
         date = [self yearDeal:model.shoptime];
     }
     [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%.2f", total]];
