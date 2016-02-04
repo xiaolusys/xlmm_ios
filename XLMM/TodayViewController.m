@@ -30,6 +30,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMAdvertiseView.h"
 #import "HuodongViewController.h"
+#import "HuodongCollectionViewCell.h"
 
 
 
@@ -38,6 +39,7 @@ static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
 static NSString *khead1View = @"head1View";
 static NSString *khead2View = @"head2View";
+static NSString *khuodongCell = @"HuodongCell";
 
 
 #define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
@@ -71,6 +73,8 @@ static NSString *khead2View = @"head2View";
     
     
     NSString *nextUrl;
+    NSMutableArray *targetUrls;
+    BOOL _ishaveHuodong;
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
@@ -103,7 +107,7 @@ static NSString *khead2View = @"head2View";
     
     if (_isFirst) {
         //集成刷新控件
-        _isFirst = NO;
+//        _isFirst = NO;
     }
     
 }
@@ -148,9 +152,7 @@ static NSString *khead2View = @"head2View";
 
 - (void)reload
 {
-//    _isShouldLoad = YES;
     [self downloadData];
-    //[self getQiNiuToken];
 }
 
 - (void)loadMore
@@ -185,6 +187,8 @@ static NSString *khead2View = @"head2View";
     childDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     ladyDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    targetUrls = [[NSMutableArray alloc] initWithCapacity:2];
+    _ishaveHuodong = NO;
     step1 = NO;
     step2 = NO;
     _isFirst = YES;
@@ -358,7 +362,7 @@ static NSString *khead2View = @"head2View";
     [self.myCollectionView registerClass:[PosterCollectionCell2 class] forCellWithReuseIdentifier:kposterView];
     [self.myCollectionView registerClass:[Head1View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead1View];
     [self.myCollectionView registerClass:[Head2View class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:khead2View];
-    
+    [self.myCollectionView registerClass:[HuodongCollectionViewCell class] forCellWithReuseIdentifier:khuodongCell];
     [self.view addSubview:self.myCollectionView];
     
 //    self.myCollectionView.contentOffset = CGPointMake(0, 50);
@@ -416,7 +420,13 @@ static NSString *khead2View = @"head2View";
     if (step1 && step2) {
         step1 = NO;
         step2 = NO;
-        [self.myCollectionView reloadData];
+        NSRange range = {1,2};
+        if (_isFirst == YES) {
+            _isFirst = NO;
+            [self.myCollectionView reloadData];
+        } else{
+            [self.myCollectionView reloadSections:[[NSIndexSet alloc] initWithIndexesInRange:range]];
+        }
         [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     }
 }
@@ -504,8 +514,14 @@ static NSString *khead2View = @"head2View";
     if (step1 && step2) {
         step1 = NO;
         step2 = NO;
-        [self.myCollectionView reloadData];
-        [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
+        NSRange range = {1,2};
+        if (_isFirst == YES) {
+            _isFirst = NO;
+            [self.myCollectionView reloadData];
+        } else{
+            [self.myCollectionView reloadSections:[[NSIndexSet alloc] initWithIndexesInRange:range]];
+        }
+           [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         
     }
 
@@ -666,7 +682,12 @@ static NSString *khead2View = @"head2View";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        return 2;
+        _ishaveHuodong = YES;
+        if (_ishaveHuodong) {
+            return 2;
+        } else {
+            return 1;
+        }
     } else if (section == 1){
         if (ladyDataArray.count == 0) {
             return 2;
@@ -685,7 +706,13 @@ static NSString *khead2View = @"head2View";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
+        if (indexPath.row == 0) {
+            return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
+            
+        } else {
+            return CGSizeMake(SCREENWIDTH, 88);
+            
+        }
         
     }
 
@@ -721,6 +748,21 @@ static NSString *khead2View = @"head2View";
     
 }
 
+- (void)tapgesture:(UITapGestureRecognizer *)gesture{
+    NSLog(@"22222");
+    MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
+    NSLog(@"view = %@", view);
+    NSLog(@"%ld", view.currentImageIndex);
+    NSInteger index = [view currentImageIndex];
+    if (targetUrls.count >1) {
+        NSString *urlString = [targetUrls objectAtIndex:index];
+        NSLog(@"urlString = %@", urlString);
+        
+    }
+    
+    
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
         PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
@@ -729,32 +771,45 @@ static NSString *khead2View = @"head2View";
         
        
       
-        PosterCollectionCell2 *cell = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
+        PosterCollectionCell2 *cell0 = (PosterCollectionCell2 *)[collectionView dequeueReusableCellWithReuseIdentifier:kposterView forIndexPath:indexPath];
+        HuodongCollectionViewCell *cell1 = (HuodongCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:khuodongCell forIndexPath:indexPath];
         
         if (posterDataArray.count != 0) {
             
         
-            PosterModel *model = [posterDataArray objectAtIndex:indexPath.row];
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.imageURL imagePostersCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderPosterImage.png"]];
+            if (indexPath.row == 0) {
+
+                
+                MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:cell.bounds andImages:self.posterImages];
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
+                [adView.scrollView addGestureRecognizer:tap];
+                
+                [cell0.contentView addSubview:adView];
+//                NSLog(@"cell.subView = %@", cell.contentView.subviews);
+//                NSLog(@"cell0 = %@", cell0);
+                return cell0;
+
+            } else {
+                
+                cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
+                cell1.huodongImageView.image = [UIImage imageNamed:@"huodongimage.png"];
+              
+               
+               // NSLog(@"cell.subView = %@", cell.contentView.subviews);
+
+               // NSLog(@"cell1 = %@", cell1);
+                return cell1;
+
+            }
             
-            MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:cell.bounds andImages:self.posterImages];
-            
-            [cell.contentView addSubview:adView];
             
 
 
             
            
         }
-        NSLog(@"index row = %ld", indexPath.row);
         
-        if (indexPath.row == 0) {
-            cell.contentView.hidden = NO;
-        } else {
-            cell.contentView.hidden = YES;
-        }
-        
-        return cell;
+        return cell0;
        
     }
     else if (indexPath.section == 2)
@@ -946,7 +1001,7 @@ static NSString *khead2View = @"head2View";
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) return;
     
-    NSLog(@"%ld", (long)indexPath.section);
+  //  NSLog(@"%ld", (long)indexPath.section);
     
     if (childDataArray.count == 0) {
         if ((ladyDataArray.count - indexPath.row < 5) && !_updating) {

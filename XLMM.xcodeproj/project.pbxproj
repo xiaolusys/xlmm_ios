@@ -261,6 +261,9 @@
 		322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */; };
 		3236485D1C62306800CCD0DA /* HuodongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236485B1C62306800CCD0DA /* HuodongViewController.m */; };
 		3236485E1C62306800CCD0DA /* HuodongViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3236485C1C62306800CCD0DA /* HuodongViewController.xib */; };
+		323648601C62E04700CCD0DA /* huodongimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3236485F1C62E04700CCD0DA /* huodongimage.png */; };
+		323648641C62E70200CCD0DA /* HuodongCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 323648621C62E70200CCD0DA /* HuodongCollectionViewCell.m */; };
+		323648651C62E70200CCD0DA /* HuodongCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1047,6 +1050,10 @@
 		3236485A1C62306800CCD0DA /* HuodongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuodongViewController.h; sourceTree = "<group>"; };
 		3236485B1C62306800CCD0DA /* HuodongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuodongViewController.m; sourceTree = "<group>"; };
 		3236485C1C62306800CCD0DA /* HuodongViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongViewController.xib; sourceTree = "<group>"; };
+		3236485F1C62E04700CCD0DA /* huodongimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = huodongimage.png; sourceTree = "<group>"; };
+		323648611C62E70200CCD0DA /* HuodongCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuodongCollectionViewCell.h; sourceTree = "<group>"; };
+		323648621C62E70200CCD0DA /* HuodongCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuodongCollectionViewCell.m; sourceTree = "<group>"; };
+		323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongCollectionViewCell.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2841,6 +2848,7 @@
 				32A2883E1B93E230006DC949 /* MMRootViewController.h */,
 				32A2883F1B93E230006DC949 /* MMRootViewController.m */,
 				32A288401B93E230006DC949 /* MMRootViewController.xib */,
+				3236485F1C62E04700CCD0DA /* huodongimage.png */,
 				3264EA181B6C59B700F36A8D /* ChildViewController.h */,
 				3264EA191B6C59B700F36A8D /* ChildViewController.m */,
 				3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */,
@@ -3158,6 +3166,9 @@
 				2E77F5631C1BF7140020C014 /* YoumengShare.h */,
 				2E77F5641C1BF7140020C014 /* YoumengShare.m */,
 				2E77F5661C1BF77B0020C014 /* YoumengShare.xib */,
+				323648611C62E70200CCD0DA /* HuodongCollectionViewCell.h */,
+				323648621C62E70200CCD0DA /* HuodongCollectionViewCell.m */,
+				323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -3379,6 +3390,7 @@
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
+				323648651C62E70200CCD0DA /* HuodongCollectionViewCell.xib in Resources */,
 				322D25BF1C32B93A00509EAD /* 圈圈加载0020.png in Resources */,
 				2E5600991C2D496E000AFB39 /* loading动画003.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
@@ -3498,6 +3510,7 @@
 				3274C17A1C05847C00641C4E /* EmptyAddressView.xib in Resources */,
 				322D25C71C32B93A00509EAD /* 圈圈加载0028.png in Resources */,
 				2E56008C1C2D496E000AFB39 /* loading动画0018.png in Resources */,
+				323648601C62E04700CCD0DA /* huodongimage.png in Resources */,
 				322FA9411C3CA9CC008DD942 /* TixianViewController.xib in Resources */,
 				2E612B531C4A4454002F1C15 /* 1lun@2x.png in Resources */,
 				2E5600CE1C2D496E000AFB39 /* loading动画008.png in Resources */,
@@ -3785,6 +3798,7 @@
 				32CE91BB1B7C2A4D00CA67C3 /* AddressViewController.m in Sources */,
 				32E4D5351B9FCFB1001230F4 /* JiFenCollectionCell.m in Sources */,
 				3274C1861C06EB1400641C4E /* RefundDetailsViewController.m in Sources */,
+				323648641C62E70200CCD0DA /* HuodongCollectionViewCell.m in Sources */,
 				32CECF8E1BA6669C00FF3BD3 /* MMCartsView.m in Sources */,
 				32E8B5971C50CB5900414F8A /* TuijianErweimaViewController.m in Sources */,
 				181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */,
