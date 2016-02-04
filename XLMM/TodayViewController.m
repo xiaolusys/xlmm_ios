@@ -75,6 +75,7 @@ static NSString *khuodongCell = @"HuodongCell";
     NSString *nextUrl;
     NSMutableArray *targetUrls;
     BOOL _ishaveHuodong;
+    NSDictionary *huodongJson;
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
@@ -415,6 +416,12 @@ static NSString *khuodongCell = @"HuodongCell";
     
     [posterDataArray addObject:ladyModel];
     [posterDataArray addObject:childModel];
+    
+    if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
+        _ishaveHuodong = YES;
+        huodongJson = [jsonDic objectForKey:@"activity"];
+        
+    }
 
     step1 = YES;
     if (step1 && step2) {
@@ -682,7 +689,7 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        _ishaveHuodong = YES;
+        _ishaveHuodong = NO;
         if (_ishaveHuodong) {
             return 2;
         } else {
@@ -792,7 +799,8 @@ static NSString *khuodongCell = @"HuodongCell";
             } else {
                 
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
-                cell1.huodongImageView.image = [UIImage imageNamed:@"huodongimage.png"];
+                cell1.huodongImageView.image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
+                
               
                
                // NSLog(@"cell.subView = %@", cell.contentView.subviews);
@@ -933,9 +941,19 @@ static NSString *khuodongCell = @"HuodongCell";
 //            childVC.childClothing = YES;
 //            [self.navigationController pushViewController:childVC animated:YES];
             
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                
+                huodongVC.diction = huodongJson;
+                
+                
+                [self.navigationController pushViewController:huodongVC animated:YES];
+            } else{
+                LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+                [self.navigationController pushViewController:loginVC animated:YES];
+            }
             
-            [self.navigationController pushViewController:huodongVC animated:YES];
+            
             
             
         }

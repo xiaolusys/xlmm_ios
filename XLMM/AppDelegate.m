@@ -344,15 +344,15 @@
 
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
-        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-        NSString *strMsg;
-        if (resp.errCode == 0) {
-            strMsg = @"分享成功";
-        } else {
-            strMsg = @"分享失败";
-        }
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+//        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+//        NSString *strMsg;
+//        if (resp.errCode == 0) {
+//            strMsg = @"分享成功";
+//        } else {
+//            strMsg = @"分享失败";
+//        }
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
         
     } else if([resp isKindOfClass:[PayResp class]]){
 

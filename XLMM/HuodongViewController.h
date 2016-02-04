@@ -11,4 +11,6 @@
 @interface HuodongViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
+@property (nonatomic, strong) NSDictionary *diction;
+
 @end

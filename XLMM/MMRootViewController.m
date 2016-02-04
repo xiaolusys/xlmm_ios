@@ -52,7 +52,48 @@
     UIView *cartView = [_view viewWithTag:123];
     cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
     [self setLabelNumber];
+  
 }
+
+- (void)updataAfterLogin:(NSNotification *)notification{
+    NSLog(@"微信登录");
+    if ([self isXiaolumama]) {
+        [self createRightItem];
+    } else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+
+- (void)phoneNumberLogin:(NSNotification *)notification{
+    NSLog(@"手机登录");
+    if ([self isXiaolumama]) {
+        [self createRightItem];
+    } else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+
+- (BOOL)isXiaolumama{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    if (data == nil) {
+        return NO;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+}
+
+- (void)createRightItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+    rightImageView.frame = CGRectMake(18, 11, 26, 26);
+    [rightBtn addSubview:rightImageView];
+    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
 
 #pragma mark 解析targeturl 跳转到不同的界面
 - (void)presentView:(NSNotification *)notification{
@@ -197,6 +238,9 @@
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -231,13 +275,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-    [rightBtn addSubview:rightImageView];
-    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+   
 
     [self.view addSubview:[[UIView alloc] init]];
 }
