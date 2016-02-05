@@ -23,7 +23,7 @@
         
         NSLog(@"_count = %ld", (long)_imageCount);
         _currentImageIndex = 0;
-        
+        self.looptime = 2.0;
         //添加滚动控件
         [self addScrollView];
         //添加图片控件
@@ -32,6 +32,8 @@
         [self addPageControl];
         
         [self setDefaultImage];
+        
+        [self createTimer];
     }
     return self;
 }
@@ -110,16 +112,43 @@
     _currentImageIndex = 0;
     //设置当前页
     _pageControl.currentPage = _currentImageIndex;
+    
 
    
 }
 
-//- (void)createTimer{
-//    if (self.timer == nil) {
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.looptime target:self selector:@selector(reloadImageAuto) userInfo:nil repeats:YES];
-//        NSLog(@"start");
-//    }
-//}
+- (void)reloadImageAuto{
+    long leftImageIndex,rightImageIndex;
+    self.currentImageIndex = (_currentImageIndex+1)%_imageCount;
+    
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        self.scrollView.contentOffset = CGPointMake(width * 2, 0);
+    }];
+    
+
+  
+    //UIImageView *centerImageView=(UIImageView *)[_scrollView viewWithTag:2];
+    _centerImageView.image=self.images[self.currentImageIndex];
+    
+    //重新设置左右图片
+    leftImageIndex = (_currentImageIndex+_imageCount-1)%_imageCount;
+    rightImageIndex = (_currentImageIndex+1)%_imageCount;
+    self.leftImageView.image=self.images[leftImageIndex];
+    self.rightImageView.image=self.images[rightImageIndex];
+    
+    [_scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
+    //设置分页
+    _pageControl.currentPage=_currentImageIndex;
+}
+
+
+- (void)createTimer{
+    if (self.timer == nil) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.looptime target:self selector:@selector(reloadImageAuto) userInfo:nil repeats:YES];
+        NSLog(@"start");
+    }
+}
 
 #pragma mark 滚动停止事件
 
