@@ -23,7 +23,7 @@
         
         NSLog(@"_count = %ld", (long)_imageCount);
         _currentImageIndex = 0;
-        self.looptime = 2.0;
+        self.looptime = 4.0;
         //添加滚动控件
         [self addScrollView];
         //添加图片控件
