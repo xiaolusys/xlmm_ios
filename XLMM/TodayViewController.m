@@ -689,7 +689,6 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        _ishaveHuodong = NO;
         if (_ishaveHuodong) {
             return 2;
         } else {
@@ -717,7 +716,7 @@ static NSString *khuodongCell = @"HuodongCell";
             return CGSizeMake(SCREENWIDTH, SCREENWIDTH*253/618);
             
         } else {
-            return CGSizeMake(SCREENWIDTH, 88);
+            return CGSizeMake(SCREENWIDTH, 100 *SCREENWIDTH/320);
             
         }
         
@@ -756,16 +755,34 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
-    NSLog(@"22222");
+  //  NSLog(@"22222");
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
-    NSLog(@"view = %@", view);
-    NSLog(@"%ld", view.currentImageIndex);
-    NSInteger index = [view currentImageIndex];
-    if (targetUrls.count >1) {
-        NSString *urlString = [targetUrls objectAtIndex:index];
-        NSLog(@"urlString = %@", urlString);
+//    NSLog(@"view = %@", view);
+//    NSLog(@"%ld", view.currentImageIndex);
+//    NSInteger index = [view currentImageIndex];
+//    if (targetUrls.count >1) {
+//        NSString *urlString = [targetUrls objectAtIndex:index];
+//        NSLog(@"urlString = %@", urlString);
+//        
+//    }
+    if (view.currentImageIndex == 0) {
+        PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.titleName = @"潮童装区";
+        childVC.childClothing = YES;
+        [self.navigationController pushViewController:childVC animated:YES];
+    } else {
+        PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+        childVC.urlString = kLADY_LIST_URL;
+        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        childVC.titleName = @"时尚女装";
+        childVC.childClothing = NO;
+        [self.navigationController pushViewController:childVC animated:YES];
+
         
     }
+    
     
     
 }

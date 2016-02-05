@@ -44,9 +44,14 @@
     self.saveButton.layer.borderWidth = 1;
     self.saveButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     
-    self.shareButton.layer.cornerRadius = 15;
+    self.shareButton.layer.cornerRadius = 20;
     self.shareButton.layer.borderWidth = 1;
-    self.shareButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    self.shareButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    self.whiteView.layer.cornerRadius = 20;
+    self.whiteView.layer.borderWidth = 1;
+    self.whiteView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.whiteView.layer.shadowColor = [UIColor grayColor].CGColor;
+    self.whiteView.layer.shadowOffset = CGSizeMake(2, 2);
     
 }
 

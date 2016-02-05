@@ -32,6 +32,7 @@
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[self.diction objectForKey:@"act_link"]]];
+    self.webView.scalesPageToFit = YES;
     
     [self.webView loadRequest:request];
     

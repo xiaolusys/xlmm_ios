@@ -118,7 +118,7 @@
     }
      
     
-    [self createRightButonItem];
+   // [self createRightButonItem];
     
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
 //    button.frame = CGRectMake(0, 0, 44, 44);

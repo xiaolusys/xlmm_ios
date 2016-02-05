@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headImageViewHeight;
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model;
+
 - (void)fillData:(PromoteModel *)model;
 
 @end

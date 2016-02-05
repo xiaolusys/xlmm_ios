@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
+@property (weak, nonatomic) IBOutlet UIView *whiteView;
 
 - (IBAction)saveImage:(id)sender;
 - (IBAction)shareImage:(id)sender;

@@ -264,6 +264,7 @@
 		323648601C62E04700CCD0DA /* huodongimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3236485F1C62E04700CCD0DA /* huodongimage.png */; };
 		323648641C62E70200CCD0DA /* HuodongCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 323648621C62E70200CCD0DA /* HuodongCollectionViewCell.m */; };
 		323648651C62E70200CCD0DA /* HuodongCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */; };
+		323648671C64339E00CCD0DA /* defaultmamaimageicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323648661C64339E00CCD0DA /* defaultmamaimageicon.png */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1054,6 +1055,7 @@
 		323648611C62E70200CCD0DA /* HuodongCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuodongCollectionViewCell.h; sourceTree = "<group>"; };
 		323648621C62E70200CCD0DA /* HuodongCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuodongCollectionViewCell.m; sourceTree = "<group>"; };
 		323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongCollectionViewCell.xib; sourceTree = "<group>"; };
+		323648661C64339E00CCD0DA /* defaultmamaimageicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultmamaimageicon.png; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2590,6 +2592,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				323648661C64339E00CCD0DA /* defaultmamaimageicon.png */,
 				32E20B601C5F2DA4009D1726 /* selectedImageView.png */,
 				32E20B5E1C5F29EE009D1726 /* downarrowicon.png */,
 				32E20B5C1C5F29E0009D1726 /* uparrowicon.png */,
@@ -3605,6 +3608,7 @@
 				2EB87D2F1C17FAE4001CBF3D /* UMSLoginViewController.xib in Resources */,
 				2E5600861C2D496E000AFB39 /* loading动画0012.png in Resources */,
 				32746E111B74A22000816208 /* icon-duihao.png in Resources */,
+				323648671C64339E00CCD0DA /* defaultmamaimageicon.png in Resources */,
 				32816F871C1FA880004DD2EF /* messageicon.png in Resources */,
 				32E6BC1A1BEC95CF0036F338 /* ModifyPhoneController.xib in Resources */,
 				2E5600831C2D496E000AFB39 /* loading动画001.png in Resources */,
