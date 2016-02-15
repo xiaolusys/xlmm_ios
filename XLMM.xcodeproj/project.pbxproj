@@ -2889,9 +2889,6 @@
 				320CABDE1BA906D400C62E36 /* PostersViewController.h */,
 				320CABDF1BA906D400C62E36 /* PostersViewController.m */,
 				320CABE01BA906D400C62E36 /* PostersViewController.xib */,
-				3236485A1C62306800CCD0DA /* HuodongViewController.h */,
-				3236485B1C62306800CCD0DA /* HuodongViewController.m */,
-				3236485C1C62306800CCD0DA /* HuodongViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -3255,6 +3252,9 @@
 				32CFD5C01C588F7F00C6203E /* FensiListViewController.h */,
 				32CFD5C11C588F7F00C6203E /* FensiListViewController.m */,
 				32CFD5C21C588F7F00C6203E /* FensiListViewController.xib */,
+				3236485A1C62306800CCD0DA /* HuodongViewController.h */,
+				3236485B1C62306800CCD0DA /* HuodongViewController.m */,
+				3236485C1C62306800CCD0DA /* HuodongViewController.xib */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
