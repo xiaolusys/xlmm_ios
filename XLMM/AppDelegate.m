@@ -537,6 +537,7 @@
     
     
     NSString *urlString = [url absoluteString];
+    
     NSLog(@"url = %@", urlString);
     NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
     NSURL *url1 = [NSURL URLWithString:newUrl];
