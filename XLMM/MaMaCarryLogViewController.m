@@ -105,7 +105,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
     
-    NSLog(@"data = %@", data);
+//    NSLog(@"data = %@", data);
     for (NSDictionary *carry in data) {
         CarryLogModel *carryM = [[CarryLogModel alloc] init];
         [carryM setValuesForKeysWithDictionary:carry];

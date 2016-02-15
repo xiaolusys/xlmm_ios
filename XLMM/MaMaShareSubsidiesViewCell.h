@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class ShareClickModel;
+@class CarryLogModel;
 @interface MaMaShareSubsidiesViewCell : UITableViewCell
 
 
@@ -15,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *click_way;
 @property (weak, nonatomic) IBOutlet UILabel *click_money;
 
-- (void)fillCell:(ShareClickModel *)clickModel;
+- (void)fillCell:(CarryLogModel *)clickModel;
 @end

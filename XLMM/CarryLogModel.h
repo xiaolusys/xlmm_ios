@@ -13,11 +13,11 @@
 //@property (nonatomic, strong)NSNumber *carryId;
 //@property (nonatomic, strong)NSString *carry_type;
 //@property (nonatomic, strong)NSNumber *xlmm;
-//@property (nonatomic, strong)NSNumber *value_money;
+@property (nonatomic, strong)NSNumber *value_money;
 //@property (nonatomic, strong)NSString *carry_type_name;
 //@property (nonatomic, strong)NSString *log_type_name;
 //@property (nonatomic, strong)NSString *carry_date;
-//@property (nonatomic, strong)NSString *created;
+@property (nonatomic, strong)NSString *created;
 
 
 @property (nonatomic, strong)NSNumber *type_count;

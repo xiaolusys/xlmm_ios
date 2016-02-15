@@ -511,10 +511,10 @@
     
     Reachability *reach = [Reachability reachabilityForInternetConnection];
     NetworkStatus status = [reach currentReachabilityStatus];
-    if (status == NotReachable) {
-        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alterView show];
-    }
+//    if (status == NotReachable) {
+//        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alterView show];
+//    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -41,6 +41,7 @@
 
 - (IBAction)jingxuanliebiao:(id)sender;
 - (IBAction)xuanpinliebiao:(id)sender;
+- (IBAction)shareSubsidiesAction:(id)sender;
 
 - (IBAction)huodongzhongxin:(id)sender;
 
