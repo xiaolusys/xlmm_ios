@@ -63,62 +63,40 @@
     NSString *platform = [array[0] componentsSeparatedByString:@"="][1];
     NSString *url = [array[1] componentsSeparatedByString:@"="][1];
     NSString *url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
-    UIImage *image = [UIImage imageNamed:@"logo.png"];
     NSString *sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
     NSLog(@"link = %@", sharelink);
-    NSString *content = @"小鹿美美";
     
     if ([platform isEqualToString:@"qq"]) {
         NSLog(@"qq");
         
-        [UMSocialData defaultData].extConfig.qqData.url = sharelink;
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        }];
+        
 
     } else if ([platform isEqualToString:@"wxapp"]){
         
-        [UMSocialData defaultData].extConfig.wechatSessionData.title = @"小鹿美美";
-        [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-        [UMSocialData defaultData].extConfig.wxMessageType = 0;
+        NSLog(@"xp");
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        }];
         
         
     } else if ([platform isEqualToString:@"sinawb"]){
+        NSLog(@"wb");
+     
         
-        NSString *sinaContent = [NSString stringWithFormat:@"%@", sharelink];
-        NSData *data = UIImagePNGRepresentation(image);
-        [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:data];
+        
     } else if ([platform isEqualToString:@"web"]){
-       // NSLog(@"copy");
+        NSLog(@"copy");
+      
         
-        UIPasteboard *pab = [UIPasteboard generalPasteboard];
-        NSString *str = sharelink;
-        [pab setString:str];
-        if (pab == nil) {
-            [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-        }else
-        {
-            [SVProgressHUD showSuccessWithStatus:@"已复制"];
-        }
     } else if ([platform isEqualToString:@"qqspa"]){
         NSLog(@"zone");
-        [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
+       
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        }];
+        
 
     } else if ([platform isEqualToString:@"pyq"]){
-        [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
-        [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"小鹿美美";
-        [UMSocialData defaultData].extConfig.wxMessageType = 0;
-        
-        
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:image location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            
-        }];
+       
+        NSLog(@"friends");
+    
     } else{
         NSLog(@"others");
     }
