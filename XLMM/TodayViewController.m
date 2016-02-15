@@ -52,7 +52,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
     NSInteger childListNumber;
     NSInteger ladyListNumber;
-    
+    BOOL login_required;
 //    BOOL _isShouldLoad;
     
 
@@ -420,6 +420,7 @@ static NSString *khuodongCell = @"HuodongCell";
     if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
         _ishaveHuodong = YES;
         huodongJson = [jsonDic objectForKey:@"activity"];
+        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
         
     }
 
@@ -943,21 +944,10 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-            childVC.urlString = kLADY_LIST_URL;
-            childVC.orderUrlString = kLADY_LIST_ORDER_URL;
-            childVC.titleName = @"时尚女装";
-            childVC.childClothing = NO;
-            [self.navigationController pushViewController:childVC animated:YES];
             
             
         } else{
-//            PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-//            childVC.urlString = kCHILD_LIST_URL;
-//            childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-//            childVC.titleName = @"潮童装区";
-//            childVC.childClothing = YES;
-//            [self.navigationController pushViewController:childVC animated:YES];
+
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
                 HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
@@ -967,8 +957,20 @@ static NSString *khuodongCell = @"HuodongCell";
                 
                 [self.navigationController pushViewController:huodongVC animated:YES];
             } else{
-                LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-                [self.navigationController pushViewController:loginVC animated:YES];
+                if (login_required) {
+                    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+                    [self.navigationController pushViewController:loginVC animated:YES];
+                } else{
+                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    
+                    huodongVC.diction = huodongJson;
+                    
+                    
+                    [self.navigationController pushViewController:huodongVC animated:YES];
+                }
+            
+
+                
             }
             
             
