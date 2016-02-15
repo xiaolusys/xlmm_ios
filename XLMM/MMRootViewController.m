@@ -254,6 +254,29 @@
     
     [self creatPageData];
     
+   // [self islogin];
+    
+}
+
+- (void)islogin{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
+    NSURL *url = [NSURL URLWithString:string];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+    if (error == nil) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if (error == nil) {
+            NSLog(@"dic = %@", dic);
+        } else{
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+        
+    } else{
+        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+    
 }
 
 #pragma mark  设置导航栏样式
