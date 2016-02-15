@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 @property (weak, nonatomic) IBOutlet UIView *whiteView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
 - (IBAction)saveImage:(id)sender;
 - (IBAction)shareImage:(id)sender;

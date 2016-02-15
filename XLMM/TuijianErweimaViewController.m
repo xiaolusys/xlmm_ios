@@ -37,6 +37,9 @@
     self.title = @"二维码";
     UIImage * image = [UIImage imageNamed:@"erweimaDemo.png"];
     [self createNavigationBarWithTitle:@"推荐二维码" selecotr:@selector(backClicked:)];
+    CGFloat height = (SCREENHEIGHT - 360-64-50)/2;
+    self.topHeight.constant = 64 + height;
+    self.bottomHeight.constant = height;
     
     self.imageView.image = image;
     [self downloadImage];
@@ -47,7 +50,7 @@
     self.shareButton.layer.cornerRadius = 20;
     self.shareButton.layer.borderWidth = 1;
     self.shareButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-    self.whiteView.layer.cornerRadius = 20;
+    self.whiteView.layer.cornerRadius = 8;
     self.whiteView.layer.borderWidth = 1;
     self.whiteView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.whiteView.layer.shadowColor = [UIColor grayColor].CGColor;

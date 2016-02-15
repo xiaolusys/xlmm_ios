@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuijianErweimaViewController">
             <connections>
+                <outlet property="bottomHeight" destination="kea-5j-fxu" id="0Vg-br-r1H"/>
                 <outlet property="imageView" destination="ped-j3-Lx8" id="Y06-7e-g5r"/>
                 <outlet property="shareButton" destination="ohG-sK-dvV" id="MVa-Fi-McR"/>
+                <outlet property="topHeight" destination="fCC-Q4-LP8" id="lOV-B1-dMm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="whiteView" destination="E9i-JW-DVH" id="Otu-cD-5wg"/>
             </connections>
@@ -18,10 +20,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9i-JW-DVH">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E9i-JW-DVH">
                     <rect key="frame" x="68" y="52" width="240" height="240"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ped-j3-Lx8">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ped-j3-Lx8">
                             <rect key="frame" x="20" y="20" width="200" height="200"/>
                             <color key="backgroundColor" red="0.94117647059999998" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -103,14 +105,14 @@
                         <mask key="constraints">
                             <exclude reference="JvL-0E-SWO"/>
                             <exclude reference="gLl-U7-SQ3"/>
-                            <exclude reference="DFk-Fd-f7m"/>
-                            <exclude reference="VOb-cs-ZLX"/>
-                            <exclude reference="Peg-op-CYA"/>
-                            <exclude reference="qSQ-8v-ZGr"/>
                             <exclude reference="9qH-ob-hGE"/>
                             <exclude reference="k3z-La-6Wu"/>
                             <exclude reference="V9U-ea-sHu"/>
                             <exclude reference="Vxm-0d-ezK"/>
+                            <exclude reference="DFk-Fd-f7m"/>
+                            <exclude reference="VOb-cs-ZLX"/>
+                            <exclude reference="Peg-op-CYA"/>
+                            <exclude reference="qSQ-8v-ZGr"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -122,14 +124,14 @@
                         <mask key="constraints">
                             <include reference="JvL-0E-SWO"/>
                             <include reference="gLl-U7-SQ3"/>
-                            <include reference="DFk-Fd-f7m"/>
-                            <include reference="VOb-cs-ZLX"/>
-                            <include reference="Peg-op-CYA"/>
-                            <include reference="qSQ-8v-ZGr"/>
                             <include reference="9qH-ob-hGE"/>
                             <include reference="k3z-La-6Wu"/>
                             <include reference="V9U-ea-sHu"/>
                             <include reference="Vxm-0d-ezK"/>
+                            <include reference="DFk-Fd-f7m"/>
+                            <include reference="VOb-cs-ZLX"/>
+                            <include reference="Peg-op-CYA"/>
+                            <include reference="qSQ-8v-ZGr"/>
                         </mask>
                     </variation>
                 </view>
@@ -170,6 +172,7 @@
                 </constraint>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aaZ-Au-Iuh"/>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="fCC-Q4-LP8"/>
+                <constraint firstItem="ohG-sK-dvV" firstAttribute="top" secondItem="E9i-JW-DVH" secondAttribute="bottom" priority="200" constant="185" id="kea-5j-fxu"/>
                 <constraint firstItem="ohG-sK-dvV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="146" id="wkM-23-6cr">
                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                 </constraint>
@@ -184,6 +187,7 @@
                     <exclude reference="fCC-Q4-LP8"/>
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
+                    <exclude reference="kea-5j-fxu"/>
                     <exclude reference="wkM-23-6cr"/>
                 </mask>
             </variation>
@@ -196,10 +200,11 @@
                     <include reference="fCC-Q4-LP8"/>
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
+                    <include reference="kea-5j-fxu"/>
                     <include reference="wkM-23-6cr"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="388.5" y="316.5"/>
+            <point key="canvasLocation" x="182.5" y="236.5"/>
         </view>
     </objects>
     <resources>
