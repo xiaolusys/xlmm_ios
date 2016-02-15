@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuijianErweimaViewController">
             <connections>
+                <outlet property="bottomHeight" destination="kea-5j-fxu" id="0Vg-br-r1H"/>
                 <outlet property="imageView" destination="ped-j3-Lx8" id="Y06-7e-g5r"/>
                 <outlet property="shareButton" destination="ohG-sK-dvV" id="MVa-Fi-McR"/>
+                <outlet property="topHeight" destination="fCC-Q4-LP8" id="lOV-B1-dMm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="whiteView" destination="E9i-JW-DVH" id="Otu-cD-5wg"/>
             </connections>
@@ -170,6 +172,7 @@
                 </constraint>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aaZ-Au-Iuh"/>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="fCC-Q4-LP8"/>
+                <constraint firstItem="ohG-sK-dvV" firstAttribute="top" secondItem="E9i-JW-DVH" secondAttribute="bottom" priority="200" constant="185" id="kea-5j-fxu"/>
                 <constraint firstItem="ohG-sK-dvV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="146" id="wkM-23-6cr">
                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                 </constraint>
@@ -182,6 +185,7 @@
                 <mask key="constraints">
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
+                    <exclude reference="kea-5j-fxu"/>
                     <exclude reference="wkM-23-6cr"/>
                     <exclude reference="aaZ-Au-Iuh"/>
                     <exclude reference="fCC-Q4-LP8"/>
@@ -194,12 +198,13 @@
                 <mask key="constraints">
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
+                    <include reference="kea-5j-fxu"/>
                     <include reference="wkM-23-6cr"/>
                     <include reference="aaZ-Au-Iuh"/>
                     <include reference="fCC-Q4-LP8"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="388.5" y="316.5"/>
+            <point key="canvasLocation" x="182.5" y="236.5"/>
         </view>
     </objects>
     <resources>

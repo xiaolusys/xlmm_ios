@@ -537,14 +537,24 @@
     
     
     NSString *urlString = [url absoluteString];
-    NSLog(@"url = %@", urlString);
+    
+   // NSLog(@"url = %@", urlString);
     NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
     NSURL *url1 = [NSURL URLWithString:newUrl];
     
     NSString *paramString = [url1 query];
-    NSLog(@"param = %@", paramString);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:paramString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alertView show];
+    NSArray *array = [paramString componentsSeparatedByString:@"&"];
+    if (array.count ==3) {
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"activityShare" object:nil userInfo:@{@"param":paramString}];     
+    }
+   
+    
+    
+    
+//    
+//    NSLog(@"param = %@", paramString);
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:paramString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+//    [alertView show];
     
     
    [Pingpp handleOpenURL:url
