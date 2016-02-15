@@ -54,7 +54,7 @@
 //  Root_URL @"http://192.168.1.31:9000"
 
 //  Root_URL @"http://192.168.1.57:8000"
-
+//#define Share_Root_Url @"http://m.xiaolumeimei.com"
 
 
 #if 0
@@ -64,7 +64,7 @@
 #else
 
 
-#define Root_URL @"http://api.xiaolumeimei.com"
+#define Root_URL @"http://m.xiaolumeimei.com"
 
 #endif
 
