@@ -109,11 +109,19 @@ static NSString * ksimpleCell = @"simpleCell";
     if (array.count == 0) {
         return;
     }
+    NSMutableArray *numArray = [[NSMutableArray alloc] init];
+    
     for (NSDictionary *ladyInfo in array) {
         PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        
+        NSIndexPath *index = [NSIndexPath indexPathForRow:_dataArray.count
+                                                inSection:0];
         [_dataArray addObject:model];
+        [numArray addObject:index];
     }
-    [self.childCollectionView reloadData];
+    [self.childCollectionView insertItemsAtIndexPaths:numArray];
+    [numArray removeAllObjects];
+    numArray = nil;
 }
 
 
@@ -308,8 +316,11 @@ static NSString * ksimpleCell = @"simpleCell";
     CGFloat temp = oldScrollViewTop - point.y;
     
     if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
-        [self loadMore];
-        _isupdate = NO;
+        if (isOrder == NO) {
+            [self loadMore];
+            _isupdate = NO;
+        }
+     
         
     }
     

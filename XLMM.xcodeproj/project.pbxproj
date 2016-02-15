@@ -2802,6 +2802,7 @@
 		32816F891C1FF469004DD2EF /* cageory */ = {
 			isa = PBXGroup;
 			children = (
+				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */,
 				32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */,
 				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
@@ -3195,7 +3196,6 @@
 				32816F891C1FF469004DD2EF /* cageory */,
 				325D567D1BCE449700B12EE6 /* ArrowView.h */,
 				325D567E1BCE449700B12EE6 /* ArrowView.m */,
-				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
 				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
 				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,

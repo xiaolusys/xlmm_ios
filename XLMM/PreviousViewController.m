@@ -257,6 +257,8 @@ static NSString *khead2View = @"head2View";
         string = [NSString stringWithFormat:@"剩余%ld天%02ld时%02ld分%02ld秒", (long)[d day],(long)[d hour], (long)[d minute], (long)[d second]];
         
     }
+    
+  //  NSLog(@"time = %@", string);
     childTimeLabel.text = string;
     ladyTimeLabel.text = string;
     
@@ -332,7 +334,7 @@ static NSString *khead2View = @"head2View";
     }
     // NSLog(@"childcount = %ld, ladyCount = %ld", childDataArray.count, ladyDataArray.count);
     
-    
+       theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     step2 = YES;
     if (step1 && step2) {
         step1 = NO;

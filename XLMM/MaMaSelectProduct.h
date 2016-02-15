@@ -19,7 +19,7 @@
 
 //@property (nonatomic, strong)NSNumber *status;
 @property (nonatomic, strong) NSNumber *rebet_amount;
-@property (nonatomic, strong)NSNumber *lock_num;
+@property (nonatomic, strong)NSNumber *sale_num;
 @property (nonatomic, strong) NSNumber *agent_price;
 @property (nonatomic, strong)NSNumber *std_sale_price;
 

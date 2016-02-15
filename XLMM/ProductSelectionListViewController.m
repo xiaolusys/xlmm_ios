@@ -287,8 +287,8 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
    // NSLog(@"xiaoliang");
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"lock_num"];
-  //  NSLog(@"string = %@", string);
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
+//    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
 - (void)backClickAction {

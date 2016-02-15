@@ -67,7 +67,7 @@
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.stdPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
     self.backPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
-    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.lock_num integerValue]];
+    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.sale_num integerValue]];
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     if ([product.in_customer_shop intValue]) {
        self.addBtnClick.selected = YES;
@@ -100,7 +100,7 @@
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.stdPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
     self.backPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
-    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.lock_num integerValue]];
+    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.sale_num integerValue]];
     
     //[self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }
