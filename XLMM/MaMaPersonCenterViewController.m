@@ -173,7 +173,8 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         
         //获取点击补贴
-        self.money = dicJson[@"clk_money"];
+//        self.money = dicJson[@"clk_money"];
+        self.money = [NSNumber numberWithFloat:34.00];
         NSDictionary *mmclog = dicJson[@"mmclog"];
         self.clickTotalMoney = mmclog[@"clki"];
         
