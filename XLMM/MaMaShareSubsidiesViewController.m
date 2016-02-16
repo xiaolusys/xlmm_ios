@@ -14,6 +14,7 @@
 #import "ShareClickModel.h"
 #import "CarryLogModel.h"
 #import "CarryLogHeaderView.h"
+#import "MJRefresh.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -61,17 +62,28 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [self createNavigationBarWithTitle:@"分享补贴" selecotr:@selector(backClickAction)];
     [self createTableView];
     
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+    
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog/get_clk_list", Root_URL];
     
     [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
         
-        [self dataDeal:responseObject];
+        [self dataAnalysis:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@", error);
     }];
+    
+    
 }
 
 - (void)createTableView {
@@ -112,7 +124,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
     //历史点击修改
     CGFloat moneyTextY = CGRectGetMaxY(self.moneyText.frame) + 10;
-    NSLog(@"moneyTextY:%f", moneyTextY);
     UILabel *history = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, moneyTextY, 60, 40)];
     history.text = @"历史累积";
     history.font = [UIFont systemFontOfSize:14];
@@ -135,42 +146,10 @@ static NSString *cellIdentifier = @"shareSubsidies";
 }
 
 #pragma mark 数据处理
-- (void)dataDeal:(NSDictionary *)dic {
-    self.nextPage = dic[@"next"];
-    NSArray *clicks = dic[@"results"];
-    
-//    self.moneyText.text = [NSString stringWithFormat:@"%@", dic[@"all_income"]];
-    for (NSDictionary *click in clicks) {
-        CarryLogModel *carryM = [[CarryLogModel alloc] init];
-        [carryM setValuesForKeysWithDictionary:click];
-        
-        NSString *date = [self dateDeal:carryM.carry_date];
-        self.dataArr = [[self.dataDic allKeys] mutableCopy];
-        if ([self.dataArr containsObject:date]) {
-            //已经含有key
-            NSMutableArray *orderArr = [self.dataDic objectForKey:date];
-            [orderArr addObject:carryM];
-        }else {
-            //没有key
-            NSMutableArray *orderArr = [NSMutableArray arrayWithCapacity:0];
-            [orderArr addObject:carryM];
-            [self.dataDic setObject:orderArr forKey:date];
-        }
-
-    }
-    self.dataArr = [[self.dataDic allKeys]mutableCopy];
-    self.dataArr = [self sortAllKeyArray:self.dataArr];
-    
-    [self.tableView reloadData];
-    
-    [self.tableView reloadData];
-}
-
 //将日期去掉－
-- (NSString *)dateDeal:(NSString *)str {
+- (NSString *)dateDealtt:(NSString *)str {
     NSString *year = [str substringToIndex:7];
     NSString *date = [year stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    NSLog(@"date:%@", date);
     return date;
 }
 
@@ -187,6 +166,47 @@ static NSString *cellIdentifier = @"shareSubsidies";
     }
     return keyArr;
 }
+
+//加载更多
+- (void)loadMore {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.tableView.mj_footer endRefreshing];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+
+- (void)dataAnalysis:(NSDictionary *)dic {
+    self.nextPage = dic[@"next"];
+    NSArray *clicks = dic[@"results"];
+    
+//    self.moneyText.text = [NSString stringWithFormat:@"%@", dic[@"all_income"]];
+    for (NSDictionary *click in clicks) {
+        CarryLogModel *carryM = [[CarryLogModel alloc] init];
+        [carryM setValuesForKeysWithDictionary:click];
+        
+        NSString *date = [self dateDealtt:carryM.carry_date];
+        self.dataArr = [[self.dataDic allKeys] mutableCopy];
+        if ([self.dataArr containsObject:date]) {
+            //已经含有key
+            NSMutableArray *orderArr = [self.dataDic objectForKey:date];
+            [orderArr addObject:carryM];
+        }else {
+            //没有key
+            NSMutableArray *orderArr = [NSMutableArray arrayWithCapacity:0];
+            [orderArr addObject:carryM];
+            [self.dataDic setObject:orderArr forKey:date];
+        }
+
+    }
+    self.dataArr = [[self.dataDic allKeys]mutableCopy];
+    self.dataArr = [self sortAllKeyArray:self.dataArr];
+
+    [self.tableView reloadData];
+}
+
 #pragma mark UItabelView的代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArr.count;
