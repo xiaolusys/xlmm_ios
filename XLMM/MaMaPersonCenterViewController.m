@@ -66,6 +66,7 @@
 
 @property (nonatomic, strong)NSNumber *money;
 @property (nonatomic, strong)NSNumber *clickTotalMoney;
+
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -269,9 +270,9 @@
     //点击补贴
     NSNumber *clicks = dic[@"clk_money"];
     
-    _money = dic[@"clk_money"];
-    NSDictionary *mmclog = dic[@"mmclog"];
-    _clickTotalMoney = mmclog[@"clki"];
+//    _money = dic[@"clk_money"];
+//    NSDictionary *mmclog = dic[@"mmclog"];
+//    _clickTotalMoney = mmclog[@"clki"];
     
     
     self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴%0.1f", [clicks floatValue]];

@@ -121,6 +121,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     UILabel *totalMoney = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 + 10, moneyTextY, 90, 40)];
     
     totalMoney.text = [NSString stringWithFormat:@"%.2f", [self.clickTotalMoeny floatValue]];
+    
     totalMoney.font = [UIFont systemFontOfSize:14];
     [headerV addSubview:totalMoney];
     
@@ -139,7 +140,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
     NSArray *clicks = dic[@"results"];
     
 //    self.moneyText.text = [NSString stringWithFormat:@"%@", dic[@"all_income"]];
-    NSLog(@"%@", clicks);
     for (NSDictionary *click in clicks) {
         CarryLogModel *carryM = [[CarryLogModel alloc] init];
         [carryM setValuesForKeysWithDictionary:click];
