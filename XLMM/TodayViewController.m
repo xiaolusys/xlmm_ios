@@ -457,19 +457,11 @@ static NSString *khuodongCell = @"HuodongCell";
             UIImage *image = [UIImage imagewithURLString:imageUrl];
             NSLog(@"image = %@", image);
             imageView.image = image;
-            
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
             [imageView addGestureRecognizer:tap];
-            
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.userInteractionEnabled = YES;
-            
             [self.view addSubview:activityView];
-            
-            
-            
-            
-            
-            
             [defaults setObject:activityID forKey:@"activityid"];
         }
         
@@ -498,14 +490,35 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)huodongrukou{
-    [backView removeFromSuperview];
-    [activityView removeFromSuperview];
-    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-    
-    huodongVC.diction = huodongJson;
-    
-    
-    [self.navigationController pushViewController:huodongVC animated:YES];
+  
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        
+        huodongVC.diction = huodongJson;
+        
+        
+        [self.navigationController pushViewController:huodongVC animated:YES];
+        [backView removeFromSuperview];
+        [activityView removeFromSuperview];
+    } else{
+        if (login_required) {
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            
+            huodongVC.diction = huodongJson;
+            
+            
+            [self.navigationController pushViewController:huodongVC animated:YES];
+            [backView removeFromSuperview];
+            [activityView removeFromSuperview];
+        }
+        
+        
+        
+    }
+
     
 }
 
