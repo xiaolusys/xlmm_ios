@@ -17,4 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *click_money;
 
 - (void)fillCell:(CarryLogModel *)clickModel;
+- (void)fillShareSubsidiesCell:(CarryLogModel *)clickModel;
 @end

@@ -47,7 +47,7 @@
     NSString *share_mmcode;
     
     NSNumber *_money;
-//    NSInteger _clickDate;
+    NSNumber *_clickTotalMoney;
     
 }
 
@@ -166,10 +166,16 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
+        
+        //获取点击补贴
+        //点击补贴
+        _money = dicJson[@"clk_money"];
+        NSDictionary *mmclog = dicJson[@"mmclog"];
+        _clickTotalMoney = mmclog[@"clki"];
+        
         self.earningsRecord = self.jileishouyi.text;
     }
 }
@@ -264,6 +270,9 @@
     NSNumber *clicks = dic[@"clk_money"];
     
     _money = dic[@"clk_money"];
+    NSDictionary *mmclog = dic[@"mmclog"];
+    _clickTotalMoney = mmclog[@"clki"];
+    
     
     self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴%0.1f", [clicks floatValue]];
 
@@ -563,9 +572,9 @@
 
 - (IBAction)shareSubsidiesAction:(id)sender {
     MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
-//    share.clickDate = _clickDate;
-    NSLog(@"-----%@", _money);
+    share.clickTotalMoeny = _clickTotalMoney;
     share.todayMoney = _money;
+    
     [self.navigationController pushViewController:share animated:YES];
 }
 

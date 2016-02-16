@@ -62,8 +62,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [self createTableView];
     
     //网络请求
-//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/clicklog/click_by_day?days=%ld", Root_URL, (long)self.clickDate];
-    
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog/get_clk_list", Root_URL];
     
     [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -81,7 +79,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -50, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"MaMaShareSubsidiesViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
@@ -121,7 +119,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [headerV addSubview:history];
     
     UILabel *totalMoney = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 + 10, moneyTextY, 90, 40)];
-    totalMoney.text = @"15.00";
+    totalMoney.text = [NSString stringWithFormat:@"%.2f", [self.clickTotalMoeny floatValue]];
     totalMoney.font = [UIFont systemFontOfSize:14];
     [headerV addSubview:totalMoney];
     
@@ -142,9 +140,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
 //    self.moneyText.text = [NSString stringWithFormat:@"%@", dic[@"all_income"]];
     NSLog(@"%@", clicks);
     for (NSDictionary *click in clicks) {
-//        ShareClickModel *clickM = [[ShareClickModel alloc] init];
-//        [clickM setValuesForKeysWithDictionary:click];
-//        [self.dataArr addObject:clickM];
         CarryLogModel *carryM = [[CarryLogModel alloc] init];
         [carryM setValuesForKeysWithDictionary:click];
         
@@ -210,7 +205,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     if (!cell) {
         cell = [[MaMaShareSubsidiesViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    [cell fillCell:clickModel];
+    [cell fillShareSubsidiesCell:clickModel];
     return cell;
 }
 
