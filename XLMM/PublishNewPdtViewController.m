@@ -160,6 +160,23 @@
 }
 
 - (void)requestData:(NSArray *)data {
+    if (data.count == 0) {
+        UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
+        [self.view addSubview:timeView];
+        
+        UIImageView *timeImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
+        timeImageV.image = [UIImage imageNamed:@"shizhong.png"];
+        [timeView addSubview:timeImageV];
+        
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, 120, 120)];
+        title.text = @"休假中...";
+        title.font = [UIFont systemFontOfSize:14];
+        title.textColor = [UIColor lightGrayColor];
+        title.textAlignment = NSTextAlignmentCenter;
+        [timeView addSubview:title];
+
+        return;
+    }
     
     for (NSMutableDictionary *oneTurns in data) {
         SharePicModel *sharePic = [[SharePicModel alloc] init];

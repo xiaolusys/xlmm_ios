@@ -209,7 +209,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
 
 #pragma mark UItabelView的代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataArr.count;
+    return self.dataArr.count;     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

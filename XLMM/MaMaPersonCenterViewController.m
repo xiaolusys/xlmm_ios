@@ -67,6 +67,8 @@
 @property (nonatomic, strong)NSNumber *money;
 @property (nonatomic, strong)NSNumber *clickTotalMoney;
 
+@property (copy, nonatomic) NSString *mamalink;
+
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -171,11 +173,13 @@
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
+        self.mamalink = [dicJson objectForKey:@"mama_link"];
         
         //获取点击补贴
         self.money = dicJson[@"clk_money"];
         NSDictionary *mmclog = dicJson[@"mmclog"];
         self.clickTotalMoney = mmclog[@"clki"];
+        
         
         self.earningsRecord = self.jileishouyi.text;
     }
@@ -553,6 +557,7 @@
     TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
     
     erweima.imagelink = share_mmcode;
+    erweima.mamalink = self.mamalink;
     [self.navigationController pushViewController:erweima animated:YES];
     
     

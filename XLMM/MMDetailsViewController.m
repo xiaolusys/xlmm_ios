@@ -93,7 +93,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+    [super viewWillAppear:animated]; 
     
     if (last_created != nil) {
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -366,8 +366,6 @@
         self.des = [shareDic objectForKey:@"desc"];
         self.url = [shareDic objectForKey:@"share_link"];
     }
-
-    
 }
 - (void)createKuaiZhaoImage{
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
@@ -983,7 +981,7 @@
 
 - (void)qqspaceShareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
-    [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr  ;
+    [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];

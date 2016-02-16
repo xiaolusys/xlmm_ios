@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UMSocial.h"
 
-@interface TuijianErweimaViewController : UIViewController
+@interface TuijianErweimaViewController : UIViewController<UMSocialUIDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (copy, nonatomic) NSString *imagelink;
+
+@property (copy, nonatomic) NSString *mamalink;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
