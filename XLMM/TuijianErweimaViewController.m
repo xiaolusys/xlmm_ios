@@ -11,15 +11,28 @@
 #import "WXApi.h"
 #import "MMClass.h"
 #import "UIImage+ChangeGray.h"
+#import "YoumengShare.h"
+#import "SendMessageToWeibo.h"
+#import "SVProgressHUD.h"
 
 
 
 @interface TuijianErweimaViewController ()
-
+//遮罩层
+@property (nonatomic, strong)UIView *shareBackView;
+//分享页面
+@property (nonatomic, strong) YoumengShare *youmengShare;
 @end
 
 @implementation TuijianErweimaViewController{
     UIImage *shareImages;
+}
+
+- (YoumengShare *)youmengShare {
+    if (!_youmengShare) {
+        self.youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _youmengShare;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -110,7 +123,6 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     
     if (error == nil) {
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         
@@ -131,20 +143,115 @@
 - (IBAction)shareImage:(id)sender {
     NSLog(@"share");
     
-    WXMediaMessage *message = [WXMediaMessage message];
+    self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
+    [self.shareBackView addSubview:self.youmengShare];
+    self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    self.youmengShare.snapshotBtn.hidden = YES;
+    self.youmengShare.friendsSnaoshotBtn.hidden = YES;
     
-    WXImageObject *ext = [WXImageObject object];
+    // 点击分享后弹出自定义的分享界面
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
+    }];
     
-  
-    ext.imageData = UIImagePNGRepresentation(shareImages);
-    message.mediaObject = ext;
+    // 分享页面事件处理
+    [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
-    req.bText = NO;
-    req.message = message;
-    req.scene = 1;
+    [self.youmengShare.weixinShareBtn addTarget:self action:@selector(weixinShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.friendsShareBtn addTarget:self action:@selector(friendsShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+
     
-    [WXApi sendReq:req];
+//    WXMediaMessage *message = [WXMediaMessage message];
+//    
+//    WXImageObject *ext = [WXImageObject object];
+//    
+//  
+//    ext.imageData = UIImagePNGRepresentation(shareImages);
+//    message.mediaObject = ext;
+//    
+//    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+//    req.bText = NO;
+//    req.message = message;
+//    req.scene = 1;
+//    
+//    [WXApi sendReq:req];
+}
+
+#pragma mark --分享按钮事件
+- (void)hiddenNavigationView{
+    self.navigationController.navigationBarHidden = YES;
+}
+- (void)cancleShareBtnClick:(UIButton *)btn{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
+    } completion:^(BOOL finished) {
+        [self.shareBackView removeFromSuperview];
+    }];
+}
+- (void)weixinShareBtnClick:(UIButton *)btn{
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:shareImages location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [self hiddenNavigationView];
+    }];
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)friendsShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:shareImages location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [self hiddenNavigationView];
+        
+    }];
+    [self cancleShareBtnClick:nil];
+}
+
+
+
+- (void)qqshareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeImage;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:@" " image:shareImages location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+    }];
+
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)qqspaceShareBtnClick:(UIButton *)btn {
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.mamalink;
+    
+    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeImage;
+    
+    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:@" " image:shareImages location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+    }];
+    
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)weiboShareBtnClick:(UIButton *)btn {
+    [SendMessageToWeibo sendMessageWithText:self.mamalink andPicture:UIImagePNGRepresentation(shareImages)];
+    [self cancleShareBtnClick:nil];
+}
+
+- (void)linkCopyBtnClick:(UIButton *)btn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    NSString *str = self.mamalink;
+    [pab setString:str];
+    if (pab == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+    }else
+    {
+        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    }
+    
+    [self cancleShareBtnClick:nil];
 }
 
 @end
