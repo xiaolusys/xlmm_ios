@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuijianErweimaViewController">
@@ -183,12 +183,12 @@
                     <exclude reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="aaZ-Au-Iuh"/>
-                    <exclude reference="fCC-Q4-LP8"/>
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
                     <exclude reference="kea-5j-fxu"/>
                     <exclude reference="wkM-23-6cr"/>
+                    <exclude reference="aaZ-Au-Iuh"/>
+                    <exclude reference="fCC-Q4-LP8"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -196,12 +196,12 @@
                     <include reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="aaZ-Au-Iuh"/>
-                    <include reference="fCC-Q4-LP8"/>
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
                     <include reference="kea-5j-fxu"/>
                     <include reference="wkM-23-6cr"/>
+                    <include reference="aaZ-Au-Iuh"/>
+                    <include reference="fCC-Q4-LP8"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="182.5" y="236.5"/>

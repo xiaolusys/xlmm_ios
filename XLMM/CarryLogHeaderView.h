@@ -14,4 +14,6 @@
 
 - (void)yearLabelAndTotalMoneyLabelText:(NSString *)year
                                   total:(NSString *)total;
+- (void)shareYearLabelAndTotalMoneyLabelText:(NSString *)year
+                                       total:(NSString *)total;
 @end

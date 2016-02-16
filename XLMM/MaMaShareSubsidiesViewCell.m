@@ -8,6 +8,8 @@
 
 #import "MaMaShareSubsidiesViewCell.h"
 #import "ShareClickModel.h"
+#import "CarryLogModel.h"
+
 
 @implementation MaMaShareSubsidiesViewCell
 
@@ -21,12 +23,22 @@
     // Configure the view for the selected state
 }
 
-- (void)fillCell:(ShareClickModel *)clickModel {
-    NSMutableString *timestext= [NSMutableString stringWithString:clickModel.click_time];
+- (void)fillCell:(CarryLogModel *)clickModel {
+    NSMutableString *timestext= [NSMutableString stringWithString:clickModel.created];
     NSRange range;
     range = [timestext rangeOfString:@"T"];
     [timestext replaceCharactersInRange:range withString:@" "];
     self.click_time.text = timestext;
+}
+
+- (void)fillShareSubsidiesCell:(CarryLogModel *)clickModel {
+    NSMutableString *timestext= [NSMutableString stringWithString:clickModel.created];
+    NSRange range;
+    range = [timestext rangeOfString:@"T"];
+    [timestext replaceCharactersInRange:range withString:@" "];
+    self.click_time.text = timestext;
+//    self.click_time.text = clickModel.carry_date;
+    self.click_money.text = [NSString stringWithFormat:@"+%.2f", [clickModel.value_money floatValue]];
 }
 
 @end

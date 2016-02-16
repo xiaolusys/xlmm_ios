@@ -47,7 +47,7 @@
     NSString *share_mmcode;
     
     NSNumber *_money;
-    NSInteger _clickDate;
+    NSNumber *_clickTotalMoney;
     
 }
 
@@ -61,6 +61,9 @@
 //分享点击补贴
 @property (weak, nonatomic) IBOutlet UILabel *clickNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *clickMoney;
+
+@property (weak, nonatomic) IBOutlet UILabel *updateClickMoenyLabel;
+
 
 @end
 
@@ -163,10 +166,16 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSLog(@"json = %@", dicJson);
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
+        
+        //获取点击补贴
+        //点击补贴
+        _money = dicJson[@"clk_money"];
+        NSDictionary *mmclog = dicJson[@"mmclog"];
+        _clickTotalMoney = mmclog[@"clki"];
+        
         self.earningsRecord = self.jileishouyi.text;
     }
 }
@@ -258,20 +267,26 @@
     [self.dataArr removeAllObjects];
     
     //点击补贴
-    NSNumber *clicks = dic[@"clicks"];
+    NSNumber *clicks = dic[@"clk_money"];
     
-    _money = dic[@"click_money"];
-    if ([clicks intValue] > 0) {
-        self.shareSubsidies.hidden = NO;
-        self.clickedViewHeight.constant = 45;
-        self.clickNumLabel.text = [NSString stringWithFormat:@"%@用户通过点击你的分享", dic[@"clicks"]];
-        
-        
-        self.clickMoney.text = [NSString stringWithFormat:@"+%@",  dic[@"click_money"]];
-    }else {
-        self.shareSubsidies.hidden = YES;
-        self.clickedViewHeight.constant = 0;
-    }
+    _money = dic[@"clk_money"];
+    NSDictionary *mmclog = dic[@"mmclog"];
+    _clickTotalMoney = mmclog[@"clki"];
+    
+    
+    self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴%0.1f", [clicks floatValue]];
+
+//    if ([clicks intValue] > 0) {
+//        self.shareSubsidies.hidden = NO;
+//        self.clickedViewHeight.constant = 45;
+//        self.clickNumLabel.text = [NSString stringWithFormat:@"%@用户通过点击你的分享", dic[@"clicks"]];
+//        
+//        self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴--%@", dic[@"click_money"]];
+////        self.clickMoney.text = [NSString stringWithFormat:@"+%@",  dic[@"click_money"]];
+//    }else {
+//        self.shareSubsidies.hidden = YES;
+//        self.clickedViewHeight.constant = 0;
+//    }
     
     NSArray *array = dic[@"shops"];
     if (array.count == 0){
@@ -397,7 +412,7 @@
     
     //NSLog(@"days = %ld", days);
 
-    _clickDate = days;
+//    _clickDate = days;
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
     
@@ -555,16 +570,25 @@
     [self.navigationController pushViewController:product animated:YES];
 }
 
+- (IBAction)shareSubsidiesAction:(id)sender {
+    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
+    share.clickTotalMoeny = _clickTotalMoney;
+    share.todayMoney = _money;
+    
+    [self.navigationController pushViewController:share animated:YES];
+}
+
+
 - (IBAction)huodongzhongxin:(id)sender {
     MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
     [self.navigationController pushViewController:activityVC animated:YES];
 }
 
-- (void)clickShareView {
-    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
-    share.clickDate = _clickDate;
-    share.todayMoney = _money;
-    [self.navigationController pushViewController:share animated:YES];
-}
+//- (void)clickShareView {
+//    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
+//    share.clickDate = _clickDate;
+//    share.todayMoney = _money;
+//    [self.navigationController pushViewController:share animated:YES];
+//}
 
 @end

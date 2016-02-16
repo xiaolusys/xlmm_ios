@@ -29,4 +29,10 @@
     self.totalMoneyLabel.text = [NSString stringWithFormat:@"总收益%@", total];
 }
 
+- (void)shareYearLabelAndTotalMoneyLabelText:(NSString *)year
+                                  total:(NSString *)total {
+    NSString *str = [year substringToIndex:7];
+    self.yearLabel.text = str;
+    self.totalMoneyLabel.text = [NSString stringWithFormat:@"总收益%@", total];
+}
 @end

@@ -11,5 +11,5 @@
 @interface MaMaShareSubsidiesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 //当前日期总的补贴
 @property (nonatomic, strong)NSNumber *todayMoney;
-@property (nonatomic, assign)NSInteger clickDate;
+@property (nonatomic, strong)NSNumber *clickTotalMoeny;
 @end

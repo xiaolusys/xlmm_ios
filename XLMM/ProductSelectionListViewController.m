@@ -212,10 +212,6 @@ static NSString *cellIdentifier = @"productSelection";
         [self performSelector:@selector(downloadChildliat) title1:@"童装" title2:@"全部" title3:@"女装"];
     
     }
-    
-    
-    
-    
 }
 
 - (void)fetchedDatalist:(NSData *)data{
