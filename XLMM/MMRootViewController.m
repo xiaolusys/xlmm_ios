@@ -254,9 +254,43 @@
     
     [self creatPageData];
     
-   // [self islogin];
+    //[self islogin];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self autologin];
+    } else {
+        NSLog(@"no login");
+        
+    }
+    
     
 }
+
+- (void)autologin{
+    
+   
+     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
+    if ([loginMethon isEqualToString:kWeiXinLogin]) {
+        NSLog(@"微信登录");
+    } else if ([loginMethon isEqualToString:kPhoneLogin]){
+        NSLog(@"手机登录");
+        
+        NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+        NSLog(@"userinfo = %@", userinfo);
+        if ([self isXiaolumama]) {
+            [self createRightItem];
+        } else{
+            self.navigationItem.rightBarButtonItem = nil;
+        }
+        
+
+        
+        
+        
+    }
+   
+}
+
 
 - (void)islogin{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];

@@ -168,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMRootViewController.m"
-            timestampString = "477237144.530466"
+            timestampString = "477288488.771815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "-rightClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMRootViewController.m"
-            timestampString = "477237144.530466"
+            timestampString = "477288488.771815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "-rightClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMRootViewController.m"
-            timestampString = "477237144.530466"
+            timestampString = "477288488.771815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "-rightClicked:"
             landmarkType = "5">
          </BreakpointContent>

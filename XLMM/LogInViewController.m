@@ -335,9 +335,11 @@
                   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                   // 手机登录成功 ，保存用户信息以及登录途径
                   [defaults setBool:YES forKey:kIsLogin];
+                  
                   NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
                                              kPassWord:self.passwordTextField.text};
                   [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
+                  
                   [defaults setObject:kPhoneLogin forKey:kLoginMethod];
                   [defaults synchronize];
                   // 发送手机号码登录成功的通知
