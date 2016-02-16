@@ -10,6 +10,20 @@
 
 @implementation UIImage (ChangeGray)
 
++ (UIImage*)imageFromView:(UIView*)view{
+    
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, view.layer.contentsScale);
+    
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+    
+}
+
 + (UIImage*)grayscale:(UIImage*)anImage{
     
 //    CGImageRef imageRef = anImage.CGImage;

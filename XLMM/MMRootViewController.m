@@ -272,6 +272,13 @@
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {
         NSLog(@"微信登录");
+        NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+        NSLog(@"userinfo = %@", userinfo);
+        if ([self isXiaolumama]) {
+            [self createRightItem];
+        } else{
+            self.navigationItem.rightBarButtonItem = nil;
+        }
     } else if ([loginMethon isEqualToString:kPhoneLogin]){
         NSLog(@"手机登录");
         

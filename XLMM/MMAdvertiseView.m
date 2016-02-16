@@ -7,6 +7,7 @@
 //
 
 #import "MMAdvertiseView.h"
+#import "UIColor+RGBColor.h"
 
 #define width self.frame.size.width
 #define height self.frame.size.height
@@ -88,9 +89,9 @@
     _pageControl.bounds=CGRectMake(0, 0, width, 30);
     _pageControl.center=CGPointMake(width/2, height-15);
     //设置颜色
-    _pageControl.pageIndicatorTintColor=[UIColor colorWithRed:193/255.0 green:219/255.0 blue:249/255.0 alpha:1];
+    _pageControl.pageIndicatorTintColor=[UIColor backgroundlightGrayColor];
     //设置当前页颜色
-    _pageControl.currentPageIndicatorTintColor=[UIColor colorWithRed:0 green:150/255.0 blue:1 alpha:1];
+    _pageControl.currentPageIndicatorTintColor=[UIColor orangeThemeColor];
     //设置总页数
     _pageControl.numberOfPages = _imageCount;
     

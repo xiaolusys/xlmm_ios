@@ -91,8 +91,8 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
     
     //点击分享补贴
-    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
-    [self.shareSubsidies addGestureRecognizer:tapShare];
+//    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
+//    [self.shareSubsidies addGestureRecognizer:tapShare];
     
 
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];

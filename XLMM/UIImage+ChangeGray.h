@@ -11,4 +11,6 @@
 @interface UIImage (ChangeGray)
 + (UIImage*)grayscale:(UIImage*)anImage;
 
++ (UIImage*)imageFromView:(UIView*)view;
+
 @end

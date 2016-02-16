@@ -150,7 +150,7 @@
                                     <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的粉丝 8000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-d7-Gr2">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的粉丝 8000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-d7-Gr2">
                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -236,7 +236,7 @@
                                 <constraint firstItem="gbp-da-shj" firstAttribute="top" secondItem="Pde-lL-geW" secondAttribute="bottom" id="IwS-A9-rde"/>
                                 <constraint firstItem="P5R-d7-Gr2" firstAttribute="centerX" secondItem="vkd-Tf-mwI" secondAttribute="centerX" id="OC5-Fr-3uK"/>
                                 <constraint firstItem="Pde-lL-geW" firstAttribute="top" secondItem="P5R-d7-Gr2" secondAttribute="bottom" constant="11" id="Rv5-p7-tCx">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                 </constraint>
                                 <constraint firstItem="Avq-4J-csh" firstAttribute="centerX" secondItem="vkd-Tf-mwI" secondAttribute="centerX" id="ZEf-WA-z6s"/>
                                 <constraint firstAttribute="width" constant="414" id="bOj-HD-mE8"/>
@@ -246,7 +246,7 @@
                                 <constraint firstItem="4ID-ID-LFF" firstAttribute="leading" secondItem="vkd-Tf-mwI" secondAttribute="leading" id="ndP-Ic-NAW"/>
                                 <constraint firstAttribute="height" constant="260" id="peZ-oJ-oWn"/>
                                 <constraint firstItem="P5R-d7-Gr2" firstAttribute="top" secondItem="Avq-4J-csh" secondAttribute="bottom" constant="16" id="r9g-aQ-J55">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                 </constraint>
                                 <constraint firstItem="gbp-da-shj" firstAttribute="centerX" secondItem="Pde-lL-geW" secondAttribute="centerX" id="zzs-RJ-cjy"/>
                             </constraints>
@@ -529,7 +529,9 @@
                                     <constraints>
                                         <constraint firstItem="Odr-sW-eY2" firstAttribute="leading" secondItem="MYM-AB-pm7" secondAttribute="trailing" constant="14" id="1bs-eb-vQh"/>
                                         <constraint firstAttribute="trailing" secondItem="vt2-YC-XPv" secondAttribute="trailing" id="21a-wF-uif"/>
-                                        <constraint firstItem="MYM-AB-pm7" firstAttribute="leading" secondItem="WHY-OM-BHS" secondAttribute="leading" constant="30" id="9sQ-GT-dsK"/>
+                                        <constraint firstItem="MYM-AB-pm7" firstAttribute="leading" secondItem="WHY-OM-BHS" secondAttribute="leading" constant="30" id="9sQ-GT-dsK">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="15"/>
+                                        </constraint>
                                         <constraint firstItem="MYM-AB-pm7" firstAttribute="centerY" secondItem="WHY-OM-BHS" secondAttribute="centerY" id="Cau-EF-qAt"/>
                                         <constraint firstAttribute="bottom" secondItem="vt2-YC-XPv" secondAttribute="bottom" id="GKz-KR-th4"/>
                                         <constraint firstItem="vt2-YC-XPv" firstAttribute="leading" secondItem="WHY-OM-BHS" secondAttribute="leading" id="RaC-uh-1Py"/>
@@ -627,7 +629,7 @@
                                         <constraint firstItem="73H-mC-ZYV" firstAttribute="leading" secondItem="G4Q-G3-6X9" secondAttribute="leading" id="4iP-NS-vW6"/>
                                         <constraint firstItem="G4Q-G3-6X9" firstAttribute="leading" secondItem="jFA-DS-mU9" secondAttribute="trailing" constant="7" id="80B-4M-QQI"/>
                                         <constraint firstItem="jFA-DS-mU9" firstAttribute="leading" secondItem="lyT-LG-bhU" secondAttribute="leading" constant="31" id="I7A-yA-KCs">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                                         </constraint>
                                         <constraint firstAttribute="bottom" secondItem="XjV-Xl-Gfr" secondAttribute="bottom" id="Jna-9x-ddD"/>
                                         <constraint firstItem="73H-mC-ZYV" firstAttribute="top" secondItem="G4Q-G3-6X9" secondAttribute="bottom" constant="4" id="SjO-tz-PB7"/>
@@ -891,7 +893,7 @@
                                     <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="sav-Cc-vfk">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="59"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="69"/>
                                         </constraint>
                                     </constraints>
                                     <variation key="default">
@@ -918,7 +920,7 @@
                                 <constraint firstItem="FKn-Xf-DJm" firstAttribute="height" secondItem="WHY-OM-BHS" secondAttribute="height" id="72F-jJ-69G"/>
                                 <constraint firstItem="WHY-OM-BHS" firstAttribute="leading" secondItem="2rp-TN-hE4" secondAttribute="leading" id="D1U-nC-m5W"/>
                                 <constraint firstItem="qX4-I2-Gnd" firstAttribute="width" secondItem="WHY-OM-BHS" secondAttribute="width" id="G7D-4O-Myc"/>
-                                <constraint firstAttribute="height" constant="120" id="K41-LU-RBi"/>
+                                <constraint firstAttribute="height" constant="140" id="K41-LU-RBi"/>
                                 <constraint firstAttribute="bottom" secondItem="FKn-Xf-DJm" secondAttribute="bottom" id="Nda-ty-Jpu">
                                     <variation key="heightClass=regular-widthClass=compact" constant="1"/>
                                 </constraint>
@@ -1156,7 +1158,7 @@
                     <include reference="sy1-sn-KpX"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-266" y="10"/>
+            <point key="canvasLocation" x="109" y="6"/>
         </view>
     </objects>
     <resources>

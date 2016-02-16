@@ -10,6 +10,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
 #import "MMClass.h"
+#import "UIImage+ChangeGray.h"
 
 
 
@@ -18,6 +19,7 @@
 @end
 
 @implementation TuijianErweimaViewController{
+    UIImage *shareImages;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -28,6 +30,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
 }
 
 
@@ -55,6 +58,8 @@
     self.whiteView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.whiteView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.whiteView.layer.shadowOffset = CGSizeMake(2, 2);
+    self.whiteView.contentMode = UIViewContentModeScaleAspectFill;
+ 
     
 }
 
@@ -80,7 +85,10 @@
     image = [UIImage imageWithData:data];
     self.imageView.image = image;
     
-    
+    NSLog(@"view = %@", self.whiteView);
+    self.whiteView.bounds = CGRectMake(0, 0, 240, 360);
+    shareImages = [UIImage imageFromView:self.whiteView];
+    NSLog(@"shareImage = %@", shareImages);
     
 }
 
@@ -126,10 +134,9 @@
     WXMediaMessage *message = [WXMediaMessage message];
     
     WXImageObject *ext = [WXImageObject object];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"erweimaDemo" ofType:@"png"];
-    ext.imageData = [NSData dataWithContentsOfFile:filePath];
-    UIImage* image = [UIImage imageWithData:ext.imageData];
-    ext.imageData = UIImagePNGRepresentation(image);
+    
+  
+    ext.imageData = UIImagePNGRepresentation(shareImages);
     message.mediaObject = ext;
     
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
