@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TuijianErweimaViewController">
             <connections>
-                <outlet property="bottomHeight" destination="kea-5j-fxu" id="0Vg-br-r1H"/>
                 <outlet property="imageView" destination="ped-j3-Lx8" id="Y06-7e-g5r"/>
                 <outlet property="shareButton" destination="ohG-sK-dvV" id="MVa-Fi-McR"/>
                 <outlet property="topHeight" destination="fCC-Q4-LP8" id="lOV-B1-dMm"/>
@@ -78,7 +77,7 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小鹿妈妈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85T-Vc-f9I">
                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -90,7 +89,7 @@
                         <constraint firstAttribute="height" constant="360" id="JvL-0E-SWO"/>
                         <constraint firstAttribute="bottom" secondItem="ped-j3-Lx8" secondAttribute="bottom" constant="45" id="Peg-op-CYA"/>
                         <constraint firstItem="J2j-ln-pE4" firstAttribute="centerX" secondItem="E9i-JW-DVH" secondAttribute="centerX" id="V9U-ea-sHu"/>
-                        <constraint firstItem="8yE-4O-DTU" firstAttribute="top" secondItem="E9i-JW-DVH" secondAttribute="top" constant="10" id="VOb-cs-ZLX"/>
+                        <constraint firstItem="8yE-4O-DTU" firstAttribute="top" secondItem="E9i-JW-DVH" secondAttribute="top" constant="20" id="VOb-cs-ZLX"/>
                         <constraint firstItem="J2j-ln-pE4" firstAttribute="top" secondItem="ped-j3-Lx8" secondAttribute="bottom" constant="11" id="Vxm-0d-ezK"/>
                         <constraint firstAttribute="width" constant="240" id="gLl-U7-SQ3"/>
                         <constraint firstItem="85T-Vc-f9I" firstAttribute="centerX" secondItem="8yE-4O-DTU" secondAttribute="centerX" id="k3z-La-6Wu"/>
@@ -172,7 +171,6 @@
                 </constraint>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aaZ-Au-Iuh"/>
                 <constraint firstItem="E9i-JW-DVH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="fCC-Q4-LP8"/>
-                <constraint firstItem="ohG-sK-dvV" firstAttribute="top" secondItem="E9i-JW-DVH" secondAttribute="bottom" priority="200" constant="185" id="kea-5j-fxu"/>
                 <constraint firstItem="ohG-sK-dvV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="146" id="wkM-23-6cr">
                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                 </constraint>
@@ -185,7 +183,6 @@
                 <mask key="constraints">
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
-                    <exclude reference="kea-5j-fxu"/>
                     <exclude reference="wkM-23-6cr"/>
                     <exclude reference="aaZ-Au-Iuh"/>
                     <exclude reference="fCC-Q4-LP8"/>
@@ -198,7 +195,6 @@
                 <mask key="constraints">
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
-                    <include reference="kea-5j-fxu"/>
                     <include reference="wkM-23-6cr"/>
                     <include reference="aaZ-Au-Iuh"/>
                     <include reference="fCC-Q4-LP8"/>
