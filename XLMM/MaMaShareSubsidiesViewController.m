@@ -119,6 +119,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     [headerV addSubview:history];
     
     UILabel *totalMoney = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 + 10, moneyTextY, 90, 40)];
+    
     totalMoney.text = [NSString stringWithFormat:@"%.2f", [self.clickTotalMoeny floatValue]];
     totalMoney.font = [UIFont systemFontOfSize:14];
     [headerV addSubview:totalMoney];

@@ -46,8 +46,8 @@
     
     NSString *share_mmcode;
     
-    NSNumber *_money;
-    NSNumber *_clickTotalMoney;
+//    NSNumber *_money;
+//    NSNumber *_clickTotalMoney;
     
 }
 
@@ -64,7 +64,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *updateClickMoenyLabel;
 
-
+@property (nonatomic, strong)NSNumber *money;
+@property (nonatomic, strong)NSNumber *clickTotalMoney;
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -171,10 +172,9 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         
         //获取点击补贴
-        //点击补贴
-        _money = dicJson[@"clk_money"];
+        self.money = dicJson[@"clk_money"];
         NSDictionary *mmclog = dicJson[@"mmclog"];
-        _clickTotalMoney = mmclog[@"clki"];
+        self.clickTotalMoney = mmclog[@"clki"];
         
         self.earningsRecord = self.jileishouyi.text;
     }
@@ -572,8 +572,8 @@
 
 - (IBAction)shareSubsidiesAction:(id)sender {
     MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
-    share.clickTotalMoeny = _clickTotalMoney;
-    share.todayMoney = _money;
+    share.clickTotalMoeny = self.clickTotalMoney;
+    share.todayMoney = self.money;
     
     [self.navigationController pushViewController:share animated:YES];
 }
