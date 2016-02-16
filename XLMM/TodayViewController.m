@@ -460,6 +460,7 @@ static NSString *khuodongCell = @"HuodongCell";
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
             [imageView addGestureRecognizer:tap];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.layer.masksToBounds = YES;
             imageView.userInteractionEnabled = YES;
             [self.view addSubview:activityView];
             [defaults setObject:activityID forKey:@"activityid"];

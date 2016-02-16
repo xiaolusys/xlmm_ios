@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
@@ -480,18 +481,18 @@
                         <mask key="constraints">
                             <exclude reference="d71-Xb-jhF"/>
                             <exclude reference="g5d-xg-0Ob"/>
-                            <exclude reference="BFw-0n-UeW"/>
-                            <exclude reference="Ex2-uj-Jzg"/>
-                            <exclude reference="X5z-AZ-86v"/>
-                            <exclude reference="ayF-Qs-tpW"/>
                             <exclude reference="kLS-MI-IIt"/>
                             <exclude reference="tKk-LX-6yQ"/>
-                            <exclude reference="XXK-NJ-xaX"/>
-                            <exclude reference="cWX-Mh-3j1"/>
                             <exclude reference="52A-GP-dCL"/>
                             <exclude reference="wqR-k0-7AA"/>
                             <exclude reference="6ot-Jh-ega"/>
                             <exclude reference="RNs-J8-NAj"/>
+                            <exclude reference="XXK-NJ-xaX"/>
+                            <exclude reference="cWX-Mh-3j1"/>
+                            <exclude reference="BFw-0n-UeW"/>
+                            <exclude reference="Ex2-uj-Jzg"/>
+                            <exclude reference="X5z-AZ-86v"/>
+                            <exclude reference="ayF-Qs-tpW"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -505,18 +506,18 @@
                         <mask key="constraints">
                             <include reference="d71-Xb-jhF"/>
                             <include reference="g5d-xg-0Ob"/>
-                            <include reference="BFw-0n-UeW"/>
-                            <include reference="Ex2-uj-Jzg"/>
-                            <include reference="X5z-AZ-86v"/>
-                            <include reference="ayF-Qs-tpW"/>
                             <include reference="kLS-MI-IIt"/>
                             <include reference="tKk-LX-6yQ"/>
-                            <include reference="XXK-NJ-xaX"/>
-                            <include reference="cWX-Mh-3j1"/>
                             <include reference="52A-GP-dCL"/>
                             <include reference="wqR-k0-7AA"/>
                             <include reference="6ot-Jh-ega"/>
                             <include reference="RNs-J8-NAj"/>
+                            <include reference="XXK-NJ-xaX"/>
+                            <include reference="cWX-Mh-3j1"/>
+                            <include reference="BFw-0n-UeW"/>
+                            <include reference="Ex2-uj-Jzg"/>
+                            <include reference="X5z-AZ-86v"/>
+                            <include reference="ayF-Qs-tpW"/>
                         </mask>
                     </variation>
                 </view>
