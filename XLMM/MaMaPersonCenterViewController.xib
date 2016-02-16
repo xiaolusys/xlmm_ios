@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
@@ -655,12 +655,12 @@
                                             <exclude reference="h20-OE-X1l"/>
                                             <exclude reference="o5y-Mu-44Y"/>
                                             <exclude reference="zS4-Nf-k4Y"/>
-                                            <exclude reference="I7A-yA-KCs"/>
-                                            <exclude reference="f6f-KC-27I"/>
-                                            <exclude reference="80B-4M-QQI"/>
-                                            <exclude reference="SoL-W7-qdg"/>
                                             <exclude reference="4iP-NS-vW6"/>
                                             <exclude reference="SjO-tz-PB7"/>
+                                            <exclude reference="80B-4M-QQI"/>
+                                            <exclude reference="SoL-W7-qdg"/>
+                                            <exclude reference="I7A-yA-KCs"/>
+                                            <exclude reference="f6f-KC-27I"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -678,12 +678,12 @@
                                             <include reference="h20-OE-X1l"/>
                                             <exclude reference="o5y-Mu-44Y"/>
                                             <exclude reference="zS4-Nf-k4Y"/>
-                                            <include reference="I7A-yA-KCs"/>
-                                            <include reference="f6f-KC-27I"/>
-                                            <include reference="80B-4M-QQI"/>
-                                            <include reference="SoL-W7-qdg"/>
                                             <include reference="4iP-NS-vW6"/>
                                             <include reference="SjO-tz-PB7"/>
+                                            <include reference="80B-4M-QQI"/>
+                                            <include reference="SoL-W7-qdg"/>
+                                            <include reference="I7A-yA-KCs"/>
+                                            <include reference="f6f-KC-27I"/>
                                         </mask>
                                     </variation>
                                 </view>
