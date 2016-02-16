@@ -124,7 +124,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
     //历史点击修改
     CGFloat moneyTextY = CGRectGetMaxY(self.moneyText.frame) + 10;
-    NSLog(@"moneyTextY:%f", moneyTextY);
     UILabel *history = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, moneyTextY, 60, 40)];
     history.text = @"历史累积";
     history.font = [UIFont systemFontOfSize:14];
@@ -151,7 +150,6 @@ static NSString *cellIdentifier = @"shareSubsidies";
 - (NSString *)dateDealtt:(NSString *)str {
     NSString *year = [str substringToIndex:7];
     NSString *date = [year stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    NSLog(@"date:%@", date);
     return date;
 }
 

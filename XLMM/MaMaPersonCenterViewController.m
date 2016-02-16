@@ -425,9 +425,6 @@
         
         
         [self maMaOrderInfoData:responseObject];
-        
-        NSLog(@"%@", responseObject);
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
 }
