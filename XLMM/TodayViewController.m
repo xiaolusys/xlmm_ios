@@ -432,6 +432,7 @@ static NSString *khuodongCell = @"HuodongCell";
         NSString *userNumber = [defaults objectForKey:@"activityid"];
         
         NSLog(@"id = %@  user id = %@", activityID, userNumber);
+      
         if ([activityID isEqualToString:userNumber]) {
            
             NSLog(@"不显示活动视图");
@@ -442,7 +443,19 @@ static NSString *khuodongCell = @"HuodongCell";
             backView.alpha = 0.5;
             [self.view addSubview:backView];
              NSLog(@"显示活动视图");
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+            NSArray *array;
+             array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+            @try {
+               
+            }
+            @catch (NSException *exception) {
+                NSLog(@"exception = %@", exception);
+            }
+            @finally {
+                NSLog(@"hehe");
+            }
+           
+            NSLog(@"array = %@", array);
             activityView = array[0];
             activityView.frame = CGRectMake(0, 0, 260, 320);
             UIButton *button = (UIButton *)[activityView viewWithTag:200];
