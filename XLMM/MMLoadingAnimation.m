@@ -27,7 +27,7 @@
 - (UIImageView *)imageV {
     if (!_imageV) {
 //        self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
-        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 75, 0, 150, 335)];
+        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 75, 0, 150, SCREENHEIGHT * 0.5 + 20)];
         _imageV.contentMode = UIViewContentModeScaleAspectFit;
         _imageV.alpha = 1.0;
     }
@@ -36,7 +36,7 @@
 
 - (UIView *)shadeView {
     if (!_shadeView) {
-        self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, 315, 50, 20)];
+        self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, SCREENHEIGHT *0.5, 50, 20)];
         _shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
 //        _shadeView.backgroundColor = [UIColor redColor];
         _shadeView.alpha = 0.5;
@@ -138,7 +138,7 @@
     [UIView setAnimationRepeatCount:500];
     
     [UIView setAnimationDuration:1.5];
-    self.shadeView.frame = CGRectMake(self.frame.size.width * 0.5 + 38, 315, 50, 20);
+    self.shadeView.frame = CGRectMake(self.frame.size.width * 0.5 + 38, SCREENHEIGHT *0.5, 50, 20);
     [UIView commitAnimations];
 
     [self.imageV startAnimating];
