@@ -57,6 +57,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
 
     NSTimer *theTimer;
+    UIView *activityView;
 
     UILabel *childTimeLabel;
     UILabel *ladyTimeLabel;
@@ -64,6 +65,7 @@ static NSString *khuodongCell = @"HuodongCell";
     BOOL step1;
     BOOL step2;
     BOOL _isDone;
+    UIView *backView;
     
     BOOL _updating;
     
@@ -422,6 +424,49 @@ static NSString *khuodongCell = @"HuodongCell";
         huodongJson = [jsonDic objectForKey:@"activity"];
         login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
         
+        
+        
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
+        NSString *userNumber = [defaults objectForKey:@"activityid"];
+        
+        NSLog(@"id = %@  user id = %@", activityID, userNumber);
+        if ([activityID isEqualToString:userNumber]) {
+           
+            NSLog(@"不显示活动视图");
+  
+        } else {
+            backView = [[UIView alloc] initWithFrame:self.view.bounds];
+            backView.backgroundColor = [UIColor blackColor];
+            backView.alpha = 0.5;
+            [self.view addSubview:backView];
+             NSLog(@"显示活动视图");
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+            activityView = array[0];
+            activityView.frame = CGRectMake(0, 0, 260, 320);
+            UIButton *button = (UIButton *)[activityView viewWithTag:200];
+            [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+            NSLog(@"button = %@", button);
+            UIImageView *imageView = [activityView viewWithTag:100];
+            NSLog(@"imageView = %@", imageView);
+            activityView.center = self.view.center;
+            NSString *imageUrl = [[huodongJson objectForKey:@"mask_link"] URLEncodedString];
+            NSLog(@"imagelink = %@", imageUrl);
+         
+            UIImage *image = [UIImage imagewithURLString:imageUrl];
+            NSLog(@"image = %@", image);
+            imageView.image = image;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+            [imageView addGestureRecognizer:tap];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.layer.masksToBounds = YES;
+            imageView.userInteractionEnabled = YES;
+            [self.view addSubview:activityView];
+            [defaults setObject:activityID forKey:@"activityid"];
+        }
+        
+        
     }
 
     step1 = YES;
@@ -437,6 +482,45 @@ static NSString *khuodongCell = @"HuodongCell";
         }
         [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     }
+}
+
+- (void)guanbiClicked:(UIButton *)button{
+    [backView removeFromSuperview];
+    [activityView removeFromSuperview];
+    
+}
+
+- (void)huodongrukou{
+  
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        
+        huodongVC.diction = huodongJson;
+        
+        
+        [self.navigationController pushViewController:huodongVC animated:YES];
+        [backView removeFromSuperview];
+        [activityView removeFromSuperview];
+    } else{
+        if (login_required) {
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            
+            huodongVC.diction = huodongJson;
+            
+            
+            [self.navigationController pushViewController:huodongVC animated:YES];
+            [backView removeFromSuperview];
+            [activityView removeFromSuperview];
+        }
+        
+        
+        
+    }
+
+    
 }
 
 - (void)fetchedPromoteMorePageData:(NSData *)data{
