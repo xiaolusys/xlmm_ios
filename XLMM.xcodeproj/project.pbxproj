@@ -40,6 +40,9 @@
 		18601B181C743EFE00E87A7B /* loading动画0018.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B041C743EFE00E87A7B /* loading动画0018.png */; };
 		18601B191C743EFE00E87A7B /* loading动画0019.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B051C743EFE00E87A7B /* loading动画0019.png */; };
 		18601B1A1C743EFE00E87A7B /* loading动画0020.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B061C743EFE00E87A7B /* loading动画0020.png */; };
+		18601B1C1C7469C600E87A7B /* mamafan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1B1C7469C600E87A7B /* mamafan.png */; };
+		18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1D1C746EB200E87A7B /* mamajiang.png */; };
+		18601B201C746EB600E87A7B /* mamati.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1F1C746EB600E87A7B /* mamati.png */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -697,6 +700,9 @@
 		18601B041C743EFE00E87A7B /* loading动画0018.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画0018.png"; sourceTree = "<group>"; };
 		18601B051C743EFE00E87A7B /* loading动画0019.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画0019.png"; sourceTree = "<group>"; };
 		18601B061C743EFE00E87A7B /* loading动画0020.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画0020.png"; sourceTree = "<group>"; };
+		18601B1B1C7469C600E87A7B /* mamafan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamafan.png; sourceTree = "<group>"; };
+		18601B1D1C746EB200E87A7B /* mamajiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamajiang.png; sourceTree = "<group>"; };
+		18601B1F1C746EB600E87A7B /* mamati.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamati.png; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
@@ -1796,7 +1802,10 @@
 				2E63AE541C3E5DCF008E97BB /* savephoto.png */,
 				181C74911C52152800375DF8 /* mamayong.png */,
 				181C749E1C53678400375DF8 /* mamaShare.png */,
+				18601B1F1C746EB600E87A7B /* mamati.png */,
+				18601B1D1C746EB200E87A7B /* mamajiang.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
+				18601B1B1C7469C600E87A7B /* mamafan.png */,
 				18CD7BCA1C5A149C0024B447 /* totalClick.png */,
 				18D22E391C5B4EF200ECE45C /* zhanwei.png */,
 			);
@@ -3421,6 +3430,7 @@
 				2E63AE5A1C3E66A5008E97BB /* PicFooterCollectionReusableView.xib in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */,
 				322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
 				32DE21B81BF184A200999ECA /* childIcon.png in Resources */,
@@ -3590,6 +3600,7 @@
 				32746E171B74A22000816208 /* icon-gouwuche.png in Resources */,
 				3284A2431BFC4C4400D0F0D0 /* CameraImage.png in Resources */,
 				32746E281B74A22000816208 /* icon-shouye2.png in Resources */,
+				18601B1C1C7469C600E87A7B /* mamafan.png in Resources */,
 				322D25BE1C32B93A00509EAD /* 圈圈加载0019.png in Resources */,
 				32D2B78E1BDDF41C00603FCE /* unselected_icon.png in Resources */,
 				327F80C01B9559F600EDDF5B /* PersonTableCell.xib in Resources */,
@@ -3701,6 +3712,7 @@
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				326296531C45F627001A27E3 /* hongbaounused100.png in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
+				18601B201C746EB600E87A7B /* mamati.png in Resources */,
 				322D25CD1C32B93A00509EAD /* 圈圈加载0034.png in Resources */,
 				8EA825EB1C041A53008D0C13 /* weixin_icon.png in Resources */,
 				321928E21BDB7EB8004EA6A7 /* suggestions.png in Resources */,
