@@ -156,6 +156,12 @@
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
     }];
     
+    //添加手势
+//    self.youmengShare.userInteractionEnabled = NO;
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleShareBtnClick:)];
+//    
+//    [self.shareBackView addGestureRecognizer:tap];
+    
     // 分享页面事件处理
     [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -188,6 +194,7 @@
     self.navigationController.navigationBarHidden = YES;
 }
 - (void)cancleShareBtnClick:(UIButton *)btn{
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     } completion:^(BOOL finished) {
@@ -195,6 +202,7 @@
     }];
 }
 - (void)weixinShareBtnClick:(UIButton *)btn{
+    
     [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:shareImages location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
