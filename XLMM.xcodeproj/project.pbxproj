@@ -359,6 +359,7 @@
 		3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */; };
 		3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320CABE01BA906D400C62E36 /* PostersViewController.xib */; };
 		3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
+		3269A4BC1C747322001B8761 /* havenodingdan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3269A4BB1C747322001B8761 /* havenodingdan.png */; };
 		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
@@ -1182,6 +1183,7 @@
 		3266A6DF1BE35C4100C676A9 /* PosterCollectionCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterCollectionCell2.h; sourceTree = "<group>"; };
 		3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell2.m; sourceTree = "<group>"; };
 		3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell2.xib; sourceTree = "<group>"; };
+		3269A4BB1C747322001B8761 /* havenodingdan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = havenodingdan.png; sourceTree = "<group>"; };
 		326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		326C4E0A1C2CE8FB00A79359 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -1665,6 +1667,7 @@
 				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
 				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
 				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
+				3269A4BD1C747710001B8761 /* New Group */,
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,
@@ -1794,6 +1797,7 @@
 		2E63AE531C3E5DA1008E97BB /* MaMa */ = {
 			isa = PBXGroup;
 			children = (
+				3269A4BB1C747322001B8761 /* havenodingdan.png */,
 				2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */,
 				2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */,
 				2E612B4F1C4A4454002F1C15 /* 2lun@2x.png */,
@@ -2718,6 +2722,13 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		3269A4BD1C747710001B8761 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		326C4E081C2CE8FB00A79359 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -3382,6 +3393,7 @@
 				3247FDBE1C03365900C6631D /* keshiyong.png in Resources */,
 				323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */,
 				8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */,
+				3269A4BC1C747322001B8761 /* havenodingdan.png in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				322D25B11C32B93A00509EAD /* 圈圈加载0006.png in Resources */,
 				2EB87D321C17FAE4001CBF3D /* UMSocialSDKResourcesNew.bundle in Resources */,
@@ -4073,7 +4085,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
+				PROVISIONING_PROFILE = "59ab8e8b-68a9-4cb2-aa2e-63026b868063";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4110,7 +4122,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
+				PROVISIONING_PROFILE = "59ab8e8b-68a9-4cb2-aa2e-63026b868063";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4155,7 +4167,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
+				PROVISIONING_PROFILE = "59ab8e8b-68a9-4cb2-aa2e-63026b868063";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4199,7 +4211,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
+				PROVISIONING_PROFILE = "59ab8e8b-68a9-4cb2-aa2e-63026b868063";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

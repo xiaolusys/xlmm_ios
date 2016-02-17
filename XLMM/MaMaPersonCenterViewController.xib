@@ -17,6 +17,8 @@
                 <outlet property="jineLabel" destination="gbp-da-shj" id="REF-Du-8d0"/>
                 <outlet property="levelLabel" destination="Q51-Vc-n5R" id="WR6-R1-Ytc"/>
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
+                <outlet property="mamaimage" destination="X8d-KY-HhH" id="OmZ-iT-JgO"/>
+                <outlet property="mamalabel" destination="a2d-cl-nqH" id="nJx-VX-HvZ"/>
                 <outlet property="rootScrollView" destination="CZD-1f-6rH" id="kih-rd-YjN"/>
                 <outlet property="updateClickMoenyLabel" destination="73H-mC-ZYV" id="44V-eN-4el"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -113,7 +115,7 @@
                         </mask>
                     </variation>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-1f-6rH">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-1f-6rH">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkd-Tf-mwI" userLabel="hheadView">
@@ -150,7 +152,7 @@
                                     <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的粉丝 8000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-d7-Gr2">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的粉丝 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-d7-Gr2">
                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -322,6 +324,31 @@
                                 </mask>
                             </variation>
                         </scrollView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您今日暂无订单收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2d-cl-nqH">
+                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="havenodingdan.png" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-KY-HhH">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="aX5-wJ-mSR"/>
+                                <constraint firstAttribute="width" constant="60" id="uMc-rw-nhx"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="aX5-wJ-mSR"/>
+                                    <exclude reference="uMc-rw-nhx"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="aX5-wJ-mSR"/>
+                                    <include reference="uMc-rw-nhx"/>
+                                </mask>
+                            </variation>
+                        </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcS-3K-PCf">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <subviews>
@@ -399,6 +426,23 @@
                                         <action selector="MamaCarryLogClicked:" destination="-1" eventType="touchUpInside" id="FrJ-r0-Ssu"/>
                                     </connections>
                                 </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xb-Fd-sVo">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="uVH-Ga-qkY"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="uVH-Ga-qkY"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="uVH-Ga-qkY"/>
+                                        </mask>
+                                    </variation>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -412,14 +456,21 @@
                                 <constraint firstItem="9Yk-DK-N8l" firstAttribute="leading" secondItem="Y8t-u2-PXo" secondAttribute="trailing" constant="11" id="IAO-tw-Oos">
                                     <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                 </constraint>
+                                <constraint firstAttribute="trailing" secondItem="1xb-Fd-sVo" secondAttribute="trailing" constant="95" id="LSv-hX-D41">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                </constraint>
                                 <constraint firstAttribute="height" constant="40" id="N8b-c2-MHx">
                                     <variation key="heightClass=regular-widthClass=compact" constant="45"/>
+                                </constraint>
+                                <constraint firstItem="1xb-Fd-sVo" firstAttribute="leading" secondItem="hcS-3K-PCf" secondAttribute="leading" constant="79" id="O1G-KP-wQv">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
                                 <constraint firstAttribute="trailing" secondItem="9pP-kO-dHT" secondAttribute="trailing" constant="8" id="OlN-SJ-DzD"/>
                                 <constraint firstItem="9pP-kO-dHT" firstAttribute="centerY" secondItem="hcS-3K-PCf" secondAttribute="centerY" id="Vmf-h5-beE"/>
                                 <constraint firstItem="onc-IJ-A1G" firstAttribute="centerY" secondItem="hcS-3K-PCf" secondAttribute="centerY" id="WMY-Pp-rsH"/>
                                 <constraint firstItem="9Yk-DK-N8l" firstAttribute="centerY" secondItem="hcS-3K-PCf" secondAttribute="centerY" id="Xu9-ou-D60"/>
                                 <constraint firstItem="Y8t-u2-PXo" firstAttribute="centerY" secondItem="hcS-3K-PCf" secondAttribute="centerY" id="Xw9-C3-E9b"/>
+                                <constraint firstAttribute="bottom" secondItem="1xb-Fd-sVo" secondAttribute="bottom" id="Ycp-YQ-ACU"/>
                                 <constraint firstItem="QoG-Lw-4xz" firstAttribute="centerY" secondItem="hcS-3K-PCf" secondAttribute="centerY" id="i7s-cv-K8m"/>
                                 <constraint firstItem="Fek-64-8IO" firstAttribute="leading" secondItem="hcS-3K-PCf" secondAttribute="leading" constant="8" id="kjF-9H-49S"/>
                                 <constraint firstItem="onc-IJ-A1G" firstAttribute="leading" secondItem="QoG-Lw-4xz" secondAttribute="trailing" constant="14" id="wyv-hP-QnM">
@@ -434,21 +485,25 @@
                                     <exclude reference="9Yk-DK-N8l"/>
                                     <exclude reference="Fek-64-8IO"/>
                                     <exclude reference="9pP-kO-dHT"/>
+                                    <exclude reference="1xb-Fd-sVo"/>
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="N8b-c2-MHx"/>
-                                    <exclude reference="OlN-SJ-DzD"/>
-                                    <exclude reference="Vmf-h5-beE"/>
                                     <exclude reference="7di-hA-kKC"/>
                                     <exclude reference="kjF-9H-49S"/>
+                                    <exclude reference="2sY-2h-Xjm"/>
+                                    <exclude reference="i7s-cv-K8m"/>
+                                    <exclude reference="WMY-Pp-rsH"/>
+                                    <exclude reference="wyv-hP-QnM"/>
+                                    <exclude reference="LSv-hX-D41"/>
+                                    <exclude reference="O1G-KP-wQv"/>
+                                    <exclude reference="Ycp-YQ-ACU"/>
+                                    <exclude reference="OlN-SJ-DzD"/>
+                                    <exclude reference="Vmf-h5-beE"/>
+                                    <exclude reference="Xw9-C3-E9b"/>
                                     <exclude reference="C4f-dC-v2s"/>
                                     <exclude reference="IAO-tw-Oos"/>
                                     <exclude reference="Xu9-ou-D60"/>
-                                    <exclude reference="2sY-2h-Xjm"/>
-                                    <exclude reference="i7s-cv-K8m"/>
-                                    <exclude reference="Xw9-C3-E9b"/>
-                                    <exclude reference="WMY-Pp-rsH"/>
-                                    <exclude reference="wyv-hP-QnM"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -459,21 +514,25 @@
                                     <include reference="9Yk-DK-N8l"/>
                                     <include reference="Fek-64-8IO"/>
                                     <include reference="9pP-kO-dHT"/>
+                                    <include reference="1xb-Fd-sVo"/>
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="N8b-c2-MHx"/>
-                                    <include reference="OlN-SJ-DzD"/>
-                                    <include reference="Vmf-h5-beE"/>
                                     <include reference="7di-hA-kKC"/>
                                     <include reference="kjF-9H-49S"/>
+                                    <include reference="2sY-2h-Xjm"/>
+                                    <include reference="i7s-cv-K8m"/>
+                                    <include reference="WMY-Pp-rsH"/>
+                                    <include reference="wyv-hP-QnM"/>
+                                    <include reference="LSv-hX-D41"/>
+                                    <include reference="O1G-KP-wQv"/>
+                                    <include reference="Ycp-YQ-ACU"/>
+                                    <include reference="OlN-SJ-DzD"/>
+                                    <include reference="Vmf-h5-beE"/>
+                                    <include reference="Xw9-C3-E9b"/>
                                     <include reference="C4f-dC-v2s"/>
                                     <include reference="IAO-tw-Oos"/>
                                     <include reference="Xu9-ou-D60"/>
-                                    <include reference="2sY-2h-Xjm"/>
-                                    <include reference="i7s-cv-K8m"/>
-                                    <include reference="Xw9-C3-E9b"/>
-                                    <include reference="WMY-Pp-rsH"/>
-                                    <include reference="wyv-hP-QnM"/>
                                 </mask>
                             </variation>
                         </view>
@@ -1011,19 +1070,25 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="X8d-KY-HhH" firstAttribute="top" secondItem="vkd-Tf-mwI" secondAttribute="bottom" constant="20" id="4pc-Io-71m"/>
                         <constraint firstAttribute="trailing" secondItem="6vX-aZ-8d4" secondAttribute="trailing" constant="3" id="6eS-oJ-b9B">
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
+                        <constraint firstItem="a2d-cl-nqH" firstAttribute="centerX" secondItem="X8d-KY-HhH" secondAttribute="centerX" id="FXj-fd-glt"/>
                         <constraint firstItem="2rp-TN-hE4" firstAttribute="top" secondItem="hcS-3K-PCf" secondAttribute="bottom" id="KkE-jZ-AaC">
-                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="2rp-TN-hE4" secondAttribute="trailing" id="LaA-2t-Ic5"/>
+                        <constraint firstItem="X8d-KY-HhH" firstAttribute="centerX" secondItem="4ID-ID-LFF" secondAttribute="centerX" id="R2g-ps-Ch3"/>
                         <constraint firstAttribute="trailing" secondItem="vkd-Tf-mwI" secondAttribute="trailing" id="RPE-OE-xnN"/>
                         <constraint firstItem="vkd-Tf-mwI" firstAttribute="leading" secondItem="CZD-1f-6rH" secondAttribute="leading" id="XOw-sN-5x2"/>
                         <constraint firstItem="6vX-aZ-8d4" firstAttribute="top" secondItem="vkd-Tf-mwI" secondAttribute="bottom" constant="15" id="alP-0k-G0a">
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
                         <constraint firstItem="hcS-3K-PCf" firstAttribute="leading" secondItem="CZD-1f-6rH" secondAttribute="leading" id="axB-Tq-wYh"/>
+                        <constraint firstItem="a2d-cl-nqH" firstAttribute="top" secondItem="X8d-KY-HhH" secondAttribute="bottom" id="gKl-W1-3hC">
+                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                        </constraint>
                         <constraint firstItem="hcS-3K-PCf" firstAttribute="top" secondItem="6vX-aZ-8d4" secondAttribute="bottom" id="hLE-xH-ISx"/>
                         <constraint firstAttribute="bottom" secondItem="2rp-TN-hE4" secondAttribute="bottom" constant="690" id="npC-vT-UZZ">
                             <variation key="heightClass=regular-widthClass=compact" constant="30"/>
@@ -1034,51 +1099,66 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="hcS-3K-PCf" secondAttribute="trailing" id="ufd-pp-ZVB"/>
+                        <constraint firstItem="X8d-KY-HhH" firstAttribute="centerX" secondItem="CZD-1f-6rH" secondAttribute="centerX" id="xSD-o2-e8V"/>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
                             <exclude reference="vkd-Tf-mwI"/>
                             <exclude reference="6vX-aZ-8d4"/>
+                            <exclude reference="a2d-cl-nqH"/>
+                            <exclude reference="X8d-KY-HhH"/>
                             <exclude reference="hcS-3K-PCf"/>
                             <exclude reference="2rp-TN-hE4"/>
                         </mask>
                         <mask key="constraints">
+                            <exclude reference="RPE-OE-xnN"/>
+                            <exclude reference="XOw-sN-5x2"/>
+                            <exclude reference="oW6-xd-nSc"/>
+                            <exclude reference="6eS-oJ-b9B"/>
+                            <exclude reference="alP-0k-G0a"/>
+                            <exclude reference="tK3-9v-io3"/>
+                            <exclude reference="4pc-Io-71m"/>
+                            <exclude reference="R2g-ps-Ch3"/>
+                            <exclude reference="xSD-o2-e8V"/>
+                            <exclude reference="FXj-fd-glt"/>
+                            <exclude reference="gKl-W1-3hC"/>
+                            <exclude reference="axB-Tq-wYh"/>
+                            <exclude reference="hLE-xH-ISx"/>
+                            <exclude reference="ufd-pp-ZVB"/>
                             <exclude reference="KkE-jZ-AaC"/>
                             <exclude reference="LaA-2t-Ic5"/>
                             <exclude reference="npC-vT-UZZ"/>
                             <exclude reference="oWt-Hv-OW2"/>
-                            <exclude reference="6eS-oJ-b9B"/>
-                            <exclude reference="alP-0k-G0a"/>
-                            <exclude reference="tK3-9v-io3"/>
-                            <exclude reference="axB-Tq-wYh"/>
-                            <exclude reference="hLE-xH-ISx"/>
-                            <exclude reference="ufd-pp-ZVB"/>
-                            <exclude reference="RPE-OE-xnN"/>
-                            <exclude reference="XOw-sN-5x2"/>
-                            <exclude reference="oW6-xd-nSc"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="subviews">
                             <include reference="vkd-Tf-mwI"/>
                             <include reference="6vX-aZ-8d4"/>
+                            <include reference="a2d-cl-nqH"/>
+                            <include reference="X8d-KY-HhH"/>
                             <include reference="hcS-3K-PCf"/>
                             <include reference="2rp-TN-hE4"/>
                         </mask>
                         <mask key="constraints">
+                            <include reference="RPE-OE-xnN"/>
+                            <include reference="XOw-sN-5x2"/>
+                            <include reference="oW6-xd-nSc"/>
+                            <include reference="6eS-oJ-b9B"/>
+                            <include reference="alP-0k-G0a"/>
+                            <include reference="tK3-9v-io3"/>
+                            <include reference="4pc-Io-71m"/>
+                            <exclude reference="R2g-ps-Ch3"/>
+                            <include reference="xSD-o2-e8V"/>
+                            <include reference="FXj-fd-glt"/>
+                            <include reference="gKl-W1-3hC"/>
+                            <include reference="axB-Tq-wYh"/>
+                            <include reference="hLE-xH-ISx"/>
+                            <include reference="ufd-pp-ZVB"/>
                             <include reference="KkE-jZ-AaC"/>
                             <include reference="LaA-2t-Ic5"/>
                             <include reference="npC-vT-UZZ"/>
                             <include reference="oWt-Hv-OW2"/>
-                            <include reference="6eS-oJ-b9B"/>
-                            <include reference="alP-0k-G0a"/>
-                            <include reference="tK3-9v-io3"/>
-                            <include reference="axB-Tq-wYh"/>
-                            <include reference="hLE-xH-ISx"/>
-                            <include reference="ufd-pp-ZVB"/>
-                            <include reference="RPE-OE-xnN"/>
-                            <include reference="XOw-sN-5x2"/>
-                            <include reference="oW6-xd-nSc"/>
                         </mask>
                     </variation>
                 </scrollView>
@@ -1162,6 +1242,7 @@
         </view>
     </objects>
     <resources>
+        <image name="havenodingdan.png" width="120" height="100"/>
         <image name="head_icon.png" width="140" height="140"/>
         <image name="mamaerweimaicon.png" width="50" height="50"/>
         <image name="mamajingxuanicon.png" width="50" height="50"/>
