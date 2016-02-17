@@ -8,6 +8,7 @@
 
 #import "MMLoadingAnimation.h"
 #import "UIColor+RGBColor.h"
+#import "MMClass.h"
 
 #define PAGE 21
 #define CIRCLEPAGE 25
@@ -25,7 +26,8 @@
 
 - (UIImageView *)imageV {
     if (!_imageV) {
-        self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
+//        self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
+        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 75, 0, 150, 335)];
         _imageV.contentMode = UIViewContentModeScaleAspectFit;
         _imageV.alpha = 1.0;
     }
@@ -34,8 +36,9 @@
 
 - (UIView *)shadeView {
     if (!_shadeView) {
-        self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, self.frame.size.height * 0.5 + 23, 76, 40)];
+        self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width * 0.5 - 38, 315, 50, 20)];
         _shadeView.backgroundColor = [UIColor loadingViewBackgroundColor];
+//        _shadeView.backgroundColor = [UIColor redColor];
         _shadeView.alpha = 0.5;
     }
     return _shadeView;
@@ -131,13 +134,13 @@
     self.imageV.animationRepeatCount = 100;
     
     
-    [UIView beginAnimations:@"animationID"  context:nil];
+    [UIView beginAnimations:@"animationID" context:nil];
     [UIView setAnimationRepeatCount:500];
     
     [UIView setAnimationDuration:1.5];
-    self.shadeView.frame = CGRectMake(self.frame.size.width * 0.5 + 38, self.frame.size.height * 0.5 + 23, 76, 40);
+    self.shadeView.frame = CGRectMake(self.frame.size.width * 0.5 + 38, 315, 50, 20);
     [UIView commitAnimations];
-//
+
     [self.imageV startAnimating];
 }
 
@@ -153,7 +156,7 @@
         [imgArr addObject:img];
     }
     [self.imageV setAnimationImages:imgArr];
-    self.imageV.animationDuration = 1.0;
+    self.imageV.animationDuration = 0.5;
     self.imageV.animationRepeatCount = 500;
     [self.imageV startAnimating];
 }
