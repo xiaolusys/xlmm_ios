@@ -108,8 +108,8 @@
     [self prepareTableData];
  
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
-    [self.headImageView addGestureRecognizer:tap];
-    self.headImageView.userInteractionEnabled = YES;
+    [self.jineLabel addGestureRecognizer:tap];
+    self.jineLabel.userInteractionEnabled = YES;
     
     self.fensiLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
@@ -478,6 +478,10 @@
             }
         }
      // NSLog(@"%@", allDingdan);
+        if (allDingdan.count > 0) {
+            self.mamaimage.hidden = YES;
+            self.mamalabel.hidden = YES;
+        }
         scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
 @property (weak, nonatomic) IBOutlet UIView *shareSubsidies;
 
+@property (weak, nonatomic) IBOutlet UILabel *mamalabel;
+@property (weak, nonatomic) IBOutlet UIImageView *mamaimage;
 
 
 
