@@ -467,7 +467,6 @@
 		32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B631B81EA96007E562A /* ShoppingCartModel.m */; };
 		328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 328CE5D41B9F0B28000469DF /* JifenViewController.m */; };
 		328CE5D71B9F0B28000469DF /* JifenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 328CE5D51B9F0B28000469DF /* JifenViewController.xib */; };
-		3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */; };
 		32976B811BA117AE0045ADB9 /* icon-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7E1BA117AE0045ADB9 /* icon-ok.png */; };
 		32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */; };
 		32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 32976B801BA117AE0045ADB9 /* tuihuo-warning.png */; };
@@ -518,7 +517,6 @@
 		32BE33951BDA0D580078C8B0 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8D9A1BD8E2110060FB62 /* NewLeftViewController.m */; };
 		32C1340D1C5C8C2700922DC2 /* MamaShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C1340C1C5C8C2700922DC2 /* MamaShareView.m */; };
 		32C1340F1C5C8C4600922DC2 /* MamaShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */; };
-		32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */; };
 		32C74C4B1BE7425E00E25A7C /* SetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C74C491BE7425E00E25A7C /* SetPasswordController.m */; };
 		32C74C4C1BE7425E00E25A7C /* SetPasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */; };
 		32CC3FEA1BA282B30043764F /* tuihuo-ing.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CC3FE91BA282B30043764F /* tuihuo-ing.png */; };
@@ -1319,7 +1317,6 @@
 		328CE5D31B9F0B28000469DF /* JifenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JifenViewController.h; sourceTree = "<group>"; };
 		328CE5D41B9F0B28000469DF /* JifenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JifenViewController.m; sourceTree = "<group>"; };
 		328CE5D51B9F0B28000469DF /* JifenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JifenViewController.xib; sourceTree = "<group>"; };
-		3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LiHeiPro.ttf; sourceTree = "<group>"; };
 		32976B7E1BA117AE0045ADB9 /* icon-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-ok.png"; path = "../icon-ok.png"; sourceTree = "<group>"; };
 		32976B7F1BA117AE0045ADB9 /* tuihuo-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tuihuo-close.png"; path = "../tuihuo-close.png"; sourceTree = "<group>"; };
 		32976B801BA117AE0045ADB9 /* tuihuo-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tuihuo-warning.png"; path = "../tuihuo-warning.png"; sourceTree = "<group>"; };
@@ -1406,7 +1403,6 @@
 		32C1340B1C5C8C2700922DC2 /* MamaShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamaShareView.h; sourceTree = "<group>"; };
 		32C1340C1C5C8C2700922DC2 /* MamaShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamaShareView.m; sourceTree = "<group>"; };
 		32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaShareView.xib; sourceTree = "<group>"; };
-		32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiaolufont.ttf; sourceTree = "<group>"; };
 		32C74C481BE7425E00E25A7C /* SetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPasswordController.h; sourceTree = "<group>"; };
 		32C74C491BE7425E00E25A7C /* SetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPasswordController.m; sourceTree = "<group>"; };
 		32C74C4A1BE7425E00E25A7C /* SetPasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPasswordController.xib; sourceTree = "<group>"; };
@@ -3125,8 +3121,6 @@
 		3290C88E1B88A6D000CFAFA0 /* font */ = {
 			isa = PBXGroup;
 			children = (
-				32C26BF31BCC8FB80006FA3B /* xiaolufont.ttf */,
-				3290C88D1B88A25500CFAFA0 /* LiHeiPro.ttf */,
 			);
 			name = font;
 			sourceTree = "<group>";
@@ -3377,7 +3371,6 @@
 			files = (
 				32CDC9431BD1FC9100EF5FA6 /* name.png in Resources */,
 				3247FDBE1C03365900C6631D /* keshiyong.png in Resources */,
-				3290C88F1B88A7F700CFAFA0 /* LiHeiPro.ttf in Resources */,
 				323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */,
 				8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
@@ -3431,7 +3424,6 @@
 				322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
 				32DE21B81BF184A200999ECA /* childIcon.png in Resources */,
-				32C26BF41BCC8FB80006FA3B /* xiaolufont.ttf in Resources */,
 				321928DF1BDB7EB8004EA6A7 /* setting.png in Resources */,
 				322D25B21C32B93A00509EAD /* 圈圈加载0007.png in Resources */,
 				32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */,

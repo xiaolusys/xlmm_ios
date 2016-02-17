@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMDetailsViewController.m"
-            timestampString = "477381119.726632"
+            timestampString = "477384082.739182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1147"
-            endingLineNumber = "1147">
+            startingLineNumber = "1149"
+            endingLineNumber = "1149">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
