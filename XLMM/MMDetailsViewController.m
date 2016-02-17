@@ -343,6 +343,8 @@
     [self createSizeView];
     [self createContentView];
     
+    [self performSelector:@selector(createContentView) withObject:nil afterDelay:2.0];
+    
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
 }
@@ -496,14 +498,17 @@
     __block float imageHeight = 0.0;
     
     NSMutableArray *heights = [[NSMutableArray alloc] init];
-    
+    contentCount = 0;
     for (int i = 0; i<imageArray.count; i++) {
         
         UIImageView *imageview = [[UIImageView alloc] init];
         NSString *imagelink = [[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression];
     //    NSLog(@"imageLink = %@", imagelink);
+   
+
+        
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-          //  NSLog(@"%dimage = %@",i, image);
+            NSLog(@"%dimage = %@",i, image);
             imagewidth = SCREENWIDTH;
             
             if (image.size.width == 0) {
