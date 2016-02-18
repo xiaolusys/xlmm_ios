@@ -361,6 +361,7 @@
 		3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
 		3269A4BC1C747322001B8761 /* havenodingdan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3269A4BB1C747322001B8761 /* havenodingdan.png */; };
 		3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324AB05C1C732A2C007FE81B /* StartActivityView.xib */; };
+		3269A4C01C7560CC001B8761 /* mamati.png in Resources */ = {isa = PBXBuildFile; fileRef = 3269A4BF1C7560CC001B8761 /* mamati.png */; };
 		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
@@ -1185,6 +1186,7 @@
 		3266A6E01BE35C4100C676A9 /* PosterCollectionCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterCollectionCell2.m; sourceTree = "<group>"; };
 		3266A6E11BE35C4100C676A9 /* PosterCollectionCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionCell2.xib; sourceTree = "<group>"; };
 		3269A4BB1C747322001B8761 /* havenodingdan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = havenodingdan.png; sourceTree = "<group>"; };
+		3269A4BF1C7560CC001B8761 /* mamati.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamati.png; sourceTree = "<group>"; };
 		326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		326C4E0A1C2CE8FB00A79359 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -2622,6 +2624,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				3269A4BF1C7560CC001B8761 /* mamati.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3607,6 +3610,7 @@
 				181C74901C52030200375DF8 /* CarryLogHeaderView.xib in Resources */,
 				32DE21B91BF184A200999ECA /* ladyIcon.png in Resources */,
 				32CFD5C41C588F7F00C6203E /* FensiListViewController.xib in Resources */,
+				3269A4C01C7560CC001B8761 /* mamati.png in Resources */,
 				32703F1E1BEB5D39002AFC6D /* Icon-76@2x.png in Resources */,
 				3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */,
 				32E8B59F1C51BD5600414F8A /* MamaActivityViewController.xib in Resources */,
