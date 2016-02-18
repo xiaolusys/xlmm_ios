@@ -360,6 +360,7 @@
 		3266A6E91BE38F1500C676A9 /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 320CABE01BA906D400C62E36 /* PostersViewController.xib */; };
 		3266A6EA1BE38F6600C676A9 /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3264EA1A1B6C59B700F36A8D /* ChildViewController.xib */; };
 		3269A4BC1C747322001B8761 /* havenodingdan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3269A4BB1C747322001B8761 /* havenodingdan.png */; };
+		3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324AB05C1C732A2C007FE81B /* StartActivityView.xib */; };
 		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
@@ -3427,6 +3428,7 @@
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
+				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
 				323648651C62E70200CCD0DA /* HuodongCollectionViewCell.xib in Resources */,
 				322D25BF1C32B93A00509EAD /* 圈圈加载0020.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,

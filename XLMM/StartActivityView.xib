@@ -12,10 +12,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Oa-95-A3g">
-                    <rect key="frame" x="30" y="60" width="260" height="260"/>
+                    <rect key="frame" x="40" y="80" width="240" height="240"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="260" id="9c9-g1-doY"/>
-                        <constraint firstAttribute="height" constant="260" id="Y1Q-MP-IoK"/>
+                        <constraint firstAttribute="width" constant="240" id="9c9-g1-doY"/>
+                        <constraint firstAttribute="height" constant="240" id="Y1Q-MP-IoK"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAb-X6-jxF">

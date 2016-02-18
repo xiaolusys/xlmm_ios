@@ -215,8 +215,6 @@
     if (isBangding) {
         NSLog(@"跳转首页");
         if (isSettingPsd == YES) {
-            
-            
             [self.navigationController popViewControllerAnimated:YES];
             
         } else {
