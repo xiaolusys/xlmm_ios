@@ -199,7 +199,7 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mco"];
+        NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mci"];
         self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
