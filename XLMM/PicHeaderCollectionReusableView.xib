@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
+        <deployment version="2048" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
@@ -37,33 +37,28 @@
                     <color key="textColor" red="0.99607843139999996" green="0.61960784310000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日热销产品宣传文案" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCt-6e-cfc">
-                    <rect key="frame" x="71" y="28" width="284" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-2w-itb">
+                    <rect key="frame" x="71" y="36" width="286" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="XAn-B0-zB5"/>
+                        <constraint firstAttribute="height" constant="17" id="nrz-Ea-5QM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.30980392156862746" green="0.30980392156862746" blue="0.30980392156862746" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstItem="TCt-6e-cfc" firstAttribute="trailing" secondItem="lQm-rt-3uE" secondAttribute="trailing" id="3Rz-k0-u4X"/>
-                <constraint firstItem="TCt-6e-cfc" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="8" id="7zW-80-7OI"/>
+                <constraint firstAttribute="trailing" secondItem="efz-2w-itb" secondAttribute="trailing" constant="8" id="MGo-Iq-gxL"/>
                 <constraint firstItem="YhJ-qJ-9pc" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="6" id="MqP-RX-GlH"/>
-                <constraint firstItem="TCt-6e-cfc" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" id="Qo2-wH-yEr"/>
+                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" constant="8" id="VLN-RS-SeP"/>
                 <constraint firstItem="YhJ-qJ-9pc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="aUg-CN-Y4t"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="c8n-gY-rw1"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="15" id="dtK-dH-ZMF"/>
-                <constraint firstAttribute="trailing" secondItem="TCt-6e-cfc" secondAttribute="trailing" constant="10" id="zhr-ls-PSf"/>
+                <constraint firstItem="efz-2w-itb" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="8" id="jgH-vD-iPl"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="3Rz-k0-u4X"/>
-                </mask>
-            </variation>
             <connections>
-                <outlet property="propagandaLabel" destination="TCt-6e-cfc" id="Uc7-6x-b77"/>
+                <outlet property="desheight" destination="nrz-Ea-5QM" id="Grm-MJ-j7I"/>
+                <outlet property="propagandaLabel" destination="efz-2w-itb" id="HAG-V2-anS"/>
                 <outlet property="timeLabel" destination="YhJ-qJ-9pc" id="qby-CR-gjm"/>
                 <outlet property="turnsImageView" destination="syG-lG-VVc" id="FmR-A0-dgb"/>
             </connections>

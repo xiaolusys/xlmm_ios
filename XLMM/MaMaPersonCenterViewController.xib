@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
@@ -489,21 +489,21 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="N8b-c2-MHx"/>
+                                    <exclude reference="OlN-SJ-DzD"/>
+                                    <exclude reference="Vmf-h5-beE"/>
                                     <exclude reference="7di-hA-kKC"/>
                                     <exclude reference="kjF-9H-49S"/>
+                                    <exclude reference="C4f-dC-v2s"/>
+                                    <exclude reference="IAO-tw-Oos"/>
+                                    <exclude reference="Xu9-ou-D60"/>
                                     <exclude reference="2sY-2h-Xjm"/>
                                     <exclude reference="i7s-cv-K8m"/>
+                                    <exclude reference="Xw9-C3-E9b"/>
                                     <exclude reference="WMY-Pp-rsH"/>
                                     <exclude reference="wyv-hP-QnM"/>
                                     <exclude reference="LSv-hX-D41"/>
                                     <exclude reference="O1G-KP-wQv"/>
                                     <exclude reference="Ycp-YQ-ACU"/>
-                                    <exclude reference="OlN-SJ-DzD"/>
-                                    <exclude reference="Vmf-h5-beE"/>
-                                    <exclude reference="Xw9-C3-E9b"/>
-                                    <exclude reference="C4f-dC-v2s"/>
-                                    <exclude reference="IAO-tw-Oos"/>
-                                    <exclude reference="Xu9-ou-D60"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -518,21 +518,21 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="N8b-c2-MHx"/>
+                                    <include reference="OlN-SJ-DzD"/>
+                                    <include reference="Vmf-h5-beE"/>
                                     <include reference="7di-hA-kKC"/>
                                     <include reference="kjF-9H-49S"/>
+                                    <include reference="C4f-dC-v2s"/>
+                                    <include reference="IAO-tw-Oos"/>
+                                    <include reference="Xu9-ou-D60"/>
                                     <include reference="2sY-2h-Xjm"/>
                                     <include reference="i7s-cv-K8m"/>
+                                    <include reference="Xw9-C3-E9b"/>
                                     <include reference="WMY-Pp-rsH"/>
                                     <include reference="wyv-hP-QnM"/>
                                     <include reference="LSv-hX-D41"/>
                                     <include reference="O1G-KP-wQv"/>
                                     <include reference="Ycp-YQ-ACU"/>
-                                    <include reference="OlN-SJ-DzD"/>
-                                    <include reference="Vmf-h5-beE"/>
-                                    <include reference="Xw9-C3-E9b"/>
-                                    <include reference="C4f-dC-v2s"/>
-                                    <include reference="IAO-tw-Oos"/>
-                                    <include reference="Xu9-ou-D60"/>
                                 </mask>
                             </variation>
                         </view>
@@ -1111,24 +1111,24 @@
                             <exclude reference="2rp-TN-hE4"/>
                         </mask>
                         <mask key="constraints">
-                            <exclude reference="RPE-OE-xnN"/>
-                            <exclude reference="XOw-sN-5x2"/>
-                            <exclude reference="oW6-xd-nSc"/>
+                            <exclude reference="FXj-fd-glt"/>
+                            <exclude reference="gKl-W1-3hC"/>
+                            <exclude reference="KkE-jZ-AaC"/>
+                            <exclude reference="LaA-2t-Ic5"/>
+                            <exclude reference="npC-vT-UZZ"/>
+                            <exclude reference="oWt-Hv-OW2"/>
                             <exclude reference="6eS-oJ-b9B"/>
                             <exclude reference="alP-0k-G0a"/>
                             <exclude reference="tK3-9v-io3"/>
                             <exclude reference="4pc-Io-71m"/>
                             <exclude reference="R2g-ps-Ch3"/>
                             <exclude reference="xSD-o2-e8V"/>
-                            <exclude reference="FXj-fd-glt"/>
-                            <exclude reference="gKl-W1-3hC"/>
                             <exclude reference="axB-Tq-wYh"/>
                             <exclude reference="hLE-xH-ISx"/>
                             <exclude reference="ufd-pp-ZVB"/>
-                            <exclude reference="KkE-jZ-AaC"/>
-                            <exclude reference="LaA-2t-Ic5"/>
-                            <exclude reference="npC-vT-UZZ"/>
-                            <exclude reference="oWt-Hv-OW2"/>
+                            <exclude reference="RPE-OE-xnN"/>
+                            <exclude reference="XOw-sN-5x2"/>
+                            <exclude reference="oW6-xd-nSc"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -1141,24 +1141,24 @@
                             <include reference="2rp-TN-hE4"/>
                         </mask>
                         <mask key="constraints">
-                            <include reference="RPE-OE-xnN"/>
-                            <include reference="XOw-sN-5x2"/>
-                            <include reference="oW6-xd-nSc"/>
+                            <include reference="FXj-fd-glt"/>
+                            <include reference="gKl-W1-3hC"/>
+                            <include reference="KkE-jZ-AaC"/>
+                            <include reference="LaA-2t-Ic5"/>
+                            <include reference="npC-vT-UZZ"/>
+                            <include reference="oWt-Hv-OW2"/>
                             <include reference="6eS-oJ-b9B"/>
                             <include reference="alP-0k-G0a"/>
                             <include reference="tK3-9v-io3"/>
                             <include reference="4pc-Io-71m"/>
                             <exclude reference="R2g-ps-Ch3"/>
                             <include reference="xSD-o2-e8V"/>
-                            <include reference="FXj-fd-glt"/>
-                            <include reference="gKl-W1-3hC"/>
                             <include reference="axB-Tq-wYh"/>
                             <include reference="hLE-xH-ISx"/>
                             <include reference="ufd-pp-ZVB"/>
-                            <include reference="KkE-jZ-AaC"/>
-                            <include reference="LaA-2t-Ic5"/>
-                            <include reference="npC-vT-UZZ"/>
-                            <include reference="oWt-Hv-OW2"/>
+                            <include reference="RPE-OE-xnN"/>
+                            <include reference="XOw-sN-5x2"/>
+                            <include reference="oW6-xd-nSc"/>
                         </mask>
                     </variation>
                 </scrollView>

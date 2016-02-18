@@ -16,4 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *turnsImageView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *desheight;
+
 @end

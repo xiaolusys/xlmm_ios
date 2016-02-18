@@ -43,6 +43,7 @@
 		18601B1C1C7469C600E87A7B /* mamafan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1B1C7469C600E87A7B /* mamafan.png */; };
 		18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1D1C746EB200E87A7B /* mamajiang.png */; };
 		18601B201C746EB600E87A7B /* mamati.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1F1C746EB600E87A7B /* mamati.png */; };
+		188967A11C75BC7300223404 /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -82,7 +83,6 @@
 		2E73EDEB1C3D160F00EDB94E /* PicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDE91C3D160F00EDB94E /* PicCollectionViewCell.m */; };
 		2E73EDEC1C3D160F00EDB94E /* PicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEA1C3D160F00EDB94E /* PicCollectionViewCell.xib */; };
 		2E73EDF01C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E73EDEE1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.m */; };
-		2E73EDF11C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
 		2E7600071C1823CE008CE960 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7600061C1823CE008CE960 /* TencentOpenAPI.framework */; };
 		2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E76FFE11C180BAA008CE960 /* AlipaySDK.bundle */; };
 		2E76FFED1C180BAA008CE960 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E76FFE21C180BAA008CE960 /* AlipaySDK.framework */; };
@@ -3460,7 +3460,6 @@
 				2E72B3F01C1BB9C700D452E0 /* shareqq.png in Resources */,
 				321928E51BDB7EB8004EA6A7 /* waitpay.png in Resources */,
 				320B30091BB90002006C4FC4 /* LiJiGMViewController1.xib in Resources */,
-				2E73EDF11C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib in Resources */,
 				32A288331B93E1E5006DC949 /* PreviousViewController.xib in Resources */,
 				32746E181B74A22000816208 /* icon-guanbi.png in Resources */,
 				3266A6DE1BE30B3F00C676A9 /* rightArrow.png in Resources */,
@@ -3482,6 +3481,7 @@
 				322D25CE1C32B93A00509EAD /* 圈圈加载0035.png in Resources */,
 				2EB87D3E1C17FAE4001CBF3D /* ios-social-sdk-login-detail.html in Resources */,
 				322D25BB1C32B93A00509EAD /* 圈圈加载0016.png in Resources */,
+				188967A11C75BC7300223404 /* PicHeaderCollectionReusableView.xib in Resources */,
 				18601B131C743EFE00E87A7B /* loading动画0013.png in Resources */,
 				322D25B91C32B93A00509EAD /* 圈圈加载0014.png in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,

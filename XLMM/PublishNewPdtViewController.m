@@ -185,6 +185,8 @@
         [self.dataArr addObject:sharePic];
     }
     
+    self.isLoad = YES;
+    
     [self.picCollectionView reloadData];
 }
 
@@ -230,9 +232,17 @@
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.timeLabel.text = [self turnsTime:picModel.start_time];
+        
+        //改变label的高
+        if (self.isLoad) {
+            CGSize titleSize = [picModel.title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 80, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+            headerV.desheight.constant = titleSize.height + 10;
+        }
+        
         headerV.propagandaLabel.text = picModel.title;
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
+        
         return headerV;
         
     }else{
@@ -267,13 +277,17 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-//    if (!self.isLoad) {
-//        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-//    }else {
-//        
-//    }
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-
+    if (!self.isLoad) {
+        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+    }else {
+        SharePicModel *picModel = self.dataArr[section];
+        NSString *title = picModel.title;
+        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 80, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+        if (titleSize.width < 30) {
+            return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+        }
+        return CGSizeMake([UIScreen mainScreen].bounds.size.width, titleSize.height + 40);
+    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 54);
@@ -288,8 +302,7 @@
     SharePicModel *picModel = self.dataArr[saveIndex];
     
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    NSString *str = @"🌟小鹿美美 外贸原单 天天新品🌟💡经典格纹加绒外套          69.9💡男童拼接领结T恤          39.9💡纯棉字母印花运动套装    89.9大牌套装❤绅士T恤❤文质彬彬的格纹外套🌴春季必备~马上就开春了👆你值得收藏~";
-    [pab setString:str];
+    [pab setString:picModel.title];
     if (pab == nil) {
         [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
     }else{
