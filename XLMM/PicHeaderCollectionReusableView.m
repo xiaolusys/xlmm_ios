@@ -12,6 +12,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.propagandaLabel.numberOfLines = 0;
+    self.propagandaLabel.lineBreakMode = 0;
+    self.propagandaLabel.font = [UIFont systemFontOfSize:14];
+    [self.propagandaLabel sizeToFit];
 }
 
 @end
