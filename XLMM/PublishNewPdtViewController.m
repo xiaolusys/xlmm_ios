@@ -33,7 +33,7 @@
 @property (nonatomic, assign)NSInteger saveIndex;
 @property (nonatomic, strong)NSMutableArray *currentArr;
 
-
+@property (nonatomic, assign)BOOL isLoad;
 
 @end
 
@@ -251,7 +251,6 @@
         }
        
     }
-
 }
 
 - (NSString *)turnsTime:(NSString *)timeStr {
@@ -268,7 +267,13 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//    if (!self.isLoad) {
+//        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+//    }else {
+//        
+//    }
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 54);
@@ -283,7 +288,7 @@
     SharePicModel *picModel = self.dataArr[saveIndex];
     
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    NSString *str = @"🎀🎀🌹温馨小提示：内衣不适的6个信号提醒你该换内衣了：1、胸杯经常上移2、肩带经常下滑3、胸部有压痕4、内衣太压胸5、罩杯太空荡6、背部勒痕。好的无痕无钢圈内衣,穿起来贴身舒适，透气服帖。丝洛芬】👙。只做最适合您的内衣";
+    NSString *str = @"🌟小鹿美美 外贸原单 天天新品🌟💡经典格纹加绒外套          69.9💡男童拼接领结T恤          39.9💡纯棉字母印花运动套装    89.9大牌套装❤绅士T恤❤文质彬彬的格纹外套🌴春季必备~马上就开春了👆你值得收藏~";
     [pab setString:str];
     if (pab == nil) {
         [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
