@@ -240,6 +240,7 @@
         }
         
         headerV.propagandaLabel.text = picModel.title;
+        NSLog(@"text = %@", picModel.title );
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
         
