@@ -909,6 +909,12 @@
     [self.shareBackView addSubview:self.youmengShare];
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     
+    //添加手势
+//    self.shareBackView.userInteractionEnabled = NO;
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleShareBtnClick:)];
+//    
+//    [self.shareBackView addGestureRecognizer:tap];
+
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.3 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);

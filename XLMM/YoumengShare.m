@@ -31,8 +31,17 @@
         self.cancleShareBtn.layer.borderWidth = 1.0;
         
         self.shareBackView.layer.cornerRadius = 20;
+        
+//        self.userInteractionEnabled = YES;
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelShareView)];
+//        [self addGestureRecognizer:tap];
     }
     return self;
 }
+
+//- (void)cancelShareView {
+//    
+//    [self removeFromSuperview];
+//}
 
 @end
