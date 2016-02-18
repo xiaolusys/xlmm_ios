@@ -25,7 +25,7 @@
 #import "MaMaShopViewController.h"
 #import "FensiListViewController.h"
 #import "MaMaShareSubsidiesViewController.h"
-
+#import "UIViewController+NavigationBar.h"
 
 
 
@@ -96,7 +96,7 @@
 //    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
 //    [self.shareSubsidies addGestureRecognizer:tapShare];
     
-
+    [self downloadData];
     [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
@@ -111,9 +111,10 @@
     [self.jineLabel addGestureRecognizer:tap];
     self.jineLabel.userInteractionEnabled = YES;
     
-    self.fensiLabel.userInteractionEnabled = YES;
+    self.fensilabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
-    [self.fensiLabel addGestureRecognizer:tap1];
+  //  [self.fensiLabel addGestureRecognizer:tap1];
+    [self.fensilabel addGestureRecognizer:tap1];
     
 }
 
@@ -136,6 +137,34 @@
         NSString *count = [dic objectForKey:@"count"];
         self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
         self.orderRecord = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
+    }
+    
+}
+
+- (void)downloadData{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/fanlist", Root_URL];
+    NSLog(@"string = %@", string);
+    [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
+    
+}
+
+- (void)fetchedData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error == nil) {
+        self.fensilabel.text = [NSString stringWithFormat:@"%ld", array.count];
+
+        if (array.count == 0) {
+            NSLog(@"您的粉丝列表为空");
+        } else {
+                       //生成粉丝列表。。。
+           // [self createFanlistWithArray:array];
+        }
+    } else {
+        NSLog(@"error = %@", error);
     }
     
 }

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dingdanLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *mamaScrollView;
 @property (weak, nonatomic) IBOutlet UIButton *fabuButton;
+@property (weak, nonatomic) IBOutlet UILabel *fensilabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *mamaTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
