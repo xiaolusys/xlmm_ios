@@ -101,7 +101,7 @@
 - (void)createCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
    // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
-    flowLayout.sectionInset = UIEdgeInsetsMake(10, 63, 10, 15);
+    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
     
@@ -235,7 +235,7 @@
         
         //改变label的高
         if (self.isLoad) {
-            CGSize titleSize = [picModel.title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 80, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+            CGSize titleSize = [picModel.title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
             headerV.desheight.constant = titleSize.height + 10;
         }
         
@@ -282,7 +282,7 @@
     }else {
         SharePicModel *picModel = self.dataArr[section];
         NSString *title = picModel.title;
-        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 80, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         if (titleSize.width < 30) {
             return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
         }
