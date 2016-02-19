@@ -240,7 +240,6 @@
         }
         
         headerV.propagandaLabel.text = picModel.title;
-        NSLog(@"text = %@", picModel.title );
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
         
@@ -325,7 +324,7 @@
 - (void)saveNext {
     if (self.currentArr.count > 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
-            NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.currentArr[0]];
+            NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg/quality/90", self.currentArr[0]];
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:joinUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }
