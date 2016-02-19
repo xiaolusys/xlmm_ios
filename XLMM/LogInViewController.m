@@ -211,6 +211,12 @@
 - (void) loginSuccessful {
     [MobClick profileSignInWithPUID:@"playerID"];
     
+    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
+    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+    [notificationCenter postNotification: broadcastMessage];
+
+    
+    
     NSLog(@"33isBangDing = %d", isBangding);
     if (isBangding) {
         NSLog(@"跳转首页");

@@ -462,7 +462,7 @@
               
 //                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
                 //  发送微信登录成功的通知  
-                NSNotification * broadcastMessage = [ NSNotification notificationWithName: @"login" object:self];
+                NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
                 NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
                 [notificationCenter postNotification: broadcastMessage];
 

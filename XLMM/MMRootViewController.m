@@ -25,6 +25,8 @@
 #import "YouHuiQuanViewController.h"
 #import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
+#import "MMLoginStatus.h"
+
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -57,6 +59,15 @@
 
 - (void)updataAfterLogin:(NSNotification *)notification{
     NSLog(@"微信登录");
+    
+    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
+    if (login.isxlmm) {
+        [self createRightItem];
+    } else {
+          self.navigationItem.rightBarButtonItem = nil;
+    }
+
+  
     if ([self isXiaolumama]) {
         [self createRightItem];
     } else{
@@ -238,7 +249,7 @@
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
