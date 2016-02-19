@@ -933,12 +933,12 @@ static NSString *khuodongCell = @"HuodongCell";
                 
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
                 cell1.huodongImageView.layer.masksToBounds = YES;
-                UIImage *image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
-                if (image != nil) {
-                cell1.huodongImageView.image = image;
-                }
+//                UIImage *image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
+//                if (image != nil) {
+//                cell1.huodongImageView.image = image;
+//                }
                 
-                
+                [cell1.huodongImageView sd_setImageWithURL:[NSURL URLWithString:[huodongJson objectForKey:@"act_img"]]];
               
                
                // NSLog(@"cell.subView = %@", cell.contentView.subviews);

@@ -289,6 +289,7 @@
 		323D667A1C2799BE00A2B955 /* retina6.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66791C2799BE00A2B955 /* retina6.png */; };
 		323D667C1C2799C200A2B955 /* retina7.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D667B1C2799C200A2B955 /* retina7.png */; };
 		324337341C76B2200066CADD /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
+		324337371C76C76A0066CADD /* MMLoginStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 324337361C76C76A0066CADD /* MMLoginStatus.m */; };
 		3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */; };
 		3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA81BE9E07300A5CC1C /* wash01.png */; };
 		3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA91BE9E07300A5CC1C /* wash02.png */; };
@@ -1090,6 +1091,8 @@
 		323D66741C27921F00A2B955 /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
 		323D66791C2799BE00A2B955 /* retina6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retina6.png; path = XLMM/retina6.png; sourceTree = "<group>"; };
 		323D667B1C2799C200A2B955 /* retina7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retina7.png; path = XLMM/retina7.png; sourceTree = "<group>"; };
+		324337351C76C76A0066CADD /* MMLoginStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLoginStatus.h; sourceTree = "<group>"; };
+		324337361C76C76A0066CADD /* MMLoginStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLoginStatus.m; sourceTree = "<group>"; };
 		3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lingquyouhuiquan.png; sourceTree = "<group>"; };
 		3247EAA81BE9E07300A5CC1C /* wash01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash01.png; sourceTree = "<group>"; };
 		3247EAA91BE9E07300A5CC1C /* wash02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash02.png; sourceTree = "<group>"; };
@@ -3216,6 +3219,8 @@
 				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
 				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
 				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
+				324337351C76C76A0066CADD /* MMLoginStatus.h */,
+				324337361C76C76A0066CADD /* MMLoginStatus.m */,
 			);
 			name = "Custom Class";
 			sourceTree = "<group>";
@@ -4012,6 +4017,7 @@
 				32258B451C1120A6000FFE5F /* VersionController.m in Sources */,
 				328CE5D61B9F0B28000469DF /* JifenViewController.m in Sources */,
 				2E73ED971C38F19B00EDB94E /* UIColor+FSPalette.m in Sources */,
+				324337371C76C76A0066CADD /* MMLoginStatus.m in Sources */,
 				32F3D9661B6CCA41008530BA /* AFHTTPRequestOperationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
