@@ -239,11 +239,9 @@ static NSString *khuodongCell = @"HuodongCell";
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     //NSLog(@"appInfoDic = %@", appInfoDic);
     if (error) {
-        NSLog(@"%@", error);
     }
     NSArray *reluts = [appInfoDic objectForKey:@"results"];
     if (![reluts count]) {
-        NSLog(@"reslut = nil");
     }
     NSDictionary *infoDic = reluts[0];
     
@@ -259,7 +257,6 @@ static NSString *khuodongCell = @"HuodongCell";
     double doubleCurrentVersion = [app_Version doubleValue];
     
     double doubleUpdateVersion = [self.latestVersion doubleValue];
-    NSLog(@"%f %f", doubleCurrentVersion, doubleUpdateVersion);
     
     
  
@@ -436,51 +433,39 @@ static NSString *khuodongCell = @"HuodongCell";
         NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
         NSString *userNumber = [defaults objectForKey:@"activityid"];
         
-        NSLog(@"id = %@  user id = %@", activityID, userNumber);
       
         if ([activityID isEqualToString:userNumber]) {
-           
-            NSLog(@"不显示活动视图");
   
         } else {
             if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-                NSLog(@"没图片不显示");
             } else {
                 backView = [[UIView alloc] initWithFrame:self.view.bounds];
                 backView.backgroundColor = [UIColor blackColor];
                 backView.alpha = 0.5;
                 [self.view addSubview:backView];
-                NSLog(@"显示活动视图");
                 NSArray *array;
                 array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
                 @try {
                     
                 }
                 @catch (NSException *exception) {
-                    NSLog(@"exception = %@", exception);
                 }
                 @finally {
-                    NSLog(@"hehe");
                 }
                 
-                NSLog(@"array = %@", array);
                 activityView = array[0];
                 activityView.frame = CGRectMake(0, 0, 300, 280);
                 UIButton *button = (UIButton *)[activityView viewWithTag:200];
                 [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-                NSLog(@"button = %@", button);
                 UIImageView *imageView = [activityView viewWithTag:100];
-                NSLog(@"imageView = %@", imageView);
                 activityView.center = self.view.center;
                 
                 if ([huodongJson objectForKey:@"mask_link"]) {
                     
                 } else {
                     NSString *imageUrl = [[huodongJson objectForKey:@"mask_link"] URLEncodedString];
-                    NSLog(@"imagelink = %@", imageUrl);
                     
                     UIImage *image = [UIImage imagewithURLString:imageUrl];
-                    NSLog(@"image = %@", image);
                     imageView.image = image;
                 }
                 
