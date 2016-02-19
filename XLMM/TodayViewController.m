@@ -374,6 +374,11 @@ static NSString *khuodongCell = @"HuodongCell";
 
 
 - (void)downloadData{
+    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+        [self.delegate showNavigation];
+    }
+    
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_today_paging?page_size=10",Root_URL];
     //NSLog(@"string = %@", urlStr);
     [self downLoadWithURLString:urlStr andSelector:@selector(fetchedPromotePageData:)];
