@@ -7,6 +7,7 @@
 //
 
 #import "MMLoginStatus.h"
+#import "MMClass.h"
 
 @implementation MMLoginStatus
 
@@ -19,7 +20,6 @@ static  MMLoginStatus *_instance = nil;
         _instance = [[self alloc] init];
         
     }) ;
-    
     return _instance;
 }
 
@@ -27,13 +27,58 @@ static  MMLoginStatus *_instance = nil;
     self = [super init];
     if (self) {
         _loginUrl = [NSString stringWithFormat:@""];
+        _userInfoUrl = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     }
     return self;
 }
 
 - (BOOL)islogin{
-    
-    return YES;
+    NSLog(@"login url = %@", self.loginUrl);
+    NSURL *url = [NSURL URLWithString:self.loginUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return NO;
+    } else {
+        NSError *error = nil;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if (error != nil) {
+            return NO;
+        } else {
+            NSInteger code = [[dic objectForKey:@"code"] integerValue];
+            if (code == 0) {
+                return YES;
+            }
+            else {
+                return NO;
+            }
+        }
+    }
+
+}
+
+- (BOOL)isxlmm{
+    NSLog(@"user's profile url= %@", self.userInfoUrl);
+    NSURL *url = [NSURL URLWithString:self.userInfoUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return NO;
+    } else{
+        NSError *error = nil;
+        NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if (error == nil) {
+            NSLog(@"userinfo = %@", userInfo);
+            id object = [userInfo objectForKey:@"xiaolumm"];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                self.xiaolumm = object;
+                NSLog(@"xiaolumm = %@", object);
+                return YES;
+            } else {
+                return NO;
+            }
+        } else{
+            return NO;
+        }
+    }
 }
 
 

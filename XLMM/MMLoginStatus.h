@@ -11,8 +11,13 @@
 @interface MMLoginStatus : NSObject
 
 @property (nonatomic, copy) NSString *loginUrl;
-@property (nonatomic, readonly) BOOL islogin;
+@property (nonatomic, copy) NSString *userInfoUrl;
 
+
+@property (nonatomic, strong) NSDictionary *xiaolumm;
+
+@property (nonatomic, readonly) BOOL islogin;
+@property (nonatomic, readonly) BOOL isxlmm;
 
 + (instancetype)shareLoginStatus;
 
