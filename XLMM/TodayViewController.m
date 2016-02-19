@@ -443,51 +443,57 @@ static NSString *khuodongCell = @"HuodongCell";
             NSLog(@"不显示活动视图");
   
         } else {
-            backView = [[UIView alloc] initWithFrame:self.view.bounds];
-            backView.backgroundColor = [UIColor blackColor];
-            backView.alpha = 0.5;
-            [self.view addSubview:backView];
-             NSLog(@"显示活动视图");
-            NSArray *array;
-             array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-            @try {
-               
-            }
-            @catch (NSException *exception) {
-                NSLog(@"exception = %@", exception);
-            }
-            @finally {
-                NSLog(@"hehe");
-            }
-           
-            NSLog(@"array = %@", array);
-            activityView = array[0];
-            activityView.frame = CGRectMake(0, 0, 300, 280);
-            UIButton *button = (UIButton *)[activityView viewWithTag:200];
-            [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-            NSLog(@"button = %@", button);
-            UIImageView *imageView = [activityView viewWithTag:100];
-            NSLog(@"imageView = %@", imageView);
-            activityView.center = self.view.center;
-            
-            if ([huodongJson objectForKey:@"mask_link"]) {
-                
+            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
+                NSLog(@"没图片不显示");
             } else {
-                NSString *imageUrl = [[huodongJson objectForKey:@"mask_link"] URLEncodedString];
-                NSLog(@"imagelink = %@", imageUrl);
+                backView = [[UIView alloc] initWithFrame:self.view.bounds];
+                backView.backgroundColor = [UIColor blackColor];
+                backView.alpha = 0.5;
+                [self.view addSubview:backView];
+                NSLog(@"显示活动视图");
+                NSArray *array;
+                array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+                @try {
+                    
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"exception = %@", exception);
+                }
+                @finally {
+                    NSLog(@"hehe");
+                }
                 
-                UIImage *image = [UIImage imagewithURLString:imageUrl];
-                NSLog(@"image = %@", image);
-                imageView.image = image;
+                NSLog(@"array = %@", array);
+                activityView = array[0];
+                activityView.frame = CGRectMake(0, 0, 300, 280);
+                UIButton *button = (UIButton *)[activityView viewWithTag:200];
+                [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+                NSLog(@"button = %@", button);
+                UIImageView *imageView = [activityView viewWithTag:100];
+                NSLog(@"imageView = %@", imageView);
+                activityView.center = self.view.center;
+                
+                if ([huodongJson objectForKey:@"mask_link"]) {
+                    
+                } else {
+                    NSString *imageUrl = [[huodongJson objectForKey:@"mask_link"] URLEncodedString];
+                    NSLog(@"imagelink = %@", imageUrl);
+                    
+                    UIImage *image = [UIImage imagewithURLString:imageUrl];
+                    NSLog(@"image = %@", image);
+                    imageView.image = image;
+                }
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+                [imageView addGestureRecognizer:tap];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.layer.masksToBounds = YES;
+                imageView.userInteractionEnabled = YES;
+                [self.view addSubview:activityView];
+                [defaults setObject:activityID forKey:@"activityid"];
+                
             }
           
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-            [imageView addGestureRecognizer:tap];
-            imageView.contentMode = UIViewContentModeScaleAspectFill;
-            imageView.layer.masksToBounds = YES;
-            imageView.userInteractionEnabled = YES;
-            [self.view addSubview:activityView];
-            [defaults setObject:activityID forKey:@"activityid"];
         }
         
         
@@ -926,7 +932,12 @@ static NSString *khuodongCell = @"HuodongCell";
             } else {
                 
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
-                cell1.huodongImageView.image = [UIImage imagewithURLString:[[huodongJson objectForKey:@"act_img"] URLEncodedString]];
+                cell1.huodongImageView.layer.masksToBounds = YES;
+                UIImage *image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
+                if (image != nil) {
+                cell1.huodongImageView.image = image;
+                }
+                
                 
               
                

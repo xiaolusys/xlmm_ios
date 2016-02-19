@@ -13,7 +13,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="293" height="116"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uj1-be-3ac">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeHolderPosterImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="Uj1-be-3ac">
                         <rect key="frame" x="0.0" y="0.0" width="293" height="116"/>
                     </imageView>
                 </subviews>
@@ -32,4 +32,7 @@
             <point key="canvasLocation" x="516.5" y="323"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="placeHolderPosterImage.png" width="618" height="253"/>
+    </resources>
 </document>
