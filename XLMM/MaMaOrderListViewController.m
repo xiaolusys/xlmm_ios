@@ -77,7 +77,7 @@
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"订单记录";
-    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 75, 45, SCREENWIDTH, 50)];
+    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH, 50)];
     moneyLabel.textColor = [UIColor orangeThemeColor];
     moneyLabel.font = [UIFont systemFontOfSize:35];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
