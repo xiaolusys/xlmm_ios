@@ -25,6 +25,7 @@
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
 #import "MMLoadingAnimation.h"
+#import "AFNetworking.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -352,23 +353,38 @@
 }
 
 - (void)createShareData{
+    
     if (shareDic == nil) {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
-        NSLog(@"shareUrl = %@", string);
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-        if (data == nil || [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == NO) {
-            
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            return;
-            
-        }
-        shareDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"dic = %@", shareDic);
+//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
+//        NSLog(@"shareUrl = %@", string);
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//        if (data == nil || [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == NO) {
+//            
+//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+//            [self.navigationController pushViewController:loginVC animated:YES];
+//            return;
+//            
+//        }
+//        shareDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//        NSLog(@"dic = %@", shareDic);
         
-        self.titleStr = [shareDic objectForKey:@"title"];
-        self.des = [shareDic objectForKey:@"desc"];
-        self.url = [shareDic objectForKey:@"share_link"];
+        //异步进行网络请求
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            shareDic = responseObject;
+            self.titleStr = [shareDic objectForKey:@"title"];
+            self.des = [shareDic objectForKey:@"desc"];
+            self.url = [shareDic objectForKey:@"share_link"];
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+                                                
+        
+//        self.titleStr = [shareDic objectForKey:@"title"];
+//        self.des = [shareDic objectForKey:@"desc"];
+//        self.url = [shareDic objectForKey:@"share_link"];
     }
 }
 - (void)createKuaiZhaoImage{
@@ -599,7 +615,6 @@
                 [button.layer setBorderColor:[UIColor buttonEmptyBorderColor].CGColor];
                 [button setTitleColor:[UIColor buttonEmptyBorderColor] forState:UIControlStateNormal];
                 skusID = [[normalSkus objectAtIndex:i] objectForKey:@"id"];
-               // NSLog(@"skus_id = %@ and item_id = %@", skusID, itemID);
             }
         }
     }
@@ -839,7 +854,6 @@
 }
 
 - (IBAction)washshuomingClicked:(id)sender {
- //   NSLog(@"查看洗涤说明");
     XidiShuomingViewController *xdVC = [[XidiShuomingViewController alloc] initWithNibName:@"XidiShuomingViewController" bundle:nil];
     [self.navigationController pushViewController:xdVC animated:YES];
 }
@@ -862,46 +876,35 @@
     //NSString *kLinkTagName = @"xiaolumeimei";
     
     
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self createShareData];
-
-    } else {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
     
-    
-    NSString *shareTitle = [json objectForKey:@"name"];
-    NSString *shareDesc = [[json objectForKey:@"details"] objectForKey:@"note"];
-    NSString *kLinkDescription;
-    if ([[[json objectForKey:@"details"] objectForKey:@"note"] isKindOfClass:[NSString class]]) {
-       kLinkDescription = shareDesc;
-
-    } else{
-        kLinkDescription = @"小鹿美美";
-    }
-    __unused NSString *kLinkTitle = shareTitle;
-    WXWebpageObject *ext = [WXWebpageObject object];
-    NSString *shareLink = [NSString stringWithFormat:@"http://m.xiaolu.so/pages/shangpinxq.html?id=%@", [json objectForKey:@"id"]];
-
-
-    ext.webpageUrl = shareLink;
-    
-    NSString *imageUrlString = [json objectForKey:@"pic_path"];
-    NSData *imageData = nil;
-    do {
-        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-        if (imageData != nil) {
-            break;
-        }
+    dispatch_queue_t queue1 = dispatch_queue_create("com.xlmm.gcd.Queue1", NULL);
+    dispatch_async(queue1, ^{
+        [self createShareData];
+        NSString *imageUrlString = [json objectForKey:@"pic_path"];
+        NSData *imageData = nil;
+        do {
+            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
+            if (imageData != nil) {
+                break;
+            }
+            
+        } while (YES);
+        UIImage *image = [UIImage imageWithData:imageData];
+        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
+        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
+        UIImage *newImage = [UIImage imageWithData:imagedata];
         
-    } while (YES);
-    UIImage *image = [UIImage imageWithData:imageData];
-    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-    NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-    UIImage *newImage = [UIImage imageWithData:imagedata];
+        
+        self.imageD = imageData;
+        
+        self.shareImage = newImage;
+    });
+
     
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
@@ -916,7 +919,7 @@
 //    [self.shareBackView addGestureRecognizer:tap];
 
     // 点击分享后弹出自定义的分享界面
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
     }];
     
@@ -934,11 +937,6 @@
     [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    self.imageD = imageData;
-
-    self.shareImage = newImage;
-
 }
 
 #pragma mark --分享按钮事件
@@ -957,7 +955,6 @@
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
     }];
-    
     
     [self cancleShareBtnClick:nil];
     
@@ -1025,14 +1022,16 @@
 }
 
 - (void)snapshotBtnClick:(UIButton *)btn {
+    [SVProgressHUD showWithStatus:@"正在生成快照..."];
     isWXFriends = NO;
     [self createKuaiZhaoImage];
-
 }
 
 - (void)friendsSnaoshotBtnClick:(UIButton *)btn{
+    [SVProgressHUD showWithStatus:@"正在生成快照..."];
     isWXFriends = YES;
     [self createKuaiZhaoImage];
+    
 
 }
 #pragma mark -- UIWebView代理
@@ -1044,6 +1043,7 @@
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
     
+    [SVProgressHUD dismiss];
     if (isWXFriends) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
