@@ -106,7 +106,6 @@
     
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL];
-    NSLog(@"---------%@", url);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
