@@ -315,16 +315,6 @@ static NSString *cellIdentifier = @"productSelection";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
-
-//    if (count < 6) {
-//        CGPoint originPoint = cell.center;
-//        cell.center = CGPointMake(SCREENWIDTH, originPoint.y);
-//        
-//        [UIView animateWithDuration:0.5 animations:^{
-//            cell.center = CGPointMake(SCREENWIDTH * 0.5, originPoint.y);
-//        }];
-//        count++;
-//    }
     
     MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
