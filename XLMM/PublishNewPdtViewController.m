@@ -287,7 +287,7 @@
         if (titleSize.width < 30) {
             return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
         }
-        return CGSizeMake([UIScreen mainScreen].bounds.size.width, titleSize.height + 40);
+        return CGSizeMake([UIScreen mainScreen].bounds.size.width, titleSize.height + 35);
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -38,19 +38,19 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-2w-itb">
-                    <rect key="frame" x="71" y="36" width="286" height="17"/>
+                    <rect key="frame" x="71" y="28" width="286" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="nrz-Ea-5QM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="efz-2w-itb" secondAttribute="trailing" constant="8" id="MGo-Iq-gxL"/>
                 <constraint firstItem="YhJ-qJ-9pc" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="6" id="MqP-RX-GlH"/>
-                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" constant="8" id="VLN-RS-SeP"/>
+                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" id="VLN-RS-SeP"/>
                 <constraint firstItem="YhJ-qJ-9pc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="aUg-CN-Y4t"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="c8n-gY-rw1"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="15" id="dtK-dH-ZMF"/>
