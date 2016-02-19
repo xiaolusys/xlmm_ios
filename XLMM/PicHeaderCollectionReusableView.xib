@@ -38,9 +38,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-2w-itb">
-                    <rect key="frame" x="71" y="36" width="286" height="17"/>
+                    <rect key="frame" x="71" y="36" width="286" height="150"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="17" id="nrz-Ea-5QM"/>
+                        <constraint firstAttribute="height" constant="150" id="nrz-Ea-5QM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

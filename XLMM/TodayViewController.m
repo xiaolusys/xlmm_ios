@@ -926,7 +926,7 @@ static NSString *khuodongCell = @"HuodongCell";
             } else {
                 
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
-                cell1.huodongImageView.image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
+                cell1.huodongImageView.image = [UIImage imagewithURLString:[[huodongJson objectForKey:@"act_img"] URLEncodedString]];
                 
               
                

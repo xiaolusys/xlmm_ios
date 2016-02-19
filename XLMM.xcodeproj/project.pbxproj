@@ -43,7 +43,6 @@
 		18601B1C1C7469C600E87A7B /* mamafan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1B1C7469C600E87A7B /* mamafan.png */; };
 		18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1D1C746EB200E87A7B /* mamajiang.png */; };
 		18601B201C746EB600E87A7B /* mamati.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1F1C746EB600E87A7B /* mamati.png */; };
-		188967A11C75BC7300223404 /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -289,6 +288,7 @@
 		323D66781C27921F00A2B955 /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66741C27921F00A2B955 /* retina4.png */; };
 		323D667A1C2799BE00A2B955 /* retina6.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D66791C2799BE00A2B955 /* retina6.png */; };
 		323D667C1C2799C200A2B955 /* retina7.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D667B1C2799C200A2B955 /* retina7.png */; };
+		324337341C76B2200066CADD /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
 		3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */; };
 		3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA81BE9E07300A5CC1C /* wash01.png */; };
 		3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA91BE9E07300A5CC1C /* wash02.png */; };
@@ -3481,7 +3481,7 @@
 				322D25CE1C32B93A00509EAD /* 圈圈加载0035.png in Resources */,
 				2EB87D3E1C17FAE4001CBF3D /* ios-social-sdk-login-detail.html in Resources */,
 				322D25BB1C32B93A00509EAD /* 圈圈加载0016.png in Resources */,
-				188967A11C75BC7300223404 /* PicHeaderCollectionReusableView.xib in Resources */,
+				324337341C76B2200066CADD /* PicHeaderCollectionReusableView.xib in Resources */,
 				18601B131C743EFE00E87A7B /* loading动画0013.png in Resources */,
 				322D25B91C32B93A00509EAD /* 圈圈加载0014.png in Resources */,
 				32746E2D1B74A22000816208 /* icon-xiugai.png in Resources */,
