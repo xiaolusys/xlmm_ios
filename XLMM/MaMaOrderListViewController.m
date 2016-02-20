@@ -112,6 +112,7 @@
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:   %@", error);
     }];
 }
 

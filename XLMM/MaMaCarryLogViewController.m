@@ -14,6 +14,7 @@
 #import "CarryLogModel.h"
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
+#import "MJRefresh.h"
 
 
 @interface MaMaCarryLogViewController ()
@@ -21,6 +22,8 @@
 @property (nonatomic, strong)NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong)UITableView *tableView;
+
+@property (nonatomic, strong)NSString *nextPage;
 @end
 
 static NSString *cellIdentifier = @"carryLogCell";
@@ -58,7 +61,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     [self createTableView];
     
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog/get_carryinlog", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog", Root_URL];
     
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;
@@ -75,6 +78,16 @@ static NSString *cellIdentifier = @"carryLogCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"CarryLogTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+
     
     UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 25, 100, 20)];
@@ -102,11 +115,23 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+//加载更多
+- (void)loadMore {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.tableView.mj_footer endRefreshing];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
+    self.nextPage = data[@"next"];
+    NSArray *reults = data[@"results"];
     
-//    NSLog(@"data = %@", data);
-    for (NSDictionary *carry in data) {
+    for (NSDictionary *carry in reults) {
         CarryLogModel *carryM = [[CarryLogModel alloc] init];
         [carryM setValuesForKeysWithDictionary:carry];
         NSString *date = [self dateDeal:carryM.carry_date];
@@ -177,14 +202,15 @@ static NSString *cellIdentifier = @"carryLogCell";
     //计算金额
     NSString *key = self.dataArr[section];
     NSMutableArray *orderArr = self.dataDic[key];
-    float total = 0.0;
-    NSString *date;
-    for (CarryLogModel *model in orderArr) {
-        total = [model.sum_value floatValue] + total;
-        date = model.carry_date;
-    }
-    
-    [headerV yearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%.2f", total]];
+    CarryLogModel *carryM = [orderArr firstObject];
+//    float total = 0.0;
+//    NSString *date;
+//    for (CarryLogModel *model in orderArr) {
+//        total = [model.sum_value floatValue] + total;
+//        date = model.carry_date;
+//    }
+
+    [headerV yearLabelAndTotalMoneyLabelText:carryM.carry_date total:[NSString stringWithFormat:@"%.2f", [carryM.dayly_in_amount floatValue]]];
     return headerV;
 }
 
