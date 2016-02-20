@@ -191,14 +191,29 @@
             //  http://m.xiaolu.so/rest/v1/users/need_set_info
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/need_set_info", Root_URL];
             NSLog(@"string = %@", string);
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSLog(@"%@", result);
-            if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
-                isSettingPsd = NO;
+            NSError *error = nil;
+            
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string] options:NSDataReadingMapped error:&error];
+            if (error == nil) {
+                NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+                if (error == nil) {
+               
+                    NSLog(@"%@", result);
+                    if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
+                        isSettingPsd = NO;
+                    } else {
+                        isSettingPsd = YES;
+                    }
+                } else {
+                    NSLog(@"jsonError = %@", error);
+                }
+               
             } else {
-                isSettingPsd = YES;
+                NSLog(@"dataError = %@", error);
             }
+            
+            
+           
             
         }
     }

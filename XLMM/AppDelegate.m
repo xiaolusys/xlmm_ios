@@ -431,6 +431,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (data) {
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                NSLog(@"dic2 = %@", dic);
                 /*
                  {
                  city = Haidian;
