@@ -350,6 +350,27 @@
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
+    
+    [self createShareData];
+    NSString *imageUrlString = [json objectForKey:@"pic_path"];
+    NSData *imageData = nil;
+    do {
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
+        if (imageData != nil) {
+            break;
+        }
+
+    } while (YES);
+    UIImage *image = [UIImage imageWithData:imageData];
+    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
+    NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
+    UIImage *newImage = [UIImage imageWithData:imagedata];
+
+
+    self.imageD = imageData;
+    
+    self.shareImage = newImage;
+
 }
 
 - (void)createShareData{
@@ -791,8 +812,6 @@
             goodsCount = [[dic objectForKey:@"result"] integerValue];
            //nnnf
             
-            
-            //NSLog(@"%ld", (long)goodsCount);
             NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
             countLabel.text = strNum;
             if (goodsCount >0) {
@@ -882,28 +901,28 @@
         return;
     }
     
-    dispatch_queue_t queue1 = dispatch_queue_create("com.xlmm.gcd.Queue1", NULL);
-    dispatch_async(queue1, ^{
-        [self createShareData];
-        NSString *imageUrlString = [json objectForKey:@"pic_path"];
-        NSData *imageData = nil;
-        do {
-            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-            if (imageData != nil) {
-                break;
-            }
-            
-        } while (YES);
-        UIImage *image = [UIImage imageWithData:imageData];
-        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-        UIImage *newImage = [UIImage imageWithData:imagedata];
-        
-        
-        self.imageD = imageData;
-        
-        self.shareImage = newImage;
-    });
+//    dispatch_queue_t queue1 = dispatch_queue_create("com.xlmm.gcd.Queue1", NULL);
+//    dispatch_async(queue1, ^{
+//        [self createShareData];
+//        NSString *imageUrlString = [json objectForKey:@"pic_path"];
+//        NSData *imageData = nil;
+//        do {
+//            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
+//            if (imageData != nil) {
+//                break;
+//            }
+//            
+//        } while (YES);
+//        UIImage *image = [UIImage imageWithData:imageData];
+//        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
+//        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
+//        UIImage *newImage = [UIImage imageWithData:imagedata];
+//        
+//        
+//        self.imageD = imageData;
+//        
+//        self.shareImage = newImage;
+//    });
 
     
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
