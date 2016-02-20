@@ -25,4 +25,6 @@
 @property (nonatomic, strong)NSString *log_type;
 @property (nonatomic, strong)NSString *carry_date;
 
+@property (nonatomic, strong)NSNumber *dayly_in_amount;
+
 @end
