@@ -438,11 +438,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/HuodongViewController.m"
-            timestampString = "477755554.013845"
+            timestampString = "477758043.751234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
             landmarkName = "-shareForPlatform:"
             landmarkType = "5">
          </BreakpointContent>

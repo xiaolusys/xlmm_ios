@@ -77,6 +77,9 @@
     
 }
 - (void)dealloc{
+    self.shareWebView =nil;
+    webViewImage = nil;
+    self.webView = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
