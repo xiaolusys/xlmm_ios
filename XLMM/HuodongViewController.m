@@ -86,7 +86,7 @@
         url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
         sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
 
-       // NSLog(@"link = %@", sharelink);
+        NSLog(@"link = %@", sharelink);
 
         
     }
@@ -98,7 +98,7 @@
         
     }
     
- //   NSLog(@"link = %@", sharelink);
+    NSLog(@"link = %@", sharelink);
    
     
     NSDictionary *param0 = @{@"ufrom":platform};
