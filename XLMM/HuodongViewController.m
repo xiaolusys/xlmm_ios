@@ -20,6 +20,7 @@
 @interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 
 @property (nonatomic, strong) UIWebView *shareWebView;
+@property (nonatomic, strong) UIWebView *erweimaShareWebView;
 
 
 
@@ -31,6 +32,7 @@
     NSString *shareTitle;
     UIImage *newshareImage;
     UIImage *webViewImage;
+    
     NSString *shareType;
     
     NSString *shareUrllink;
@@ -56,6 +58,7 @@
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
@@ -172,6 +175,11 @@
                       [SVProgressHUD showSuccessWithStatus:@"已复制"];
                   }
                   
+                  [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+                  //                  isWXFriends = NO;
+                  NSLog(@"0000 = %@", [responseObject objectForKey:@"qrcode_link"]);
+                  [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
+                  
                   
               } else if ([platform isEqualToString:@"qqspa"]){
                   NSLog(@"zone");
@@ -248,8 +256,10 @@
     
 }
 
+
+
 - (void)createKuaiZhaoImagewithlink:(NSString *)link{
-  
+    NSLog(@"link = %@", link);
     
     
     NSURL *url = [NSURL URLWithString:link];
@@ -275,17 +285,21 @@
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
     if (webView.tag != 888) {
+        
         return;
+        
     }
     if (webView.isLoading) {
         return;
     }
-    webViewImage = [UIImage imagewithWebView:self.webView];
-    webViewImage = [UIImage imagewithWebView:self.webView];
+   
+    
+    webViewImage = [UIImage imagewithWebView:self.shareWebView];
+    webViewImage = [UIImage imagewithWebView:self.shareWebView];
     
     [SVProgressHUD dismiss];
-    NSLog(@"type = %@", shareType);
     if ([shareType isEqualToString:@"pyq"]) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -298,10 +312,27 @@
         UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
         snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
         
+    } else if ([shareType isEqualToString:@"web"]){
+        // 保存本地二维码
+  
+        
+        UIImageWriteToSavedPhotosAlbum(webViewImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
     
- 
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     
+    if (error == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        webViewImage = nil;
+        
+    }else{
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
     
 }
 
