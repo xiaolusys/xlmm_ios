@@ -290,6 +290,7 @@
 		323D667C1C2799C200A2B955 /* retina7.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D667B1C2799C200A2B955 /* retina7.png */; };
 		324337341C76B2200066CADD /* PicHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E73EDEF1C3D1D0000EDB94E /* PicHeaderCollectionReusableView.xib */; };
 		324337371C76C76A0066CADD /* MMLoginStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 324337361C76C76A0066CADD /* MMLoginStatus.m */; };
+		324337391C79BA860066CADD /* accounticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 324337381C79BA860066CADD /* accounticon.png */; };
 		3247EA941BE9943300A5CC1C /* lingquyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */; };
 		3247EAAC1BE9E07300A5CC1C /* wash01.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA81BE9E07300A5CC1C /* wash01.png */; };
 		3247EAAD1BE9E07300A5CC1C /* wash02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3247EAA91BE9E07300A5CC1C /* wash02.png */; };
@@ -1093,6 +1094,7 @@
 		323D667B1C2799C200A2B955 /* retina7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retina7.png; path = XLMM/retina7.png; sourceTree = "<group>"; };
 		324337351C76C76A0066CADD /* MMLoginStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLoginStatus.h; sourceTree = "<group>"; };
 		324337361C76C76A0066CADD /* MMLoginStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLoginStatus.m; sourceTree = "<group>"; };
+		324337381C79BA860066CADD /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
 		3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lingquyouhuiquan.png; sourceTree = "<group>"; };
 		3247EAA81BE9E07300A5CC1C /* wash01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash01.png; sourceTree = "<group>"; };
 		3247EAA91BE9E07300A5CC1C /* wash02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash02.png; sourceTree = "<group>"; };
@@ -2625,6 +2627,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				324337381C79BA860066CADD /* accounticon.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3425,6 +3428,7 @@
 				32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
+				324337391C79BA860066CADD /* accounticon.png in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32E8B5B01C56474B00414F8A /* HuojiangListViewController.xib in Resources */,
 				32F2E95A1C128E3700A98EA3 /* retina_HD4.7.png in Resources */,

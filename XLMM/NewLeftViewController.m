@@ -149,6 +149,8 @@
     
     
     
+  //  self.yuelabel.text = @"100.00";
+    
     
 }
 
@@ -236,6 +238,11 @@
    
     
     
+}
+
+- (IBAction)yueClicked:(id)sender {
+    
+    NSLog(@"查看余额详情");
 }
 
 - (IBAction)settingClicked:(id)sender {

@@ -18,6 +18,7 @@
 
 @property (nonatomic, assign)id<RootVCPushOtherVCDelegate>pushVCDelegate;
 
+@property (weak, nonatomic) IBOutlet UILabel *yuelabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeight;
 @property (weak, nonatomic) IBOutlet UIButton *quitButton;
@@ -35,6 +36,7 @@
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;
+- (IBAction)yueClicked:(id)sender;
 
 
 
