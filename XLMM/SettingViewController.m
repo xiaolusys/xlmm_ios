@@ -16,12 +16,16 @@
 #import "ModifyPhoneController.h"
 #import "VerifyPhoneViewController.h"
 #import "VersionController.h"
+#import "WXLoginController.h"
+
 
 
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
     
     NSString *phoneNumber;
+    NSString *mobile;
+    
 }
 
 @end
@@ -157,13 +161,36 @@
     //NSLog(@"用户昵称");
 }
 
+- (void)ishavemobel{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    NSURL *url = [NSURL URLWithString:string];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    mobile = [dic objectForKey:@"mobile"];
+    NSLog(@"mobel = %@", mobile);
+    
+}
+
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     //return;
-//    ModifyPhoneController *modifyVC = [[ModifyPhoneController alloc] initWithNibName:@"ModifyPhoneController" bundle:nil];
-//    modifyVC.numberString = phoneNumber;
-//    [self.navigationController pushViewController:modifyVC animated:YES];
-}
+    
+    [self ishavemobel];
+    if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+        ;
+        NSLog(@"请绑定手机");
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
+    }
+    
+
+ }
 
 - (IBAction)modifyButtonClicked:(id)sender {
     NSLog(@"修改密码");

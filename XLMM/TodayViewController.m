@@ -1088,7 +1088,7 @@ static NSString *khuodongCell = @"HuodongCell";
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
               
                 [self ishavemobel];
-                if ([mobel isEqualToString:@""]) {
+                if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
                     NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
 ;
                     NSLog(@"请绑定手机");
@@ -1115,7 +1115,7 @@ static NSString *khuodongCell = @"HuodongCell";
                     [self.navigationController pushViewController:loginVC animated:YES];
                 } else{
                     [self ishavemobel];
-                    if ([mobel isEqualToString:@""]) {
+                    if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
                         
                         NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
                         ;
