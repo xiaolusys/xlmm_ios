@@ -849,6 +849,9 @@ static NSString *khuodongCell = @"HuodongCell";
         return CGSizeMake(SCREENWIDTH, 60);
     }
     else if (section == 2){
+        if (childDataArray.count == 0) {
+            return CGSizeZero;
+        }
         return CGSizeMake(SCREENWIDTH, 60);
     }
     return CGSizeZero;
