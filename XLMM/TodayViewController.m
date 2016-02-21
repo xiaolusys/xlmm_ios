@@ -395,36 +395,46 @@ static NSString *khuodongCell = @"HuodongCell";
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
    // NSLog(@"posters = %@", jsonDic);
     
-    NSDictionary *childDic = [[jsonDic objectForKey:@"chd_posters"] lastObject];
-    if (childDic == nil) {
-        step1 = YES;
-
-        return;
-    }
-    PosterModel *childModel = [PosterModel new];
-    childModel.imageURL = [childDic objectForKey:@"pic_link"];
-    childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
-    childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-    
-    NSDictionary *ladyDic = [[jsonDic objectForKey:@"wem_posters"] lastObject];
-    PosterModel *ladyModel = [PosterModel new];
-    ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
-    ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
-    ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
-    
+    NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
     self.posterImages = [[NSMutableArray alloc] init];
-    UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
-    UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
-    [self.posterImages addObject:image0];
-    [self.posterImages addObject:image1];
+
+    for (NSDictionary *childDic in childArray) {
+        PosterModel *childModel = [PosterModel new];
+        childModel.imageURL = [childDic objectForKey:@"pic_link"];
+        childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
+        childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
+        
+        UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
+        [self.posterImages addObject:image0];
+        [posterDataArray addObject:childModel];
+
+
+    }
+   
+   
     
-    [posterDataArray addObject:ladyModel];
-    [posterDataArray addObject:childModel];
+    NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
+    for (NSDictionary *ladyDic in ladyArray) {
+    
+        PosterModel *ladyModel = [PosterModel new];
+        ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
+        ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
+        ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
+        
+        UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
+        [self.posterImages addObject:image1];
+        [posterDataArray addObject:ladyModel];
+
+    }
+    
+    
+    
     
     if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
         _ishaveHuodong = YES;
         huodongJson = [jsonDic objectForKey:@"activity"];
         login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+        
         
         
         
