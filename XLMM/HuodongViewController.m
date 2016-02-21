@@ -66,12 +66,12 @@
 
 - (void)shareForPlatform:(NSNotification *)notification{
     NSDictionary *info = notification.userInfo;
-    NSLog(@"info = %@", info);
+    //NSLog(@"info = %@", info);
     
    // http://dev.xiaolumeimei.com/rest/v1/pmt/free_order/get_share_content
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
-    NSLog(@"string = %@", string);
+  //  NSLog(@"string = %@", string);
     
     
     
@@ -80,9 +80,26 @@
     NSArray *array = [param componentsSeparatedByString:@"&"];
     NSString *platform = [array[0] componentsSeparatedByString:@"="][1];
     NSString *url = [array[1] componentsSeparatedByString:@"="][1];
-    NSString *url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
-    NSString *sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
-    NSLog(@"link = %@", sharelink);
+    NSString *url1;
+    NSString *sharelink;
+    @try {
+        url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
+        sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
+
+       // NSLog(@"link = %@", sharelink);
+
+        
+    }
+    @catch (NSException *exception) {
+     //   NSLog(@"exception = %@", exception);
+        sharelink = nil;
+    }
+    @finally {
+        
+    }
+    
+ //   NSLog(@"link = %@", sharelink);
+   
     
     NSDictionary *param0 = @{@"ufrom":platform};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -96,11 +113,11 @@
     [manager POST:string parameters:param0
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
+            //  NSLog(@"JSON: %@", responseObject);
               //  active_dec   //  link_qrcode   title
               shareTitle = [responseObject objectForKey:@"title"];
               NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"link_qrcode"]];
-              NSLog(@"imageUrl = %@", imageurl);
+          //    NSLog(@"imageUrl = %@", imageurl);
               shareImage = [UIImage imagewithURLString:imageurl];
               content = [responseObject objectForKey:@"active_dec"];
               
@@ -138,6 +155,10 @@
                   NSLog(@"copy");
                   UIPasteboard *pab = [UIPasteboard generalPasteboard];
                   NSString *str = sharelink;
+                  if (str == nil) {
+                      [SVProgressHUD showSuccessWithStatus:@"复制失败"];
+                      return ;  
+                  }
                   [pab setString:str];
                   if (pab == nil) {
                       [SVProgressHUD showErrorWithStatus:@"请重新复制"];
