@@ -544,8 +544,6 @@
         NSString *imagelink = [[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression];
     //    NSLog(@"imageLink = %@", imagelink);
    
-
-        
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             NSLog(@"%dimage = %@",i, image);
             imagewidth = SCREENWIDTH;
