@@ -14,9 +14,14 @@
 #import "WXApi.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
+#import "UIImage+ImageWithSelectedView.h"
 
 
 @interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+
+@property (nonatomic, strong) UIWebView *shareWebView;
+
+
 
 @end
 
@@ -24,8 +29,16 @@
     UIImage *shareImage;
     NSString *content;
     NSString *shareTitle;
+    UIImage *newshareImage;
+    UIImage *webViewImage;
+    NSString *shareType;
+    
+    NSString *shareUrllink;
+    
+    
     
 }
+
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -42,6 +55,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
+    self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
@@ -71,7 +85,7 @@
    // http://dev.xiaolumeimei.com/rest/v1/pmt/free_order/get_share_content
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
-  //  NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     
     
     
@@ -82,6 +96,7 @@
     NSString *url = [array[1] componentsSeparatedByString:@"="][1];
     NSString *url1;
     NSString *sharelink;
+    shareType = platform;
     @try {
         url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
         sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
@@ -99,6 +114,7 @@
     }
     
     NSLog(@"link = %@", sharelink);
+    shareUrllink = sharelink;
    
     
     NSDictionary *param0 = @{@"ufrom":platform};
@@ -113,13 +129,15 @@
     [manager POST:string parameters:param0
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
-            //  NSLog(@"JSON: %@", responseObject);
+             NSLog(@"JSON: %@", responseObject);
               //  active_dec   //  link_qrcode   title
               shareTitle = [responseObject objectForKey:@"title"];
               NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"link_qrcode"]];
-          //    NSLog(@"imageUrl = %@", imageurl);
-              shareImage = [UIImage imagewithURLString:imageurl];
+              NSLog(@"imageUrl = %@", imageurl);
+              newshareImage = [UIImage imagewithURLString:imageurl];
               content = [responseObject objectForKey:@"active_dec"];
+              shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_img"]];
+              
               
               if ([platform isEqualToString:@"qq"]) {
                   NSLog(@"qq");
@@ -130,20 +148,7 @@
                   }];
                   
                   
-              } else if ([platform isEqualToString:@"wxapp"]){
-                  
-                  NSLog(@"wx");
-                  [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-                  [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-                  
-                  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                      
-                  }];
-                  
-                  
-                  
-                  
-              } else if ([platform isEqualToString:@"sinawb"]){
+              }else if ([platform isEqualToString:@"sinawb"]){
                   NSLog(@"wb");
                   NSString *sinaContent = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
                   [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:UIImagePNGRepresentation(shareImage)];
@@ -178,22 +183,57 @@
                   }];
                   
                   
-              } else if ([platform isEqualToString:@"pyq"]){
+              } else if ([platform isEqualToString:@"wxapp"]){
+                  if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                      NSLog(@"wx");
+                      [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+                      [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
+                      
+                      [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                          
+                      }];
+
+                  } else {
+                      
+                      [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                      //                  isWXFriends = NO;
+                      [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+
+                      
+                  }
+                  
+                  
+                  
+                  
+                  
+              }  else if ([platform isEqualToString:@"pyq"]){
                   
                   NSLog(@"friends");
                   
-                  [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
-                  [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-                  
-                  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                  if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                      [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
+                      [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
                       
-                  }];
+                      [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                          
+                      }];
+                  } else{
+                      
+                      [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                      //                  isWXFriends = NO;
+                      [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+
+                      
+                  }
+                  
+                  
                   
                   
               } else{
                   
                   NSLog(@"others");
               }
+
 
               
               
@@ -208,6 +248,19 @@
     
 }
 
+- (void)createKuaiZhaoImagewithlink:(NSString *)link{
+  
+    
+    
+    NSURL *url = [NSURL URLWithString:link];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [self.shareWebView loadRequest:request];
+    self.shareWebView.delegate = self;
+    self.shareWebView.scalesPageToFit = YES;
+    self.shareWebView.tag = 888;
+}
+
 
 
 - (void)backClicked:(UIButton *)button{
@@ -216,6 +269,40 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark -- UIWebView代理
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.tag != 888) {
+        return;
+    }
+    if (webView.isLoading) {
+        return;
+    }
+    webViewImage = [UIImage imagewithWebView:self.webView];
+    webViewImage = [UIImage imagewithWebView:self.webView];
+    
+    [SVProgressHUD dismiss];
+    NSLog(@"type = %@", shareType);
+    if ([shareType isEqualToString:@"pyq"]) {
+        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            
+        }];
+    } else if ([shareType isEqualToString:@"wxapp"]) {
+        [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:webViewImage socialUIDelegate:self];
+        //        [UMSocialData defaultData].extConfig.wxMessageType = 0;
+        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+    }
+    
+ 
+    
+    
 }
 
 /*
