@@ -31,6 +31,8 @@
 #import "MMAdvertiseView.h"
 #import "HuodongViewController.h"
 #import "HuodongCollectionViewCell.h"
+#import "WXLoginController.h"
+
 
 
 
@@ -78,6 +80,8 @@ static NSString *khuodongCell = @"HuodongCell";
     NSMutableArray *targetUrls;
     BOOL _ishaveHuodong;
     NSDictionary *huodongJson;
+    
+    NSString *mobel;
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
@@ -227,6 +231,7 @@ static NSString *khuodongCell = @"HuodongCell";
 //        
 //    });
   
+    [self ishavemobel];
 
 }
 
@@ -1058,32 +1063,75 @@ static NSString *khuodongCell = @"HuodongCell";
     return UIEdgeInsetsMake(0, 5, 0, 5);
 }
 
+- (void)ishavemobel{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    NSURL *url = [NSURL URLWithString:string];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    mobel = [dic objectForKey:@"mobile"];
+    NSLog(@"mobel = %@", mobel);
+    
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             
             
         } else{
-
+          
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-                
-                huodongVC.diction = huodongJson;
-                
-                
-                [self.navigationController pushViewController:huodongVC animated:YES];
-            } else{
-                if (login_required) {
-                    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-                    [self.navigationController pushViewController:loginVC animated:YES];
-                } else{
+              
+                [self ishavemobel];
+                if ([mobel isEqualToString:@""]) {
+                    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+;
+                    NSLog(@"请绑定手机");
+                    WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+                    wxloginVC.userInfo = dic;
+                    [self.navigationController pushViewController:wxloginVC animated:YES];
+                    
+                    
+                    
+                    
+                } else {
                     HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                     
                     huodongVC.diction = huodongJson;
                     
                     
                     [self.navigationController pushViewController:huodongVC animated:YES];
+                }
+                
+                
+            } else{
+                if (login_required) {
+                    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+                    [self.navigationController pushViewController:loginVC animated:YES];
+                } else{
+                    [self ishavemobel];
+                    if ([mobel isEqualToString:@""]) {
+                        
+                        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+                        ;
+                        NSLog(@"请绑定手机");
+                        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+                        wxloginVC.userInfo = dic;
+                        [self.navigationController pushViewController:wxloginVC animated:YES];
+                        
+                    } else {
+                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                        
+                        huodongVC.diction = huodongJson;
+                        
+                        
+                        [self.navigationController pushViewController:huodongVC animated:YES];
+                    }
                 }
             
 
