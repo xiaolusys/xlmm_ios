@@ -152,20 +152,20 @@
     if (data == nil) {
         return;
     }
-    NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error == nil) {
-        self.fensilabel.text = [NSString stringWithFormat:@"%ld", array.count];
-
-        if (array.count == 0) {
-            NSLog(@"您的粉丝列表为空");
-        } else {
-                       //生成粉丝列表。。。
-           // [self createFanlistWithArray:array];
-        }
-    } else {
-        NSLog(@"error = %@", error);
-    }
+//    NSError *error = nil;
+//    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//    if (error == nil) {
+//        self.fensilabel.text = [NSString stringWithFormat:@"%ld", array.count];
+//
+//        if (array.count == 0) {
+//            NSLog(@"您的粉丝列表为空");
+//        } else {
+//                       //生成粉丝列表。。。
+//           // [self createFanlistWithArray:array];
+//        }
+//    } else {
+//        NSLog(@"error = %@", error);
+//    }
     
 }
 
@@ -208,6 +208,9 @@
         self.money = dicJson[@"clk_money"];
         NSDictionary *mmclog = dicJson[@"mmclog"];
         self.clickTotalMoney = mmclog[@"clki"];
+        NSLog(@"%@",[dicJson objectForKey:@"fans_num"]);
+        
+        self.fensilabel.text = [NSString stringWithFormat:@"%@", [dicJson objectForKey:@"fans_num"]];
         
         
         self.earningsRecord = self.jileishouyi.text;
