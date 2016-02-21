@@ -85,10 +85,20 @@
     NSString *url = self.picArr[self.index];
     NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
 
-    [imageIndex sd_setImageWithURL:[NSURL URLWithString:joinUrl]];
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        imageIndex.frame = CGRectMake(self.index * SWIDTH, 0, SWIDTH, SHEIGHT);
+//    [imageIndex sd_setImageWithURL:[NSURL URLWithString:joinUrl]];
+    __block float imageWidth = 0.0;
+    __block float imageHeight = 0.0;
+    [imageIndex sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        imageWidth = SWIDTH;
+        if (image.size.width == 0) {
+            imageHeight = 0;
+        }else {
+            imageHeight = image.size.height/image.size.width * SWIDTH;
+        }
+        CGFloat imageIndexY = (SHEIGHT - imageHeight) * 0.5;
+        [UIView animateWithDuration:0.3 animations:^{
+            imageIndex.frame = CGRectMake(self.index * SWIDTH, imageIndexY, SWIDTH, imageHeight);
+        }];
     }];
     [self.scrollView addSubview:imageIndex];
     
@@ -96,16 +106,28 @@
     for (int i = 0; i < self.picArr.count; i++) {
         if (self.index == i)continue;
     
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, SWIDTH, SHEIGHT)];
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, 80, 80)];
 
 //        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 //        activityIndicator.center = imageV.center;
 //        [activityIndicator startAnimating];
 
         NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
+        __block float imagew = 0.0;
+        __block float imageh = 0.0;
         [imageV sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 //            [activityIndicator removeFromSuperview];
 //            activityIndicator = nil;
+            imagew = SWIDTH;
+            if (image.size.width == 0) {
+                imageh = 0;
+            }else {
+                imageh = image.size.height/image.size.width * SWIDTH;
+            }
+            CGFloat imageY = (SHEIGHT - imageh) * 0.5;
+            imageV.frame = CGRectMake(i * SWIDTH, imageY, SWIDTH, imageh);
+            imagew = 0;
+            imageh = 0;
         }];
     
         [self.scrollView addSubview:imageV];
