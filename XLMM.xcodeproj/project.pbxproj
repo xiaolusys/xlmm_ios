@@ -49,6 +49,10 @@
 		18D22E3A1C5B4EF200ECE45C /* zhanwei.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D22E391C5B4EF200ECE45C /* zhanwei.png */; };
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
+		18F3883F1C7B08DC005A7C12 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3883D1C7B08DC005A7C12 /* AccountViewController.m */; };
+		18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */; };
+		18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F388431C7B1405005A7C12 /* AccountEmpty.xib */; };
+		18F388461C7B227B005A7C12 /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F388451C7B227B005A7C12 /* wallet.png */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
 		2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5D4CB01C311A6700F5D269 /* smallrun.gif */; };
@@ -717,6 +721,11 @@
 		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
 		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
 		18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShopViewController.m; sourceTree = "<group>"; };
+		18F3883C1C7B08DC005A7C12 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		18F3883D1C7B08DC005A7C12 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
+		18F388431C7B1405005A7C12 /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
+		18F388451C7B227B005A7C12 /* wallet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallet.png; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600D41C2E6418000AFB39 /* run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = run.gif; sourceTree = "<group>"; };
@@ -1771,6 +1780,17 @@
 			name = AppleVersion1;
 			sourceTree = "<group>";
 		};
+		18F3883B1C7B08C4005A7C12 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				18F3883C1C7B08DC005A7C12 /* AccountViewController.h */,
+				18F3883D1C7B08DC005A7C12 /* AccountViewController.m */,
+				18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */,
+				18F388431C7B1405005A7C12 /* AccountEmpty.xib */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
 		2E5600351C2D496E000AFB39 /* loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -1803,6 +1823,7 @@
 		2E63AE531C3E5DA1008E97BB /* MaMa */ = {
 			isa = PBXGroup;
 			children = (
+				18F388451C7B227B005A7C12 /* wallet.png */,
 				3269A4BB1C747322001B8761 /* havenodingdan.png */,
 				2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */,
 				2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */,
@@ -2614,6 +2635,7 @@
 		3249B9811B6F37A20086D030 /* PersonCenter */ = {
 			isa = PBXGroup;
 			children = (
+				18F3883B1C7B08C4005A7C12 /* Account */,
 				32816F941C1FFA45004DD2EF /* Common */,
 				32816F931C1FF88F004DD2EF /* Settings */,
 				32816F921C1FF880004DD2EF /* Coupons */,
@@ -3438,6 +3460,7 @@
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
 				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
+				18F388461C7B227B005A7C12 /* wallet.png in Resources */,
 				323648651C62E70200CCD0DA /* HuodongCollectionViewCell.xib in Resources */,
 				322D25BF1C32B93A00509EAD /* 圈圈加载0020.png in Resources */,
 				32BDE48E1B85B12D00FBEC25 /* AddYouhuiquanViewController.xib in Resources */,
@@ -3452,7 +3475,9 @@
 				2E612B561C4A4454002F1C15 /* 4lun@2x.png in Resources */,
 				2E63AE5A1C3E66A5008E97BB /* PicFooterCollectionReusableView.xib in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
+				18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */,
 				18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */,
 				322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
@@ -3958,6 +3983,7 @@
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
+				18F3883F1C7B08DC005A7C12 /* AccountViewController.m in Sources */,
 				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */,

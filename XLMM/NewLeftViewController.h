@@ -52,4 +52,7 @@
 
 - (IBAction)loginButtonClicked:(id)sender;
 
+- (IBAction)accountBtnAction:(id)sender;
+
+
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,7 +13,6 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" tag="400" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dingdanemptyimage.png" translatesAutoresizingMaskIntoConstraints="NO" id="qj2-sQ-ALv">
                     <rect key="frame" x="100" y="155" width="120" height="120"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="ERb-XF-KE2"/>
                         <constraint firstAttribute="height" constant="120" id="aDD-Yz-FAf"/>
@@ -21,7 +20,6 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" tag="300" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲，您暂时还没有订单哦～ 快去看看吧！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Js-pw-OmX">
                     <rect key="frame" x="32" y="299" width="256" height="29"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="zuo-1G-hc2"/>
                     </constraints>
@@ -31,7 +29,6 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="再不抢购，就卖光啦～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxa-0E-LxT">
                     <rect key="frame" x="100" y="328" width="120" height="26"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="Dfa-5F-IMP"/>
                     </constraints>
@@ -41,7 +38,6 @@
                 </label>
                 <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGD-cO-3EX">
                     <rect key="frame" x="110" y="366" width="100" height="30"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="HqX-vL-LfV"/>
                         <constraint firstAttribute="height" constant="30" id="txL-A9-zfU"/>
@@ -51,7 +47,6 @@
                     </state>
                 </button>
             </subviews>
-            <animations/>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="2Js-pw-OmX" firstAttribute="top" secondItem="qj2-sQ-ALv" secondAttribute="bottom" constant="24" id="8T8-tS-sVH"/>
@@ -65,7 +60,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="238" y="309"/>
+            <point key="canvasLocation" x="507" y="378"/>
         </view>
     </objects>
     <resources>
