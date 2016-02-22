@@ -951,9 +951,6 @@
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 #pragma mark --分享按钮事件
@@ -972,7 +969,6 @@
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
     }];
-    
     [self cancleShareBtnClick:nil];
     
 }
@@ -1048,9 +1044,8 @@
     [SVProgressHUD showWithStatus:@"正在生成快照..."];
     isWXFriends = YES;
     [self createKuaiZhaoImage];
-    
-
 }
+
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
