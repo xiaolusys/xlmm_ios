@@ -24,14 +24,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" tag="300" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shopping_coupon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xRe-fa-UXb">
-                    <rect key="frame" x="275" y="6" width="30" height="20"/>
+                    <rect key="frame" x="305" y="6" width="0.0" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="UvU-T4-Mro"/>
-                        <constraint firstAttribute="width" constant="30" id="abn-al-fYY"/>
+                        <constraint firstAttribute="width" id="abn-al-fYY"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="还差34元可用优惠券" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bo0-7X-hau">
-                    <rect key="frame" x="159" y="8" width="112" height="15"/>
+                    <rect key="frame" x="189" y="8" width="112" height="15"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
