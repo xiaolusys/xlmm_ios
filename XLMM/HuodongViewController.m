@@ -38,6 +38,7 @@
 @property (nonatomic, strong)NSString *kuaizhaoLink;
 @property (nonatomic, assign)BOOL isWeixin;
 @property (nonatomic, assign)BOOL isWeixinFriends;
+@property (nonatomic, assign)BOOL isCopy;
 
 @end
 
@@ -278,6 +279,7 @@
 }
 
 - (void)linkCopyBtnClick:(UIButton *)btn {
+    self.isCopy = YES;
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
     NSString *str = self.url;
     [pab setString:str];
@@ -530,9 +532,10 @@
         snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
         
         self.isWeixinFriends = NO;
-    } else if ([shareType isEqualToString:@"web"] || self.isPic){
+    } else if ([shareType isEqualToString:@"web"] || self.isCopy){
         // 保存本地二维码
         UIImageWriteToSavedPhotosAlbum(webViewImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        self.isCopy = NO;
     }
     
 }
