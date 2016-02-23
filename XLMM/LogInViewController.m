@@ -231,7 +231,7 @@
     [notificationCenter postNotification: broadcastMessage];
 
     
-    
+    [self setDevice];
     NSLog(@"33isBangDing = %d", isBangding);
     if (isBangding) {
         NSLog(@"跳转首页");
@@ -366,40 +366,8 @@
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
                   
                   
-                  NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-                  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                  
-                  
-                  
-                  NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-                  
-             
-                  
-                  NSLog(@"urlStr = %@", urlString);
-                  NSLog(@"params = %@", params);
-
-                  [manager POST:urlString parameters:params
-                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                            //  NSError *error;
-                            NSLog(@"JSON: %@", responseObject);
-                            NSString *user_account = [responseObject objectForKey:@"user_account"];
-                            NSLog(@"user_account = %@", user_account);
-                            if ([user_account isEqualToString:@""]) {
-                                
-                            } else {
-                                [MiPushSDK setAccount:user_account];
-                            }
-                            
-                            
-                        }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            NSLog(@"Error: %@", error);
-                            
-                            
-                        }];
-
-                  
-                  
+                 
+                  [self setDevice];
                   [self.navigationController popViewControllerAnimated:NO];
               }
               
@@ -409,6 +377,43 @@
               
               
           }];
+}
+
+- (void)setDevice{
+    NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+    
+    
+    
+    NSLog(@"urlStr = %@", urlString);
+    NSLog(@"params = %@", params);
+    
+    [manager POST:urlString parameters:params
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              //  NSError *error;
+              NSLog(@"JSON: %@", responseObject);
+              NSString *user_account = [responseObject objectForKey:@"user_account"];
+              NSLog(@"user_account = %@", user_account);
+              if ([user_account isEqualToString:@""]) {
+                  
+              } else {
+                  [MiPushSDK setAccount:user_account];
+              }
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              
+              
+          }];
+    
+    
+
 }
 
 -(void) alertMessage:(NSString*)msg

@@ -346,7 +346,7 @@
     [self createSizeView];
     [self createContentView];
     
-    [self performSelector:@selector(createContentView) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(createContentView) withObject:nil afterDelay:4.0];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
