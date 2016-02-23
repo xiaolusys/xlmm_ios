@@ -545,7 +545,7 @@
         
         
         UIImageView *imageview = [[UIImageView alloc] init];
-        NSString *imagelink = [[[imageArray objectAtIndex:i] URLEncodedString] ImageNoCompression];
+        NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] URLEncodedString];
     //    NSLog(@"imageLink = %@", imagelink);
    
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
