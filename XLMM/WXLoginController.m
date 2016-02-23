@@ -300,7 +300,11 @@
     
     // username  valid_code
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/check_code", Root_URL];
+   // NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/check_code", Root_URL];
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile_unpassword", Root_URL];
+
     NSLog(@"url = %@", urlString);
     
    // AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -345,10 +349,12 @@
     NSString *result = [json objectForKey:@"result"];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     NSLog(@"%@",str1);
-    if ([result isEqualToString:@"ok"]) {
+    if ([result isEqualToString:@"0"]) {
         NSLog(@"the result is ok");
         alertView.message = result;
         [alertView show];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
         
     } else if ([result isEqualToString:@"4"]){
         NSLog(@"the result is 4");
@@ -362,15 +368,15 @@
         alertView.message = @"验证码输入错误";
         [alertView show];
         return;
-    } else if ([result isEqualToString:@"0"]){
-        alertView.message = @"该手机已绑定,请使用其他手机号";
-        [alertView show];
-        return;
     } else if ([result isEqualToString:@"2"]){
         alertView.message = @"参数错误";
         [alertView show];
         return;
         
+    } else {
+        alertView.message = [json objectForKey:@"info"];
+        [alertView show];
+        return;
     }
   
 
