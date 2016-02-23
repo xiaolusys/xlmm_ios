@@ -11,6 +11,8 @@
 #import "MMClass.h"
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "AccountTableViewCell.h"
+#import "WithdrawCashViewController.h"
 
 
 @interface AccountViewController ()
@@ -19,8 +21,10 @@
 @property (nonatomic, strong)NSString *nextPage;
 
 @property (nonatomic, assign)CGFloat headerH;
+
 @end
 
+static NSString *identifier = @"AccountCell";
 @implementation AccountViewController
 {
     UIView *emptyView;
@@ -32,10 +36,21 @@
     // Do any additional setup after loading the view from its nib.
     
     [self createNavigationBarWithTitle:@"钱包" selecotr:@selector(backBtnClicked:)];
+    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
+    [button1 setTitle:@"提现" forState:UIControlStateNormal];
+    [button1 setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+    [button1 addTarget:self action:@selector(rightBarButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     self.navigationController.navigationBarHidden = NO;
+    self.money = 0;
     
     [self createTableView];
-    [self createEmptyView];
+    if (!self.money > 0) {
+        [self createEmptyView];
+    }
+//    [self createEmptyView];
 }
 
 - (void)createTableView {
@@ -43,7 +58,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:self.tableView];
     
@@ -75,16 +89,16 @@
     
     self.tableView.tableHeaderView = headerV;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
     //添加上拉加载
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return ;
-        }
-//        [self loadMore];
-    }];
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        if([self.nextPage class] == [NSNull class]) {
+//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//            return ;
+//        }
+////        [self loadMore];
+//    }];
     
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL];
@@ -115,40 +129,47 @@
 }
 
 #pragma mark --邀请好友
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)gotoInviteFriends {
     
+}
+
+//提现
+- (void)rightBarButtonAction {
+    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
+    [self.navigationController pushViewController:drawCash animated:YES];
 }
 
 #pragma mark ---UItableView的代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 //    return self.dataDic.count;
-    return 0;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    NSString *key = self.dataArr[section];
 //    NSMutableArray *orderArr = self.dataDic[key];
 //    return orderArr.count;
-    return 0;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    NSString *key = self.dataArr[indexPath.section];
 //    NSMutableArray *orderArr = self.dataDic[key];
 //    MaMaOrderModel *orderM = orderArr[indexPath.row];
-//    MaMaOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaMaOrder"];
+    AccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    if (!cell) {
-//        cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
-//    }
+    if (!cell) {
+        cell = [[AccountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
 //    [cell fillDataOfCell:orderM];
 //    return cell;
-    return nil;
+    return cell;
 }
 
 
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
