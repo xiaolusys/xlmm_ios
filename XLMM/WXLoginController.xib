@@ -133,7 +133,7 @@
                         <constraint firstAttribute="height" constant="40" id="f5M-2p-trQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="下一步">
+                    <state key="normal" title="绑定手机号">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
