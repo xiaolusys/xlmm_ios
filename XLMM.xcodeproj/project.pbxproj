@@ -43,6 +43,16 @@
 		18601B1C1C7469C600E87A7B /* mamafan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1B1C7469C600E87A7B /* mamafan.png */; };
 		18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1D1C746EB200E87A7B /* mamajiang.png */; };
 		18601B201C746EB600E87A7B /* mamati.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601B1F1C746EB600E87A7B /* mamati.png */; };
+		18BDB2741C7BFD15006462C2 /* WithdrawCashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB2721C7BFD15006462C2 /* WithdrawCashViewController.m */; };
+		18BDB2751C7BFD15006462C2 /* WithdrawCashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2731C7BFD15006462C2 /* WithdrawCashViewController.xib */; };
+		18BDB2771C7C111C006462C2 /* WithdrawalsEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2761C7C111C006462C2 /* WithdrawalsEmpty.xib */; };
+		18BDB27B1C7C2A56006462C2 /* path.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2791C7C2A56006462C2 /* path.png */; };
+		18BDB27C1C7C2A56006462C2 /* shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27A1C7C2A56006462C2 /* shop.png */; };
+		18BDB27E1C7C308B006462C2 /* WithdrawalsIsOk.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */; };
+		18BDB2801C7C30A6006462C2 /* WithdrwaIsIsNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */; };
+		18BDB2841C7C4193006462C2 /* redPkgjian.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2811C7C4193006462C2 /* redPkgjian.png */; };
+		18BDB2851C7C4193006462C2 /* redPkgAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2821C7C4193006462C2 /* redPkgAdd.png */; };
+		18BDB2861C7C4193006462C2 /* redPkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2831C7C4193006462C2 /* redPkg.png */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -53,6 +63,8 @@
 		18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */; };
 		18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F388431C7B1405005A7C12 /* AccountEmpty.xib */; };
 		18F388461C7B227B005A7C12 /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F388451C7B227B005A7C12 /* wallet.png */; };
+		18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */; };
+		18F388511C7BF1CF005A7C12 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F3884F1C7BF1CF005A7C12 /* AccountTableViewCell.xib */; };
 		2E5600341C2D48D0000AFB39 /* LoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */; };
 		2E5600D51C2E6418000AFB39 /* run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5600D41C2E6418000AFB39 /* run.gif */; };
 		2E5D4CB11C311A6700F5D269 /* smallrun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2E5D4CB01C311A6700F5D269 /* smallrun.gif */; };
@@ -711,6 +723,17 @@
 		18601B1B1C7469C600E87A7B /* mamafan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamafan.png; sourceTree = "<group>"; };
 		18601B1D1C746EB200E87A7B /* mamajiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamajiang.png; sourceTree = "<group>"; };
 		18601B1F1C746EB600E87A7B /* mamati.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamati.png; sourceTree = "<group>"; };
+		18BDB2711C7BFD15006462C2 /* WithdrawCashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WithdrawCashViewController.h; sourceTree = "<group>"; };
+		18BDB2721C7BFD15006462C2 /* WithdrawCashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithdrawCashViewController.m; sourceTree = "<group>"; };
+		18BDB2731C7BFD15006462C2 /* WithdrawCashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawCashViewController.xib; sourceTree = "<group>"; };
+		18BDB2761C7C111C006462C2 /* WithdrawalsEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawalsEmpty.xib; sourceTree = "<group>"; };
+		18BDB2791C7C2A56006462C2 /* path.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = path.png; sourceTree = "<group>"; };
+		18BDB27A1C7C2A56006462C2 /* shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop.png; sourceTree = "<group>"; };
+		18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawalsIsOk.xib; sourceTree = "<group>"; };
+		18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrwaIsIsNo.xib; sourceTree = "<group>"; };
+		18BDB2811C7C4193006462C2 /* redPkgjian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkgjian.png; sourceTree = "<group>"; };
+		18BDB2821C7C4193006462C2 /* redPkgAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkgAdd.png; sourceTree = "<group>"; };
+		18BDB2831C7C4193006462C2 /* redPkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkg.png; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
@@ -726,6 +749,9 @@
 		18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		18F388431C7B1405005A7C12 /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
 		18F388451C7B227B005A7C12 /* wallet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallet.png; sourceTree = "<group>"; };
+		18F3884D1C7BF1CF005A7C12 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
+		18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
+		18F3884F1C7BF1CF005A7C12 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
 		2E5600321C2D48D0000AFB39 /* LoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAnimation.h; sourceTree = "<group>"; };
 		2E5600331C2D48D0000AFB39 /* LoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAnimation.m; sourceTree = "<group>"; };
 		2E5600D41C2E6418000AFB39 /* run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = run.gif; sourceTree = "<group>"; };
@@ -1780,6 +1806,19 @@
 			name = AppleVersion1;
 			sourceTree = "<group>";
 		};
+		18BDB2781C7C2A40006462C2 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				18BDB2811C7C4193006462C2 /* redPkgjian.png */,
+				18BDB2821C7C4193006462C2 /* redPkgAdd.png */,
+				18BDB2831C7C4193006462C2 /* redPkg.png */,
+				18BDB2791C7C2A56006462C2 /* path.png */,
+				18BDB27A1C7C2A56006462C2 /* shop.png */,
+				18F388451C7B227B005A7C12 /* wallet.png */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		18F3883B1C7B08C4005A7C12 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -1787,8 +1826,24 @@
 				18F3883D1C7B08DC005A7C12 /* AccountViewController.m */,
 				18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */,
 				18F388431C7B1405005A7C12 /* AccountEmpty.xib */,
+				18BDB2711C7BFD15006462C2 /* WithdrawCashViewController.h */,
+				18BDB2721C7BFD15006462C2 /* WithdrawCashViewController.m */,
+				18BDB2731C7BFD15006462C2 /* WithdrawCashViewController.xib */,
+				18BDB2761C7C111C006462C2 /* WithdrawalsEmpty.xib */,
+				18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */,
+				18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */,
 			);
 			name = Account;
+			sourceTree = "<group>";
+		};
+		18F388471C7BE8A2005A7C12 /* SettingAccount */ = {
+			isa = PBXGroup;
+			children = (
+				18F3884D1C7BF1CF005A7C12 /* AccountTableViewCell.h */,
+				18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */,
+				18F3884F1C7BF1CF005A7C12 /* AccountTableViewCell.xib */,
+			);
+			name = SettingAccount;
 			sourceTree = "<group>";
 		};
 		2E5600351C2D496E000AFB39 /* loading */ = {
@@ -1823,7 +1878,6 @@
 		2E63AE531C3E5DA1008E97BB /* MaMa */ = {
 			isa = PBXGroup;
 			children = (
-				18F388451C7B227B005A7C12 /* wallet.png */,
 				3269A4BB1C747322001B8761 /* havenodingdan.png */,
 				2E612B4D1C4A4454002F1C15 /* 0lun@2x.png */,
 				2E612B4E1C4A4454002F1C15 /* 1lun@2x.png */,
@@ -2712,6 +2766,7 @@
 		325DF9451B69BCE200351ACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				18F388471C7BE8A2005A7C12 /* SettingAccount */,
 				324BFCDF1C61DC880055C984 /* MMAdvertiseView.h */,
 				324BFCE01C61DC880055C984 /* MMAdvertiseView.m */,
 				181C74981C53608500375DF8 /* NewMaMaView */,
@@ -3092,6 +3147,7 @@
 		32816F961C1FFBFC004DD2EF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				18BDB2781C7C2A40006462C2 /* Setting */,
 				2E63AE531C3E5DA1008E97BB /* MaMa */,
 				2E5600351C2D496E000AFB39 /* loading */,
 				321928BA1BDB7E7D004EA6A7 /* New Images */,
@@ -3450,6 +3506,7 @@
 				32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
+				18BDB2771C7C111C006462C2 /* WithdrawalsEmpty.xib in Resources */,
 				324337391C79BA860066CADD /* accounticon.png in Resources */,
 				2EB87D3B1C17FAE4001CBF3D /* ios-social-sdk-comment-detail.html in Resources */,
 				32E8B5B01C56474B00414F8A /* HuojiangListViewController.xib in Resources */,
@@ -3457,6 +3514,7 @@
 				18601B171C743EFE00E87A7B /* loading动画0017.png in Resources */,
 				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
+				18BDB2801C7C30A6006462C2 /* WithdrwaIsIsNo.xib in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
 				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
@@ -3588,8 +3646,10 @@
 				2E612B531C4A4454002F1C15 /* 1lun@2x.png in Resources */,
 				32746E211B74A22000816208 /* icon-radio-select.png in Resources */,
 				3236486D1C6469CD00CCD0DA /* mamajingxuanicon.png in Resources */,
+				18BDB2841C7C4193006462C2 /* redPkgjian.png in Resources */,
 				2EB87D3C1C17FAE4001CBF3D /* ios-social-sdk-comment-quick.html in Resources */,
 				322D25BA1C32B93A00509EAD /* 圈圈加载0015.png in Resources */,
+				18BDB2851C7C4193006462C2 /* redPkgAdd.png in Resources */,
 				32BDE4841B85620F00FBEC25 /* AddressTableCell.xib in Resources */,
 				32E6BC141BEC762B0036F338 /* SettingViewController.xib in Resources */,
 				321928D31BDB7EB8004EA6A7 /* alltrades.png in Resources */,
@@ -3603,6 +3663,8 @@
 				32703F1B1BEB5D39002AFC6D /* Icon-40.png in Resources */,
 				322D25AD1C32B93A00509EAD /* 圈圈加载0002.png in Resources */,
 				322D25B71C32B93A00509EAD /* 圈圈加载0012.png in Resources */,
+				18BDB27E1C7C308B006462C2 /* WithdrawalsIsOk.xib in Resources */,
+				18F388511C7BF1CF005A7C12 /* AccountTableViewCell.xib in Resources */,
 				32746E271B74A22000816208 /* icon-shouye.png in Resources */,
 				325DB3681C449B080018C421 /* hongbao100.png in Resources */,
 				32703F261BEB60D3002AFC6D /* Icon-60@3x.png in Resources */,
@@ -3698,6 +3760,7 @@
 				8E0044F51BFF09B600AFC1DF /* gouwucheemptyimage.png in Resources */,
 				18601B0B1C743EFE00E87A7B /* loading动画005.png in Resources */,
 				3274C1821C05B3CA00641C4E /* EmptyYHQView.xib in Resources */,
+				18BDB2751C7BFD15006462C2 /* WithdrawCashViewController.xib in Resources */,
 				18601B191C743EFE00E87A7B /* loading动画0019.png in Resources */,
 				181C749F1C53678400375DF8 /* mamaShare.png in Resources */,
 				2E77F56A1C1C10900020C014 /* YoumengShare.xib in Resources */,
@@ -3734,6 +3797,8 @@
 				322D25D21C32B93A00509EAD /* 圈圈加载0039.png in Resources */,
 				32E20B611C5F2DA4009D1726 /* selectedImageView.png in Resources */,
 				32BA1B271BF2F1FA0000A0F2 /* SingleOrderViewCell.xib in Resources */,
+				18BDB27C1C7C2A56006462C2 /* shop.png in Resources */,
+				18BDB2861C7C4193006462C2 /* redPkg.png in Resources */,
 				32A2882E1B93E1C6006DC949 /* TodayViewController.xib in Resources */,
 				323B9C641BDDB5FC0060BFC1 /* shopping_cart_add.png in Resources */,
 				2EB87D311C17FAE4001CBF3D /* UMSShareListController.xib in Resources */,
@@ -3759,6 +3824,7 @@
 				3236486E1C6469CD00CCD0DA /* mamashareicon.png in Resources */,
 				325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */,
 				326296531C45F627001A27E3 /* hongbaounused100.png in Resources */,
+				18BDB27B1C7C2A56006462C2 /* path.png in Resources */,
 				32976B831BA117AE0045ADB9 /* tuihuo-warning.png in Resources */,
 				18601B201C746EB600E87A7B /* mamati.png in Resources */,
 				322D25CD1C32B93A00509EAD /* 圈圈加载0034.png in Resources */,
@@ -3902,6 +3968,7 @@
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
 				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
+				18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */,
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
 				181C748C1C5202DF00375DF8 /* CarryLogHeaderView.m in Sources */,
 				32A88E181B8718F9003501EF /* XiangQingView.m in Sources */,
@@ -3969,6 +4036,7 @@
 				3282F28A1B6B5B1300E73EB9 /* UIImage+MultiFormat.m in Sources */,
 				32F3D9651B6CCA41008530BA /* AFHTTPRequestOperation.m in Sources */,
 				2E63A4441C21112500FF66F8 /* UIImage+ImageWithSelectedView.m in Sources */,
+				18BDB2741C7BFD15006462C2 /* WithdrawCashViewController.m in Sources */,
 				3236485D1C62306800CCD0DA /* HuodongViewController.m in Sources */,
 				32FF9A2F1B9FDC0B0001F314 /* TuihuoModel.m in Sources */,
 				3247FDB41BFF1BEA00C6631D /* YHQHeadView.m in Sources */,
