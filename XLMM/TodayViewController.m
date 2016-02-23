@@ -886,14 +886,17 @@ static NSString *khuodongCell = @"HuodongCell";
 //    }
     if (view.currentImageIndex == 0) {
         PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-        childVC.urlString = kCHILD_LIST_URL;
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/childlist", Root_URL];
+        childVC.urlString = string;
         childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
         childVC.titleName = @"潮童装区";
         childVC.childClothing = YES;
         [self.navigationController pushViewController:childVC animated:YES];
     } else {
         PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
-        childVC.urlString = kLADY_LIST_URL;
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/ladylist", Root_URL];
+
+        childVC.urlString = string;
         childVC.orderUrlString = kLADY_LIST_ORDER_URL;
         childVC.titleName = @"时尚女装";
         childVC.childClothing = NO;

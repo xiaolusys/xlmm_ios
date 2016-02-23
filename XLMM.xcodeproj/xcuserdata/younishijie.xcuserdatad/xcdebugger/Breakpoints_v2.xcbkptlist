@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMDetailsViewController.m"
-            timestampString = "477384082.739182"
+            timestampString = "477902874.785394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1149"
-            endingLineNumber = "1149">
+            startingLineNumber = "1157"
+            endingLineNumber = "1157">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -530,7 +530,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/HuodongViewController.m"
