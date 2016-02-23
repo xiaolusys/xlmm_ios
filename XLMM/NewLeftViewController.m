@@ -21,6 +21,7 @@
 #import "AddressViewController.h"
 #import "SettingViewController.h"
 #import "LogInViewController.h"
+#import "AccountViewController.h"
 
 
 
@@ -387,7 +388,7 @@
         //   http://m.xiaolu.so/rest/v1/users/customer_logout
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
        // NSLog(@"urlString = %@", urlString);
-        NSURL *url = [NSURL URLWithString:urlString];
+        NSURL *url = [NSURL URLWithString:urlString];  
         
         //第二步，创建请求
         
@@ -402,10 +403,7 @@
         [alterView show];
     }
 
-    
-    
-    
-    
+
 //     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     self.touxiangImageView.image = nil;
     self.nameLabel.text = @"未登录";
@@ -435,6 +433,24 @@
         [self displayLoginView];
     }
     
+}
+
+- (IBAction)accountBtnAction:(id)sender {
+//    AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:account];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        [self displayLoginView];
+        return;
+    }
 }
 
 - (void) displayLoginView{
