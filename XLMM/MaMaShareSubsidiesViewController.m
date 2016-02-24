@@ -237,14 +237,15 @@ static NSString *cellIdentifier = @"shareSubsidies";
     //计算金额
     NSString *key = self.dataArr[section];
     NSMutableArray *orderArr = self.dataDic[key];
-    float total = 0.0;
-    NSString *date;
-    for (CarryLogModel *model in orderArr) {
-        total = [model.value_money floatValue] + total;
-        date = model.carry_date;
-    }
+    CarryLogModel *model = [orderArr firstObject];
+//    float total = 0.0;
+//    NSString *date;
+//    for (CarryLogModel *model in orderArr) {
+//        total = [model.value_money floatValue] + total;
+//        date = model.carry_date;
+//    }
     
-    [headerV shareYearLabelAndTotalMoneyLabelText:date total:[NSString stringWithFormat:@"%.2f", total]];
+    [headerV shareYearLabelAndTotalMoneyLabelText:model.carry_date total:[NSString stringWithFormat:@"%.2f", [model.dayly_clk_amount floatValue]]];
     return headerV;
 }
 

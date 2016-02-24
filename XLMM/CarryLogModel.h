@@ -26,5 +26,6 @@
 @property (nonatomic, strong)NSString *carry_date;
 
 @property (nonatomic, strong)NSNumber *dayly_in_amount;
+@property (nonatomic, strong)NSNumber *dayly_clk_amount;
 
 @end
