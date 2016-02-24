@@ -62,9 +62,13 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    btn.backgroundColor = [UIColor redColor];
-    btn.frame = CGRectMake(0, 0, self.bindView.frame.size.width, self.bindView.frame.size.height);
+    btn.frame = CGRectMake(self.bindView.frame.size.width - 75, 17, 65, 25);
+    btn.layer.cornerRadius = 13;
+    btn.layer.borderWidth = 0.5;
+    btn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     [btn setTitle:@"立即绑定" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(bindBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bindView addSubview:btn];
 }
@@ -138,12 +142,12 @@
         
         return;
     }
-    
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
     NSLog(@"req = %@", req);
     [WXApi sendReq:req];
+    
 }
 //马上提现
 - (void)rightAwayDraw:(UIButton *)button {

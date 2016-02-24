@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="360" height="461"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="path.png" translatesAutoresizingMaskIntoConstraints="NO" id="sak-kG-fy1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="path1.png" translatesAutoresizingMaskIntoConstraints="NO" id="sak-kG-fy1">
                     <rect key="frame" x="252" y="0.0" width="67" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Ngs-0R-Zz8"/>
@@ -86,7 +86,7 @@
         </view>
     </objects>
     <resources>
-        <image name="path.png" width="157" height="113"/>
+        <image name="path1.png" width="157" height="113"/>
         <image name="shop.png" width="202" height="156"/>
     </resources>
 </document>

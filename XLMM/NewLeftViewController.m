@@ -437,7 +437,7 @@
 
 - (IBAction)accountBtnAction:(id)sender {
 //    AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
-    return;
+//    return;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
