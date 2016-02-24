@@ -46,7 +46,7 @@
 #define kLoginMethod @"loginMethod"
 #define kWeiXinLogin @"weixinlogin"
 
-
+#define kWeiXinauthorize @"kWeiXinauthorize"
 #define kPhoneNumberUserInfo @"phoneUserInfo"
 #define kWeiXinUserInfo @"weixinUserInfo"
 
