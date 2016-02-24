@@ -152,9 +152,10 @@
     
     self.kuaizhaoLink = dicShare[@"qrcode_link"];
     
-    NSString *imageUrlString = dicShare[@"link_qrcode"];
+    NSString *imageUrlString = dicShare[@"share_img"];
     NSData *imageData = nil;
     do {
+        NSLog(@"image = %@", [imageUrlString URLEncodedString]);
         imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
         if (imageData != nil) {
             break;

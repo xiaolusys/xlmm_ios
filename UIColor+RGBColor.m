@@ -53,6 +53,10 @@
    return [UIColor colorWithR:98 G:98 B:98 alpha:1];
 }
 
++ (UIColor *)randomColor{
+    return [UIColor colorWithR:arc4random()%256 G:arc4random()%256 B:arc4random()%256 alpha:1];
+}
+
 + (UIColor *)pothoViewBackgroundColor{
     return [UIColor blackColor];
 }

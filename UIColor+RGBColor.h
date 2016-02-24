@@ -37,5 +37,5 @@
 + (UIColor *)dingfanxiangqingColor;
 + (UIColor *)countLabelColor;
 + (UIColor *)buttonTitleColor;
-
++ (UIColor *)randomColor;
 @end

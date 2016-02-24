@@ -351,9 +351,9 @@
     NSLog(@"%@",str1);
     if ([result isEqualToString:@"0"]) {
         NSLog(@"the result is ok");
-        alertView.message = result;
+        alertView.message = @"来绑定成功";
         [alertView show];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
         return;
         
     } else if ([result isEqualToString:@"4"]){
