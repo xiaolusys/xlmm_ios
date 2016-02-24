@@ -35,24 +35,24 @@
         //佣金
         self.photoImageV.image = [UIImage imageNamed:@"mamayong"];
         self.sourceLabel.text = @"订单佣金";
-        self.desLabel.text = [NSString stringWithFormat:@"今日成功推进%d个订单交易", [carryModel.type_count intValue]];
-        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.sum_value floatValue]];
+        self.desLabel.text = [NSString stringWithFormat:@"哇！好厉害，今日成功了订单交易"];
+        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
     }else if ([carryModel.log_type isEqualToString:@"click"]) {
         //分享点击
         self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
         self.sourceLabel.text = @"分享返现";
-        self.desLabel.text = [NSString stringWithFormat:@"今日共有%d个用户点击的你的分享", [carryModel.type_count intValue]];
-        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.sum_value floatValue]];
+        self.desLabel.text = [NSString stringWithFormat:@"美女，又有用户点击了你的分享！"];
+        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
     }else if ([carryModel.log_type isEqualToString:@"recruit"]){
         //奖金
         self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         self.desLabel.text = [NSString stringWithFormat:@"恭喜您获奖了"];
-        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.sum_value floatValue]];
+        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
     }else if ([carryModel.log_type isEqualToString:@"subsidy"]){
         //提成
         self.photoImageV.image = [UIImage imageNamed:@"mamati"];
         self.desLabel.text = [NSString stringWithFormat:@"您的提成多了噢"];
-        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.sum_value floatValue]];
+        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
     }
     
     

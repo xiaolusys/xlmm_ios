@@ -32,6 +32,7 @@
 #import "HuodongViewController.h"
 #import "HuodongCollectionViewCell.h"
 #import "WXLoginController.h"
+#import "MobClick.h"
 
 
 
@@ -521,12 +522,14 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)huodongrukou{
+    //统计进入活动页人数
+    [MobClick event:@"activity"];
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        
         HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
         
         huodongVC.diction = huodongJson;
-        
         
         [self.navigationController pushViewController:huodongVC animated:YES];
         [backView removeFromSuperview];
@@ -545,8 +548,6 @@ static NSString *khuodongCell = @"HuodongCell";
             [backView removeFromSuperview];
             [activityView removeFromSuperview];
         }
-        
-        
         
     }
 
@@ -1086,7 +1087,7 @@ static NSString *khuodongCell = @"HuodongCell";
             
             
         } else{
-          
+          [MobClick event:@"activity"];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
               

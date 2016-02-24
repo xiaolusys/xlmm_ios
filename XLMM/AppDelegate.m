@@ -80,7 +80,6 @@
     NSLog(@"%d", self.isLaunchedByNotification);
     
 //    [MobClick setLogEnabled:YES];
-    
     //version标识
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];

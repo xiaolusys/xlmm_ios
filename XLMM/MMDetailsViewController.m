@@ -26,6 +26,7 @@
 #import "UIImage+ImageWithSelectedView.h"
 #import "MMLoadingAnimation.h"
 #import "AFNetworking.h"
+#import "MobClick.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -855,6 +856,11 @@
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *parameters = @{@"item_id": itemID,
                                      @"sku_id":skusID};
+        //统计加入购物车的次数
+        NSDictionary *dict = @{@"item_id": itemID};
+        [MobClick event:@"purchase" attributes:dict];
+        
+        
         [manager POST:kCart_URL parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                //   NSLog(@"JSON: %@", responseObject);
