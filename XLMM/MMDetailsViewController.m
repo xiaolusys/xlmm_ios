@@ -236,6 +236,7 @@
     }
     return YES;
 }
+
 - (void)downloadDetailsData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
@@ -243,6 +244,7 @@
     });
     
 }
+
 - (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
         [MMLoadingAnimation dismissLoadingView];
@@ -254,8 +256,10 @@
     json = dic; 
     //设置底部图片,调整高度
     self.midLabel.hidden = NO;
+    [MMLoadingAnimation dismissLoadingView];
+
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       [MMLoadingAnimation dismissLoadingView];
+       //[MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {
 
@@ -982,6 +986,8 @@
         [theTimer invalidate];
     }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//    [MMLoadingAnimation dismissLoadingView];
+
 }
 - (void)timerFireMethod:(NSTimer*)thetimer
 {

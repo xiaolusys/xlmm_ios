@@ -26,7 +26,7 @@
 
 
 //购物车支付界面
-@interface PurchaseViewController1 ()<YouhuiquanDelegate>{
+@interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
     AddressModel *addressModel;//默认收货地址
     NSString *payMethod; //支付方式
     NSString *uuid;      //uuid
@@ -38,6 +38,8 @@
     float discountfee;   //优惠券金额
     
     BOOL paySucceed;
+    
+    NSString *errorCharge;
     
     
   
@@ -427,19 +429,24 @@
         NSLog(@"response = %@", httpResponse);
         
       
-        
-        if (httpResponse.statusCode != 200) {
-            NSLog(@"出错了");
-            //  return;
-        }
-        
         if (connectionError != nil) {
             NSLog(@"error = %@", connectionError);
-            return;
         }
         
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"charge = %@", charge);
+        errorCharge = charge;
+        
+        if (httpResponse.statusCode != 200) {
+            NSLog(@"出错了");
+            [self performSelectorOnMainThread:@selector(showAlertView) withObject:nil waitUntilDone:YES];
+           
+            return;
+        }
+        
+        
+        
+       
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
@@ -464,6 +471,17 @@
         
     }];
     
+}
+
+- (void)showAlertView{
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errorCharge delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
