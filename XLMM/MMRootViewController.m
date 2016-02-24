@@ -43,6 +43,7 @@
     CGRect frame;
     NSInteger _currentIndex;
     UIBarButtonItem *rightItem;
+    UIView *dotView;
 }
 @end
 
@@ -251,6 +252,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
@@ -423,6 +425,7 @@
 
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
+    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, SCREENHEIGHT - 156, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
@@ -438,10 +441,20 @@
     iconView.userInteractionEnabled = NO;
     [button addSubview:iconView];
     
+    dotView = [[UIView alloc] initWithFrame:CGRectMake(26, 10, 6, 6)];
+    dotView.layer.cornerRadius = 3;
+    dotView.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    [button addSubview:dotView];
+    dotView.hidden = YES;
+    
+    
+    
+    
 }
 #pragma mark 设置购物车数量
 - (void)setLabelNumber{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"login"] == NO) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"] == NO) {
+        dotView.hidden = YES;
         label.text = @"0";
         return;
     }
@@ -450,11 +463,17 @@
     NSError *error = nil;
     if (data == nil) {
         label.text = @"0";
+        dotView.hidden = YES;
         return;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
+    if (goodsCount == 0) {
+        dotView.hidden = YES;
+        return;
+    }
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
+    dotView.hidden = NO;
 }
 
 #pragma mark 点击按钮进入购物车界面

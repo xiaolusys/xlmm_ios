@@ -384,6 +384,10 @@
         [userDefaults setBool:NO forKey:@"login"];
         [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
         [userDefaults synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
+
+        
+        
         
         //   http://m.xiaolu.so/rest/v1/users/customer_logout
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
