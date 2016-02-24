@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMDetailsViewController.m"
-            timestampString = "477902874.785394"
+            timestampString = "477979207.450618"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1157"
-            endingLineNumber = "1157">
+            startingLineNumber = "1289"
+            endingLineNumber = "1289">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -604,6 +604,22 @@
             startingLineNumber = "135"
             endingLineNumber = "135"
             landmarkName = "-rightBarButtonAction"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/MMDetailsViewController.m"
+            timestampString = "477977949.320755"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
+            landmarkName = "-createContentView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
