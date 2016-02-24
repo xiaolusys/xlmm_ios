@@ -462,10 +462,23 @@
                 [userdefault synchronize];
               
 //                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
-                //  发送微信登录成功的通知  
-                NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
-                NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-                [notificationCenter postNotification: broadcastMessage];
+                //  发送微信登录成功的通知
+                
+                NSUserDefaults *userdefault0 = [NSUserDefaults standardUserDefaults];
+                NSString *author = [userdefault0 objectForKey:kWeiXinauthorize];
+                
+                if ([author isEqualToString:@"wxlogin"]) {
+             
+                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
+                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+                    [notificationCenter postNotification: broadcastMessage];
+                } else if([author isEqualToString:@"binding"]){
+                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"bindingwx" object:self];
+                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+                    [notificationCenter postNotification: broadcastMessage];
+                }
+                
+             
 
             //    NSLog(@"登录成功");
                 

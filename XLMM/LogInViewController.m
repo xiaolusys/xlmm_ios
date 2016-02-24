@@ -348,6 +348,9 @@
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
                   [self alertMessage:@"用户名或密码错误!"];
               }
+              if ([[responseObject objectForKey:@"result"] isEqualToString:@"no_pwd"]) {
+                  [self alertMessage:@"未设置密码，请用短信验证登录!"];
+              }
               
               if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
                   NSLog(@"succeed");
@@ -369,7 +372,9 @@
                  
                   [self setDevice];
                   [self.navigationController popViewControllerAnimated:NO];
+                  return ;
               }
+           
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -470,6 +475,10 @@
         
         return;
     }
+    
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
+    [userdefaults synchronize];
     
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";

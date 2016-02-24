@@ -237,6 +237,7 @@
     }
     return YES;
 }
+
 - (void)downloadDetailsData{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
@@ -244,6 +245,7 @@
     });
     
 }
+
 - (void)fetchedDetailsData:(NSData *)data{
     if (data == nil) {
         [MMLoadingAnimation dismissLoadingView];
@@ -255,8 +257,10 @@
     json = dic; 
     //设置底部图片,调整高度
     self.midLabel.hidden = NO;
+    [MMLoadingAnimation dismissLoadingView];
+
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       [MMLoadingAnimation dismissLoadingView];
+       //[MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {
 
@@ -328,7 +332,7 @@
         NSString *string = [details objectForKey:@"note"];
         CGRect frame = self.canshulabel.frame;
         CGSize titleSize = [string boundingRectWithSize:CGSizeMake(SCREENWIDTH - 90, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-        NSLog(@"title size = %@", NSStringFromCGSize(titleSize));
+       // NSLog(@"title size = %@", NSStringFromCGSize(titleSize));
         
         self.canshuViewHeight.constant = frame.origin.y + titleSize.height + 20;
         
@@ -412,7 +416,7 @@
 }
 - (void)createKuaiZhaoImage{
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, itemID];
-    NSLog(@"imageUrlString = %@", str);
+ //   NSLog(@"imageUrlString = %@", str);
     
     
     NSURL *url = [NSURL URLWithString:str];
@@ -561,7 +565,7 @@
 //                                                                     toItem:nil attribute:NSLayoutAttributeHeight multiplier:0.5 constant:80];
    //     [imageView addConstraint:height];
         imageView.tag = i * 100 + 100;
-        NSLog(@"imageview.tag = %ld", imageView.tag);
+       // NSLog(@"imageview.tag = %ld", imageView.tag);
         [self.contentView addSubview:imageView];
     }
     
@@ -569,7 +573,7 @@
         //add 约束。。
         if (i == 0) {
             UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-            NSLog(@"imageview = %@", imageView);
+        //    NSLog(@"imageview = %@", imageView);
             NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
                                                                     attribute:NSLayoutAttributeLeading
                                                                     relatedBy:NSLayoutRelationEqual
@@ -598,8 +602,8 @@
         } else if (i < imageArray.count - 1){
             UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
             UIImageView *imageView1 = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-               NSLog(@"imageview0 = %@", imageView0);
-               NSLog(@"imageview1 = %@", imageView1);
+            //   NSLog(@"imageview0 = %@", imageView0);
+            //   NSLog(@"imageview1 = %@", imageView1);
             NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView1
                                                                     attribute:NSLayoutAttributeLeading
                                                                     relatedBy:NSLayoutRelationEqual
@@ -630,8 +634,8 @@
             UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
 
             UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-               NSLog(@"imageview0 = %@", imageView0);
-               NSLog(@"imageview = %@", imageView);
+            //   NSLog(@"imageview0 = %@", imageView0);
+//NSLog(@"imageview = %@", imageView);
             NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
                                                                     attribute:NSLayoutAttributeLeading
                                                                     relatedBy:NSLayoutRelationEqual
@@ -680,10 +684,10 @@
         UIImageView *imageview = [self.contentView viewWithTag:i * 100 + 100];
 
         NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] URLEncodedString];
-        NSLog(@"imageLink = %@", imagelink);
+       // NSLog(@"imageLink = %@", imagelink);
    
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            NSLog(@"%dimage = %@",i, image);
+        //    NSLog(@"%dimage = %@",i, image);
 
             imagewidth = SCREENWIDTH;
             
@@ -988,6 +992,8 @@
         [theTimer invalidate];
     }
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//    [MMLoadingAnimation dismissLoadingView];
+
 }
 - (void)timerFireMethod:(NSTimer*)thetimer
 {

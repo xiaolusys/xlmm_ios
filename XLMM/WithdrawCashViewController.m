@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bangdingweixin) name:@"bindingwx" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backBtnClicked:)];
     
@@ -51,6 +51,8 @@
 //    [self createWithdrawalsIsNo];
 //    [self createBindView];
 }
+
+
 
 #pragma mark --创建View
 - (void)createBindView {
@@ -146,12 +148,21 @@
     req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
     NSLog(@"req = %@", req);
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setObject:@"binding" forKey:kWeiXinauthorize];
+    [userdefaults synchronize];
     [WXApi sendReq:req];
     
 }
 //马上提现
 - (void)rightAwayDraw:(UIButton *)button {
     
+}
+//绑定微信
+- (void)bangdingweixin{
+    NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dic = [userdefault objectForKey:@"userInfo"];
+    NSLog(@"---> userinfo = %@", dic);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -168,5 +179,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end
