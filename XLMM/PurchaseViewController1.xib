@@ -162,7 +162,7 @@
                                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shopping_coupon.png" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-6e-S7z">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-6e-S7z">
                                             <rect key="frame" x="265" y="27" width="35" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="9fZ-bv-Td2"/>
@@ -574,7 +574,6 @@
         <image name="logo.png" width="328" height="382"/>
         <image name="rightArrow.png" width="40" height="60"/>
         <image name="selected_icon.png" width="44" height="44"/>
-        <image name="shopping_coupon.png" width="70" height="40"/>
         <image name="unselected_icon.png" width="44" height="45"/>
         <image name="weixinzhifu.png" width="45" height="45"/>
         <image name="zhifubao.png" width="45" height="45"/>

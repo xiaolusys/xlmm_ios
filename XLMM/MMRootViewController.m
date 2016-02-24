@@ -44,6 +44,10 @@
     NSInteger _currentIndex;
     UIBarButtonItem *rightItem;
     UIView *dotView;
+    UILabel *countLabel;
+    NSNumber *last_created;
+    NSTimer *theTimer;
+    
 }
 @end
 
@@ -53,7 +57,10 @@
 {
     [super viewWillAppear:animated];
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
+    CGRect rect = cartView.frame;
+    rect.origin.y = SCREENHEIGHT - 156;
+    cartView.frame = rect;
+//    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
     [self setLabelNumber];
   
 }
@@ -426,7 +433,7 @@
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(30, SCREENHEIGHT - 156, 44, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor cartViewBackGround];
@@ -440,21 +447,45 @@
     iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
     iconView.userInteractionEnabled = NO;
     [button addSubview:iconView];
+//    button.backgroundColor = [UIColor redColor];
     
-    dotView = [[UIView alloc] initWithFrame:CGRectMake(26, 10, 6, 6)];
-    dotView.layer.cornerRadius = 3;
+    dotView = [[UIView alloc] initWithFrame:CGRectMake(26, 4, 16, 16)];
+    dotView.layer.cornerRadius = 8;
     dotView.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
     [button addSubview:dotView];
     dotView.hidden = YES;
     
     
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 60, 24)];
+    countLabel.text = @"";
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.textAlignment = NSTextAlignmentLeft;
+    [button addSubview:countLabel];
+    label = [[UILabel alloc] initWithFrame:dotView.bounds];
+    label.font = [UIFont systemFontOfSize:10];
+    [dotView addSubview:label];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    countLabel.userInteractionEnabled = NO;
+    dotView.userInteractionEnabled = NO;
+    label.userInteractionEnabled = NO;
+    countLabel.hidden = YES;
+    
     
     
 }
 #pragma mark 设置购物车数量
+
+
 - (void)setLabelNumber{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"] == NO) {
         dotView.hidden = YES;
+        countLabel.hidden = YES;
+        UIView *view = [_view viewWithTag:123];
+        CGRect rect = view.frame;
+        rect.size.width = 44;
+        view.frame = rect;
+        
         label.text = @"0";
         return;
     }
@@ -464,17 +495,68 @@
     if (data == nil) {
         label.text = @"0";
         dotView.hidden = YES;
+        countLabel.hidden = YES;
+        UIView *view = [_view viewWithTag:123];
+        CGRect rect = view.frame;
+        rect.size.width = 44;
+        view.frame = rect;
         return;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSLog(@"dic = %@", dic);
+    last_created = [dic objectForKey:@"last_created"];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
     if (goodsCount == 0) {
         dotView.hidden = YES;
+        countLabel.hidden = YES;
+        UIView *view = [_view viewWithTag:123];
+        CGRect rect = view.frame;
+        rect.size.width = 44;
+        view.frame = rect;
         return;
     }
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
     dotView.hidden = NO;
+    countLabel.hidden = NO;
+    UIView *view = [_view viewWithTag:123];
+    CGRect rect = view.frame;
+    rect.size.width = 108;
+    view.frame = rect;
+    
+    [self createTimeLabel];
 }
+
+
+- (void)createTimeLabel{
+    countLabel.hidden = NO;
+    if ([theTimer isValid]) {
+        [theTimer invalidate];
+    }
+    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+}
+- (void)timerFireMethod:(NSTimer*)thetimer
+{
+    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[last_created doubleValue]];
+    // NSLog(@"%@", lastDate);
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+    //   NSLog(@"string = %@", string);
+    if ([d minute] < 0 || [d second] < 0) {
+        string = @"00:00";
+        if ([theTimer isValid]) {
+            [theTimer invalidate];
+            
+        }
+    }
+    countLabel.text = string;
+}
+
 
 #pragma mark 点击按钮进入购物车界面
 - (void)gotoCarts:(id)sender{
@@ -635,7 +717,10 @@
       self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(15, SCREENHEIGHT - 112, 44, 44);
+    
+    CGRect rect = cartView.frame;
+    rect.origin.y = SCREENHEIGHT - 112;
+    cartView.frame = rect;
   
 
 }
@@ -644,7 +729,10 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
-    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156, 44, 44);
+    CGRect rect = cartView.frame;
+    rect.origin.y = SCREENHEIGHT - 156;
+    cartView.frame = rect;
+//    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156, 44, 44);
 }
 
 #pragma mark RootVCPushOtherVCDelegate
