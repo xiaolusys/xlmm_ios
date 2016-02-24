@@ -10,4 +10,7 @@
 
 @interface AccountViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign)CGFloat money;
+
+
+
 @end

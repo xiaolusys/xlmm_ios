@@ -49,10 +49,14 @@
 		18BDB27B1C7C2A56006462C2 /* path.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2791C7C2A56006462C2 /* path.png */; };
 		18BDB27C1C7C2A56006462C2 /* shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27A1C7C2A56006462C2 /* shop.png */; };
 		18BDB27E1C7C308B006462C2 /* WithdrawalsIsOk.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */; };
-		18BDB2801C7C30A6006462C2 /* WithdrwaIsIsNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */; };
 		18BDB2841C7C4193006462C2 /* redPkgjian.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2811C7C4193006462C2 /* redPkgjian.png */; };
 		18BDB2851C7C4193006462C2 /* redPkgAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2821C7C4193006462C2 /* redPkgAdd.png */; };
 		18BDB2861C7C4193006462C2 /* redPkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2831C7C4193006462C2 /* redPkg.png */; };
+		18BDB2881C7D4743006462C2 /* grayJian.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2871C7D4743006462C2 /* grayJian.png */; };
+		18BDB28B1C7D4761006462C2 /* grayAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2891C7D4761006462C2 /* grayAdd.png */; };
+		18BDB28C1C7D4761006462C2 /* redNo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28A1C7D4761006462C2 /* redNo.png */; };
+		18BDB28E1C7D5297006462C2 /* WithdrwaIsNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */; };
+		18BDB2901C7D7587006462C2 /* path1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28F1C7D7587006462C2 /* path1.png */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -730,10 +734,14 @@
 		18BDB2791C7C2A56006462C2 /* path.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = path.png; sourceTree = "<group>"; };
 		18BDB27A1C7C2A56006462C2 /* shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop.png; sourceTree = "<group>"; };
 		18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrawalsIsOk.xib; sourceTree = "<group>"; };
-		18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrwaIsIsNo.xib; sourceTree = "<group>"; };
 		18BDB2811C7C4193006462C2 /* redPkgjian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkgjian.png; sourceTree = "<group>"; };
 		18BDB2821C7C4193006462C2 /* redPkgAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkgAdd.png; sourceTree = "<group>"; };
 		18BDB2831C7C4193006462C2 /* redPkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPkg.png; sourceTree = "<group>"; };
+		18BDB2871C7D4743006462C2 /* grayJian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayJian.png; sourceTree = "<group>"; };
+		18BDB2891C7D4761006462C2 /* grayAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayAdd.png; sourceTree = "<group>"; };
+		18BDB28A1C7D4761006462C2 /* redNo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redNo.png; sourceTree = "<group>"; };
+		18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrwaIsNo.xib; sourceTree = "<group>"; };
+		18BDB28F1C7D7587006462C2 /* path1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = path1.png; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
@@ -1809,10 +1817,14 @@
 		18BDB2781C7C2A40006462C2 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				18BDB2891C7D4761006462C2 /* grayAdd.png */,
+				18BDB28A1C7D4761006462C2 /* redNo.png */,
+				18BDB2871C7D4743006462C2 /* grayJian.png */,
 				18BDB2811C7C4193006462C2 /* redPkgjian.png */,
 				18BDB2821C7C4193006462C2 /* redPkgAdd.png */,
 				18BDB2831C7C4193006462C2 /* redPkg.png */,
 				18BDB2791C7C2A56006462C2 /* path.png */,
+				18BDB28F1C7D7587006462C2 /* path1.png */,
 				18BDB27A1C7C2A56006462C2 /* shop.png */,
 				18F388451C7B227B005A7C12 /* wallet.png */,
 			);
@@ -1831,7 +1843,7 @@
 				18BDB2731C7BFD15006462C2 /* WithdrawCashViewController.xib */,
 				18BDB2761C7C111C006462C2 /* WithdrawalsEmpty.xib */,
 				18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */,
-				18BDB27F1C7C30A6006462C2 /* WithdrwaIsIsNo.xib */,
+				18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -3490,6 +3502,7 @@
 				32746E141B74A22000816208 /* icon-fanhuidingbu.png in Resources */,
 				32746E311B74A22000816208 /* jifen-kv.png in Resources */,
 				322D25BD1C32B93A00509EAD /* 圈圈加载0018.png in Resources */,
+				18BDB2901C7D7587006462C2 /* path1.png in Resources */,
 				3219D2251C31113000619A55 /* wxkuaizhao.png in Resources */,
 				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
 				32746E1D1B74A22000816208 /* icon-jiantouzuo.png in Resources */,
@@ -3514,7 +3527,7 @@
 				18601B171C743EFE00E87A7B /* loading动画0017.png in Resources */,
 				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
-				18BDB2801C7C30A6006462C2 /* WithdrwaIsIsNo.xib in Resources */,
+				18BDB2881C7D4743006462C2 /* grayJian.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
 				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
@@ -3533,9 +3546,11 @@
 				2E612B561C4A4454002F1C15 /* 4lun@2x.png in Resources */,
 				2E63AE5A1C3E66A5008E97BB /* PicFooterCollectionReusableView.xib in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
+				18BDB28E1C7D5297006462C2 /* WithdrwaIsNo.xib in Resources */,
 				18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
 				18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */,
+				18BDB28C1C7D4761006462C2 /* redNo.png in Resources */,
 				18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */,
 				322D25AF1C32B93A00509EAD /* 圈圈加载0004.png in Resources */,
 				32D2B7901BDDF41C00603FCE /* zhifubao.png in Resources */,
@@ -3685,6 +3700,7 @@
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
+				18BDB28B1C7D4761006462C2 /* grayAdd.png in Resources */,
 				322D25B51C32B93A00509EAD /* 圈圈加载0010.png in Resources */,
 				32E8B5981C50CB5900414F8A /* TuijianErweimaViewController.xib in Resources */,
 				18601AF21C73286400E87A7B /* shizhong.png in Resources */,
@@ -4191,7 +4207,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4228,7 +4244,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4273,7 +4289,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4317,7 +4333,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "2b0b66d0-29f8-421f-9e29-c086b721ac3d";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
