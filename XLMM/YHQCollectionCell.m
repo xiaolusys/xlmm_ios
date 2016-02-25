@@ -57,7 +57,7 @@
     self.requireLabel.text = [NSString stringWithFormat:@"满%@元可以使用", useFee];
     if ([useFee intValue] == 0 && [yhqModel.status integerValue] == 0 && [yhqModel.poll_status integerValue] == 1) {
         self.requireLabel.textColor = [UIColor youhuiquanrequireColor];
-        self.requireLabel.text = @"无门槛";
+        self.requireLabel.text = yhqModel.coupon_type_display;
     }
     self.valueLabel.text = [NSString stringWithFormat:@"%d", [couponValue intValue]];
     self.timeLabel.text = newString;

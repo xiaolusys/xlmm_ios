@@ -556,7 +556,7 @@
     for (int i = 0; i < imageArray.count; i++) {
         //创建imageView
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.backgroundColor = colors[i];
+//        imageView.backgroundColor = colors[i];
         [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
    
 //        NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:imageView

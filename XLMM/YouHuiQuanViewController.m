@@ -77,6 +77,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     model1.title = [dic objectForKey:@"title"];
     model1.valid = [dic objectForKey:@"valid"];
     model1.use_fee = [dic objectForKey:@"use_fee"];
+    model1.coupon_type_display = [dic objectForKey:@"coupon_type_display"];
     
     return model1;
 }
@@ -295,30 +296,30 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     NSLog(@"couponType = %ld", (long)couponType);
     
     
-    if (couponType == 2) {
-        if (self.payment < 150 ) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            
-            return;
-        }
-        
-        
-    } else if(couponType ==3){
-        
-        if (self.payment < 259) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            return;
-        }
-        
-    } else {
-        if (self.payment < 200) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            return;
-        }
-    }
+//    if (couponType == 2) {
+//        if (self.payment < 150 ) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            
+//            return;
+//        }
+//        
+//        
+//    } else if(couponType ==3){
+//        
+//        if (self.payment < 259) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            return;
+//        }
+//        
+//    } else {
+//        if (self.payment < 200) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            return;
+//        }
+//    }
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.delegate = self;
     [alertView show];
