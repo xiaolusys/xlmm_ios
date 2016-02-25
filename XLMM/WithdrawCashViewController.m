@@ -104,7 +104,14 @@
     button.layer.borderWidth = 1.0;
     [button addTarget:self action:@selector(rightAwayDraw:) forControlEvents:UIControlEventTouchUpInside];
     
+    //获得加按钮和减按钮
+    UIButton *reduce = (UIButton *)[withdrawalsIsOk viewWithTag:102];
+    [reduce addTarget:self action:@selector(reduceBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *add = (UIButton *)[withdrawalsIsOk viewWithTag:103];
+    [add addTarget:self action:@selector(addBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:withdrawalsIsOk];
+    
     //    emptyView.hidden = YES;
 }
 
@@ -126,6 +133,15 @@
 }
 
 #pragma mark--按钮点击事件
+//减红包
+- (void)reduceBtnClickAction:(UIButton *)btn {
+
+}
+//加红包
+- (void)addBtnClickAction:(UIButton *)btn {
+    
+}
+
 - (void)gotoShopping:(UIButton *)btn {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

@@ -235,7 +235,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30);
     //计算金额
-    NSString *key = self.dataArr[section];
+    NSString *key = self.dataArr[section];  
     NSMutableArray *orderArr = self.dataDic[key];
     CarryLogModel *model = [orderArr firstObject];
 //    float total = 0.0;
