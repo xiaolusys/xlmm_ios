@@ -357,6 +357,7 @@
     NSLog(@"model = %@", model);
     yhqModel = model;
     
+    
     NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
     
     NSLog(@"coupon_id = %@", yhqModel.ID);

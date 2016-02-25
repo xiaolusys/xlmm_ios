@@ -565,15 +565,17 @@
 //                                                                     toItem:nil attribute:NSLayoutAttributeHeight multiplier:0.5 constant:80];
    //     [imageView addConstraint:height];
         imageView.tag = i * 100 + 100;
-       // NSLog(@"imageview.tag = %ld", imageView.tag);
+        NSLog(@"imageview.tag = %ld", imageView.tag);
         [self.contentView addSubview:imageView];
     }
     
     for (int i = 0; i < imageArray.count; i++) {
         //add 约束。。
-        if (i == 0) {
+        
+        
+        if (imageArray.count == 1) {
             UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-        //    NSLog(@"imageview = %@", imageView);
+            NSLog(@"imageview = %@", imageView);
             NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
                                                                     attribute:NSLayoutAttributeLeading
                                                                     relatedBy:NSLayoutRelationEqual
@@ -595,77 +597,114 @@
                                                                     attribute:NSLayoutAttributeTrailing
                                                                    multiplier:1.0
                                                                      constant:0];
-           
-            
-            [self.contentView addConstraints:@[h_c,v_c,e_w]];
-            
-        } else if (i < imageArray.count - 1){
-            UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
-            UIImageView *imageView1 = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-            //   NSLog(@"imageview0 = %@", imageView0);
-            //   NSLog(@"imageview1 = %@", imageView1);
-            NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView1
-                                                                    attribute:NSLayoutAttributeLeading
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.contentView
-                                                                    attribute:NSLayoutAttributeLeading
-                                                                   multiplier:1.0
-                                                                     constant:0];
-            NSLayoutConstraint * v_c = [NSLayoutConstraint constraintWithItem:imageView1
-                                                                    attribute:NSLayoutAttributeTop
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:imageView0
+            NSLayoutConstraint * e_e = [NSLayoutConstraint constraintWithItem:imageView
                                                                     attribute:NSLayoutAttributeBottom
-                                                                   multiplier:1.0
-                                                                     constant:0];
-            NSLayoutConstraint * e_w = [NSLayoutConstraint constraintWithItem:imageView1
-                                                                    attribute:NSLayoutAttributeTrailing
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:self.contentView
-                                                                    attribute:NSLayoutAttributeTrailing
-                                                                   multiplier:1.0
+                                                                    attribute:NSLayoutAttributeBottom                                                                   multiplier:1.0
                                                                      constant:0];
             
-            [self.contentView addConstraints:@[h_c,v_c,e_w]];
             
-            
-            
+            [self.contentView addConstraints:@[h_c,v_c,e_w, e_e]];
         } else {
-            UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
+            if (i == 0) {
+                UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
+                NSLog(@"imageview = %@", imageView);
+                NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * v_c = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeTop
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * e_w = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                
+                
+                [self.contentView addConstraints:@[h_c,v_c,e_w]];
+                
+            } else if (i < imageArray.count - 1){
+                UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
+                UIImageView *imageView1 = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
+                //   NSLog(@"imageview0 = %@", imageView0);
+                //   NSLog(@"imageview1 = %@", imageView1);
+                NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView1
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * v_c = [NSLayoutConstraint constraintWithItem:imageView1
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:imageView0
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * e_w = [NSLayoutConstraint constraintWithItem:imageView1
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                
+                [self.contentView addConstraints:@[h_c,v_c,e_w]];
+                
+                
+                
+            } else {
+                UIImageView *imageView0 = (UIImageView *)[self.contentView viewWithTag:i * 100];
+                
+                UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
+                //   NSLog(@"imageview0 = %@", imageView0);
+                //NSLog(@"imageview = %@", imageView);
+                NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeLeading
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * v_c = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * v_v = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:imageView0                                                                    attribute:NSLayoutAttributeBottom                                                                 multiplier:1.0
+                                                                         constant:0];
+                NSLayoutConstraint * e_w = [NSLayoutConstraint constraintWithItem:imageView
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeTrailing
+                                                                       multiplier:1.0
+                                                                         constant:0];
+                
+                [self.contentView addConstraints:@[h_c,v_c,e_w, v_v]];
+                
+            }
 
-            UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
-            //   NSLog(@"imageview0 = %@", imageView0);
-//NSLog(@"imageview = %@", imageView);
-            NSLayoutConstraint * h_c = [NSLayoutConstraint constraintWithItem:imageView
-                                                                    attribute:NSLayoutAttributeLeading
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.contentView
-                                                                    attribute:NSLayoutAttributeLeading
-                                                                   multiplier:1.0
-                                                                     constant:0];
-            NSLayoutConstraint * v_c = [NSLayoutConstraint constraintWithItem:imageView
-                                                                    attribute:NSLayoutAttributeBottom
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.contentView
-                                                                    attribute:NSLayoutAttributeBottom
-                                                                   multiplier:1.0
-                                                                     constant:0];
-            NSLayoutConstraint * v_v = [NSLayoutConstraint constraintWithItem:imageView
-                                                                    attribute:NSLayoutAttributeTop
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:imageView0                                                                    attribute:NSLayoutAttributeBottom                                                                 multiplier:1.0
-                                                                     constant:0];
-            NSLayoutConstraint * e_w = [NSLayoutConstraint constraintWithItem:imageView
-                                                                    attribute:NSLayoutAttributeTrailing
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.contentView
-                                                                    attribute:NSLayoutAttributeTrailing
-                                                                   multiplier:1.0
-                                                                     constant:0];
-            
-            [self.contentView addConstraints:@[h_c,v_c,e_w, v_v]];
-            
         }
+        
     }
     
    // NSLog(@"imagelinks = %@", imageArray);
@@ -684,10 +723,10 @@
         UIImageView *imageview = [self.contentView viewWithTag:i * 100 + 100];
 
         NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] URLEncodedString];
-       // NSLog(@"imageLink = %@", imagelink);
+        NSLog(@"imageLink = %@", imagelink);
    
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        //    NSLog(@"%dimage = %@",i, image);
+            NSLog(@"%dimage = %@",i, image);
 
             imagewidth = SCREENWIDTH;
             

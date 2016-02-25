@@ -330,8 +330,8 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
             NSLog(@"更新优惠券");
             [self.delegate updateYouhuiquanWithmodel:model];
-            NSLog(@"model = %@", model);
-            NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
+//            NSLog(@"model = %@", model);
+//            NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
         }
         //记录选择的优惠券 并返回上一个界面。。。。
         [self.navigationController popViewControllerAnimated:YES];

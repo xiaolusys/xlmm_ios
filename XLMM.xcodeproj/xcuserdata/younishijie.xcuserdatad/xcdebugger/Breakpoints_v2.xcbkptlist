@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMDetailsViewController.m"
-            timestampString = "478002719.593779"
+            timestampString = "478080128.025768"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1295"
-            endingLineNumber = "1295">
+            startingLineNumber = "1334"
+            endingLineNumber = "1334">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -614,11 +614,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MMDetailsViewController.m"
-            timestampString = "478002614.378291"
+            timestampString = "478080128.025768"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "574"
-            endingLineNumber = "574"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "-createContentView"
             landmarkType = "5">
          </BreakpointContent>
@@ -678,11 +678,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/PurchaseViewController1.m"
-            timestampString = "478074071.440466"
+            timestampString = "478079475.512401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "-fetchedCartsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -690,16 +690,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/PurchaseViewController1.m"
-            timestampString = "478074071.440466"
+            timestampString = "478079555.835594"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "-fetchedCartsData:"
+            startingLineNumber = "567"
+            endingLineNumber = "567"
+            landmarkName = "-buyClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -144,17 +144,24 @@
    
     //下载购物车支付界面数据
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] ];
+        
         if (data == nil) {
          //   NSLog(@"下载失败");
         }
-        [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchedCartsData2:) withObject:data waitUntilDone:YES];
     });
 }
 
-- (void)fetchedCartsData:(NSData *)responseData{
-    NSError *error;
+- (void)fetchedCartsData2:(NSData *)responseData{
+    NSError *error = nil;
+    if (responseData == nil) {
+        NSLog(@"无数据");
+        return;
+    }
+    
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    
     if (error != nil) {
         NSLog(@"解析失败");
     }
@@ -166,6 +173,100 @@
     coupon_message = [dic objectForKey:@"coupon_message"];
     
     NSLog(@"coupon_message= %@", coupon_message);
+    
+    uuid = [dic objectForKey:@"uuid"];
+    cartIDs = [dic objectForKey:@"cart_ids"];
+    totalfee = [[dic objectForKey:@"total_fee"] floatValue];
+    totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
+    postfee = [[dic objectForKey:@"post_fee"] floatValue];
+    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
+    NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
+    
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
+    self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
+    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
+    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
+    
+    
+    [self.MutCatrsArray removeAllObjects];
+    
+    for (NSDictionary *dicInfo in array) {
+        BuyModel *model = [BuyModel new];
+        
+        model.addressID = [dicInfo objectForKey:@"id"];
+        model.payment = [dic objectForKey:@"total_payment"];
+        model.postFee = [dic objectForKey:@"post_fee"];
+        model.discountFee = [dic objectForKey:@"discount_fee"];
+        model.totalFee = [dic objectForKey:@"total_fee"];
+        totalfee = [[dic objectForKey:@"total_fee"] floatValue];
+        model.uuID = [dic objectForKey:@"uuid"];
+        model.itemID = [dicInfo objectForKey:@"item_id"];
+        model.skuID = [dicInfo objectForKey:@"sku_id"];
+        model.buyNumber = [[dicInfo objectForKey:@"num"]integerValue];
+        model.imageURL = [dicInfo objectForKey:@"pic_path"];
+        model.name = [dicInfo objectForKey:@"title"];
+        model.sizeName = [dicInfo objectForKey:@"sku_name"];
+        model.price = [dicInfo objectForKey:@"price"];
+        model.oldPrice = [dicInfo objectForKey:@"std_sale_price"];
+        
+        
+        [self.MutCatrsArray addObject:model];
+    }
+    
+    //NSLog(@"cartsDataArray = %@", self.MutCatrsArray);
+    
+    [self createCartsListView];
+    
+    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+    
+    
+    if ([coupon_message isEqualToString:@""]) {
+        NSLog(@"okokoko");
+        
+    } else {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertView.tag = 2000;
+        [alertView show];
+        
+    }
+    
+    // NSLog(@"****************");
+}
+
+
+- (void)fetchedCartsData:(NSData *)responseData{
+    NSError *error = nil;
+    if (responseData == nil) {
+        return;
+    }
+ 
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+
+    if (error != nil) {
+        NSLog(@"解析失败");
+    }
+    NSLog(@"dic = %@", dic);
+    
+    NSArray *array = [dic objectForKey:@"cart_list"];
+    
+    
+    coupon_message = [dic objectForKey:@"coupon_message"];
+    
+    NSLog(@"coupon_message= %@", coupon_message);
+    
+    if ([coupon_message isEqualToString:@""]) {
+        NSLog(@"okokoko");
+        
+    } else {
+        
+        yhqModel = nil;
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertView.tag = 2000;
+        [alertView show];
+        return;
+        
+    }
    
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
@@ -209,6 +310,11 @@
     //NSLog(@"cartsDataArray = %@", self.MutCatrsArray);
     
     [self createCartsListView];
+    
+    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+
+    
+   
     
    // NSLog(@"****************");
 }
@@ -327,17 +433,60 @@
     
 }
 
+- (void)downloadCartsData2{
+    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
+    if (self.cartsArray.count == 0) {
+        //购物车为空。
+        //  NSLog(@"购物车为空");
+        return;
+    }
+    //构造参数字符串
+    for (NewCartsModel *model in self.cartsArray) {
+        NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
+        [paramstring appendString:str];
+    }
+    NSRange rang =  {paramstring.length -1, 1};
+    [paramstring deleteCharactersInRange:rang];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,paramstring, yhqModel.ID];
+    
+    NSLog(@"cartsURLString = %@", urlString);
+    
+
+    
+    //下载购物车支付界面数据
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error = nil;
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSLog(@"url = %@", url);
+        if (url == nil) {
+            return ;
+        }
+        
+        NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+        NSLog(@"error = %@", error);
+        if (data == nil) {
+               NSLog(@"下载失败");
+        }
+        [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
+    });
+}
+
+
+
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
     
     //NSLog(@"立即购买优惠券更新");
     //NSLog(@"model = %@", model);
     yhqModel = model;
     
+    
+    [self downloadCartsData2];
+    
+    
     //NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
     
     //NSLog(@"coupon_id = %@", yhqModel.ID);
     
-    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
     //   NSFontAttributeName
 }
 
@@ -415,7 +564,7 @@
     
     }
     
-  //  NSLog(@"%@", dict);
+    NSLog(@"dict = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     
     
@@ -487,6 +636,10 @@
     //[self.navigationController popViewControllerAnimated:YES];
     
     yhqModel = nil;
+    if (alertView.tag == 2000) {
+        return;
+    }
+    
     
     [self downloadCartsData];
 }
