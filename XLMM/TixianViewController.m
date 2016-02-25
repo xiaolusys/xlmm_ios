@@ -118,8 +118,7 @@
     }
      
     
-   // [self createRightButonItem];
-    
+    [self createRightButonItem];
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
 //    button.frame = CGRectMake(0, 0, 44, 44);
 //    [button setTitle:@"取消提现" forState:UIControlStateNormal];
@@ -144,8 +143,6 @@
 - (void)rightClicked:(UIButton *)button{
     NSLog(@"历史提现");
     TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
-    
-    
     
     [self.navigationController pushViewController:historyVC animated:YES];
     
@@ -289,7 +286,6 @@
 - (IBAction)fabuClicked:(id)sender {
     
  //   NSLog(@"发布产品");
-    
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }

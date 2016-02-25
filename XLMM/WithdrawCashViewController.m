@@ -17,6 +17,9 @@
 @property (assign, nonatomic)BOOL isBandWx;
 @property (assign, nonatomic)BOOL isMoneyMax;
 
+//暂定红包金额
+@property (assign, nonatomic)float money;
+
 @end
 
 @implementation WithdrawCashViewController
@@ -25,6 +28,8 @@
     UIView *withdrawalsIsOk;
     UIView *withdrawalsIsNo;
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,16 +40,16 @@
     
     [self createBindView];
     //判断是否绑定微信号
-    if (!self.isBandWx) {
-        [self createEmptyView];
-    }else {
-        //已经绑定微信，判断金额
-        if (self.isMoneyMax) {
-            [self createWithdrawalsIsOk];
-        }else {
-            [self createWithdrawalsIsNo];
-        }
-    }
+//    if (!self.isBandWx) {
+//        [self createEmptyView];
+//    }else {
+//        //已经绑定微信，判断金额
+//        if (self.isMoneyMax) {
+//            [self createWithdrawalsIsOk];
+//        }else {
+//            [self createWithdrawalsIsNo];
+//        }
+//    }
     
 //    [self createEmptyView];
 //    [self createWithdrawalsIsOk];

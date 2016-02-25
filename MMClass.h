@@ -58,8 +58,8 @@
 
 
 #if 1
-//#define Root_URL @"http://192.168.1.31:9000"
-#define Root_URL @"http://dev.xiaolumeimei.com:8000"
+#define Root_URL @"http://192.168.1.31:9000"
+//#define Root_URL @"http://dev.xiaolumeimei.com:8000"
 #else
 
 
