@@ -17,6 +17,9 @@
 @property (assign, nonatomic)BOOL isBandWx;
 @property (assign, nonatomic)BOOL isMoneyMax;
 
+//暂定红包金额
+@property (assign, nonatomic)float money;
+
 @end
 
 @implementation WithdrawCashViewController
@@ -25,6 +28,8 @@
     UIView *withdrawalsIsOk;
     UIView *withdrawalsIsNo;
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,16 +40,16 @@
     
     [self createBindView];
     //判断是否绑定微信号
-    if (!self.isBandWx) {
-        [self createEmptyView];
-    }else {
-        //已经绑定微信，判断金额
-        if (self.isMoneyMax) {
-            [self createWithdrawalsIsOk];
-        }else {
-            [self createWithdrawalsIsNo];
-        }
-    }
+//    if (!self.isBandWx) {
+//        [self createEmptyView];
+//    }else {
+//        //已经绑定微信，判断金额
+//        if (self.isMoneyMax) {
+//            [self createWithdrawalsIsOk];
+//        }else {
+//            [self createWithdrawalsIsNo];
+//        }
+//    }
     
 //    [self createEmptyView];
 //    [self createWithdrawalsIsOk];
@@ -104,7 +109,14 @@
     button.layer.borderWidth = 1.0;
     [button addTarget:self action:@selector(rightAwayDraw:) forControlEvents:UIControlEventTouchUpInside];
     
+    //获得加按钮和减按钮
+    UIButton *reduce = (UIButton *)[withdrawalsIsOk viewWithTag:102];
+    [reduce addTarget:self action:@selector(reduceBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *add = (UIButton *)[withdrawalsIsOk viewWithTag:103];
+    [add addTarget:self action:@selector(addBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:withdrawalsIsOk];
+    
     //    emptyView.hidden = YES;
 }
 
@@ -126,6 +138,15 @@
 }
 
 #pragma mark--按钮点击事件
+//减红包
+- (void)reduceBtnClickAction:(UIButton *)btn {
+
+}
+//加红包
+- (void)addBtnClickAction:(UIButton *)btn {
+    
+}
+
 - (void)gotoShopping:(UIButton *)btn {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

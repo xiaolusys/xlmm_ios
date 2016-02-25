@@ -376,7 +376,6 @@
     self.imageD = imageData;
     
     self.shareImage = newImage;
-
 }
 
 - (void)createShareData{

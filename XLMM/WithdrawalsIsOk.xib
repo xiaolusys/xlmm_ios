@@ -51,14 +51,14 @@
                         <constraint firstAttribute="width" constant="20" id="n7b-Kq-mnf"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JT-bA-O2B">
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JT-bA-O2B">
                     <rect key="frame" x="166" y="240" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="OFB-Se-9UZ"/>
                         <constraint firstAttribute="height" constant="40" id="fuT-tq-5IK"/>
                     </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDe-vK-yUk">
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDe-vK-yUk">
                     <rect key="frame" x="246" y="240" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="5hd-pH-gCv"/>

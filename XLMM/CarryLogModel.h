@@ -24,8 +24,12 @@
 @property (nonatomic, strong)NSNumber *sum_value;
 @property (nonatomic, strong)NSString *log_type;
 @property (nonatomic, strong)NSString *carry_date;
+@property (nonatomic, strong)NSString *carry_type;
 
 @property (nonatomic, strong)NSNumber *dayly_in_amount;
 @property (nonatomic, strong)NSNumber *dayly_clk_amount;
+
+@property (nonatomic, strong)NSString *desc;
+@property (nonatomic, strong)NSString *get_log_type_display;
 
 @end

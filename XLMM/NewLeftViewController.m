@@ -24,9 +24,6 @@
 #import "AccountViewController.h"
 
 
-
-
-
 @interface NewLeftViewController ()
 
 @end
@@ -53,17 +50,16 @@
         NSString *nickName = [dic objectForKey:@"nick"];
         if (nickName.length >= 4) {
             self.nameLabel.text = [dic objectForKey:@"nick"];
-            
         }
         self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
+//        NSDictionary *xiaolumeimei = [dic objectForKey:@"xiaolumm"];
+//        self.accountLabel.text = [xiaolumeimei objectForKey:@"get_cash_display"];
     }
 }
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
-
-
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{

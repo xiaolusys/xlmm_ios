@@ -33,6 +33,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *jifenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *youhuiquanLabel;
+@property (weak, nonatomic) IBOutlet UILabel *accountLabel;
+
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;
