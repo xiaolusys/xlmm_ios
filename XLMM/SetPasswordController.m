@@ -167,10 +167,6 @@
                   [self.navigationController popViewControllerAnimated:YES];
               }
               
-              
-              
-              
-              
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               

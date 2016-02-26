@@ -29,4 +29,7 @@
 - (IBAction)versionButtonClicked:(id)sender;
 - (IBAction)deleteButtonClicked:(id)sender;
 
+- (IBAction)thirdAccountBind:(id)sender;
+
+
 @end

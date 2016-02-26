@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WithdrawCashViewController : UIViewController
-
+@interface WithdrawCashViewController : UIViewController<UIAlertViewDelegate>
+@property (nonatomic, strong)NSNumber *money;
 @end

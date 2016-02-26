@@ -21,11 +21,11 @@
 #import "AddressViewController.h"
 #import "SettingViewController.h"
 #import "LogInViewController.h"
-#import "AccountViewController.h"
+#import "Account1ViewController.h"
 
 
 @interface NewLeftViewController ()
-
+@property (nonatomic, strong)NSNumber *accountMoney;
 @end
 
 @implementation NewLeftViewController
@@ -52,8 +52,18 @@
             self.nameLabel.text = [dic objectForKey:@"nick"];
         }
         self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
-//        NSDictionary *xiaolumeimei = [dic objectForKey:@"xiaolumm"];
-//        self.accountLabel.text = [xiaolumeimei objectForKey:@"get_cash_display"];
+        //判断是否为0
+        if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
+            self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
+            self.accountMoney = [NSNumber numberWithFloat:0.00];
+        }else {
+            NSDictionary *xiaolumeimei = [dic objectForKey:@"user_budget"];
+            NSNumber *num = [xiaolumeimei objectForKey:@"budget_cash"];
+            self.accountLabel.text  = [NSString stringWithFormat:@"%.2f", [num floatValue]];
+            self.accountMoney = num;
+        }
+        
+        
     }
 }
 
@@ -437,10 +447,13 @@
 
 - (IBAction)accountBtnAction:(id)sender {
 //    AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
-    return;
+//    return;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        AccountViewController *account = [[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil];
+//        Account1ViewController *account = [[Account1ViewController alloc] initWithNibName:@"Account1ViewController" bundle:nil];
+        Account1ViewController *account = [[Account1ViewController alloc] init];
+        account.accountMoney = self.accountMoney;
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:account];
         }

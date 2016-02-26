@@ -7,6 +7,8 @@
 //
 
 #import "AccountTableViewCell.h"
+#import "AccountModel.h"
+#import "MMClass.h"
 
 @implementation AccountTableViewCell
 
@@ -20,4 +22,17 @@
     // Configure the view for the selected state
 }
 
+- (void)fillDataOfCell:(AccountModel *)accountM {
+    //budget_type 0收入1支出
+    self.timeLabel.text = accountM.budget_date;
+    self.sourceLabel.text = accountM.desc;
+    
+    if ([accountM.budget_type boolValue]) {
+        self.moneyLabel.text = [NSString stringWithFormat:@"- %.2f元", [accountM.budeget_detail_cash floatValue]];
+    }else {
+        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f元", [accountM.budeget_detail_cash floatValue]];
+        self.moneyLabel.textColor = [UIColor orangeThemeColor];
+    }
+    
+}
 @end

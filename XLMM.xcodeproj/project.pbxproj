@@ -19,6 +19,10 @@
 		181C749F1C53678400375DF8 /* mamaShare.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C749E1C53678400375DF8 /* mamaShare.png */; };
 		181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */; };
 		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
+		185E2E481C7F1E7E00131D11 /* weixinIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 185E2E471C7F1E7E00131D11 /* weixinIcon.png */; };
+		185E2E4A1C7F1EBD00131D11 /* weixinnind.png in Resources */ = {isa = PBXBuildFile; fileRef = 185E2E491C7F1EBD00131D11 /* weixinnind.png */; };
+		185E2E4C1C7F314400131D11 /* jiebang.png in Resources */ = {isa = PBXBuildFile; fileRef = 185E2E4B1C7F314400131D11 /* jiebang.png */; };
+		185E2E4F1C7FFFE800131D11 /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E2E4E1C7FFFE800131D11 /* AccountModel.m */; };
 		18601AF21C73286400E87A7B /* shizhong.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601AF11C73286400E87A7B /* shizhong.png */; };
 		18601B071C743EFE00E87A7B /* loading动画001.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601AF31C743EFE00E87A7B /* loading动画001.png */; };
 		18601B081C743EFE00E87A7B /* loading动画002.png in Resources */ = {isa = PBXBuildFile; fileRef = 18601AF41C743EFE00E87A7B /* loading动画002.png */; };
@@ -57,14 +61,15 @@
 		18BDB28C1C7D4761006462C2 /* redNo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28A1C7D4761006462C2 /* redNo.png */; };
 		18BDB28E1C7D5297006462C2 /* WithdrwaIsNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */; };
 		18BDB2901C7D7587006462C2 /* path1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28F1C7D7587006462C2 /* path1.png */; };
+		18BDB2941C7F1A44006462C2 /* ThirdAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB2921C7F1A44006462C2 /* ThirdAccountViewController.m */; };
+		18BDB2951C7F1A44006462C2 /* ThirdAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2931C7F1A44006462C2 /* ThirdAccountViewController.xib */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
 		18D22E3A1C5B4EF200ECE45C /* zhanwei.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D22E391C5B4EF200ECE45C /* zhanwei.png */; };
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
-		18F3883F1C7B08DC005A7C12 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3883D1C7B08DC005A7C12 /* AccountViewController.m */; };
-		18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */; };
+		18EA12481C80292C00B9A753 /* Account1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EA12471C80292C00B9A753 /* Account1ViewController.m */; };
 		18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F388431C7B1405005A7C12 /* AccountEmpty.xib */; };
 		18F388461C7B227B005A7C12 /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F388451C7B227B005A7C12 /* wallet.png */; };
 		18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */; };
@@ -703,6 +708,11 @@
 		181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell.h; sourceTree = "<group>"; };
 		181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell.m; sourceTree = "<group>"; };
 		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
+		185E2E471C7F1E7E00131D11 /* weixinIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixinIcon.png; sourceTree = "<group>"; };
+		185E2E491C7F1EBD00131D11 /* weixinnind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixinnind.png; sourceTree = "<group>"; };
+		185E2E4B1C7F314400131D11 /* jiebang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jiebang.png; sourceTree = "<group>"; };
+		185E2E4D1C7FFFE800131D11 /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
+		185E2E4E1C7FFFE800131D11 /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
 		18601AF11C73286400E87A7B /* shizhong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shizhong.png; sourceTree = "<group>"; };
 		18601AF31C743EFE00E87A7B /* loading动画001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画001.png"; sourceTree = "<group>"; };
 		18601AF41C743EFE00E87A7B /* loading动画002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading动画002.png"; sourceTree = "<group>"; };
@@ -742,6 +752,9 @@
 		18BDB28A1C7D4761006462C2 /* redNo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redNo.png; sourceTree = "<group>"; };
 		18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WithdrwaIsNo.xib; sourceTree = "<group>"; };
 		18BDB28F1C7D7587006462C2 /* path1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = path1.png; sourceTree = "<group>"; };
+		18BDB2911C7F1A44006462C2 /* ThirdAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdAccountViewController.h; sourceTree = "<group>"; };
+		18BDB2921C7F1A44006462C2 /* ThirdAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdAccountViewController.m; sourceTree = "<group>"; };
+		18BDB2931C7F1A44006462C2 /* ThirdAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThirdAccountViewController.xib; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
@@ -752,9 +765,8 @@
 		18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaSelectProduct.m; sourceTree = "<group>"; };
 		18DCB2DB1C55FC2800B7FBA9 /* MaMaShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaShopViewController.h; sourceTree = "<group>"; };
 		18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShopViewController.m; sourceTree = "<group>"; };
-		18F3883C1C7B08DC005A7C12 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
-		18F3883D1C7B08DC005A7C12 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
-		18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
+		18EA12461C80292C00B9A753 /* Account1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account1ViewController.h; sourceTree = "<group>"; };
+		18EA12471C80292C00B9A753 /* Account1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account1ViewController.m; sourceTree = "<group>"; };
 		18F388431C7B1405005A7C12 /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
 		18F388451C7B227B005A7C12 /* wallet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallet.png; sourceTree = "<group>"; };
 		18F3884D1C7BF1CF005A7C12 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
@@ -1814,9 +1826,19 @@
 			name = AppleVersion1;
 			sourceTree = "<group>";
 		};
+		185E2E501C7FFFF900131D11 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				185E2E4D1C7FFFE800131D11 /* AccountModel.h */,
+				185E2E4E1C7FFFE800131D11 /* AccountModel.m */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		18BDB2781C7C2A40006462C2 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				185E2E4B1C7F314400131D11 /* jiebang.png */,
 				18BDB2891C7D4761006462C2 /* grayAdd.png */,
 				18BDB28A1C7D4761006462C2 /* redNo.png */,
 				18BDB2871C7D4743006462C2 /* grayJian.png */,
@@ -1827,6 +1849,8 @@
 				18BDB28F1C7D7587006462C2 /* path1.png */,
 				18BDB27A1C7C2A56006462C2 /* shop.png */,
 				18F388451C7B227B005A7C12 /* wallet.png */,
+				185E2E471C7F1E7E00131D11 /* weixinIcon.png */,
+				185E2E491C7F1EBD00131D11 /* weixinnind.png */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -1834,9 +1858,8 @@
 		18F3883B1C7B08C4005A7C12 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				18F3883C1C7B08DC005A7C12 /* AccountViewController.h */,
-				18F3883D1C7B08DC005A7C12 /* AccountViewController.m */,
-				18F3883E1C7B08DC005A7C12 /* AccountViewController.xib */,
+				18EA12461C80292C00B9A753 /* Account1ViewController.h */,
+				18EA12471C80292C00B9A753 /* Account1ViewController.m */,
 				18F388431C7B1405005A7C12 /* AccountEmpty.xib */,
 				18BDB2711C7BFD15006462C2 /* WithdrawCashViewController.h */,
 				18BDB2721C7BFD15006462C2 /* WithdrawCashViewController.m */,
@@ -2911,6 +2934,7 @@
 			isa = PBXGroup;
 			children = (
 				2E73ED981C3A14A300EDB94E /* MaMaModel */,
+				185E2E501C7FFFF900131D11 /* Setting */,
 				181C74A21C5369C900375DF8 /* AppleVersion1 */,
 			);
 			name = Model;
@@ -3122,6 +3146,9 @@
 				32258B421C1120A6000FFE5F /* VersionController.h */,
 				32258B431C1120A6000FFE5F /* VersionController.m */,
 				32258B441C1120A6000FFE5F /* VersionController.xib */,
+				18BDB2911C7F1A44006462C2 /* ThirdAccountViewController.h */,
+				18BDB2921C7F1A44006462C2 /* ThirdAccountViewController.m */,
+				18BDB2931C7F1A44006462C2 /* ThirdAccountViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3518,6 +3545,7 @@
 				32E8B58C1C4F59DA00414F8A /* countdowmBackImage.png in Resources */,
 				32E8B5AB1C532F8200414F8A /* ActivityViewController2.xib in Resources */,
 				32E8B5851C4CE80D00414F8A /* TixianTableViewCell.xib in Resources */,
+				185E2E4C1C7F314400131D11 /* jiebang.png in Resources */,
 				3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */,
 				18BDB2771C7C111C006462C2 /* WithdrawalsEmpty.xib in Resources */,
 				324337391C79BA860066CADD /* accounticon.png in Resources */,
@@ -3547,8 +3575,8 @@
 				2E63AE5A1C3E66A5008E97BB /* PicFooterCollectionReusableView.xib in Resources */,
 				3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */,
 				18BDB28E1C7D5297006462C2 /* WithdrwaIsNo.xib in Resources */,
-				18F388401C7B08DC005A7C12 /* AccountViewController.xib in Resources */,
 				32746E1C1B74A22000816208 /* icon-jiantouyou2.png in Resources */,
+				185E2E4A1C7F1EBD00131D11 /* weixinnind.png in Resources */,
 				18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */,
 				18BDB28C1C7D4761006462C2 /* redNo.png in Resources */,
 				18601B1E1C746EB200E87A7B /* mamajiang.png in Resources */,
@@ -3693,6 +3721,7 @@
 				2E77F5BA1C1EBBA90020C014 /* WeiboSDK.bundle in Resources */,
 				18601B071C743EFE00E87A7B /* loading动画001.png in Resources */,
 				326296541C45F627001A27E3 /* hongbaounused200.png in Resources */,
+				18BDB2951C7F1A44006462C2 /* ThirdAccountViewController.xib in Resources */,
 				3297C7931BFB344600776970 /* SelectedReasonsView.xib in Resources */,
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */,
@@ -3829,6 +3858,7 @@
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
 				32EAA33F1C3DFC97004055AB /* hongbaounableclicked.png in Resources */,
+				185E2E481C7F1E7E00131D11 /* weixinIcon.png in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
 				322D25CA1C32B93A00509EAD /* 圈圈加载0031.png in Resources */,
 				323D667C1C2799C200A2B955 /* retina7.png in Resources */,
@@ -4020,6 +4050,7 @@
 				322D25701C32B66100509EAD /* MJRefreshStateHeader.m in Sources */,
 				321952991BFC7A8D00AA0AB8 /* QNReachability.m in Sources */,
 				32BDE4921B85CD1100FBEC25 /* TousuViewController.m in Sources */,
+				18EA12481C80292C00B9A753 /* Account1ViewController.m in Sources */,
 				3219528B1BFC7A8D00AA0AB8 /* QNALAssetFile.m in Sources */,
 				321952931BFC7A8D00AA0AB8 /* QNDns.m in Sources */,
 				2E73EDE31C3CF61F00EDB94E /* PublishNewPdtViewController.m in Sources */,
@@ -4061,13 +4092,13 @@
 				32891B641B81EA96007E562A /* ShoppingCartModel.m in Sources */,
 				3282F2871B6B5B1300E73EB9 /* SDWebImagePrefetcher.m in Sources */,
 				322D25641C32B66100509EAD /* MJRefreshBackFooter.m in Sources */,
+				18BDB2941C7F1A44006462C2 /* ThirdAccountViewController.m in Sources */,
 				322D256F1C32B66100509EAD /* MJRefreshNormalHeader.m in Sources */,
 				32FF9A261B9FDB870001F314 /* TuihuoViewController.m in Sources */,
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
-				18F3883F1C7B08DC005A7C12 /* AccountViewController.m in Sources */,
 				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */,
@@ -4119,6 +4150,7 @@
 				321952C81BFC7AF800AA0AB8 /* QNHosts.m in Sources */,
 				3219529B1BFC7A8D00AA0AB8 /* QNConfiguration.m in Sources */,
 				3265DAAD1C1667BD0095BC94 /* SVIndefiniteAnimatedView.m in Sources */,
+				185E2E4F1C7FFFE800131D11 /* AccountModel.m in Sources */,
 				321952CB1BFC7AF800AA0AB8 /* QNHex.m in Sources */,
 				3299A05B1C0EBA6500229D74 /* TiaoKuanViewController.m in Sources */,
 				325A91C71C5C4CC100629C9F /* FanceModel.m in Sources */,
@@ -4207,7 +4239,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "bdbdb829-cc27-4544-a94a-12b90c07a2e0";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4244,7 +4276,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "bdbdb829-cc27-4544-a94a-12b90c07a2e0";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4289,7 +4321,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bdbdb829-cc27-4544-a94a-12b90c07a2e0";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4333,7 +4365,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bdbdb829-cc27-4544-a94a-12b90c07a2e0";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

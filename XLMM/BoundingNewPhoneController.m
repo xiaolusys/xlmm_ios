@@ -45,8 +45,7 @@
     
     [self createNavigationBarWithTitle:@"绑定新手机号" selecotr:@selector(backClicked:)];
     
-    
-    
+
 }
 
 - (void)backClicked:(UIButton *)button{
