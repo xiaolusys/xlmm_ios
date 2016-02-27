@@ -11,6 +11,8 @@
 #import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "GuanzhuViewController.h"
+
 
 #define RED 2.0
 
@@ -36,7 +38,15 @@
     UIView *withdrawalsIsOk;
     UIView *withdrawalsIsNo;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = YES;
+    
+}
 
 
 - (void)viewDidLoad {
@@ -90,7 +100,7 @@
     btn.layer.cornerRadius = 13;
     btn.layer.borderWidth = 0.5;
     btn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    [btn setTitle:@"立即绑定" forState:UIControlStateNormal];
+    [btn setTitle:@"立即关注" forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:12];
     [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(bindBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -212,14 +222,9 @@
         
         return;
     }
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo,snsapi_base";
-    req.state = @"xiaolumeimei" ;
-    NSLog(@"req = %@", req);
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@"binding" forKey:kWeiXinauthorize];
-    [userdefaults synchronize];
-    [WXApi sendReq:req];
+    GuanzhuViewController *guanzhuVC = [[GuanzhuViewController alloc] init];
+    [self.navigationController pushViewController:guanzhuVC animated:YES];
+   
     
 }
 //马上提现

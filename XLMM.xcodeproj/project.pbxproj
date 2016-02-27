@@ -496,6 +496,8 @@
 		3284A23F1BFC2F3D00D0F0D0 /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32707F1A1BFAC9FB0006FB6A /* WuliuViewController.xib */; };
 		3284A2421BFC4C4400D0F0D0 /* deletaBtnIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */; };
 		3284A2431BFC4C4400D0F0D0 /* CameraImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3284A2411BFC4C4400D0F0D0 /* CameraImage.png */; };
+		3286D1FE1C818D4B0080DF84 /* GuanzhuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3286D1FC1C818D4B0080DF84 /* GuanzhuViewController.m */; };
+		3286D1FF1C818D4B0080DF84 /* GuanzhuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3286D1FD1C818D4B0080DF84 /* GuanzhuViewController.xib */; };
 		3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FC1BE0BEAA00C8A775 /* childImage.png */; };
 		3286F2FF1BE0BEAA00C8A775 /* ladyImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */; };
 		32891B5B1B81C9E0007E562A /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32891B591B81C9E0007E562A /* CartViewController.m */; };
@@ -1382,6 +1384,9 @@
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3284A2401BFC4C4400D0F0D0 /* deletaBtnIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletaBtnIcon.png; sourceTree = "<group>"; };
 		3284A2411BFC4C4400D0F0D0 /* CameraImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraImage.png; sourceTree = "<group>"; };
+		3286D1FB1C818D4B0080DF84 /* GuanzhuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuanzhuViewController.h; sourceTree = "<group>"; };
+		3286D1FC1C818D4B0080DF84 /* GuanzhuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuanzhuViewController.m; sourceTree = "<group>"; };
+		3286D1FD1C818D4B0080DF84 /* GuanzhuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuanzhuViewController.xib; sourceTree = "<group>"; };
 		3286F2FC1BE0BEAA00C8A775 /* childImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childImage.png; sourceTree = "<group>"; };
 		3286F2FD1BE0BEAA00C8A775 /* ladyImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladyImage.png; sourceTree = "<group>"; };
 		32891B581B81C9E0007E562A /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
@@ -1873,6 +1878,9 @@
 				18BDB2761C7C111C006462C2 /* WithdrawalsEmpty.xib */,
 				18BDB27D1C7C308B006462C2 /* WithdrawalsIsOk.xib */,
 				18BDB28D1C7D5297006462C2 /* WithdrwaIsNo.xib */,
+				3286D1FB1C818D4B0080DF84 /* GuanzhuViewController.h */,
+				3286D1FC1C818D4B0080DF84 /* GuanzhuViewController.m */,
+				3286D1FD1C818D4B0080DF84 /* GuanzhuViewController.xib */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -3916,6 +3924,7 @@
 				322D25B81C32B93A00509EAD /* 圈圈加载0013.png in Resources */,
 				32C1340F1C5C8C4600922DC2 /* MamaShareView.xib in Resources */,
 				32EAA33C1C3DFC97004055AB /* hongbaoafterclicked.png in Resources */,
+				3286D1FF1C818D4B0080DF84 /* GuanzhuViewController.xib in Resources */,
 				2E72B3F21C1BB9C700D452E0 /* shareweibo.png in Resources */,
 				32B83E151BA3FD8F004E3215 /* area.plist in Resources */,
 				2EB87D421C17FAE4001CBF3D /* ios-social-sdk-share-quick.html in Resources */,
@@ -4136,6 +4145,7 @@
 				32A2884B1B93E2AC006DC949 /* RESideMenu.m in Sources */,
 				32FE087E1BF4398A0072CCEC /* NSString+URL.m in Sources */,
 				325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */,
+				3286D1FE1C818D4B0080DF84 /* GuanzhuViewController.m in Sources */,
 				32E8B5AA1C532F8200414F8A /* ActivityViewController2.m in Sources */,
 				32A88E201B872CB5003501EF /* PerDingdanModel.m in Sources */,
 				322D257B1C32B7C700509EAD /* MJPullGifHeader.m in Sources */,
