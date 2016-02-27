@@ -10,15 +10,23 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
+#import "AFHTTPRequestOperationManager.h"
+
+#define RED 2.0
 
 @interface WithdrawCashViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *bindView;
+@property (weak, nonatomic) IBOutlet UILabel *accountMoney;
+
+//redNum
+@property (nonatomic, strong)UILabel *redNumLabel;
+@property (nonatomic, strong)UIButton *addBtn;
+@property (nonatomic, strong)UIButton *reduceBtn;
+
+
 @property (assign, nonatomic)BOOL isBandWx;
 @property (assign, nonatomic)BOOL isMoneyMax;
-
-//暂定红包金额
-@property (assign, nonatomic)float money;
 
 @end
 
@@ -36,9 +44,18 @@
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bangdingweixin) name:@"bindingwx" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
+    
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backBtnClicked:)];
     
     [self createBindView];
+    self.accountMoney.text = [NSString stringWithFormat:@"%.2f",[self.money floatValue]];
+    
+    if (([self.money floatValue] < RED)) {
+        [self createWithdrawalsIsNo];
+    }else {
+        [self createWithdrawalsIsOk];
+    }
+    
     //判断是否绑定微信号
 //    if (!self.isBandWx) {
 //        [self createEmptyView];
@@ -86,7 +103,7 @@
     
     emptyView.frame = CGRectMake(0, 180, SCREENWIDTH, SCREENHEIGHT - 180);
     
-    UIButton *button = (UIButton *)[emptyView viewWithTag:102];
+    UIButton *button = (UIButton *)[emptyView viewWithTag:111];
     button.layer.cornerRadius = 15;
     button.layer.borderWidth = 0.5;
     button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
@@ -110,10 +127,12 @@
     [button addTarget:self action:@selector(rightAwayDraw:) forControlEvents:UIControlEventTouchUpInside];
     
     //获得加按钮和减按钮
-    UIButton *reduce = (UIButton *)[withdrawalsIsOk viewWithTag:102];
-    [reduce addTarget:self action:@selector(reduceBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *add = (UIButton *)[withdrawalsIsOk viewWithTag:103];
-    [add addTarget:self action:@selector(addBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.reduceBtn = (UIButton *)[withdrawalsIsOk viewWithTag:102];
+    [self.reduceBtn addTarget:self action:@selector(reduceBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.addBtn = (UIButton *)[withdrawalsIsOk viewWithTag:103];
+    [self.addBtn addTarget:self action:@selector(addBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.redNumLabel = (UILabel *)[withdrawalsIsOk viewWithTag:108];
     
     [self.view addSubview:withdrawalsIsOk];
     
@@ -140,12 +159,40 @@
 #pragma mark--按钮点击事件
 //减红包
 - (void)reduceBtnClickAction:(UIButton *)btn {
+    int rednum = [self.redNumLabel.text intValue];
+    CGFloat totalMoney = [self.accountMoney.text floatValue];
 
+    if (!rednum == 0) {
+        self.redNumLabel.text = [NSString stringWithFormat:@"%d", (rednum - 1)];
+        
+        CGFloat addsurplus = totalMoney + RED;
+        self.accountMoney.text = [NSString stringWithFormat:@"%.2f", addsurplus];
+    }else {
+        NSLog(@"不能再减了！");
+    }
 }
 //加红包
 - (void)addBtnClickAction:(UIButton *)btn {
+    int rednum = [self.redNumLabel.text intValue];
+    CGFloat totalMoney = [self.accountMoney.text floatValue];
     
+//    NSNumber *temp = [NSNumber numberWithFloat:((rednum + 1) * RED)];
+//    CGFloat num = [temp floatValue];
+    
+//    if (currentProfile.GreenLow.floatValue - tempHistory.BloodSugar.floatValue > 0.000001) {
+//    }
+//    abs(tempHistory.BloodSugar.floatValue - currentProfile.GreenLow.floatValue) < 0.000001 ||
+//    abs(currentProfile.GreenHigh.floatValue - tempHistory.BloodSugar.floatValue) < 0.000001
+    if (totalMoney - RED > 0.000001 || (fabs(totalMoney - RED) < 0.000001 || fabs(RED - totalMoney) < 0.000001)) {
+        self.redNumLabel.text = [NSString stringWithFormat:@"%d", (rednum + 1)];
+        
+        CGFloat surplus = totalMoney - RED;
+        self.accountMoney.text = [NSString stringWithFormat:@"%.2f", surplus];
+    }else {
+        NSLog(@"您的余额不够了！");
+    }
 }
+
 
 - (void)gotoShopping:(UIButton *)btn {
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -177,8 +224,34 @@
 }
 //马上提现
 - (void)rightAwayDraw:(UIButton *)button {
+    //提现金额
+//    CGFloat amount1 = [self.redNumLabel.text floatValue] * RED;
     
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out", Root_URL];
+    
+    NSNumber *amount = [NSNumber numberWithFloat:1];
+    
+    NSDictionary *dic = @{@"cashout_amount":amount};
+    [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        [self showDrawResults:responseObject];
+//        NSLog(@"-----%@", operation);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        
+    }];
 }
+
+- (void)showDrawResults:(NSDictionary *)results {
+    NSString *desc = results[@"message"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:desc delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+    
+    //成功之后返回
+}
+
 //绑定微信
 - (void)bangdingweixin{
     NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
@@ -200,8 +273,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

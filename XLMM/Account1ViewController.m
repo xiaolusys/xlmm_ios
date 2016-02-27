@@ -1,35 +1,43 @@
 //
-//  AccountViewController.m
+//  Account1ViewController.m
 //  XLMM
 //
-//  Created by apple on 16/2/22.
+//  Created by apple on 16/2/26.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "AccountViewController.h"
+#import "Account1ViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AccountTableViewCell.h"
 #import "WithdrawCashViewController.h"
+#import "AccountModel.h"
 
-
-@interface AccountViewController ()
+@interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, strong)NSString *nextPage;
+@property (nonatomic, strong)NSMutableArray *dataArr;
+@property (nonatomic, assign)BOOL isFirstLoad;
 
 @property (nonatomic, assign)CGFloat headerH;
-
 @end
 
 static NSString *identifier = @"AccountCell";
-@implementation AccountViewController
+@implementation Account1ViewController
+
 {
     UIView *emptyView;
 }
 
+- (NSMutableArray *)dataArr {
+    if (!_dataArr) {
+        self.dataArr = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return _dataArr;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,13 +52,13 @@ static NSString *identifier = @"AccountCell";
     self.navigationItem.rightBarButtonItem = rightItem;
     
     self.navigationController.navigationBarHidden = NO;
-    self.money = 0;
+//    self.money = 0;
     
     [self createTableView];
-    if (!self.money > 0) {
-        [self createEmptyView];
-    }
-//    [self createEmptyView];
+//    if (!self.money > 0) {
+//        //        [self createEmptyView];
+//    }
+    //    [self createEmptyView];
 }
 
 - (void)createTableView {
@@ -68,7 +76,8 @@ static NSString *identifier = @"AccountCell";
     moneyLabel.textColor = [UIColor orangeThemeColor];
     moneyLabel.font = [UIFont systemFontOfSize:35];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    moneyLabel.text = @"0.00";
+    
+    moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
     
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 75, 100, 20)];
@@ -91,22 +100,13 @@ static NSString *identifier = @"AccountCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
-    //添加上拉加载
-//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        if([self.nextPage class] == [NSNull class]) {
-//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-//            return ;
-//        }
-////        [self loadMore];
-//    }];
-    
     //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;
-//        [self dataAnalysis:responseObject];
+        [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:   %@", error);
     }];
@@ -122,10 +122,10 @@ static NSString *identifier = @"AccountCell";
     button.layer.cornerRadius = 15;
     button.layer.borderWidth = 0.5;
     button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    [button addTarget:self action:@selector(gotoInviteFriends) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self.view addSubview:emptyView];
-//    emptyView.hidden = YES;
+    //    emptyView.hidden = YES;
 }
 
 #pragma mark --邀请好友
@@ -133,49 +133,78 @@ static NSString *identifier = @"AccountCell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)gotoInviteFriends {
-    
-}
 
 //提现
 - (void)rightBarButtonAction {
     WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
+    drawCash.money = self.accountMoney;
     [self.navigationController pushViewController:drawCash animated:YES];
 }
 
 #pragma mark ---UItableView的代理
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return self.dataDic.count;
-    return 1;
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    NSString *key = self.dataArr[section];
-//    NSMutableArray *orderArr = self.dataDic[key];
-//    return orderArr.count;
-    return 4;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSString *key = self.dataArr[indexPath.section];
-//    NSMutableArray *orderArr = self.dataDic[key];
-//    MaMaOrderModel *orderM = orderArr[indexPath.row];
+    AccountModel *accountM = self.dataArr[indexPath.row];
     AccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (!cell) {
         cell = [[AccountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-//    [cell fillDataOfCell:orderM];
-//    return cell;
+        [cell fillDataOfCell:accountM];
     return cell;
 }
 
+#pragma mark--网络请求
+- (void)dataAnalysis:(NSDictionary *)data {
+    self.nextPage = data[@"next"];
+    
+    if (!self.isFirstLoad && !([self.nextPage class] == [NSNull class])) {
+        [self addLoadMoreFooter];
+    }
+    
+    NSArray *results = data[@"results"];
+    if (results.count == 0 ) {
+        [self createEmptyView];
+        return;
+    }
+    
+    for (NSDictionary *account in results) {
+        AccountModel *accountM = [[AccountModel alloc] init];
+        [accountM setValuesForKeysWithDictionary:account];
+        [self.dataArr addObject:accountM];
+    }
+    [self.tableView reloadData];
+}
+
+- (void)addLoadMoreFooter {
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+}
+
+//加载更多
+- (void)loadMore {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.tableView.mj_footer endRefreshing];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

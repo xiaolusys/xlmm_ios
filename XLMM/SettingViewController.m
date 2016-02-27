@@ -17,6 +17,7 @@
 #import "VerifyPhoneViewController.h"
 #import "VersionController.h"
 #import "WXLoginController.h"
+#import "ThirdAccountViewController.h"
 
 
 
@@ -230,6 +231,11 @@
     
     [alterView show];
     
+}
+
+- (IBAction)thirdAccountBind:(id)sender {
+    ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
+    [self.navigationController pushViewController:third animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

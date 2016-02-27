@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AccountModel;
 
 @interface AccountTableViewCell : UITableViewCell
 
@@ -14,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sourceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 
+- (void)fillDataOfCell:(AccountModel *)accountM;
 
 @end
