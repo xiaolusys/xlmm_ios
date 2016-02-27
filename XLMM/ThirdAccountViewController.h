@@ -11,6 +11,9 @@
 @interface ThirdAccountViewController : UIViewController<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *bindWX;
 @property (weak, nonatomic) IBOutlet UILabel *weixinName;
+@property (weak, nonatomic) IBOutlet UIButton *qqbutton;
+@property (weak, nonatomic) IBOutlet UIButton *weibobutton;
+@property (weak, nonatomic) IBOutlet UIButton *zhifubaobutton;
 
 
 - (IBAction)bindWXAction:(id)sender;

@@ -409,7 +409,15 @@
 
                   if (result == 0)
                   {   // 校验成功。。。
-                      [self displaySetPasswordPage];
+                      if ([self.config[@"isRegister"] boolValue] == YES || [self.config[@"isMessageLogin"] boolValue] == YES) {
+                          [self.navigationController popToRootViewControllerAnimated:YES];
+
+                          
+                      } else {
+                          [self displaySetPasswordPage];
+//
+                      }
+//                      return;
                   }
                   else
                   {
