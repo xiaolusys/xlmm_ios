@@ -345,6 +345,7 @@
 		32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32558A9E1BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib */; };
 		325A91C71C5C4CC100629C9F /* FanceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325A91C61C5C4CC100629C9F /* FanceModel.m */; };
 		325AD2D31C842DEB00446B02 /* NSString+DeleteT.m in Sources */ = {isa = PBXBuildFile; fileRef = 325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */; };
+		325AD2D41C8465B900446B02 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
 		325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
 		325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
@@ -394,7 +395,6 @@
 		3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324AB05C1C732A2C007FE81B /* StartActivityView.xib */; };
 		326C4E0B1C2CE8FB00A79359 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E091C2CE8FB00A79359 /* libMiPushSDK.a */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
-		326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
 		326E88951B72139D00D15973 /* UIImage+ImageWithUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */; };
 		32703F191BEB5D39002AFC6D /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F131BEB5D39002AFC6D /* Icon-29.png */; };
 		32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32703F141BEB5D39002AFC6D /* Icon-29@2x.png */; };
@@ -4014,7 +4014,6 @@
 				32707F1B1BFAC9FB0006FB6A /* WuliuViewController.m in Sources */,
 				322D25661C32B66100509EAD /* MJRefreshFooter.m in Sources */,
 				32A81F911B8D963C009972B3 /* BuyModel.m in Sources */,
-				326C4E101C2D4EF000A79359 /* MMLoadingAnimation.m in Sources */,
 				321952911BFC7A8D00AA0AB8 /* QNSystem.m in Sources */,
 				322D256A1C32B66100509EAD /* MJRefreshAutoStateFooter.m in Sources */,
 				3249B98F1B6F38500086D030 /* PersonCenterViewController3.m in Sources */,
@@ -4113,6 +4112,7 @@
 				2E62D6711C4DE569007B20BB /* CarryLogModel.m in Sources */,
 				322D25691C32B66100509EAD /* MJRefreshAutoNormalFooter.m in Sources */,
 				321952C61BFC7AF800AA0AB8 /* QNDnspodFree.m in Sources */,
+				325AD2D41C8465B900446B02 /* MMLoadingAnimation.m in Sources */,
 				2E62D66E1C4DE059007B20BB /* MaMaCarryLogViewController.m in Sources */,
 				32A2884C1B93E2AC006DC949 /* UIViewController+RESideMenu.m in Sources */,
 				32CE91C41B7C491E00CA67C3 /* AddressModel.m in Sources */,
