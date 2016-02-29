@@ -32,14 +32,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日成功推荐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-ek-Vvb">
-                        <rect key="frame" x="67" y="34" width="200" height="34"/>
+                        <rect key="frame" x="67" y="34" width="293" height="34"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="200" id="aj7-gp-GIb"/>
+                            <constraint firstAttribute="width" constant="180" id="aj7-gp-GIb"/>
                             <constraint firstAttribute="height" constant="34" id="fwx-9h-zhd"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="aj7-gp-GIb"/>
+                            </mask>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＋4.9" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wx-cb-dGX">
                         <rect key="frame" x="370" y="30" width="80" height="24"/>
@@ -63,6 +68,7 @@
                     <constraint firstAttribute="bottom" secondItem="S3g-AH-H1H" secondAttribute="bottom" id="3RB-PU-LOg"/>
                     <constraint firstItem="S3g-AH-H1H" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9rC-jR-w6s"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="top" secondItem="f0i-YC-mX6" secondAttribute="bottom" id="LEo-YT-Q29"/>
+                    <constraint firstItem="6Wx-cb-dGX" firstAttribute="leading" secondItem="QIn-ek-Vvb" secondAttribute="trailing" constant="10" id="MLU-hF-IZz"/>
                     <constraint firstItem="6Wx-cb-dGX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="R8D-0T-CZ7"/>
                     <constraint firstAttribute="trailing" secondItem="6Wx-cb-dGX" secondAttribute="trailing" constant="10" id="ZVs-d7-JLU"/>
                     <constraint firstItem="f0i-YC-mX6" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="fJv-xg-MM9"/>
