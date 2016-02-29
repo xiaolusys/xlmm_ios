@@ -420,6 +420,7 @@
     self.nameLabel.text = @"未登录";
     self.jifenLabel.text = @"0";
     self.youhuiquanLabel.text = @"0";
+    self.accountLabel.text = @"0.00";
     
     [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
     
