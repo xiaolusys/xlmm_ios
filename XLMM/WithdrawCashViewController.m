@@ -274,14 +274,14 @@
 
 //立即绑定
 - (void)bindBtnAction:(UIButton *)button {
-    if ([WXApi isWXAppInstalled]) {
-        
-    } else{
-        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alterView show];
-        
-        return;
-    }
+//    if ([WXApi isWXAppInstalled]) {
+//        
+//    } else{
+//        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alterView show];
+//        
+//        return;
+//    }
     GuanzhuViewController *guanzhuVC = [[GuanzhuViewController alloc] init];
     [self.navigationController pushViewController:guanzhuVC animated:YES];
    
@@ -300,7 +300,16 @@
     NSDictionary *dic = @{@"cashout_amount":amount};
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
-        [self showDrawResults:responseObject];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+            [self showDrawResults:responseObject];
+            
+        } else if ([[responseObject objectForKey:@"code"] integerValue] == 4) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请关注小鹿美美公众号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            alertView.tag = 1000;
+            [alertView show];
+        } else {
+             [self showDrawResults:responseObject];
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
@@ -318,11 +327,15 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *btnTitle = [alertView buttonTitleAtIndex:0];
+  
+    if (alertView.tag == 1000) {
+        
+        GuanzhuViewController *guanzhuVC = [[GuanzhuViewController alloc] init];
+        [self.navigationController pushViewController:guanzhuVC animated:YES];
+        
+    }
     
-//    if ([btnTitle isEqualToString:@"确定"]) {
-//        
-//    }
+
 }
 
 //绑定微信
