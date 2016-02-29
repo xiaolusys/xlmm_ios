@@ -58,8 +58,7 @@
     }else if ([carryModel.log_type isEqualToString:@"group_bonus"]){
         //团队新增成员奖金
         self.photoImageV.image = [UIImage imageNamed:@"mamatuan"];
-    }
-    
+    }    
     if ([carryModel.carry_type isEqualToString:@"in"]) {
         self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.value_money floatValue]];
     }else {
