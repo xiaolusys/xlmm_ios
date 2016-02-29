@@ -338,7 +338,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   
     if (alertView.tag == 1000) {
-        
         GuanzhuViewController *guanzhuVC = [[GuanzhuViewController alloc] init];
         [self.navigationController pushViewController:guanzhuVC animated:YES];
         
@@ -351,7 +350,7 @@
 - (void)bangdingweixin{
     NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
     NSDictionary *dic = [userdefault objectForKey:@"userInfo"];
-    NSLog(@"---> userinfo = %@", dic);
+//    NSLog(@"---> userinfo = %@", dic);
 }
 
 #pragma mark--马上提现按钮的操作
