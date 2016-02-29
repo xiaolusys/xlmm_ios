@@ -23,6 +23,8 @@
 @property (nonatomic, assign)BOOL isFirstLoad;
 
 @property (nonatomic, assign)CGFloat headerH;
+
+@property (nonatomic, strong)UILabel *moneyLabel;
 @end
 
 static NSString *identifier = @"AccountCell";
@@ -44,9 +46,22 @@ static NSString *identifier = @"AccountCell";
     self.navigationController.navigationBarHidden = NO;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)updateMoneyLabel{
+   NSUserDefaults *drawCashM = [NSUserDefaults standardUserDefaults];
+    NSString *str = [drawCashM objectForKey:@"DrawCashM"];
+    self.moneyLabel.text = str;
     
+    //刷新记录
+    [self againRequest];
 }
 
 - (void)viewDidLoad {
@@ -82,12 +97,12 @@ static NSString *identifier = @"AccountCell";
     //添加header
     UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     
-    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, SCREENWIDTH, 50)];
-    moneyLabel.textColor = [UIColor orangeThemeColor];
-    moneyLabel.font = [UIFont systemFontOfSize:35];
-    moneyLabel.textAlignment = NSTextAlignmentCenter;
+    self.moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, SCREENWIDTH, 50)];
+    self.moneyLabel.textColor = [UIColor orangeThemeColor];
+    self.moneyLabel.font = [UIFont systemFontOfSize:35];
+    self.moneyLabel.textAlignment = NSTextAlignmentCenter;
     
-    moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
+    self.moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
     
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 75, 100, 20)];
@@ -96,7 +111,7 @@ static NSString *identifier = @"AccountCell";
     titleLabel.text = @"我的余额(元)";
     
     [headerV addSubview:titleLabel];
-    [headerV addSubview:moneyLabel];
+    [headerV addSubview:self.moneyLabel];
     headerV.backgroundColor = [UIColor whiteColor];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, 1)];
@@ -110,6 +125,10 @@ static NSString *identifier = @"AccountCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
+    [self againRequest];
+}
+
+- (void)againRequest {
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     
@@ -147,7 +166,9 @@ static NSString *identifier = @"AccountCell";
 //提现
 - (void)rightBarButtonAction {
     WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
-    drawCash.money = self.accountMoney;
+    CGFloat money = [self.moneyLabel.text floatValue];
+    NSNumber *number = [NSNumber numberWithFloat:money];
+    drawCash.money = number;
     [self.navigationController pushViewController:drawCash animated:YES];
 }
 
@@ -214,6 +235,10 @@ static NSString *identifier = @"AccountCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 /*
 #pragma mark - Navigation

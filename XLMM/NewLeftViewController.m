@@ -35,6 +35,7 @@
     [self setUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
 }
 
 - (void)setUserInfo{
@@ -474,5 +475,11 @@
     if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
         [self.pushVCDelegate rootVCPushOtherVC:loginVC];
     }
+}
+
+- (void)updateMoneyLabel {
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *str = [user objectForKey:@"DrawCashM"];
+    self.accountLabel.text = str;
 }
 @end
