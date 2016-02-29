@@ -535,22 +535,22 @@
         
         
     }
-    NSArray *colors = @[[UIColor redColor],
-                        [UIColor orangeColor],
-                        [UIColor yellowColor],
-                        [UIColor greenColor],
-                        [UIColor cyanColor],
-                        [UIColor blueColor],
-                        [UIColor purpleColor],
-                        [UIColor whiteColor],
-                        [UIColor blackColor],
-                        [UIColor grayColor],
-                        [UIColor magentaColor],
-                        [UIColor brownColor],
-                        [UIColor clearColor],
-                        [UIColor lightGrayColor],
-                        [UIColor darkGrayColor]
-                        ];
+//    NSArray *colors = @[[UIColor redColor],
+//                        [UIColor orangeColor],
+//                        [UIColor yellowColor],
+//                        [UIColor greenColor],
+//                        [UIColor cyanColor],
+//                        [UIColor blueColor],
+//                        [UIColor purpleColor],
+//                        [UIColor whiteColor],
+//                        [UIColor blackColor],
+//                        [UIColor grayColor],
+//                        [UIColor magentaColor],
+//                        [UIColor brownColor],
+//                        [UIColor clearColor],
+//                        [UIColor lightGrayColor],
+//                        [UIColor darkGrayColor]
+//                        ];
     
     
     for (int i = 0; i < imageArray.count; i++) {

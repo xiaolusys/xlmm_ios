@@ -350,7 +350,7 @@
 - (void)bangdingweixin{
     NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
     NSDictionary *dic = [userdefault objectForKey:@"userInfo"];
-//    NSLog(@"---> userinfo = %@", dic);
+    NSLog(@"---> userinfo = %@", dic);
 }
 
 #pragma mark--马上提现按钮的操作
