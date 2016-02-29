@@ -1141,6 +1141,11 @@
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    
+    
+    
+    
 }
 
 #pragma mark --分享按钮事件
