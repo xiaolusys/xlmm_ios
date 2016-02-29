@@ -10,6 +10,8 @@
 
 @interface TixianModel : NSObject
 
+@property (nonatomic, copy) NSString *ID;
+
 @property (nonatomic, assign) NSInteger xlmm;
 @property (nonatomic, assign) float value_money;
 

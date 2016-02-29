@@ -123,10 +123,10 @@
     MMLOG(dic);
     NSInteger isAttPub = [[dic objectForKey:@"is_attention_public"] integerValue];
    // isAttPub = 0;
-    if (isAttPub == 1) {
+    if (isAttPub == 0) {
         //立即关注
         
-    } else if (isAttPub == 0){
+    } else if (isAttPub == 1){
         //已关注
         UIButton *button = [self.bindView viewWithTag:88];
         [button setTitle:@"已关注" forState:UIControlStateNormal];

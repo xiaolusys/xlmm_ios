@@ -11,6 +11,7 @@
 
 @interface TixianTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *jineLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

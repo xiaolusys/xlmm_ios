@@ -27,8 +27,8 @@
                         <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已拒绝" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aa1-xc-mNu">
-                        <rect key="frame" x="261" y="18" width="42" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aa1-xc-mNu">
+                        <rect key="frame" x="287" y="18" width="16" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -40,6 +40,16 @@
                             <constraint firstAttribute="height" constant="1" id="mqO-hs-ZO5"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ine-Kx-Veg">
+                        <rect key="frame" x="247" y="40" width="60" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="4CZ-3U-ddB"/>
+                            <constraint firstAttribute="width" constant="60" id="CZL-Gg-riS"/>
+                        </constraints>
+                        <state key="normal" title="取消">
+                            <color key="titleColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="pIw-0q-kyN" secondAttribute="trailing" id="42b-5C-yuo"/>
@@ -48,12 +58,15 @@
                     <constraint firstItem="Aa1-xc-mNu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="FYw-Kp-77w"/>
                     <constraint firstItem="1p5-vE-iSd" firstAttribute="leading" secondItem="HqK-eY-rSh" secondAttribute="leading" id="H9C-ZL-40y"/>
                     <constraint firstItem="pIw-0q-kyN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PhY-yw-iNk"/>
+                    <constraint firstItem="pIw-0q-kyN" firstAttribute="top" secondItem="Ine-Kx-Veg" secondAttribute="bottom" constant="8" id="QnY-B2-Rqj"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Aa1-xc-mNu" secondAttribute="trailing" constant="9" id="TsN-3c-YuK"/>
                     <constraint firstAttribute="bottom" secondItem="1p5-vE-iSd" secondAttribute="bottom" constant="11" id="Wdo-bk-1jM"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ine-Kx-Veg" secondAttribute="trailing" constant="5" id="gw3-5v-xo8"/>
                     <constraint firstAttribute="bottom" secondItem="pIw-0q-kyN" secondAttribute="bottom" id="nHC-nk-ENe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cancelButton" destination="Ine-Kx-Veg" id="Sek-vG-hoR"/>
                 <outlet property="infoLabel" destination="Aa1-xc-mNu" id="Rba-C0-D7S"/>
                 <outlet property="jineLabel" destination="HqK-eY-rSh" id="Jyg-dK-f6A"/>
                 <outlet property="timeLabel" destination="1p5-vE-iSd" id="AKj-pP-UG8"/>
