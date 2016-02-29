@@ -22,6 +22,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSString *nextString;
 
 
 @end
@@ -61,7 +62,9 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 - (void)downloadData{
-    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL] andSelector:@selector(fetchedHistoryData:)];
+    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
+    NSLog(@"string = %@", self.nextString);
+    [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
 }
 
 - (void)fetchedHistoryData:(NSData *)data{
@@ -82,9 +85,18 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         [self.dataArray addObject:model];
     }
     
+    self.nextString = [dicJson objectForKey:@"next"];
+    if ([self.nextString class] == [NSNull class]) {
+        [self.tableView reloadData];
+    } else {
+        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+    }
+    
+
+    
   
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     
 }
 
@@ -136,6 +148,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
     [cell fillModel:model];
+    
     
     return cell;
  

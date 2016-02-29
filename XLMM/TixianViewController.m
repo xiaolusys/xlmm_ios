@@ -41,36 +41,36 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)cancelTixian:(UIButton *)button{
-    NSLog(@"取消");
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    //  http://192.168.1.31:9000/rest/v1/cashout
-    
-    NSLog(@"url = %@", string);
-    NSDictionary *paramters = @{@"id":@68};
-    NSLog(@"paramters = %@", paramters);
-    [manager POST:string parameters:paramters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"response = %@", responseObject);
-              if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
-                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                  [alertView show];
-              } else if ([[responseObject objectForKey:@"code"] integerValue] == 0){
-                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                  [alertView show];
-              }
-     
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-
-    
-}
+//- (void)cancelTixian:(UIButton *)button{
+//    NSLog(@"取消");
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//    //  http://192.168.1.31:9000/rest/v1/cashout
+//    
+//    NSLog(@"url = %@", string);
+//    NSDictionary *paramters = @{@"id":@68};
+//    NSLog(@"paramters = %@", paramters);
+//    [manager POST:string parameters:paramters
+//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//              NSLog(@"response = %@", responseObject);
+//              if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+//                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                  [alertView show];
+//              } else if ([[responseObject objectForKey:@"code"] integerValue] == 0){
+//                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                  [alertView show];
+//              }
+//     
+//          }
+//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//              
+//              NSLog(@"Error: %@", error);
+//              
+//          }];
+//
+//    
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

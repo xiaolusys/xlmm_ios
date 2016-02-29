@@ -13,6 +13,7 @@
 - (instancetype)initWithDiction:(NSDictionary *)dic{
     self = [super init];
     if (self) {
+        _ID = [dic objectForKey:@"id"];
         _xlmm = [[dic objectForKey:@"xlmm"] integerValue];
         _value_money = [[dic objectForKey:@"value_money"] floatValue];
         _get_status_display = [dic objectForKey:@"get_status_display"];
