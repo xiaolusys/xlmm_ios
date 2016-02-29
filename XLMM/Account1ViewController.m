@@ -166,7 +166,9 @@ static NSString *identifier = @"AccountCell";
 //提现
 - (void)rightBarButtonAction {
     WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
-    drawCash.money = self.accountMoney;
+    CGFloat money = [self.moneyLabel.text floatValue];
+    NSNumber *number = [NSNumber numberWithFloat:money];
+    drawCash.money = number;
     [self.navigationController pushViewController:drawCash animated:YES];
 }
 

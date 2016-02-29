@@ -293,7 +293,16 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:desc delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
     
-    //成功之后返回
+    //如果没有绑定微信号
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *btnTitle = [alertView buttonTitleAtIndex:0];
+    
+//    if ([btnTitle isEqualToString:@"确定"]) {
+//        
+//    }
 }
 
 //绑定微信
