@@ -1161,7 +1161,7 @@
 		323D667B1C2799C200A2B955 /* retina7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retina7.png; path = XLMM/retina7.png; sourceTree = "<group>"; };
 		324337351C76C76A0066CADD /* MMLoginStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLoginStatus.h; sourceTree = "<group>"; };
 		324337361C76C76A0066CADD /* MMLoginStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLoginStatus.m; sourceTree = "<group>"; };
-		324337381C79BA860066CADD /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
+		324337381C79BA860066CADD /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = accounticon.png; path = ../accounticon.png; sourceTree = "<group>"; };
 		3247EA931BE9943300A5CC1C /* lingquyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lingquyouhuiquan.png; sourceTree = "<group>"; };
 		3247EAA81BE9E07300A5CC1C /* wash01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash01.png; sourceTree = "<group>"; };
 		3247EAA91BE9E07300A5CC1C /* wash02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wash02.png; sourceTree = "<group>"; };
@@ -1346,9 +1346,9 @@
 		3274C1841C06EB1400641C4E /* RefundDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundDetailsViewController.m; sourceTree = "<group>"; };
 		3274C1851C06EB1400641C4E /* RefundDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundDetailsViewController.xib; sourceTree = "<group>"; };
 		3274C1891C07129E00641C4E /* refundSuccessful.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refundSuccessful.png; sourceTree = "<group>"; };
-		327C43A71C813ABB007091F6 /* qqiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qqiconthird.png; sourceTree = "<group>"; };
-		327C43A81C813ABB007091F6 /* zhifubaoiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifubaoiconthird.png; sourceTree = "<group>"; };
-		327C43A91C813ABB007091F6 /* weiboiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weiboiconthird.png; sourceTree = "<group>"; };
+		327C43A71C813ABB007091F6 /* qqiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qqiconthird.png; path = ../qqiconthird.png; sourceTree = "<group>"; };
+		327C43A81C813ABB007091F6 /* zhifubaoiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zhifubaoiconthird.png; path = ../zhifubaoiconthird.png; sourceTree = "<group>"; };
+		327C43A91C813ABB007091F6 /* weiboiconthird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = weiboiconthird.png; path = ../weiboiconthird.png; sourceTree = "<group>"; };
 		327F80BC1B9559F600EDDF5B /* PersonTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableCell.h; sourceTree = "<group>"; };
 		327F80BD1B9559F600EDDF5B /* PersonTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableCell.m; sourceTree = "<group>"; };
 		327F80BE1B9559F600EDDF5B /* PersonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonTableCell.xib; sourceTree = "<group>"; };
@@ -2764,10 +2764,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				327C43A71C813ABB007091F6 /* qqiconthird.png */,
-				327C43A81C813ABB007091F6 /* zhifubaoiconthird.png */,
-				327C43A91C813ABB007091F6 /* weiboiconthird.png */,
-				324337381C79BA860066CADD /* accounticon.png */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -2896,6 +2892,10 @@
 		32746DD41B74A22000816208 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				327C43A71C813ABB007091F6 /* qqiconthird.png */,
+				327C43A81C813ABB007091F6 /* zhifubaoiconthird.png */,
+				327C43A91C813ABB007091F6 /* weiboiconthird.png */,
+				324337381C79BA860066CADD /* accounticon.png */,
 				3219D2231C31113000619A55 /* wxkuaizhao.png */,
 				3219D2241C31113000619A55 /* friendskuaizhao.png */,
 				2E72B3E81C1BB9C700D452E0 /* sharecopylink.png */,
