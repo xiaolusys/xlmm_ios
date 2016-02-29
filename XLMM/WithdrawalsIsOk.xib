@@ -28,7 +28,7 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgAdd.png" translatesAutoresizingMaskIntoConstraints="NO" id="aYf-Xg-4G3">
+                <imageView userInteractionEnabled="NO" tag="106" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgAdd.png" translatesAutoresizingMaskIntoConstraints="NO" id="aYf-Xg-4G3">
                     <rect key="frame" x="256" y="250" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="OWa-NB-DW0"/>
@@ -44,7 +44,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgjian.png" translatesAutoresizingMaskIntoConstraints="NO" id="yg9-dg-KCn">
+                <imageView userInteractionEnabled="NO" tag="105" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgjian.png" translatesAutoresizingMaskIntoConstraints="NO" id="yg9-dg-KCn">
                     <rect key="frame" x="176" y="250" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="QJd-S4-xk8"/>
