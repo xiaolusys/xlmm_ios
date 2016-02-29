@@ -91,6 +91,7 @@ static NSString *identifier = @"AccountCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:self.tableView];
     
@@ -186,7 +187,8 @@ static NSString *identifier = @"AccountCell";
     if (!cell) {
         cell = [[AccountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-        [cell fillDataOfCell:accountM];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell fillDataOfCell:accountM];
     return cell;
 }
 

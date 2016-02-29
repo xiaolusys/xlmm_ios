@@ -50,13 +50,12 @@
     }
     
     if ([carryModel.carry_type isEqualToString:@"in"]) {
-        self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
+        self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.value_money floatValue]];
     }else {
-        self.moneyLabel.text = [NSString stringWithFormat:@"- %.2f", [carryModel.value_money floatValue]];
+        self.moneyLabel.text = [NSString stringWithFormat:@"-%.2f", [carryModel.value_money floatValue]];
     }
     self.sourceLabel.text = carryModel.get_log_type_display;
     self.desLabel.text = carryModel.desc;
-    self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f", [carryModel.value_money floatValue]];
     
     
 }
