@@ -41,6 +41,9 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+    [self isAttentionPublic];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -66,7 +69,6 @@
         [self createWithdrawalsIsOk];
     }
     
-    [self isAttentionPublic];
     
     //判断是否绑定微信号
 //    if (!self.isBandWx) {
