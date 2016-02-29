@@ -72,7 +72,7 @@
 		18EA12481C80292C00B9A753 /* Account1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EA12471C80292C00B9A753 /* Account1ViewController.m */; };
 		18EA124A1C84454C00B9A753 /* mamazhi.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA12491C84454C00B9A753 /* mamazhi.png */; };
 		18EA124C1C8447AD00B9A753 /* mamafens.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA124B1C8447AD00B9A753 /* mamafens.png */; };
-		18EA124E1C844A6600B9A753 /* mamatuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA124D1C844A6600B9A753 /* mamatuan.png */; };
+		18EA12501C844DBC00B9A753 /* mamatuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA124F1C844DBC00B9A753 /* mamatuan.png */; };
 		18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F388431C7B1405005A7C12 /* AccountEmpty.xib */; };
 		18F388461C7B227B005A7C12 /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F388451C7B227B005A7C12 /* wallet.png */; };
 		18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */; };
@@ -778,7 +778,7 @@
 		18EA12471C80292C00B9A753 /* Account1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account1ViewController.m; sourceTree = "<group>"; };
 		18EA12491C84454C00B9A753 /* mamazhi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamazhi.png; sourceTree = "<group>"; };
 		18EA124B1C8447AD00B9A753 /* mamafens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamafens.png; sourceTree = "<group>"; };
-		18EA124D1C844A6600B9A753 /* mamatuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamatuan.png; sourceTree = "<group>"; };
+		18EA124F1C844DBC00B9A753 /* mamatuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamatuan.png; sourceTree = "<group>"; };
 		18F388431C7B1405005A7C12 /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
 		18F388451C7B227B005A7C12 /* wallet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallet.png; sourceTree = "<group>"; };
 		18F3884D1C7BF1CF005A7C12 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
@@ -1943,10 +1943,10 @@
 				2E612B501C4A4454002F1C15 /* 3lun@2x.png */,
 				2E612B511C4A4454002F1C15 /* 4lun@2x.png */,
 				2E63AE541C3E5DCF008E97BB /* savephoto.png */,
+				18EA124F1C844DBC00B9A753 /* mamatuan.png */,
 				181C74911C52152800375DF8 /* mamayong.png */,
 				181C749E1C53678400375DF8 /* mamaShare.png */,
 				18601B1F1C746EB600E87A7B /* mamati.png */,
-				18EA124D1C844A6600B9A753 /* mamatuan.png */,
 				18EA124B1C8447AD00B9A753 /* mamafens.png */,
 				18601B1D1C746EB200E87A7B /* mamajiang.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
@@ -3587,7 +3587,7 @@
 				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				18BDB2881C7D4743006462C2 /* grayJian.png in Resources */,
-				18EA124E1C844A6600B9A753 /* mamatuan.png in Resources */,
+				18EA12501C844DBC00B9A753 /* mamatuan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
 				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
@@ -4279,7 +4279,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4316,7 +4316,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4361,7 +4361,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4405,7 +4405,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
