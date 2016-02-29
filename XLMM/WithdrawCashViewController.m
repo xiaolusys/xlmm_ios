@@ -66,6 +66,8 @@
         [self createWithdrawalsIsOk];
     }
     
+    [self isAttentionPublic];
+    
     //判断是否绑定微信号
 //    if (!self.isBandWx) {
 //        [self createEmptyView];
@@ -82,6 +84,32 @@
 //    [self createWithdrawalsIsOk];
 //    [self createWithdrawalsIsNo];
 //    [self createBindView];
+}
+
+- (void)isAttentionPublic{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile.json", Root_URL];
+    MMLOG(string);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    MMLOG(dic);
+    NSInteger isAttPub = [[dic objectForKey:@"is_attention_public"] integerValue];
+   // isAttPub = 0;
+    if (isAttPub == 1) {
+        //立即关注
+        
+    } else if (isAttPub == 0){
+        //已关注
+        UIButton *button = [self.bindView viewWithTag:88];
+        [button setTitle:@"已关注" forState:UIControlStateNormal];
+        button.enabled = NO;
+        [button setTitleColor:[UIColor buttonDisabledBorderColor] forState:UIControlStateNormal];
+        button.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
+        
+    }
+    
 }
 
 
@@ -104,6 +132,7 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:12];
     [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(bindBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = 88;
     [self.bindView addSubview:btn];
 }
 

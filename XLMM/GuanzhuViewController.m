@@ -42,14 +42,15 @@
     
     [self createNavigationBarWithTitle:@"公众号" selecotr:@selector(backClicked:)];
     
-    UIImage *image = [self createNonInterpolatedUIImageFormCIImage:[self createQRForString:@"http://www.baidu.com"] withSize:480];
-    self.imageView.image = image;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.button.layer.cornerRadius = 20;
     self.button.layer.borderWidth = 1;
     self.button.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/users/profile",Root_URL] andSelector:@selector(fetchedData:)];
-
+    [self downLoadWithURLString:[NSString stringWithFormat:@"%@/rest/v1/users/get_wxpub_authinfo",Root_URL] andSelector:@selector(fetchedData:)];
+    
+    self.saveView.layer.cornerRadius = 8;
+    self.saveView.layer.borderWidth = 1;
+    self.saveView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
 }
 
@@ -59,6 +60,13 @@
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
+    //  生成二维码 和描述。。。
+    UIImage *image = [self createNonInterpolatedUIImageFormCIImage:[self createQRForString:[dic objectForKey:@"auth_link"]] withSize:480];
+    self.imageView.image = image;
+    
+    self.label.text = [dic objectForKey:@"auth_msg"];
+    
+    
     
 }
 
@@ -133,4 +141,5 @@
     // Send the image back
     return qrFilter.outputImage;
 }
+
 @end
