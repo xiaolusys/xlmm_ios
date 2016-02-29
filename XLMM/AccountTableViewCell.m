@@ -29,6 +29,7 @@
     
     if ([accountM.budget_type boolValue]) {
         self.moneyLabel.text = [NSString stringWithFormat:@"- %.2f元", [accountM.budeget_detail_cash floatValue]];
+        self.moneyLabel.textColor = [UIColor textDarkGrayColor];
     }else {
         self.moneyLabel.text = [NSString stringWithFormat:@"+ %.2f元", [accountM.budeget_detail_cash floatValue]];
         self.moneyLabel.textColor = [UIColor orangeThemeColor];

@@ -61,7 +61,7 @@ static NSString *identifier = @"AccountCell";
     self.moneyLabel.text = str;
     
     //刷新记录
-    [self againRequest];
+    [self againRequest:YES];
 }
 
 - (void)viewDidLoad {
@@ -125,10 +125,13 @@ static NSString *identifier = @"AccountCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
-    [self againRequest];
+    [self againRequest:NO];
 }
 
-- (void)againRequest {
+- (void)againRequest:(BOOL)type {
+    if (type) {
+        [self.dataArr removeAllObjects];
+    }
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     

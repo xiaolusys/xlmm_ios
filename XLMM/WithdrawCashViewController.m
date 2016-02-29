@@ -60,7 +60,15 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [user setObject:self.accountMoney.text forKey:@"DrawCashM"];
+    
+    NSInteger rednum = [self.redNumLabel.text integerValue];
+    NSString *save = self.accountMoney.text;
+    if (rednum > 0) {
+        CGFloat money = rednum * RED + [self.accountMoney.text floatValue];
+        save = [NSString stringWithFormat:@"%.2f", money];
+    }
+    
+    [user setObject:save forKey:@"DrawCashM"];
     [user synchronize];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"drawCashMoeny" object:nil];
@@ -302,7 +310,8 @@
         NSLog(@"%@", responseObject);
         if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
             [self showDrawResults:responseObject];
-            
+            self.redNumLabel.text = @"0";
+            [self rightDrawCashBtn:NO];
         } else if ([[responseObject objectForKey:@"code"] integerValue] == 4) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请关注小鹿美美公众号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             alertView.tag = 1000;
