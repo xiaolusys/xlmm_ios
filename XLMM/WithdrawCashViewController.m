@@ -214,7 +214,7 @@
     withdrawalsIsNo = views[0];
     
     withdrawalsIsNo.frame = CGRectMake(0, 180, SCREENWIDTH, SCREENHEIGHT - 180);
-//
+
     UIButton *button = (UIButton *)[withdrawalsIsNo viewWithTag:105];
     button.layer.cornerRadius = 20;
     button.layer.borderWidth = 0.5;

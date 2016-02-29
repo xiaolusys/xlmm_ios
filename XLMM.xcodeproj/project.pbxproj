@@ -70,6 +70,9 @@
 		18DCB2DA1C55F4F800B7FBA9 /* MaMaSelectProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2D91C55F4F800B7FBA9 /* MaMaSelectProduct.m */; };
 		18DCB2DD1C55FC2800B7FBA9 /* MaMaShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */; };
 		18EA12481C80292C00B9A753 /* Account1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EA12471C80292C00B9A753 /* Account1ViewController.m */; };
+		18EA124A1C84454C00B9A753 /* mamazhi.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA12491C84454C00B9A753 /* mamazhi.png */; };
+		18EA124C1C8447AD00B9A753 /* mamafens.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA124B1C8447AD00B9A753 /* mamafens.png */; };
+		18EA124E1C844A6600B9A753 /* mamatuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EA124D1C844A6600B9A753 /* mamatuan.png */; };
 		18F388441C7B1405005A7C12 /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18F388431C7B1405005A7C12 /* AccountEmpty.xib */; };
 		18F388461C7B227B005A7C12 /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F388451C7B227B005A7C12 /* wallet.png */; };
 		18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F3884E1C7BF1CF005A7C12 /* AccountTableViewCell.m */; };
@@ -773,6 +776,9 @@
 		18DCB2DC1C55FC2800B7FBA9 /* MaMaShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaShopViewController.m; sourceTree = "<group>"; };
 		18EA12461C80292C00B9A753 /* Account1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account1ViewController.h; sourceTree = "<group>"; };
 		18EA12471C80292C00B9A753 /* Account1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account1ViewController.m; sourceTree = "<group>"; };
+		18EA12491C84454C00B9A753 /* mamazhi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamazhi.png; sourceTree = "<group>"; };
+		18EA124B1C8447AD00B9A753 /* mamafens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamafens.png; sourceTree = "<group>"; };
+		18EA124D1C844A6600B9A753 /* mamatuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamatuan.png; sourceTree = "<group>"; };
 		18F388431C7B1405005A7C12 /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
 		18F388451C7B227B005A7C12 /* wallet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallet.png; sourceTree = "<group>"; };
 		18F3884D1C7BF1CF005A7C12 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
@@ -1940,8 +1946,11 @@
 				181C74911C52152800375DF8 /* mamayong.png */,
 				181C749E1C53678400375DF8 /* mamaShare.png */,
 				18601B1F1C746EB600E87A7B /* mamati.png */,
+				18EA124D1C844A6600B9A753 /* mamatuan.png */,
+				18EA124B1C8447AD00B9A753 /* mamafens.png */,
 				18601B1D1C746EB200E87A7B /* mamajiang.png */,
 				181C74921C52152800375DF8 /* mamabu.png */,
+				18EA12491C84454C00B9A753 /* mamazhi.png */,
 				18601B1B1C7469C600E87A7B /* mamafan.png */,
 				18CD7BCA1C5A149C0024B447 /* totalClick.png */,
 				18D22E391C5B4EF200ECE45C /* zhanwei.png */,
@@ -3578,6 +3587,7 @@
 				32E8B5A61C5214E100414F8A /* ActivityErweimaViewController.xib in Resources */,
 				32746E2E1B74A22000816208 /* icon-youhuiquan.png in Resources */,
 				18BDB2881C7D4743006462C2 /* grayJian.png in Resources */,
+				18EA124E1C844A6600B9A753 /* mamatuan.png in Resources */,
 				3262964F1C45F627001A27E3 /* hongbaoclose100.png in Resources */,
 				2EB87D411C17FAE4001CBF3D /* ios-social-sdk-share-detail.html in Resources */,
 				3269A4BE1C749DA5001B8761 /* StartActivityView.xib in Resources */,
@@ -3686,6 +3696,7 @@
 				321C8D981BD87C4B0060FB62 /* PurchaseViewController1.xib in Resources */,
 				8E9665761C0599CD001CF18A /* empty.png in Resources */,
 				8E0044EB1BFC5B9E00AFC1DF /* ChangeNicknameViewController.xib in Resources */,
+				18EA124A1C84454C00B9A753 /* mamazhi.png in Resources */,
 				32E8B5491C4CC8A300414F8A /* TixianHistoryViewController.xib in Resources */,
 				32151BF51B96CFBF003569D7 /* MMCollectionController.xib in Resources */,
 				321928D61BDB7EB8004EA6A7 /* coupon.png in Resources */,
@@ -3845,6 +3856,7 @@
 				32FE088C1BF5CB940072CCEC /* downArrow1.png in Resources */,
 				321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */,
 				327C43AB1C813ABB007091F6 /* zhifubaoiconthird.png in Resources */,
+				18EA124C1C8447AD00B9A753 /* mamafens.png in Resources */,
 				2E72B3F31C1BB9C700D452E0 /* shareweixin.png in Resources */,
 				32EC42651BE8A8C1009E5FA2 /* tiantian.png in Resources */,
 				2E76FFEC1C180BAA008CE960 /* AlipaySDK.bundle in Resources */,
