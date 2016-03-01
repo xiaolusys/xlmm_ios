@@ -112,9 +112,9 @@
     self.jineLabel.userInteractionEnabled = YES;
     
     self.fensilabel.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
-//  //  [self.fensiLabel addGestureRecognizer:tap1];
-//    [self.fensilabel addGestureRecognizer:tap1];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
+  //  [self.fensiLabel addGestureRecognizer:tap1];
+    [self.fensilabel addGestureRecognizer:tap1];
     
 }
 
