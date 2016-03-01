@@ -39,4 +39,5 @@
 - (void)fillCell:(MaMaSelectProduct *)product;
 //我的精选
 - (void)fillMyChoice:(MaMaSelectProduct *)product;
+
 @end

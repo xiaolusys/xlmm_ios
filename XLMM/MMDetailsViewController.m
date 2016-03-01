@@ -905,7 +905,7 @@
         
         [manager POST:kCart_URL parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               //   NSLog(@"JSON: %@", responseObject);
+                 NSLog(@"JSON: %@", responseObject);
                   [self myAnimation];
 
             }
@@ -913,11 +913,11 @@
          //   NSLog(@"Error: %@", error);
          //     NSLog(@"error:, --.>>>%@", error.description);
               NSDictionary *dic = [error userInfo];
-            //  NSLog(@"dic = %@", dic);
-           //   NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+              NSLog(@"dic = %@", dic);
+              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
               
               __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-           //   NSLog(@"%@",str);
+              NSLog(@"%@",str);
               UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
               view.backgroundColor = [UIColor blackColor];
               view.layer.cornerRadius = 8;

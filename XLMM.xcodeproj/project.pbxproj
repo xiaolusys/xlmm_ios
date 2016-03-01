@@ -346,6 +346,8 @@
 		325A91C71C5C4CC100629C9F /* FanceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 325A91C61C5C4CC100629C9F /* FanceModel.m */; };
 		325AD2D31C842DEB00446B02 /* NSString+DeleteT.m in Sources */ = {isa = PBXBuildFile; fileRef = 325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */; };
 		325AD2D41C8465B900446B02 /* MMLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 326C4E0F1C2D4EF000A79359 /* MMLoadingAnimation.m */; };
+		325AD2D81C85667000446B02 /* ProductSelectionListCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 325AD2D61C85667000446B02 /* ProductSelectionListCell2.m */; };
+		325AD2D91C85667000446B02 /* ProductSelectionListCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325AD2D71C85667000446B02 /* ProductSelectionListCell2.xib */; };
 		325B1E7C1BE488630027B3E3 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A2883F1B93E230006DC949 /* MMRootViewController.m */; };
 		325B1E7D1BE488800027B3E3 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288401B93E230006DC949 /* MMRootViewController.xib */; };
 		325B1E821BE494FA0027B3E3 /* Head2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32A288C21B942F6B006DC949 /* Head2View.xib */; };
@@ -1198,6 +1200,9 @@
 		325A91C61C5C4CC100629C9F /* FanceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FanceModel.m; sourceTree = "<group>"; };
 		325AD2D11C842DEB00446B02 /* NSString+DeleteT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DeleteT.h"; sourceTree = "<group>"; };
 		325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DeleteT.m"; sourceTree = "<group>"; };
+		325AD2D51C85667000446B02 /* ProductSelectionListCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell2.h; sourceTree = "<group>"; };
+		325AD2D61C85667000446B02 /* ProductSelectionListCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell2.m; sourceTree = "<group>"; };
+		325AD2D71C85667000446B02 /* ProductSelectionListCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell2.xib; sourceTree = "<group>"; };
 		325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorImage.h"; sourceTree = "<group>"; };
 		325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorImage.m"; sourceTree = "<group>"; };
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1730,6 +1735,9 @@
 				181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */,
 				181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */,
 				181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */,
+				325AD2D51C85667000446B02 /* ProductSelectionListCell2.h */,
+				325AD2D61C85667000446B02 /* ProductSelectionListCell2.m */,
+				325AD2D71C85667000446B02 /* ProductSelectionListCell2.xib */,
 				32CFD5C51C589F0500C6203E /* FensiTableViewCell.h */,
 				32CFD5C61C589F0500C6203E /* FensiTableViewCell.m */,
 				32CFD5C71C589F0500C6203E /* FensiTableViewCell.xib */,
@@ -3760,6 +3768,7 @@
 				32746E121B74A22000816208 /* icon-fanhui.png in Resources */,
 				8EA825E91C041A53008D0C13 /* display_passwd_icon.png in Resources */,
 				18601B161C743EFE00E87A7B /* loading动画0016.png in Resources */,
+				325AD2D91C85667000446B02 /* ProductSelectionListCell2.xib in Resources */,
 				32746E351B74A22000816208 /* tag-shixiao.png in Resources */,
 				32976B821BA117AE0045ADB9 /* tuihuo-close.png in Resources */,
 				32558AA01BF5DA2D00C0AE77 /* ShenQingTuiHuoController.xib in Resources */,
@@ -4157,6 +4166,7 @@
 				32D790BC1BCDE5E6007353AD /* UIImage+ChangeGray.m in Sources */,
 				32D2321C1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m in Sources */,
 				3282F28D1B6B5B1300E73EB9 /* UIImageView+WebCache.m in Sources */,
+				325AD2D81C85667000446B02 /* ProductSelectionListCell2.m in Sources */,
 				3266A6E21BE35C4100C676A9 /* PosterCollectionCell2.m in Sources */,
 				321952C71BFC7AF800AA0AB8 /* QNHijackingDetectWrapper.m in Sources */,
 				321952C51BFC7AF800AA0AB8 /* QNDnspodEnterprise.m in Sources */,
