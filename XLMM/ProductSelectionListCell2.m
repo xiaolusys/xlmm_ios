@@ -18,6 +18,25 @@
     // Initialization code
 }
 
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+//        _addBtnClick.layer.cornerRadius = 15;
+//        _addBtnClick.layer.borderWidth = 0.5;
+//        _addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    }
+    return self;
+}
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+//        _addBtnClick.layer.cornerRadius = 15;
+//        _addBtnClick.layer.borderWidth = 0.5;
+//        _addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    }
+    return self;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
@@ -48,10 +67,10 @@
     
     
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
-    self.addBtnClick.selected = YES;
-    self.addBtnClick.layer.cornerRadius = 15;
-    self.addBtnClick.layer.borderWidth = 0.5;
-    self.addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    //self.xiajiaBtn.selected = YES;
+    self.xiajiaBtn.layer.cornerRadius = 15;
+    self.xiajiaBtn.layer.borderWidth = 0.5;
+    self.xiajiaBtn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
 //    [self.addBtnClick setTitle:@"下架" forState:UIControlStateNormal];
     
     self.shareBtn.layer.cornerRadius = 15;

@@ -53,7 +53,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     self.isRequest = NO;
     
-    [self createNavigationBarWithTitle:@"我的店铺" selecotr:@selector(backClickAction)];
+    [self createNavigationBarWithTitle:@"我的精选" selecotr:@selector(backClickAction)];
     
     UIBarButtonItem *rightItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(previewAction)];
 
@@ -125,6 +125,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProductSelectionListCell2 *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
         cell = [[ProductSelectionListCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];

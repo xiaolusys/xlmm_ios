@@ -28,7 +28,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *picImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productName;
-@property (weak, nonatomic) IBOutlet UIButton *addBtnClick;
+@property (weak, nonatomic) IBOutlet UIButton *xiajiaBtn;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stdPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *backPriceLabel;
