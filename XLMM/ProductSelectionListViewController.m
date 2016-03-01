@@ -41,6 +41,8 @@
 
 
 
+
+
 @end
 
 static NSString *cellIdentifier = @"productSelection";
@@ -78,6 +80,8 @@ static NSString *cellIdentifier = @"productSelection";
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
+    
+    [SVProgressHUD show];
     
     [self createHeadView];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
@@ -299,6 +303,7 @@ static NSString *cellIdentifier = @"productSelection";
         [self.dataArr addObject:productM];
     }
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [SVProgressHUD dismiss];
     [self.tableView reloadData];
     
 }
