@@ -28,7 +28,7 @@
 
 @end
 
-static NSString *cellIdentifier = @"productSelection";
+static NSString *cellIdentifier = @"SelectedListCell";
 @implementation MaMaShopViewController
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -65,8 +65,10 @@ static NSString *cellIdentifier = @"productSelection";
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 118;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+    self.tableView.tableHeaderView = tableHeaderView;
     //注册cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell2" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
@@ -115,15 +117,17 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 96;
+    return 128;
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProductSelectionListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ProductSelectionListCell2 *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
     MaMaSelectProduct *product = self.dataArr[indexPath.row];
     if (!cell) {
-        cell = [[ProductSelectionListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ProductSelectionListCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     [cell fillMyChoice:product];
     return cell;
@@ -148,6 +152,10 @@ static NSString *cellIdentifier = @"productSelection";
         NSLog(@"店铺－－Error: %@", error);
     }];
 
+}
+
+- (void)productSelectionShareClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn{
+    NSLog(@"share");
 }
 
 
