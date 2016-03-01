@@ -15,6 +15,8 @@
 #import "MaMaSelectProduct.h"
 #import "ShopPreviousViewController.h"
 #import "WXApi.h"
+#import "MamaShareView.h"
+
 
 
 @interface MaMaShopViewController ()
@@ -29,7 +31,12 @@
 @end
 
 static NSString *cellIdentifier = @"SelectedListCell";
-@implementation MaMaShopViewController
+@implementation MaMaShopViewController{
+    MamaShareView *shareView;
+    MamaShareView *singleShareView;
+    UIView *backView;
+    
+}
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         self.dataArr = [NSMutableArray arrayWithCapacity:0];
@@ -71,6 +78,9 @@ static NSString *cellIdentifier = @"SelectedListCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell2" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
+    
+    [self createBackView];
+
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
@@ -89,12 +99,160 @@ static NSString *cellIdentifier = @"SelectedListCell";
 
 //分享
 - (void)shareAction {
-    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeText;
+    shareView = [MamaShareView new];
     
-    [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:@"小鹿妈妈店铺分享" image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-        }
+    
+    
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
+    shareView = array[0];
+    shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    NSLog(@"shareView  = %@", shareView.subviews);
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        shareView.frame = self.view.bounds;
     }];
+    backView.hidden = NO;
+    [self.view addSubview:shareView];
+    
+    
+    
+    
+    
+    
+    [self createShareButtonTarget];
+}
+
+- (void)createShareButtonTarget{
+    UIView *view = (UIView *)[shareView.subviews objectAtIndex:0];
+    view.layer.cornerRadius = 20;
+    // shareView.cancleBtn.layer.masksToBounds = YES;
+    shareView.cancleBtn.layer.cornerRadius = 20;
+    shareView.cancleBtn.layer.borderWidth = 1;
+    shareView.cancleBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    
+    [shareView.cancleBtn addTarget:self action:@selector(cancleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    shareView.weixinBtn.tag = 100;
+    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    shareView.friendBtn.tag = 101;
+    shareView.qqBtn.tag = 102;
+    shareView.spaceBtn.tag = 103;
+    shareView.weiboBtn.tag = 104;
+    shareView.fuzhiBtn.tag = 105;
+    shareView.wxkuaizhaoBtn.tag = 106;
+    shareView.wxkuaizhaoBtn.hidden = YES;
+    shareView.friendkuaizhaoBtn.tag = 107;
+    shareView.friendkuaizhaoBtn.hidden = YES;
+    
+    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.friendBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.qqBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.spaceBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.weiboBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.fuzhiBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.wxkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [shareView.friendkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
+    
+}
+
+- (void)shareClicked:(UIButton *)button{
+    switch (button.tag) {
+        case 100:{
+            NSLog(@"微信");
+            
+            [self cancleBtnClicked:nil];
+            break;
+        }
+        case 101:{
+            
+            
+            [self cancleBtnClicked:nil];
+            break;
+        }
+        case 102:{
+                       [self cancleBtnClicked:nil];
+            
+            break;
+        }
+        case 103:{
+                      [self cancleBtnClicked:nil];
+            
+            break;
+        }
+        case 104:{
+           
+            
+              [self cancleBtnClicked:nil];
+            
+            break;
+        }
+        case 105:{
+          
+            [self cancleBtnClicked:nil];
+            
+            NSLog(@"复制");
+            break;
+        }
+        case 106:{
+            NSLog(@"微信快照");
+            break;
+        }
+        case 107:{
+            NSLog(@"朋友圈快照");
+            break;
+        }
+        default:{
+            NSLog(@"其他");
+            break;
+        }
+            
+    }
+}
+
+- (void)cancleSingleBtnClicked:(UIButton *)button{
+    NSLog(@"quxiao");
+    [UIView animateWithDuration:0.3 animations:^{
+        singleShareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    } completion:^(BOOL finished) {
+        
+        [singleShareView removeFromSuperview];
+        
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        backView.hidden = YES;
+    }];
+}
+
+- (void)cancleBtnClicked:(UIButton *)button{
+    NSLog(@"quxiao");
+    [UIView animateWithDuration:0.3 animations:^{
+        shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    } completion:^(BOOL finished) {
+        
+        [shareView removeFromSuperview];
+        
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        backView.hidden = YES;
+    }];
+    
+    
+    
+}
+
+
+- (void)createBackView{
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.alpha = 0.3;
+    backView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:backView];
+    backView.hidden = YES;
+    
 }
 
 #pragma mark --数据处理
@@ -158,6 +316,121 @@ static NSString *cellIdentifier = @"SelectedListCell";
 
 - (void)productSelectionShareClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn{
     NSLog(@"share");
+    singleShareView = [MamaShareView new];
+    
+    
+    
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:singleShareView options:nil];
+    singleShareView = array[0];
+    singleShareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
+    NSLog(@"shareView  = %@", singleShareView.subviews);
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        singleShareView.frame = self.view.bounds;
+    }];
+    backView.hidden = NO;
+    [self.view addSubview:singleShareView];
+    
+    
+    
+    
+    
+    
+    [self createShareSingleTarget];
+}
+
+- (void)createShareSingleTarget{
+    
+    UIView *view = (UIView *)[singleShareView.subviews objectAtIndex:0];
+    view.layer.cornerRadius = 20;
+    // shareView.cancleBtn.layer.masksToBounds = YES;
+    singleShareView.cancleBtn.layer.cornerRadius = 20;
+    singleShareView.cancleBtn.layer.borderWidth = 1;
+    singleShareView.cancleBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    
+    [singleShareView.cancleBtn addTarget:self action:@selector(cancleSingleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    singleShareView.weixinBtn.tag = 100;
+    singleShareView.friendBtn.tag = 101;
+    singleShareView.qqBtn.tag = 102;
+    singleShareView.spaceBtn.tag = 103;
+    singleShareView.weiboBtn.tag = 104;
+    singleShareView.fuzhiBtn.tag = 105;
+    singleShareView.wxkuaizhaoBtn.tag = 106;
+    singleShareView.wxkuaizhaoBtn.hidden = YES;
+    singleShareView.friendkuaizhaoBtn.tag = 107;
+    singleShareView.friendkuaizhaoBtn.hidden = YES;
+    
+    [singleShareView.weixinBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.friendBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.qqBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.spaceBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.weiboBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.fuzhiBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.wxkuaizhaoBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [singleShareView.friendkuaizhaoBtn addTarget:self action:@selector(singleShareClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+}
+
+- (void)singleShareClicked:(UIButton *)button{
+    
+    switch (button.tag) {
+        case 100:{
+            NSLog(@"单品微信");
+            
+            [self cancleSingleBtnClicked:nil];
+            break;
+        }
+        case 101:{
+            
+            
+            
+            [self cancleSingleBtnClicked:nil];
+            break;
+        }
+        case 102:{
+            [self cancleSingleBtnClicked:nil];
+            
+            break;
+        }
+        case 103:{
+            [self cancleSingleBtnClicked:nil];
+            
+            break;
+        }
+        case 104:{
+            
+            
+            [self cancleSingleBtnClicked:nil];
+            
+            break;
+        }
+        case 105:{
+            
+            [self cancleSingleBtnClicked:nil];
+            
+            NSLog(@"复制");
+            break;
+        }
+        case 106:{
+            NSLog(@"微信快照");
+            break;
+        }
+        case 107:{
+            NSLog(@"朋友圈快照");
+            break;
+        }
+        default:{
+            NSLog(@"其他");
+            break;
+        }
+            
+    }
+    
+    
 }
 
 
