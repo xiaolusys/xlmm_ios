@@ -16,6 +16,7 @@
 #import "NewLeftViewController.h"
 #import "MMDetailsViewController.h"
 #import "MobClick.h"
+#import "SVProgressHUD.h"
 
 #define login @"login"
 
@@ -357,6 +358,7 @@
 
 
     } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+        [SVProgressHUD showInfoWithStatus:@"登录中....."];
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;

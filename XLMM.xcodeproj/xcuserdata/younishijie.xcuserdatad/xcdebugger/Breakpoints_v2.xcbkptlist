@@ -215,22 +215,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XLMM/PromoteModel.m"
-            timestampString = "475646317.794334"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "-initWithDictionary:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "XLMM/PreviousViewController.m"
             timestampString = "477724823.934016"
             startingColumnNumber = "9223372036854775807"
@@ -502,11 +486,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "477626595.677635"
+            timestampString = "478490837.38909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "-getUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -614,11 +598,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "477997125.336165"
+            timestampString = "478490837.38909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "-getUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -630,11 +614,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/AppDelegate.m"
-            timestampString = "477997126.143999"
+            timestampString = "478490837.38909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
             landmarkName = "-getUserInfo"
             landmarkType = "5">
          </BreakpointContent>

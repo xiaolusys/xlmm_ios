@@ -20,6 +20,7 @@
 #import "MiPushSDK.h"
 #import "MobClick.h"
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
+#import "SVProgressHUD.h"
 
 @interface LogInViewController ()
 
@@ -112,6 +113,8 @@
 
 - (void)update:(NSNotificationCenter *)notification{
     NSLog(@"微信一键登录成功， 请您绑定手机号");
+    
+    
     
     dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
@@ -226,6 +229,7 @@
 - (void) loginSuccessful {
     [MobClick profileSignInWithPUID:@"playerID"];
     
+    
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -316,6 +320,10 @@
 //    [MobClick profileSignInWithPUID:@"playerID"];
     
     NSLog(@"登录");
+    
+    [SVProgressHUD showInfoWithStatus:@"登录中....."];
+    
+    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *userName = _userIDTextField.text;
