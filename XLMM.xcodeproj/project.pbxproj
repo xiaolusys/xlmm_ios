@@ -1751,12 +1751,12 @@
 		181C74A01C53691A00375DF8 /* MaMaVersion1 */ = {
 			isa = PBXGroup;
 			children = (
+				3269A4BD1C747710001B8761 /* New Group */,
 				2E7C03811C2BBBC3004047BB /* MaMaViewController.h */,
 				2E7C03821C2BBBC3004047BB /* MaMaViewController.m */,
 				325DB35D1C434DB10018C421 /* MaMaPersonCenterViewController.h */,
 				325DB35E1C434DB10018C421 /* MaMaPersonCenterViewController.m */,
 				325DB35F1C434DB10018C421 /* MaMaPersonCenterViewController.xib */,
-				3269A4BD1C747710001B8761 /* New Group */,
 				322FA93D1C3CA9CC008DD942 /* TixianViewController.h */,
 				322FA93E1C3CA9CC008DD942 /* TixianViewController.m */,
 				322FA93F1C3CA9CC008DD942 /* TixianViewController.xib */,

@@ -15,7 +15,11 @@
 #import "MaMaSelectProduct.h"
 #import "ShopPreviousViewController.h"
 #import "WXApi.h"
+#import "SVProgressHUD.h"
 #import "MamaShareView.h"
+#import "WeiboSDK.h"
+#import "SendMessageToWeibo.h"
+
 
 
 
@@ -25,6 +29,12 @@
 @property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, assign)BOOL isRequest;
+
+@property (nonatomic, copy) NSString *shopShareLink;
+@property (nonatomic, copy) NSString *shopShareName;
+@property (nonatomic, copy) UIImage *shopShareImage;
+
+
 
 
 
@@ -87,6 +97,26 @@ static NSString *cellIdentifier = @"SelectedListCell";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+    NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
+    NSLog(@"url = %@", shareString);
+    [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
+}
+
+- (void)fetchedShareData:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
+    self.shopShareName = dic[@"shop_info"][@"name"];
+    
+    self.shopShareImage = [UIImage imageNamed:@"logo.png"];
+    
+    
+    MMLOG(_shopShareLink);
+    MMLOG(_shopShareName);
+    
 }
 
 
@@ -167,33 +197,80 @@ static NSString *cellIdentifier = @"SelectedListCell";
         case 100:{
             NSLog(@"微信");
             
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
+            
             [self cancleBtnClicked:nil];
             break;
         }
         case 101:{
+            
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
             
             
             [self cancleBtnClicked:nil];
             break;
         }
         case 102:{
+            
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
                        [self cancleBtnClicked:nil];
             
             break;
         }
         case 103:{
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                
+            }];
                       [self cancleBtnClicked:nil];
             
             break;
         }
         case 104:{
-           
+          
+            NSLog(@"微博");
+            NSData *data = UIImagePNGRepresentation(self.shopShareImage);
+            
+            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.shopShareName, self.shopShareLink];
+            
+            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:data];
             
               [self cancleBtnClicked:nil];
             
             break;
         }
         case 105:{
+            
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            NSString *str = self.shopShareLink;
+            [pab setString:str];
+            if (pab == nil) {
+                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+            }else
+            {
+                [SVProgressHUD showSuccessWithStatus:@"已复制"];
+            }
+            [self cancleBtnClicked:nil];
+            
+            NSLog(@"复制");
+            
           
             [self cancleBtnClicked:nil];
             
