@@ -410,7 +410,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
         }
         case 105:{
             
-            [self cancleSingleBtnClicked:nil];
+            [self cancleSingleBtnClicked :nil];
             
             NSLog(@"复制");
             break;
