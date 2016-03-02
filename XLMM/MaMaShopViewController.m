@@ -108,8 +108,13 @@ static NSString *cellIdentifier = @"SelectedListCell";
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
-    self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
     self.shopShareName = dic[@"shop_info"][@"name"];
+
+    if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
+        self.shopShareName = @"小鹿妈妈";
+
+    }
+    self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
     
     self.shopShareImage = [UIImage imageNamed:@"logo.png"];
     
@@ -193,6 +198,10 @@ static NSString *cellIdentifier = @"SelectedListCell";
 }
 
 - (void)shareClicked:(UIButton *)button{
+    if (self.shopShareLink == nil) {
+        [self cancleBtnClicked:nil];
+        return;
+    }
     switch (button.tag) {
         case 100:{
             NSLog(@"微信");
