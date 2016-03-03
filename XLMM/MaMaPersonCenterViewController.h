@@ -48,5 +48,7 @@
 
 - (IBAction)huodongzhongxin:(id)sender;
 
+- (IBAction)fansList:(id)sender;
+
 
 @end
