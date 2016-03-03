@@ -70,22 +70,22 @@
     //self.xiajiaBtn.selected = YES;
     self.xiajiaBtn.layer.cornerRadius = 15;
     self.xiajiaBtn.layer.borderWidth = 0.5;
-    self.xiajiaBtn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    self.xiajiaBtn.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
 //    [self.addBtnClick setTitle:@"下架" forState:UIControlStateNormal];
     
     self.shareBtn.layer.cornerRadius = 15;
     self.shareBtn.layer.borderWidth = 0.5;
-    self.shareBtn.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    self.shareBtn.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
     
-    self.picImageView.layer.cornerRadius = 8;
+//    self.picImageView.layer.cornerRadius = 8;
     self.picImageView.layer.masksToBounds = YES;
-    self.picImageView.layer.borderWidth = 0.5;
-    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+//    self.picImageView.layer.borderWidth = 0.5;
+//    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.stdPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
     self.backPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
-    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.sale_num integerValue]];
+    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld", (long)[product.sale_num integerValue]];
     
     //[self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }
