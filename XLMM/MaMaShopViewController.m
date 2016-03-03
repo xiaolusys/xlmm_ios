@@ -135,6 +135,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     mamaHeadImageView.layer.cornerRadius = 27;
     mamaHeadImageView.layer.borderColor = [UIColor colorWithR:50 G:12 B:8 alpha:1].CGColor;
     mamaHeadImageView.layer.borderWidth = 1.5;
+    mamaHeadImageView.layer.masksToBounds = YES;
     
     MMLOG(mamaHeadImageView);
     MMLOG(mamaShopLabel);

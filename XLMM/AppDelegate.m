@@ -419,6 +419,8 @@
     });
 }
 
+
+
 -(void)getUserInfo
 {
     // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
