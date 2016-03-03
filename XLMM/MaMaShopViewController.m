@@ -54,6 +54,10 @@ static NSString *cellIdentifier = @"SelectedListCell";
     MamaShareView *singleShareView;
     UIView *backView;
     
+    UIImageView *mamaHeadImageView;
+    UILabel *mamaShopLabel;
+    
+    
 }
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -91,6 +95,11 @@ static NSString *cellIdentifier = @"SelectedListCell";
     self.tableView.rowHeight = 118;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+    
+    [tableHeaderView addSubview:[self createTableHeadView]];
+    
+    
+    
     self.tableView.tableHeaderView = tableHeaderView;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell2" bundle:nil] forCellReuseIdentifier:cellIdentifier];
@@ -108,6 +117,36 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
     NSLog(@"url = %@", shareString);
     [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
+}
+
+- (UIView *)createTableHeadView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"mamaJingxuan" owner:nil options:nil];
+    NSLog(@"%@", views);
+    
+    NSLog(@"%@", [views[0] subviews]);
+    UIView *view = views[0];
+    
+    view.frame = CGRectMake(0, 0, SCREENWIDTH, 180);
+    
+    UIView *whiteView = [view viewWithTag:200];
+    mamaShopLabel = [view viewWithTag:100];
+    whiteView.layer.cornerRadius = 30;
+    mamaHeadImageView = [whiteView.subviews objectAtIndex:0];
+    mamaHeadImageView.layer.cornerRadius = 27;
+    mamaHeadImageView.layer.borderColor = [UIColor colorWithR:50 G:12 B:8 alpha:1].CGColor;
+    mamaHeadImageView.layer.borderWidth = 1.5;
+    
+    MMLOG(mamaHeadImageView);
+    MMLOG(mamaShopLabel);
+    
+    
+    
+    
+    return view;
+    
+    
+    
+    
 }
 
 - (void)fetchedShareData:(NSData *)data{
