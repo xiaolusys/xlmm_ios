@@ -529,7 +529,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
         case 103:{
             
             [UMSocialData defaultData].extConfig.qzoneData.title = self.productName;
-            [UMSocialData defaultData].extConfig.qzoneData.url = self.productLink;
+            [UMSocialData defaultData].extConfig.qzoneData
+            .url = self.productLink;
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.productDes image:self.productImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 
