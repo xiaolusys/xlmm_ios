@@ -1974,6 +1974,13 @@
 		2E63AE531C3E5DA1008E97BB /* MaMa */ = {
 			isa = PBXGroup;
 			children = (
+				32DF3B0E1C88078B00738815 /* wodejingxuantouxiangicon.png */,
+				32DF3B0C1C8806F000738815 /* wodejingxuandanpinxiajia.png */,
+				32DF3B0A1C8806EB00738815 /* wodejingxuandanpinfenxiang.png */,
+				32DF3B021C8804AA00738815 /* wodejingxuanyulan.png */,
+				32DF3B031C8804AA00738815 /* wodejingxuanfenxiang.png */,
+				32DF3B041C8804AA00738815 /* wodejingxuanfanhui.png */,
+				32DF3B051C8804AA00738815 /* wodejingxuanback.png */,
 				1847A7AA1C8809DA005D992C /* mamashop.png */,
 				1847A7A41C8807C5005D992C /* mamajingxuan.png */,
 				1847A7A51C8807C5005D992C /* mamatuisong.png */,
