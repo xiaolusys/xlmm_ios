@@ -11,12 +11,13 @@
 #import "FensiTableViewCell.h"
 #import "MMClass.h"
 #import "FanceModel.h"
+#import "MJRefresh.h"
 
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
-
+@property (nonatomic, strong) NSString *nextPage;
 
 @end
 
@@ -48,31 +49,43 @@
     [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(backClicked:)];
     [self.view addSubview:self.tableView];
     
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+    
     [self downloadData];
 }
 
 - (void)downloadData{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/fanlist", Root_URL];
-    NSLog(@"string = %@", string);
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_fans_list", Root_URL];
+    //    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
     
 }
+- (void)loadMore {
+    NSString *string = self.nextPage;
+    [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
+}
 
 - (void)fetchedData:(NSData *)data{
+    [self.tableView.mj_footer endRefreshing];
     if (data == nil) {
         return;
     }
     NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error == nil) {
-        if (array.count == 0) {
-            NSLog(@"您的粉丝列表为空");
-        } else {
-            //生成粉丝列表。。。
-            [self createFanlistWithArray:array];
-        }
-    } else {
-        NSLog(@"error = %@", error);
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (dic.count == 0) {
+        return;
+    }else {
+        //生成粉丝列表
+        self.nextPage = dic[@"next"];
+        NSArray *array = dic[@"results"];
+        [self createFanlistWithArray:array];
     }
     
 }
@@ -82,7 +95,6 @@
         FanceModel *fan = [[FanceModel alloc] initWithInfo:dic];
         [self.dataArray addObject:fan];
     }
-    NSLog(@"dataArray = %@", self.dataArray);
     [self.tableView reloadData];
 }
 
@@ -121,26 +133,8 @@
     [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-
+    //    UIImageView *image = [[UIImageView alloc] init];
+    //    image.image = [UIImage imageNamed:@"Icon-60@3x"];
     return cell;
 }
-
-
-
-
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
