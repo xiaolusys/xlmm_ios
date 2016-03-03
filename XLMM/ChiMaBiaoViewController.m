@@ -118,7 +118,7 @@
                               @"臀围",@"下摆围",@"下摆宽",@"前档",
                               @"后档",@"大腿围",@"小腿围",
                               @"脚口",@"裙长",@"裤长",
-                              @"建议身高"];
+                              @"建议身高",@"前中长",@"后中长"];
     
         for (NSString *key1 in allSizeKeys) {
             for (NSString *key2 in keysArray) {
@@ -135,7 +135,7 @@
         NSLog(@"mutable = %@", mutableSizeName);
     
     
-    
+    width = orderKeyArray.count;
     
         UIView *headview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENHEIGHT, 31)];
         [sizeView0 addSubview:headview];

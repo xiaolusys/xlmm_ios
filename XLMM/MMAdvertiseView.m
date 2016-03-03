@@ -55,7 +55,7 @@
    
     //去掉滚动条
     _scrollView.showsHorizontalScrollIndicator=NO;
-    self.scrollView.backgroundColor = [UIColor orangeColor];
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     
 }
 

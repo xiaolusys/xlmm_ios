@@ -905,7 +905,7 @@
         
         [manager POST:kCart_URL parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               //   NSLog(@"JSON: %@", responseObject);
+                 NSLog(@"JSON: %@", responseObject);
                   [self myAnimation];
 
             }
@@ -913,19 +913,30 @@
          //   NSLog(@"Error: %@", error);
          //     NSLog(@"error:, --.>>>%@", error.description);
               NSDictionary *dic = [error userInfo];
-            //  NSLog(@"dic = %@", dic);
-           //   NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+              NSLog(@"dic = %@", dic);
+              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
               
               __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-           //   NSLog(@"%@",str);
-              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
-              view.backgroundColor = [UIColor blackColor];
-              view.layer.cornerRadius = 8;
-              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+              NSLog(@"%@",str);
+                
+                NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary *detail = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                NSString *detailString = [detail objectForKey:@"detail"];
+                if ([detailString isEqualToString:@"Authentication credentials were not provided."]) {
+                    NSLog(@"login");
+                    LogInViewController *login = [[LogInViewController alloc] init];
+                    [self.navigationController pushViewController:login animated:YES];
+                    
+                    return ;
+                }
+              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 30)];
+              view.backgroundColor = [UIColor darkGrayColor];
+              view.layer.cornerRadius = 4;
+              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
               label.text = @"商品库存不足";
               label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor whiteColor];
-              label.font = [UIFont systemFontOfSize:24];
+              label.textColor = [UIColor imageViewBorderColor];
+              label.font = [UIFont systemFontOfSize:14];
               [view addSubview:label];
               [self.view addSubview:view];
               

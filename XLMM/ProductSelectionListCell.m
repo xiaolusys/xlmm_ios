@@ -55,7 +55,7 @@
 //选品列表
 - (void)fillCell:(MaMaSelectProduct *)product {
     self.pdtModel = product;
-    [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[product.pic_path URLEncodedString]]];
+    [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.productName.text = product.name;
     self.addBtnClick.layer.cornerRadius = 12;
     self.addBtnClick.layer.borderWidth = 0.5;
@@ -64,6 +64,8 @@
     self.picImageView.layer.masksToBounds = YES;
     self.picImageView.layer.borderWidth = 0.5;
     self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.picImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.stdPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
     self.backPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
@@ -85,7 +87,10 @@
 - (void)fillMyChoice:(MaMaSelectProduct *)product {
     self.pdtModel = product;
     self.productName.text = product.name;
-    [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[product.pic_path URLEncodedString]]];
+    [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
+    self.picImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     self.addBtnClick.selected = YES;
     self.addBtnClick.layer.cornerRadius = 12;
