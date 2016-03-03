@@ -119,7 +119,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="220" id="TRE-Z3-9EQ">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="260"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="240"/>
                                         </constraint>
                                     </constraints>
                                     <variation key="default">
@@ -243,7 +243,7 @@
                                 <constraint firstItem="4ID-ID-LFF" firstAttribute="leading" secondItem="vkd-Tf-mwI" secondAttribute="leading" id="ndP-Ic-NAW"/>
                                 <constraint firstItem="LbA-bs-fQO" firstAttribute="centerX" secondItem="vkd-Tf-mwI" secondAttribute="centerX" id="ohg-Th-5H7"/>
                                 <constraint firstAttribute="height" constant="230" id="peZ-oJ-oWn">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="240"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="220"/>
                                 </constraint>
                                 <constraint firstItem="LbA-bs-fQO" firstAttribute="top" secondItem="H0I-Lv-C9x" secondAttribute="bottom" constant="8" id="q4s-OR-imV"/>
                                 <constraint firstAttribute="trailing" secondItem="jaY-1k-U8x" secondAttribute="trailing" id="rj4-bt-Umb"/>
@@ -319,7 +319,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="120" id="e2W-L2-wWg"/>
+                                <constraint firstAttribute="height" constant="120" id="e2W-L2-wWg">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="120"/>
+                                </constraint>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
@@ -1750,7 +1752,7 @@
                             <include reference="RPE-OE-xnN"/>
                             <include reference="XOw-sN-5x2"/>
                             <include reference="oW6-xd-nSc"/>
-                            <include reference="2Zo-wD-wmU"/>
+                            <exclude reference="2Zo-wD-wmU"/>
                             <include reference="6eS-oJ-b9B"/>
                             <include reference="alP-0k-G0a"/>
                             <include reference="tK3-9v-io3"/>
