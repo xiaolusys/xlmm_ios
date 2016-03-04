@@ -57,6 +57,10 @@ static NSString *cellIdentifier = @"SelectedListCell";
     UIImageView *mamaHeadImageView;
     UILabel *mamaShopLabel;
     
+    UIView *navView;
+    UIView *tableHeadView;
+    
+    
     
 }
 - (NSMutableArray *)dataArr {
@@ -123,7 +127,42 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
     NSLog(@"url = %@", shareString);
     [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
+    
+    
+    
+    [self createNavView];
+    
 }
+
+
+
+- (void)createNavView{
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"mamaJingxuanNav" owner:nil options:nil];
+    UIView *view = array[0];
+    view.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+    
+    
+    UIButton *btn1 = [view viewWithTag:80];
+    UIButton *btn2 = [view viewWithTag:82];
+    UIButton *btn3 = [view viewWithTag:83];
+    
+    [btn1 addTarget:self action:@selector(btn1Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 addTarget:self action:@selector(btn2Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn3 addTarget:self action:@selector(btn3Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *label = [view viewWithTag:81];
+    
+    navView = view;
+    
+//    label.text = @"Hello";
+    
+    
+    
+    navView.hidden = YES;
+    
+    [self.view addSubview:view];
+}
+
 
 - (UIView *)createTableHeadView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"mamaJingxuan" owner:nil options:nil];
@@ -156,7 +195,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
     [btn3 addTarget:self action:@selector(btn3Clicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    
+    tableHeadView = view;
+    tableHeadView.hidden = NO;
     
     return view;
     
@@ -179,6 +219,22 @@ static NSString *cellIdentifier = @"SelectedListCell";
 - (void)btn3Clicked:(UIButton *)button{
  
     [self shareAction];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"%@", NSStringFromCGPoint(scrollView.contentOffset));
+    CGFloat height = scrollView.contentOffset.y;
+    
+    if (height > 94) {
+        navView.hidden = NO;
+    } else {
+        navView.hidden = YES;
+    }
+    
+   // navView.alpha = (height)/80;
+   // tableHeadView.alpha = (120 - height)/100;
 }
 
 
