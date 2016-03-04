@@ -26,6 +26,12 @@
 #import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
+#import "AFNetworking.h"
+#import "NSString+Encrypto.h"
+
+#define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
+
+
 
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
@@ -66,7 +72,7 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-    NSLog(@"微信登录");
+  //  NSLog(@"微信登录");
     
     MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
     if (login.isxlmm) {
@@ -84,7 +90,7 @@
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
-    NSLog(@"手机登录");
+  //  NSLog(@"手机登录");
     if ([self isXiaolumama]) {
         [self createRightItem];
     } else{
@@ -99,7 +105,7 @@
         return NO;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
+   // NSLog(@"dic = %@", dic);
     return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
@@ -279,6 +285,7 @@
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     
+    
     [self createInfo];
     
     [self creatPageData];
@@ -293,6 +300,125 @@
     
     
 }
+- (NSArray *)randomArray{
+    NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
+    
+    for (int i = 0; i<10; i++) {
+        // NSLog(@"%d", i);
+        NSString *string = [NSString stringWithFormat:@"%d",i];
+        [mutable addObject:string];
+    }
+    for (char i = 'a'; i<='z'; i++) {
+        // NSLog(@"%c", i);
+        NSString *string = [NSString stringWithFormat:@"%c", i];
+        
+        [mutable addObject:string];
+    }
+    NSArray *array = [NSArray arrayWithArray:mutable];
+    
+    NSLog(@"array = %@", array);
+    return array;
+}
+
+- (void)weixinzidongdenglu{
+    NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+  //  NSLog(@"用户信息 = %@", dic);
+    //微信登录 hash算法。。。。
+    NSArray *randomArray = [self randomArray];
+    unsigned long count = (unsigned long)randomArray.count;
+//    NSLog(@"count = %lu", count);
+    int index = 0;
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+ //   NSLog(@"timeSp:%@",timeSp);
+    
+    __unused long time = [timeSp integerValue];
+  //  NSLog(@"time = %ld", (long)time);
+    NSMutableString * randomstring = [[NSMutableString alloc] initWithCapacity:0];
+    for (int i = 0; i<8; i++) {
+        index = arc4random()%count;
+        // NSLog(@"index = %d", index);
+        NSString *string = [randomArray objectAtIndex:index];
+        [randomstring appendString:string];
+    }
+  //  NSLog(@"%@%@",timeSp ,randomstring);
+    //    NSString *secret = @"3c7b4e3eb5ae4c";
+    NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
+    //获得参数，升序排列
+    NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
+ //   NSLog(@"1.————》%@", sign_params);
+    
+    NSString *sign = [sign_params sha1];
+    NSString *dict;
+    
+ //   NSLog(@"sign = %@", sign);
+    
+    
+    //http://m.xiaolu.so/rest/v1/register/wxapp_login
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
+    NSURL *url = [NSURL URLWithString:urlString];
+   // NSLog(@"urlString = %@", urlString);
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
+    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
+    
+  //  NSLog(@"params = %@", dict);
+    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    [postRequest setHTTPBody:data];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    
+    
+    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+  __unused  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+    
+    
+   // NSLog(@"dictionary = %@", dictionary);
+    
+    //   http://m.xiaolu.so/rest/v1/users/need_set_info
+    
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setBool:YES forKey:@"login"];
+    [userdefaults synchronize];
+
+}
+
+- (void)shoujizidongdenglu{
+  //  NSLog(@"手机自动登录");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *username = [defaults objectForKey:kUserName];
+    NSString *password = [defaults objectForKey:kPassWord];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+  //  NSLog(@"userName : %@, password : %@", username, password);
+    
+    
+    NSDictionary *parameters = @{@"username":username,
+                                 @"password":password
+                                 };
+    
+    
+    
+    [manager POST:kLOGIN_URL parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              //  NSError *error;
+           //   NSLog(@"JSON: %@", responseObject);
+         //     NSLog(@"手机自动登录成功。。。。");
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         //     NSLog(@"Error: %@", error);
+              
+              
+          }];
+
+}
 
 - (void)autologin{
     
@@ -300,19 +426,20 @@
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {
-        NSLog(@"微信登录");
+      //  NSLog(@"微信登录");
+        
+        [self weixinzidongdenglu];
         NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-        NSLog(@"userinfo = %@", userinfo);
+      //  NSLog(@"userinfo = %@", userinfo);
         if ([self isXiaolumama]) {
             [self createRightItem];
         } else{
             self.navigationItem.rightBarButtonItem = nil;
         }
     } else if ([loginMethon isEqualToString:kPhoneLogin]){
-        NSLog(@"手机登录");
-        
+      
         NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-        NSLog(@"userinfo = %@", userinfo);
+      //  NSLog(@"userinfo = %@", userinfo);
         if ([self isXiaolumama]) {
             [self createRightItem];
         } else{
@@ -336,7 +463,7 @@
     if (error == nil) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         if (error == nil) {
-            NSLog(@"dic = %@", dic);
+          //  NSLog(@"dic = %@", dic);
         } else{
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
             [self.navigationController pushViewController:loginVC animated:YES];
@@ -384,13 +511,13 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
         NSError *error = nil;
         NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
-        NSLog(@"error = %@", error);
+      //  NSLog(@"error = %@", error);
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
         if (data == nil) {
             return;
         }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"json = %@", json);
+       // NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
             MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
             [self.navigationController pushViewController:ma animated:YES];
@@ -512,7 +639,7 @@
         return;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSLog(@"dic = %@", dic);
+   // NSLog(@"dic = %@", dic);
     last_created = [dic objectForKey:@"last_created"];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
     if (goodsCount == 0) {
