@@ -468,6 +468,7 @@
         NSLog(@"error = %@", error);
         if (data == nil) {
                NSLog(@"下载失败");
+            return;
         }
         [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
     });
