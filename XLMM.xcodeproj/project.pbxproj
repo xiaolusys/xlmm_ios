@@ -4415,7 +4415,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4459,7 +4459,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
