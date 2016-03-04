@@ -21,12 +21,22 @@
 
 
 - (void)fillData:(FanceModel *)model{
-    [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.imagelink URLEncodedString]]];
+    if (model.imagelink.length == 0) {
+        self.picImageView.image = [UIImage imageNamed:@"Icon-60"];
+    }else {
+        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.imagelink URLEncodedString]]];
+    }
+    
     self.picImageView.layer.cornerRadius = 8;
     self.picImageView.layer.borderWidth = 0.5;
     self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;
-    self.name.text = model.name;
+    if (model.name.length == 0) {
+        self.name.text = @"匿名粉丝";
+    }else {
+        self.name.text = model.name;
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

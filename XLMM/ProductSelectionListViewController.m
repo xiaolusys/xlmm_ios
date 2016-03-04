@@ -41,6 +41,8 @@
 
 
 
+
+
 @end
 
 static NSString *cellIdentifier = @"productSelection";
@@ -78,6 +80,8 @@ static NSString *cellIdentifier = @"productSelection";
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
+    
+    [SVProgressHUD show];
     
     [self createHeadView];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
@@ -247,7 +251,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-  //  NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
 }
@@ -257,7 +261,7 @@ static NSString *cellIdentifier = @"productSelection";
   //  NSLog(@"child");
     category = 1;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-   // NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
 }
@@ -267,7 +271,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-  //  NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
 
@@ -299,6 +303,7 @@ static NSString *cellIdentifier = @"productSelection";
         [self.dataArr addObject:productM];
     }
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [SVProgressHUD dismiss];
     [self.tableView reloadData];
     
 }

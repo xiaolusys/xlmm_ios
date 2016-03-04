@@ -87,19 +87,27 @@
     
     self.mamaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.rootScrollView];
-    self.fabuButton.layer.borderWidth = 1;
-    self.fabuButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-    self.fabuButton.layer.cornerRadius = 20;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
     
     //点击分享补贴
 //    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
 //    [self.shareSubsidies addGestureRecognizer:tapShare];
     
-    [self downloadData];
-    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
-    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
-    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
+//    [self downloadData];
+//    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
+//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
+    
+    //主页新的数据
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self updateMaMaHome:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    [self downloadDataWithUrlString:str selector:@selector(updateMaMaHome:)];
     
     [self prepareData];
     [self createChart:dataArray];
@@ -111,19 +119,27 @@
     [self.jineLabel addGestureRecognizer:tap];
     self.jineLabel.userInteractionEnabled = YES;
     
-    self.fensilabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
-  //  [self.fensiLabel addGestureRecognizer:tap1];
-    [self.fensilabel addGestureRecognizer:tap1];
+//    self.fensilabel.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
+//  //  [self.fensiLabel addGestureRecognizer:tap1];
+//    [self.fensilabel addGestureRecognizer:tap1];
+    
+}
+
+- (void)updateMaMaHome:(NSDictionary *)dataDic {
+//    NSLog(@"%@", dataDic);
+    NSDictionary *mamaDic = [dataDic objectForKey:@"mama_fortune"];
+    self.inviteLabel.text = [mamaDic objectForKey:@"invite_num"];
+//    self.
     
 }
 
 
-- (void)fensiList:(UITapGestureRecognizer *)recognizer{
-    NSLog(@"fensi");
-    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
-    [self.navigationController pushViewController:fensiVC animated:YES];
-}
+//- (void)fensiList:(UITapGestureRecognizer *)recognizer{
+//    NSLog(@"fensi");
+//    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
+//    [self.navigationController pushViewController:fensiVC animated:YES];
+//}
 
 #pragma mark -获取订单记录
 
@@ -621,6 +637,11 @@
 - (IBAction)huodongzhongxin:(id)sender {
     MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
     [self.navigationController pushViewController:activityVC animated:YES];
+}
+
+- (IBAction)fansList:(id)sender {
+    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
+    [self.navigationController pushViewController:fensiVC animated:YES];
 }
 
 //- (void)clickShareView {

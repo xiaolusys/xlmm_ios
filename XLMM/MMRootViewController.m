@@ -153,6 +153,11 @@
         
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+        
+        //  跳转到小鹿妈妈界面。。。
+        
+        
+        
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
@@ -199,6 +204,10 @@
             
             
         } else {
+            
+            //  跳转到H5 界面 。。。。。
+            
+            
             NSLog(@"跳到H5首页");
             
         }
