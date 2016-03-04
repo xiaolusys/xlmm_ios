@@ -68,7 +68,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES ;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -93,6 +93,12 @@ static NSString *cellIdentifier = @"SelectedListCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 118;
+    CGRect rect = self.tableView.frame;
+    
+    rect.origin.y -= 20;
+    rect.size.height += 20;
+    self.tableView.frame = rect;
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
     
@@ -139,6 +145,15 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     MMLOG(mamaHeadImageView);
     MMLOG(mamaShopLabel);
+    // 返回按钮  预览按钮  分享按钮 。。。
+    
+    UIButton *btn1 = [view viewWithTag:1000];
+    UIButton *btn2 = [view viewWithTag:2000];
+    UIButton *btn3 = [view viewWithTag:3000];
+    
+    [btn1 addTarget:self action:@selector(btn1Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 addTarget:self action:@selector(btn2Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn3 addTarget:self action:@selector(btn3Clicked:) forControlEvents:UIControlEventTouchUpInside];
     
     
     
@@ -149,6 +164,25 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     
 }
+
+#pragma mark - 返回方法 预览方法 分享方法
+
+- (void)btn1Clicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (void)btn2Clicked:(UIButton *)button{
+    [self previewAction];
+}
+
+- (void)btn3Clicked:(UIButton *)button{
+ 
+    [self shareAction];
+}
+
+
+
 
 - (void)fetchedShareData:(NSData *)data{
     if (data == nil) {
@@ -358,7 +392,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
         
         [singleShareView removeFromSuperview];
         
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
         backView.hidden = YES;
     }];
 }
@@ -371,7 +405,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
         
         [shareView removeFromSuperview];
         
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
         backView.hidden = YES;
     }];
     

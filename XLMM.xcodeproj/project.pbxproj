@@ -608,6 +608,8 @@
 		32DF3B0D1C8806F000738815 /* wodejingxuandanpinxiajia.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DF3B0C1C8806F000738815 /* wodejingxuandanpinxiajia.png */; };
 		32DF3B0F1C88078B00738815 /* wodejingxuantouxiangicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DF3B0E1C88078B00738815 /* wodejingxuantouxiangicon.png */; };
 		32DF3B121C88270F00738815 /* mamaJingxuan.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DF3B101C881C9C00738815 /* mamaJingxuan.xib */; };
+		32DF3B2C1C8926C300738815 /* mamaJingxuanNav.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DF3B2B1C8926C300738815 /* mamaJingxuanNav.xib */; };
+		32DF3B2E1C89275800738815 /* wodejingxuannavback.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DF3B2D1C89275800738815 /* wodejingxuannavback.png */; };
 		32E00C941BA8192D00A73390 /* YHQCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E00C921BA8192D00A73390 /* YHQCollectionCell.m */; };
 		32E20B5B1C5EFCC7009D1726 /* ProductSelectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */; };
 		32E20B5D1C5F29E0009D1726 /* uparrowicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E20B5C1C5F29E0009D1726 /* uparrowicon.png */; };
@@ -1577,6 +1579,8 @@
 		32DF3B0C1C8806F000738815 /* wodejingxuandanpinxiajia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wodejingxuandanpinxiajia.png; path = ../wodejingxuandanpinxiajia.png; sourceTree = "<group>"; };
 		32DF3B0E1C88078B00738815 /* wodejingxuantouxiangicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wodejingxuantouxiangicon.png; path = ../wodejingxuantouxiangicon.png; sourceTree = "<group>"; };
 		32DF3B101C881C9C00738815 /* mamaJingxuan.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mamaJingxuan.xib; sourceTree = "<group>"; };
+		32DF3B2B1C8926C300738815 /* mamaJingxuanNav.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mamaJingxuanNav.xib; sourceTree = "<group>"; };
+		32DF3B2D1C89275800738815 /* wodejingxuannavback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wodejingxuannavback.png; sourceTree = "<group>"; };
 		32E00C911BA8192D00A73390 /* YHQCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHQCollectionCell.h; sourceTree = "<group>"; };
 		32E00C921BA8192D00A73390 /* YHQCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHQCollectionCell.m; sourceTree = "<group>"; };
 		32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YHQCollectionCell.xib; sourceTree = "<group>"; };
@@ -2836,6 +2840,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				32DF3B2D1C89275800738815 /* wodejingxuannavback.png */,
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
 				32816F951C1FFBCC004DD2EF /* AppDelegate */,
 				32746E3D1B74A4EA00816208 /* Model */,
@@ -3484,6 +3489,7 @@
 				3236485B1C62306800CCD0DA /* HuodongViewController.m */,
 				3236485C1C62306800CCD0DA /* HuodongViewController.xib */,
 				32DF3B101C881C9C00738815 /* mamaJingxuan.xib */,
+				32DF3B2B1C8926C300738815 /* mamaJingxuanNav.xib */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
@@ -3674,6 +3680,7 @@
 				32F2E95E1C12B1E500A98EA3 /* VersionController.xib in Resources */,
 				32EAA33E1C3DFC97004055AB /* hongbaofanicon.png in Resources */,
 				32DE21C31BF1BD7F00999ECA /* XidiShuomingViewController.xib in Resources */,
+				32DF3B2E1C89275800738815 /* wodejingxuannavback.png in Resources */,
 				18601B091C743EFE00E87A7B /* loading动画003.png in Resources */,
 				2EB87D2E1C17FAE4001CBF3D /* UMShareEditViewControlleriPad.xib in Resources */,
 				32D2B78D1BDDF41C00603FCE /* selected_icon.png in Resources */,
@@ -3961,6 +3968,7 @@
 				2EB87D281C17FAE4001CBF3D /* UMSocialLocalizable.strings in Resources */,
 				32703F1A1BEB5D39002AFC6D /* Icon-29@2x.png in Resources */,
 				3266A6E31BE35C4100C676A9 /* PosterCollectionCell2.xib in Resources */,
+				32DF3B2C1C8926C300738815 /* mamaJingxuanNav.xib in Resources */,
 				32EAA33F1C3DFC97004055AB /* hongbaounableclicked.png in Resources */,
 				185E2E481C7F1E7E00131D11 /* weixinIcon.png in Resources */,
 				32746E1A1B74A22000816208 /* icon-jia2.png in Resources */,
