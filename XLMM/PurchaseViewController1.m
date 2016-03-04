@@ -483,7 +483,9 @@
     
     
     [self downloadCartsData2];
-    
+    self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
+    self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+    self.couponLabel.hidden = NO;
     
     //NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
     
@@ -593,6 +595,7 @@
         
         if (httpResponse.statusCode != 200) {
          //   NSLog(@"出错了");
+            self.couponLabel.hidden = YES;
             [self performSelectorOnMainThread:@selector(showAlertView) withObject:nil waitUntilDone:YES];
            
             return;
@@ -637,6 +640,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //[self.navigationController popViewControllerAnimated:YES];
     
+    self.couponLabel.hidden = YES;
     yhqModel = nil;
     if (alertView.tag == 2000) {
         return;

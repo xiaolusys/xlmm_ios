@@ -33,7 +33,10 @@
 
 @end
 
-@implementation CartViewController
+@implementation CartViewController{
+    NSInteger youhuiquanValud;
+    
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -47,6 +50,8 @@
     download2 = NO;
     [self downloadData];
     [self downloadHistoryData];
+    
+
     
 }
 
@@ -64,7 +69,7 @@
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     
     label1.text = @"抢几件喜欢的就好～";
-    label2.text = @"亲，您的购物车空空的呢～快去装满它吧！";
+    label2.text = @"亲，您的购物车空空的呢～快去装满它吧!";
     imageView.image = [UIImage imageNamed:@"gouwucheemptyimage.png"];
     
     defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
@@ -101,6 +106,29 @@
     
     [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
+    youhuiquanValud = 0;
+    
+    [self createYhqValue];
+}
+
+// 获取可用优惠券金额 。。。
+- (void)createYhqValue{
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    NSArray *array = [dic objectForKey:@"results"];
+    for (NSDictionary *info in array) {
+        NSInteger value = [[info objectForKey:@"coupon_value"] integerValue];
+        if (value > youhuiquanValud && value < 200) {
+            youhuiquanValud = value;
+        }
+    }
+    NSLog(@"value = %ld", youhuiquanValud);
+    
 }
 
 
@@ -380,6 +408,9 @@
             UILabel *pricelabel = (UILabel *)[footerView viewWithTag:100];
             UILabel *nameLabel = (UILabel *)[footerView viewWithTag:200];
             UIImageView *imageView = (UIImageView *)[footerView viewWithTag:300];
+            UILabel *youhuiquanLabel = (UILabel *)[footerView viewWithTag:400];
+            
+            youhuiquanLabel.text = [NSString stringWithFormat:@"¥%ld", youhuiquanValud];
             pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
             
             if (allPrice >= 150) {
