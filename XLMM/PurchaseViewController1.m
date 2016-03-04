@@ -237,6 +237,7 @@
 
 - (void)fetchedCartsData:(NSData *)responseData{
     NSError *error = nil;
+    // 返回数据为空 异常处理。。。。
     if (responseData == nil) {
         return;
     }
@@ -355,6 +356,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kAddress_List_URL]];
       //  NSLog(@"addressListURL = %@", kAddress_List_URL);
+        
         
         [self performSelectorOnMainThread:@selector(fetchedAddressData:) withObject:data waitUntilDone:YES];
         
