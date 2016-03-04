@@ -90,24 +90,22 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
     
     //点击分享补贴
-//    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
-//    [self.shareSubsidies addGestureRecognizer:tapShare];
+    UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
+    [self.shareSubsidies addGestureRecognizer:tapShare];
     
-//    [self downloadData];
-//    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
-//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
-//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
+    [self downloadData];
+    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
-    //主页新的数据
-    NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self updateMaMaHome:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    [self downloadDataWithUrlString:str selector:@selector(updateMaMaHome:)];
+//    //主页新的数据
+//    NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self updateMaMaHome:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
     
     [self prepareData];
     [self createChart:dataArray];
@@ -126,13 +124,13 @@
     
 }
 
-- (void)updateMaMaHome:(NSDictionary *)dataDic {
-//    NSLog(@"%@", dataDic);
-    NSDictionary *mamaDic = [dataDic objectForKey:@"mama_fortune"];
-    self.inviteLabel.text = [mamaDic objectForKey:@"invite_num"];
-//    self.
-    
-}
+//- (void)updateMaMaHome:(NSDictionary *)dataDic {
+////    NSLog(@"%@", dataDic);
+//    NSDictionary *mamaDic = [dataDic objectForKey:@"mama_fortune"];
+//    self.inviteLabel.text = [mamaDic objectForKey:@"invite_num"];
+////    self.
+//    
+//}
 
 
 //- (void)fensiList:(UITapGestureRecognizer *)recognizer{
@@ -153,6 +151,7 @@
         NSString *count = [dic objectForKey:@"count"];
         self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
         self.orderRecord = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
+        self.order.text = [NSString stringWithFormat:@"%@个订单", self.orderRecord];
     }
     
 }
@@ -216,7 +215,6 @@
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
         NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mci"];
-        self.jileishouyi.text = [NSString stringWithFormat:@"%.2f", [mco floatValue]];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
         
@@ -228,8 +226,8 @@
         
         self.fensilabel.text = [NSString stringWithFormat:@"%@", [dicJson objectForKey:@"fans_num"]];
         
-        
-        self.earningsRecord = self.jileishouyi.text;
+        self.account.text = [NSString stringWithFormat:@"%.2f",[mco floatValue]];
+        self.earningsRecord = self.account.text;
     }
 }
 
@@ -343,7 +341,9 @@
     
     NSArray *array = dic[@"shops"];
     if (array.count == 0){
-        self.dingdanLabel.text = @"订单 0      收入 0.00";
+//        self.dingdanLabel.text = @"订单 0      收入 0.00";
+        self.dingdanLabel.text = @"0";
+        self.shouyiLabel.text = @"0.00";
         [self.mamaTableView reloadData];
         return;
 
@@ -358,7 +358,9 @@
         ticheng += [orderM.ticheng_cash floatValue];
         [self.dataArr addObject:orderM];
     }
-    self.dingdanLabel.text = [NSString stringWithFormat:@"订单 %ld    收入 %.2f", (long)dingdanshu, ticheng];
+//    self.dingdanLabel.text = [NSString stringWithFormat:@"订单 %ld    收入 %.2f", (long)dingdanshu, ticheng];
+    self.dingdanLabel.text = [NSString stringWithFormat:@"%ld", (long)dingdanshu];
+    self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", ticheng];
     
     [self.mamaTableView reloadData];
 }
@@ -598,6 +600,7 @@
 
 - (IBAction)MamaCarryLogClicked:(id)sender {
     MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
+    
     carry.earningsRecord = self.earningsRecord;
     [self.navigationController pushViewController:carry animated:YES];
 }
