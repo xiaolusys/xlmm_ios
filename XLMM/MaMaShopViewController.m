@@ -483,7 +483,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
     for ( NSDictionary *pdt in data) {
-        MMLOG(pdt);
+        
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         
         

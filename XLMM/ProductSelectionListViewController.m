@@ -251,7 +251,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-  //  NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
 }
@@ -261,7 +261,7 @@ static NSString *cellIdentifier = @"productSelection";
   //  NSLog(@"child");
     category = 1;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-   // NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
 }
@@ -271,7 +271,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
-  //  NSLog(@"string = %@", string);
+    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
 
