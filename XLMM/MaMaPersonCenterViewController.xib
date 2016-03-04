@@ -8,16 +8,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaMaPersonCenterViewController">
             <connections>
+                <outlet property="account" destination="BKX-dB-F7e" id="2tF-Cy-e2g"/>
                 <outlet property="dingdanyilu" destination="Vfo-re-xoS" id="4Sd-Hn-fSH"/>
                 <outlet property="fabuButton" destination="NhW-4H-EKh" id="c7s-c7-j4y"/>
                 <outlet property="headViewWidth" destination="bOj-HD-mE8" id="vfR-Rz-cAE"/>
+                <outlet property="inviteLabel" destination="qOC-kZ-AWn" id="4Iz-1T-tr5"/>
                 <outlet property="jineLabel" destination="OFp-hq-wTR" id="YT4-W1-GrC"/>
                 <outlet property="levelLabel" destination="Q51-Vc-n5R" id="WR6-R1-Ytc"/>
                 <outlet property="mamaScrollView" destination="6vX-aZ-8d4" id="dnS-45-KMg"/>
                 <outlet property="mamaimage" destination="X8d-KY-HhH" id="OmZ-iT-JgO"/>
                 <outlet property="mamalabel" destination="a2d-cl-nqH" id="nJx-VX-HvZ"/>
+                <outlet property="order" destination="xt7-AT-GSJ" id="rdk-gb-3g2"/>
                 <outlet property="rootScrollView" destination="CZD-1f-6rH" id="kih-rd-YjN"/>
-                <outlet property="updateClickMoenyLabel" destination="73H-mC-ZYV" id="44V-eN-4el"/>
+                <outlet property="todaybutie" destination="73H-mC-ZYV" id="uZE-LI-M7J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

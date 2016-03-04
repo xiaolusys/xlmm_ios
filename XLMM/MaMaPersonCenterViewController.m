@@ -127,7 +127,10 @@
 }
 
 - (void)updateMaMaHome:(NSDictionary *)dataDic {
-    NSLog(@"%@", dataDic);
+//    NSLog(@"%@", dataDic);
+    NSDictionary *mamaDic = [dataDic objectForKey:@"mama_fortune"];
+    self.inviteLabel.text = [mamaDic objectForKey:@"invite_num"];
+//    self.
     
 }
 

@@ -34,6 +34,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *mamaimage;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *inviteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *todaybutie;
+@property (weak, nonatomic) IBOutlet UILabel *order;
+@property (weak, nonatomic) IBOutlet UILabel *account;
+
 
 - (IBAction)backClicked:(id)sender;
 - (IBAction)sendProduct:(id)sender;
