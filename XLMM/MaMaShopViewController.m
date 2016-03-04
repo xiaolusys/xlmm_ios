@@ -114,6 +114,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell2" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
+    self.tableView.bounces = NO;
     
     
     [self createBackView];
@@ -229,12 +230,12 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     if (height > 94) {
         navView.hidden = NO;
+        tableHeadView.hidden = YES;
     } else {
         navView.hidden = YES;
+        tableHeadView.hidden = NO;
     }
     
-   // navView.alpha = (height)/80;
-   // tableHeadView.alpha = (120 - height)/100;
 }
 
 
