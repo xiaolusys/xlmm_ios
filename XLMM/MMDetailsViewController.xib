@@ -537,6 +537,13 @@
                                                         <action selector="washshuomingClicked:" destination="-1" eventType="touchUpInside" id="4EK-6T-KJz"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBf-xV-lo9">
+                                                    <rect key="frame" x="0.0" y="79" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="GsA-uH-Vks"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -546,11 +553,14 @@
                                                 <constraint firstItem="L8n-C2-YNb" firstAttribute="top" secondItem="dep-Vn-xLk" secondAttribute="bottom" id="IFw-gk-hmm"/>
                                                 <constraint firstItem="wyX-Z5-ase" firstAttribute="leading" secondItem="0fR-gP-4zM" secondAttribute="leading" constant="40" id="Ioe-o9-3si"/>
                                                 <constraint firstItem="dep-Vn-xLk" firstAttribute="top" secondItem="FHf-qC-u04" secondAttribute="bottom" constant="10" id="K2F-Kd-lRM"/>
+                                                <constraint firstAttribute="bottom" secondItem="QBf-xV-lo9" secondAttribute="bottom" id="N6A-eP-ygb"/>
                                                 <constraint firstItem="L8n-C2-YNb" firstAttribute="trailing" secondItem="dep-Vn-xLk" secondAttribute="trailing" id="QNC-W9-7xv"/>
                                                 <constraint firstItem="8bh-zl-I93" firstAttribute="top" secondItem="duM-xT-WW0" secondAttribute="bottom" id="kbR-b8-vW4"/>
                                                 <constraint firstAttribute="height" constant="80" id="oi6-wn-rM1"/>
+                                                <constraint firstItem="QBf-xV-lo9" firstAttribute="leading" secondItem="0fR-gP-4zM" secondAttribute="leading" id="p9w-zL-kXU"/>
                                                 <constraint firstItem="dep-Vn-xLk" firstAttribute="centerX" secondItem="0fR-gP-4zM" secondAttribute="centerX" id="t0k-qX-Eoc"/>
                                                 <constraint firstItem="wyX-Z5-ase" firstAttribute="top" secondItem="0fR-gP-4zM" secondAttribute="top" constant="20" id="uUa-7P-Ea5"/>
+                                                <constraint firstAttribute="trailing" secondItem="QBf-xV-lo9" secondAttribute="trailing" id="v09-jO-k6k"/>
                                             </constraints>
                                         </view>
                                     </subviews>
