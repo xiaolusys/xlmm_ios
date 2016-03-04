@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *dingdanyilu;
 
 @property (weak, nonatomic) IBOutlet UILabel *dingdanLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shouyiLabel;
+
+
 @property (weak, nonatomic) IBOutlet UIScrollView *mamaScrollView;
 @property (weak, nonatomic) IBOutlet UIButton *fabuButton;
 @property (weak, nonatomic) IBOutlet UILabel *fensilabel;
