@@ -38,7 +38,6 @@
 
 
 @property (weak, nonatomic) IBOutlet UILabel *inviteLabel;
-@property (weak, nonatomic) IBOutlet UILabel *todaybutie;
 @property (weak, nonatomic) IBOutlet UILabel *order;
 @property (weak, nonatomic) IBOutlet UILabel *account;
 
@@ -58,5 +57,6 @@
 
 - (IBAction)fansList:(id)sender;
 
+- (IBAction)boutiqueActivities:(id)sender;
 
 @end
