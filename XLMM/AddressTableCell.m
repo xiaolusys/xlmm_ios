@@ -30,4 +30,11 @@
     }
 
 }
+- (IBAction)modifyAddressClicked:(id)sender {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(modifyAddress:)]) {
+        [self.delegate modifyAddress:self.addressModel];
+        
+    }
+}
 @end

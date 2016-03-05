@@ -171,6 +171,19 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
     AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    cell.delegate = self;
+    
+    if (self.isSelected == YES) {
+        
+        cell.modifyAddressButton.layer.borderWidth = 0.5;
+        cell.modifyAddressButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+        cell.modifyAddressButton.layer.cornerRadius = 15;
+        
+    } else {
+        cell.modifyAddressButton.hidden = YES;
+        
+    }
     if (indexPath.row == -1) {
         cell.leadingWidth.constant = 40;
         cell.addressImageView.hidden = NO;

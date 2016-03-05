@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondLabel;
+@property (weak, nonatomic) IBOutlet UIButton *modifyAddressButton;
+- (IBAction)modifyAddressClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *frontImageView;
 - (IBAction)modifyAddress:(id)sender;
