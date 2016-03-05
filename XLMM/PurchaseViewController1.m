@@ -23,7 +23,7 @@
 #import "Pingpp.h"
 #import "WXApi.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
-
+#import "SVProgressHUD.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
@@ -40,6 +40,10 @@
     BOOL paySucceed;
     NSString *coupon_message;
     NSString *errorCharge;
+    UIAlertView *alertViewError;
+    
+    BOOL isWallPay;
+    
     
     
   
@@ -57,7 +61,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [self downloadAddressData];
     if ([WXApi isWXAppInstalled]) {
       //  NSLog(@"安装了微信");
         self.weixinView.hidden = YES;
@@ -121,6 +124,9 @@
         self.couponLabel.hidden = YES;
     }
     
+    [self downloadAddressData];
+
+    
     
 }
 
@@ -139,7 +145,7 @@
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-    NSLog(@"cartsURLString = %@", urlString);
+  //  NSLog(@"cartsURLString = %@", urlString);
     
    
     //下载购物车支付界面数据
@@ -172,7 +178,7 @@
     
     coupon_message = [dic objectForKey:@"coupon_message"];
     
-    NSLog(@"coupon_message= %@", coupon_message);
+  //  NSLog(@"coupon_message= %@", coupon_message);
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
@@ -219,19 +225,34 @@
     
     [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
     
+    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
+        isWallPay = YES;
+    } else {
+        isWallPay = NO;
+    }
     
     if ([coupon_message isEqualToString:@""]) {
         NSLog(@"okokoko");
         
     } else {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertView.tag = 2000;
-        [alertView show];
+        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertViewError.tag = 2000;
+        [alertViewError show];
+        
         
     }
     
     // NSLog(@"****************");
+}
+
+-(void) performDismiss:(NSTimer *)timer
+{
+    self.couponLabel.hidden = YES;
+    yhqModel = nil;
+    
+      [self downloadCartsData];
+    [alertViewError dismissWithClickedButtonIndex:0 animated:NO];
 }
 
 
@@ -254,7 +275,7 @@
     
     coupon_message = [dic objectForKey:@"coupon_message"];
     
-    NSLog(@"coupon_message= %@", coupon_message);
+   // NSLog(@"coupon_message= %@", coupon_message);
     
     if ([coupon_message isEqualToString:@""]) {
         NSLog(@"okokoko");
@@ -262,9 +283,13 @@
     } else {
         
         yhqModel = nil;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertView.tag = 2000;
-        [alertView show];
+        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
+
+        alertViewError.tag = 2000;
+        
+        
+        [alertViewError show];
         return;
         
     }
@@ -415,7 +440,8 @@
 - (IBAction)addAddress:(id)sender {
     //NSLog(@"新增地址");
     AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-
+    addVC.isSelected = YES;
+    addVC.delegate = self;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 
@@ -528,11 +554,22 @@
 
 }
 - (IBAction)xiaoluqianbaoSelected:(id)sender {
-//    payMethod = @"wx";
-//    self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-//    self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-//    self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
-//    NSLog(@"payMethod = %@", payMethod);
+    
+    if (isWallPay == YES) {
+    
+        payMethod = @"budget";
+        self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
+        NSLog(@"payMethod = %@", payMethod);
+    } else {
+        
+        [SVProgressHUD showInfoWithStatus:@"不能使用钱包支付"];
+        
+        
+    }
+    
+    
 
     
 }
@@ -585,6 +622,16 @@
         
         NSLog(@"response = %@", httpResponse);
         
+        if ([payMethod isEqualToString:@"budget"]) {
+          
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"success"]];
+            
+            
+            
+            return ;
+        }
+        
       
         if (connectionError != nil) {
             NSLog(@"error = %@", connectionError);
@@ -593,6 +640,12 @@
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"charge = %@", charge);
         errorCharge = charge;
+        
+        
+        
+        
+        
+        
         
         if (httpResponse.statusCode != 200) {
          //   NSLog(@"出错了");
@@ -615,9 +668,12 @@
                     NSLog(@"PingppError is nil");
                     paySucceed = YES;
                     
+                    [SVProgressHUD showInfoWithStatus:@"支付成功"];
+                    
                     
                 } else {
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    [SVProgressHUD showErrorWithStatus:@"支付失败"];
                     paySucceed = NO;
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
@@ -649,6 +705,19 @@
     
     
     [self downloadCartsData];
+}
+
+
+- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
+    
+    NSLog(@"%@", model);
+    addressModel = model;
+    NSLog(@"addressID = %@", addressModel.addressID);
+    
+    self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
+    self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",model.provinceName, model.cityName, model.countyName, model.streetName];
+    
+    
 }
 
 

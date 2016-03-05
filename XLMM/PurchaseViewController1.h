@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PurchaseViewController1 : UIViewController
+@protocol PurchaseAddressDelegate;
+
+
+
+
+@interface PurchaseViewController1 : UIViewController<PurchaseAddressDelegate>
 
 @property (strong, nonatomic) NSArray *cartsArray;
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;

@@ -28,10 +28,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHv-Po-ST8">
-                                        <rect key="frame" x="10" y="41" width="280" height="15"/>
+                                        <rect key="frame" x="10" y="41" width="200" height="15"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="c5D-Mk-Sye"/>
+                                            <constraint firstAttribute="width" constant="200" id="c5D-Mk-Sye"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,6 +72,20 @@
                                         <color key="textColor" red="0.96078431369999995" green="0.69411764710000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPU-H7-nH6">
+                                        <rect key="frame" x="232" y="30" width="80" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="9r1-sY-s1R"/>
+                                            <constraint firstAttribute="width" constant="80" id="EZf-Zw-fQb"/>
+                                        </constraints>
+                                        <state key="normal" title="修改">
+                                            <color key="titleColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="modifyAddressClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cbw-rt-zXO"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,6 +93,7 @@
                                     <constraint firstAttribute="trailing" secondItem="T3o-JE-3xr" secondAttribute="trailing" id="4lY-Ig-bBf"/>
                                     <constraint firstAttribute="trailing" secondItem="NHF-KC-1O9" secondAttribute="trailing" id="6Ot-TF-Rkw"/>
                                     <constraint firstItem="3K5-hY-f0i" firstAttribute="leading" secondItem="HCO-zN-DuD" secondAttribute="leading" constant="10" id="Cdg-x8-U9H"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZPU-H7-nH6" secondAttribute="trailing" constant="8" id="H5f-xN-aTy"/>
                                     <constraint firstAttribute="trailing" secondItem="Sbc-bE-gnd" secondAttribute="trailing" constant="8" id="IR7-EU-Bhh"/>
                                     <constraint firstItem="xHg-bP-dmh" firstAttribute="top" secondItem="HCO-zN-DuD" secondAttribute="top" constant="20" id="N0D-md-0aO"/>
                                     <constraint firstItem="lHv-Po-ST8" firstAttribute="leading" secondItem="HCO-zN-DuD" secondAttribute="leading" constant="10" id="TkR-XL-qD5"/>
@@ -86,6 +101,7 @@
                                     <constraint firstItem="3K5-hY-f0i" firstAttribute="centerY" secondItem="xHg-bP-dmh" secondAttribute="centerY" id="Xj1-sz-xLk"/>
                                     <constraint firstItem="Sbc-bE-gnd" firstAttribute="centerY" secondItem="HCO-zN-DuD" secondAttribute="centerY" id="aZx-ag-w3H"/>
                                     <constraint firstItem="lHv-Po-ST8" firstAttribute="top" secondItem="xHg-bP-dmh" secondAttribute="bottom" constant="4" id="ac9-Gy-eBP"/>
+                                    <constraint firstItem="ZPU-H7-nH6" firstAttribute="centerY" secondItem="HCO-zN-DuD" secondAttribute="centerY" id="cMp-Ma-WPv"/>
                                     <constraint firstAttribute="bottom" secondItem="NHF-KC-1O9" secondAttribute="bottom" id="eEc-b2-yQT"/>
                                     <constraint firstItem="NHF-KC-1O9" firstAttribute="leading" secondItem="HCO-zN-DuD" secondAttribute="leading" id="jAr-lO-ri8"/>
                                     <constraint firstAttribute="bottom" secondItem="T3o-JE-3xr" secondAttribute="bottom" id="q9O-fU-6jv"/>
@@ -118,6 +134,7 @@
                 <outlet property="firstLabel" destination="xHg-bP-dmh" id="7vN-2a-H2I"/>
                 <outlet property="leadingWidth" destination="Tol-9Q-C83" id="suo-mg-er1"/>
                 <outlet property="lineView" destination="NHF-KC-1O9" id="hbC-By-Tcl"/>
+                <outlet property="modifyAddressButton" destination="ZPU-H7-nH6" id="GXq-o1-8n9"/>
                 <outlet property="morenLabel" destination="3K5-hY-f0i" id="Wcb-HX-kiR"/>
                 <outlet property="secondLabel" destination="lHv-Po-ST8" id="4qM-a2-8VP"/>
             </connections>

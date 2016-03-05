@@ -20,6 +20,8 @@
 #define MAINSCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
+
+
 @interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate>
 {
     NSMutableArray *dataArray;
@@ -29,6 +31,7 @@
 }
 
 @property (nonatomic, strong)UITableView *addressTableView;
+
 
 @end
 
@@ -168,6 +171,19 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
     AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    cell.delegate = self;
+    
+    if (self.isSelected == YES) {
+        
+        cell.modifyAddressButton.layer.borderWidth = 0.5;
+        cell.modifyAddressButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+        cell.modifyAddressButton.layer.cornerRadius = 15;
+        
+    } else {
+        cell.modifyAddressButton.hidden = YES;
+        
+    }
     if (indexPath.row == -1) {
         cell.leadingWidth.constant = 40;
         cell.addressImageView.hidden = NO;
@@ -207,11 +223,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   
     NSLog(@"%ld", (long)indexPath.row);
+    
+    AddressModel *model = [dataArray objectAtIndex:indexPath.row];
+    
+    if (self.isSelected == YES) {
+        
+        [self.delegate addressView:self model:model];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    } else {
+    
+        AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+        addVC.isAdd = NO;
+        addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:addVC animated:YES];
+    }
 
-    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
-    addVC.isAdd = NO;
-    addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:addVC animated:YES];
+    
     
     
 }
