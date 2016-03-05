@@ -23,7 +23,7 @@
 #import "Pingpp.h"
 #import "WXApi.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
-
+#import "SVProgressHUD.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
@@ -41,6 +41,9 @@
     NSString *coupon_message;
     NSString *errorCharge;
     UIAlertView *alertViewError;
+    
+    BOOL isWallPay;
+    
     
     
   
@@ -168,7 +171,7 @@
     if (error != nil) {
         NSLog(@"解析失败");
     }
-  //  NSLog(@"dic = %@", dic);
+    NSLog(@"dic = %@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     
@@ -222,6 +225,11 @@
     
     [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
     
+    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
+        isWallPay = YES;
+    } else {
+        isWallPay = NO;
+    }
     
     if ([coupon_message isEqualToString:@""]) {
         NSLog(@"okokoko");
@@ -260,7 +268,7 @@
     if (error != nil) {
         NSLog(@"解析失败");
     }
-  //  NSLog(@"dic = %@", dic);
+    NSLog(@"dic = %@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     
@@ -546,11 +554,22 @@
 
 }
 - (IBAction)xiaoluqianbaoSelected:(id)sender {
-//    payMethod = @"wx";
-//    self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-//    self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-//    self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
-//    NSLog(@"payMethod = %@", payMethod);
+    
+    if (isWallPay == YES) {
+    
+        payMethod = @"budget";
+        self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
+        NSLog(@"payMethod = %@", payMethod);
+    } else {
+        
+        [SVProgressHUD showInfoWithStatus:@"不能使用钱包支付"];
+        
+        
+    }
+    
+    
 
     
 }
@@ -603,6 +622,16 @@
         
         NSLog(@"response = %@", httpResponse);
         
+        if ([payMethod isEqualToString:@"budget"]) {
+          
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"success"]];
+            
+            
+            
+            return ;
+        }
+        
       
         if (connectionError != nil) {
             NSLog(@"error = %@", connectionError);
@@ -611,6 +640,12 @@
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"charge = %@", charge);
         errorCharge = charge;
+        
+        
+        
+        
+        
+        
         
         if (httpResponse.statusCode != 200) {
          //   NSLog(@"出错了");
@@ -633,9 +668,12 @@
                     NSLog(@"PingppError is nil");
                     paySucceed = YES;
                     
+                    [SVProgressHUD showInfoWithStatus:@"支付成功"];
+                    
                     
                 } else {
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    [SVProgressHUD showErrorWithStatus:@"支付失败"];
                     paySucceed = NO;
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }

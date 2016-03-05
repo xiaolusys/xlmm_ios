@@ -587,6 +587,8 @@
                } else {
                    // 支付失败或取消
                    // 发送支付不成功的 通知
+                   
+                   [SVProgressHUD showErrorWithStatus:@"支付失败"];
                    NSLog(@"url = %@", url);
                    NSLog(@"取消支付或支付失败");
                    //[[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
