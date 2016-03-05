@@ -84,7 +84,7 @@
     self.topToRefundHeight.constant = 1;
     }
     
-    
+    NSLog(@"%@", self.model.return_address);
     
 }
 
