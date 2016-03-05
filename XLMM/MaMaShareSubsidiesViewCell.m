@@ -37,6 +37,7 @@
 //    range = [timestext rangeOfString:@"T"];
 //    [timestext replaceCharactersInRange:range withString:@" "];
 //    self.click_time.text = timestext;
+    self.click_way.text = clickModel.desc;
     self.click_time.text = clickModel.carry_date;
     self.click_money.text = [NSString stringWithFormat:@"+%.2f", [clickModel.value_money floatValue]];
 }

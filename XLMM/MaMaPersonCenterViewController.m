@@ -26,6 +26,7 @@
 #import "FensiListViewController.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "UIViewController+NavigationBar.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -232,10 +233,10 @@
         self.clickTotalMoney = mmclog[@"clki"];
         NSLog(@"%@",[dicJson objectForKey:@"fans_num"]);
         
-        self.fensilabel.text = [NSString stringWithFormat:@"%@", [dicJson objectForKey:@"fans_num"]];
+        self.fensilabel.text = [NSString stringWithFormat:@"粉丝数%@", [dicJson objectForKey:@"fans_num"]];
         
-        self.account.text = [NSString stringWithFormat:@"%.2f",[mco floatValue]];
-        self.earningsRecord = self.account.text;
+        self.account.text = [NSString stringWithFormat:@"账户余额%.2f",[mco floatValue]];
+        self.earningsRecord = [NSString stringWithFormat:@"%.2f",[mco floatValue]];
     }
 }
 
@@ -653,6 +654,11 @@
 - (IBAction)fansList:(id)sender {
     FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
     [self.navigationController pushViewController:fensiVC animated:YES];
+}
+
+- (IBAction)boutiqueActivities:(id)sender {
+    //精品活动
+    [SVProgressHUD showInfoWithStatus:@"程序猿正在努力开发..."];
 }
 
 - (void)clickShareView {

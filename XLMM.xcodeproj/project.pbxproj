@@ -11,6 +11,7 @@
 		1808FAC11C8A7D060090EC17 /* mamaeryaoqing.png in Resources */ = {isa = PBXBuildFile; fileRef = 1808FABD1C8A7D060090EC17 /* mamaeryaoqing.png */; };
 		1808FAC21C8A7D060090EC17 /* mamafensi.png in Resources */ = {isa = PBXBuildFile; fileRef = 1808FABE1C8A7D060090EC17 /* mamafensi.png */; };
 		1808FAC31C8A7D060090EC17 /* mamashouyi.png in Resources */ = {isa = PBXBuildFile; fileRef = 1808FABF1C8A7D060090EC17 /* mamashouyi.png */; };
+		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181C74881C51F28300375DF8 /* CarryLogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74861C51F28300375DF8 /* CarryLogTableViewCell.m */; };
 		181C74891C51F28300375DF8 /* CarryLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181C74871C51F28300375DF8 /* CarryLogTableViewCell.xib */; };
 		181C748C1C5202DF00375DF8 /* CarryLogHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C748B1C5202DF00375DF8 /* CarryLogHeaderView.m */; };
@@ -727,6 +728,7 @@
 		1808FABD1C8A7D060090EC17 /* mamaeryaoqing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaeryaoqing.png; sourceTree = "<group>"; };
 		1808FABE1C8A7D060090EC17 /* mamafensi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamafensi.png; sourceTree = "<group>"; };
 		1808FABF1C8A7D060090EC17 /* mamashouyi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamashouyi.png; sourceTree = "<group>"; };
+		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181C74851C51F28300375DF8 /* CarryLogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarryLogTableViewCell.h; sourceTree = "<group>"; };
 		181C74861C51F28300375DF8 /* CarryLogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarryLogTableViewCell.m; sourceTree = "<group>"; };
 		181C74871C51F28300375DF8 /* CarryLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarryLogTableViewCell.xib; sourceTree = "<group>"; };
@@ -1724,6 +1726,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */,
 				326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */,
 				327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */,
 				327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */,
@@ -3363,6 +3366,7 @@
 				3266762B1BB5200E00307EC4 /* libz.tbd */,
 				326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */,
 				326676271BB51FE000307EC4 /* libc++.tbd */,
+				1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */,
 				2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */,
 				321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */,
 				32E329621B708A4000A6F0BC /* Foundation.framework */,
@@ -4369,6 +4373,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				ENABLE_TESTABILITY = YES;
@@ -4414,6 +4419,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -4439,7 +4445,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",

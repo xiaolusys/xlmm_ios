@@ -20,7 +20,9 @@
 #import "UILabel+CustomLabel.h"
 
 
+
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
+
 
 @interface PublishNewPdtViewController ()
 
@@ -296,29 +298,42 @@
 #pragma mark --保存事件
 - (void)tapSaveImageToIphone:(UIButton *)sender
                currentPicArr:(NSMutableArray *)currentPicArr {
-    
+
     NSInteger saveIndex = sender.tag - 100;
     self.saveIndex = saveIndex;
     SharePicModel *picModel = self.dataArr[saveIndex];
     
-    UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    [pab setString:picModel.title];
-    if (pab == nil) {
-        [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    //判断是否有用户权限
+    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+    if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+        //无权限
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        alert.tag = 101;
         [alert show];
-    }
-    if (self.currentArr == nil) {
-        self.currentArr = [picModel.pic_arry mutableCopy];
-        [self saveNext];
-    }else if (self.currentArr.count > 0){
-        [self.currentArr addObjectsFromArray:picModel.pic_arry];
     }else {
-        [self.currentArr addObjectsFromArray:picModel.pic_arry];
-        [self saveNext];
+        UIPasteboard *pab = [UIPasteboard generalPasteboard];
+        [pab setString:picModel.title];
+        if (pab == nil) {
+            [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            alert.tag = 102;
+            [alert show];
+        }
+        
+        
+        if (self.currentArr == nil) {
+            self.currentArr = [picModel.pic_arry mutableCopy];
+            [self saveNext];
+        }else if (self.currentArr.count > 0){
+            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+        }else {
+            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+            [self saveNext];
+        }
+        
     }
-
+  
 }
 
 - (void)saveNext {
@@ -332,7 +347,7 @@
 
 -(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
-//        NSLog(@"%@", error.localizedDescription);
+//        NSLog(@"-------%@", error.localizedDescription);
     }else {
         [self.currentArr removeObjectAtIndex:0];
     }
@@ -344,6 +359,19 @@
     self.photoView.contentOffY = scrollView.contentOffset.y;
 }
 
+#pragma mark--alertView的代理
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (101 == alertView.tag) {
+//        //跳转到设置页
+//        NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+//        
+//        if([[UIApplication sharedApplication] canOpenURL:url]) {
+//            
+//            NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+//            [[UIApplication sharedApplication] openURL:url];
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
