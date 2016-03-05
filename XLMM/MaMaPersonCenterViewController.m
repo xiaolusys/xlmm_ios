@@ -647,11 +647,11 @@
     [self.navigationController pushViewController:fensiVC animated:YES];
 }
 
-//- (void)clickShareView {
+- (void)clickShareView {
 //    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
 //    share.clickDate = _clickDate;
 //    share.todayMoney = _money;
 //    [self.navigationController pushViewController:share animated:YES];
-//}
+}
 
 @end

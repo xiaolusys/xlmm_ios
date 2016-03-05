@@ -166,7 +166,7 @@
                                         </constraint>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -386,8 +386,7 @@
                                                     <exclude reference="GDq-Th-3oO"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="12" width="69" height="20"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="Br7-Qu-iKA"/>
                                                     <include reference="GDq-Th-3oO"/>
@@ -400,15 +399,14 @@
                                                 <constraint firstAttribute="height" constant="30" id="Paw-Ek-0TK"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Paw-Ek-0TK"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="74" y="7" width="64" height="30"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="Paw-Ek-0TK"/>
                                                 </mask>
@@ -461,15 +459,14 @@
                                                 <constraint firstAttribute="height" constant="30" id="Qef-bM-iHb"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Qef-bM-iHb"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="74" y="7" width="64" height="30"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="Qef-bM-iHb"/>
                                                 </mask>
@@ -488,8 +485,7 @@
                                                     <exclude reference="6Zv-Ws-Tyu"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="12" width="69" height="20"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="6Zv-Ws-Tyu"/>
                                                 </mask>
@@ -595,7 +591,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WHY-OM-BHS">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamaerweimaicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYM-AB-pm7">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamaeryaoqing.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYM-AB-pm7">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="fph-ck-Vto"/>
@@ -614,7 +610,7 @@
                                                 </mask>
                                             </variation>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的二维码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odr-sW-eY2">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的邀请" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odr-sW-eY2">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -639,7 +635,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="Odr-sW-eY2" firstAttribute="leading" secondItem="MYM-AB-pm7" secondAttribute="trailing" constant="14" id="1bs-eb-vQh"/>
+                                        <constraint firstItem="Odr-sW-eY2" firstAttribute="leading" secondItem="MYM-AB-pm7" secondAttribute="trailing" constant="14" id="1bs-eb-vQh">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                        </constraint>
                                         <constraint firstAttribute="trailing" secondItem="vt2-YC-XPv" secondAttribute="trailing" id="21a-wF-uif"/>
                                         <constraint firstItem="MYM-AB-pm7" firstAttribute="leading" secondItem="WHY-OM-BHS" secondAttribute="leading" constant="30" id="9sQ-GT-dsK">
                                             <variation key="heightClass=regular-widthClass=compact" constant="15"/>
@@ -698,7 +696,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyT-LG-bhU">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamashareicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jFA-DS-mU9">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamafensi.png" translatesAutoresizingMaskIntoConstraints="NO" id="jFA-DS-mU9">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="jKp-sf-0TV"/>
@@ -739,7 +737,9 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="73H-mC-ZYV" firstAttribute="leading" secondItem="G4Q-G3-6X9" secondAttribute="leading" id="4iP-NS-vW6"/>
-                                        <constraint firstItem="G4Q-G3-6X9" firstAttribute="leading" secondItem="jFA-DS-mU9" secondAttribute="trailing" constant="7" id="80B-4M-QQI"/>
+                                        <constraint firstItem="G4Q-G3-6X9" firstAttribute="leading" secondItem="jFA-DS-mU9" secondAttribute="trailing" constant="7" id="80B-4M-QQI">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                        </constraint>
                                         <constraint firstItem="jFA-DS-mU9" firstAttribute="leading" secondItem="lyT-LG-bhU" secondAttribute="leading" constant="31" id="I7A-yA-KCs">
                                             <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                                         </constraint>
@@ -804,7 +804,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qX4-I2-Gnd">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamaxuanpinicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="lLr-5c-8YE">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamadingdan.png" translatesAutoresizingMaskIntoConstraints="NO" id="lLr-5c-8YE">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="YAZ-K1-1kE"/>
@@ -855,7 +855,9 @@
                                         </constraint>
                                         <constraint firstItem="xt7-AT-GSJ" firstAttribute="leading" secondItem="Pps-yb-4Fx" secondAttribute="leading" id="SI9-zR-le9"/>
                                         <constraint firstAttribute="trailing" secondItem="62u-GJ-Iyr" secondAttribute="trailing" id="V60-Xm-FqF"/>
-                                        <constraint firstItem="Pps-yb-4Fx" firstAttribute="leading" secondItem="lLr-5c-8YE" secondAttribute="trailing" constant="8" id="Vrc-xo-CF6"/>
+                                        <constraint firstItem="Pps-yb-4Fx" firstAttribute="leading" secondItem="lLr-5c-8YE" secondAttribute="trailing" constant="8" id="Vrc-xo-CF6">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                        </constraint>
                                         <constraint firstItem="xt7-AT-GSJ" firstAttribute="top" secondItem="Pps-yb-4Fx" secondAttribute="bottom" constant="4" id="cPr-bb-GeT"/>
                                         <constraint firstAttribute="bottom" secondItem="62u-GJ-Iyr" secondAttribute="bottom" id="oDZ-kH-bsB"/>
                                         <constraint firstItem="62u-GJ-Iyr" firstAttribute="leading" secondItem="qX4-I2-Gnd" secondAttribute="leading" id="r2v-Fb-3xp"/>
@@ -904,7 +906,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FKn-Xf-DJm">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamajingxuanicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="3c5-d3-Z9B">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamashouyi.png" translatesAutoresizingMaskIntoConstraints="NO" id="3c5-d3-Z9B">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="OSa-GO-1Qr"/>
@@ -948,7 +950,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="CEU-MR-8sq" firstAttribute="leading" secondItem="3c5-d3-Z9B" secondAttribute="trailing" constant="8" id="1eg-GY-8o3"/>
+                                        <constraint firstItem="CEU-MR-8sq" firstAttribute="leading" secondItem="3c5-d3-Z9B" secondAttribute="trailing" constant="8" id="1eg-GY-8o3">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                        </constraint>
                                         <constraint firstAttribute="trailing" secondItem="WOc-4X-3iv" secondAttribute="trailing" id="4ZC-nL-YMX"/>
                                         <constraint firstItem="BKX-dB-F7e" firstAttribute="leading" secondItem="CEU-MR-8sq" secondAttribute="leading" id="A7p-Ar-egh"/>
                                         <constraint firstItem="WOc-4X-3iv" firstAttribute="top" secondItem="FKn-Xf-DJm" secondAttribute="top" id="Bgv-WA-kEF"/>
@@ -1736,14 +1740,14 @@
         <image name="havenodingdan.png" width="120" height="100"/>
         <image name="homepage.png" width="750" height="440"/>
         <image name="mamaback.png" width="30" height="52"/>
-        <image name="mamaerweimaicon.png" width="50" height="50"/>
+        <image name="mamadingdan.png" width="58" height="57"/>
+        <image name="mamaeryaoqing.png" width="58" height="57"/>
+        <image name="mamafensi.png" width="58" height="57"/>
         <image name="mamaheader.png" width="143" height="143"/>
         <image name="mamahuodong.png" width="64" height="64"/>
         <image name="mamajingxuan.png" width="72" height="60"/>
-        <image name="mamajingxuanicon.png" width="50" height="50"/>
-        <image name="mamashareicon.png" width="50" height="50"/>
         <image name="mamashop.png" width="158" height="161"/>
+        <image name="mamashouyi.png" width="58" height="57"/>
         <image name="mamatuisong.png" width="55" height="54"/>
-        <image name="mamaxuanpinicon.png" width="50" height="50"/>
     </resources>
 </document>
