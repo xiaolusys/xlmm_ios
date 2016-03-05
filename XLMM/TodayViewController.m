@@ -203,7 +203,7 @@ static NSString *khuodongCell = @"HuodongCell";
     _isDone = NO;
     [self createCollectionView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
@@ -395,7 +395,7 @@ static NSString *khuodongCell = @"HuodongCell";
     NSError *error;
     [posterDataArray removeAllObjects];
     if (data == nil) {
-
+        [self downloadData];
         return;
     }
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -414,11 +414,9 @@ static NSString *khuodongCell = @"HuodongCell";
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
 
-
     }
    
-   
-    
+
     NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
     for (NSDictionary *ladyDic in ladyArray) {
     
@@ -605,7 +603,8 @@ static NSString *khuodongCell = @"HuodongCell";
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {
-        
+        //如果数据是空就重新加载
+        [self downloadData];
         return;
     }
     NSError *error = nil;
