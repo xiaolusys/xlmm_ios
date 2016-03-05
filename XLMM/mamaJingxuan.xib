@@ -30,7 +30,7 @@
                 <view tag="200" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKZ-IS-eUi">
                     <rect key="frame" x="179" y="72" width="60" height="60"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-76.png" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-ss-e7f">
+                        <imageView userInteractionEnabled="NO" tag="888" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-76.png" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-ss-e7f">
                             <rect key="frame" x="3" y="3" width="54" height="54"/>
                         </imageView>
                     </subviews>

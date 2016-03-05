@@ -43,7 +43,9 @@
 @property (nonatomic, copy) NSString *productUrl;
 
 
-
+@property (nonatomic, strong) UILabel *mamaJingXuanLabel;
+@property (nonatomic, strong) UILabel *navmamaLabel;
+@property (nonatomic, strong) UIImageView *nanaHeadImageView;
 
 
 @end
@@ -86,7 +88,6 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     self.isRequest = NO;
     
-    [self createNavigationBarWithTitle:@"我的精选" selecotr:@selector(backClickAction)];
     
     UIBarButtonItem *rightItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(previewAction)];
 
@@ -151,7 +152,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
     [btn2 addTarget:self action:@selector(btn2Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [btn3 addTarget:self action:@selector(btn3Clicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *label = [view viewWithTag:81];
+    self.mamaJingXuanLabel = [view viewWithTag:81];
+    
     
     navView = view;
     
@@ -195,6 +197,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
     [btn2 addTarget:self action:@selector(btn2Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [btn3 addTarget:self action:@selector(btn3Clicked:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.navmamaLabel = [view viewWithTag:100];
+    self.nanaHeadImageView = [view viewWithTag:888];
     
     tableHeadView = view;
     tableHeadView.hidden = NO;
@@ -250,12 +254,16 @@ static NSString *cellIdentifier = @"SelectedListCell";
     self.shopShareName = dic[@"shop_info"][@"name"];
 
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
-        self.shopShareName = @"小鹿妈妈";
+      //  self.shopShareName = @"小鹿妈妈";
 
     }
     self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
     
-    self.shopShareImage = [UIImage imageNamed:@"logo.png"];
+    self.nanaHeadImageView.image = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
+    self.mamaJingXuanLabel.text = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
+    self.navmamaLabel.text = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
+    
+    
     
     
     MMLOG(_shopShareLink);
