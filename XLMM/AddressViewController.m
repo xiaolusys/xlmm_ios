@@ -20,6 +20,8 @@
 #define MAINSCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
+
+
 @interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate>
 {
     NSMutableArray *dataArray;
@@ -29,6 +31,7 @@
 }
 
 @property (nonatomic, strong)UITableView *addressTableView;
+
 
 @end
 
@@ -207,11 +210,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   
     NSLog(@"%ld", (long)indexPath.row);
+    
+    AddressModel *model = [dataArray objectAtIndex:indexPath.row];
+    
+    if (self.isSelected == YES) {
+        
+        [self.delegate addressView:self model:model];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    } else {
+    
+        AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
+        addVC.isAdd = NO;
+        addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:addVC animated:YES];
+    }
 
-    AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
-    addVC.isAdd = NO;
-    addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:addVC animated:YES];
+    
     
     
 }

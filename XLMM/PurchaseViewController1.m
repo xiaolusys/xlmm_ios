@@ -58,7 +58,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [self downloadAddressData];
     if ([WXApi isWXAppInstalled]) {
       //  NSLog(@"安装了微信");
         self.weixinView.hidden = YES;
@@ -122,6 +121,9 @@
         self.couponLabel.hidden = YES;
     }
     
+    [self downloadAddressData];
+
+    
     
 }
 
@@ -140,7 +142,7 @@
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-    NSLog(@"cartsURLString = %@", urlString);
+  //  NSLog(@"cartsURLString = %@", urlString);
     
    
     //下载购物车支付界面数据
@@ -166,14 +168,14 @@
     if (error != nil) {
         NSLog(@"解析失败");
     }
-    NSLog(@"dic = %@", dic);
+  //  NSLog(@"dic = %@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     
     
     coupon_message = [dic objectForKey:@"coupon_message"];
     
-    NSLog(@"coupon_message= %@", coupon_message);
+  //  NSLog(@"coupon_message= %@", coupon_message);
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
@@ -258,14 +260,14 @@
     if (error != nil) {
         NSLog(@"解析失败");
     }
-    NSLog(@"dic = %@", dic);
+  //  NSLog(@"dic = %@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     
     
     coupon_message = [dic objectForKey:@"coupon_message"];
     
-    NSLog(@"coupon_message= %@", coupon_message);
+   // NSLog(@"coupon_message= %@", coupon_message);
     
     if ([coupon_message isEqualToString:@""]) {
         NSLog(@"okokoko");
@@ -430,7 +432,8 @@
 - (IBAction)addAddress:(id)sender {
     //NSLog(@"新增地址");
     AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-
+    addVC.isSelected = YES;
+    addVC.delegate = self;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 
@@ -664,6 +667,19 @@
     
     
     [self downloadCartsData];
+}
+
+
+- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
+    
+    NSLog(@"%@", model);
+    addressModel = model;
+    NSLog(@"addressID = %@", addressModel.addressID);
+    
+    self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
+    self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",model.provinceName, model.cityName, model.countyName, model.streetName];
+    
+    
 }
 
 

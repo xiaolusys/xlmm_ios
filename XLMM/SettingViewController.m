@@ -207,6 +207,7 @@
 - (IBAction)addressButtonClicked:(id)sender {
     NSLog(@"地址管理");
     AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+    addressVC.isSelected = NO;
     [self.navigationController pushViewController:addressVC animated:YES];
     
 }

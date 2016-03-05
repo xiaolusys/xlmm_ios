@@ -8,10 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+@class AddressModel;
+@class AddressViewController;
+
+@protocol PurchaseAddressDelegate <NSObject>
+
+@required
+
+- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model;
+
+@end
+
 @interface AddressViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 - (IBAction)addButtonClicked:(id)sender;
+
+@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, assign) id <PurchaseAddressDelegate>delegate;
+
 
 @end
