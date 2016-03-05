@@ -20,4 +20,6 @@
 - (IBAction)addressInfoClicked:(id)sender;
 - (IBAction)wuliuInfoClicked:(id)sender;
 
+@property (nonatomic, copy) NSString *tuihuodizhi;
+
 @end
