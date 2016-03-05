@@ -320,9 +320,20 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 //            return;
 //        }
 //    }
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.delegate = self;
-    [alertView show];
+    
+    NSLog(@"是的， 我要使用这样优惠券");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
+        NSLog(@"更新优惠券");
+        [self.delegate updateYouhuiquanWithmodel:model];
+        //            NSLog(@"model = %@", model);
+        //            NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
+    }
+    //记录选择的优惠券 并返回上一个界面。。。。
+    [self.navigationController popViewControllerAnimated:YES];
+//
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alertView.delegate = self;
+//    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

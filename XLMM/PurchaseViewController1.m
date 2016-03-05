@@ -40,6 +40,7 @@
     BOOL paySucceed;
     NSString *coupon_message;
     NSString *errorCharge;
+    UIAlertView *alertViewError;
     
     
   
@@ -225,13 +226,23 @@
         
     } else {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertView.tag = 2000;
-        [alertView show];
+        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertViewError.tag = 2000;
+        [alertViewError show];
+        
         
     }
     
     // NSLog(@"****************");
+}
+
+-(void) performDismiss:(NSTimer *)timer
+{
+    self.couponLabel.hidden = YES;
+    yhqModel = nil;
+    
+      [self downloadCartsData];
+    [alertViewError dismissWithClickedButtonIndex:0 animated:NO];
 }
 
 
@@ -262,9 +273,13 @@
     } else {
         
         yhqModel = nil;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertView.tag = 2000;
-        [alertView show];
+        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
+
+        alertViewError.tag = 2000;
+        
+        
+        [alertViewError show];
         return;
         
     }
