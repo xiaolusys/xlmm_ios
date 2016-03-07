@@ -316,7 +316,7 @@
     }
     NSArray *array = [NSArray arrayWithArray:mutable];
     
-    NSLog(@"array = %@", array);
+   // NSLog(@"array = %@", array);
     return array;
 }
 
@@ -429,7 +429,7 @@
       //  NSLog(@"微信登录");
         
         [self weixinzidongdenglu];
-        NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
       //  NSLog(@"userinfo = %@", userinfo);
         if ([self isXiaolumama]) {
             [self createRightItem];
@@ -438,7 +438,7 @@
         }
     } else if ([loginMethon isEqualToString:kPhoneLogin]){
       
-        NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
       //  NSLog(@"userinfo = %@", userinfo);
         if ([self isXiaolumama]) {
             [self createRightItem];
@@ -461,7 +461,7 @@
     NSError *error = nil;
     NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
     if (error == nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         if (error == nil) {
           //  NSLog(@"dic = %@", dic);
         } else{

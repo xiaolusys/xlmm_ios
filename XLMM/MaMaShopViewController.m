@@ -33,6 +33,7 @@
 @property (nonatomic, copy) NSString *shopShareLink;
 @property (nonatomic, copy) NSString *shopShareName;
 @property (nonatomic, strong) UIImage *shopShareImage;
+@property (nonatomic, copy) NSString *shopDesc;
 
 
 @property (nonatomic, copy) NSString *productLink;
@@ -254,14 +255,16 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
     self.shopShareName = dic[@"shop_info"][@"name"];
+    self.shopShareImage = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
 
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
-      //  self.shopShareName = @"小鹿妈妈";
+        self.shopShareName = @"小鹿妈妈";
 
     }
     self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
+    self.shopDesc = [dic[@"shop_info"] objectForKey:@"desc"];
     
-    self.nanaHeadImageView.image = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
+    self.nanaHeadImageView.image = self.shopShareImage;
     self.mamaJingXuanLabel.text = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
     self.navmamaLabel.text = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
     
@@ -358,7 +361,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
             [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 
             }];
             
@@ -370,7 +373,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
             [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.shopShareName;
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.shopShareLink;
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 
             }];
             
@@ -383,7 +386,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
             [UMSocialData defaultData].extConfig.qqData.title = self.shopShareName;
             [UMSocialData defaultData].extConfig.qqData.url = self.shopShareLink;
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 
             }];
                        [self cancleBtnClicked:nil];
@@ -394,7 +397,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
             [UMSocialData defaultData].extConfig.qzoneData.title = self.shopShareName;
             [UMSocialData defaultData].extConfig.qzoneData.url = self.shopShareLink;
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.shopShareName image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 
             }];
                       [self cancleBtnClicked:nil];
@@ -406,7 +409,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
             NSLog(@"微博");
             NSData *data = UIImagePNGRepresentation(self.shopShareImage);
             
-            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.shopShareName, self.shopShareLink];
+            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.shopDesc, self.shopShareLink];
             
             [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:data];
             

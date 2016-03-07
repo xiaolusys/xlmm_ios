@@ -370,7 +370,7 @@
     self.dingdanLabel.text = [NSString stringWithFormat:@"%ld", (long)dingdanshu];
     self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", ticheng];
     
-    [self.mamaTableView reloadData];
+    //[self.mamaTableView reloadData];
 }
 
 

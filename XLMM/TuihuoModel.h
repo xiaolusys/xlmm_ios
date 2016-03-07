@@ -74,6 +74,9 @@
 @property (nonatomic, copy)NSString *status_display;
 @property (nonatomic, copy)NSArray *proof_pic;
 
+@property (nonatomic, copy) NSString *return_address;
+
+
 
 
 

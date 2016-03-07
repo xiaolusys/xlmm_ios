@@ -20,7 +20,7 @@
 //@property (nonatomic, strong)NSNumber *status;
 @property (nonatomic, strong) NSNumber *rebet_amount;
 
-#warning mark － 服务器返回数据错误
+#warning 
 @property (nonatomic, strong)NSNumber *sale_num;
 @property (nonatomic, strong) NSNumber *agent_price;
 @property (nonatomic, strong)NSNumber *std_sale_price;

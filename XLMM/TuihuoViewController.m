@@ -158,6 +158,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         model.status = [[dic objectForKey:kStatus] integerValue];
         model.refund_fee = [[dic objectForKey:kRefune_Fee] floatValue];
         model.status_display = [dic objectForKey:kStatus_Display];
+        model.return_address = [dic objectForKey:@"return_address"];
         if ([[dic objectForKey:@"proof_pic"] isKindOfClass:[NSArray class]]) {
             model.proof_pic = [dic objectForKey:@"proof_pic"];
             

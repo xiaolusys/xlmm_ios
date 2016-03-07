@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbn-Pa-cqf">
-                    <rect key="frame" x="10" y="128" width="300" height="312"/>
+                    <rect key="frame" x="10" y="142" width="300" height="284"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退货地址信息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccS-kQ-udh">
                             <rect key="frame" x="96" y="8" width="108" height="22"/>
@@ -21,20 +21,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请将包裹里原发货单一并寄回或者写张纸条，注明您的微信昵称、联系电话和退换货的原因，方便我们售后收到及时为您处理哦，谢谢！^_^" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1j-Q8-Jcp">
-                            <rect key="frame" x="10" y="113" width="280" height="67"/>
+                            <rect key="frame" x="10" y="85" width="280" height="67"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="质量问题的退货，邮费需要您先支付哦，到货验收后我们会把货款和运费分开退还给您的！发普通的快递即可！请勿发顺丰或EMS等高邮费的快递，拒收到付件，请保持衣服吊牌完整；不影响二次销售." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajD-yc-kpF">
-                            <rect key="frame" x="10" y="188" width="280" height="84"/>
+                            <rect key="frame" x="10" y="160" width="280" height="84"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" tag="600" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="021-50939326-818  201602" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmA-J9-t8y">
-                            <rect key="frame" x="45" y="85" width="210" height="20"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -45,7 +39,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="da6-id-typ">
-                            <rect key="frame" x="100" y="272" width="100" height="40"/>
+                            <rect key="frame" x="100" y="244" width="100" height="40"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" lianxikkefu_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="kJf-7Q-7Kb">
                                     <rect key="frame" x="5" y="10" width="20" height="20"/>
@@ -93,9 +87,8 @@
                         <constraint firstAttribute="trailing" secondItem="ajD-yc-kpF" secondAttribute="trailing" constant="10" id="4MN-5B-vxA"/>
                         <constraint firstItem="da6-id-typ" firstAttribute="top" secondItem="ajD-yc-kpF" secondAttribute="bottom" id="5pg-ra-1WT"/>
                         <constraint firstItem="ajD-yc-kpF" firstAttribute="leading" secondItem="vbn-Pa-cqf" secondAttribute="leading" constant="10" id="6QQ-0k-kYb"/>
-                        <constraint firstItem="ZmA-J9-t8y" firstAttribute="centerX" secondItem="vbn-Pa-cqf" secondAttribute="centerX" id="7cE-7p-hnO"/>
                         <constraint firstItem="ajD-yc-kpF" firstAttribute="top" secondItem="m1j-Q8-Jcp" secondAttribute="bottom" constant="8" id="DnV-VP-e0R"/>
-                        <constraint firstItem="m1j-Q8-Jcp" firstAttribute="top" secondItem="ZmA-J9-t8y" secondAttribute="bottom" constant="8" id="GW6-d4-WnG"/>
+                        <constraint firstItem="m1j-Q8-Jcp" firstAttribute="top" secondItem="IRu-o6-UpR" secondAttribute="bottom" constant="8" id="FFn-0x-Bew"/>
                         <constraint firstAttribute="bottom" secondItem="da6-id-typ" secondAttribute="bottom" id="KCM-zz-Lkp"/>
                         <constraint firstItem="ajD-yc-kpF" firstAttribute="centerX" secondItem="vbn-Pa-cqf" secondAttribute="centerX" id="O2U-0E-u3Z"/>
                         <constraint firstItem="ccS-kQ-udh" firstAttribute="top" secondItem="vbn-Pa-cqf" secondAttribute="top" constant="8" id="P28-83-ccg"/>
@@ -106,7 +99,6 @@
                         <constraint firstItem="IRu-o6-UpR" firstAttribute="leading" secondItem="vbn-Pa-cqf" secondAttribute="leading" constant="10" id="aeA-S1-8k4"/>
                         <constraint firstItem="IRu-o6-UpR" firstAttribute="centerX" secondItem="vbn-Pa-cqf" secondAttribute="centerX" id="ayv-6Z-Swh"/>
                         <constraint firstItem="ccS-kQ-udh" firstAttribute="centerX" secondItem="vbn-Pa-cqf" secondAttribute="centerX" id="gwZ-xl-cQG"/>
-                        <constraint firstItem="ZmA-J9-t8y" firstAttribute="top" secondItem="IRu-o6-UpR" secondAttribute="bottom" constant="8" id="jUE-lv-U2s"/>
                         <constraint firstItem="da6-id-typ" firstAttribute="centerX" secondItem="ajD-yc-kpF" secondAttribute="centerX" id="nbN-hL-QZB"/>
                         <constraint firstAttribute="trailing" secondItem="m1j-Q8-Jcp" secondAttribute="trailing" constant="10" id="rA5-FG-1kf"/>
                         <constraint firstItem="m1j-Q8-Jcp" firstAttribute="leading" secondItem="vbn-Pa-cqf" secondAttribute="leading" constant="10" id="ykN-Of-lED"/>

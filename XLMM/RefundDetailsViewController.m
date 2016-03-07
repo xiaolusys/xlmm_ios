@@ -45,6 +45,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *createdLabel;
 
 
+
+
 @end
 
 @implementation RefundDetailsViewController
@@ -82,7 +84,7 @@
     self.topToRefundHeight.constant = 1;
     }
     
-    
+    NSLog(@"%@", self.model.return_address);
     
 }
 
@@ -174,23 +176,23 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
     [infoView addGestureRecognizer:tap];
     
-    NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界 售后(收)";
-    NSString *phone1 = @"021-50939326-818  201602";
+//    NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界 售后(收)";
+//    NSString *phone1 = @"021-50939326-818  201602";
+//    
+//
+//    NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼 售后(收)";
+//    NSString *phone2 = @"15821245603  510000";
     
-
-    NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼 售后(收)";
-    NSString *phone2 = @"15821245603  510000";
-    
-    NSDictionary *dic1 = @{@"address":backAddress1,
-                           @"phone":phone1,
-                        
-                           
-                           };
-    NSDictionary *dic2 = @{@"address":backAddress2,
-                           @"phone":phone2,
-                        
-                           };
-    NSArray *array = @[dic1, dic1, dic2];
+//    NSDictionary *dic1 = @{@"address":backAddress1,
+//                           @"phone":phone1,
+//                        
+//                           
+//                           };
+//    NSDictionary *dic2 = @{@"address":backAddress2,
+//                           @"phone":phone2,
+//                        
+//                           };
+//    NSArray *array = @[dic1, dic1, dic2];
     
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.model.item_id];
     NSLog(@"url = %@", urlstring);
@@ -202,17 +204,22 @@
     
     NSLog(@"wear_by = %ld", (long)wear_by);
     
-    NSDictionary *addressDetails = [array objectAtIndex:wear_by];
+//    NSDictionary *addressDetails = [array objectAtIndex:wear_by];
     
 
     
     UILabel *addressLabel = [infoView viewWithTag:500];
-    UILabel *phoneLabel = [infoView viewWithTag:600];
+//    UILabel *phoneLabel = [infoView viewWithTag:600];
     UIButton *kefuButton = [infoView viewWithTag:800];
     [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
     
-    addressLabel.text = [addressDetails objectForKey:@"address"];
-    phoneLabel.text = [addressDetails objectForKey:@"phone"];
+    
+    
+    addressLabel.text = self.model.return_address;
+    
+    
+    
+   // phoneLabel.text = [addressDetails objectForKey:@"phone"];
     
     
     
