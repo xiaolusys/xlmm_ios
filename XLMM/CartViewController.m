@@ -412,13 +412,11 @@
             
             youhuiquanLabel.text = [NSString stringWithFormat:@"¥%ld", youhuiquanValud];
             pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+          
             
-            if (allPrice >= 150) {
-                nameLabel.text = @"可使用优惠券";
-            }  else {
-                nameLabel.text = [NSString stringWithFormat:@"还差%.1f元可用优惠券", 150 - allPrice];
-                
-            }
+            nameLabel.text = @"可使用优惠券";
+          
+            
             imageView.hidden = NO;
             
             footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
