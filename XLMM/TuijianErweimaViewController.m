@@ -91,7 +91,7 @@
     NSURL *url = [NSURL URLWithString:imagelink];
     NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error == nil) {
-        NSLog(@"data = %@", data);
+      //  NSLog(@"data = %@", data);
     } else{
         NSLog(@"error = %@", error);
     }
@@ -99,8 +99,10 @@
     self.imageView.image = image;
     
     NSLog(@"view = %@", self.whiteView);
-    self.whiteView.bounds = CGRectMake(0, 0, 240, 360);
-    shareImages = [UIImage imageFromView:self.whiteView];
+    //self.whiteView.bounds = CGRectMake(0, 0, 240, 360);
+    
+    self.mamaPicView.bounds = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 1.1);
+    shareImages = [UIImage imageFromView:self.mamaPicView];
     NSLog(@"shareImage = %@", shareImages);
     
 }
