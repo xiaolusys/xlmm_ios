@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol PurchaseAddressDelegate;
+#import "AddressViewController.h"
+
 
 
 

@@ -43,7 +43,7 @@
     UIAlertView *alertViewError;
     
     BOOL isWallPay;
-    
+    NSString *mamaqianbaoInfo;
     
     
   
@@ -625,7 +625,24 @@
         if ([payMethod isEqualToString:@"budget"]) {
           
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"success"]];
+            
+            NSLog(@"dic = %@", dic);
+            
+            /*
+             dic = {
+             channel = budget;
+             id = 305313;
+             info = "\U8ba2\U5355\U652f\U4ed8\U6210\U529f";
+             success = 1;
+             */
+            MMLOG([dic objectForKey:@"info"]);
+            mamaqianbaoInfo = [dic objectForKey:@"info"];
+            
+            [self performSelectorOnMainThread:@selector(showXiaoluQianbaoView) withObject:nil waitUntilDone:YES];
+//            
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[dic objectForKey:@"info"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+//            [alertView show];
+           // [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"info"]];
             
             
             
@@ -687,6 +704,15 @@
     
 }
 
+- (void)showXiaoluQianbaoView{
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mamaqianbaoInfo delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    alertView.tag = 666;
+    
+    [alertView show];
+    
+}
+
 - (void)showAlertView{
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errorCharge delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -700,6 +726,9 @@
     self.couponLabel.hidden = YES;
     yhqModel = nil;
     if (alertView.tag == 2000) {
+        return;
+    } else if (alertView.tag == 666){
+        [self.navigationController popToRootViewControllerAnimated:YES];
         return;
     }
     
