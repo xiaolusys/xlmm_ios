@@ -67,7 +67,7 @@ static NSString *cellIdentifier = @"productSelection";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+//    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     
     [self createNavigationBarWithTitle:@"选品上架" selecotr:@selector(backClickAction)];
     
@@ -81,7 +81,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
-    [SVProgressHUD show];
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [self createHeadView];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
@@ -203,7 +203,6 @@ static NSString *cellIdentifier = @"productSelection";
       
     } else if ([self.firstButton.currentTitle isEqualToString:@"全部"]){
         [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-       
     }
    
 }

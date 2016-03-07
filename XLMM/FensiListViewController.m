@@ -12,6 +12,7 @@
 #import "MMClass.h"
 #import "FanceModel.h"
 #import "MJRefresh.h"
+#import "SVProgressHUD.h"
 
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -58,6 +59,7 @@
         [self loadMore];
     }];
     
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     [self downloadData];
 }
 
@@ -73,6 +75,7 @@
 }
 
 - (void)fetchedData:(NSData *)data{
+    [SVProgressHUD dismiss];
     [self.tableView.mj_footer endRefreshing];
     if (data == nil) {
         return;

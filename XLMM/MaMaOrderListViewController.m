@@ -14,6 +14,7 @@
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
+#import "SVProgressHUD.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -107,8 +108,11 @@
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL];
     
+    [SVProgressHUD showWithStatus:@"正在加载..."];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

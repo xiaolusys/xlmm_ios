@@ -127,6 +127,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
         
     }];
     NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     NSLog(@"url = %@", shareString);
     [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
     
@@ -246,6 +247,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 
 
 - (void)fetchedShareData:(NSData *)data{
+    [SVProgressHUD dismiss];
     if (data == nil) {
         return;
     }
