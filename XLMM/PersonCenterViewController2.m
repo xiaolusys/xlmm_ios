@@ -15,6 +15,7 @@
 
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -59,10 +60,10 @@
 
 - (void)downlaodData{
     //http://192.168.1.79:8000/rest/v1/trades
-    
+     [SVProgressHUD showWithStatus:@"正在加载..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"wait send = %@", kWaitsend_List_URL);
-        
+       
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
         
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
@@ -70,6 +71,7 @@
 }
 
 - (void)fetchedWaipayData:(NSData *)data{
+    [SVProgressHUD dismiss];
     if (data == nil) {
         NSLog(@"下载失败");
         return;

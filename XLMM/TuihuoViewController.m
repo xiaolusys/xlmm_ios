@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
 #import "RefundDetailsViewController.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -74,10 +75,9 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"url = %@", urlstring);
+        
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
         [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-        
-        
     });
     
 }

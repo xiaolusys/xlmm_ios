@@ -181,14 +181,10 @@
     
     infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 + 20, 160, 20) font:[UIFont systemFontOfSize:12] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
     [self addSubview:infoLabel];
-  
-   
 }
 
 - (void)updateTimeView{
    // NSLog(@"更新数据");
-    
-    
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -208,7 +204,7 @@
     NSString *string = nil;
     
   
-        string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+    string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
     
     timeLabel.text = string;
 }

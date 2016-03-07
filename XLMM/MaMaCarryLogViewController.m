@@ -15,6 +15,7 @@
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
+#import "SVProgressHUD.h"
 
 
 @interface MaMaCarryLogViewController ()
@@ -62,8 +63,10 @@ static NSString *cellIdentifier = @"carryLogCell";
     
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog", Root_URL];
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
