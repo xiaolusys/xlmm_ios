@@ -59,7 +59,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     [self createEmptyView];
     
-    [ ];
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
    self.integralValue =  [self numberOfJifen];
