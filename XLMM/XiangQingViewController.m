@@ -101,6 +101,7 @@
     
 
     
+    
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -314,6 +315,8 @@
     self.remainTimeLabel.text = string;
     if ([d minute] <0 || [d second] < 0) {
         self.remainTimeLabel.text = @"00:00";
+        self.buyBtn.hidden = YES;
+        self.quxiaoBtn.hidden = YES;
     }
 }
 
