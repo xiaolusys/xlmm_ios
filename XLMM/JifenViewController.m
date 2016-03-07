@@ -102,7 +102,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
         NSLog(@"无积分");
         emptyView.hidden = NO;
         return [NSNumber numberWithInt:0];
-        
     }
     
     NSDictionary *result = [[dic objectForKey:@"results"] objectAtIndex:0];
