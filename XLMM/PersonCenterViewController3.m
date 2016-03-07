@@ -20,6 +20,7 @@
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
 #import "MJPullGifHeader.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -114,6 +115,8 @@
     
     
     self.quanbuCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
+    
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self downloadData];
     
 //    
@@ -174,6 +177,7 @@
 //        [self.quanbuCollectionView.mj_header endRefreshing];
 //
 //    }
+    [SVProgressHUD dismiss];
     NSError *error = nil;
     diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
     NSLog(@"array = %@", diciontary);
