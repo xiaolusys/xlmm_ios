@@ -692,7 +692,14 @@
                     
                 } else {
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                    [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                    
+                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+                        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                        
+                    } else {
+                        [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                        
+                    }
                     paySucceed = NO;
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
