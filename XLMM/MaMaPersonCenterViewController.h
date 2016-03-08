@@ -11,6 +11,10 @@
 @interface MaMaPersonCenterViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *clickedViewHeight;
+@property (weak, nonatomic) IBOutlet UILabel *huoyuedulabel;
+@property (weak, nonatomic) IBOutlet UIView *huoyueduView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *huoyueduRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *huoyueduLeft;
 
 @property (weak, nonatomic) IBOutlet UILabel *fensiLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;
@@ -18,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *jineLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
+@property (weak, nonatomic) IBOutlet UIView *mamaHeadViewnew;
 @property (weak, nonatomic) IBOutlet UILabel *jileishouyi;
 @property (weak, nonatomic) IBOutlet UILabel *dingdanyilu;
 

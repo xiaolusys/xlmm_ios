@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbW-16-Uxw">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbW-16-Uxw">
                     <rect key="frame" x="48" y="52" width="280" height="400"/>
                     <subviews>
                         <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E9i-JW-DVH">
@@ -208,12 +208,12 @@
                     <exclude reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="IOf-5q-wGF"/>
-                    <exclude reference="Ioj-B4-epP"/>
-                    <exclude reference="ZFM-UF-7pu"/>
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
                     <exclude reference="wkM-23-6cr"/>
+                    <exclude reference="IOf-5q-wGF"/>
+                    <exclude reference="Ioj-B4-epP"/>
+                    <exclude reference="ZFM-UF-7pu"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -221,12 +221,12 @@
                     <include reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="IOf-5q-wGF"/>
-                    <include reference="Ioj-B4-epP"/>
-                    <include reference="ZFM-UF-7pu"/>
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
                     <include reference="wkM-23-6cr"/>
+                    <include reference="IOf-5q-wGF"/>
+                    <include reference="Ioj-B4-epP"/>
+                    <include reference="ZFM-UF-7pu"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="182" y="236"/>

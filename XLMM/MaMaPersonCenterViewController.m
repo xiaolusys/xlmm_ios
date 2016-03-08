@@ -69,6 +69,7 @@
 @property (nonatomic, strong)NSNumber *clickTotalMoney;
 
 @property (copy, nonatomic) NSString *mamalink;
+@property (nonatomic, strong) UIImageView *mamaHuoyueduImageView;
 
 @end
 
@@ -126,10 +127,17 @@
     [self.jineLabel addGestureRecognizer:tap];
     self.jineLabel.userInteractionEnabled = YES;
     
+    [self createHuoYueDuView];
+    
 //    self.fensilabel.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
 //  //  [self.fensiLabel addGestureRecognizer:tap1];
 //    [self.fensilabel addGestureRecognizer:tap1];
+    
+}
+
+- (void)createHuoYueDuView{
+  self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
 }
 
