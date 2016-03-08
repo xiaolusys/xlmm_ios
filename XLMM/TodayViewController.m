@@ -1164,16 +1164,8 @@ static NSString *khuodongCell = @"HuodongCell";
                         [self.navigationController pushViewController:huodongVC animated:YES];
                     }
                 }
-            
-
-                
             }
-            
-            
-            
-            
         }
-        
     } else if (indexPath.section == 2){
         if (childDataArray.count == 0) {
             return;

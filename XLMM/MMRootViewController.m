@@ -684,9 +684,18 @@
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
     //   NSLog(@"string = %@", string);
     if ([d minute] < 0 || [d second] < 0) {
-        string = @"00:00";
+        string = @"";
+        
+        UIView *view = [_view viewWithTag:123];
+        dotView.hidden = YES;
+        
+        CGRect rect = view.frame;
+        rect.size.width = 44;
+        view.frame = rect;
         if ([theTimer isValid]) {
             [theTimer invalidate];
+            
+            
             
         }
     }
