@@ -186,6 +186,12 @@
                                         </mask>
                                     </variation>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活跃度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Pk-XS-lZQ">
+                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OFp-hq-wTR">
                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                     <constraints>
@@ -330,12 +336,6 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活跃度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Pk-XS-lZQ">
-                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -381,9 +381,9 @@
                                     <exclude reference="jaY-1k-U8x"/>
                                     <exclude reference="ot8-iA-7G8"/>
                                     <exclude reference="H0I-Lv-C9x"/>
+                                    <exclude reference="4Pk-XS-lZQ"/>
                                     <exclude reference="OFp-hq-wTR"/>
                                     <exclude reference="HyZ-gn-fx5"/>
-                                    <exclude reference="4Pk-XS-lZQ"/>
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="bOj-HD-mE8"/>
@@ -419,9 +419,9 @@
                                     <include reference="jaY-1k-U8x"/>
                                     <include reference="ot8-iA-7G8"/>
                                     <include reference="H0I-Lv-C9x"/>
+                                    <include reference="4Pk-XS-lZQ"/>
                                     <include reference="OFp-hq-wTR"/>
                                     <include reference="HyZ-gn-fx5"/>
-                                    <include reference="4Pk-XS-lZQ"/>
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="bOj-HD-mE8"/>

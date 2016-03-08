@@ -139,6 +139,15 @@
 - (void)createHuoYueDuView{
   self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
+    NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
+    huoyuezhi = SCREENWIDTH * 0.25;
+    CGFloat percent = (CGFloat)huoyuezhi/SCREENWIDTH*100;
+    self.huoyuedulabel.text = [NSString stringWithFormat:@"%%%.0f",100 - percent];
+    self.huoyueduLeft.constant = 0 - huoyuezhi;
+    self.huoyueduRight.constant = huoyuezhi ;
+    
+    
+    
 }
 
 //- (void)updateMaMaHome:(NSDictionary *)dataDic {
