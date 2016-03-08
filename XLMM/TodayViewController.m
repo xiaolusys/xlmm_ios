@@ -233,7 +233,35 @@ static NSString *khuodongCell = @"HuodongCell";
 //    });
   
     [self ishavemobel];
+    
+    
+    [self dingshishuaxin];
 
+}
+
+- (void)dingshishuaxin{
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
+    
+}
+
+- (void)updatePosters{
+    NSDate *date = [NSDate date];
+    
+    
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+    NSInteger hour = [comps hour];
+    NSInteger minute = [comps minute];
+    NSInteger second = [comps second];
+    
+    if (hour == 10 && minute == 0 && second == 0) {
+        [self downloadData];
+        
+    }
+   
+    
 }
 
 - (void)fetchedUpdateData:(NSData *)data{
