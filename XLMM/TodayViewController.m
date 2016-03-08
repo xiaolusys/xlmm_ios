@@ -435,13 +435,26 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
+        
         _ishaveHuodong = YES;
         huodongJson = [jsonDic objectForKey:@"activity"];
+        
+        //判断时间
+        NSString *endTime = [huodongJson objectForKey:@"end_time"];
+        NSDate *senddate = [NSDate date];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *location = [dateformatter stringFromDate:senddate];
+        
+        NSString *endtime = [endTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+        int result = [location compare:endtime];
+        if (result == NSOrderedAscending) {
+            _ishaveHuodong = YES;
+        }else {
+            _ishaveHuodong = NO;
+        }
+        
         login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
-        
-        
-        
-        
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
@@ -488,9 +501,6 @@ static NSString *khuodongCell = @"HuodongCell";
                     [self.view addSubview:activityView];
                     [defaults setObject:activityID forKey:@"activityid"];
                 }
-                
-                
-                
             }
           
         }
@@ -901,8 +911,6 @@ static NSString *khuodongCell = @"HuodongCell";
         childVC.titleName = @"时尚女装";
         childVC.childClothing = NO;
         [self.navigationController pushViewController:childVC animated:YES];
-
-        
     }
     
     
