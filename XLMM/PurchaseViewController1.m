@@ -188,7 +188,8 @@
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
     NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
     
-    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
+    //self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
     self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
@@ -306,6 +307,7 @@
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
     self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
     
     
     [self.MutCatrsArray removeAllObjects];
