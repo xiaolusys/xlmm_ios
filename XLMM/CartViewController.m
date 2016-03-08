@@ -16,6 +16,7 @@
 #import "PurchaseViewController1.h"
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -48,11 +49,11 @@
     isEmpty = YES;
     download1 = NO;
     download2 = NO;
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self downloadData];
     [self downloadHistoryData];
     
 
-    
 }
 
 -(void)displayDefaultView{
@@ -134,6 +135,7 @@
 
 
 - (void)downloadData{
+    [SVProgressHUD dismiss];
     NSLog(@"cart Url = %@", kCart_URL);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_URL]];
@@ -556,7 +558,8 @@
     
 }
 - (void)reduceNumber:(NewCartsModel *)cartModel{
-  
+    
+    [SVProgressHUD showWithStatus:@"加载中..."];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
     NSLog(@"url = %@", urlString);
     
@@ -579,7 +582,7 @@
     
 }
 - (void)addNumber:(NewCartsModel *)cartModel{
-   
+   [SVProgressHUD showWithStatus:@"加载中..."];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
     NSLog(@"url = %@", urlString);
     

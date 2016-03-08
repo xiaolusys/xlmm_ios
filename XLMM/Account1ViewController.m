@@ -14,6 +14,7 @@
 #import "AccountTableViewCell.h"
 #import "WithdrawCashViewController.h"
 #import "AccountModel.h"
+#import "SVProgressHUD.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -133,11 +134,13 @@ static NSString *identifier = @"AccountCell";
     if (type) {
         [self.dataArr removeAllObjects];
     }
+    [SVProgressHUD showWithStatus:@"加载中..."];
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

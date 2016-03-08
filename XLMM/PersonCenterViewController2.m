@@ -31,6 +31,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self downlaodData];
 }
 
@@ -60,7 +61,6 @@
 
 - (void)downlaodData{
     //http://192.168.1.79:8000/rest/v1/trades
-     [SVProgressHUD showWithStatus:@"正在加载..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"wait send = %@", kWaitsend_List_URL);
        

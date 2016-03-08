@@ -13,6 +13,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "JifenReusableView.h"
 
+
 @interface JifenViewController ()
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -58,7 +59,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     [self createEmptyView];
     
-    
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
    self.integralValue =  [self numberOfJifen];
@@ -102,7 +102,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
         NSLog(@"无积分");
         emptyView.hidden = NO;
         return [NSNumber numberWithInt:0];
-        
     }
     
     NSDictionary *result = [[dic objectForKey:@"results"] objectAtIndex:0];

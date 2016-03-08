@@ -16,6 +16,7 @@
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -66,6 +67,7 @@
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
+    [SVProgressHUD showWithStatus:@"加载中..."];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -83,6 +85,7 @@
 }
 
 - (void)fetchedWaipayData:(NSData *)data{
+    [SVProgressHUD dismiss];
     if (data == nil) {
         return;
     }

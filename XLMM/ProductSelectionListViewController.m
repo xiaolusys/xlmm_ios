@@ -138,10 +138,12 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (void)yongjinorder:(UIButton *)button{
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self downloadOrderlist1];
 }
 
 - (void)xiangliangorder:(UIButton *)button{
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self downloadOrderlist2];
 }
 
@@ -218,6 +220,7 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (void)fetchedDatalist:(NSData *)data{
+    [SVProgressHUD dismiss];
     if (data == nil) {
         return;
     }
@@ -245,6 +248,7 @@ static NSString *cellIdentifier = @"productSelection";
 
 
 - (void)downloadAlllist{
+    [SVProgressHUD showWithStatus:@"加载中..."];
   //  NSLog(@"all");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
@@ -255,6 +259,7 @@ static NSString *cellIdentifier = @"productSelection";
     
 }
 - (void)downloadChildliat{
+    [SVProgressHUD showWithStatus:@"加载中..."];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"child");
@@ -265,6 +270,7 @@ static NSString *cellIdentifier = @"productSelection";
     
 }
 - (void)downloadLadylist{
+    [SVProgressHUD showWithStatus:@"加载中..."];
    // NSLog(@"lady");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];

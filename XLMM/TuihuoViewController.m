@@ -69,7 +69,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 }
 
 - (void)downlaodData{
-    
+    [SVProgressHUD showWithStatus:@"正在加载..."];
    // http://m.xiaolu.so/rest/v1/refunds
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
@@ -108,6 +108,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 - (void)fetchedWaipayData:(NSData *)data{
+    [SVProgressHUD dismiss];
     NSLog(@"11");
     
     if (data == nil) {
