@@ -306,11 +306,11 @@
                                         <constraint firstAttribute="bottom" secondItem="8Wq-jW-IL4" secondAttribute="bottom" id="chC-PN-FGZ"/>
                                         <constraint firstItem="8Wq-jW-IL4" firstAttribute="leading" secondItem="HmQ-lQ-awL" secondAttribute="leading" id="iQP-Gg-pgz"/>
                                         <constraint firstAttribute="trailing" secondItem="AcW-NA-WsR" secondAttribute="trailing" priority="100" constant="-8" id="lth-hC-NKk">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="3"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                         </constraint>
                                         <constraint firstItem="8Wq-jW-IL4" firstAttribute="top" secondItem="HmQ-lQ-awL" secondAttribute="top" id="pEW-b1-fU2"/>
                                         <constraint firstAttribute="bottom" secondItem="AcW-NA-WsR" secondAttribute="bottom" priority="100" constant="-14" id="xIb-1f-veF">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                         </constraint>
                                     </constraints>
                                     <variation key="default">
