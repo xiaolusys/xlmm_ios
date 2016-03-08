@@ -350,6 +350,9 @@ static NSString *cellIdentifier = @"SelectedListCell";
 }
 
 - (void)shareClicked:(UIButton *)button{
+    if (self.shopShareImage == nil) {
+        self.shopShareImage = [UIImage imageNamed:@"logo.png"];
+    }
     if (self.shopShareLink == nil) {
         [self cancleBtnClicked:nil];
         return;
@@ -631,6 +634,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 }
 
 - (void)singleShareClicked:(UIButton *)button{
+  
     
     switch (button.tag) {
         case 100:{

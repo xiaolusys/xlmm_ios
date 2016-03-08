@@ -334,12 +334,9 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSString *ID = model.ID;
     
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, ID];
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil];
-    detailsVC.childClothing = self.isChildClothing;
-    detailsVC.urlString = string;
+    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
+  
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
