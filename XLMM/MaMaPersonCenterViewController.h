@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIView *huoyueduView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *huoyueduRight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *huoyueduLeft;
+@property (weak, nonatomic) IBOutlet UILabel *mamahuoyueduLabel;
+@property (weak, nonatomic) IBOutlet UIView *mamaHuoyueduView;
 
 @property (weak, nonatomic) IBOutlet UILabel *fensiLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;

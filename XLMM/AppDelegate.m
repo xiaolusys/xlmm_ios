@@ -38,9 +38,13 @@
 @property (nonatomic, copy) NSDictionary *pushInfo;
 @property (nonatomic, assign) BOOL isFirst;
 
+
+
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate{
+   
+}
 
 - (NSString *)stringFromStatus:(NetworkStatus)status{
     NSString *string;
@@ -66,6 +70,26 @@
     // Override point for customization after application launch.
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    
+  
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSInteger count = [userDefaults integerForKey:@"StartCount"];
+    
+    NSLog(@"count = %ld", count);
+    
+    count++;
+    
+    [userDefaults setInteger:count forKey:@"StartCount"];
+    [userDefaults synchronize];
+    if (count == 22) {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"去评价" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
+//        [alertView show];
+
+    }
+    
+    
+   
 
     self.isFirst = YES;
    [MiPushSDK registerMiPush:self type:0 connect:YES];
@@ -161,7 +185,23 @@
     
     return YES;
 }
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    //  https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985
+    if (buttonIndex == 1) {
+        NSString * str = @"https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985";
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    } else {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+         [userDefaults setInteger:0 forKey:@"StartCount"];
+        [userDefaults synchronize];
 
+    }
+    
+    
+    
+}
 
 
 #pragma mark UIApplicationDelegate

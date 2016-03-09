@@ -28,6 +28,9 @@
 #import "UIViewController+NavigationBar.h"
 #import "SVProgressHUD.h"
 
+#import "MaMaHuoyueduViewController.h"
+
+
 
 
 @interface MaMaPersonCenterViewController ()<UITableViewDataSource, UITabBarDelegate, UITableViewDelegate, UIScrollViewDelegate>{
@@ -133,7 +136,17 @@
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
 //  //  [self.fensiLabel addGestureRecognizer:tap1];
 //    [self.fensilabel addGestureRecognizer:tap1];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huoyueduDetails)];
     
+    [self.mamaHuoyueduView addGestureRecognizer:tap1];
+    
+}
+
+- (void)huoyueduDetails{
+    NSLog(@"huoyuedu");
+    
+    MaMaHuoyueduViewController *VC = [[MaMaHuoyueduViewController alloc] init];
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 - (void)createHuoYueDuView{

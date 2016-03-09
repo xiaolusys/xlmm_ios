@@ -312,6 +312,8 @@
 		3236486D1C6469CD00CCD0DA /* mamajingxuanicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323648691C6469CD00CCD0DA /* mamajingxuanicon.png */; };
 		3236486E1C6469CD00CCD0DA /* mamashareicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3236486A1C6469CD00CCD0DA /* mamashareicon.png */; };
 		3236486F1C6469CD00CCD0DA /* mamaxuanpinicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3236486B1C6469CD00CCD0DA /* mamaxuanpinicon.png */; };
+		3237853C1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3237853A1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m */; };
+		3237853D1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3237853B1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1180,6 +1182,9 @@
 		323648691C6469CD00CCD0DA /* mamajingxuanicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamajingxuanicon.png; sourceTree = "<group>"; };
 		3236486A1C6469CD00CCD0DA /* mamashareicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamashareicon.png; sourceTree = "<group>"; };
 		3236486B1C6469CD00CCD0DA /* mamaxuanpinicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaxuanpinicon.png; sourceTree = "<group>"; };
+		323785391C8FEA1E00C2C20B /* MaMaHuoyueduViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaHuoyueduViewController.h; sourceTree = "<group>"; };
+		3237853A1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaHuoyueduViewController.m; sourceTree = "<group>"; };
+		3237853B1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHuoyueduViewController.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -3523,6 +3528,9 @@
 				3236485C1C62306800CCD0DA /* HuodongViewController.xib */,
 				32DF3B101C881C9C00738815 /* mamaJingxuan.xib */,
 				32DF3B2B1C8926C300738815 /* mamaJingxuanNav.xib */,
+				323785391C8FEA1E00C2C20B /* MaMaHuoyueduViewController.h */,
+				3237853A1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m */,
+				3237853B1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib */,
 			);
 			name = NewController;
 			sourceTree = "<group>";
@@ -3880,6 +3888,7 @@
 				18601B141C743EFE00E87A7B /* loading动画0014.png in Resources */,
 				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				326296511C45F627001A27E3 /* hongbaoopen100.png in Resources */,
+				3237853D1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib in Resources */,
 				3286F2FE1BE0BEAA00C8A775 /* childImage.png in Resources */,
 				32703F251BEB60D3002AFC6D /* Icon-29@3x.png in Resources */,
 				32E20B5F1C5F29EE009D1726 /* downarrowicon.png in Resources */,
@@ -4254,6 +4263,7 @@
 				32A2882D1B93E1C6006DC949 /* TodayViewController.m in Sources */,
 				322D256C1C32B66100509EAD /* MJRefreshBackNormalFooter.m in Sources */,
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
+				3237853C1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
 				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,

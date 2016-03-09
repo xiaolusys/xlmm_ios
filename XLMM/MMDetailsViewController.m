@@ -131,6 +131,8 @@
     }
 }
 
+
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -140,6 +142,7 @@
     }
     return self;
 }
+
 
 
 
