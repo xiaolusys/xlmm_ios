@@ -931,6 +931,7 @@
         return;
     }
     if (skusID == nil) {
+        
         [UIView animateWithDuration:.5f animations:^{
             self.scrollerView.contentOffset = CGPointMake(0, self.sizeViewHeight.constant);
             
