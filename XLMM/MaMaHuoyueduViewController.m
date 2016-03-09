@@ -9,6 +9,9 @@
 #import "MaMaHuoyueduViewController.h"
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
+#import "HuoyuezhiTableViewCell.h"
+
+
 
 
 @interface MaMaHuoyueduViewController ()
@@ -44,6 +47,9 @@
     
     [self downLoadWithURLString:string andSelector:@selector(fetchListData:)];
     
+    [self.tableView registerClass:[HuoyuezhiTableViewCell class] forCellReuseIdentifier:@"HuoyueZhiCell"];
+    
+    
     
 }
 
@@ -69,6 +75,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"HuoyuezhiTableViewCell" owner:nil options:nil];
+    HuoyuezhiTableViewCell *cell = [array objectAtIndex:0];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    
+    return cell;
+    
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
 /*
 #pragma mark - Navigation
 

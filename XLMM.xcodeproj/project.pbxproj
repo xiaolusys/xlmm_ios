@@ -314,6 +314,8 @@
 		3236486F1C6469CD00CCD0DA /* mamaxuanpinicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3236486B1C6469CD00CCD0DA /* mamaxuanpinicon.png */; };
 		3237853C1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3237853A1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m */; };
 		3237853D1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3237853B1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib */; };
+		323785461C9000AA00C2C20B /* HuoyuezhiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 323785441C9000AA00C2C20B /* HuoyuezhiTableViewCell.m */; };
+		323785471C9000AA00C2C20B /* HuoyuezhiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323785451C9000AA00C2C20B /* HuoyuezhiTableViewCell.xib */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1185,6 +1187,9 @@
 		323785391C8FEA1E00C2C20B /* MaMaHuoyueduViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaHuoyueduViewController.h; sourceTree = "<group>"; };
 		3237853A1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaHuoyueduViewController.m; sourceTree = "<group>"; };
 		3237853B1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHuoyueduViewController.xib; sourceTree = "<group>"; };
+		323785431C9000AA00C2C20B /* HuoyuezhiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoyuezhiTableViewCell.h; sourceTree = "<group>"; };
+		323785441C9000AA00C2C20B /* HuoyuezhiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoyuezhiTableViewCell.m; sourceTree = "<group>"; };
+		323785451C9000AA00C2C20B /* HuoyuezhiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuoyuezhiTableViewCell.xib; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -1811,6 +1816,9 @@
 				32C1340B1C5C8C2700922DC2 /* MamaShareView.h */,
 				32C1340C1C5C8C2700922DC2 /* MamaShareView.m */,
 				32C1340E1C5C8C4600922DC2 /* MamaShareView.xib */,
+				323785431C9000AA00C2C20B /* HuoyuezhiTableViewCell.h */,
+				323785441C9000AA00C2C20B /* HuoyuezhiTableViewCell.m */,
+				323785451C9000AA00C2C20B /* HuoyuezhiTableViewCell.xib */,
 			);
 			name = NewMaMaView;
 			sourceTree = "<group>";
@@ -3650,6 +3658,7 @@
 				3247FDBE1C03365900C6631D /* keshiyong.png in Resources */,
 				323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */,
 				8E0044E61BFAF4B000AFC1DF /* WuliuInfoView.xib in Resources */,
+				323785471C9000AA00C2C20B /* HuoyuezhiTableViewCell.xib in Resources */,
 				3269A4BC1C747322001B8761 /* havenodingdan.png in Resources */,
 				32746E0F1B74A22000816208 /* icon-daizhifu.png in Resources */,
 				322D25B11C32B93A00509EAD /* 圈圈加载0006.png in Resources */,
@@ -4133,6 +4142,7 @@
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
+				323785461C9000AA00C2C20B /* HuoyuezhiTableViewCell.m in Sources */,
 				321952981BFC7A8D00AA0AB8 /* QNUserAgent.m in Sources */,
 				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,
 				3282F2851B6B5B1300E73EB9 /* SDWebImageDownloaderOperation.m in Sources */,

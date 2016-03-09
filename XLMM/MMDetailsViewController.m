@@ -212,6 +212,8 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    
     self.navigationController.navigationBarHidden = YES;
     CGPoint contentOffset = scrollView.contentOffset;
     self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , self.bottomImageViewHeight.constant);
@@ -234,6 +236,9 @@
         self.imageBottom.constant = (contentOffset.y)/3;
     }
 }
+
+
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     if (self.navigationController.viewControllers.count == 1) {
         return NO;
