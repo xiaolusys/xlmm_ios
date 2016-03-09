@@ -286,7 +286,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-    
+    if (scrollView.tag != 106)return;
     self.navigationController.navigationBarHidden = YES;
     CGPoint contentOffset = scrollView.contentOffset;
     self.bottomImageView.frame = CGRectMake(0, 0, SCREENWIDTH , self.bottomImageViewHeight.constant);

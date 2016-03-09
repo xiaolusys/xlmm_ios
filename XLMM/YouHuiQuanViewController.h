@@ -24,6 +24,9 @@
 @property (assign, nonatomic)BOOL isSelectedYHQ;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *buyongBUtton;
+- (IBAction)buyongClicked:(id)sender;
 
 @property (assign, nonatomic) NSInteger payment;
 

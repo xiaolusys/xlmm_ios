@@ -55,6 +55,17 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     self.usedArray = [[NSMutableArray alloc] initWithCapacity:0];
     model = [YHQModel new];
     
+    self.buyongBUtton.layer.cornerRadius = 20;
+    self.buyongBUtton.layer.borderWidth = 1;
+    self.buyongBUtton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
+    
+    if (self.isSelectedYHQ == YES) {
+        
+    } else{
+        self.bottomView.hidden = YES;
+    }
+    
+    
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backBtnClicked:)];
     [self createCollectionView];
     [self downLoadData];
@@ -370,5 +381,17 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)buyongClicked:(id)sender {
+    NSLog(@"quxiao ");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
+        NSLog(@"取消优惠券");
+        [self.delegate updateYouhuiquanWithmodel:nil];
+        
+       
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end
