@@ -35,9 +35,6 @@
 #import "MobClick.h"
 
 
-
-
-
 static NSString *ksimpleCell = @"simpleCell";
 static NSString *kposterView = @"posterView";
 static NSString *khead1View = @"head1View";
@@ -463,13 +460,11 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
+        
         _ishaveHuodong = YES;
         huodongJson = [jsonDic objectForKey:@"activity"];
+        
         login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
-        
-        
-        
-        
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
@@ -516,9 +511,6 @@ static NSString *khuodongCell = @"HuodongCell";
                     [self.view addSubview:activityView];
                     [defaults setObject:activityID forKey:@"activityid"];
                 }
-                
-                
-                
             }
           
         }
@@ -929,8 +921,6 @@ static NSString *khuodongCell = @"HuodongCell";
         childVC.titleName = @"时尚女装";
         childVC.childClothing = NO;
         [self.navigationController pushViewController:childVC animated:YES];
-
-        
     }
     
     

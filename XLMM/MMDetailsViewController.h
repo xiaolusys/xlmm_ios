@@ -55,6 +55,15 @@
 @property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *yansebottomHeight;
 
+
+@property (weak, nonatomic) IBOutlet UIScrollView *lastScrollView;
+@property (weak, nonatomic) IBOutlet UIView *productMsgView;
+
+@property (weak, nonatomic) IBOutlet UIView *jiageView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *imageViewss;
+
+
 - (IBAction)shareClicked:(id)sender;
 - (IBAction)sizeViewBtnClicked:(id)sender;
 - (IBAction)backqianye:(id)sender;

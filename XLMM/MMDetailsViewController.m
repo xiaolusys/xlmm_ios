@@ -27,6 +27,7 @@
 #import "MMLoadingAnimation.h"
 #import "AFNetworking.h"
 #import "MobClick.h"
+#import "MJRefresh.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -82,6 +83,9 @@
 
 @property (nonatomic, strong)UIImage *kuaiZhaoImage;
 
+//详情图片
+@property (nonatomic, strong)NSString *imageWebUrl;
+@property (nonatomic, strong)UIScrollView *belowScrollView;
 
 @end
 
@@ -95,7 +99,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated]; 
+    [super viewWillAppear:animated];
     
     if (last_created != nil) {
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -138,7 +142,10 @@
     if (self) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/%@/details.json", Root_URL, modelID];
         self.urlString = string;
+        self.imageWebUrl = [NSString stringWithFormat:@"%@/mm/pdetail/%@", Root_URL, modelID];
+        
         _childClothing = isChild;
+        
     }
     return self;
 }
@@ -150,7 +157,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.view addSubview:self.scrollerView];
+    self.lastScrollView.tag = 104;
+    self.lastScrollView.pagingEnabled = YES;
+    self.lastScrollView.scrollEnabled = NO;
+    self.lastScrollView.contentSize = CGSizeMake(SCREENWIDTH, 2 * SCREENHEIGHT);
+    self.scrollerView.tag = 106;
+    self.scrollerView.showsVerticalScrollIndicator = NO;
+    
+    [self.lastScrollView addSubview:self.headImageView];
+    [self.lastScrollView addSubview:self.scrollerView];
+    [self.view addSubview:self.lastScrollView];
+    
     [self.view addSubview:self.backView];
     [self.view addSubview:self.shareView];
     _midLabel.hidden = YES;
@@ -163,6 +180,9 @@
     theNumberOfSizeCanSelected = 0;
    
     self.webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    self.webView.tag = 102;
+
+    
 //  
 //    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, -60)];
 //    
@@ -209,6 +229,59 @@
     
     
     self.scrollerView.scrollEnabled = NO;
+
+    self.belowScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.scrollerView.frame.origin.y + SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT)];
+    NSLog(@"belowScrollView.frame-%@", NSStringFromCGRect(self.belowScrollView.frame));
+    self.belowScrollView.tag = 105;
+    self.belowScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.lastScrollView addSubview:self.belowScrollView];
+    self.belowScrollView.scrollEnabled = NO;
+    
+    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    webView.tag = 103;
+    webView.delegate = self;
+    webView.scalesPageToFit = YES;
+    webView.backgroundColor = [UIColor whiteColor];
+    NSURL *url = [NSURL URLWithString:self.imageWebUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    self.belowScrollView.backgroundColor = [UIColor redColor];
+    
+    //设置上拉加载
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [webView loadRequest:request];
+        [self.belowScrollView addSubview:webView];
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            self.lastScrollView.contentOffset = CGPointMake(0, SCREENHEIGHT);
+        } completion:^(BOOL finished) {
+            //结束加载
+            [self.scrollerView.mj_footer endRefreshing];
+        }];
+    }];
+    
+    self.scrollerView.mj_footer = footer;
+    footer.stateLabel.backgroundColor = [UIColor backgroundlightGrayColor];
+    [footer setTitle:@"继续拖动，查看图文详情" forState:MJRefreshStateIdle];
+    [footer setTitle:@"正在加载..." forState:MJRefreshStateRefreshing];
+
+    
+    //    设置UIWebView 有下拉操作
+    MJRefreshNormalHeader *mjheader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            //下拉执行对应的操作
+            self.lastScrollView.contentOffset = CGPointMake(0, 0);
+            //结束加载
+            [webView.scrollView.mj_header endRefreshing];
+        } completion:^(BOOL finished) {
+        }];
+    }];
+    [mjheader setTitle:@"下拉返回商品详情" forState:MJRefreshStateIdle];
+    mjheader.lastUpdatedTimeLabel.hidden = YES;
+    webView.scrollView.mj_header = mjheader;
+}
+
+- (void)createDetailWebView {
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -220,6 +293,7 @@
     self.bottomImageView.layer.masksToBounds = YES;
     self.bottomImageView.contentMode = UIViewContentModeScaleAspectFill;
     distance = headImageOrigineHeight - contentTopHeight;
+    
     if (contentOffset.y<-distance) {
         //下拉
         CGFloat sizeheight = contentTopHeight- contentOffset.y;
@@ -228,9 +302,6 @@
         self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
     if (contentOffset.y >= 0) {
-//        NSLog(@"");
-//        
-//        NSLog(@"%@", NSStringFromCGPoint(contentOffset));
         //上滑
         self.imageViewTop.constant = -contentOffset.y/3;
         self.imageBottom.constant = (contentOffset.y)/3;
@@ -247,11 +318,19 @@
 }
 
 - (void)downloadDetailsData{
+    NSLog(@"+++++++++%@", self.urlString);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
         [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
     });
     
+//    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+//    [manage GET:self.imageWebUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self createContentView];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//    [self createContentView];
 }
 
 - (void)fetchedDetailsData:(NSData *)data{
@@ -357,7 +436,7 @@
    
     
     [self createSizeView];
-    [self createContentView];
+//    [self createContentView];
     
 //    [self performSelector:@selector(createContentView) withObject:nil afterDelay:5.0];
     
@@ -543,34 +622,11 @@
         
         
     }
-//    NSArray *colors = @[[UIColor redColor],
-//                        [UIColor orangeColor],
-//                        [UIColor yellowColor],
-//                        [UIColor greenColor],
-//                        [UIColor cyanColor],
-//                        [UIColor blueColor],
-//                        [UIColor purpleColor],
-//                        [UIColor whiteColor],
-//                        [UIColor blackColor],
-//                        [UIColor grayColor],
-//                        [UIColor magentaColor],
-//                        [UIColor brownColor],
-//                        [UIColor clearColor],
-//                        [UIColor lightGrayColor],
-//                        [UIColor darkGrayColor]
-//                        ];
-    
-    
     for (int i = 0; i < imageArray.count; i++) {
         //创建imageView
         UIImageView *imageView = [[UIImageView alloc] init];
 //        imageView.backgroundColor = colors[i];
         [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-   
-//        NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:imageView
-//                                                                  attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual
-//                                                                     toItem:nil attribute:NSLayoutAttributeHeight multiplier:0.5 constant:80];
-   //     [imageView addConstraint:height];
         imageView.tag = i * 100 + 100;
         NSLog(@"imageview.tag = %ld", imageView.tag);
         [self.contentView addSubview:imageView];
@@ -578,8 +634,6 @@
     
     for (int i = 0; i < imageArray.count; i++) {
         //add 约束。。
-        
-        
         if (imageArray.count == 1) {
             UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:i * 100 + 100];
             NSLog(@"imageview = %@", imageView);
@@ -711,7 +765,7 @@
             }
 
         }
-        
+    
     }
     
    // NSLog(@"imagelinks = %@", imageArray);
@@ -758,6 +812,17 @@
         }];
         [self.contentView addSubview:imageview];
     }
+    
+//    NSLog(@"----------%@", self.imageWebUrl);
+//    //webView加载
+//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.contentView.frame];
+//    
+//    webView.delegate = self;
+//    webView.scalesPageToFit = YES;
+//    NSURL *url = [NSURL URLWithString:self.imageWebUrl];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    [webView loadRequest:request];
+//    [self.contentView addSubview:webView];
 }
 
 
@@ -1264,6 +1329,7 @@
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (webView.tag != 102)return;
     if (webView.isLoading) {
         return;
     }
