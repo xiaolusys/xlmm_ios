@@ -28,6 +28,9 @@
 
 
 
+
+
+
 @end
 
 static NSString *ksimpleCell = @"youhuiCell";
@@ -36,7 +39,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 @implementation YouHuiQuanViewController{
     YHQModel *model;
-    YHQModel *selectedModel;
+   
     
     UIView *emptyView;
 }
@@ -97,6 +100,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     model1.valid = [dic objectForKey:@"valid"];
     model1.use_fee = [dic objectForKey:@"use_fee"];
     model1.coupon_type_display = [dic objectForKey:@"coupon_type_display"];
+    model1.isSelected = NO;
     
     return model1;
 }
@@ -244,8 +248,24 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         yhqModel = [self.canUsedArray objectAtIndex:indexPath.row];
         
         cell.valueLabel.textColor = [UIColor colorWithR:240 G:80 B:80 alpha:1];
+        if (self.isSelectedYHQ == YES) {
+           //显示选中优惠券的图片 。。。。
+            NSLog(@"%@  %@", self.selectedModelID,  yhqModel.ID);
+            if ([self.selectedModelID isEqualToString:[NSString stringWithFormat:@"%@",yhqModel.ID]]) {
+                imageName = @"newyouhuiquanxuanzhongbg.png";
+                
+            } else {
+           
+                imageName = @"newyouhuiquankeyongbg.png";
+            }
+        } else {
+     
+            imageName = @"newyouhuiquankeyongbg.png";
+        }
         
-        imageName = @"newyouhuiquankeyongbg.png";
+      
+        
+        
     } else if (indexPath.section == 1){//冻结优惠券
         yhqModel = [self.disableUsedArray objectAtIndex:indexPath.row];
         imageName = @"newyouhuiquanbukeyongbg.png";
@@ -332,6 +352,8 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"indexPath = %@", indexPath);
     model = [self.canUsedArray objectAtIndex:indexPath.row];
+    
+    
    
   
  
@@ -339,44 +361,21 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     NSLog(@"couponType = %ld", (long)couponType);
     
     
-//    if (couponType == 2) {
-//        if (self.payment < 150 ) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//            [alertView show];
-//            
-//            return;
-//        }
-//        
-//        
-//    } else if(couponType ==3){
-//        
-//        if (self.payment < 259) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//            [alertView show];
-//            return;
-//        }
-//        
-//    } else {
-//        if (self.payment < 200) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"商品价格不足优惠券使用金额哦~" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//            [alertView show];
-//            return;
-//        }
-//    }
+
     
     NSLog(@"是的， 我要使用这样优惠券");
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         NSLog(@"更新优惠券");
         [self.delegate updateYouhuiquanWithmodel:model];
-        //            NSLog(@"model = %@", model);
-        //            NSLog(@"model.title = %@, %@-%@.\nid = %@", model.title, model.deadline, model.created, model.ID);
+        
+        
+        
+        
+     
     }
     //记录选择的优惠券 并返回上一个界面。。。。
     [self.navigationController popViewControllerAnimated:YES];
-//
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定选择这样优惠券吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    alertView.delegate = self;
-//    [alertView show];
+
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -419,7 +418,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         NSLog(@"取消优惠券");
         [self.delegate updateYouhuiquanWithmodel:nil];
-        
+       
        
     }
     

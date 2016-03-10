@@ -247,7 +247,9 @@ static NSString *cellIdentifier = @"SelectedListCell";
 }
 
 
-
+- (void)createDefualtView{
+    
+}
 
 - (void)fetchedShareData:(NSData *)data{
     [SVProgressHUD dismiss];
@@ -257,6 +259,12 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     NSLog(@"dic = %@", dic);
+    if ([[dic objectForKey:@"shop_info"] class] == [NSNull class]) {
+        
+        [self createDefualtView];
+        
+        return;
+    }
     
     self.shopShareName = dic[@"shop_info"][@"name"];
     

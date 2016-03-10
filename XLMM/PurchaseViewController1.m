@@ -45,6 +45,8 @@
     BOOL isWallPay;
     NSString *mamaqianbaoInfo;
     
+    NSString *yhqModelID;
+    
     
   
 }
@@ -457,6 +459,8 @@
     vc.isSelectedYHQ = YES;
     vc.payment = totalfee;
     vc.delegate = self;
+    vc.selectedModelID = yhqModelID;
+    
     
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -522,11 +526,14 @@
     [self downloadCartsData2];
     if (model == nil) {
         self.couponLabel.hidden = YES;
+        yhqModelID = @"";
         
     } else {
         self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
         self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
         self.couponLabel.hidden = NO;
+        
+        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
     }
     
     
