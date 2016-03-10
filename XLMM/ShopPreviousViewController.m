@@ -30,12 +30,12 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"店铺预览" selecotr:@selector(backClickAction)];
-    
    
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
-    
+    [self.webView scalesPageToFit];
+
     [self.view addSubview:self.webView];
 }
 
