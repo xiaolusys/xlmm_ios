@@ -82,7 +82,23 @@
     
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
+    [self updateTimeView];
+}
+
+- (void)updateTimeView {
+    NSDate *date = [NSDate date];
     
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+    NSInteger hour = [comps hour];
+    NSInteger minute = [comps minute];
+    NSInteger second = [comps second];
+    
+    if (hour == 10 && minute == 0 && second == 0) {
+        self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        [self.picCollectionView reloadData];
+    }
 }
 
 - (void)showDefaultView{
@@ -122,7 +138,6 @@
         [self showDefaultView];
         self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
-        
     }
     
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
@@ -177,7 +192,8 @@
         title.textColor = [UIColor lightGrayColor];
         title.textAlignment = NSTextAlignmentCenter;
         [timeView addSubview:title];
-
+        
+        self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         return;
     }
     
