@@ -54,12 +54,10 @@
     NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutablestart, mutableend];
     
     
-    self.requireLabel.text = [NSString stringWithFormat:@"满%@元可以使用", useFee];
-    if ([useFee intValue] == 0 && [yhqModel.status integerValue] == 0 && [yhqModel.poll_status integerValue] == 1) {
-        self.requireLabel.textColor = [UIColor youhuiquanrequireColor];
-        self.requireLabel.text = yhqModel.coupon_type_display;
-    }
-    self.valueLabel.text = [NSString stringWithFormat:@"%d", [couponValue intValue]];
+    self.requireLabel.text = [NSString stringWithFormat:@"满%@元使用", useFee];
+    self.requireLabel.text = yhqModel.coupon_type_display;
+
+    self.valueLabel.text = [NSString stringWithFormat:@"¥%d", [couponValue intValue]];
     self.timeLabel.text = newString;
 }
 

@@ -22,22 +22,33 @@
 }
 
 - (void)createCouponValue{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
-  //  NSLog(@"urlString = %@", string);
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        _couponValue = 0;
-        return;
+    NSString *urlString = [NSString stringWithFormat:@"%@", KUserCoupins_URL];
+    NSLog(@"url = %@", urlString);
+    NSInteger count = 0;
+    while (true) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        if (data == nil) {
+            return;
+        }
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        //  NSLog(@"json = %@", dictionary);
+        NSArray *array = [dictionary objectForKey:@"results"];
+        for (NSDictionary *dic in array) {
+            // 可用优惠券
+            if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue] == 1) {
+                count ++;
+            }
+            
+        }
+        
+        urlString = [dictionary objectForKey:@"next"];
+        if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
+            NSLog(@"可用已用 下页为空");
+            break;
+        }
     }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"json = %@", json);
     
-    if (json == nil) {
-        _couponValue = 0;
-        return;
-    }
-    _couponValue = [[json objectForKey:@"count"] integerValue];
-    //NSLog(@"_couponValue = %ld", (long)self.couponValue);
+    _couponValue = count;
     
 }
 

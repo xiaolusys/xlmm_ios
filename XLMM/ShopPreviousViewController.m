@@ -31,10 +31,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"店铺预览" selecotr:@selector(backClickAction)];
     
-    NSString *url = [NSString stringWithFormat:@"https://www.baidu.com/"];
+   
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     
     [self.view addSubview:self.webView];
 }

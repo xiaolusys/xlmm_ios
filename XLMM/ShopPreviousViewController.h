@@ -10,4 +10,6 @@
 
 @interface ShopPreviousViewController : UIViewController
 
+@property (nonatomic, copy) NSString *urlString;
+
 @end

@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSMutableArray *canUsedArray;
 @property (nonatomic, strong) NSMutableArray *expiredArray;
 @property (nonatomic, strong) NSMutableArray *usedArray;
+@property (nonatomic, strong) NSMutableArray *disableUsedArray;
+
 
 
 
@@ -34,6 +36,8 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 @implementation YouHuiQuanViewController{
     YHQModel *model;
+    YHQModel *selectedModel;
+    
     UIView *emptyView;
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -46,6 +50,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     self.navigationController.navigationBarHidden = YES;
     
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -53,12 +58,14 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     self.canUsedArray = [[NSMutableArray alloc] initWithCapacity:0];
     self.expiredArray = [[NSMutableArray alloc] initWithCapacity:0];
     self.usedArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.disableUsedArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
     model = [YHQModel new];
     
     self.buyongBUtton.layer.cornerRadius = 20;
     self.buyongBUtton.layer.borderWidth = 1;
     self.buyongBUtton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-    
+    //  展示优惠券列表时 隐藏地步按钮。
     if (self.isSelectedYHQ == YES) {
         
     } else{
@@ -67,6 +74,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     
     
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backBtnClicked:)];
+    
     [self createCollectionView];
     [self downLoadData];
     [self downLoadOtherDate];
@@ -102,15 +110,15 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     NSLog(@"url = %@", urlString);
     while (true) {
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        NSLog(@"data = %@", data);
+     //   NSLog(@"data = %@", data);
         if (data == nil) {
-            NSLog(@"下载失败");
+       //     NSLog(@"下载失败");
             break;
         } else{
-            NSLog(@"下载成功");
+            NSLog(@"已过期优惠券 下载成功");
         }
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"json = %@", dictionary);
+        //NSLog(@"json = %@", dictionary);
         NSArray *array = [dictionary objectForKey:@"results"];
         for (NSDictionary *dic in array) {
             YHQModel *model1 = [self fillModelWithData:dic];
@@ -119,7 +127,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         }
         urlString = [dictionary objectForKey:@"next"];
         if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
-            NSLog(@"下页为空");
+            NSLog(@"已过期下页为空");
             break;
         }
     }
@@ -135,12 +143,12 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
             return;
         }
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"json = %@", dictionary);
+      //  NSLog(@"json = %@", dictionary);
         NSArray *array = [dictionary objectForKey:@"results"];
         
         for (NSDictionary *dic in array) {
             // 可用优惠券
-             if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue ] == 1) {
+             if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue] == 1) {
                  YHQModel *model1 = [self fillModelWithData:dic];
                  
                  [self.canUsedArray addObject:model1];
@@ -150,17 +158,23 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
                 YHQModel *model1 = [self fillModelWithData:dic];
                 [self.usedArray addObject:model1];
             }
+            // 不可用优惠券  已冻结状态
+            if ([[dic objectForKey:@"status"] integerValue] == 2) {
+                YHQModel *model1 = [self fillModelWithData:dic];
+                [self.disableUsedArray addObject:model1];
+            }
         }
         urlString = [dictionary objectForKey:@"next"];
         if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
-            NSLog(@"下页为空");
+            NSLog(@"可用已用 下页为空");
             break;
         }
     }
-    NSLog(@"self.dataArray = %@", self.canUsedArray);
+  //  NSLog(@"self.dataArray = %@", self.canUsedArray);
 }
 // 创建优惠券集合视图
 - (void)createCollectionView{
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
@@ -194,22 +208,28 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 #pragma mark --UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    //购买选择优惠券返回 2 查看优惠券列表返回 4
+    
     if (self.isSelectedYHQ == YES) {
-        return 1;
+        return 2;
     }
-    return 3;
+    return 4;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
     if (section == 0) {
+        
+        // 可用优惠券为0 显示空界面。
         if (self.canUsedArray.count == 0) {
             emptyView.hidden = NO;
         }
         return self.canUsedArray.count;
     } else if (section == 1){
-        return self.expiredArray.count;
-    } else{
+        return self.disableUsedArray.count;
+    } else if (section == 3){
+         return self.expiredArray.count;
+    } else {
         return self.usedArray.count;
     }
     
@@ -220,25 +240,28 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     YHQCollectionCell *cell = (YHQCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     YHQModel *yhqModel;
     NSString *imageName;
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0) {//可用优惠券
         yhqModel = [self.canUsedArray objectAtIndex:indexPath.row];
-        cell.valueLabel.textColor = [UIColor youhuiquanValueColor
-                                     ];
-        cell.markLabel.textColor = cell.valueLabel.textColor;
-        cell.requireLabel.textColor = [UIColor textDarkGrayColor];
-        imageName = @"keshiyong.png";
-    } else if (indexPath.section == 1){
+        
+        cell.valueLabel.textColor = [UIColor colorWithR:240 G:80 B:80 alpha:1];
+        
+        imageName = @"newyouhuiquankeyongbg.png";
+    } else if (indexPath.section == 1){//冻结优惠券
+        yhqModel = [self.disableUsedArray objectAtIndex:indexPath.row];
+        imageName = @"newyouhuiquanbukeyongbg.png";
+        cell.valueLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+        
+    } else if (indexPath.section == 3){//过期优惠券
         yhqModel = [self.expiredArray objectAtIndex:indexPath.row];
-        imageName = @"yiguoqi.png";
-        cell.valueLabel.textColor = [UIColor lineGrayColor];
-        cell.markLabel.textColor = cell.valueLabel.textColor;
-        cell.requireLabel.textColor = cell.valueLabel.textColor;
-    } else{
+        imageName = @"yiguoqiyouhuiquan.png";
+        cell.valueLabel.textColor = [UIColor colorWithR:216 G:216 B:216 alpha:1];
+
+    }else{//已用优惠券
         yhqModel = [self.usedArray objectAtIndex:indexPath.row];
-        imageName = @"yishiyong.png";
-        cell.valueLabel.textColor = [UIColor lineGrayColor];
-        cell.markLabel.textColor = cell.valueLabel.textColor;
-        cell.requireLabel.textColor = cell.valueLabel.textColor;
+        imageName = @"newyouhuiquanyiyongbg.png";
+        cell.valueLabel.textColor = [UIColor colorWithR:74 G:74 B:74 alpha:1];
+
+
     }
     cell.myimageView.image = [UIImage imageNamed:imageName];
     [cell fillCellWithYHQModel:yhqModel];
@@ -247,11 +270,17 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.section == 0) {
         YHQHeadView * headerView = (YHQHeadView *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ksimpleHeadView forIndexPath:indexPath];
-        headerView.headLabel.text = @"可用优惠券";
+        headerView.headLabel.text = @"可使用优惠券";
         return headerView;
     } else if (indexPath.section == 1){
+        YHQHeadView * headerView = (YHQHeadView *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ksimpleHeadView forIndexPath:indexPath];
+        headerView.headLabel.text = @"不可用优惠券";
+        return headerView;
+    }
+    else if (indexPath.section == 3){
         YHQHeadView * headerView = (YHQHeadView *) [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ksimpleHeadView forIndexPath:indexPath];
         headerView.headLabel.text = @"已过期优惠券";
         return headerView;
@@ -275,7 +304,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 3) {
         return CGSizeMake(SCREENWIDTH, 40);
     }
     else{
@@ -292,7 +321,10 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (self.isSelectedYHQ == YES) {
-        return YES;
+        if (indexPath.section == 0) {
+            return YES;
+        }
+        return NO;
     }
     return NO;
 }
