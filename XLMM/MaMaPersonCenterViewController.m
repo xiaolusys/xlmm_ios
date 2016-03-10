@@ -29,6 +29,7 @@
 #import "SVProgressHUD.h"
 
 #import "MaMaHuoyueduViewController.h"
+#import "MaClassifyCarryLogViewController.h"
 
 
 
@@ -638,9 +639,10 @@
 }
 
 - (IBAction)MamaCarryLogClicked:(id)sender {
-    MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
-    
-    carry.earningsRecord = self.earningsRecord;
+//    MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
+//    
+//    carry.earningsRecord = self.earningsRecord;
+    MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
     [self.navigationController pushViewController:carry animated:YES];
 }
 

@@ -82,7 +82,11 @@
     
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
-    [self updateTimeView];
+    [self dingshishuaxin];
+}
+
+- (void)dingshishuaxin{
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
 }
 
 - (void)updateTimeView {
@@ -96,7 +100,8 @@
     NSInteger second = [comps second];
     
     if (hour == 10 && minute == 0 && second == 0) {
-        self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.picCollectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+        
         [self.picCollectionView reloadData];
     }
 }
