@@ -183,6 +183,10 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadData{
+    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+        [self.delegate showNavigation];
+    }
+    
     [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
 }
 

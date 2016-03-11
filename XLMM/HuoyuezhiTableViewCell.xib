@@ -82,6 +82,13 @@
                     <constraint firstItem="19V-HL-vTQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="uHs-BB-r2A"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="carryLabel" destination="Tqw-qe-avC" id="lSn-wg-74P"/>
+                <outlet property="statusLabel" destination="num-GW-2Lu" id="CnV-7E-c23"/>
+                <outlet property="timeLabel" destination="19V-HL-vTQ" id="D5Z-YX-nBP"/>
+                <outlet property="typeLabel" destination="XDp-gg-o5e" id="Ha7-zL-U0S"/>
+                <outlet property="valueLabel" destination="MDC-y4-Ipt" id="ADv-BH-To3"/>
+            </connections>
             <point key="canvasLocation" x="731" y="250"/>
         </tableViewCell>
     </objects>

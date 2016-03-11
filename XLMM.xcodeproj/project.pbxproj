@@ -322,6 +322,7 @@
 		323785501C900FB200C2C20B /* newyouhuiquanxuanzhongbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3237854B1C900FB200C2C20B /* newyouhuiquanxuanzhongbg.png */; };
 		323785511C900FB200C2C20B /* newyouhuiquanyiyongbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3237854C1C900FB200C2C20B /* newyouhuiquanyiyongbg.png */; };
 		3237857E1C9146D500C2C20B /* yiguoqiyouhuiquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3237857D1C9146D500C2C20B /* yiguoqiyouhuiquan.png */; };
+		323785811C929E3800C2C20B /* HuoyuezhiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 323785801C929E3800C2C20B /* HuoyuezhiModel.m */; };
 		323A05611C0BD8C400F56EAB /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */; };
 		323A05631C0BDD6900F56EAB /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */; };
 		323A05671C0BF5B300F56EAB /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 323A05651C0BF5B300F56EAB /* FillWuliuController.m */; };
@@ -1202,6 +1203,8 @@
 		3237854B1C900FB200C2C20B /* newyouhuiquanxuanzhongbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newyouhuiquanxuanzhongbg.png; path = XLMM/newyouhuiquanxuanzhongbg.png; sourceTree = "<group>"; };
 		3237854C1C900FB200C2C20B /* newyouhuiquanyiyongbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newyouhuiquanyiyongbg.png; path = XLMM/newyouhuiquanyiyongbg.png; sourceTree = "<group>"; };
 		3237857D1C9146D500C2C20B /* yiguoqiyouhuiquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yiguoqiyouhuiquan.png; sourceTree = "<group>"; };
+		3237857F1C929E3800C2C20B /* HuoyuezhiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoyuezhiModel.h; sourceTree = "<group>"; };
+		323785801C929E3800C2C20B /* HuoyuezhiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoyuezhiModel.m; sourceTree = "<group>"; };
 		323A05601C0BD8C400F56EAB /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		323A05621C0BDD6900F56EAB /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
 		323A05641C0BF5B300F56EAB /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
@@ -2131,6 +2134,8 @@
 				18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */,
 				325A91C51C5C4CC100629C9F /* FanceModel.h */,
 				325A91C61C5C4CC100629C9F /* FanceModel.m */,
+				3237857F1C929E3800C2C20B /* HuoyuezhiModel.h */,
+				323785801C929E3800C2C20B /* HuoyuezhiModel.m */,
 			);
 			name = MaMaModel;
 			sourceTree = "<group>";
@@ -4166,6 +4171,7 @@
 				3249B9851B6F381F0086D030 /* PersonCenterViewController1.m in Sources */,
 				325DB3601C434DB10018C421 /* MaMaPersonCenterViewController.m in Sources */,
 				3282F2881B6B5B1300E73EB9 /* UIButton+WebCache.m in Sources */,
+				323785811C929E3800C2C20B /* HuoyuezhiModel.m in Sources */,
 				323785461C9000AA00C2C20B /* HuoyuezhiTableViewCell.m in Sources */,
 				321952981BFC7A8D00AA0AB8 /* QNUserAgent.m in Sources */,
 				32151BF41B96CFBF003569D7 /* MMCollectionController.m in Sources */,

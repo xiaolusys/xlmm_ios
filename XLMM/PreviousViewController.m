@@ -295,6 +295,9 @@ static NSString *khead2View = @"head2View";
 
 
 - (void)downloadData{
+    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+        [self.delegate showNavigation];
+    }
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/promote_previous_paging?page_size=10",Root_URL];
     
