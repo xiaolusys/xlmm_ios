@@ -31,7 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"活动中心" selecotr:@selector(backClicked:)];
-    
+
 }
 
 - (void)backClicked:(UIButton *)button{
