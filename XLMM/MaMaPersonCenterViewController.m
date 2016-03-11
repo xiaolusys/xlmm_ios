@@ -643,6 +643,7 @@
 //    
 //    carry.earningsRecord = self.earningsRecord;
     MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+    carry.earningsRecord = self.earningsRecord;
     [self.navigationController pushViewController:carry animated:YES];
 }
 

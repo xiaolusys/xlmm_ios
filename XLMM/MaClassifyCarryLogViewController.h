@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MaClassifyCarryLogViewController : UIViewController
-
+@interface MaClassifyCarryLogViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, strong)NSString *earningsRecord;
 @end
