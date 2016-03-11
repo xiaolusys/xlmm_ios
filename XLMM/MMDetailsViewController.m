@@ -932,6 +932,7 @@
     }
     if (skusID == nil) {
         [UIView animateWithDuration:.5f animations:^{
+            self.lastScrollView.contentOffset = CGPointMake(0, 0);
             self.scrollerView.contentOffset = CGPointMake(0, self.sizeViewHeight.constant);
             
         } completion:^(BOOL finished) {

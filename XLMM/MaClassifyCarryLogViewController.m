@@ -108,7 +108,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     for (UIButton *btn in self.btnView.subviews) {
         if (btn.tag == 100) {
             [self titleBtnClickAction:btn];
-        } 
+        }
     }
 }
 

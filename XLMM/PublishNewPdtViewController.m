@@ -334,6 +334,7 @@
         [alert show];
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
+//        NSLog(@"---------%@", picModel.title);
         [pab setString:picModel.title];
         if (pab == nil) {
             [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
