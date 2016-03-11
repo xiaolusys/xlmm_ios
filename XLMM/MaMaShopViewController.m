@@ -62,6 +62,8 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     UIView *navView;
     UIView *tableHeadView;
+    NSString *urlString;
+    
     
     
     
@@ -245,7 +247,9 @@ static NSString *cellIdentifier = @"SelectedListCell";
 }
 
 
-
+- (void)createDefualtView{
+    
+}
 
 - (void)fetchedShareData:(NSData *)data{
     [SVProgressHUD dismiss];
@@ -253,8 +257,17 @@ static NSString *cellIdentifier = @"SelectedListCell";
         return;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
     NSLog(@"dic = %@", dic);
+    if ([[dic objectForKey:@"shop_info"] class] == [NSNull class]) {
+        
+        [self createDefualtView];
+        
+        return;
+    }
+    
     self.shopShareName = dic[@"shop_info"][@"name"];
+    
     self.shopShareImage = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
 
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
@@ -281,6 +294,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 //预览
 - (void)previewAction {
     ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
+    previous.urlString = self.shopShareLink;
     [self.navigationController pushViewController:previous animated:YES];
 }
 

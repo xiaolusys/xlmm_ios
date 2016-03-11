@@ -22,10 +22,17 @@
 }
 
 @property (assign, nonatomic)BOOL isSelectedYHQ;
+@property (nonatomic, copy) NSString *selectedModelID;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *buyongBUtton;
+- (IBAction)buyongClicked:(id)sender;
 
 @property (assign, nonatomic) NSInteger payment;
+
+
+
 
 @property (assign, nonatomic) id <YouhuiquanDelegate> delegate;
 

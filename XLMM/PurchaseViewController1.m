@@ -45,6 +45,8 @@
     BOOL isWallPay;
     NSString *mamaqianbaoInfo;
     
+    NSString *yhqModelID;
+    
     
   
 }
@@ -457,6 +459,8 @@
     vc.isSelectedYHQ = YES;
     vc.payment = totalfee;
     vc.delegate = self;
+    vc.selectedModelID = yhqModelID;
+    
     
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -477,7 +481,15 @@
     }
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,paramstring, yhqModel.ID];
+    NSString *urlString;
+    if (yhqModel == nil) {
+         urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
+        
+        
+    } else {
+  urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,paramstring, yhqModel.ID];
+    }
+   
     
     NSLog(@"cartsURLString = %@", urlString);
     
@@ -512,9 +524,18 @@
     
     
     [self downloadCartsData2];
-    self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
-    self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
-    self.couponLabel.hidden = NO;
+    if (model == nil) {
+        self.couponLabel.hidden = YES;
+        yhqModelID = @"";
+        
+    } else {
+        self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
+        self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+        self.couponLabel.hidden = NO;
+        
+        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+    }
+    
     
     //NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
     

@@ -194,10 +194,10 @@
                 <constraint firstAttribute="trailing" secondItem="ohG-sK-dvV" secondAttribute="trailing" constant="149" id="OUZ-GT-bOo">
                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                 </constraint>
-                <constraint firstItem="lbW-16-Uxw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ZFM-UF-7pu"/>
                 <constraint firstAttribute="bottom" secondItem="ohG-sK-dvV" secondAttribute="bottom" constant="108" id="aBx-mJ-kJz">
                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                 </constraint>
+                <constraint firstItem="lbW-16-Uxw" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="lDE-8Y-jo5"/>
                 <constraint firstItem="ohG-sK-dvV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="146" id="wkM-23-6cr">
                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                 </constraint>
@@ -208,12 +208,12 @@
                     <exclude reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="IOf-5q-wGF"/>
+                    <exclude reference="Ioj-B4-epP"/>
+                    <exclude reference="lDE-8Y-jo5"/>
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
                     <exclude reference="wkM-23-6cr"/>
-                    <exclude reference="IOf-5q-wGF"/>
-                    <exclude reference="Ioj-B4-epP"/>
-                    <exclude reference="ZFM-UF-7pu"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -221,12 +221,12 @@
                     <include reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="IOf-5q-wGF"/>
+                    <include reference="Ioj-B4-epP"/>
+                    <include reference="lDE-8Y-jo5"/>
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
                     <include reference="wkM-23-6cr"/>
-                    <include reference="IOf-5q-wGF"/>
-                    <include reference="Ioj-B4-epP"/>
-                    <include reference="ZFM-UF-7pu"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="182" y="236"/>

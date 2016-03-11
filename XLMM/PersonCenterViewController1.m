@@ -91,11 +91,11 @@
     }
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
+   // NSLog(@"json = %@", json);
     
     
     self.dataArray = [json objectForKey:@"results"];
-    NSLog(@"dataArray = %@", self.dataArray);
+    //NSLog(@"dataArray = %@", self.dataArray);
   
     
     self.collectionView.contentSize = CGSizeMake(SCREENWIDTH, 120 * self.dataArray.count);
@@ -106,7 +106,7 @@
     
     
     if ([[json objectForKey:@"count"] integerValue] == 0) {
-        NSLog(@"无待支付列表");
+       // NSLog(@"无待支付列表");
         
         [self displayDefaultView];
         return;
@@ -205,7 +205,7 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-        NSString *string = [details objectForKey:@"status_display"];
+      __unused NSString *string = [details objectForKey:@"status_display"];
         
             cell.statusLabel.text = @"待支付";
        
@@ -225,23 +225,10 @@
         label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
        
+        cell.statusLabel.text = @"待支付";
+
         
-        
-        if ([string isEqualToString:@"待付款"]) {
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-            button.tag = indexPath.row +100;
-            
-            [button setTitle:@"立即支付" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-            button.layer.cornerRadius = 12.5;
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-            [cell.contentView addSubview:button];
-            button.userInteractionEnabled = NO;
-        }
+
   
         return cell;
        
@@ -258,7 +245,7 @@
         for (int i = 1101; i < orderArray.count + 1101; i++) {
             NSDictionary *details = [orderArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
-            NSLog(@"imageView = %@", imageView);
+          //  NSLog(@"imageView = %@", imageView);
             [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
@@ -284,23 +271,7 @@
 
         cell.statusLabel.text = @"待支付";
       //  NSString *string = [diction objectForKey:@"status_display"];
-        
-//        if ([string isEqualToString:@"待付款"]) {
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//            
-//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            
-//            button.userInteractionEnabled = NO;
-//            [cell.contentView addSubview:button];
-//        }
+
         
      
         return cell;
@@ -308,21 +279,21 @@
 }
 
 - (void)lijizhifu:(UIButton *)button{
-    NSLog(@"立即支付");
-    NSLog(@"tag = %lu", (unsigned long)button.tag);
+  //  NSLog(@"立即支付");
+   // NSLog(@"tag = %lu", (unsigned long)button.tag);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
+  //  NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     NSString *ID = [dic objectForKey:@"id"];
-    NSLog(@"id = %@", ID);
+   // NSLog(@"id = %@", ID);
     
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
-    NSLog(@"urlString = %@", urlString);
+  //  NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;
     [self.navigationController pushViewController:xiangqingVC animated:YES];

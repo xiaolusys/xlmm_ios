@@ -28,6 +28,8 @@
 #import "MMLoginStatus.h"
 #import "AFNetworking.h"
 #import "NSString+Encrypto.h"
+#import "PublishNewPdtViewController.h"
+
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -153,7 +155,7 @@
         NSLog(@"跳转到用户未过期优惠券列表");
         
         YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = YES;
+        youhuiVC.isSelectedYHQ = NO;
         [self.navigationController pushViewController:youhuiVC animated:YES];
         
         
@@ -167,6 +169,13 @@
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
+        
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
+        
+        NSLog(@"跳转到小鹿妈妈每日上新");
+        
+        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        [self.navigationController pushViewController:publish animated:YES];
         
     }else {
         NSArray *components = [target_url componentsSeparatedByString:@"?"];

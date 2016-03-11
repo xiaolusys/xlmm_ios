@@ -4,7 +4,6 @@
 //
 //  Created by younishijie on 16/1/11.
 //  Copyright © 2016年 上海己美. All rights reserved.
-//
 
 #import "MaMaPersonCenterViewController.h"
 #import "FSLineChart.h"
@@ -27,7 +26,6 @@
 #import "MaMaShareSubsidiesViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "SVProgressHUD.h"
-
 #import "MaMaHuoyueduViewController.h"
 #import "MaClassifyCarryLogViewController.h"
 
@@ -53,7 +51,6 @@
     
 //    NSNumber *_money;
 //    NSNumber *_clickTotalMoney;
-    
 }
 
 @property (nonatomic, strong)FSLineChart *lineChart;

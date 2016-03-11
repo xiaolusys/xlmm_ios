@@ -124,7 +124,7 @@
 
 - (void)fetchedDingdanData:(NSData *)responsedata{
     if (responsedata == nil) {
-        NSLog(@"下载失败");
+     //   NSLog(@"下载失败");
         return;
     }
     
@@ -132,10 +132,10 @@
     
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
     if (error != nil) {
-        NSLog(@"解析失败");
+       // NSLog(@"解析失败");
         return;
     }
-    NSLog(@"JSON = %@", dicJson);
+  //  NSLog(@"JSON = %@", dicJson);
     
     [activityView removeFromSuperview];
     //订单状态
@@ -143,19 +143,19 @@
     status = [dicJson objectForKey:@"status_display"];
     //判断在详情页是否显示取消订单和重新购买按钮。。。。。
     if ([statusname isEqualToString:@"待付款"]) {
-        NSLog(@"待支付状态订单订单");
+     //   NSLog(@"待支付状态订单订单");
         self.quxiaoBtn.hidden = NO;
         self.buyBtn.hidden = NO;
         
 #pragma 显示剩余支付时间。。。。。
         createdString = [self formatterTimeString:[dicJson objectForKey:@"created"]];
-        NSLog(@"created:%@", createdString);
+      //  NSLog(@"created:%@", createdString);
         
       theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         
         
     } else {
-        NSLog(@"其他状态订单");
+       // NSLog(@"其他状态订单");
         self.quxiaoBtn.hidden = YES;
         self.buyBtn.hidden = YES;
     }
@@ -294,7 +294,7 @@
     //  2015-10-29T15:50:19
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate *date = [formatter dateFromString:createdString];
-    NSLog(@"date = %@", date);
+  //  NSLog(@"date = %@", date);
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSInteger unitFlags = NSCalendarUnitYear |
@@ -304,19 +304,21 @@
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
-    NSLog(@"todate = %@", todate);
+   // NSLog(@"todate = %@", todate);
     //把目标时间装载入date
     //用来得到具体的时差
     NSDateComponents *d = [calendar components:unitFlags fromDate:[NSDate date] toDate:todate options:0];
     NSString *string = nil;
     string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-    NSLog(@"string = %@", string);
+   // NSLog(@"string = %@", string);
     
     self.remainTimeLabel.text = string;
     if ([d minute] <0 || [d second] < 0) {
         self.remainTimeLabel.text = @"00:00";
         self.buyBtn.hidden = YES;
         self.quxiaoBtn.hidden = YES;
+        
+        self.bottomView.hidden = YES;
     }
 }
 
@@ -664,13 +666,13 @@
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    NSLog(@"111 : %@", response);
+  //  NSLog(@"111 : %@", response);
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"222 : %@", dic);
+  //  NSLog(@"222 : %@", dic);
     NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-      NSLog(@"string = %@", charge);
+    //  NSLog(@"string = %@", charge);
     
     XiangQingViewController * __weak weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -682,7 +684,7 @@
                 NSLog(@"PingppError is nil");
             } else {
                 NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                [self.navigationController popViewControllerAnimated:YES];
+               // [self.navigationController popViewControllerAnimated:YES];
             }
             //[weakSelf showAlertMessage:result];
         }];
