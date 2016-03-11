@@ -35,6 +35,7 @@
 @property (nonatomic, strong)NSNumber *today_carry;
 @property (nonatomic, strong)NSString *carry_type_name;
 @property (nonatomic, strong)NSNumber *carry_value;
+@property (nonatomic, strong)NSNumber *carry_type;
 
 
 @end
