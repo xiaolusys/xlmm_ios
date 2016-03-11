@@ -143,6 +143,14 @@
 //新接口数据
 - (void)updateMaMaHome:(NSDictionary *)dic {
     NSDictionary *fortune = [dic objectForKey:@"mama_fortune"];
+    if (fortune == nil) {
+        return;
+    }
+    if ([fortune class] == [NSNull class]) {
+        self.huoyuedulabel.text = @"0";
+
+        return;
+    }
     
     //账户金额
     self.jineLabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"cash_value"]];
