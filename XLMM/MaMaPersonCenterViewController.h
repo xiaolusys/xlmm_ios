@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *mamahuoyueduLabel;
 @property (weak, nonatomic) IBOutlet UIView *mamaHuoyueduView;
 
-@property (weak, nonatomic) IBOutlet UILabel *fensiLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *rootScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jineLabel;
@@ -47,6 +46,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *inviteLabel;
 @property (weak, nonatomic) IBOutlet UILabel *order;
 @property (weak, nonatomic) IBOutlet UILabel *account;
+
+@property (weak, nonatomic) IBOutlet UILabel *todayNum;
 
 
 - (IBAction)backClicked:(id)sender;

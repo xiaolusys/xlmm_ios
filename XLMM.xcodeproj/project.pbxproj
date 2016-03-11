@@ -75,6 +75,7 @@
 		18BDB2901C7D7587006462C2 /* path1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB28F1C7D7587006462C2 /* path1.png */; };
 		18BDB2941C7F1A44006462C2 /* ThirdAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB2921C7F1A44006462C2 /* ThirdAccountViewController.m */; };
 		18BDB2951C7F1A44006462C2 /* ThirdAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BDB2931C7F1A44006462C2 /* ThirdAccountViewController.xib */; };
+		18C1801A1C910B480084FD7F /* MaClassifyCarryLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C180191C910B480084FD7F /* MaClassifyCarryLogViewController.m */; };
 		18CD7BC61C59B24F0024B447 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */; };
 		18CD7BC91C5A07FA0024B447 /* ShareClickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CD7BC81C5A07FA0024B447 /* ShareClickModel.m */; };
 		18CD7BCB1C5A149C0024B447 /* totalClick.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CD7BCA1C5A149C0024B447 /* totalClick.png */; };
@@ -814,6 +815,8 @@
 		18BDB2911C7F1A44006462C2 /* ThirdAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdAccountViewController.h; sourceTree = "<group>"; };
 		18BDB2921C7F1A44006462C2 /* ThirdAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdAccountViewController.m; sourceTree = "<group>"; };
 		18BDB2931C7F1A44006462C2 /* ThirdAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThirdAccountViewController.xib; sourceTree = "<group>"; };
+		18C180181C910B480084FD7F /* MaClassifyCarryLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaClassifyCarryLogViewController.h; sourceTree = "<group>"; };
+		18C180191C910B480084FD7F /* MaClassifyCarryLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaClassifyCarryLogViewController.m; sourceTree = "<group>"; };
 		18CD7BC41C59B24F0024B447 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		18CD7BC51C59B24F0024B447 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
 		18CD7BC71C5A07FA0024B447 /* ShareClickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareClickModel.h; sourceTree = "<group>"; };
@@ -1862,6 +1865,8 @@
 				2E62D66A1C4CC66A007B20BB /* MaMaOrderListViewController.m */,
 				2E62D66C1C4DE059007B20BB /* MaMaCarryLogViewController.h */,
 				2E62D66D1C4DE059007B20BB /* MaMaCarryLogViewController.m */,
+				18C180181C910B480084FD7F /* MaClassifyCarryLogViewController.h */,
+				18C180191C910B480084FD7F /* MaClassifyCarryLogViewController.m */,
 			);
 			name = MaMaVersion1;
 			sourceTree = "<group>";
@@ -4237,6 +4242,7 @@
 				32E6BC1E1BEC95F90036F338 /* BoundingNewPhoneController.m in Sources */,
 				32F3D9671B6CCA41008530BA /* AFHTTPSessionManager.m in Sources */,
 				32A88E1D1B8729F8003501EF /* DingDanXiangQingModel.m in Sources */,
+				18C1801A1C910B480084FD7F /* MaClassifyCarryLogViewController.m in Sources */,
 				2E73ED891C38D37700EDB94E /* MaMaChartTableViewCell.m in Sources */,
 				322D256E1C32B66100509EAD /* MJRefreshGifHeader.m in Sources */,
 				32BDE4881B85AA9D00FBEC25 /* YouHuiQuanViewController.m in Sources */,
@@ -4448,7 +4454,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4486,7 +4492,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4531,7 +4537,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4575,7 +4581,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c2586765-b9cf-49c3-9a5f-648e0a0f7f39";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

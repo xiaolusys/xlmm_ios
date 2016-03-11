@@ -25,7 +25,8 @@
 
 - (void)yearLabelAndTotalMoneyLabelText:(NSString *)year
                                   total:(NSString *)total {
-    self.yearLabel.text = year;
+    NSString *string = [year substringToIndex:10];
+    self.yearLabel.text = string;
     self.totalMoneyLabel.text = [NSString stringWithFormat:@"总收益%@", total];
 }
 

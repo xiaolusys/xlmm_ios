@@ -64,6 +64,8 @@
 @property (weak, nonatomic) IBOutlet UIView *imageViewss;
 
 
+
+
 - (IBAction)shareClicked:(id)sender;
 - (IBAction)sizeViewBtnClicked:(id)sender;
 - (IBAction)backqianye:(id)sender;
