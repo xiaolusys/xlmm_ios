@@ -11,5 +11,6 @@
 
 @interface CarryLogTableViewCell : UITableViewCell
 
-- (void)fillCarryModel:(CarryLogModel *)carryModel;
+- (void)fillCarryModel:(CarryLogModel *)carryModel
+                  type:(NSInteger)type;
 @end

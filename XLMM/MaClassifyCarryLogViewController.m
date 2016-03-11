@@ -388,7 +388,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     if (!cell) {
         cell = [[CarryLogTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    [cell fillCarryModel:carryLogM];
+    [cell fillCarryModel:carryLogM type:self.currentIndex];
     return cell;
 }
 
