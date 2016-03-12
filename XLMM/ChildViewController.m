@@ -33,7 +33,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     BOOL _isupdate;
     NSString *nextUrl;
-    
+    CGFloat _contentY;
     
 }
 
@@ -312,41 +312,58 @@ static NSString * ksimpleCell = @"simpleCell";
     }
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    _contentY = scrollView.contentOffset.y;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
-        return;
-    }
-    CGPoint point = scrollView.contentOffset;
-    CGFloat temp = oldScrollViewTop - point.y;
-    
-    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
-        if (isOrder == NO) {
-            [self loadMore];
-            _isupdate = NO;
+//    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
+//        return;
+//    }
+//    CGPoint point = scrollView.contentOffset;
+//    CGFloat temp = oldScrollViewTop - point.y;
+//    
+//    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
+//        if (isOrder == NO) {
+//            [self loadMore];
+//            _isupdate = NO;
+//        }
+//     
+//        
+//    }
+//    
+//    CGFloat marine = 5;
+//    if (temp > marine) {
+//        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+//            [self.delegate showNavigation];
+//        }
+//        
+//        
+//    } else if (temp < -5){
+//        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+//            [self.delegate hiddenNavigation];
+//        }
+//    }
+//    if (temp > marine ) {
+//        oldScrollViewTop = point.y;
+//        return;
+//        
+//    }
+//    if (temp < 0 - marine) {
+//        oldScrollViewTop = point.y;
+//    }
+    if (scrollView.isDragging) {
+        if ((scrollView.contentOffset.y - _contentY) > 5.0f) {
+            //隐藏
+            if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+                [self.delegate hiddenNavigation];
+            }
+        }else if((_contentY - scrollView.contentOffset.y) > 5.0f) {
+            //显示
+            if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+                [self.delegate showNavigation];
+            }
         }
-     
-        
-    }
-    
-    CGFloat marine = 5;
-    if (temp > marine) {
-        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-            [self.delegate showNavigation];
-        }
-        
-        
-    } else if (temp < -5){
-        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-            [self.delegate hiddenNavigation];
-        }
-    }
-    if (temp > marine ) {
-        oldScrollViewTop = point.y;
-        return;
-        
-    }
-    if (temp < 0 - marine) {
-        oldScrollViewTop = point.y;
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{

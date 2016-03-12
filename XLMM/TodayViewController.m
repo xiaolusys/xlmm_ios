@@ -84,6 +84,7 @@ static NSString *khuodongCell = @"HuodongCell";
     NSDictionary *huodongJson;
     
     NSString *mobel;
+    CGFloat _contentY;
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
@@ -1164,45 +1165,63 @@ static NSString *khuodongCell = @"HuodongCell";
     return headerView;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    _contentY = scrollView.contentOffset.y;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    [_slimeView scrollViewDidScroll];
     
-    if (scrollView.contentOffset.y <200 && scrollView.contentOffset.y > -400) {
-      //  NSLog(@"%F", scrollView.contentOffset.y);
-        //下滑 小于0，  上滑 大于 0
-        return;
-    }
-    CGPoint point = scrollView.contentOffset;
-    CGFloat temp = oldScrollViewTop - point.y;
-    
-    
-//    NSLog(@"%f", scrollView.contentSize.height - scrollView.contentOffset.y);
-//    CGFloat distance = scrollView.contentSize.height - scrollView.contentOffset.y;
-//    if (distance < 1500 && _isShouldLoad) {
-//        [self loadMore];
-//        _isShouldLoad = NO;
+//    if (scrollView.contentOffset.y <200 && scrollView.contentOffset.y > -400) {
+//      //  NSLog(@"%F", scrollView.contentOffset.y);
+//        //下滑 小于0，  上滑 大于 0
+//        return;
+//    }
+//    CGPoint point = scrollView.contentOffset;
+//    CGFloat temp = oldScrollViewTop - point.y;
+//    
+//    
+////    NSLog(@"%f", scrollView.contentSize.height - scrollView.contentOffset.y);
+////    CGFloat distance = scrollView.contentSize.height - scrollView.contentOffset.y;
+////    if (distance < 1500 && _isShouldLoad) {
+////        [self loadMore];
+////        _isShouldLoad = NO;
+////    }
+//    
+//    
+//    CGFloat marine = 120;
+//    if (temp > marine) {
+//        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+//            [self.delegate showNavigation];
+//        }
+//      
+//        
+//    } else if (temp < -5){
+//        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+//            [self.delegate hiddenNavigation];
+//        }
+//    }
+//    if (temp > marine ) {
+//        oldScrollViewTop = point.y;
+//        return;
+//        
+//    }
+//    if (temp < 0 - marine) {
+//        oldScrollViewTop = point.y;
 //    }
     
-    
-    CGFloat marine = 120;
-    if (temp > marine) {
-        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-            [self.delegate showNavigation];
+    if (scrollView.isDragging) {
+        if ((scrollView.contentOffset.y - _contentY) > 5.0f) {
+            //隐藏
+            if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
+                    [self.delegate hiddenNavigation];
+            }
+        }else if((_contentY - scrollView.contentOffset.y) > 5.0f) {
+            //显示
+            if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+                [self.delegate showNavigation];
+            }
         }
-      
-        
-    } else if (temp < -5){
-        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-            [self.delegate hiddenNavigation];
-        }
-    }
-    if (temp > marine ) {
-        oldScrollViewTop = point.y;
-        return;
-        
-    }
-    if (temp < 0 - marine) {
-        oldScrollViewTop = point.y;
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
