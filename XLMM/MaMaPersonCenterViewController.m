@@ -94,6 +94,10 @@
     allDingdan = [[NSMutableArray alloc] init];
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
+    
+    self.earningsRecord = @"0.00";
+    self.orderRecord = @"0.00";
+    
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     
     self.mamaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -167,8 +171,6 @@
     self.order.text = [NSString stringWithFormat:@"%@个订单", [fortune objectForKey:@"order_num"]];
     self.account.text = [NSString stringWithFormat:@"账户余额%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
-
-//    NSLog(@"---------%@", dic);
 }
 
 - (void)huoyueduDetails{
