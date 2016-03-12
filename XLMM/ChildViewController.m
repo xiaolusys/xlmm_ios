@@ -323,15 +323,15 @@ static NSString * ksimpleCell = @"simpleCell";
 //    CGPoint point = scrollView.contentOffset;
 //    CGFloat temp = oldScrollViewTop - point.y;
 //    
-//    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
-//        if (isOrder == NO) {
-//            [self loadMore];
-//            _isupdate = NO;
-//        }
-//     
-//        
-//    }
-//    
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
+        if (isOrder == NO) {
+            [self loadMore];
+            _isupdate = NO;
+        }
+     
+        
+    }
+//
 //    CGFloat marine = 5;
 //    if (temp > marine) {
 //        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {

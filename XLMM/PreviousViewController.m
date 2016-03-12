@@ -685,12 +685,12 @@ static NSString *khead2View = @"head2View";
 //    }
 //    
 //   
-//    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _update) {
-//        [self loadMore];
-//        _update = NO;
-//        
-//    }
-//    
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _update) {
+        [self loadMore];
+        _update = NO;
+        
+    }
+//
 //    
 //    CGPoint point = scrollView.contentOffset;
 //    CGFloat temp = oldScrollViewTop - point.y;
