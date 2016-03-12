@@ -45,7 +45,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidLoad {

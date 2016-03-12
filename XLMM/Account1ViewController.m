@@ -53,7 +53,9 @@ static NSString *identifier = @"AccountCell";
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [SVProgressHUD dismiss];
 }
 
 - (void)updateMoneyLabel{
