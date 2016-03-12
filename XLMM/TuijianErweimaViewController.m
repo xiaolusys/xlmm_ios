@@ -51,14 +51,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"二维码";
-    UIImage * image = [UIImage imageNamed:@"erweimaDemo.png"];
+  //  UIImage * image = [UIImage imageNamed:@"erweimaDemo.png"];
     [self createNavigationBarWithTitle:@"推荐二维码" selecotr:@selector(backClicked:)];
     CGFloat height = (SCREENHEIGHT - 360-64-50)/2;
     self.topHeight.constant = 64 + height;
     self.bottomHeight.constant = height;
     
-    self.imageView.image = image;
-    [self downloadImage];
+   // self.imageView.image = image;
     self.saveButton.layer.cornerRadius = 15;
     self.saveButton.layer.borderWidth = 1;
     self.saveButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
@@ -72,7 +71,25 @@
     self.whiteView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.whiteView.layer.shadowOffset = CGSizeMake(2, 2);
     self.whiteView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL];
+    
+    [self downLoadWithURLString:string andSelector:@selector(fetchInfo:)];
  
+    
+}
+
+- (void)fetchInfo:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"dic = %@", dic);
+    
+    self.imagelink = [NSString stringWithFormat:@"%@%@", Root_URL, [dic objectForKey:@"share_mmcode"]];
+    self.mamalink = self.mamalink;
+    [self downloadImage];
+    
     
 }
 
@@ -81,22 +98,22 @@
 }
 
 - (void)downloadImage{
-    NSString *imagelink = [NSString stringWithFormat:@"%@%@", Root_URL, self.imagelink];
-    NSLog(@"imagelink = %@", imagelink);
-   // imagelink = @"http://192.168.1.31:9000/media/mm/coupon.png";
-    UIImage *image = [UIImage imagewithURLString:imagelink];
-    NSLog(@"image = %@", image);
-    NSError *error = nil;
-    
-    NSURL *url = [NSURL URLWithString:imagelink];
-    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
-    if (error == nil) {
-      //  NSLog(@"data = %@", data);
-    } else{
-        NSLog(@"error = %@", error);
-    }
-    image = [UIImage imageWithData:data];
-    self.imageView.image = image;
+//    NSLog(@"imagelink = %@", self.imagelink);
+//   // imagelink = @"http://192.168.1.31:9000/media/mm/coupon.png";
+//    UIImage *image = [UIImage imagewithURLString:self.imagelink];
+//    NSLog(@"image = %@", image);
+//    NSError *error = nil;
+//    
+//    NSURL *url = [NSURL URLWithString:self.imagelink];
+//    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
+//    if (error == nil) {
+//      //  NSLog(@"data = %@", data);
+//    } else{
+//        NSLog(@"error = %@", error);
+//    }
+//    image = [UIImage imageWithData:data];
+    NSURL *url = [NSURL URLWithString:self.imagelink];
+    [self.imageView sd_setImageWithURL:url];
     
     NSLog(@"view = %@", self.whiteView);
     //self.whiteView.bounds = CGRectMake(0, 0, 240, 360);

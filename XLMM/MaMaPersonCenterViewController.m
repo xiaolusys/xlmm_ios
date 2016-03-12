@@ -105,7 +105,7 @@
     [self.shareSubsidies addGestureRecognizer:tapShare];
     
 //    [self downloadData];
-//    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
+   // [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
 //    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
@@ -152,13 +152,15 @@
         return;
     }
     
+    nickName = [fortune objectForKey:@"mama_name"];
+    
     //账户金额
     self.jineLabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"cash_value"]];
     self.huoyuedulabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"active_value_num"]];
     //今日数据,订单，收益
     self.todayNum.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"today_visitor_num"]];
     
-    self.
+  
     //邀请数，粉丝，订单，收益
     self.inviteLabel.text = [NSString stringWithFormat:@"%@为小鹿妈妈", [fortune objectForKey:@"invite_num"]];
     self.fensilabel.text = [NSString stringWithFormat:@"%@位粉丝", [fortune objectForKey:@"fans_num"]];
@@ -182,7 +184,7 @@
     
     NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
     huoyuezhi = SCREENWIDTH * 0.25;
-    CGFloat percent = (CGFloat)huoyuezhi/SCREENWIDTH*100;
+  //  CGFloat percent = (CGFloat)huoyuezhi/SCREENWIDTH*100;
 //    self.huoyuedulabel.text = [NSString stringWithFormat:@"%%%.0f",100 - percent];
     self.huoyueduLeft.constant = 0 - huoyuezhi;
     self.huoyueduRight.constant = huoyuezhi ;
@@ -305,9 +307,9 @@
             return;
         }
         NSDictionary *dic = [arrJson objectAtIndex:0];
-        self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
-      //  NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
-        self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
+//        self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
+//      //  NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
+//        self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
         ableTixianJine = [[dic objectForKey:@"coulde_cashout"] floatValue];
         nickName = [dic objectForKey:@"weikefu"];
     }
@@ -668,9 +670,7 @@
     NSLog(@"推荐二维码");
     
     TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
-    
-    erweima.imagelink = share_mmcode;
-    erweima.mamalink = self.mamalink;
+ 
     [self.navigationController pushViewController:erweima animated:YES];
     
     
