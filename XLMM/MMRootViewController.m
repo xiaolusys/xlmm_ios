@@ -276,6 +276,10 @@
 {
     [super viewDidLoad];
     
+//    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
+    
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
@@ -870,7 +874,7 @@
 #pragma mark --mmNavigationDelegate--
 
 - (void)hiddenNavigation{
-      self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
     UIView *cartView = [_view viewWithTag:123];
     
