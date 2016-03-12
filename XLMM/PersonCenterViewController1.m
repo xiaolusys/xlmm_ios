@@ -50,7 +50,8 @@
     self.navigationController.navigationBarHidden = YES;
     if ([theTimer isValid]) {
         [theTimer invalidate];
-    } 
+    }
+    [SVProgressHUD dismiss];
 }
 
 //待支付界面 。。。。

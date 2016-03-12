@@ -38,6 +38,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [SVProgressHUD dismiss];
 }
 
 //待收货订单。。。。。。
