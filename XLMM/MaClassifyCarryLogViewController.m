@@ -34,6 +34,7 @@
 @property (nonatomic, strong)NSMutableDictionary *nextdic;
 //存储旧的位置
 @property (nonatomic, strong)NSMutableDictionary *oldDic;
+@property (nonatomic, strong)NSMutableDictionary *contentOffsetYDic;
 
 
 @end
@@ -80,6 +81,13 @@ static NSString *cellIdentifier = @"carryLogCell";
     return _oldDic;
 }
 
+- (NSMutableDictionary *)contentOffsetYDic {
+    if (!_contentOffsetYDic) {
+        self.contentOffsetYDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    return _contentOffsetYDic;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -88,6 +96,11 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [SVProgressHUD dismiss];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -185,7 +198,7 @@ static NSString *cellIdentifier = @"carryLogCell";
         table.delegate = self;
         table.dataSource = self;
         table.rowHeight = 80;
-//        table.separatorStyle = UITableViewCellSeparatorStyleNone;
+        table.separatorStyle = UITableViewCellSeparatorStyleNone;
         //注册cell
         [table registerNib:[UINib nibWithNibName:@"CarryLogTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
         [self.bottomScrollView addSubview:table];
@@ -236,9 +249,11 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 #pragma mark --网络请求
 - (void)requestAction {
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     NSString *url = self.urlArr[self.currentIndex];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -333,11 +348,10 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (scrollView != self.bottomScrollView) {
-//        NSLog(@"----------%f", scrollView.contentOffset.y);
-        if (scrollView.contentOffset.y < 0 || scrollView.contentOffset.y == 0)return;
         NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
-        NSNumber *oldY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
-        [self.oldDic setObject:oldY forKey:number];
+        NSNumber *contentOffY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
+        [self.contentOffsetYDic setObject:contentOffY forKey:number];
+//        NSLog(@"-------%@", self.contentOffsetYDic);
     }
 }
 
@@ -346,27 +360,32 @@ static NSString *cellIdentifier = @"carryLogCell";
         NSInteger offX = scrollView.contentOffset.x / SCREENWIDTH;
         [self changeBtnSelect:offX];
     }else {
-        if (scrollView.contentOffset.y < 0 || scrollView.contentOffset.y == 0)return;
-        CGFloat old = [[self.oldDic objectForKey:[NSNumber numberWithInteger:self.currentIndex]] floatValue];
-        if (old > scrollView.contentOffset.y) {
-            //向上滑动
-            [UIView animateWithDuration:0.5 animations:^{
-                self.headerV.frame = CGRectMake(0, 64, SCREENWIDTH, 105);
-                self.headerV.alpha = 1.0;
-                self.scrollAndBtnView.frame = CGRectMake(0, 64 + 105, SCREENWIDTH, SCREENHEIGHT - 35);
-            }];
-        }else {
-            //向下滑动
-            [UIView animateWithDuration:0.5 animations:^{
-                self.headerV.frame = CGRectMake(0, 41, SCREENWIDTH, 105);
-                self.headerV.alpha = 0.0;
-                self.scrollAndBtnView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 35);
-            }];
-            
+        CGFloat contentOffY = [[self.contentOffsetYDic objectForKey:[NSNumber numberWithInteger:self.currentIndex]] floatValue];
+        if (scrollView.dragging) {
+            if ((scrollView.contentOffset.y - contentOffY) > 5.0f) {
+                //隐藏
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.headerV.frame = CGRectMake(0, 41, SCREENWIDTH, 105);
+                    self.headerV.alpha = 0.0;
+                    self.scrollAndBtnView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 35);
+                }];
+            }else if((contentOffY - scrollView.contentOffset.y) > 5.0f){
+                //显示
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.headerV.frame = CGRectMake(0, 64, SCREENWIDTH, 105);
+                    self.headerV.alpha = 1.0;
+                    self.scrollAndBtnView.frame = CGRectMake(0, 64 + 105, SCREENWIDTH, SCREENHEIGHT - 35);
+                }];
+            }
         }
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
+    NSNumber *oldY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
+    [self.oldDic setObject:oldY forKey:number];
+}
 #pragma mark --tableView的代理方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.allkey.count;
@@ -401,12 +420,6 @@ static NSString *cellIdentifier = @"carryLogCell";
     NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
     NSMutableArray *orderArr = dic[key];
     CarryLogModel *carryM = [orderArr firstObject];
-    //    float total = 0.0;
-    //    NSString *date;
-    //    for (CarryLogModel *model in orderArr) {
-    //        total = [model.sum_value floatValue] + total;
-    //        date = model.carry_date;
-    //    }
     
     [headerV yearLabelAndTotalMoneyLabelText:carryM.created total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
     return headerV;

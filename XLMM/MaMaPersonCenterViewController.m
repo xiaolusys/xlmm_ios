@@ -164,8 +164,8 @@
     self.fensilabel.text = [NSString stringWithFormat:@"%@位粉丝", [fortune objectForKey:@"fans_num"]];
     self.order.text = [NSString stringWithFormat:@"%@个订单", [fortune objectForKey:@"order_num"]];
     self.account.text = [NSString stringWithFormat:@"账户余额%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
-    
-    
+    self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
+
 //    NSLog(@"---------%@", dic);
 }
 
