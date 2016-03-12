@@ -14,6 +14,8 @@
 @property (nonatomic, copy)NSString *firstName;
 @property (nonatomic, copy)NSString *secondName;
 @property (nonatomic, copy)NSString *activiteTime;
+@property (nonatomic, copy)NSString *target_link;
+
 
 
 @end

@@ -524,7 +524,7 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vfo-re-xoS">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -577,7 +577,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEw-Br-SyG">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -605,7 +605,7 @@
                                         <constraint firstItem="KEw-Br-SyG" firstAttribute="top" secondItem="Ubn-Go-wBP" secondAttribute="top" id="0bY-lj-ehj"/>
                                         <constraint firstAttribute="bottom" secondItem="7Dq-Ap-a3x" secondAttribute="bottom" constant="12" id="224-DW-xVb"/>
                                         <constraint firstItem="KEw-Br-SyG" firstAttribute="leading" secondItem="7Dq-Ap-a3x" secondAttribute="trailing" constant="5" id="3Zo-vK-KDC"/>
-                                        <constraint firstItem="7Dq-Ap-a3x" firstAttribute="width" secondItem="Ubn-Go-wBP" secondAttribute="width" multiplier="1:2" id="5S0-rA-nDt"/>
+                                        <constraint firstItem="7Dq-Ap-a3x" firstAttribute="width" secondItem="Ubn-Go-wBP" secondAttribute="width" multiplier="2:5" id="5S0-rA-nDt"/>
                                         <constraint firstItem="7Dq-Ap-a3x" firstAttribute="leading" secondItem="Ubn-Go-wBP" secondAttribute="leading" constant="8" id="LL9-uh-rcc">
                                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                         </constraint>
@@ -651,7 +651,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sI3-gm-ogf">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>

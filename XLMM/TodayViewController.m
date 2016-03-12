@@ -33,6 +33,10 @@
 #import "HuodongCollectionViewCell.h"
 #import "WXLoginController.h"
 #import "MobClick.h"
+#import "PublishNewPdtViewController.h"
+#import "MaMaPersonCenterViewController.h"
+#import "XiangQingViewController.h"
+#import "YouHuiQuanViewController.h"
 
 
 static NSString *ksimpleCell = @"simpleCell";
@@ -431,10 +435,12 @@ static NSString *khuodongCell = @"HuodongCell";
 
     for (NSDictionary *childDic in childArray) {
         PosterModel *childModel = [PosterModel new];
+
+        childModel.target_link = [childDic objectForKey:@"app_link"];
         childModel.imageURL = [childDic objectForKey:@"pic_link"];
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-        
+
         UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
@@ -446,6 +452,7 @@ static NSString *khuodongCell = @"HuodongCell";
     for (NSDictionary *ladyDic in ladyArray) {
     
         PosterModel *ladyModel = [PosterModel new];
+        ladyModel.target_link = [ladyDic objectForKey:@"app_link"];
         ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
@@ -904,7 +911,28 @@ static NSString *khuodongCell = @"HuodongCell";
 //        NSLog(@"urlString = %@", urlString);
 //        
 //    }
-    if (view.currentImageIndex == 0) {
+    
+    PosterModel *model = posterDataArray[view.currentImageIndex];
+    
+    NSString *target_url = model.target_link;
+    
+    MMLOG(model.target_link);
+    
+    
+    
+    if (target_url == nil) {
+        return;
+    }
+    
+    NSLog(@"target_url = %@", target_url);
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
+        NSLog(@"跳到今日上新");
+        
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
+        NSLog(@"跳到昨日推荐");
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/childlist", Root_URL];
         childVC.urlString = string;
@@ -912,7 +940,11 @@ static NSString *khuodongCell = @"HuodongCell";
         childVC.titleName = @"潮童装区";
         childVC.childClothing = YES;
         [self.navigationController pushViewController:childVC animated:YES];
-    } else {
+        NSLog(@"跳到潮童专区");
+        
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
+        NSLog(@"跳到时尚女装");
         PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/ladylist", Root_URL];
 
@@ -921,7 +953,107 @@ static NSString *khuodongCell = @"HuodongCell";
         childVC.titleName = @"时尚女装";
         childVC.childClothing = NO;
         [self.navigationController pushViewController:childVC animated:YES];
+        
+        
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
+        NSLog(@"跳转到用户未过期优惠券列表");
+        
+        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        youhuiVC.isSelectedYHQ = NO;
+        [self.navigationController pushViewController:youhuiVC animated:YES];
+        
+        
+        
+    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+        
+        //  跳转到小鹿妈妈界面。。。
+        
+        
+        
+        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:ma animated:YES];
+        
+        
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
+        
+        NSLog(@"跳转到小鹿妈妈每日上新");
+        
+        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        [self.navigationController pushViewController:publish animated:YES];
+        
+    }else {
+        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+        
+        NSString *parameter = [components lastObject];
+        NSArray *params = [parameter componentsSeparatedByString:@"="];
+        NSString *firstparam = [params firstObject];
+        if ([firstparam isEqualToString:@"model_id"]) {
+            NSLog(@"跳到集合页面");
+            NSLog(@"model_id = %@", [params lastObject]);
+            
+            
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+            
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+            
+            
+        } else if ([firstparam isEqualToString:@"product_id"]){
+            NSLog(@"跳到商品详情");
+            NSLog(@"product_id = %@", [params lastObject]);
+            
+            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
+            [self.navigationController pushViewController:details animated:YES];
+            
+            
+        } else if ([firstparam isEqualToString:@"trade_id"]){
+            NSLog(@"跳到订单详情");
+            NSLog(@"trade_id = %@", [params lastObject]);
+            
+            
+            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+            //http://m.xiaolu.so/rest/v1/trades/86412/details
+            
+            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            NSLog(@"url = %@", xiangqingVC.urlString);
+            
+            
+            [self.navigationController pushViewController:xiangqingVC animated:YES];
+            
+            
+        } else {
+            
+            //  跳转到H5 界面 。。。。。
+            
+            
+            NSLog(@"跳到H5首页");
+            
+        }
     }
+
+    
+//    
+//    
+//    if (view.currentImageIndex == 0) {
+//        PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/childlist", Root_URL];
+//        childVC.urlString = string;
+//        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+//        childVC.titleName = @"潮童装区";
+//        childVC.childClothing = YES;
+//        [self.navigationController pushViewController:childVC animated:YES];
+//    } else {
+//        PostersViewController *childVC = [[PostersViewController alloc] initWithNibName:@"PostersViewController" bundle:nil];
+//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/ladylist", Root_URL];
+//
+//        childVC.urlString = string;
+//        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+//        childVC.titleName = @"时尚女装";
+//        childVC.childClothing = NO;
+//        [self.navigationController pushViewController:childVC animated:YES];
+//    }
     
     
     
