@@ -36,6 +36,7 @@
 @property (nonatomic, strong)NSString *carry_type_name;
 @property (nonatomic, strong)NSNumber *carry_value;
 @property (nonatomic, strong)NSNumber *carry_type;
+@property (nonatomic, strong)NSString *carry_description;
 
 
 @end

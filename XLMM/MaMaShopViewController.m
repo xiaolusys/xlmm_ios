@@ -83,6 +83,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [SVProgressHUD dismiss];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -208,10 +209,6 @@ static NSString *cellIdentifier = @"SelectedListCell";
     tableHeadView.hidden = NO;
     
     return view;
-    
-    
-    
-    
 }
 
 #pragma mark - 返回方法 预览方法 分享方法

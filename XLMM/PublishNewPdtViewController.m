@@ -18,6 +18,7 @@
 #import "SVProgressHUD.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
+#import "SVProgressHUD.h"
 
 
 
@@ -64,6 +65,7 @@
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
+    [SVProgressHUD dismiss];
 }
 
 - (PhotoView *)photoView {
@@ -154,10 +156,12 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
     
+    [SVProgressHUD showWithStatus:@"正在加载..."];
     //网络请求
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

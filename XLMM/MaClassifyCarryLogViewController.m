@@ -351,7 +351,6 @@ static NSString *cellIdentifier = @"carryLogCell";
         NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
         NSNumber *contentOffY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
         [self.contentOffsetYDic setObject:contentOffY forKey:number];
-//        NSLog(@"-------%@", self.contentOffsetYDic);
     }
 }
 

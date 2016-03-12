@@ -92,8 +92,14 @@
 //    }
 
     self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.carry_value floatValue]];
-    self.sourceLabel.text = carryModel.carry_type_name;
-    self.desLabel.text = @"哈哈哈，测试。。。";
+    self.sourceLabel.text = [self dateDeal:carryModel.created];
+    self.desLabel.text = carryModel.carry_description;
+}
+
+//将日期去掉－
+- (NSString *)dateDeal:(NSString *)str {
+    NSString *string = [str substringWithRange:NSMakeRange(11, 8)];
+    return string;
 }
 
 @end
