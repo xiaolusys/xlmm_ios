@@ -106,7 +106,7 @@
     
 //    [self downloadData];
 //    [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
-//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
 //    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
 //    //主页新的数据
@@ -158,7 +158,7 @@
     //今日数据,订单，收益
     self.todayNum.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"today_visitor_num"]];
     
-    
+    self.
     //邀请数，粉丝，订单，收益
     self.inviteLabel.text = [NSString stringWithFormat:@"%@为小鹿妈妈", [fortune objectForKey:@"invite_num"]];
     self.fensilabel.text = [NSString stringWithFormat:@"%@位粉丝", [fortune objectForKey:@"fans_num"]];
@@ -281,21 +281,13 @@
     NSError *error = nil;
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (!error) {
-        NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mci"];
+     //   NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mci"];
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
         
         //获取点击补贴
-        self.money = dicJson[@"clk_money"];
-        NSDictionary *mmclog = dicJson[@"mmclog"];
-        self.clickTotalMoney = mmclog[@"clki"];
-        NSLog(@"%@",[dicJson objectForKey:@"fans_num"]);
         
-        self.fensilabel.text = [NSString stringWithFormat:@"粉丝数%@", [dicJson objectForKey:@"fans_num"]];
-        
-        self.account.text = [NSString stringWithFormat:@"账户余额%.2f",[mco floatValue]];
-        self.earningsRecord = [NSString stringWithFormat:@"%.2f",[mco floatValue]];
-    }
+       }
 }
 
 
