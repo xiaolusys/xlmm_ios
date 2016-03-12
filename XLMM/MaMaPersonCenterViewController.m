@@ -182,12 +182,28 @@
   self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
     
-    NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
-    huoyuezhi = SCREENWIDTH * 0.25;
+ //   NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
+    NSInteger huoyuezhi = SCREENWIDTH;
   //  CGFloat percent = (CGFloat)huoyuezhi/SCREENWIDTH*100;
 //    self.huoyuedulabel.text = [NSString stringWithFormat:@"%%%.0f",100 - percent];
-    self.huoyueduLeft.constant = 0 - huoyuezhi;
-    self.huoyueduRight.constant = huoyuezhi ;
+  
+    
+    CGRect frame = self.mamaHuoyueduView.frame;
+    MMLOG(NSStringFromCGRect(frame));
+    frame.origin.x += huoyuezhi;
+    MMLOG(NSStringFromCGRect(frame));
+  
+    [UIView animateWithDuration:2.0 animations:^{
+        
+        self.mamaHuoyueduView.frame = frame;
+        
+    
+    } completion:^(BOOL finished) {
+//        self.huoyueduLeft.constant = 0 - huoyuezhi;
+//        self.huoyueduRight.constant = huoyuezhi;
+    }];
+    
+ 
     
     
     
@@ -267,8 +283,7 @@
 
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
-    vc.cantixianjine = ableTixianJine;
-    vc.name = nickName;
+  
     
     [self.navigationController pushViewController:vc animated:YES];
 }
