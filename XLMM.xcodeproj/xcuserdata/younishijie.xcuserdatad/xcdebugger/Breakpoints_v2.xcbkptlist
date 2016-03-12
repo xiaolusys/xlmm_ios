@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MaMaPersonCenterViewController.m"
-            timestampString = "479456037.583459"
+            timestampString = "479457626.293841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
             landmarkName = "-fetchedMaMaData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MaMaPersonCenterViewController.m"
-            timestampString = "479456037.583459"
+            timestampString = "479457626.293841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
             landmarkName = "@implementation MaMaPersonCenterViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -74,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/TuijianErweimaViewController.m"
-            timestampString = "477307725.872502"
+            timestampString = "479458624.734077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
             endingLineNumber = "74"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/TuijianErweimaViewController.m"
-            timestampString = "477307725.872502"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-downloadImage"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -298,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/MaMaPersonCenterViewController.m"
-            timestampString = "479456037.583459"
+            timestampString = "479457626.293841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "-scrollViewDidEndDecelerating:"
             landmarkType = "5">
          </BreakpointContent>

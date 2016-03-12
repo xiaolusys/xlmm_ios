@@ -28,7 +28,7 @@
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ped-j3-Lx8">
                                     <rect key="frame" x="20" y="20" width="200" height="200"/>
-                                    <color key="backgroundColor" red="0.94117647059999998" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="240" id="AWw-5O-h4p">
                                             <variation key="heightClass=regular-widthClass=compact" constant="200"/>
@@ -208,12 +208,12 @@
                     <exclude reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="IOf-5q-wGF"/>
-                    <exclude reference="Ioj-B4-epP"/>
-                    <exclude reference="lDE-8Y-jo5"/>
                     <exclude reference="OUZ-GT-bOo"/>
                     <exclude reference="aBx-mJ-kJz"/>
                     <exclude reference="wkM-23-6cr"/>
+                    <exclude reference="IOf-5q-wGF"/>
+                    <exclude reference="Ioj-B4-epP"/>
+                    <exclude reference="lDE-8Y-jo5"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -221,12 +221,12 @@
                     <include reference="ohG-sK-dvV"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="IOf-5q-wGF"/>
-                    <include reference="Ioj-B4-epP"/>
-                    <include reference="lDE-8Y-jo5"/>
                     <include reference="OUZ-GT-bOo"/>
                     <include reference="aBx-mJ-kJz"/>
                     <include reference="wkM-23-6cr"/>
+                    <include reference="IOf-5q-wGF"/>
+                    <include reference="Ioj-B4-epP"/>
+                    <include reference="lDE-8Y-jo5"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="182" y="236"/>
