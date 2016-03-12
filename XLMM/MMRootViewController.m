@@ -581,7 +581,9 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
     view.tag = 123;
     [_view addSubview:view];
-    view.backgroundColor = [UIColor cartViewBackGround];
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.8;
+    
     view.layer.cornerRadius = 22;
     view.layer.borderWidth = 1;
     view.layer.borderColor = [UIColor settingBackgroundColor].CGColor;

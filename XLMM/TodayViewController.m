@@ -431,10 +431,12 @@ static NSString *khuodongCell = @"HuodongCell";
 
     for (NSDictionary *childDic in childArray) {
         PosterModel *childModel = [PosterModel new];
+
+        childModel.target_link = [childDic objectForKey:@"app_link"];
         childModel.imageURL = [childDic objectForKey:@"pic_link"];
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
-        
+
         UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
@@ -446,6 +448,7 @@ static NSString *khuodongCell = @"HuodongCell";
     for (NSDictionary *ladyDic in ladyArray) {
     
         PosterModel *ladyModel = [PosterModel new];
+        ladyModel.target_link = [ladyDic objectForKey:@"app_link"];
         ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
