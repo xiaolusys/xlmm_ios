@@ -192,6 +192,8 @@
     MMLOG(NSStringFromCGRect(frame));
     frame.origin.x += huoyuezhi;
     MMLOG(NSStringFromCGRect(frame));
+    
+    
   
     [UIView animateWithDuration:2.0 animations:^{
         
