@@ -722,7 +722,6 @@
                         
                     }
                     paySucceed = NO;
-                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 //[weakSelf showAlertMessage:result];
             }];
