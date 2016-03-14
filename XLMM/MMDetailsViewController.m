@@ -231,7 +231,6 @@
     self.scrollerView.scrollEnabled = NO;
 
     self.belowScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.scrollerView.frame.origin.y + SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT)];
-    NSLog(@"belowScrollView.frame-%@", NSStringFromCGRect(self.belowScrollView.frame));
     self.belowScrollView.tag = 105;
     self.belowScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.lastScrollView addSubview:self.belowScrollView];
@@ -280,9 +279,6 @@
     webView.scrollView.mj_header = mjheader;
 }
 
-- (void)createDetailWebView {
-    
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
@@ -309,7 +305,6 @@
 }
 
 
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     if (self.navigationController.viewControllers.count == 1) {
         return NO;
@@ -318,7 +313,6 @@
 }
 
 - (void)downloadDetailsData{
-    NSLog(@"+++++++++%@", self.urlString);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
         [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
