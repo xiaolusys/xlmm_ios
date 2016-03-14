@@ -1133,6 +1133,10 @@
  //   NSLog(@"string = %@", string);
     if ([d minute] < 0 || [d second] < 0) {
         string = @"00:00";
+        
+        cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 40, 40);
+        shengyutimeLabel.hidden = YES;
+        countLabel.hidden = YES;
         if ([theTimer isValid]) {
             [theTimer invalidate];
             

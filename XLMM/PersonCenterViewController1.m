@@ -345,10 +345,13 @@
      //   NSLog(@"shengyu shijian = %@" , shengyushijian);
         if ([d minute] < 0 || [d second] < 0) {
             shengyushijian = @"剩余时间00:00";
+            
         }
 #pragma mark 设置倒计时
         UILabel *label = (UILabel *)[self.labelArray objectAtIndex:i];
+     
         label.text = shengyushijian;
+        label.hidden = YES;
     }
 
 }

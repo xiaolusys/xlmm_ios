@@ -197,7 +197,7 @@
     
     
   
-    [UIView animateWithDuration:2.0 animations:^{
+    [UIView animateWithDuration:1.5 animations:^{
         
         self.mamaHuoyueduView.frame = frame;
         
