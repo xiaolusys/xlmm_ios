@@ -560,9 +560,14 @@
     if (_isFirst == YES && self.isLaunchedByNotification == YES) {
         _isFirst = NO;
         
-        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
-           [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[self.pushInfo objectForKey:@"target_url"]}];
-        });
+        if ([self.pushInfo objectForKey:@"target_url"] == nil) {
+            
+           
+        } else {
+            dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[self.pushInfo objectForKey:@"target_url"]}];
+            });
+        }
     }
   
     
