@@ -3029,13 +3029,10 @@
 			isa = PBXGroup;
 			children = (
 				18F388471C7BE8A2005A7C12 /* SettingAccount */,
-				324BFCDF1C61DC880055C984 /* MMAdvertiseView.h */,
-				324BFCE01C61DC880055C984 /* MMAdvertiseView.m */,
 				181C74981C53608500375DF8 /* NewMaMaView */,
 				2E73ED861C38D2F100EDB94E /* MaMaView */,
 				181C74A11C53699700375DF8 /* CartView */,
 				32CECF8A1BA665A100FF3BD3 /* Custom Cells */,
-				324AB05C1C732A2C007FE81B /* StartActivityView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3487,6 +3484,9 @@
 		32CECF8A1BA665A100FF3BD3 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				324AB05C1C732A2C007FE81B /* StartActivityView.xib */,
+				324BFCDF1C61DC880055C984 /* MMAdvertiseView.h */,
+				324BFCE01C61DC880055C984 /* MMAdvertiseView.m */,
 				32A81F951B8D9C08009972B3 /* BuyCartsView.xib */,
 				32BA1B231BF2F1FA0000A0F2 /* SingleOrderViewCell.h */,
 				32BA1B241BF2F1FA0000A0F2 /* SingleOrderViewCell.m */,
