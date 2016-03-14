@@ -1949,6 +1949,77 @@
 			name = AppleVersion1;
 			sourceTree = "<group>";
 		};
+		18306D641C9684E100B7665E /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				325BA11E1B68BAF0006D64BD /* MMClass.h */,
+			);
+			name = Macro;
+			sourceTree = "<group>";
+		};
+		18306D651C96859600B7665E /* General */ = {
+			isa = PBXGroup;
+			children = (
+				18306D661C96877F00B7665E /* Views */,
+				18306D671C96878A00B7665E /* Classes */,
+				18306D681C96879E00B7665E /* Categories */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		18306D661C96877F00B7665E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
+				325D567D1BCE449700B12EE6 /* ArrowView.h */,
+				325D567E1BCE449700B12EE6 /* ArrowView.m */,
+				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
+				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
+				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
+				324337351C76C76A0066CADD /* MMLoginStatus.h */,
+				324337361C76C76A0066CADD /* MMLoginStatus.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		18306D671C96878A00B7665E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		18306D681C96879E00B7665E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */,
+				32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */,
+				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
+				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
+				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
+				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
+				329E8A961BB64A32008AA0B6 /* NSString+Encrypto.h */,
+				329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */,
+				32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */,
+				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
+				3218132A1BD76CCC00D3D036 /* NSArray+Log.h */,
+				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
+				325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */,
+				325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */,
+				32DE21C81BF1E62600999ECA /* UIImage+UIImageExt.h */,
+				32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */,
+				32FE087C1BF4398A0072CCEC /* NSString+URL.h */,
+				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
+				2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */,
+				2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */,
+				32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */,
+				32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */,
+				325AD2D11C842DEB00446B02 /* NSString+DeleteT.h */,
+				325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		185E2E501C7FFFF900131D11 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -2916,10 +2987,11 @@
 			children = (
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
 				32816F951C1FFBCC004DD2EF /* AppDelegate */,
-				32746E3D1B74A4EA00816208 /* Model */,
+				32746E3D1B74A4EA00816208 /* Models */,
 				325DF9451B69BCE200351ACA /* Views */,
 				325DF95C1B6A472600351ACA /* Controller */,
-				32E00C8F1BA7B48500A73390 /* Custom Class */,
+				18306D651C96859600B7665E /* General */,
+				18306D641C9684E100B7665E /* Macro */,
 				32E00C901BA7B79700A73390 /* Venders */,
 				32816F961C1FFBFC004DD2EF /* Resources */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
@@ -3089,46 +3161,14 @@
 			path = ../images;
 			sourceTree = "<group>";
 		};
-		32746E3D1B74A4EA00816208 /* Model */ = {
+		32746E3D1B74A4EA00816208 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				2E73ED981C3A14A300EDB94E /* MaMaModel */,
 				185E2E501C7FFFF900131D11 /* Setting */,
 				181C74A21C5369C900375DF8 /* AppleVersion1 */,
 			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		32816F891C1FF469004DD2EF /* cageory */ = {
-			isa = PBXGroup;
-			children = (
-				32CE91C51B7C5CE700CA67C3 /* AddressPickerView.h */,
-				32D790BA1BCDE5E6007353AD /* UIImage+ChangeGray.h */,
-				32D790BB1BCDE5E6007353AD /* UIImage+ChangeGray.m */,
-				326E88931B72139C00D15973 /* UIImage+ImageWithUrl.h */,
-				326E88941B72139D00D15973 /* UIImage+ImageWithUrl.m */,
-				32746E701B74B5C600816208 /* UIColor+RGBColor.h */,
-				32746E711B74B5C600816208 /* UIColor+RGBColor.m */,
-				329E8A961BB64A32008AA0B6 /* NSString+Encrypto.h */,
-				329E8A971BB64A32008AA0B6 /* NSString+Encrypto.m */,
-				32D2321A1BCCD95500A9FBB4 /* UIViewController+NavigationBar.h */,
-				32D2321B1BCCD95500A9FBB4 /* UIViewController+NavigationBar.m */,
-				3218132A1BD76CCC00D3D036 /* NSArray+Log.h */,
-				3218132B1BD76CCC00D3D036 /* NSArray+Log.m */,
-				325B1E851BE4A2300027B3E3 /* UIImage+ColorImage.h */,
-				325B1E861BE4A2300027B3E3 /* UIImage+ColorImage.m */,
-				32DE21C81BF1E62600999ECA /* UIImage+UIImageExt.h */,
-				32DE21C91BF1E62600999ECA /* UIImage+UIImageExt.m */,
-				32FE087C1BF4398A0072CCEC /* NSString+URL.h */,
-				32FE087D1BF4398A0072CCEC /* NSString+URL.m */,
-				2E63A4421C21112500FF66F8 /* UIImage+ImageWithSelectedView.h */,
-				2E63A4431C21112500FF66F8 /* UIImage+ImageWithSelectedView.m */,
-				32E8B5901C4F605400414F8A /* UILabel+CustomLabel.h */,
-				32E8B5911C4F605400414F8A /* UILabel+CustomLabel.m */,
-				325AD2D11C842DEB00446B02 /* NSString+DeleteT.h */,
-				325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */,
-			);
-			name = cageory;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		32816F8A1C1FF5C1004DD2EF /* Login */ = {
@@ -3489,22 +3529,6 @@
 				323648631C62E70200CCD0DA /* HuodongCollectionViewCell.xib */,
 			);
 			name = "Custom Cells";
-			sourceTree = "<group>";
-		};
-		32E00C8F1BA7B48500A73390 /* Custom Class */ = {
-			isa = PBXGroup;
-			children = (
-				325BA11E1B68BAF0006D64BD /* MMClass.h */,
-				32816F891C1FF469004DD2EF /* cageory */,
-				325D567D1BCE449700B12EE6 /* ArrowView.h */,
-				325D567E1BCE449700B12EE6 /* ArrowView.m */,
-				32CE91C61B7C5CE700CA67C3 /* AddressPickerView.m */,
-				32BA54041BE6F5E400A597DB /* MMUserCoupons.h */,
-				32BA54051BE6F5E400A597DB /* MMUserCoupons.m */,
-				324337351C76C76A0066CADD /* MMLoginStatus.h */,
-				324337361C76C76A0066CADD /* MMLoginStatus.m */,
-			);
-			name = "Custom Class";
 			sourceTree = "<group>";
 		};
 		32E00C901BA7B79700A73390 /* Venders */ = {
