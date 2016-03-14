@@ -190,7 +190,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *order = self.dataDic[key];
-    CarryLogModel *carryLogM = order[indexPath.row];
+     __unused CarryLogModel *carryLogM = order[indexPath.row];
     if (!cell) {
         cell = [[CarryLogTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
