@@ -174,9 +174,9 @@ static NSString *cellIdentifier = @"SelectedListCell";
 
 - (UIView *)createTableHeadView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"mamaJingxuan" owner:nil options:nil];
-    NSLog(@"%@", views);
-    
-    NSLog(@"%@", [views[0] subviews]);
+//    NSLog(@"%@", views);
+//    
+//    NSLog(@"%@", [views[0] subviews]);
     UIView *view = views[0];
     
     view.frame = CGRectMake(0, 0, SCREENWIDTH, 180);
@@ -304,7 +304,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
     shareView = array[0];
     shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-    NSLog(@"shareView  = %@", shareView.subviews);
+//    NSLog(@"shareView  = %@", shareView.subviews);
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
@@ -370,7 +370,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     }
     switch (button.tag) {
         case 100:{
-            NSLog(@"微信");
+//            NSLog(@"微信");
             
             [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
@@ -420,7 +420,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
         }
         case 104:{
           
-            NSLog(@"微博");
+//            NSLog(@"微博");
             NSData *data = UIImagePNGRepresentation(self.shopShareImage);
             
             NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.shopDesc, self.shopShareLink];
@@ -444,24 +444,24 @@ static NSString *cellIdentifier = @"SelectedListCell";
             }
             [self cancleBtnClicked:nil];
             
-            NSLog(@"复制");
+//            NSLog(@"复制");
             
           
             [self cancleBtnClicked:nil];
             
-            NSLog(@"复制");
+//            NSLog(@"复制");
             break;
         }
         case 106:{
-            NSLog(@"微信快照");
+//            NSLog(@"微信快照");
             break;
         }
         case 107:{
-            NSLog(@"朋友圈快照");
+//            NSLog(@"朋友圈快照");
             break;
         }
         default:{
-            NSLog(@"其他");
+//            NSLog(@"其他");
             break;
         }
             
@@ -575,7 +575,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
   //  NSLog(@"share");
     singleShareView = [MamaShareView new];
     
-    NSLog(@"id = %@", cell.pdtID);
+//    NSLog(@"id = %@", cell.pdtID);
     
     self.productUrl = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, cell.pdtID];
     NSLog(@"url = %@", self.productUrl);
