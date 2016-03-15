@@ -623,9 +623,6 @@
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
-		321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */; };
-		321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */; };
-		321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */; };
 		325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B79791C97E6F10022F930 /* AddressTableCell.m */; };
 		325B79941C97E6F10022F930 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325B797A1C97E6F10022F930 /* AddressTableCell.xib */; };
 		325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B797C1C97E6F10022F930 /* BuyCartsView.m */; };
@@ -1603,9 +1600,6 @@
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
-		321952D71BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanCanUsedImage.png; sourceTree = "<group>"; };
-		321952D81BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanGuoqiiamge.png; sourceTree = "<group>"; };
-		321952D91BFEBB3200AA0AB8 /* youhuiquanUsedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youhuiquanUsedImage.png; sourceTree = "<group>"; };
 		325B79781C97E6F10022F930 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		325B79791C97E6F10022F930 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		325B797A1C97E6F10022F930 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -3639,7 +3633,6 @@
 				183076871C97D49A00B7665E /* redPkg.png in Resources */,
 				183076071C97D49A00B7665E /* hongbaoopen200.png in Resources */,
 				183075A51C97D49A00B7665E /* yifu2.png in Resources */,
-				321952DA1BFEBB3200AA0AB8 /* youhuiquanCanUsedImage.png in Resources */,
 				183075C81C97D49A00B7665E /* mamaback.png in Resources */,
 				183072271C97BE3700B7665E /* AddAdressViewController.xib in Resources */,
 				183075ED1C97D49A00B7665E /* defaultmamaimageicon.png in Resources */,
@@ -3883,7 +3876,6 @@
 				183075C61C97D49A00B7665E /* mamafensi.png in Resources */,
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
-				321952DC1BFEBB3200AA0AB8 /* youhuiquanUsedImage.png in Resources */,
 				1830743F1C97D17900B7665E /* iOS-social-releasenote.html in Resources */,
 				325B79A31C97E6F10022F930 /* XiangQingView.xib in Resources */,
 				183072591C97BE3700B7665E /* SettingViewController.xib in Resources */,
@@ -3975,7 +3967,6 @@
 				183074301C97D17800B7665E /* UMSCommentInputController.xib in Resources */,
 				183075CB1C97D49A00B7665E /* mamafens.png in Resources */,
 				183072141C97BE3700B7665E /* MaMaHuoyueduViewController.xib in Resources */,
-				321952DB1BFEBB3200AA0AB8 /* youhuiquanGuoqiiamge.png in Resources */,
 				183075F71C97D49A00B7665E /* erweimaDemo.png in Resources */,
 				1830765B1C97D49A00B7665E /* 圈圈加载0007.png in Resources */,
 				325B7A2D1C97E74B0022F930 /* HuoyuezhiTableViewCell.xib in Resources */,
