@@ -41,7 +41,7 @@
     self.navigationController.navigationBarHidden = NO;
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     _userIDTextField.text = [userDefault objectForKey:kUserName];
-    _passwordTextField.text = [userDefault objectForKey:kPassWord];
+//    _passwordTextField.text = [userDefault objectForKey:kPassWord];
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
     if (islogin) {
        // [self.navigationController popViewControllerAnimated:NO];
