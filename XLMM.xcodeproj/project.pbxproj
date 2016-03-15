@@ -24,6 +24,7 @@
 		181C749F1C53678400375DF8 /* mamaShare.png in Resources */ = {isa = PBXBuildFile; fileRef = 181C749E1C53678400375DF8 /* mamaShare.png */; };
 		181C74A51C536C7600375DF8 /* ProductSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A41C536C7600375DF8 /* ProductSelectionListViewController.m */; };
 		181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */; };
+		18306F6D1C97AA1600B7665E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18306F6C1C97AA1600B7665E /* AppDelegate.m */; };
 		1847A79F1C87DB28005D992C /* homepage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1847A79E1C87DB28005D992C /* homepage.png */; };
 		1847A7A11C87DF3E005D992C /* mamaback.png in Resources */ = {isa = PBXBuildFile; fileRef = 1847A7A01C87DF3E005D992C /* mamaback.png */; };
 		1847A7A31C87E0EA005D992C /* mamaheader.png in Resources */ = {isa = PBXBuildFile; fileRef = 1847A7A21C87E0EA005D992C /* mamaheader.png */; };
@@ -380,7 +381,6 @@
 		325B1E891BE4B2C80027B3E3 /* CartTableCellTableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321EA3991BE2279D009A45DE /* CartTableCellTableViewCell1.xib */; };
 		325B1E8A1BE4C45A0027B3E3 /* YHQCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E00C931BA8192D00A73390 /* YHQCollectionCell.xib */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
-		325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F61B68B18A006D64BD /* AppDelegate.m */; };
 		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		325D567F1BCE449700B12EE6 /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325D567E1BCE449700B12EE6 /* ArrowView.m */; };
@@ -761,6 +761,8 @@
 		181C74A61C536E3800375DF8 /* ProductSelectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectionListCell.h; sourceTree = "<group>"; };
 		181C74A71C536E3800375DF8 /* ProductSelectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectionListCell.m; sourceTree = "<group>"; };
 		181C74A81C536E3800375DF8 /* ProductSelectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSelectionListCell.xib; sourceTree = "<group>"; };
+		18306F6B1C97AA1600B7665E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18306F6C1C97AA1600B7665E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1847A79E1C87DB28005D992C /* homepage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homepage.png; sourceTree = "<group>"; };
 		1847A7A01C87DF3E005D992C /* mamaback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaback.png; sourceTree = "<group>"; };
 		1847A7A21C87E0EA005D992C /* mamaheader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamaheader.png; sourceTree = "<group>"; };
@@ -1273,8 +1275,6 @@
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA0F21B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		325BA0F51B68B18A006D64BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		325BA0F61B68B18A006D64BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		325BA0FE1B68B18A006D64BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2018,6 +2018,15 @@
 				325AD2D21C842DEB00446B02 /* NSString+DeleteT.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		18306F6A1C97AA1600B7665E /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				18306F6B1C97AA1600B7665E /* AppDelegate.h */,
+				18306F6C1C97AA1600B7665E /* AppDelegate.m */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		185E2E501C7FFFF900131D11 /* Setting */ = {
@@ -2986,7 +2995,7 @@
 			isa = PBXGroup;
 			children = (
 				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
-				32816F951C1FFBCC004DD2EF /* AppDelegate */,
+				18306F6A1C97AA1600B7665E /* AppDelegate */,
 				32746E3D1B74A4EA00816208 /* Models */,
 				325DF9451B69BCE200351ACA /* Views */,
 				325DF95C1B6A472600351ACA /* Controller */,
@@ -3370,15 +3379,6 @@
 				8E0044EC1BFF01B900AFC1DF /* EmptyDefault.xib */,
 			);
 			name = Common;
-			sourceTree = "<group>";
-		};
-		32816F951C1FFBCC004DD2EF /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				325BA0F51B68B18A006D64BD /* AppDelegate.h */,
-				325BA0F61B68B18A006D64BD /* AppDelegate.m */,
-			);
-			name = AppDelegate;
 			sourceTree = "<group>";
 		};
 		32816F961C1FFBFC004DD2EF /* Resources */ = {
@@ -4244,7 +4244,6 @@
 				320B30081BB90002006C4FC4 /* LiJiGMViewController1.m in Sources */,
 				32CFD5C81C589F0500C6203E /* FensiTableViewCell.m in Sources */,
 				32F3D96C1B6CCA41008530BA /* AFURLResponseSerialization.m in Sources */,
-				325BA0F71B68B18A006D64BD /* AppDelegate.m in Sources */,
 				3219529E1BFC7A8D00AA0AB8 /* QNUploadManager.m in Sources */,
 				18F388501C7BF1CF005A7C12 /* AccountTableViewCell.m in Sources */,
 				32BA54061BE6F5E400A597DB /* MMUserCoupons.m in Sources */,
@@ -4335,6 +4334,7 @@
 				32FF9A2B1B9FDBEC0001F314 /* TuihuoCollectionCell.m in Sources */,
 				3237853C1C8FEA1E00C2C20B /* MaMaHuoyueduViewController.m in Sources */,
 				2E73ED9B1C3A14C700EDB94E /* MaMaOrderModel.m in Sources */,
+				18306F6D1C97AA1600B7665E /* AppDelegate.m in Sources */,
 				32E8B59E1C51BD5600414F8A /* MamaActivityViewController.m in Sources */,
 				3264EA2F1B6C685500F36A8D /* PeopleCollectionCell.m in Sources */,
 				181C74A91C536E3800375DF8 /* ProductSelectionListCell.m in Sources */,
@@ -4478,7 +4478,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4516,7 +4516,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4561,7 +4561,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4605,7 +4605,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
