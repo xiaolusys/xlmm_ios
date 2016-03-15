@@ -28,6 +28,7 @@
 #import "SVProgressHUD.h"
 #import "MaMaHuoyueduViewController.h"
 #import "MaClassifyCarryLogViewController.h"
+#import "NSArray+Reverse.h"
 
 
 
@@ -55,10 +56,16 @@
 
 @property (nonatomic, strong)FSLineChart *lineChart;
 
+@property (nonatomic, copy) NSString *huoyueduString;
+
+
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)NSString *earningsRecord;
 @property (nonatomic, strong)NSString *orderRecord;
+
+@property (nonatomic, copy) NSArray *mamaOrderArray;
+
 
 //分享点击补贴
 @property (weak, nonatomic) IBOutlet UILabel *clickNumLabel;
@@ -126,13 +133,11 @@
     [self createChart:dataArray];
     
     
-//    [self prepareTableData];
  
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.jineLabel addGestureRecognizer:tap];
     self.jineLabel.userInteractionEnabled = YES;
     
-    [self createHuoYueDuView];
     
 //    self.fensilabel.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
@@ -152,6 +157,10 @@
     }
     if ([fortune class] == [NSNull class]) {
         self.huoyuedulabel.text = @"0";
+        self.huoyueduString = nil;
+        
+
+        [self createHuoYueDuView];
 
         return;
     }
@@ -161,9 +170,10 @@
     //账户金额
     self.jineLabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"cash_value"]];
     self.huoyuedulabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"active_value_num"]];
-    //今日数据,订单，收益
-    self.todayNum.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"today_visitor_num"]];
-    
+  
+    self.huoyueduString = [[fortune objectForKey:@"active_value_num"] stringValue];
+    [self createHuoYueDuView];
+
   
     //邀请数，粉丝，订单，收益
     self.inviteLabel.text = [NSString stringWithFormat:@"%@为小鹿妈妈", [fortune objectForKey:@"invite_num"]];
@@ -184,27 +194,33 @@
   self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
     
- //   NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
-    NSInteger huoyuezhi = SCREENWIDTH;
-  //  CGFloat percent = (CGFloat)huoyuezhi/SCREENWIDTH*100;
-//    self.huoyuedulabel.text = [NSString stringWithFormat:@"%%%.0f",100 - percent];
-  
+    NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
+
+    huoyuezhi = SCREENWIDTH /2;
+    NSLog(@"huoyuezhi = %ld", huoyuezhi);
+    self.huoyueduRight.constant = SCREENWIDTH - 36;
+    
+    
+    if (self.huoyueduString == nil) {
+       return;
+    }
+    
     
     CGRect frame = self.mamaHuoyueduView.frame;
-    MMLOG(NSStringFromCGRect(frame));
+    frame.origin.x -= huoyuezhi;
+    self.mamaHuoyueduView.frame = frame;
+    
     frame.origin.x += huoyuezhi;
-    MMLOG(NSStringFromCGRect(frame));
     
     
-  
-    [UIView animateWithDuration:1.5 animations:^{
-        
+    [UIView animateWithDuration:1.0 animations:^{
+         self.huoyueduRight.constant = huoyuezhi;
+
         self.mamaHuoyueduView.frame = frame;
         
     
     } completion:^(BOOL finished) {
-//        self.huoyueduLeft.constant = 0 - huoyuezhi;
-//        self.huoyueduRight.constant = huoyuezhi;
+
     }];
     
  
@@ -349,21 +365,16 @@
     NSInteger days = (count - page - 1)*7;
   //  NSLog(@"days = %ld", days);
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
-  //  NSLog(@"urlstring = %@", urlString);
+     NSDictionary *dic = self.mamaOrderArray[days];
+   // NSLog(@"dic = %@", dic);
+    self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
+    self.shouyiLabel.text = [dic[@"carry"] stringValue];
+    self.todayNum.text = [dic[@"visitor_num"] stringValue];
     
     //改变竖线的位置。。。。
     [self createChart:allDingdan];
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject)return ;
-    
-        [self maMaOrderInfoData:responseObject];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
 
 }
 
@@ -376,71 +387,8 @@
     });
 }
 
-#pragma mark --获取今日订单数据。。。。
-- (void)prepareTableData{
-    NSString *orderUrl = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:orderUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject)return ;
-        [self maMaOrderInfoData:responseObject];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
 
-}
 
-//更新订单数据。
-- (void)maMaOrderInfoData:(NSDictionary *)dic {
-    
-    [self.dataArr removeAllObjects];
-    
-    //点击补贴
-    NSNumber *clicks = dic[@"clk_money"];
-    
-//    _money = dic[@"clk_money"];
-//    NSDictionary *mmclog = dic[@"mmclog"];
-//    _clickTotalMoney = mmclog[@"clki"];
-    
-    
-    self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴%0.1f", [clicks floatValue]];
-
-//    if ([clicks intValue] > 0) {
-//        self.shareSubsidies.hidden = NO;
-//        self.clickedViewHeight.constant = 45;
-//        self.clickNumLabel.text = [NSString stringWithFormat:@"%@用户通过点击你的分享", dic[@"clicks"]];
-//        
-//        self.updateClickMoenyLabel.text = [NSString stringWithFormat:@"今日补贴--%@", dic[@"click_money"]];
-////        self.clickMoney.text = [NSString stringWithFormat:@"+%@",  dic[@"click_money"]];
-//    }else {
-//        self.shareSubsidies.hidden = YES;
-//        self.clickedViewHeight.constant = 0;
-//    }
-    
-    NSArray *array = dic[@"shops"];
-    if (array.count == 0){
-//        self.dingdanLabel.text = @"订单 0      收入 0.00";
-        self.dingdanLabel.text = @"0";
-        self.shouyiLabel.text = @"0.00";
-        [self.mamaTableView reloadData];
-        return;
-
-    }
-        
-    ticheng = 0.0;
-    dingdanshu = array.count;
-    
-    for (NSDictionary *orderDic in array) {
-        MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
-        [orderM setValuesForKeysWithDictionary:orderDic];
-        ticheng += [orderM.ticheng_cash floatValue];
-        [self.dataArr addObject:orderM];
-    }
-//    self.dingdanLabel.text = [NSString stringWithFormat:@"订单 %ld    收入 %.2f", (long)dingdanshu, ticheng];
-    self.dingdanLabel.text = [NSString stringWithFormat:@"%ld", (long)dingdanshu];
-    self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", ticheng];
-    
-    //[self.mamaTableView reloadData];
-}
 
 
  //根据订单数据 画表格。。。。
@@ -542,21 +490,20 @@
     
     NSInteger days = (6 - index) + (week - 1)*7;
     
-    //NSLog(@"days = %ld", days);
-
-//    _clickDate = days;
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/shops_by_day?days=%ld", Root_URL, (long)days];
+   // NSLog(@"days = %ld", days);
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject)return ;
-        
-        
-        [self maMaOrderInfoData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
+    NSDictionary *dic = self.mamaOrderArray[days];
+    
+ //   NSLog(@"info = %@", dic);
+    
+    
+    self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
+    self.shouyiLabel.text = [dic[@"carry"] stringValue];
+    self.todayNum.text = [dic[@"visitor_num"] stringValue];
+    
+    
+ 
 }
 
 
@@ -584,27 +531,51 @@
 //  获取表格数据
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping/days_num?days=91", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=1&days=90", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        NSMutableArray *data = [responseObject mutableCopy];
+        
+        
+        
+        
+        
+        
+        NSArray *data = [NSArray reverse:responseObject];
+        self.mamaOrderArray = data;
+        
+        NSDictionary *dic = data[0];
+    //    NSLog(@"info = %@", dic);
+        
+        
+        self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
+        self.shouyiLabel.text = [dic[@"carry"] stringValue];
+        self.todayNum.text = [dic[@"visitor_num"] stringValue];
+        
+        
+       // NSLog(@"orderArray = %@", self.mamaOrderArray);
+        
+        
      //   NSLog(@"%@", responseObject);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
+        
         for (int i = 0; i < data.count; i++) {
-            [weekArray addObject:data[i]];
+            NSNumber *order_num = [data[i] objectForKey:@"order_num"];
+            [weekArray addObject:order_num];
             
             if ((i +1)%7 == 0) {
                 NSInteger sum = [self sumofoneWeek:weekArray];
-          //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
+                //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
                 }
                 [allDingdan addObject:[weekArray copy]];
                 [weekArray removeAllObjects];
             }
+            
         }
-     // NSLog(@"%@", allDingdan);
+        
+      
         if (allDingdan.count > 0) {
             self.mamaimage.hidden = YES;
             self.mamalabel.hidden = YES;

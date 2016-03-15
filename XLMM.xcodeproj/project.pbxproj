@@ -161,8 +161,6 @@
 		183071FA1C97BE3700B7665E /* MaClassifyCarryLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071331C97BE3700B7665E /* MaClassifyCarryLogViewController.m */; };
 		183071FB1C97BE3700B7665E /* MaMaCarryLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071351C97BE3700B7665E /* MaMaCarryLogViewController.m */; };
 		183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071371C97BE3700B7665E /* MaMaOrderListViewController.m */; };
-		183071FD1C97BE3700B7665E /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071391C97BE3700B7665E /* MaMaPersonCenterViewController.m */; };
-		183071FE1C97BE3700B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830713A1C97BE3700B7665E /* MaMaPersonCenterViewController.xib */; };
 		183071FF1C97BE3700B7665E /* MaMaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830713C1C97BE3700B7665E /* MaMaViewController.m */; };
 		183072001C97BE3700B7665E /* PublishNewPdtViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830713E1C97BE3700B7665E /* PublishNewPdtViewController.m */; };
 		183072011C97BE3700B7665E /* TixianHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071401C97BE3700B7665E /* TixianHistoryViewController.m */; };
@@ -695,6 +693,10 @@
 		183076951C97D51B00B7665E /* retina4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183076911C97D51B00B7665E /* retina4@2x.png */; };
 		183076961C97D51B00B7665E /* retina_HD4.7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183076921C97D51B00B7665E /* retina_HD4.7@2x.png */; };
 		183076A41C97D73C00B7665E /* XLMM copy-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 183076A31C97D73C00B7665E /* XLMM copy-Info.plist */; };
+		183076A61C97E22300B7665E /* accounticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 183076A51C97E22300B7665E /* accounticon.png */; };
+		183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */; };
+		183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */; };
+		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
@@ -980,9 +982,6 @@
 		183071351C97BE3700B7665E /* MaMaCarryLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaCarryLogViewController.m; sourceTree = "<group>"; };
 		183071361C97BE3700B7665E /* MaMaOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaOrderListViewController.h; sourceTree = "<group>"; };
 		183071371C97BE3700B7665E /* MaMaOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaOrderListViewController.m; sourceTree = "<group>"; };
-		183071381C97BE3700B7665E /* MaMaPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaPersonCenterViewController.h; sourceTree = "<group>"; };
-		183071391C97BE3700B7665E /* MaMaPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaPersonCenterViewController.m; sourceTree = "<group>"; };
-		1830713A1C97BE3700B7665E /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
 		1830713B1C97BE3700B7665E /* MaMaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaViewController.h; sourceTree = "<group>"; };
 		1830713C1C97BE3700B7665E /* MaMaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaViewController.m; sourceTree = "<group>"; };
 		1830713D1C97BE3700B7665E /* PublishNewPdtViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishNewPdtViewController.h; sourceTree = "<group>"; };
@@ -1709,6 +1708,12 @@
 		183076911C97D51B00B7665E /* retina4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retina4@2x.png"; sourceTree = "<group>"; };
 		183076921C97D51B00B7665E /* retina_HD4.7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retina_HD4.7@2x.png"; sourceTree = "<group>"; };
 		183076A31C97D73C00B7665E /* XLMM copy-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "XLMM copy-Info.plist"; sourceTree = "<group>"; };
+		183076A51C97E22300B7665E /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
+		183076A71C97E26D00B7665E /* MaMaPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaPersonCenterViewController.h; sourceTree = "<group>"; };
+		183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaPersonCenterViewController.m; sourceTree = "<group>"; };
+		183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
+		183076AC1C97E31A00B7665E /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
+		183076AD1C97E31A00B7665E /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -2166,15 +2171,15 @@
 		183071311C97BE3700B7665E /* MaMaVersion1 */ = {
 			isa = PBXGroup;
 			children = (
+				183076A71C97E26D00B7665E /* MaMaPersonCenterViewController.h */,
+				183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */,
+				183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */,
 				183071321C97BE3700B7665E /* MaClassifyCarryLogViewController.h */,
 				183071331C97BE3700B7665E /* MaClassifyCarryLogViewController.m */,
 				183071341C97BE3700B7665E /* MaMaCarryLogViewController.h */,
 				183071351C97BE3700B7665E /* MaMaCarryLogViewController.m */,
 				183071361C97BE3700B7665E /* MaMaOrderListViewController.h */,
 				183071371C97BE3700B7665E /* MaMaOrderListViewController.m */,
-				183071381C97BE3700B7665E /* MaMaPersonCenterViewController.h */,
-				183071391C97BE3700B7665E /* MaMaPersonCenterViewController.m */,
-				1830713A1C97BE3700B7665E /* MaMaPersonCenterViewController.xib */,
 				1830713B1C97BE3700B7665E /* MaMaViewController.h */,
 				1830713C1C97BE3700B7665E /* MaMaViewController.m */,
 				1830713D1C97BE3700B7665E /* PublishNewPdtViewController.h */,
@@ -2401,6 +2406,8 @@
 		1830725F1C97C00900B7665E /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				183076AC1C97E31A00B7665E /* NSArray+Reverse.h */,
+				183076AD1C97E31A00B7665E /* NSArray+Reverse.m */,
 				183072601C97C00900B7665E /* NSArray+Log.h */,
 				183072611C97C00900B7665E /* NSArray+Log.m */,
 				183072621C97C00900B7665E /* NSString+DeleteT.h */,
@@ -3405,6 +3412,7 @@
 		183075641C97D49A00B7665E /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				183076A51C97E22300B7665E /* accounticon.png */,
 				183075651C97D49A00B7665E /* grayAdd.png */,
 				183075661C97D49A00B7665E /* grayJian.png */,
 				183075671C97D49A00B7665E /* jiebang.png */,
@@ -3733,6 +3741,7 @@
 				183075DF1C97D49A00B7665E /* wodejingxuanyulan.png in Resources */,
 				1830765F1C97D49A00B7665E /* 圈圈加载0011.png in Resources */,
 				183075E21C97D49A00B7665E /* address_icon.png in Resources */,
+				183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */,
 				183075B21C97D49A00B7665E /* loading动画002.png in Resources */,
 				1830706A1C97B5BD00B7665E /* YHQCollectionCell.xib in Resources */,
 				183072251C97BE3700B7665E /* WithdrwaIsNo.xib in Resources */,
@@ -3824,7 +3833,6 @@
 				183076211C97D49A00B7665E /* newyouhuiquanguoqibg.png in Resources */,
 				183076851C97D49A00B7665E /* path1.png in Resources */,
 				183073F81C97D17800B7665E /* MJRefresh.bundle in Resources */,
-				183071FE1C97BE3700B7665E /* MaMaPersonCenterViewController.xib in Resources */,
 				183076111C97D49A00B7665E /* Icon-60@3x.png in Resources */,
 				183071F91C97BE3700B7665E /* WXLoginController.xib in Resources */,
 				183075FC1C97D49A00B7665E /* head_icon.png in Resources */,
@@ -3971,6 +3979,7 @@
 				183075D51C97D49A00B7665E /* mamayong.png in Resources */,
 				183075F51C97D49A00B7665E /* emptyJifenIcon.png in Resources */,
 				183070451C97B5BD00B7665E /* BuyCartsView.xib in Resources */,
+				183076A61C97E22300B7665E /* accounticon.png in Resources */,
 				183072571C97BE3700B7665E /* ModifyPhoneController.xib in Resources */,
 				1830758F1C97D49A00B7665E /* icon-tousujianyi.png in Resources */,
 				183076491C97D49A00B7665E /* weixin_icon.png in Resources */,
@@ -4091,12 +4100,12 @@
 				183074141C97D17800B7665E /* RECommonFunctions.m in Sources */,
 				183070421C97B5BD00B7665E /* AddressTableCell.m in Sources */,
 				183070D71C97B83900B7665E /* HistoryCartsModel.m in Sources */,
+				183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */,
 				183070DB1C97B83900B7665E /* OrderModel.m in Sources */,
 				183072821C97C00900B7665E /* NSArray+Log.m in Sources */,
 				183072091C97BE3700B7665E /* ActivityViewController2.m in Sources */,
 				183072181C97BE3700B7665E /* MaMaShopViewController.m in Sources */,
 				183073CD1C97D17800B7665E /* AFHTTPSessionManager.m in Sources */,
-				183071FD1C97BE3700B7665E /* MaMaPersonCenterViewController.m in Sources */,
 				183070511C97B5BD00B7665E /* XiangQingView.m in Sources */,
 				183072451C97BE3700B7665E /* FillWuliuController.m in Sources */,
 				183071FF1C97BE3700B7665E /* MaMaViewController.m in Sources */,
@@ -4147,6 +4156,7 @@
 				183074211C97D17800B7665E /* UIButton+WebCache.m in Sources */,
 				183073D71C97D17800B7665E /* QNDnsManager.m in Sources */,
 				183070811C97B5BD00B7665E /* FensiTableViewCell.m in Sources */,
+				183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */,
 				183073DB1C97D17800B7665E /* QNDnspodEnterprise.m in Sources */,
 				183073DE1C97D17800B7665E /* QNHosts.m in Sources */,
 				183072891C97C00900B7665E /* UIImage+ImageWithSelectedView.m in Sources */,
