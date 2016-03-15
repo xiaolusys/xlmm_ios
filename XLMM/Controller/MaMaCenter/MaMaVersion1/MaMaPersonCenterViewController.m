@@ -120,7 +120,7 @@
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
 //    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
     
-//    //主页新的数据
+    //主页新的数据
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -176,7 +176,7 @@
 
   
     //邀请数，粉丝，订单，收益
-    self.inviteLabel.text = [NSString stringWithFormat:@"%@为小鹿妈妈", [fortune objectForKey:@"invite_num"]];
+    self.inviteLabel.text = [NSString stringWithFormat:@"%@位小鹿妈妈", [fortune objectForKey:@"invite_num"]];
     self.fensilabel.text = [NSString stringWithFormat:@"%@位粉丝", [fortune objectForKey:@"fans_num"]];
     self.order.text = [NSString stringWithFormat:@"%@个订单", [fortune objectForKey:@"order_num"]];
     self.account.text = [NSString stringWithFormat:@"账户余额%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
