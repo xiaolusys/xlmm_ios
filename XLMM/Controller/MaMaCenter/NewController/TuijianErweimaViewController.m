@@ -86,8 +86,8 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSLog(@"dic = %@", dic);
     
-    self.imagelink = [NSString stringWithFormat:@"%@%@", Root_URL, [dic objectForKey:@"share_mmcode"]];
-    self.mamalink = self.mamalink;
+    self.imagelink = [dic objectForKey:@"share_qrcode"];
+    self.mamalink = dic[@"mama_link"];
     [self downloadImage];
     
     
@@ -113,14 +113,16 @@
 //    }
 //    image = [UIImage imageWithData:data];
     NSURL *url = [NSURL URLWithString:self.imagelink];
-    [self.imageView sd_setImageWithURL:url];
+    [self.imageView sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.mamaPicView.bounds = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 1.1);
+        shareImages = [UIImage imageFromView:self.mamaPicView];
+        NSLog(@"shareImage = %@", shareImages);
+    }] ;
     
     NSLog(@"view = %@", self.whiteView);
     //self.whiteView.bounds = CGRectMake(0, 0, 240, 360);
     
-    self.mamaPicView.bounds = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 1.1);
-    shareImages = [UIImage imageFromView:self.mamaPicView];
-    NSLog(@"shareImage = %@", shareImages);
+  
     
 }
 

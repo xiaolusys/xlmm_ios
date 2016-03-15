@@ -405,6 +405,7 @@
         self.peopleLabel.text = @"";
         self.addressLabel.text = @"";
         self.addressZeroLabel.hidden = NO;
+        self.addressZeroLabel.text = @"请填写收货地址";
         return;
     } else {
         self.addressZeroLabel.hidden = YES;
