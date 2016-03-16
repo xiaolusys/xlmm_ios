@@ -57,9 +57,6 @@
     self.pdtModel = product;
     [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.productName.text = product.name;
-    self.addBtnClick.layer.cornerRadius = 12;
-    self.addBtnClick.layer.borderWidth = 0.5;
-    self.addBtnClick.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     self.picImageView.layer.cornerRadius = 8;
     self.picImageView.layer.masksToBounds = YES;
     self.picImageView.layer.borderWidth = 0.5;
@@ -73,11 +70,11 @@
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     if ([product.in_customer_shop intValue]) {
        self.addBtnClick.selected = YES;
-        [self.addBtnClick setTitle:@"下架" forState:UIControlStateNormal];
+        [self.addBtnClick setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
 //        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
     }else {
         self.addBtnClick.selected = NO;
-        [self.addBtnClick setTitle:@"上架" forState:UIControlStateNormal];
+        [self.addBtnClick setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];;
         
 //        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
     }

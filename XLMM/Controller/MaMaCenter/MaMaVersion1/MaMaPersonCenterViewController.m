@@ -143,9 +143,9 @@
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fensiList:)];
 //  //  [self.fensiLabel addGestureRecognizer:tap1];
 //    [self.fensilabel addGestureRecognizer:tap1];
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huoyueduDetails)];
-    
-    [self.mamaHuoyueduView addGestureRecognizer:tap1];
+//    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huoyueduDetails)];
+//    
+//    [self.mamaHuoyueduView addGestureRecognizer:tap1];
     
 }
 
@@ -203,6 +203,10 @@
     
     if (self.huoyueduString == nil) {
        return;
+    }
+    
+    if ([self.huoyueduString integerValue] == 0) {
+        return;
     }
     
     
