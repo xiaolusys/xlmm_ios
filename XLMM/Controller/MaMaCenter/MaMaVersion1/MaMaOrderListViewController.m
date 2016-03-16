@@ -208,13 +208,6 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
-    return 30;
-}
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section {
-    return 1;
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
@@ -226,6 +219,14 @@
     
     [headerV yearLabelAndTotalMoneyLabelText:[self yearDeal:orderM.shoptime] total:[NSString stringWithFormat:@"%.2f", [orderM.dayly_amount floatValue]]];
     return headerV;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 1;
 }
 
 
