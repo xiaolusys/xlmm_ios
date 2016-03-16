@@ -259,7 +259,7 @@
         model.urlString = [dic objectForKey:@"pic_path"];
         model.sizeString = [dic objectForKey:@"sku_name"];
         model.numberString = [dic objectForKey:@"num"];
-        model.priceString = [dic objectForKey:@"total_fee"];
+        model.priceString = [dic objectForKey:@"payment"];
         model.nameString = [dic objectForKey:@"title"];
         model.orderID = [dic objectForKey:@"id"];
         model.killTitle = [[dic objectForKey:@"kill_title"] boolValue];

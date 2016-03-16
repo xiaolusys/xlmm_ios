@@ -195,7 +195,7 @@
     NSDictionary *pay_ex = pay_extras[0];
     lijianpay = [pay_ex[@"value"] floatValue];
     
-    self.zhifulijianLabel.text = [NSString stringWithFormat:@"支付立减%@元哦", pay_ex[@"value"]];
+    self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", pay_ex[@"value"]];
     
     
     
@@ -310,7 +310,7 @@
     NSDictionary *pay_ex = pay_extras[0];
     lijianpay = [pay_ex[@"value"] floatValue];
     
-    self.zhifulijianLabel.text = [NSString stringWithFormat:@"支付立减%@元哦", pay_ex[@"value"]];
+    self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", pay_ex[@"value"]];
     
    // NSLog(@"coupon_message= %@", coupon_message);
     
@@ -505,7 +505,7 @@
     [self.navigationController pushViewController:vc animated:YES];
     
     
-}  
+}
 
 - (void)downloadCartsData2{
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
