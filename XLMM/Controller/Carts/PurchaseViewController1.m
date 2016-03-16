@@ -47,6 +47,12 @@
     
     NSString *yhqModelID;
     
+    NSArray *pay_extras;
+    
+    float lijianpay;
+    
+    
+    
     
   
 }
@@ -181,20 +187,39 @@
     coupon_message = [dic objectForKey:@"coupon_message"];
     
   //  NSLog(@"coupon_message= %@", coupon_message);
+    pay_extras = [dic objectForKey:@"pay_extras"];
+    NSLog(@"pay_extras = %@", pay_extras);
+   
+    
+    NSString *name = pay_extras[0][@"name"];
+    NSDictionary *pay_ex = pay_extras[0];
+    lijianpay = [pay_ex[@"value"] floatValue];
+    
+    self.zhifulijianLabel.text = [NSString stringWithFormat:@"支付立减%@元哦", pay_ex[@"value"]];
+    
+    
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
     totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-    totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
+    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
     postfee = [[dic objectForKey:@"post_fee"] floatValue];
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
     NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
+    
+    
     
     //self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
     self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
+  
+    
+  
+    
+    MMLOG(name);
+    
     
     
     [self.MutCatrsArray removeAllObjects];
@@ -278,6 +303,15 @@
     
     coupon_message = [dic objectForKey:@"coupon_message"];
     
+    //  NSLog(@"coupon_message= %@", coupon_message);
+    pay_extras = [dic objectForKey:@"pay_extras"];
+    NSLog(@"pay_extras = %@", pay_extras);
+    
+    NSDictionary *pay_ex = pay_extras[0];
+    lijianpay = [pay_ex[@"value"] floatValue];
+    
+    self.zhifulijianLabel.text = [NSString stringWithFormat:@"支付立减%@元哦", pay_ex[@"value"]];
+    
    // NSLog(@"coupon_message= %@", coupon_message);
     
     if ([coupon_message isEqualToString:@""]) {
@@ -300,16 +334,21 @@
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
     totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-    totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
+    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
     postfee = [[dic objectForKey:@"post_fee"] floatValue];
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
     NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
+    
+    
     
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
     self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
+    
+    pay_extras = [dic objectForKey:@"pay_extras"];
+    NSLog(@"pay_extras = %@", pay_extras);
     
     
     [self.MutCatrsArray removeAllObjects];
@@ -550,7 +589,7 @@
     
     discountfee = [yhqModel.coupon_value floatValue];
 
-    float allpay = totalfee - discountfee + postfee;
+    float allpay = totalfee - discountfee + postfee - lijianpay;
     
    // NSLog(@"allpay = %.1f", allpay);
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
@@ -613,7 +652,7 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     
-    float allpay = totalfee - discountfee + postfee;
+    float allpay = totalfee - discountfee + postfee - lijianpay;
     
   //  NSLog(@"allpay = %.1f", allpay);
     
@@ -623,10 +662,18 @@
     NSString* dict;
   //  NSLog(@"youhuiquan.ID = %@", yhqModel.ID);
     
+
+    NSDictionary *pay_ex = pay_extras[0];
+    
+    //pid:1:value:2
+    NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",pay_ex[@"pid"],pay_ex[@"value"]];
+    
+    
+    
     if (yhqModel.ID == nil) {
-        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
+        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, parms];
     } else {
-        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, yhqModel.ID];
+        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, yhqModel.ID, parms];
     
     }
     

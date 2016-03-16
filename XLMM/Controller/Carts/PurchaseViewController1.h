@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailsViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewWidth;
 @property (weak, nonatomic) IBOutlet UILabel *addressZeroLabel;
+@property (weak, nonatomic) IBOutlet UILabel *zhifulijianLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 @property (weak, nonatomic) IBOutlet UIImageView *xiaoluimageView;
