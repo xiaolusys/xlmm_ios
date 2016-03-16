@@ -32,7 +32,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -52,7 +52,7 @@
     [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
     
    
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, -20, SCREENWIDTH, SCREENHEIGHT)];
     
    
     
@@ -71,24 +71,24 @@
 
 - (void)createbutton{
     
-    UIButton *button0 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIButton *button0 = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
     NSString *imageName0 = nil;
-    imageName0 = @"shareIconImage2.png";
+    imageName0 = @"wodejingxuanfanhui.png";
     
     UIImageView *imageView0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName0]];
-    imageView0.frame = CGRectMake(20, 10, 20, 20);
+    imageView0.frame = CGRectMake(2, 2, 40, 40);
     [button0 addSubview:imageView0];
     [button0 addTarget:self action:@selector(backClickAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:button0 aboveSubview:self.webView];
     
     
     
-    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 44 - 8, 20, 44, 44)];
     NSString *imageName1 = nil;
-    imageName1 = @"shareIconImage2.png";
+    imageName1 = @"wodejingxuanfenxiang.png";
     
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName1]];
-    imageView1.frame = CGRectMake(20, 10, 20, 20);
+    imageView1.frame = CGRectMake(2, 2, 40, 40);
     [button1 addSubview:imageView1];
     [button1 addTarget:self action:@selector(sharedMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:button1 aboveSubview:self.webView];

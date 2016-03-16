@@ -121,7 +121,7 @@ static NSString *cellIdentifier = @"productSelection";
     
     self.orderBySaleButon = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.orderBySaleButon setTitle:@"销量排序" forState:UIControlStateNormal];
+    [self.orderBySaleButon setTitle:@"售卖排序" forState:UIControlStateNormal];
     self.orderBySaleButon.frame = CGRectMake(width + width, 0, width, height);
     [self.headView addSubview:self.orderBySaleButon];
     
