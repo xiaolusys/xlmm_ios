@@ -176,10 +176,10 @@
 
   
     //邀请数，粉丝，订单，收益
-    self.inviteLabel.text = [NSString stringWithFormat:@"%@位小鹿妈妈", [fortune objectForKey:@"invite_num"]];
-    self.fensilabel.text = [NSString stringWithFormat:@"%@位粉丝", [fortune objectForKey:@"fans_num"]];
-    self.order.text = [NSString stringWithFormat:@"%@个订单", [fortune objectForKey:@"order_num"]];
-    self.account.text = [NSString stringWithFormat:@"账户余额%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
+    self.inviteLabel.text = [NSString stringWithFormat:@"%@位", [fortune objectForKey:@"invite_num"]];
+    self.fensilabel.text = [NSString stringWithFormat:@"%@人", [fortune objectForKey:@"fans_num"]];
+    self.order.text = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
+    self.account.text = [NSString stringWithFormat:@"%.2f元", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
 }
 
