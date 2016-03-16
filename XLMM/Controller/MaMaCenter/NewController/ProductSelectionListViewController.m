@@ -303,6 +303,8 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
+    
+    
     for (NSDictionary *pdt in data) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         [productM setValuesForKeysWithDictionary:pdt];
@@ -320,7 +322,7 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 96;
+    return 120;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -349,7 +351,8 @@ static NSString *cellIdentifier = @"productSelection";
         
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];;
+            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];
+            cell.statusLabel.text = @"加入精选";
            btn.selected = NO;
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
             //修改数据源中的数据
@@ -367,6 +370,7 @@ static NSString *cellIdentifier = @"productSelection";
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
             //[btn setTitle:@"下架" forState:UIControlStateNormal];
             [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
+            cell.statusLabel.text = @"已加入";
 
            btn.selected = YES;
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];

@@ -29,6 +29,8 @@
 #import "MaMaHuoyueduViewController.h"
 #import "MaClassifyCarryLogViewController.h"
 #import "NSArray+Reverse.h"
+#import "ShopPreviousViewController.h"
+
 
 
 
@@ -671,8 +673,13 @@
 }
 
 - (IBAction)jingxuanliebiao:(id)sender {
-    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
-    [self.navigationController pushViewController:shop animated:YES];
+    
+    ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
+    [self.navigationController pushViewController:previous animated:YES];
+    
+    
+//    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
+//    [self.navigationController pushViewController:shop animated:YES];
 }
 
 - (IBAction)xuanpinliebiao:(id)sender {

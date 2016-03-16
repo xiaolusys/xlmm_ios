@@ -57,24 +57,26 @@
     self.pdtModel = product;
     [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.productName.text = product.name;
-    self.picImageView.layer.cornerRadius = 8;
+    self.picImageView.layer.cornerRadius = 4;
     self.picImageView.layer.masksToBounds = YES;
     self.picImageView.layer.borderWidth = 0.5;
     self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.picImageView.contentMode = UIViewContentModeScaleAspectFill;
     
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
-    self.stdPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
-    self.backPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
-    self.saleNumberLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.sale_num integerValue]];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [product.agent_price floatValue]];
+    self.stdPriceLabel.text = [NSString stringWithFormat:@"/¥%.0f", [product.std_sale_price floatValue]];
+    self.backPriceLabel.text = [NSString stringWithFormat:@"%@", product.rebet_amount_des];
+    self.saleNumberLabel.text = [NSString stringWithFormat:@"%@", product.sale_num_des];
     self.pdtID = [NSString stringWithFormat:@"%@", product.productId];
     if ([product.in_customer_shop intValue]) {
        self.addBtnClick.selected = YES;
         [self.addBtnClick setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
+        self.statusLabel.text = @"已加入";
 //        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
     }else {
         self.addBtnClick.selected = NO;
-        [self.addBtnClick setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];;
+        [self.addBtnClick setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];
+        self.statusLabel.text = @"加入精选";
         
 //        [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
     }

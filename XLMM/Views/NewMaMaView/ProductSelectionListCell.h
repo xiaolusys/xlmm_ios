@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stdPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *backPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *saleNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 //商品ID
 @property (strong, nonatomic) NSString *pdtID;
