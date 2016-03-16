@@ -105,7 +105,7 @@
     self.headViewWidth.constant = SCREENWIDTH;
     
     self.earningsRecord = @"0.00";
-    self.orderRecord = @"0.00";
+    self.orderRecord = @"0";
     
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     
