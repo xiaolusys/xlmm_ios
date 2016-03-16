@@ -205,6 +205,10 @@
        return;
     }
     
+    if ([self.huoyueduString integerValue] == 0) {
+        return;
+    }
+    
     
     CGRect frame = self.mamaHuoyueduView.frame;
     frame.origin.x -= huoyuezhi;

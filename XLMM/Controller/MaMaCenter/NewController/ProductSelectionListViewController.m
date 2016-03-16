@@ -349,7 +349,7 @@ static NSString *cellIdentifier = @"productSelection";
         
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-            [btn setTitle:@"上架" forState:UIControlStateNormal];
+            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];;
            btn.selected = NO;
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
             //修改数据源中的数据
@@ -365,8 +365,9 @@ static NSString *cellIdentifier = @"productSelection";
         [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //已上架
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
-            [btn setTitle:@"下架" forState:UIControlStateNormal];
-            
+            //[btn setTitle:@"下架" forState:UIControlStateNormal];
+            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
+
            btn.selected = YES;
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
             //修改数据源中的数据

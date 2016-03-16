@@ -43,7 +43,7 @@
         
         urlString = [dictionary objectForKey:@"next"];
         if ([[dictionary objectForKey:@"next"]class] == [NSNull class]) {
-            NSLog(@"可用已用 下页为空");
+//            NSLog(@"可用已用 下页为空");
             break;
         }
     }
