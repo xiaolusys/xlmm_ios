@@ -24,6 +24,8 @@
 @property (nonatomic, strong) UIImage *shopShareImage;
 @property (nonatomic, copy) NSString *shopDesc;
 
+@property (nonatomic, copy) NSString *webViewUrl;
+
 @end
 
 @implementation ShopPreviousViewController{
@@ -332,7 +334,11 @@
     self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
     self.shopDesc = [dic[@"shop_info"] objectForKey:@"desc"];
     
-     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.shopShareLink]]];
+    self.webViewUrl = [[dic objectForKey:@"shop_info"] objectForKey:@"preview_shop_link"];
+    NSLog(@"web url = %@", self.webViewUrl);
+    
+    
+     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webViewUrl]]];
     
     self.title = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
     
