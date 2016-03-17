@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YouHuiQuanViewController">
@@ -169,10 +169,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5UD-bM-ez4">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iv6-jE-Voe">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iv6-jE-Voe">
                     <rect key="frame" x="-5" y="597" width="385" height="80"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtE-6w-ssx">
+                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtE-6w-ssx">
                             <rect key="frame" x="20" y="20" width="345" height="40"/>
                             <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -288,6 +288,13 @@
                     <exclude reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="RTn-c8-sc5"/>
+                    <exclude reference="WWX-S1-dcg"/>
+                    <exclude reference="9Wp-5f-jy9"/>
+                    <exclude reference="O4v-ai-2ZZ"/>
+                    <exclude reference="WFX-3i-5GL"/>
+                    <exclude reference="X4h-5A-2XM"/>
+                    <exclude reference="alg-6Q-ZEh"/>
                     <exclude reference="01i-WB-Nzh"/>
                     <exclude reference="WaS-Ly-aPX"/>
                     <exclude reference="rbL-su-DN9"/>
@@ -295,13 +302,6 @@
                     <exclude reference="8Nj-4f-Vi8"/>
                     <exclude reference="P89-U2-kL3"/>
                     <exclude reference="oxI-b0-dNN"/>
-                    <exclude reference="X4h-5A-2XM"/>
-                    <exclude reference="alg-6Q-ZEh"/>
-                    <exclude reference="RTn-c8-sc5"/>
-                    <exclude reference="WWX-S1-dcg"/>
-                    <exclude reference="9Wp-5f-jy9"/>
-                    <exclude reference="O4v-ai-2ZZ"/>
-                    <exclude reference="WFX-3i-5GL"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -312,6 +312,13 @@
                     <include reference="5UD-bM-ez4"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="RTn-c8-sc5"/>
+                    <include reference="WWX-S1-dcg"/>
+                    <include reference="9Wp-5f-jy9"/>
+                    <include reference="O4v-ai-2ZZ"/>
+                    <include reference="WFX-3i-5GL"/>
+                    <include reference="X4h-5A-2XM"/>
+                    <include reference="alg-6Q-ZEh"/>
                     <include reference="01i-WB-Nzh"/>
                     <include reference="WaS-Ly-aPX"/>
                     <include reference="rbL-su-DN9"/>
@@ -319,13 +326,6 @@
                     <include reference="8Nj-4f-Vi8"/>
                     <include reference="P89-U2-kL3"/>
                     <include reference="oxI-b0-dNN"/>
-                    <include reference="X4h-5A-2XM"/>
-                    <include reference="alg-6Q-ZEh"/>
-                    <include reference="RTn-c8-sc5"/>
-                    <include reference="WWX-S1-dcg"/>
-                    <include reference="9Wp-5f-jy9"/>
-                    <include reference="O4v-ai-2ZZ"/>
-                    <include reference="WFX-3i-5GL"/>
                 </mask>
             </variation>
         </view>
