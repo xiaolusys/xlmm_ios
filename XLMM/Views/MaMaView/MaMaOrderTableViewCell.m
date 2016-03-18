@@ -10,7 +10,7 @@
 #import "MaMaOrderModel.h"
 #import "UIImageView+WebCache.h"
 #import "UIColor+RGBColor.h"
-
+#import "NSString+URL.h"
 
 @implementation MaMaOrderTableViewCell
 
@@ -25,11 +25,13 @@
 }
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM {
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:orderM.sku_img] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.imageV.layer.masksToBounds = YES;
     self.imageV.layer.cornerRadius = 5;
     self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
+    self.imageV.contentMode = UIViewContentModeScaleAspectFill;
+    
    self.purchaser.text = orderM.contributor_nick;
 //    self.purchaser.text = orderM.linkname;
     self.purchaser.font = [UIFont systemFontOfSize:13];
