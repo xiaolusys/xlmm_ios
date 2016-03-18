@@ -8,7 +8,8 @@
 
 #import "CarryLogTableViewCell.h"
 #import "CarryLogModel.h"
-
+#import "UIImageView+WebCache.h"
+#import "NSString+URL.h"
 @interface CarryLogTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageV;
 @property (weak, nonatomic) IBOutlet UILabel *sourceLabel;
@@ -47,15 +48,23 @@
             //奖金
             self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         }
+        self.sourceLabel.text = [self dateDeal:carryModel.created];
     }else if(type == 1) {
         //佣金
-        self.photoImageV.image = [UIImage imageNamed:@"mamayong"];
+        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+        if ([carryModel.contributor_nick isEqualToString:@""] || carryModel.contributor_nick.length == 0) {
+            self.sourceLabel.text = @"匿名用户";
+        }else {
+            self.sourceLabel.text = carryModel.contributor_nick;
+        }
     }else if(type == 2) {
         //点击
         self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
+        self.sourceLabel.text = [self dateDeal:carryModel.created];
         
     }else if(type == 3) {
         self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
+        self.sourceLabel.text = [self dateDeal:carryModel.created];
     }
 //    if ([carryModel.log_type isEqualToString:@"rebeta"]) {
 //        //佣金
@@ -93,7 +102,6 @@
 //    }
 
     self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.carry_value floatValue]];
-    self.sourceLabel.text = [self dateDeal:carryModel.created];
     self.status.text = carryModel.status_display;
     self.desLabel.text = carryModel.carry_description;
 }
