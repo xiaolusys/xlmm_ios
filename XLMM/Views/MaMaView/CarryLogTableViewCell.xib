@@ -22,7 +22,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-YC-mX6">
-                        <rect key="frame" x="67" y="14" width="50" height="20"/>
+                        <rect key="frame" x="67" y="14" width="48" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="7F1-vs-Syj"/>
                             <constraint firstAttribute="height" constant="20" id="XJ4-t2-Ypx"/>
@@ -30,6 +30,11 @@
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7F1-vs-Syj"/>
+                            </mask>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日成功推荐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-ek-Vvb">
                         <rect key="frame" x="67" y="34" width="72" height="34"/>
@@ -63,7 +68,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已确定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-Xo-jiO">
-                        <rect key="frame" x="117" y="14" width="80" height="20"/>
+                        <rect key="frame" x="125" y="14" width="80" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="PGd-0l-YN7"/>
                             <constraint firstAttribute="height" constant="20" id="jDD-oc-aXZ"/>
@@ -79,7 +84,7 @@
                     <constraint firstItem="6Wx-cb-dGX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="JlH-vJ-v4J"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="top" secondItem="f0i-YC-mX6" secondAttribute="bottom" id="LEo-YT-Q29"/>
                     <constraint firstItem="Gwf-Xo-jiO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="OoD-Tp-chG"/>
-                    <constraint firstItem="Gwf-Xo-jiO" firstAttribute="leading" secondItem="f0i-YC-mX6" secondAttribute="trailing" id="coG-dn-iAm"/>
+                    <constraint firstItem="Gwf-Xo-jiO" firstAttribute="leading" secondItem="f0i-YC-mX6" secondAttribute="trailing" constant="10" id="coG-dn-iAm"/>
                     <constraint firstItem="f0i-YC-mX6" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="fJv-xg-MM9"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="jXm-fu-5Rl"/>
                     <constraint firstItem="UH8-Hz-gts" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="qmX-1X-QEW"/>
