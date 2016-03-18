@@ -183,7 +183,7 @@
     self.order.text = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
     self.account.text = [NSString stringWithFormat:@"%.2f元", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
-    self.orderRecord = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
+    self.orderRecord = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"order_num"]];
 }
 
 - (void)huoyueduDetails{
@@ -538,7 +538,7 @@
 //  获取表格数据
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=1&days=90", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=0&days=90", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
