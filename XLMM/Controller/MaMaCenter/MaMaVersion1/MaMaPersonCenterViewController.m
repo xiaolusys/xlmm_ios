@@ -46,6 +46,9 @@
     NSString *nickName;
     float ableTixianJine;
     
+    float mamahuoyueduValue;
+    
+    
     NSMutableArray *allDingdan;
     
     CGPoint scrollViewContentOffset;
@@ -174,6 +177,7 @@
     self.huoyuedulabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"active_value_num"]];
   
     self.huoyueduString = [[fortune objectForKey:@"active_value_num"] stringValue];
+    mamahuoyueduValue = [[fortune objectForKey:@"active_value_num"] floatValue];
     [self createHuoYueDuView];
 
   
@@ -212,8 +216,16 @@
         return;
     }
     
+    NSLog(@"huoyuedu = %f", mamahuoyueduValue);
     
     CGRect frame = self.mamaHuoyueduView.frame;
+  //  mamahuoyueduValue = 200.0;
+    
+    huoyuezhi = mamahuoyueduValue/100 * SCREENWIDTH;
+    if (mamahuoyueduValue >= 100) {
+        huoyuezhi = SCREENWIDTH;
+        
+    }
     frame.origin.x -= huoyuezhi;
     self.mamaHuoyueduView.frame = frame;
     
@@ -221,7 +233,7 @@
     
     
     [UIView animateWithDuration:1.0 animations:^{
-         self.huoyueduRight.constant = huoyuezhi;
+         self.huoyueduRight.constant = SCREENWIDTH - huoyuezhi;
 
         self.mamaHuoyueduView.frame = frame;
         
@@ -538,7 +550,7 @@
 //  获取表格数据
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=0&days=90", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=0&days=14", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
