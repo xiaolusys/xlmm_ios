@@ -48,6 +48,9 @@
             return;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
+
         NSString *nickName = [dic objectForKey:@"nick"];
         if (nickName.length >= 4) {
             self.nameLabel.text = [dic objectForKey:@"nick"];
@@ -77,7 +80,14 @@
     self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [self setJifenInfo];
     [self setYHQInfo];
+    [self setImage];
+    
+    
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
+}
+
+- (void)setImage{
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
