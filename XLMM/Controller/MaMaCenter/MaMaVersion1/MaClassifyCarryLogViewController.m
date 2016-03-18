@@ -287,7 +287,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     for (NSDictionary *carry in reults) {
         CarryLogModel *carryM = [[CarryLogModel alloc] init];
         [carryM setValuesForKeysWithDictionary:carry];
-        NSString *date = [self dateDeal:carryM.created];
+        NSString *date = [self dateDeal:carryM.date_field];
         NSMutableArray *currentKey = [[currentDataDic allKeys] mutableCopy];
         if ([currentKey containsObject:date]) {
             //已经含有key
@@ -311,8 +311,8 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 //将日期去掉－
 - (NSString *)dateDeal:(NSString *)str {
-    NSString *string = [str substringToIndex:10];
-    NSString *date = [string stringByReplacingOccurrencesOfString:@"-" withString:@""];
+//    NSString *string = [str substringToIndex:10];
+    NSString *date = [str stringByReplacingOccurrencesOfString:@"-" withString:@""];
     return date;
 }
 
@@ -420,7 +420,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     NSMutableArray *orderArr = dic[key];
     CarryLogModel *carryM = [orderArr firstObject];
     
-    [headerV yearLabelAndTotalMoneyLabelText:carryM.created total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
+    [headerV yearLabelAndTotalMoneyLabelText:carryM.date_field total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
     return headerV;
 }
 

@@ -25,31 +25,30 @@
 }
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM {
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:orderM.pic_path] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:orderM.sku_img] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.imageV.layer.masksToBounds = YES;
     self.imageV.layer.cornerRadius = 5;
     self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
-   self.purchaser.text = orderM.wxordernick;
+   self.purchaser.text = orderM.contributor_nick;
 //    self.purchaser.text = orderM.linkname;
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
-    self.rebate.text = [NSString stringWithFormat:@"+%.2f", [orderM.ticheng_cash floatValue]];
+    self.rebate.text = [NSString stringWithFormat:@"+%.2f", [orderM.carry_num floatValue]];
     
-    self.orderStatic.text = orderM.get_status_display;
+    self.orderStatic.text = orderM.status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
    
-//    NSMutableString *timestext= [NSMutableString stringWithString:orderM.shoptime];
-//    NSRange range;
-//    range = [timestext rangeOfString:@"T"];
-//    [timestext replaceCharactersInRange:range withString:@" "];
-//    range = NSMakeRange(0, 10);
-//    [timestext deleteCharactersInRange:range];
-//    range = NSMakeRange(timestext.length - 4, 3);
-//    [timestext deleteCharactersInRange:range];
-   
-    self.times.text = orderM.time_display;
+
+    self.times.text = [self dealDate:orderM.created];
     self.times.font = [UIFont systemFontOfSize:12];
+}
+
+- (NSString *)dealDate:(NSString *)str {
+    NSArray *strarray = [str componentsSeparatedByString:@"T"];
+    NSString *hour = strarray[1];
+    NSString *time = [hour substringToIndex:5];
+    return time;
 }
 
 @end

@@ -183,6 +183,7 @@
     self.order.text = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
     self.account.text = [NSString stringWithFormat:@"%.2f元", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
+    self.orderRecord = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
 }
 
 - (void)huoyueduDetails{

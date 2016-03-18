@@ -37,6 +37,8 @@
 @property (nonatomic, strong)NSNumber *carry_value;
 @property (nonatomic, strong)NSNumber *carry_type;
 @property (nonatomic, strong)NSString *carry_description;
+@property (nonatomic, strong)NSString *date_field;
+@property (nonatomic, strong)NSString *status_display;
 
 
 @end

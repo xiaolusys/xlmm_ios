@@ -107,7 +107,7 @@
     }];
     
     //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
@@ -128,7 +128,7 @@
     for (NSDictionary *order in results) {
         MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
         [orderM setValuesForKeysWithDictionary:order];
-        NSString *date = [self dateDeal:orderM.shoptime];
+        NSString *date = [self dateDeal:orderM.date_field];
         self.dataArr = [[self.dataDic allKeys] mutableCopy];
         //判断对应键值的数组是否存在
         if ([self.dataArr containsObject:date]) {
@@ -147,9 +147,9 @@
 
 //将日期去掉－
 - (NSString *)dateDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
-    NSString *date = [year stringByReplacingOccurrencesOfString:@"-" withString:@""];
+//    NSArray *strarray = [str componentsSeparatedByString:@"T"];
+//    NSString *year = strarray[0];
+    NSString *date = [str stringByReplacingOccurrencesOfString:@"-" withString:@""];
     return date;
 }
 
@@ -217,7 +217,7 @@
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = [orderArr firstObject];
     
-    [headerV yearLabelAndTotalMoneyLabelText:[self yearDeal:orderM.shoptime] total:[NSString stringWithFormat:@"%.2f", [orderM.dayly_amount floatValue]]];
+    [headerV yearLabelAndTotalMoneyLabelText:orderM.date_field total:[NSString stringWithFormat:@"%.2f", [orderM.today_carry floatValue]]];
     return headerV;
 }
 

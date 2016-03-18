@@ -24,4 +24,14 @@
 @property (nonatomic, copy) NSString *shoptime;
 @property (nonatomic, strong)NSNumber *dayly_amount;
 
+
+//新接口
+@property (nonatomic, strong)NSNumber *carry_num;
+@property (nonatomic, strong)NSString *sku_img;
+@property (nonatomic, strong)NSNumber *today_carry;
+@property (nonatomic, strong)NSString *status_display;
+@property (nonatomic, strong)NSString *contributor_nick;
+@property (nonatomic, strong)NSString *date_field;
+@property (nonatomic, strong)NSString *created;
+
 @end
