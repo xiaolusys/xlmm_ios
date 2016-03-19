@@ -46,30 +46,13 @@
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        if (data== nil) {
-            return;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
-
-        NSString *nickName = [dic objectForKey:@"nick"];
-        if (nickName.length >= 4) {
-            self.nameLabel.text = [dic objectForKey:@"nick"];
-        }
-        self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
-        //判断是否为0
-        if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
-            self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
-            self.accountMoney = [NSNumber numberWithFloat:0.00];
-        }else {
-            NSDictionary *xiaolumeimei = [dic objectForKey:@"user_budget"];
-            NSNumber *num = [xiaolumeimei objectForKey:@"budget_cash"];
-            self.accountLabel.text  = [NSString stringWithFormat:@"%.2f", [num floatValue]];
-            self.accountMoney = num;
-        }
-        
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (!responseObject) return;
+            [self updateUserInfo:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
         
     }
 }
@@ -132,11 +115,9 @@
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
     self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    [self setJifenInfo];
-    [self setYHQInfo];
-    [self setImage];
-    
-    
+//    [self setJifenInfo];
+//    [self setYHQInfo];
+    [self setUserInfo];
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
