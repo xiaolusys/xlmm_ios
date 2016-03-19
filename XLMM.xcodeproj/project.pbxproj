@@ -621,6 +621,10 @@
 		183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */; };
 		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
+		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
+		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
+		321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */; };
+		321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 321648AD1C9D25C100E2BE56 /* jianicons.png */; };
 		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
 		3226D2E61C9932210095D766 /* xuanpinshangjiaright.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */; };
@@ -1600,6 +1604,12 @@
 		183076AD1C97E31A00B7665E /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
+		321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YixuanTableViewController.m; sourceTree = "<group>"; };
+		321648A81C9D230B00E2BE56 /* YixuanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewCell.h; sourceTree = "<group>"; };
+		321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YixuanTableViewCell.m; sourceTree = "<group>"; };
+		321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YixuanTableViewCell.xib; sourceTree = "<group>"; };
+		321648AD1C9D25C100E2BE56 /* jianicons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jianicons.png; sourceTree = "<group>"; };
 		321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiaright.png; sourceTree = "<group>"; };
@@ -1964,6 +1974,9 @@
 				325B7A271C97E74B0022F930 /* ProductSelectionListCell2.h */,
 				325B7A281C97E74B0022F930 /* ProductSelectionListCell2.m */,
 				325B7A291C97E74B0022F930 /* ProductSelectionListCell2.xib */,
+				321648A81C9D230B00E2BE56 /* YixuanTableViewCell.h */,
+				321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */,
+				321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */,
 			);
 			path = NewMaMaView;
 			sourceTree = "<group>";
@@ -2233,6 +2246,8 @@
 				183071631C97BE3700B7665E /* MaMaShopViewController.m */,
 				183071641C97BE3700B7665E /* ProductSelectionListViewController.h */,
 				183071651C97BE3700B7665E /* ProductSelectionListViewController.m */,
+				321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */,
+				321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */,
 				183071661C97BE3700B7665E /* ShopPreviousViewController.h */,
 				183071671C97BE3700B7665E /* ShopPreviousViewController.m */,
 				183071681C97BE3700B7665E /* TuijianErweimaViewController.h */,
@@ -3109,6 +3124,7 @@
 		183074501C97D49A00B7665E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				321648AD1C9D25C100E2BE56 /* jianicons.png */,
 				183074511C97D49A00B7665E /* font-xinpin.png */,
 				183074521C97D49A00B7665E /* friendskuaizhao.png */,
 				183074531C97D49A00B7665E /* icon-daishouhuo.png */,
@@ -3688,6 +3704,7 @@
 				183072461C97BE3700B7665E /* FillWuliuController.xib in Resources */,
 				183076411C97D49A00B7665E /* unselected_icon.png in Resources */,
 				183075D71C97D49A00B7665E /* savephoto.png in Resources */,
+				321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */,
 				183076751C97D49A00B7665E /* 圈圈加载0033.png in Resources */,
 				183076271C97D49A00B7665E /* profiles.png in Resources */,
 				183075C41C97D49A00B7665E /* mamadingdan.png in Resources */,
@@ -3867,6 +3884,7 @@
 				1830762C1C97D49A00B7665E /* retina4.png in Resources */,
 				183074431C97D17900B7665E /* ios-social-sdk-login-detail.html in Resources */,
 				183072081C97BE3700B7665E /* ActivityErweimaViewController.xib in Resources */,
+				321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */,
 				183076651C97D49A00B7665E /* 圈圈加载0017.png in Resources */,
 				183071E01C97BE3700B7665E /* MMDetailsViewController.xib in Resources */,
 				1830742F1C97D17800B7665E /* UMSCommentDetailController.xib in Resources */,
@@ -4154,6 +4172,7 @@
 				1830724E1C97BE3700B7665E /* ShenQingTuikuanController.m in Sources */,
 				325B79D21C97E7160022F930 /* HuodongCollectionViewCell.m in Sources */,
 				183070E81C97B83900B7665E /* MaMaSelectProduct.m in Sources */,
+				321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */,
 				183070EB1C97B83900B7665E /* TixianModel.m in Sources */,
 				183074181C97D17800B7665E /* MKAnnotationView+WebCache.m in Sources */,
 				183072501C97BE3700B7665E /* TuihuoViewController.m in Sources */,
@@ -4244,6 +4263,7 @@
 				183073ED1C97D17800B7665E /* MJRefreshFooter.m in Sources */,
 				183073EF1C97D17800B7665E /* MJRefreshAutoGifFooter.m in Sources */,
 				183071E11C97BE3700B7665E /* MMRootViewController.m in Sources */,
+				321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */,
 				183074201C97D17800B7665E /* SDWebImagePrefetcher.m in Sources */,
 				325B79DD1C97E7160022F930 /* PosterCollectionCell2.m in Sources */,
 				325B79DB1C97E7160022F930 /* PersonTableCell.m in Sources */,

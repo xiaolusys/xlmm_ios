@@ -12,6 +12,8 @@
 #import "MMClass.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
+#import "YixuanTableViewController.h"
+
 #import "MaMaSelectProduct.h"
 
 
@@ -40,6 +42,10 @@
 @property (nonatomic, strong) UIImageView *backImageView;
 
 
+@property (nonatomic, strong) UILabel *numberLabel;
+
+
+@property (nonatomic, copy) NSString *numbersOfSelected;
 
 
 
@@ -57,6 +63,16 @@ static NSString *cellIdentifier = @"productSelection";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self dealData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    self.numberLabel.text = self.numbersOfSelected;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -85,12 +101,68 @@ static NSString *cellIdentifier = @"productSelection";
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [self createHeadView];
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self dealData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+   
+    [self createrightItem];
+    
+}
+
+- (void)createrightItem{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
+    //已选label
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    label.text = @"已选";
+    label.font = [UIFont systemFontOfSize:14];
+    label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+    label.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:label];
+    
+    //number
+    
+    UIView *orongeView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, 22, 22)];
+    orongeView.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [view addSubview:orongeView];
+    orongeView.layer.cornerRadius = 11;
+
+    self.numberLabel = [[UILabel alloc] initWithFrame:orongeView.bounds];
+    self.numberLabel.text = @"0";
+    self.numberLabel.textColor = [UIColor whiteColor];
+    self.numberLabel.textAlignment = NSTextAlignmentCenter;
+    self.numberLabel.font = [UIFont systemFontOfSize:12];
+    [orongeView addSubview:self.numberLabel];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = view.bounds;
+    [btn addTarget:self action:@selector(yixuanClicked) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btn];
+    
+    
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+
+
+- (void)yixuanClicked{
+    NSLog(@"yixuan de");
+    
+    YixuanTableViewController *vc = [[YixuanTableViewController alloc] init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (NSString *)numbersOfSelected{
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSString *string = [NSString stringWithFormat:@"%ld", (long)[array count]];
+    NSLog(@"count = %@", string);
+    
+    return string;
+    
+    
+    
 }
 
 - (void)createHeadView{
@@ -304,6 +376,9 @@ static NSString *cellIdentifier = @"productSelection";
 #pragma mark --数据处理
 - (void)dealData:(NSArray *)data {
     
+    [self.dataArr removeAllObjects];
+    
+    
     
     for (NSDictionary *pdt in data) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
@@ -357,6 +432,8 @@ static NSString *cellIdentifier = @"productSelection";
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
             //修改数据源中的数据
             cell.pdtModel.in_customer_shop = @0;
+            
+            self.numberLabel.text = self.numbersOfSelected;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         }];
@@ -376,6 +453,9 @@ static NSString *cellIdentifier = @"productSelection";
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
             //修改数据源中的数据
             cell.pdtModel.in_customer_shop = @1;
+            
+            self.numberLabel.text = self.numbersOfSelected;
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         }];
