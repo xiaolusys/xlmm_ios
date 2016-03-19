@@ -17,7 +17,7 @@
 
 static NSString *const cellIdentifier = @"YixuanCell";
 
-@interface YixuanTableViewController ()<ProductxiajiaDelegate>
+@interface YixuanTableViewController ()<ProductxiajiaDelegate, UIAlertViewDelegate>
 {
     
 }
@@ -77,7 +77,24 @@ static NSString *const cellIdentifier = @"YixuanCell";
         
         [self.dataArr addObject:productM];
     }
-    [self.tableView reloadData];
+    
+    if (self.dataArr.count == 0) {
+        [self createDefaultView];
+    } else {
+        
+        [self.tableView reloadData];
+    }
+}
+- (void)createDefaultView{
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已选列表为空，快去加入一些商品" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alertView show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

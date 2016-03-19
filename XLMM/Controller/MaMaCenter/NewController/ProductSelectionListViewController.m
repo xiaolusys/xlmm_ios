@@ -20,7 +20,7 @@
 
 #define HeadViewHeight 35
 
-@interface ProductSelectionListViewController ()
+@interface ProductSelectionListViewController ()<UIAlertViewDelegate>
 {
     int count;
    
@@ -387,9 +387,13 @@ static NSString *cellIdentifier = @"productSelection";
     }
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [SVProgressHUD dismiss];
+    
     [self.tableView reloadData];
     
+    
+   
 }
+
 
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
