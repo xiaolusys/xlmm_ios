@@ -14,5 +14,7 @@
 
 @property (nonatomic, assign) id<MMNavigationDelegate>delegate;
 
+//活动判断是否绑定手机号
+//@property (nonatomic, assign)
 
 @end

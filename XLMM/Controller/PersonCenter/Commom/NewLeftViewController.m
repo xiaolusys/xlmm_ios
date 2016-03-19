@@ -22,7 +22,10 @@
 #import "SettingViewController.h"
 #import "LogInViewController.h"
 #import "Account1ViewController.h"
+#import "PersonOrderViewController.h"
+#import "UIColor+RGBColor.h"
 
+#import "AFHTTPRequestOperationManager.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -43,29 +46,66 @@
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        if (data== nil) {
-            return;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSString *nickName = [dic objectForKey:@"nick"];
-        if (nickName.length >= 4) {
-            self.nameLabel.text = [dic objectForKey:@"nick"];
-        }
-        self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
-        //判断是否为0
-        if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
-            self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
-            self.accountMoney = [NSNumber numberWithFloat:0.00];
-        }else {
-            NSDictionary *xiaolumeimei = [dic objectForKey:@"user_budget"];
-            NSNumber *num = [xiaolumeimei objectForKey:@"budget_cash"];
-            self.accountLabel.text  = [NSString stringWithFormat:@"%.2f", [num floatValue]];
-            self.accountMoney = num;
-        }
-        
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (!responseObject) return;
+            [self updateUserInfo:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
         
     }
+}
+
+- (void)updateUserInfo:(NSDictionary *)dic {
+    NSString *nickName = [dic objectForKey:@"nick"];
+    if (nickName.length >= 4) {
+        self.nameLabel.text = [dic objectForKey:@"nick"];
+    }
+    self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
+    //判断是否为0
+    if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
+        self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
+        self.accountMoney = [NSNumber numberWithFloat:0.00];
+    }else {
+        NSDictionary *xiaolumeimei = [dic objectForKey:@"user_budget"];
+        NSNumber *num = [xiaolumeimei objectForKey:@"budget_cash"];
+        self.accountLabel.text  = [NSString stringWithFormat:@"%.2f", [num floatValue]];
+        self.accountMoney = num;
+    }
+    
+    //优惠券，待支付，待收货，退换货
+    self.youhuiquanLabel.text = [NSString stringWithFormat:@"%@", dic[@"coupon_num"]];
+    
+    if ([dic[@"waitpay_num"] integerValue] == 0) {
+        self.waitPayNum.hidden = YES;
+    }else {
+        self.waitPayNum.hidden = NO;
+        self.waitPayNum.layer.cornerRadius = 10;
+        self.waitPayNum.layer.masksToBounds = YES;
+        self.waitPayNum.backgroundColor = [UIColor orangeThemeColor];
+        self.waitPayNum.text = [NSString stringWithFormat:@"%@", dic[@"waitpay_num"]];
+    }
+    if ([dic[@"waitgoods_num"] integerValue] == 0) {
+        self.waitReceiveNum.hidden = YES;
+    }else {
+        self.waitReceiveNum.hidden = NO;
+        self.waitReceiveNum.layer.cornerRadius = 10;
+        self.waitReceiveNum.layer.masksToBounds = YES;
+        self.waitReceiveNum.backgroundColor = [UIColor orangeThemeColor];
+        self.waitReceiveNum.text = [NSString stringWithFormat:@"%@", dic[@"waitgoods_num"]];
+    }
+    
+    if ([dic[@"refunds_num"] integerValue] == 0) {
+        self.exchangeNum.hidden = YES;
+    }else {
+        self.exchangeNum.hidden = NO;
+        self.exchangeNum.layer.cornerRadius = 10;
+        self.exchangeNum.layer.masksToBounds = YES;
+        self.exchangeNum.backgroundColor = [UIColor orangeThemeColor];
+        self.exchangeNum.text = [NSString stringWithFormat:@"%@", dic[@"refunds_num"]];
+    }
+
 }
 
 - (void)dealloc{
@@ -75,8 +115,9 @@
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
     self.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    [self setJifenInfo];
-    [self setYHQInfo];
+//    [self setJifenInfo];
+//    [self setYHQInfo];
+    [self setUserInfo];
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
@@ -92,16 +133,15 @@
     
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
     self.nameLabel.text = [userInfo objectForKey:@"nickname"];
-    [self setJifenInfo];
-    [self setYHQInfo];
+    [self setUserInfo];
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
-- (void)setYHQInfo{
-    MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
-    self.youhuiquanLabel.text = [NSString stringWithFormat:@"%ld", (long)coupons.couponValue];
-    
-}
+//- (void)setYHQInfo{
+//    MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
+//    self.youhuiquanLabel.text = [NSString stringWithFormat:@"%ld", (long)coupons.couponValue];
+//    
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -299,11 +339,15 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self.sideMenuViewController hideMenuViewController];
         
-        PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
-        // zhifuVC.menuDelegate = ;
+//        PersonCenterViewController1 *zhifuVC = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil];
+        
+        PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
+        order.index = 101;
+//        // zhifuVC.menuDelegate = ;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:zhifuVC];
+            [self.pushVCDelegate rootVCPushOtherVC:order];
         }
+        
     }else{
         
         [self.sideMenuViewController hideMenuViewController];
@@ -320,9 +364,13 @@
 - (IBAction)waitSendClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+//        PersonCenterViewController2 *shouhuoVC = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+        
+        PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
+        order.index = 102;
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:shouhuoVC];
+            [self.pushVCDelegate rootVCPushOtherVC:order];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
@@ -361,9 +409,13 @@
 - (IBAction)allDingdanClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        PersonCenterViewController3 *quanbuVC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+//        PersonCenterViewController3 *quanbuVC = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+        
+        PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
+        order.index = 100;
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:quanbuVC];
+            [self.pushVCDelegate rootVCPushOtherVC:order];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
@@ -421,6 +473,10 @@
     self.jifenLabel.text = @"0";
     self.youhuiquanLabel.text = @"0";
     self.accountLabel.text = @"0.00";
+    
+    self.waitPayNum.hidden = YES;
+    self.waitReceiveNum.hidden = YES;
+    self.exchangeNum.hidden = YES;
     
     [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
     
