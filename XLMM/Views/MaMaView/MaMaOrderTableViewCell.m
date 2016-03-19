@@ -45,7 +45,10 @@
     
     self.orderStatic.text = orderM.status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
-   
+   // new add things.
+    
+    self.jinelabel.text = [NSString stringWithFormat:@"金额%.2f", [orderM.order_value floatValue]];
+    self.fromlabel.text = orderM.carry_type_name;
 
     self.times.text = [self dealDate:orderM.created];
     self.times.font = [UIFont systemFontOfSize:12];

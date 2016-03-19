@@ -33,5 +33,8 @@
 @property (nonatomic, strong)NSString *contributor_nick;
 @property (nonatomic, strong)NSString *date_field;
 @property (nonatomic, strong)NSString *created;
+@property (nonatomic, strong)NSString *carry_type_name;
+@property (nonatomic, strong)NSString *order_value;
+
 
 @end
