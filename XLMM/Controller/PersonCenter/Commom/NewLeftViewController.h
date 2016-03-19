@@ -35,6 +35,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *youhuiquanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *accountLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *waitReceiveNum;
+@property (weak, nonatomic) IBOutlet UILabel *waitPayNum;
+@property (weak, nonatomic) IBOutlet UILabel *exchangeNum;
+
+
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;

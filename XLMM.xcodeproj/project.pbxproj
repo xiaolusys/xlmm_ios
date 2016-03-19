@@ -134,8 +134,6 @@
 		1830722E1C97BE3700B7665E /* emptyJifenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071861C97BE3700B7665E /* emptyJifenView.xib */; };
 		1830722F1C97BE3700B7665E /* JifenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071881C97BE3700B7665E /* JifenViewController.m */; };
 		183072301C97BE3700B7665E /* JifenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071891C97BE3700B7665E /* JifenViewController.xib */; };
-		183072311C97BE3700B7665E /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830718B1C97BE3700B7665E /* NewLeftViewController.m */; };
-		183072321C97BE3700B7665E /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830718C1C97BE3700B7665E /* NewLeftViewController.xib */; };
 		183072331C97BE3700B7665E /* TousuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830718E1C97BE3700B7665E /* TousuViewController.m */; };
 		183072341C97BE3700B7665E /* TousuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830718F1C97BE3700B7665E /* TousuViewController.xib */; };
 		183072351C97BE3700B7665E /* AddYouhuiquanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071921C97BE3700B7665E /* AddYouhuiquanViewController.m */; };
@@ -620,6 +618,9 @@
 		183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */; };
 		183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */; };
 		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
+		18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */; };
+		18EE10DD1C9C132B00E52313 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */; };
+		18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -944,9 +945,6 @@
 		183071871C97BE3700B7665E /* JifenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JifenViewController.h; sourceTree = "<group>"; };
 		183071881C97BE3700B7665E /* JifenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JifenViewController.m; sourceTree = "<group>"; };
 		183071891C97BE3700B7665E /* JifenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JifenViewController.xib; sourceTree = "<group>"; };
-		1830718A1C97BE3700B7665E /* NewLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLeftViewController.h; sourceTree = "<group>"; };
-		1830718B1C97BE3700B7665E /* NewLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLeftViewController.m; sourceTree = "<group>"; };
-		1830718C1C97BE3700B7665E /* NewLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewLeftViewController.xib; sourceTree = "<group>"; };
 		1830718D1C97BE3700B7665E /* TousuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TousuViewController.h; sourceTree = "<group>"; };
 		1830718E1C97BE3700B7665E /* TousuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TousuViewController.m; sourceTree = "<group>"; };
 		1830718F1C97BE3700B7665E /* TousuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TousuViewController.xib; sourceTree = "<group>"; };
@@ -1602,6 +1600,11 @@
 		183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
 		183076AC1C97E31A00B7665E /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		183076AD1C97E31A00B7665E /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
+		18EE10D91C9C132B00E52313 /* NewLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLeftViewController.h; sourceTree = "<group>"; };
+		18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLeftViewController.m; sourceTree = "<group>"; };
+		18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewLeftViewController.xib; sourceTree = "<group>"; };
+		18EE10DE1C9C134300E52313 /* PersonOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonOrderViewController.h; sourceTree = "<group>"; };
+		18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonOrderViewController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -2307,6 +2310,9 @@
 		183071811C97BE3700B7665E /* Commom */ = {
 			isa = PBXGroup;
 			children = (
+				18EE10D91C9C132B00E52313 /* NewLeftViewController.h */,
+				18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */,
+				18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */,
 				183071821C97BE3700B7665E /* ChangeNicknameViewController.h */,
 				183071831C97BE3700B7665E /* ChangeNicknameViewController.m */,
 				183071841C97BE3700B7665E /* ChangeNicknameViewController.xib */,
@@ -2315,9 +2321,6 @@
 				183071871C97BE3700B7665E /* JifenViewController.h */,
 				183071881C97BE3700B7665E /* JifenViewController.m */,
 				183071891C97BE3700B7665E /* JifenViewController.xib */,
-				1830718A1C97BE3700B7665E /* NewLeftViewController.h */,
-				1830718B1C97BE3700B7665E /* NewLeftViewController.m */,
-				1830718C1C97BE3700B7665E /* NewLeftViewController.xib */,
 				1830718D1C97BE3700B7665E /* TousuViewController.h */,
 				1830718E1C97BE3700B7665E /* TousuViewController.m */,
 				1830718F1C97BE3700B7665E /* TousuViewController.xib */,
@@ -2351,6 +2354,8 @@
 				1830719F1C97BE3700B7665E /* PersonCenterViewController3.h */,
 				183071A01C97BE3700B7665E /* PersonCenterViewController3.m */,
 				183071A11C97BE3700B7665E /* PersonCenterViewController3.xib */,
+				18EE10DE1C9C134300E52313 /* PersonOrderViewController.h */,
+				18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */,
 				183071A21C97BE3700B7665E /* WuliuInfoView.xib */,
 				183071A31C97BE3700B7665E /* WuliuViewController.h */,
 				183071A41C97BE3700B7665E /* WuliuViewController.m */,
@@ -3739,6 +3744,7 @@
 				183075AB1C97D49A00B7665E /* loading动画0013.png in Resources */,
 				1830768B1C97D49A00B7665E /* wallet.png in Resources */,
 				1830724D1C97BE3700B7665E /* ShenQingTuiHuoController.xib in Resources */,
+				18EE10DD1C9C132B00E52313 /* NewLeftViewController.xib in Resources */,
 				183075AC1C97D49A00B7665E /* loading动画0014.png in Resources */,
 				183076261C97D49A00B7665E /* placeHolderPosterImage.png in Resources */,
 				183075F61C97D49A00B7665E /* emptyYouhuiquanIcon.png in Resources */,
@@ -3966,7 +3972,6 @@
 				1830762D1C97D49A00B7665E /* retina6.png in Resources */,
 				183075841C97D49A00B7665E /* icon-mimaxiugai.png in Resources */,
 				183076521C97D49A00B7665E /* youhuiquankongicon.png in Resources */,
-				183072321C97BE3700B7665E /* NewLeftViewController.xib in Resources */,
 				1830743B1C97D17900B7665E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				183076641C97D49A00B7665E /* 圈圈加载0016.png in Resources */,
 				325B79E71C97E7160022F930 /* YHQHeadView.xib in Resources */,
@@ -4207,6 +4212,7 @@
 				1830741B1C97D17800B7665E /* SDWebImageCompat.m in Sources */,
 				183071DF1C97BE3700B7665E /* MMDetailsViewController.m in Sources */,
 				183072841C97C00900B7665E /* NSString+Encrypto.m in Sources */,
+				18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */,
 				183074031C97D17800B7665E /* QNPHAssetFile.m in Sources */,
 				325B79E21C97E7160022F930 /* TuihuoCollectionCell.m in Sources */,
 				183070D21C97B83900B7665E /* CartModel.m in Sources */,
@@ -4300,6 +4306,7 @@
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
+				18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */,
 				1830723A1C97BE3700B7665E /* PersonCenterViewController1.m in Sources */,
 				183074191C97D17800B7665E /* NSData+ImageContentType.m in Sources */,
 				183074121C97D17800B7665E /* QNUploadOption.m in Sources */,
@@ -4328,7 +4335,6 @@
 				1830723E1C97BE3700B7665E /* PersonCenterViewController3.m in Sources */,
 				183070D51C97B83900B7665E /* DingdanModel.m in Sources */,
 				325B7A0F1C97E73A0022F930 /* PhotoView.m in Sources */,
-				183072311C97BE3700B7665E /* NewLeftViewController.m in Sources */,
 				183070E51C97B83900B7665E /* HuoyuezhiModel.m in Sources */,
 				325B7A0D1C97E73A0022F930 /* MaMaOrderTableViewCell.m in Sources */,
 				183074011C97D17800B7665E /* QNEtag.m in Sources */,
@@ -4415,7 +4421,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4453,7 +4459,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4512,7 +4518,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4570,7 +4576,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fa619996-a90a-400f-a48c-a94763527f73";
+				PROVISIONING_PROFILE = "97222213-ee0e-4bc3-bfd0-595b8a571f7a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

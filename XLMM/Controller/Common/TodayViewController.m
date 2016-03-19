@@ -220,69 +220,55 @@ static NSString *khuodongCell = @"HuodongCell";
             self.myCollectionView.mj_footer = footer;
     }
     
-//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
-  //  [footer setAutomaticallyHidden:YES];
-//    self.myCollectionView.mj_footer = footer;
+    //首页网络请求
+//    [self downLoadWithURLString:UPDATE_URLSTRING andSelector:@selector(fetchedUpdateData:)];
     
-    
-//    _isShouldLoad = YES;
-  //  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-    [self downLoadWithURLString:UPDATE_URLSTRING andSelector:@selector(fetchedUpdateData:)];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:url];
-//        [self performSelectorOnMainThread:@selector(fetchedUpdateData:)withObject:data waitUntilDone:YES];
-//        
-//    });
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self fetchedUpdateData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
   
     [self ishavemobel];
     
     
-    [self dingshishuaxin];
+//    [self dingshishuaxin];
 
 }
 
-- (void)dingshishuaxin{
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
-    
-}
+//- (void)dingshishuaxin{
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
+//    
+//}
 
-- (void)updatePosters{
-    NSDate *date = [NSDate date];
-    
-    
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
-    NSInteger hour = [comps hour];
-    NSInteger minute = [comps minute];
-    NSInteger second = [comps second];
-    
-    if (hour == 10 && minute == 0 && second == 0) {
-        [self downloadData];
-        
-    }
-   
-    
-}
+//- (void)updatePosters{
+//    NSDate *date = [NSDate date];
+//    
+//    
+//    
+//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+//    
+//    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+//    NSInteger hour = [comps hour];
+//    NSInteger minute = [comps minute];
+//    NSInteger second = [comps second];
+//    
+//    if (hour == 10 && minute == 0 && second == 0) {
+//        [self downloadData];
+//        
+//    }
+//   
+//    
+//}
 
-- (void)fetchedUpdateData:(NSData *)data{
-    NSError *error = nil;
-    if (data == nil) {
-        [self.myCollectionView.mj_header endRefreshing];
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    //NSLog(@"appInfoDic = %@", appInfoDic);
-    if (error) {
-    }
+- (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
     NSArray *reluts = [appInfoDic objectForKey:@"results"];
-    if (![reluts count]) {
-    }
+    if ([reluts count] == 0) return;
     NSDictionary *infoDic = reluts[0];
     
-    
-    
+
     self.latestVersion = [infoDic objectForKey:@"version"];
     self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
@@ -971,9 +957,6 @@ static NSString *khuodongCell = @"HuodongCell";
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         
         //  跳转到小鹿妈妈界面。。。
-        
-        
-        
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
@@ -1013,7 +996,6 @@ static NSString *khuodongCell = @"HuodongCell";
         } else if ([firstparam isEqualToString:@"trade_id"]){
             NSLog(@"跳到订单详情");
             NSLog(@"trade_id = %@", [params lastObject]);
-            
             
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             //http://m.xiaolu.so/rest/v1/trades/86412/details
@@ -1254,8 +1236,6 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            
-            
         } else{
           [MobClick event:@"activity"];
             
