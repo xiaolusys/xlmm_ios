@@ -443,6 +443,8 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
         UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
+        
+        
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
 

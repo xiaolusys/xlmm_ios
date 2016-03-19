@@ -87,6 +87,13 @@ static NSString *const cellIdentifier = @"YixuanCell";
 }
 - (void)createDefaultView{
     
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    view.backgroundColor = [UIColor whiteColor];
+    // 已选列表为空时默认图片。。。。。
+    
+    [self.tableView addSubview:view];
+    
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已选列表为空，快去加入一些商品" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alertView show];
     
