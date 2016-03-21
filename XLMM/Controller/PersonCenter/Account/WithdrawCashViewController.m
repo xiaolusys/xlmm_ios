@@ -123,6 +123,7 @@
     MMLOG(dic);
     NSInteger isAttPub = [[dic objectForKey:@"is_attention_public"] integerValue];
    // isAttPub = 0;
+    
     if (isAttPub == 0) {
         //立即关注
         

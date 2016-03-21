@@ -515,10 +515,7 @@ static NSString *khuodongCell = @"HuodongCell";
                     [defaults setObject:activityID forKey:@"activityid"];
                 }
             }
-          
         }
-        
-        
     }
 
     step1 = YES;

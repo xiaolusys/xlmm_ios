@@ -308,7 +308,7 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     } else {
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
     }
-    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@",model.stdSalePrice];
+    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.stdSalePrice floatValue]];
     cell.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
