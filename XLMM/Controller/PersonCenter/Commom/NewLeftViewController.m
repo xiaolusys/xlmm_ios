@@ -105,7 +105,16 @@
         self.exchangeNum.backgroundColor = [UIColor orangeThemeColor];
         self.exchangeNum.text = [NSString stringWithFormat:@"%@", dic[@"refunds_num"]];
     }
-
+    
+    //应用打开时判断是否是小鹿妈妈
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    if ([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
+        [users setBool:YES forKey:@"isXLMM"];
+    }else {
+        [users setBool:NO forKey:@"isXLMM"];
+    }
+    [users synchronize];
+    
 }
 
 - (void)dealloc{
@@ -446,6 +455,8 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setBool:NO forKey:@"login"];
         [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+        
+        [userDefaults setBool:NO forKey:@"isXLMM"];
         [userDefaults synchronize];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
 

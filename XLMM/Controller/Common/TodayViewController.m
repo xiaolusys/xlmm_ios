@@ -85,12 +85,16 @@ static NSString *khuodongCell = @"HuodongCell";
     
     NSString *mobel;
     CGFloat _contentY;
+    
+    NSInteger _requestTime;
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 @property (nonatomic, strong) NSMutableArray *posterImages;
+
+@property (nonatomic, strong)NSTimer *timer;
 
 @end
 
@@ -107,6 +111,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
    
@@ -121,6 +126,8 @@ static NSString *khuodongCell = @"HuodongCell";
     }
     
 }
+
+
 
 - (NSString *)stringFromStatus:(NetworkStatus)status{
     NSString *string;
@@ -162,7 +169,20 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)reload
 {
+    //超过10秒请求处理
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateRequestTime) userInfo:nil repeats:YES];
     [self downloadData];
+}
+
+- (void)updateRequestTime {
+    _requestTime++;
+    if (_requestTime > 10) {
+        [self.myCollectionView.mj_header endRefreshing];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"哎呦，网不好呦！请重新刷新" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        alert.tag = 200;
+        [alert show];
+        _requestTime = 0;
+    }
 }
 
 - (void)loadMore
@@ -408,6 +428,8 @@ static NSString *khuodongCell = @"HuodongCell";
 #pragma mark --今题推荐数据解析
 
 - (void)fetchedPosterData:(NSData *)data{
+    [self.timer invalidate];
+    self.timer = nil;
     if (data == nil) {
         return;
     }
@@ -622,7 +644,8 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 - (void)fetchedPromotePageData:(NSData *)data{
-    
+    [self.timer invalidate];
+    self.timer = nil;
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {
@@ -1227,16 +1250,24 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)ishavemobel{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    NSURL *url = [NSURL URLWithString:string];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        return;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    mobel = [dic objectForKey:@"mobile"];
-    NSLog(@"mobel = %@", mobel);
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        mobel = [responseObject objectForKey:@"mobile"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+   
+//    NSURL *url = [NSURL URLWithString:string];
+//    NSData *data = [NSData dataWithContentsOfURL:url];
+//    if (data == nil) {
+//        return;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"dic = %@", dic);
+//    mobel = [dic objectForKey:@"mobile"];
+//    NSLog(@"mobel = %@", mobel);
     
 }
 
