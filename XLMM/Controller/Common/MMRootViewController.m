@@ -76,15 +76,15 @@
 - (void)updataAfterLogin:(NSNotification *)notification{
   //  NSLog(@"微信登录");
     
-    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
-    if (login.isxlmm) {
-        [self createRightItem];
-    } else {
-          self.navigationItem.rightBarButtonItem = nil;
-    }
+//    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
+//    if (login.isxlmm) {
+//        [self createRightItem];
+//    } else {
+//          self.navigationItem.rightBarButtonItem = nil;
+//    }
 
   
-    if ([self isXiaolumama]) {
+    if ([self loginUpdateIsXiaoluMaMa]) {
         [self createRightItem];
     } else{
         self.navigationItem.rightBarButtonItem = nil;
@@ -93,7 +93,7 @@
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
   //  NSLog(@"手机登录");
-    if ([self isXiaolumama]) {
+    if ([self loginUpdateIsXiaoluMaMa]) {
         [self createRightItem];
     } else{
         self.navigationItem.rightBarButtonItem = nil;
@@ -101,13 +101,36 @@
 }
 
 - (BOOL)isXiaolumama{
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject)return ;
+//        return YES;
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        return NO;
+//    }];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        return NO;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"dic = %@", dic);
+//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+//    return YES;
+    
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:@"isXLMM"];
+    return isXLMM;
+}
+
+- (BOOL)loginUpdateIsXiaoluMaMa {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     if (data == nil) {
         return NO;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"dic = %@", dic);
+    NSLog(@"dic = %@", dic);
     return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
@@ -640,21 +663,33 @@
         label.text = @"0";
         return;
     }
+    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-    NSError *error = nil;
-    if (data == nil) {
-        label.text = @"0";
-        dotView.hidden = YES;
-        countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
-        CGRect rect = view.frame;
-        rect.size.width = 44;
-        view.frame = rect;
-        return;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-   // NSLog(@"dic = %@", dic);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            label.text = @"0";
+            dotView.hidden = YES;
+            countLabel.hidden = YES;
+            UIView *view = [_view viewWithTag:123];
+            CGRect rect = view.frame;
+            rect.size.width = 44;
+            view.frame = rect;
+            return ;
+        }else {
+            [self cartViewUpdate:responseObject];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+   
+    
+}
+
+- (void)cartViewUpdate:(NSDictionary *)dic {
+    // NSLog(@"dic = %@", dic);
     last_created = [dic objectForKey:@"last_created"];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
     if (goodsCount == 0) {

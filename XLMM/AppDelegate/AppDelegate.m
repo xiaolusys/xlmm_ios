@@ -141,7 +141,6 @@
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
- 
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
@@ -150,13 +149,11 @@
 //    
 //    
 //    leftMenu.pushVCDelegate = root;
-    
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
 //    leftMenu.push
 
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    
    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
@@ -252,56 +249,56 @@
 {
     // 请求成功
 
-    if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
-   
-
-    } else if ([selector isEqualToString:@"bindDeviceToken:"]){
-       NSLog(@"data = %@", data);
-        
-        
-        self.miRegid = [data objectForKey:@"regid"];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-        
-
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-
-        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
-        NSDictionary *parameters = @{@"platform":@"ios",
-                                     @"regid":self.miRegid,
-                                     @"device_id":self.deviceUUID,
-                                     @"ios_token":self.deviceToken
-                                     };
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:parameters forKey:@"MiPush"];
-        [defaults synchronize];
-        
-        NSLog(@"parameters = %@", parameters);
-        NSLog(@"urlStr = %@", urlString);
-        
-        [manager POST:urlString parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  //  NSError *error;
-                  NSLog(@"JSON: %@", responseObject);
-                  NSString *user_account = [responseObject objectForKey:@"user_account"];
-                  if ([user_account isEqualToString:@""]) {
-                      
-                  } else {
-                      NSLog(@"user_account = %@", user_account);
-                      [MiPushSDK setAccount:user_account];
-                  }
-               
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"Error: %@", error);
-                  
-                  
-              }];
+//    if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
+//   
 //
-        
-    }
+//    } else if ([selector isEqualToString:@"bindDeviceToken:"]){
+//       NSLog(@"data = %@", data);
+//        
+//        
+//        self.miRegid = [data objectForKey:@"regid"];
+//        
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//        
+//
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+//
+//        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
+//        NSDictionary *parameters = @{@"platform":@"ios",
+//                                     @"regid":self.miRegid,
+//                                     @"device_id":self.deviceUUID,
+//                                     @"ios_token":self.deviceToken
+//                                     };
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setObject:parameters forKey:@"MiPush"];
+//        [defaults synchronize];
+//        
+//        NSLog(@"parameters = %@", parameters);
+//        NSLog(@"urlStr = %@", urlString);
+//        
+//        [manager POST:urlString parameters:parameters
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  //  NSError *error;
+//                  NSLog(@"JSON: %@", responseObject);
+//                  NSString *user_account = [responseObject objectForKey:@"user_account"];
+//                  if ([user_account isEqualToString:@""]) {
+//                      
+//                  } else {
+//                      NSLog(@"user_account = %@", user_account);
+//                      [MiPushSDK setAccount:user_account];
+//                  }
+//               
+//                  
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  NSLog(@"Error: %@", error);
+//                  
+//                  
+//              }];
+////
+//        
+//    }
     
 
 
@@ -317,28 +314,28 @@
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
-    NSLog(@"data = %@", data);
-    
-    // 长连接收到的消息。消息格式跟APNs格式一样
-    // 返回数据
-    NSString *target_url = nil;
-    target_url = [data objectForKey:@"target_url"];
-    
-    if (target_url != nil) {
-        if (self.isLaunchedByNotification == YES) {
-            
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-            return;
-        }
-        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
-            return;
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-        }
-
-    }
+//    NSLog(@"data = %@", data);
+//    
+//    // 长连接收到的消息。消息格式跟APNs格式一样
+//    // 返回数据
+//    NSString *target_url = nil;
+//    target_url = [data objectForKey:@"target_url"];
+//    
+//    if (target_url != nil) {
+//        if (self.isLaunchedByNotification == YES) {
+//            
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+//            return;
+//        }
+//        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+//            return;
+//        } else {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+//        }
+//
+//    }
    
     
 
