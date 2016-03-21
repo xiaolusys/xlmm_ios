@@ -77,34 +77,10 @@
     //优惠券，待支付，待收货，退换货
     self.youhuiquanLabel.text = [NSString stringWithFormat:@"%@", dic[@"coupon_num"]];
     
-    if ([dic[@"waitpay_num"] integerValue] == 0) {
-        self.waitPayNum.hidden = YES;
-    }else {
-        self.waitPayNum.hidden = NO;
-        self.waitPayNum.layer.cornerRadius = 10;
-        self.waitPayNum.layer.masksToBounds = YES;
-        self.waitPayNum.backgroundColor = [UIColor orangeThemeColor];
-        self.waitPayNum.text = [NSString stringWithFormat:@"%@", dic[@"waitpay_num"]];
-    }
-    if ([dic[@"waitgoods_num"] integerValue] == 0) {
-        self.waitReceiveNum.hidden = YES;
-    }else {
-        self.waitReceiveNum.hidden = NO;
-        self.waitReceiveNum.layer.cornerRadius = 10;
-        self.waitReceiveNum.layer.masksToBounds = YES;
-        self.waitReceiveNum.backgroundColor = [UIColor orangeThemeColor];
-        self.waitReceiveNum.text = [NSString stringWithFormat:@"%@", dic[@"waitgoods_num"]];
-    }
-    
-    if ([dic[@"refunds_num"] integerValue] == 0) {
-        self.exchangeNum.hidden = YES;
-    }else {
-        self.exchangeNum.hidden = NO;
-        self.exchangeNum.layer.cornerRadius = 10;
-        self.exchangeNum.layer.masksToBounds = YES;
-        self.exchangeNum.backgroundColor = [UIColor orangeThemeColor];
-        self.exchangeNum.text = [NSString stringWithFormat:@"%@", dic[@"refunds_num"]];
-    }
+    [self orderNumSet:[dic[@"waitpay_num"] integerValue] currentLabel:self.waitPayNum labelConstant:self.waitPayNumWidth];
+    [self orderNumSet:[dic[@"waitgoods_num"] integerValue] currentLabel:self.waitReceiveNum labelConstant:self.waitReceiveNumWidth];
+    [self orderNumSet:[dic[@"refunds_num"] integerValue] currentLabel:self.exchangeNum labelConstant:self.exchangeNumWidth];
+
     
     //应用打开时判断是否是小鹿妈妈
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
@@ -115,6 +91,25 @@
     }
     [users synchronize];
     
+}
+
+- (void)orderNumSet:(NSInteger)num
+       currentLabel:(UILabel *)currentLabel
+      labelConstant:(NSLayoutConstraint *)width{
+    if (num == 0) {
+        currentLabel.hidden = YES;
+    }else {
+        if (num > 9) {
+            width.constant = 30;
+        }else {
+            width.constant = 20;
+        }
+        currentLabel.hidden = NO;
+        currentLabel.layer.cornerRadius = 10;
+        currentLabel.layer.masksToBounds = YES;
+        currentLabel.backgroundColor = [UIColor orangeThemeColor];
+        currentLabel.text = [NSString stringWithFormat:@"%ld", (long)num];
+    }
 }
 
 - (void)dealloc{

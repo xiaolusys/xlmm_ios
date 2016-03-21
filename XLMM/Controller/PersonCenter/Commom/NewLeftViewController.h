@@ -39,6 +39,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *waitPayNum;
 @property (weak, nonatomic) IBOutlet UILabel *exchangeNum;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitPayNumWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitReceiveNumWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *exchangeNumWidth;
 
 
 - (IBAction)jifenClicked:(id)sender;
