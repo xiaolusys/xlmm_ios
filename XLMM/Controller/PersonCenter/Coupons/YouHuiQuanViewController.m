@@ -320,7 +320,40 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(SCREENWIDTH, 40);
+    
+    if (section == 0) {
+        if (self.canUsedArray.count == 0) {
+            return CGSizeZero;
+        } else {
+            return CGSizeMake(SCREENWIDTH, 40);
+        }
+        
+    } else if (section == 1){
+        if (self.disableUsedArray.count == 0) {
+            return CGSizeZero;
+        } else {
+            return CGSizeMake(SCREENWIDTH, 40);
+        }
+    } else if (section == 2){
+        if (self.usedArray.count == 0) {
+            return CGSizeZero;
+        } else {
+            return CGSizeMake(SCREENWIDTH, 40);
+        }
+    } else if (section == 3){
+        if (self.expiredArray.count == 0) {
+            return CGSizeZero;
+        } else {
+            return CGSizeMake(SCREENWIDTH, 40);
+        }
+    } else {
+        return CGSizeZero;
+    }
+    
+    
+    
+    
+    
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{

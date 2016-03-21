@@ -84,7 +84,12 @@
         
         [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.3];
     } else {
-        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchMoreList:)];
+        if ([self.nextString class] == [NSNull class]) {
+        [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.3];
+        } else {
+            [self downLoadWithURLString:self.nextString andSelector:@selector(fetchMoreList:)];
+
+        }
     }
     
 }
@@ -189,11 +194,11 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     HuoyuezhiModel *model = self.dataArray[indexPath.row];
-    cell.timeLabel.text = [NSString dateDeleteT:model.created];
-    cell.typeLabel.text = model.value_type_name;
+    cell.timeLabel.text = model.date_field;
+    cell.typeLabel.text = [model.today_carry stringValue];
     cell.valueLabel.text = [NSString stringWithFormat:@"%@", model.value_num];
-    cell.carryLabel.text = [NSString stringWithFormat:@"%@", model.today_carry];
-    cell.statusLabel.text = model.status_display;
+    cell.carryLabel.text = [NSString stringWithFormat:@"+%@", model.value_num];
+    cell.statusLabel.text = model.value_description;
     
     return cell;
     

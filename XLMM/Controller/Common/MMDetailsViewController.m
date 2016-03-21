@@ -379,7 +379,7 @@
     //名字 价格 原价
     self.nameLabel.text = [dic objectForKey:@"name"];
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"product_lowest_price"] floatValue]];
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"std_sale_price" ] floatValue]];
     
     details = [dic objectForKey:@"details"];
     self.bianhao.text = [dic objectForKey:@"outer_id"];

@@ -107,6 +107,8 @@
     }
     
 }
+
+
 #pragma mark - InterpolatedUIImage
 - (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size {
     CGRect extent = CGRectIntegral(image.extent);

@@ -11,6 +11,7 @@
 
 @interface YHQCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *myimageView;
+@property (weak, nonatomic) IBOutlet UILabel *xianzhiLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *markLabel;
 
