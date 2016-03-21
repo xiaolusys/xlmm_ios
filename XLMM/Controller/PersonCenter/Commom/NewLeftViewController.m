@@ -201,7 +201,7 @@
     
     
     
-  //  self.yuelabel.text = @"100.00";
+  //  self.yuelabel.text = @"100.0 0";
     
     
 }
