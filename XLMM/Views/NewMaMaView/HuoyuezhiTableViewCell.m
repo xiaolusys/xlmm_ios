@@ -7,6 +7,7 @@
 //
 
 #import "HuoyuezhiTableViewCell.h"
+#import "HuoyuezhiModel.h"
 
 @implementation HuoyuezhiTableViewCell
 
@@ -28,6 +29,19 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)fillDataOfCell:(HuoyuezhiModel *)activeM {
+    self.timeLabel.text = [self dealDate:activeM.created];
+    self.statusLabel.text = activeM.status_display;
+    self.desLabel.text = activeM.value_description;
+    self.carryLabel.text = [NSString stringWithFormat:@"＋%@", activeM.value_num];
+}
+- (NSString *)dealDate:(NSString *)str {
+    NSArray *strarray = [str componentsSeparatedByString:@"T"];
+    NSString *hour = strarray[1];
+    NSString *time = [hour substringToIndex:5];
+    return time;
 }
 
 @end

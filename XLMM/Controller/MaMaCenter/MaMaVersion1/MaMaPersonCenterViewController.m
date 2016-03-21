@@ -84,6 +84,8 @@
 @property (copy, nonatomic) NSString *mamalink;
 @property (nonatomic, strong) UIImageView *mamaHuoyueduImageView;
 
+@property (nonatomic, strong)NSNumber *activeValueNum;
+
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -138,7 +140,6 @@
     [self createChart:dataArray];
     
     
- 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.jineLabel addGestureRecognizer:tap];
     self.jineLabel.userInteractionEnabled = YES;
@@ -164,10 +165,15 @@
         self.huoyuedulabel.text = @"0";
         self.huoyueduString = nil;
         
-
+        
         [self createHuoYueDuView];
 
         return;
+    }
+    if ([fortune[@"active_value_num"] class] == [NSNull class] || [fortune[@"active_value_num"] integerValue]==0) {
+        self.activeValueNum = [NSNumber numberWithInteger:0];
+    }else {
+        self.activeValueNum = fortune[@"active_value_num"];
     }
     
     nickName = [fortune objectForKey:@"mama_name"];
@@ -191,9 +197,8 @@
 }
 
 - (void)huoyueduDetails{
-    NSLog(@"huoyuedu");
-    
     MaMaHuoyueduViewController *VC = [[MaMaHuoyueduViewController alloc] init];
+    VC.activeValueNum = self.activeValueNum;
     [self.navigationController pushViewController:VC animated:YES];
 }
 
@@ -393,8 +398,6 @@
     //改变竖线的位置。。。。
     [self createChart:allDingdan];
     
-    
-
 }
 
 
@@ -402,7 +405,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         [self performSelectorOnMainThread:aSelector withObject:data waitUntilDone:YES];
-        
     });
 }
 

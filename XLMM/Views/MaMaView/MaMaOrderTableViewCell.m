@@ -32,11 +32,7 @@
     self.imageV.layer.borderWidth = 0.5;
     self.imageV.contentMode = UIViewContentModeScaleAspectFill;
     
-    if ([orderM.contributor_nick isEqualToString:@""] || orderM.contributor_nick.length == 0) {
-        self.purchaser.text = @"匿名用户";
-    }else {
-        self.purchaser.text = orderM.contributor_nick;
-    }
+    self.purchaser.text = orderM.contributor_nick;
 
 //    self.purchaser.text = orderM.linkname;
     self.purchaser.font = [UIFont systemFontOfSize:13];

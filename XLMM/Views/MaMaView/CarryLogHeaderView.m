@@ -36,4 +36,11 @@
     self.yearLabel.text = str;
     self.totalMoneyLabel.text = [NSString stringWithFormat:@"总收益%@", total];
 }
+
+- (void)activeHeaderViewYearAndDay:(NSString *)year
+                             total:(NSString *)total {
+    self.yearLabel.text = year;
+    self.totalMoneyLabel.text = [NSString stringWithFormat:@"日活跃%@", total];
+}
+
 @end

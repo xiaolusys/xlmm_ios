@@ -90,7 +90,6 @@
         [users setBool:NO forKey:@"isXLMM"];
     }
     [users synchronize];
-    
 }
 
 - (void)orderNumSet:(NSInteger)num

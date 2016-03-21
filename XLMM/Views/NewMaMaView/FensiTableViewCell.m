@@ -22,7 +22,7 @@
 
 - (void)fillData:(FanceModel *)model{
     if (model.imagelink.length == 0) {
-        self.picImageView.image = [UIImage imageNamed:@"Icon-60"];
+        self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
     }else {
         [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.imagelink URLEncodedString]]];
     }
