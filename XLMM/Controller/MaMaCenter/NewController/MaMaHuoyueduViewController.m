@@ -84,7 +84,12 @@
         
         [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.3];
     } else {
-        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchMoreList:)];
+        if ([self.nextString class] == [NSNull class]) {
+        [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.3];
+        } else {
+            [self downLoadWithURLString:self.nextString andSelector:@selector(fetchMoreList:)];
+
+        }
     }
     
 }
