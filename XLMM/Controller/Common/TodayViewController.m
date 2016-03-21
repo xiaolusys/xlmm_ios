@@ -408,18 +408,19 @@ static NSString *khuodongCell = @"HuodongCell";
 #pragma mark --今题推荐数据解析
 
 - (void)fetchedPosterData:(NSData *)data{
-    NSError *error;
-    [posterDataArray removeAllObjects];
     if (data == nil) {
-        [self downloadData];
         return;
     }
+    NSError *error;
+    [posterDataArray removeAllObjects];
+
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
    // NSLog(@"posters = %@", jsonDic);
     
     NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
     self.posterImages = [[NSMutableArray alloc] init];
-
+    
+    if (childArray.count == 0)return;
     for (NSDictionary *childDic in childArray) {
         PosterModel *childModel = [PosterModel new];
 
@@ -438,6 +439,7 @@ static NSString *khuodongCell = @"HuodongCell";
    
 
     NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
+    if (ladyArray.count == 0)return;
     for (NSDictionary *ladyDic in ladyArray) {
     
         PosterModel *ladyModel = [PosterModel new];
