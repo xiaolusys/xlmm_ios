@@ -430,7 +430,9 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
         UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
-        
+        if (image0 == nil) {
+            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+        }
         
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
@@ -449,6 +451,9 @@ static NSString *khuodongCell = @"HuodongCell";
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
         
         UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
+        if (image1 == nil) {
+            image1 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+        }
         [self.posterImages addObject:image1];
         [posterDataArray addObject:ladyModel];
 
