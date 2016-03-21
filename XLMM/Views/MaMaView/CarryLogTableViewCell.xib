@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="460" height="81"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="carryLogCell" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="460" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="460" height="80.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UH8-Hz-gts">
@@ -21,14 +21,15 @@
                             <constraint firstAttribute="width" constant="44" id="jQx-J0-jbs"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-YC-mX6">
-                        <rect key="frame" x="67" y="14" width="48" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已确定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-YC-mX6">
+                        <rect key="frame" x="67" y="14" width="40" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="7F1-vs-Syj"/>
                             <constraint firstAttribute="height" constant="20" id="XJ4-t2-Ypx"/>
+                            <constraint firstAttribute="width" constant="40" id="faO-yr-7Vg"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="1" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
@@ -67,15 +68,20 @@
                             <constraint firstAttribute="height" constant="1" id="Hya-V1-fCC"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已确定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-Xo-jiO">
-                        <rect key="frame" x="125" y="14" width="80" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-Xo-jiO">
+                        <rect key="frame" x="117" y="14" width="48" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="PGd-0l-YN7"/>
                             <constraint firstAttribute="height" constant="20" id="jDD-oc-aXZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="1" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="PGd-0l-YN7"/>
+                            </mask>
+                        </variation>
                     </label>
                 </subviews>
                 <constraints>
@@ -98,8 +104,8 @@
                 <outlet property="desLabel" destination="QIn-ek-Vvb" id="sSd-Rp-7M8"/>
                 <outlet property="moneyLabel" destination="6Wx-cb-dGX" id="5zl-Rs-UBu"/>
                 <outlet property="photoImageV" destination="UH8-Hz-gts" id="w0Y-2t-DaR"/>
-                <outlet property="sourceLabel" destination="f0i-YC-mX6" id="h5W-5T-ebP"/>
-                <outlet property="status" destination="Gwf-Xo-jiO" id="gTP-7A-bJi"/>
+                <outlet property="sourceLabel" destination="Gwf-Xo-jiO" id="t8o-C5-Sj8"/>
+                <outlet property="status" destination="f0i-YC-mX6" id="6bM-r6-CTX"/>
             </connections>
             <point key="canvasLocation" x="433" y="396.5"/>
         </tableViewCell>

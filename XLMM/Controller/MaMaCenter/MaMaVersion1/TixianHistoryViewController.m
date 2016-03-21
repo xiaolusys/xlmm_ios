@@ -13,9 +13,6 @@
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
 
-
-
-
 static NSString *CellIdentify = @"TixianCellIdentify";
 
 @interface TixianHistoryViewController ()<UITableViewDataSource, UITableViewDelegate>
