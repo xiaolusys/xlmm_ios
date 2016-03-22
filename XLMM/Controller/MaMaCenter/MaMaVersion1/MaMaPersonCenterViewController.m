@@ -741,10 +741,15 @@
 }
 
 - (IBAction)todayOrder:(id)sender {
-    
+    MaMaOrderListViewController *order = [[MaMaOrderListViewController alloc] init];
+    order.orderRecord = self.orderRecord;
+    [self.navigationController pushViewController:order animated:YES];
 }
 
 - (IBAction)todayCarry:(id)sender {
+    MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+    carry.earningsRecord = self.earningsRecord;
+    [self.navigationController pushViewController:carry animated:YES];
 }
 
 - (void)clickShareView {

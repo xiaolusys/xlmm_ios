@@ -47,9 +47,6 @@
     // Do any additional setup after loading the view.
     
     //http://192.168.1.13:8000/rest/v2/mama/visitor?from=3
-    
-    NSLog(@"------------------------%ld", (long)[self.visitorDate integerValue]);
-    
     [self createNavigationBarWithTitle:@"今日访客" selecotr:@selector(backClicked:)];
     
     [self createTableView];
