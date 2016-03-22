@@ -18,6 +18,7 @@
 #import "MMCollectionController.h"
 #import "MJRefresh.h"
 #import "UIViewController+NavigationBar.h"
+#import "SVProgressHUD.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -224,15 +225,11 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (isOrder) {
-        if (self.orderDataArray.count == 0) {
-            return 8;
-        }
+       
         return self.orderDataArray.count;
         
     }else{
-        if (self.dataArray.count == 0) {
-            return 8;
-        }
+        
         return self.dataArray.count;
         
     }
@@ -383,6 +380,10 @@ static NSString * ksimpleCell = @"simpleCell";
 - (IBAction)btnClicked:(UIButton *)sender {
     if (sender.tag == 1) {
         isOrder = NO;
+        [SVProgressHUD dismiss];
+        
+        //[activityIndicator removeFromSuperview];
+        //activityIndicator = nil;
         [self.childCollectionView reloadData];
         [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
@@ -395,13 +396,17 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
         [self downloadOrderData];
-        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activityIndicator.backgroundColor = [UIColor clearColor];
-        [activityIndicator startAnimating];
-        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2 - 80);
-        [self.childCollectionView addSubview:activityIndicator];
+//        if (activityIndicator == nil) {
+//            activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//        }
+//        
+//        activityIndicator.backgroundColor = [UIColor clearColor];
+//        [activityIndicator startAnimating];
+//        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2 - 80);
+//        [self.childCollectionView addSubview:activityIndicator];
+        [SVProgressHUD show];
         
-        [self.childCollectionView reloadData];
+        
     }
 
 }
@@ -420,7 +425,10 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.orderDataArray addObject:model];
 
     }
-     [activityIndicator removeFromSuperview];
+     //[activityIndicator removeFromSuperview];
+    //activityIndicator = nil;
+    
+    [SVProgressHUD dismiss];
     [self.childCollectionView reloadData];
 }
 
