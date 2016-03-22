@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FensiListViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (nonatomic, assign)NSInteger fansNum;
+@property (nonatomic, strong)NSNumber *fansNum;
 @end

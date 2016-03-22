@@ -18,6 +18,8 @@
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong)UITableView *tableView;
+
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSString *nextPage;
 
@@ -48,39 +50,54 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(backClicked:)];
     [self createrightItem];
-    self.fansNum = 0;
-    if (self.fansNum == 0) {
+    
+    NSString *title = nil;
+    
+    if ([self.fansNum integerValue] == 0) {
+        title = @"暂无粉丝";
         [self displayDefaultView];
     }else {
-        [self.view addSubview:self.tableView];
-        //添加上拉加载
-        self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            if([self.nextPage class] == [NSNull class]) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                return ;
-            }
-            [self loadMore];
-        }];
-        
-        [SVProgressHUD showWithStatus:@"正在加载..."];
-        [self downloadData];
-
+        title = @"粉丝列表";
+        [self createTableView];
     }
+    
+    [self createNavigationBarWithTitle:title selecotr:@selector(backClicked:)];
+}
+
+- (void)createTableView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"FensiTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FensiCell"];
+    //添加上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if([self.nextPage class] == [NSNull class]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return ;
+        }
+        [self loadMore];
+    }];
+    
+    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [self downloadData];
+
 }
 
 - (void)createrightItem{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 84, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 44)];
     //已选label
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 55, 44)];
     label.text = @"关于粉丝";
-    label.font = [UIFont systemFontOfSize:14];
+    label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
     label.textAlignment = NSTextAlignmentCenter;
     [view addSubview:label];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(64, 15, 15, 15)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(55, 15, 15, 15)];
     imageV.image = [UIImage imageNamed:@"aboutfans"];
     
     [view addSubview:label];
@@ -112,9 +129,8 @@
     
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
     
-    defaultView.frame = self.tableView.bounds;
+    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 64, self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:defaultView];
-//    [self.view insertSubview:defaultView aboveSubview:self.tableView];
     
 }
 
@@ -129,8 +145,8 @@
 
 
 - (void)downloadData{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_fans_list", Root_URL];
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_fans_list", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
     //    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
     
@@ -161,11 +177,12 @@
 
 - (void)createFanlistWithArray:(NSArray *)array{
     for (NSDictionary *dic in array) {
-        FanceModel *fan = [[FanceModel alloc] initWithInfo:dic];
+        FanceModel *fan = [[FanceModel alloc] init];
+        [fan setValuesForKeysWithDictionary:dic];
         [self.dataArray addObject:fan];
     }
     [self.tableView reloadData];
-}
+} 
 
 
 
@@ -190,20 +207,14 @@
     return 80;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString *cellIdentify = @"CellIdentify";
-    
-    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentify];
+
+    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FensiCell"];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"FensiTableViewCell" owner:self options:nil] lastObject];
+        cell = [[FensiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FensiCell"];
     }
     FanceModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
     [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    //    UIImageView *image = [[UIImageView alloc] init];
-    //    image.image = [UIImage imageNamed:@"Icon-60@3x"];
     return cell;
 }
 @end

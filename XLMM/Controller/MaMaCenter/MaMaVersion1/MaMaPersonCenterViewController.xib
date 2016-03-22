@@ -472,14 +472,24 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVz-5o-e5h">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <connections>
+                                                <action selector="todayOrder:" destination="-1" eventType="touchUpInside" id="xMV-Yn-xPc"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="Vfo-re-xoS" secondAttribute="trailing" id="38C-Z6-xjO"/>
                                         <constraint firstItem="p3b-5f-PFr" firstAttribute="leading" secondItem="Oyo-b3-Ohb" secondAttribute="leading" id="5gF-7E-tLZ"/>
+                                        <constraint firstItem="SVz-5o-e5h" firstAttribute="top" secondItem="Oyo-b3-Ohb" secondAttribute="top" id="80N-qp-fHa"/>
+                                        <constraint firstAttribute="bottom" secondItem="SVz-5o-e5h" secondAttribute="bottom" id="P5Y-y0-cYG"/>
                                         <constraint firstAttribute="bottom" secondItem="p3b-5f-PFr" secondAttribute="bottom" constant="12" id="UVY-Rw-XVi"/>
                                         <constraint firstAttribute="bottom" secondItem="Vfo-re-xoS" secondAttribute="bottom" id="YEs-uH-yWC"/>
                                         <constraint firstItem="p3b-5f-PFr" firstAttribute="width" secondItem="Oyo-b3-Ohb" secondAttribute="width" multiplier="1:2" id="eMt-0l-tF4"/>
                                         <constraint firstItem="p3b-5f-PFr" firstAttribute="top" secondItem="Oyo-b3-Ohb" secondAttribute="top" constant="13" id="k5T-WD-sMH"/>
+                                        <constraint firstAttribute="trailing" secondItem="SVz-5o-e5h" secondAttribute="trailing" id="kLx-DZ-axD"/>
+                                        <constraint firstItem="SVz-5o-e5h" firstAttribute="leading" secondItem="Oyo-b3-Ohb" secondAttribute="leading" id="owA-Ag-RfN"/>
                                         <constraint firstItem="Vfo-re-xoS" firstAttribute="top" secondItem="Oyo-b3-Ohb" secondAttribute="top" id="txF-kv-ylD"/>
                                         <constraint firstItem="Vfo-re-xoS" firstAttribute="leading" secondItem="p3b-5f-PFr" secondAttribute="trailing" constant="5" id="vIj-AR-AJf"/>
                                     </constraints>
@@ -487,32 +497,42 @@
                                         <mask key="subviews">
                                             <exclude reference="p3b-5f-PFr"/>
                                             <exclude reference="Vfo-re-xoS"/>
+                                            <exclude reference="SVz-5o-e5h"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="38C-Z6-xjO"/>
-                                            <exclude reference="YEs-uH-yWC"/>
-                                            <exclude reference="txF-kv-ylD"/>
-                                            <exclude reference="vIj-AR-AJf"/>
+                                            <exclude reference="80N-qp-fHa"/>
+                                            <exclude reference="P5Y-y0-cYG"/>
+                                            <exclude reference="kLx-DZ-axD"/>
+                                            <exclude reference="owA-Ag-RfN"/>
                                             <exclude reference="5gF-7E-tLZ"/>
                                             <exclude reference="UVY-Rw-XVi"/>
                                             <exclude reference="eMt-0l-tF4"/>
                                             <exclude reference="k5T-WD-sMH"/>
+                                            <exclude reference="38C-Z6-xjO"/>
+                                            <exclude reference="YEs-uH-yWC"/>
+                                            <exclude reference="txF-kv-ylD"/>
+                                            <exclude reference="vIj-AR-AJf"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="p3b-5f-PFr"/>
                                             <include reference="Vfo-re-xoS"/>
+                                            <include reference="SVz-5o-e5h"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="38C-Z6-xjO"/>
-                                            <include reference="YEs-uH-yWC"/>
-                                            <include reference="txF-kv-ylD"/>
-                                            <include reference="vIj-AR-AJf"/>
+                                            <include reference="80N-qp-fHa"/>
+                                            <include reference="P5Y-y0-cYG"/>
+                                            <include reference="kLx-DZ-axD"/>
+                                            <include reference="owA-Ag-RfN"/>
                                             <include reference="5gF-7E-tLZ"/>
                                             <include reference="UVY-Rw-XVi"/>
                                             <include reference="eMt-0l-tF4"/>
                                             <include reference="k5T-WD-sMH"/>
+                                            <include reference="38C-Z6-xjO"/>
+                                            <include reference="YEs-uH-yWC"/>
+                                            <include reference="txF-kv-ylD"/>
+                                            <include reference="vIj-AR-AJf"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -544,6 +564,12 @@
                                                 </mask>
                                             </variation>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwV-yK-8Lf">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <connections>
+                                                <action selector="todayCarry:" destination="-1" eventType="touchUpInside" id="X32-lo-dgU"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="KEw-Br-SyG" firstAttribute="top" secondItem="Ubn-Go-wBP" secondAttribute="top" id="0bY-lj-ehj"/>
@@ -555,20 +581,29 @@
                                         <constraint firstItem="7Dq-Ap-a3x" firstAttribute="leading" secondItem="Ubn-Go-wBP" secondAttribute="leading" constant="8" id="LL9-uh-rcc">
                                             <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                         </constraint>
+                                        <constraint firstAttribute="trailing" secondItem="uwV-yK-8Lf" secondAttribute="trailing" id="OYo-AC-C5j"/>
                                         <constraint firstAttribute="bottom" secondItem="KEw-Br-SyG" secondAttribute="bottom" id="dbw-8B-IlD"/>
+                                        <constraint firstItem="uwV-yK-8Lf" firstAttribute="leading" secondItem="Ubn-Go-wBP" secondAttribute="leading" id="gdt-cw-5Pb"/>
                                         <constraint firstItem="7Dq-Ap-a3x" firstAttribute="top" secondItem="Ubn-Go-wBP" secondAttribute="top" constant="13" id="jZE-PO-IlS"/>
+                                        <constraint firstAttribute="bottom" secondItem="uwV-yK-8Lf" secondAttribute="bottom" id="lZG-6B-XsN"/>
+                                        <constraint firstItem="uwV-yK-8Lf" firstAttribute="top" secondItem="Ubn-Go-wBP" secondAttribute="top" id="wHe-fw-450"/>
                                         <constraint firstAttribute="trailing" secondItem="KEw-Br-SyG" secondAttribute="trailing" id="yUc-MH-wQA"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="KEw-Br-SyG"/>
                                             <exclude reference="7Dq-Ap-a3x"/>
+                                            <exclude reference="uwV-yK-8Lf"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="224-DW-xVb"/>
                                             <exclude reference="5S0-rA-nDt"/>
                                             <exclude reference="LL9-uh-rcc"/>
                                             <exclude reference="jZE-PO-IlS"/>
+                                            <exclude reference="OYo-AC-C5j"/>
+                                            <exclude reference="gdt-cw-5Pb"/>
+                                            <exclude reference="lZG-6B-XsN"/>
+                                            <exclude reference="wHe-fw-450"/>
                                             <exclude reference="0bY-lj-ehj"/>
                                             <exclude reference="3Zo-vK-KDC"/>
                                             <exclude reference="dbw-8B-IlD"/>
@@ -579,12 +614,17 @@
                                         <mask key="subviews">
                                             <include reference="KEw-Br-SyG"/>
                                             <include reference="7Dq-Ap-a3x"/>
+                                            <include reference="uwV-yK-8Lf"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="224-DW-xVb"/>
                                             <include reference="5S0-rA-nDt"/>
                                             <include reference="LL9-uh-rcc"/>
                                             <include reference="jZE-PO-IlS"/>
+                                            <include reference="OYo-AC-C5j"/>
+                                            <include reference="gdt-cw-5Pb"/>
+                                            <include reference="lZG-6B-XsN"/>
+                                            <include reference="wHe-fw-450"/>
                                             <include reference="0bY-lj-ehj"/>
                                             <include reference="3Zo-vK-KDC"/>
                                             <include reference="dbw-8B-IlD"/>
@@ -620,14 +660,24 @@
                                                 </mask>
                                             </variation>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hZO-Hu-efx">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <connections>
+                                                <action selector="todayVisitor:" destination="-1" eventType="touchUpInside" id="NBQ-ju-Tb5"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="sI3-gm-ogf" firstAttribute="top" secondItem="8Fw-pQ-0TJ" secondAttribute="top" id="60v-Y5-inn"/>
+                                        <constraint firstItem="hZO-Hu-efx" firstAttribute="top" secondItem="8Fw-pQ-0TJ" secondAttribute="top" id="6U1-EH-Evd"/>
+                                        <constraint firstAttribute="trailing" secondItem="hZO-Hu-efx" secondAttribute="trailing" id="LPM-ob-eHv"/>
                                         <constraint firstItem="A2U-4I-sVT" firstAttribute="top" secondItem="8Fw-pQ-0TJ" secondAttribute="top" constant="13" id="QHr-ha-H3L"/>
+                                        <constraint firstAttribute="bottom" secondItem="hZO-Hu-efx" secondAttribute="bottom" id="QeX-VL-fOW"/>
                                         <constraint firstItem="A2U-4I-sVT" firstAttribute="leading" secondItem="8Fw-pQ-0TJ" secondAttribute="leading" id="QhC-0i-oaj"/>
                                         <constraint firstAttribute="bottom" secondItem="sI3-gm-ogf" secondAttribute="bottom" id="S6v-lA-03B"/>
                                         <constraint firstItem="sI3-gm-ogf" firstAttribute="leading" secondItem="A2U-4I-sVT" secondAttribute="trailing" constant="5" id="ZMh-MS-R5p"/>
                                         <constraint firstAttribute="trailing" secondItem="sI3-gm-ogf" secondAttribute="trailing" id="irY-Vx-aue"/>
+                                        <constraint firstItem="hZO-Hu-efx" firstAttribute="leading" secondItem="8Fw-pQ-0TJ" secondAttribute="leading" id="oH3-xp-i4B"/>
                                         <constraint firstAttribute="bottom" secondItem="A2U-4I-sVT" secondAttribute="bottom" constant="12" id="rqu-6h-msK"/>
                                         <constraint firstItem="A2U-4I-sVT" firstAttribute="width" secondItem="8Fw-pQ-0TJ" secondAttribute="width" multiplier="1:2" id="y56-xD-Y6c"/>
                                     </constraints>
@@ -635,12 +685,17 @@
                                         <mask key="subviews">
                                             <exclude reference="sI3-gm-ogf"/>
                                             <exclude reference="A2U-4I-sVT"/>
+                                            <exclude reference="hZO-Hu-efx"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="QHr-ha-H3L"/>
                                             <exclude reference="QhC-0i-oaj"/>
                                             <exclude reference="rqu-6h-msK"/>
                                             <exclude reference="y56-xD-Y6c"/>
+                                            <exclude reference="6U1-EH-Evd"/>
+                                            <exclude reference="LPM-ob-eHv"/>
+                                            <exclude reference="QeX-VL-fOW"/>
+                                            <exclude reference="oH3-xp-i4B"/>
                                             <exclude reference="60v-Y5-inn"/>
                                             <exclude reference="S6v-lA-03B"/>
                                             <exclude reference="ZMh-MS-R5p"/>
@@ -651,12 +706,17 @@
                                         <mask key="subviews">
                                             <include reference="sI3-gm-ogf"/>
                                             <include reference="A2U-4I-sVT"/>
+                                            <include reference="hZO-Hu-efx"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="QHr-ha-H3L"/>
                                             <include reference="QhC-0i-oaj"/>
                                             <include reference="rqu-6h-msK"/>
                                             <include reference="y56-xD-Y6c"/>
+                                            <include reference="6U1-EH-Evd"/>
+                                            <include reference="LPM-ob-eHv"/>
+                                            <include reference="QeX-VL-fOW"/>
+                                            <include reference="oH3-xp-i4B"/>
                                             <include reference="60v-Y5-inn"/>
                                             <include reference="S6v-lA-03B"/>
                                             <include reference="ZMh-MS-R5p"/>

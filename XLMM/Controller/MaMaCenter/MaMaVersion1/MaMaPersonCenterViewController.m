@@ -30,6 +30,7 @@
 #import "MaClassifyCarryLogViewController.h"
 #import "NSArray+Reverse.h"
 #import "ShopPreviousViewController.h"
+#import "TodayVisitorViewController.h"
 
 
 
@@ -86,6 +87,9 @@
 
 @property (nonatomic, strong)NSNumber *activeValueNum;
 
+@property (nonatomic, strong)NSNumber *fansNum;
+
+@property (nonatomic, strong)NSNumber *visitorDate;
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -102,6 +106,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.visitorDate = [NSNumber numberWithInt:0];
     // Do any additional setup after loading the view from its nib.
     dataArray = [[NSMutableArray alloc] initWithCapacity:30];
     self.dataArr = [[NSMutableArray alloc] init];
@@ -186,7 +192,11 @@
     mamahuoyueduValue = [[fortune objectForKey:@"active_value_num"] floatValue];
     [self createHuoYueDuView];
 
-  
+    if ([[fortune objectForKey:@"fans_num"] class] == [NSNull class] || [[fortune objectForKey:@"fans_num"] integerValue]==0) {
+        self.fansNum = [NSNumber numberWithInteger:0];
+    }else {
+        self.fansNum = [fortune objectForKey:@"fans_num"];
+    }
     //邀请数，粉丝，订单，收益
     self.inviteLabel.text = [NSString stringWithFormat:@"%@位", [fortune objectForKey:@"invite_num"]];
     self.fensilabel.text = [NSString stringWithFormat:@"%@人", [fortune objectForKey:@"fans_num"]];
@@ -387,6 +397,7 @@
    // NSLog(@"count = %ld", count);
     
     NSInteger days = (count - page - 1)*7;
+    self.visitorDate = [NSNumber numberWithInteger:days];
   //  NSLog(@"days = %ld", days);
     
      NSDictionary *dic = self.mamaOrderArray[days];
@@ -511,6 +522,7 @@
     
     NSInteger days = (6 - index) + (week - 1)*7;
     
+    self.visitorDate = [NSNumber numberWithInteger:days];
    // NSLog(@"days = %ld", days);
     
     
@@ -556,11 +568,6 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        
-        
-        
-        
-        
         
         NSArray *data = [NSArray reverse:responseObject];
         self.mamaOrderArray = data;
@@ -718,12 +725,26 @@
 
 - (IBAction)fansList:(id)sender {
     FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
+    fensiVC.fansNum = self.fansNum;
     [self.navigationController pushViewController:fensiVC animated:YES];
 }
 
 - (IBAction)boutiqueActivities:(id)sender {
     //精品活动
     [SVProgressHUD showInfoWithStatus:@"程序猿正在努力开发..."];
+}
+
+- (IBAction)todayVisitor:(id)sender {
+    TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
+    today.visitorDate = self.visitorDate;
+    [self.navigationController pushViewController:today animated:YES];
+}
+
+- (IBAction)todayOrder:(id)sender {
+    
+}
+
+- (IBAction)todayCarry:(id)sender {
 }
 
 - (void)clickShareView {
