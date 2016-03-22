@@ -3505,7 +3505,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				321857C21CA109990085FF21 /* WebKit.framework */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -3580,6 +3579,7 @@
 				3266762B1BB5200E00307EC4 /* libz.tbd */,
 				326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */,
 				326676271BB51FE000307EC4 /* libc++.tbd */,
+				321857C21CA109990085FF21 /* WebKit.framework */,
 				1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */,
 				2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */,
 				321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */,
