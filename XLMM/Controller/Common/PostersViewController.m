@@ -102,6 +102,9 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)loadMore
 {
     NSLog(@"loadmore");
+    
+    
+    
 }
 
 

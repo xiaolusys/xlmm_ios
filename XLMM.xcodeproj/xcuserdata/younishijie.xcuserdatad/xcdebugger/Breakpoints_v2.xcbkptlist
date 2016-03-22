@@ -964,48 +964,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/NewController/MaMaHuoyueduViewController.m"
-            timestampString = "480234104.93884"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480302656.442612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "-fetchMoreList:"
+            startingLineNumber = "967"
+            endingLineNumber = "967"
+            landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/NewController/MaMaHuoyueduViewController.m"
-            timestampString = "480234104.93884"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480302706.592191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "-fetchMoreList:"
+            startingLineNumber = "955"
+            endingLineNumber = "955"
+            landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/NewController/MaMaHuoyueduViewController.m"
-            timestampString = "480234104.93884"
+            filePath = "XLMM/Controller/Common/ChildViewController.m"
+            timestampString = "480302797.868316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-fetchMoreList:"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-loadMore"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
