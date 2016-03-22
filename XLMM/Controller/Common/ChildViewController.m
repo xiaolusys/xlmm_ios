@@ -100,6 +100,9 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)fetchedPromoteMorePageData:(NSData *)data{
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     NSError *error;
+    if (data == nil) {
+        return;
+    }
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (json == nil) {
         return;
