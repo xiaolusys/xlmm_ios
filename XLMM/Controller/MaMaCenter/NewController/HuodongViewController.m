@@ -19,6 +19,7 @@
 #import "NSString+URL.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
+#import "MMDetailsViewController.h"
 
 
 
@@ -96,10 +97,28 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)tiaozhuan:(NSNotification *)notification{
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *ID = [userInfo objectForKey:@"productID"];
+   
+    
+    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
+    
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tiaozhuan:) name:@"productTransate" object:nil];
+//    [[NSNotificationCenter defaultCenter] ]
+    
+    
+    
 //
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
 //    label.text = [self.diction objectForKey:@"title"];
@@ -146,6 +165,8 @@
     
     
 }
+
+
 
 - (void)rightBarButtonAction {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];

@@ -605,6 +605,11 @@
     NSArray *array = [paramString componentsSeparatedByString:@"&"];
     if (array.count == 3) {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"activityShare" object:nil userInfo:@{@"param":paramString}];     
+    } else if(array.count == 2) {
+        NSString *productID ;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"productTransate" object:nil userInfo:@{@"productID":productID}];
+        
+        
     }
    
     
