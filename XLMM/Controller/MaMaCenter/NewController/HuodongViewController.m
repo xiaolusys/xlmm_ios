@@ -18,6 +18,8 @@
 #import "YoumengShare.h"
 #import "NSString+URL.h"
 #import "UIImage+UIImageExt.h"
+#import "WebViewJavascriptBridge.h"
+
 
 
 @interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
@@ -39,6 +41,9 @@
 @property (nonatomic, assign)BOOL isWeixin;
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
+
+@property (nonatomic, strong)WebViewJavascriptBridge* bridge;
+
 
 @end
 
@@ -68,6 +73,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    //与js交互代码。。
+    /*
+    
+    [WebViewJavascriptBridge enableLogging];
+    
+    _bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    
+    [_bridge registerHandler:@"testObjcCallback" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"testObjcCallback called: %@", data);
+        responseCallback(@"Response from testObjcCallback");
+    }];
+    
+    [_bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
+    */
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
