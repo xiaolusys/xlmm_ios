@@ -161,10 +161,11 @@ static NSString *const cellIdentifier = @"YixuanCell";
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSArray *rows = [NSArray arrayWithObject:indexPath];
+    [self.dataArr removeObject:cell.model];
+    [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
     
     [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.dataArr removeObject:cell.model];
-        [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"店铺－－Error: %@", error);
     }];
