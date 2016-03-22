@@ -641,6 +641,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 - (void)fetchedPromotePageData:(NSData *)data{
+    [self.myCollectionView.mj_footer endRefreshing];
     [self.timer invalidate];
     self.timer = nil;
     [childDataArray removeAllObjects];

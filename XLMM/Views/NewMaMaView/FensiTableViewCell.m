@@ -27,7 +27,7 @@
         [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.imagelink URLEncodedString]]];
     }
     
-    self.picImageView.layer.cornerRadius = 8;
+    self.picImageView.layer.cornerRadius = 30;
     self.picImageView.layer.borderWidth = 0.5;
     self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;

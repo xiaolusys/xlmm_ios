@@ -11,4 +11,5 @@
 @interface FensiListViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, assign)NSInteger fansNum;
 @end
