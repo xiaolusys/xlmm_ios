@@ -323,7 +323,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //    CGPoint point = scrollView.contentOffset;
 //    CGFloat temp = oldScrollViewTop - point.y;
 //    
-    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1500 && _isupdate) {
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1200 && _isupdate) {
         if (isOrder == NO) {
             [self loadMore];
             _isupdate = NO;

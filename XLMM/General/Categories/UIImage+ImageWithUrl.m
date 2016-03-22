@@ -11,7 +11,13 @@
 @implementation UIImage (ImageWithUrl)
 
 +(UIImage *)imagewithURLString:(NSString *)urlString{
-    return [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
+    UIImage *image = nil;
+    NSError *imageError = nil;
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError];
+    NSLog(@"loadingImageError = %@", imageError);
+    
+    image = [UIImage imageWithData:data];
+    return image;
 }
 
 @end
