@@ -180,7 +180,7 @@
     [SVProgressHUD dismiss];
     NSError *error = nil;
     diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
-    NSLog(@"array = %@", diciontary);
+//    NSLog(@"array = %@", diciontary);
     NSArray *array = [diciontary objectForKey:@"results"];
     if (array.count == 0) {
         NSLog(@"没有订单");
@@ -202,7 +202,7 @@
         
         [dataArray addObject:model];
     }
-    NSLog(@"dataArray = %@", dataArray);
+//    NSLog(@"dataArray = %@", dataArray);
 
     [self.quanbuCollectionView reloadData];
     
@@ -357,7 +357,7 @@
         for (int i = 1101; i < model.ordersArray.count + 1101; i++) {
             NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
-            NSLog(@"imageView = %@", imageView);
+//            NSLog(@"imageView = %@", imageView);
             [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
@@ -483,7 +483,7 @@
     
        xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
     xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, xiangqingVC.dingdanModel.dingdanID];
-    NSLog(@"url = %@", xiangqingVC.urlString);
+//    NSLog(@"url = %@", xiangqingVC.urlString);
 
     
     [self.navigationController pushViewController:xiangqingVC animated:YES];

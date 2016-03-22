@@ -146,7 +146,7 @@
         label.textColor = [UIColor textDarkGrayColor];
         [self.labelArray addObject:label];
     }
-    NSLog(@"label = %@", self.labelArray);
+//    NSLog(@"label = %@", self.labelArray);
 }
 
 

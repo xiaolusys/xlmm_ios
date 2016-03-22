@@ -54,11 +54,7 @@
     }else if(type == 1) {
         //佣金
         [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-        if ([carryModel.contributor_nick isEqualToString:@""] || carryModel.contributor_nick.length == 0) {
-            self.sourceLabel.text = @"匿名用户";
-        }else {
-            self.sourceLabel.text = carryModel.contributor_nick;
-        }
+        self.sourceLabel.text = carryModel.contributor_nick;
     }else if(type == 2) {
         //点击
         self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
@@ -68,40 +64,6 @@
         self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         self.sourceLabel.text = [self dateDeal:carryModel.created];
     }
-//    if ([carryModel.log_type isEqualToString:@"rebeta"]) {
-//        //佣金
-//        self.photoImageV.image = [UIImage imageNamed:@"mamayong"];
-//    }else if ([carryModel.log_type isEqualToString:@"click"]) {
-//        //分享点击
-//        self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
-//    }else if ([carryModel.log_type isEqualToString:@"recruit"]){
-//        //奖金
-//        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
-//    }else if ([carryModel.log_type isEqualToString:@"subsidy"]){
-//        //提成
-//        self.photoImageV.image = [UIImage imageNamed:@"mamati"];
-//    }else if ([carryModel.log_type isEqualToString:@"thousand"] || [carryModel.log_type isEqualToString:@"activity"]){
-//        //千元提成和参加活动收益
-//        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
-//    }else if ([carryModel.log_type isEqualToString:@"ordred"]) {
-//        //订单红包
-//        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
-//    }else if ([carryModel.log_type isEqualToString:@"buy"]){
-//        //支出
-//        self.photoImageV.image = [UIImage imageNamed:@"mamazhi"];
-//    }else if ([carryModel.log_type isEqualToString:@"fans_carry"]){
-//        //粉丝购买
-//        self.photoImageV.image = [UIImage imageNamed:@"mamafens"];
-//    }else if ([carryModel.log_type isEqualToString:@"group_bonus"]){
-//        //团队新增成员奖金
-//        self.photoImageV.image = [UIImage imageNamed:@"mamatuan"];
-//    } 
-//    
-//    if ([carryModel.carry_type isEqualToString:@"in"]) {
-//        self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.value_money floatValue]];
-//    }else {
-//        self.moneyLabel.text = [NSString stringWithFormat:@"-%.2f", [carryModel.value_money floatValue]];
-//    }
 
     self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.carry_value floatValue]];
     self.status.text = carryModel.status_display;

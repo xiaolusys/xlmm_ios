@@ -63,7 +63,7 @@
 - (void)downlaodData{
     //http://192.168.1.79:8000/rest/v1/trades
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"wait send = %@", kWaitsend_List_URL);
+//        NSLog(@"wait send = %@", kWaitsend_List_URL);
        
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
         
@@ -236,15 +236,15 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
+//    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     NSString *ID = [dic objectForKey:@"id"];
-    NSLog(@"id = %@", ID);
+//    NSLog(@"id = %@", ID);
     
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
-    NSLog(@"urlString = %@", urlString);
+//    NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     [self.navigationController pushViewController:xiangqingVC animated:YES];
 }
