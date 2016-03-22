@@ -225,7 +225,8 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     if (section == 0) {
         
         // 可用优惠券为0 显示空界面。
-        if (self.canUsedArray.count == 0) {
+        if (self.canUsedArray.count == 0 && self.disableUsedArray.count == 0
+            && self.expiredArray.count == 0 && self.usedArray.count == 0) {
             emptyView.hidden = NO;
         }
         return self.canUsedArray.count;
