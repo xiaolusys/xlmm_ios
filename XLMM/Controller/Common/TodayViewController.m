@@ -647,7 +647,7 @@ static NSString *khuodongCell = @"HuodongCell";
     [ladyDataArray removeAllObjects];
     if (data == nil) {
         //如果数据是空就重新加载
-        [self downloadData];
+       // [self downloadData];
         return;
     }
     NSError *error = nil;
@@ -679,12 +679,11 @@ static NSString *khuodongCell = @"HuodongCell";
     if (step1 && step2) {
         step1 = NO;
         step2 = NO;
-        NSRange range = {1,2};
         if (_isFirst == YES) {
             _isFirst = NO;
             [self.myCollectionView reloadData];
         } else{
-            [self.myCollectionView reloadSections:[[NSIndexSet alloc] initWithIndexesInRange:range]];
+            [self.myCollectionView reloadData];
         }
            [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         

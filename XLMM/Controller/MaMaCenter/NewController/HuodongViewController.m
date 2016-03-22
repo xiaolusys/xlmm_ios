@@ -28,7 +28,7 @@
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
 
 //遮罩层
-@property (nonatomic, strong)UIView *shareBackView;
+@property (nonatomic, strong) UIView *shareBackView;
 //分享页面
 @property (nonatomic, strong) YoumengShare *youmengShare;
 

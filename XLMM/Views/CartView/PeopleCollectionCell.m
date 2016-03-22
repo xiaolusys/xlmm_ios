@@ -110,7 +110,7 @@
    //NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
     
     
-    self.imageView.alpha = 0.0;
+    self.imageView.alpha = 0.3;
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.imageView.alpha = 1.0;

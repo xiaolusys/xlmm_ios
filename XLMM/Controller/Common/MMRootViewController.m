@@ -408,6 +408,9 @@
     
     
     NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+    if (data2 == nil) {
+        return;
+    }
   __unused  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
     
     
