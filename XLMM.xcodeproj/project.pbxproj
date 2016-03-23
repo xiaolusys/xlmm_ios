@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
+		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
+		181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB131CA136C3001307C0 /* VisitorModel.m */; };
 		18306F6D1C97AA1600B7665E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18306F6C1C97AA1600B7665E /* AppDelegate.m */; };
 		183070D01C97B83900B7665E /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183070951C97B83900B7665E /* AddressModel.m */; };
 		183070D11C97B83900B7665E /* BuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183070971C97B83900B7665E /* BuyModel.m */; };
@@ -618,6 +620,8 @@
 		183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */; };
 		183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */; };
 		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
+		18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D862751CA0EE78004A19BD /* AboutFansViewController.m */; };
+		18D862781CA1105C004A19BD /* aboutfans.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D862771CA1105C004A19BD /* aboutfans.png */; };
 		18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */; };
 		18EE10DD1C9C132B00E52313 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */; };
 		18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */; };
@@ -747,6 +751,10 @@
 
 /* Begin PBXFileReference section */
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayVisitorViewController.h; sourceTree = "<group>"; };
+		181ABB101CA12813001307C0 /* TodayVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayVisitorViewController.m; sourceTree = "<group>"; };
+		181ABB121CA136C3001307C0 /* VisitorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorModel.h; sourceTree = "<group>"; };
+		181ABB131CA136C3001307C0 /* VisitorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorModel.m; sourceTree = "<group>"; };
 		18306F6B1C97AA1600B7665E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18306F6C1C97AA1600B7665E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		183070941C97B83900B7665E /* AddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
@@ -1605,6 +1613,9 @@
 		183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
 		183076AC1C97E31A00B7665E /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		183076AD1C97E31A00B7665E /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
+		18D862741CA0EE77004A19BD /* AboutFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutFansViewController.h; sourceTree = "<group>"; };
+		18D862751CA0EE78004A19BD /* AboutFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutFansViewController.m; sourceTree = "<group>"; };
+		18D862771CA1105C004A19BD /* aboutfans.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutfans.png; sourceTree = "<group>"; };
 		18EE10D91C9C132B00E52313 /* NewLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLeftViewController.h; sourceTree = "<group>"; };
 		18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLeftViewController.m; sourceTree = "<group>"; };
 		18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewLeftViewController.xib; sourceTree = "<group>"; };
@@ -2071,6 +2082,8 @@
 				183070BC1C97B83900B7665E /* CarryLogModel.m */,
 				183070BD1C97B83900B7665E /* FanceModel.h */,
 				183070BE1C97B83900B7665E /* FanceModel.m */,
+				181ABB121CA136C3001307C0 /* VisitorModel.h */,
+				181ABB131CA136C3001307C0 /* VisitorModel.m */,
 				183070BF1C97B83900B7665E /* HuoyuezhiModel.h */,
 				183070C01C97B83900B7665E /* HuoyuezhiModel.m */,
 				183070C11C97B83900B7665E /* JiFenModel.h */,
@@ -2244,6 +2257,8 @@
 				1830714F1C97BE3700B7665E /* FensiListViewController.h */,
 				183071501C97BE3700B7665E /* FensiListViewController.m */,
 				183071511C97BE3700B7665E /* FensiListViewController.xib */,
+				18D862741CA0EE77004A19BD /* AboutFansViewController.h */,
+				18D862751CA0EE78004A19BD /* AboutFansViewController.m */,
 				183071521C97BE3700B7665E /* HuodongViewController.h */,
 				183071531C97BE3700B7665E /* HuodongViewController.m */,
 				183071541C97BE3700B7665E /* HuodongViewController.xib */,
@@ -2271,6 +2286,8 @@
 				183071681C97BE3700B7665E /* TuijianErweimaViewController.h */,
 				183071691C97BE3700B7665E /* TuijianErweimaViewController.m */,
 				1830716A1C97BE3700B7665E /* TuijianErweimaViewController.xib */,
+				181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */,
+				181ABB101CA12813001307C0 /* TodayVisitorViewController.m */,
 			);
 			path = NewController;
 			sourceTree = "<group>";
@@ -3280,6 +3297,7 @@
 				183074A61C97D49A00B7665E /* mamadingdan.png */,
 				183074A71C97D49A00B7665E /* mamaeryaoqing.png */,
 				183074A81C97D49A00B7665E /* mamafensi.png */,
+				18D862771CA1105C004A19BD /* aboutfans.png */,
 				183074A91C97D49A00B7665E /* mamashouyi.png */,
 			);
 			path = mama2;
@@ -3992,6 +4010,7 @@
 				183075EC1C97D49A00B7665E /* default.png in Resources */,
 				1830758B1C97D49A00B7665E /* icon-shengyu3.png in Resources */,
 				183076041C97D49A00B7665E /* hongbaoclose200.png in Resources */,
+				18D862781CA1105C004A19BD /* aboutfans.png in Resources */,
 				183071D61C97BE3700B7665E /* PurchaseViewController1.xib in Resources */,
 				3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */,
 				183076821C97D49A00B7665E /* grayJian.png in Resources */,
@@ -4207,6 +4226,7 @@
 				183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */,
 				183073D81C97D17800B7665E /* QNDomain.m in Sources */,
 				1830724E1C97BE3700B7665E /* ShenQingTuikuanController.m in Sources */,
+				181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */,
 				325B79D21C97E7160022F930 /* HuodongCollectionViewCell.m in Sources */,
 				183070E81C97B83900B7665E /* MaMaSelectProduct.m in Sources */,
 				321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */,
@@ -4220,6 +4240,7 @@
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				183070DE1C97B83900B7665E /* PosterModel.m in Sources */,
 				183073F51C97D17800B7665E /* MJRefreshGifHeader.m in Sources */,
+				18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */,
 				1830721F1C97BE3700B7665E /* GuanzhuViewController.m in Sources */,
 				183074211C97D17800B7665E /* UIButton+WebCache.m in Sources */,
 				183073D71C97D17800B7665E /* QNDnsManager.m in Sources */,
@@ -4288,6 +4309,7 @@
 				183071D51C97BE3700B7665E /* PurchaseViewController1.m in Sources */,
 				183074101C97D17800B7665E /* QNResumeUpload.m in Sources */,
 				1830723C1C97BE3700B7665E /* PersonCenterViewController2.m in Sources */,
+				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
 				325B799D1C97E6F10022F930 /* MMLoadingAnimation.m in Sources */,

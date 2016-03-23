@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FensiListViewController">
             <connections>
-                <outlet property="tableView" destination="Vpr-s5-lXY" id="Pam-GD-kV8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,45 +14,7 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vpr-s5-lXY">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="lEG-ha-Ihr"/>
-                        <outlet property="delegate" destination="-1" id="2Db-4e-Ujw"/>
-                    </connections>
-                </tableView>
-            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="Vpr-s5-lXY" secondAttribute="bottom" id="I1U-RD-xLF"/>
-                <constraint firstAttribute="trailing" secondItem="Vpr-s5-lXY" secondAttribute="trailing" id="kim-w7-OV5"/>
-                <constraint firstItem="Vpr-s5-lXY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lx1-tG-wPk"/>
-                <constraint firstItem="Vpr-s5-lXY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wbo-dF-6JR"/>
-            </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Vpr-s5-lXY"/>
-                </mask>
-                <mask key="constraints">
-                    <exclude reference="I1U-RD-xLF"/>
-                    <exclude reference="kim-w7-OV5"/>
-                    <exclude reference="lx1-tG-wPk"/>
-                    <exclude reference="wbo-dF-6JR"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=compact">
-                <mask key="subviews">
-                    <include reference="Vpr-s5-lXY"/>
-                </mask>
-                <mask key="constraints">
-                    <include reference="I1U-RD-xLF"/>
-                    <include reference="kim-w7-OV5"/>
-                    <include reference="lx1-tG-wPk"/>
-                    <include reference="wbo-dF-6JR"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="260" y="273"/>
         </view>
     </objects>

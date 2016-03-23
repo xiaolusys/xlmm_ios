@@ -1,15 +1,14 @@
 //
-//  FanceModel.m
+//  VisitorModel.m
 //  XLMM
 //
-//  Created by younishijie on 16/1/30.
+//  Created by apple on 16/3/22.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "FanceModel.h"
+#import "VisitorModel.h"
 
-@implementation FanceModel
-
+@implementation VisitorModel
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 
 }

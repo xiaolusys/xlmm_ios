@@ -10,10 +10,8 @@
 
 @interface FanceModel : NSObject
 
-@property (nonatomic) NSInteger fanID;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *imagelink;
-
-- (instancetype)initWithInfo:(NSDictionary *)info;
-
+@property (nonatomic, copy) NSString *fans_nick;
+@property (nonatomic, copy) NSString *fans_thumbnail;
+@property (nonatomic, copy) NSString *created;
+@property (nonatomic, copy) NSString *fans_description;
 @end

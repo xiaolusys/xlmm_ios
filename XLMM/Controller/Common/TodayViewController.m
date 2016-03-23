@@ -223,6 +223,9 @@ static NSString *khuodongCell = @"HuodongCell";
     step2 = NO;
     _isFirst = YES;
     _isDone = NO;
+    
+    _requestTime = 0;
+    
     [self createCollectionView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -428,6 +431,7 @@ static NSString *khuodongCell = @"HuodongCell";
 #pragma mark --今题推荐数据解析
 
 - (void)fetchedPosterData:(NSData *)data{
+    [self.myCollectionView.mj_header endRefreshing];
     [self.timer invalidate];
     self.timer = nil;
     if (data == nil) {
@@ -639,6 +643,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 - (void)fetchedPromotePageData:(NSData *)data{
+    [self.myCollectionView.mj_footer endRefreshing];
     [self.timer invalidate];
     self.timer = nil;
     [childDataArray removeAllObjects];

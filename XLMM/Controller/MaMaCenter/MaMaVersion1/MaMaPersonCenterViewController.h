@@ -67,4 +67,10 @@
 
 - (IBAction)boutiqueActivities:(id)sender;
 
+- (IBAction)todayVisitor:(id)sender;
+- (IBAction)todayOrder:(id)sender;
+- (IBAction)todayCarry:(id)sender;
+
+
+
 @end
