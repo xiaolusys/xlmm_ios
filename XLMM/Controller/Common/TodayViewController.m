@@ -287,9 +287,70 @@ static NSString *khuodongCell = @"HuodongCell";
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     self.activityArray = [array mutableCopy];
     
+    huodongJson = self.activityArray[0];
+    
+    if ([huodongJson isKindOfClass:[NSDictionary class]]) {
+        
+        _ishaveHuodong = YES;
+//        huodongJson = [jsonDic objectForKey:@"activity"];
+        
+        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
+        NSString *userNumber = [defaults objectForKey:@"activityid"];
+        
+        
+        if ([activityID isEqualToString:userNumber]) {
+            
+        } else {
+            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
+            } else {
+                
+                
+                
+                backView = [[UIView alloc] initWithFrame:self.view.bounds];
+                backView.backgroundColor = [UIColor blackColor];
+                backView.alpha = 0.5;
+                [self.view addSubview:backView];
+                NSArray *array;
+                array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+                
+                
+                activityView = array[0];
+                activityView.frame = CGRectMake(0, 0, 300, 280);
+                UIButton *button = (UIButton *)[activityView viewWithTag:200];
+                [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+                UIImageView *imageView = [activityView viewWithTag:100];
+                activityView.center = self.view.center;
+                
+                
+                NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+                
+                UIImage *image = [UIImage imagewithURLString:imageUrl];
+                imageView.image = image;
+                
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+                [imageView addGestureRecognizer:tap];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.layer.masksToBounds = YES;
+                imageView.userInteractionEnabled = YES;
+                [self.view addSubview:activityView];
+                [defaults setObject:activityID forKey:@"activityid"];
+                
+            }
+        }
+    }
+
+    
+    
     
     NSLog(@"activity = %@", self.activityArray);
     [self.myCollectionView reloadData];
+    
+    
+    
     
 }
 //- (void)dingshishuaxin{
@@ -519,60 +580,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     
-    if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
-        
-        _ishaveHuodong = YES;
-        huodongJson = [jsonDic objectForKey:@"activity"];
-        
-        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
-        NSString *userNumber = [defaults objectForKey:@"activityid"];
-        
-      
-//        if ([activityID isEqualToString:userNumber]) {
-//  
-//        } else {
-//            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-//            } else {
-//
-//                
-//                
-//                    backView = [[UIView alloc] initWithFrame:self.view.bounds];
-//                    backView.backgroundColor = [UIColor blackColor];
-//                    backView.alpha = 0.5;
-//                    [self.view addSubview:backView];
-//                    NSArray *array;
-//                    array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-//                  
-//                    
-//                    activityView = array[0];
-//                    activityView.frame = CGRectMake(0, 0, 300, 280);
-//                    UIButton *button = (UIButton *)[activityView viewWithTag:200];
-//                    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-//                    UIImageView *imageView = [activityView viewWithTag:100];
-//                    activityView.center = self.view.center;
-//                    
-//                   
-//                    NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
-//                    
-//                    UIImage *image = [UIImage imagewithURLString:imageUrl];
-//                    imageView.image = image;
-//                  
-//                    
-//                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-//                    [imageView addGestureRecognizer:tap];
-//                    imageView.contentMode = UIViewContentModeScaleAspectFill;
-//                    imageView.layer.masksToBounds = YES;
-//                    imageView.userInteractionEnabled = YES;
-//                    [self.view addSubview:activityView];
-//                    [defaults setObject:activityID forKey:@"activityid"];
-//
-//            }
-//        }
-    }
-
+    
     step1 = YES;
     if (step1 && step2) {
         step1 = NO;
@@ -1326,12 +1334,46 @@ static NSString *khuodongCell = @"HuodongCell";
                     
                     huodongJson = self.activityArray[indexPath.row - 1];
                     
-                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                  
+                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                        
+                        huodongVC.diction = huodongJson;
+                        
+                        
+                        [self.navigationController pushViewController:huodongVC animated:YES];
+                    } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                        NSLog(@"youhuiquan");
+                        
+                        NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                        NSString *params = [huodongJson objectForKey:@"extras"];
+                        
+                        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                        
+                        
+                        
+                        
+                        NSLog(@"%@\n%@", urlstring, params);
+                        
+                        [manager POST:urlstring parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  //  NSError *error;
+                                  NSLog(@"JSON: %@", responseObject);
+                                  
+                                  UIAlertView *alertVew = [[UIAlertView alloc] initWithTitle:[responseObject objectForKey:@"res"] message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                                  [alertVew show];
+                                  
+                                  
+                                  
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  NSLog(@"Error: %@", error);
+                                  
+                                  
+                              }];
+                    }
                     
-                    huodongVC.diction = huodongJson;
-                    
-                    
-                    [self.navigationController pushViewController:huodongVC animated:YES];
+                  
                 }
                 
                 
@@ -1355,12 +1397,44 @@ static NSString *khuodongCell = @"HuodongCell";
                         huodongJson = self.activityArray[indexPath.row - 1];
                         
                         
-                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                         
-                        huodongVC.diction = huodongJson;
-                        
-                        
-                        [self.navigationController pushViewController:huodongVC animated:YES];
+                        if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                            
+                            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                            
+                            huodongVC.diction = huodongJson;
+                            
+                            
+                            [self.navigationController pushViewController:huodongVC animated:YES];
+                        } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                            NSLog(@"youhuiquan");
+                            
+                            NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                            NSDictionary *params = [huodongJson objectForKey:@"extras"];
+                            
+                            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                           
+                            
+                            
+                            
+                            NSLog(@"%@\n%@", urlstring, params);
+                            
+                            [manager POST:urlstring parameters:params
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      //  NSError *error;
+                                      NSLog(@"JSON: %@", responseObject);
+                                      
+                                      
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      NSLog(@"Error: %@", error);
+                                      
+                                      
+                                  }];
+
+                            
+                        }
+
                     }
                 }
             }
