@@ -81,22 +81,7 @@
     self.navigationController.navigationBarHidden = NO;
     //与js交互代码。。
     
-    
-    [WebViewJavascriptBridge enableLogging];
-    
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
-    
-    [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"--------jumpToJsLocation called: %@", data);
-//        responseCallback(@"响应事件...");
-        NSDictionary *dic = data[@"foo"];
-        [self jumpToJsLocation:dic];
-    }];
-    
-    [self.bridge registerHandler:@"getNativeShareWidget" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"调用了分享功能呦－－－－－－");
-    }];
-}
+    }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -120,24 +105,6 @@
     
     //取出活动id
     self.activityId = [self.diction objectForKey:@"id"];
-    
-//
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-//    label.text = [self.diction objectForKey:@"title"];
-//    label.textColor = [UIColor blackColor];
-//    label.font = [UIFont systemFontOfSize:16];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    self.navigationItem.titleView = label;
-//    
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
-//    imageView.frame = CGRectMake(0, 14, 16, 16);
-//    [button addSubview:imageView];
-////    [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    self.navigationItem.leftBarButtonItem = leftItem;
-
 
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
@@ -147,23 +114,35 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[self.diction objectForKey:@"act_link"]]];
     
+    self.webView.scalesPageToFit = YES;
+    self.webView.delegate = self;
+    
+    [self.webView loadRequest:request];
+    
+    [WebViewJavascriptBridge enableLogging];
+    
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    
+    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        NSLog(@"--------jumpToJsLocation called: %@", data);
+        //        responseCallback(@"响应事件...");
+        [self jumpToJsLocation:data];
+    }];
+    
+    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        NSLog(@"--------getNativeShareWidget called: %@", data);
+//        NSLog(@"调用了分享功能呦－－－－－－");
+        [self shareForPlatform:data];
+    }];
+
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
-    
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[self.diction objectForKey:@"act_link"]]];
-    NSLog(@"webViewurl = %@", [self.diction objectForKey:@"act_link"]);
-   // http://192.168.1.31:9000/sale/promotion/xlsampleorder/
-   // NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://192.168.1.31:9000/sale/promotion/xlsampleorder"]];
-    self.webView.scalesPageToFit = YES;
-    self.webView.delegate = self;
-    
-    [self.webView loadRequest:request];
 }
 
 
@@ -354,32 +333,31 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)shareForPlatform:(NSNotification *)notification{
-    NSDictionary *info = notification.userInfo;
+- (void)shareForPlatform:(NSDictionary *)dic{
+//    NSDictionary *info = notification.userInfo;
     //NSLog(@"info = %@", info);
     
    // http://dev.xiaolumeimei.com/rest/v1/pmt/free_order/get_share_content
     
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
-    NSLog(@"string = %@", string);
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
+//    NSLog(@"string = %@", string);
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
+
     
     
     
     
-    NSString *param = [info objectForKey:@"param"];
+    NSString *param = @"";
     NSArray *array = [param componentsSeparatedByString:@"&"];
-    NSString *platform = [array[0] componentsSeparatedByString:@"="][1];
+    NSString *platform = dic[@"share_to"];
     NSString *url = [array[1] componentsSeparatedByString:@"="][1];
     NSString *url1;
     NSString *sharelink;
-    shareType = platform;
+    shareType = dic[@"share_to"];
     @try {
         url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
         sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
-
         NSLog(@"link = %@", sharelink);
-
-        
     }
     @catch (NSException *exception) {
      //   NSLog(@"exception = %@", exception);
@@ -607,8 +585,15 @@
 
 #pragma mark 解析targeturl 跳转到不同的界面
 - (void)jumpToJsLocation:(NSDictionary *)dic{
-    NSLog(@"dic = %@", dic);
+//    NSLog(@"dic = %@", dic);
+//    NSString *allStr = [dic objectForKey:@"target_url"];
+//    
+//    NSArray *arr = [target_url componentsSeparatedByString:@"?"];
+    
+//    NSString *target_url = arr[0];
+    
     NSString *target_url = [dic objectForKey:@"target_url"];
+    
     if (target_url == nil) {
         return;
     }
@@ -617,24 +602,20 @@
     NSLog(@"target_url = %@", target_url);
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
         NSLog(@"跳到今日上新");
-//        [self buttonClicked:100];
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
         NSLog(@"跳到昨日推荐");
-//        [self buttonClicked:101];
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"previous"}];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         NSLog(@"跳到潮童专区");
-//        [self buttonClicked:102];
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"child"}];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
         NSLog(@"跳到时尚女装");
-//        [self buttonClicked:103];
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"woman"}];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
@@ -688,8 +669,6 @@
         } else if ([firstparam isEqualToString:@"trade_id"]){
             NSLog(@"跳到订单详情");
             NSLog(@"trade_id = %@", [params lastObject]);
-            
-            
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             //http://m.xiaolu.so/rest/v1/trades/86412/details
             
@@ -702,10 +681,6 @@
             
             
         } else {
-            
-            //  跳转到H5 界面 。。。。。
-            
-            
             NSLog(@"跳到H5首页");
             
         }
