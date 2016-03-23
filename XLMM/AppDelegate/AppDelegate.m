@@ -249,56 +249,56 @@
 {
     // 请求成功
 
-//    if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
-//   
+    if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
+   
+
+    } else if ([selector isEqualToString:@"bindDeviceToken:"]){
+       NSLog(@"data = %@", data);
+        
+        
+        self.miRegid = [data objectForKey:@"regid"];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+        
+
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+
+        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
+        NSDictionary *parameters = @{@"platform":@"ios",
+                                     @"regid":self.miRegid,
+                                     @"device_id":self.deviceUUID,
+                                     @"ios_token":self.deviceToken
+                                     };
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:parameters forKey:@"MiPush"];
+        [defaults synchronize];
+        
+        NSLog(@"parameters = %@", parameters);
+        NSLog(@"urlStr = %@", urlString);
+        
+        [manager POST:urlString parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  //  NSError *error;
+                  NSLog(@"JSON: %@", responseObject);
+                  NSString *user_account = [responseObject objectForKey:@"user_account"];
+                  if ([user_account isEqualToString:@""]) {
+                      
+                  } else {
+                      NSLog(@"user_account = %@", user_account);
+                      [MiPushSDK setAccount:user_account];
+                  }
+               
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@", error);
+                  
+                  
+              }];
 //
-//    } else if ([selector isEqualToString:@"bindDeviceToken:"]){
-//       NSLog(@"data = %@", data);
-//        
-//        
-//        self.miRegid = [data objectForKey:@"regid"];
-//        
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    
-//        
-//
-//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-//
-//        NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
-//        NSDictionary *parameters = @{@"platform":@"ios",
-//                                     @"regid":self.miRegid,
-//                                     @"device_id":self.deviceUUID,
-//                                     @"ios_token":self.deviceToken
-//                                     };
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        [defaults setObject:parameters forKey:@"MiPush"];
-//        [defaults synchronize];
-//        
-//        NSLog(@"parameters = %@", parameters);
-//        NSLog(@"urlStr = %@", urlString);
-//        
-//        [manager POST:urlString parameters:parameters
-//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                  //  NSError *error;
-//                  NSLog(@"JSON: %@", responseObject);
-//                  NSString *user_account = [responseObject objectForKey:@"user_account"];
-//                  if ([user_account isEqualToString:@""]) {
-//                      
-//                  } else {
-//                      NSLog(@"user_account = %@", user_account);
-//                      [MiPushSDK setAccount:user_account];
-//                  }
-//               
-//                  
-//              }
-//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  NSLog(@"Error: %@", error);
-//                  
-//                  
-//              }];
-////
-//        
-//    }
+        
+    }
     
 
 

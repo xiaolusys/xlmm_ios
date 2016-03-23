@@ -250,10 +250,6 @@
             
         }
     }
-
-    
- 
-    
 }
 
 - (void)showNotification:(NSNotification *)notification{

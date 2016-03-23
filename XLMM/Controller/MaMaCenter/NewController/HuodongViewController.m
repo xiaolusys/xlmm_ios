@@ -86,7 +86,7 @@
         responseCallback(@"Response from testObjcCallback");
     }];
     
-    [_bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
+    [_bridge  callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
     */
     
     
@@ -115,7 +115,7 @@
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tiaozhuan:) name:@"productTransate" object:nil];
-//    [[NSNotificationCenter defaultCenter] ]
+//    [[NSNotificationCenter defaultCenter]]
     
     
     
