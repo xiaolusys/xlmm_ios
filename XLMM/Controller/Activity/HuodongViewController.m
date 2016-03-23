@@ -20,6 +20,11 @@
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "MMDetailsViewController.h"
+#import "YouHuiQuanViewController.h"
+#import "XiangQingViewController.h"
+#import "MaMaPersonCenterViewController.h"
+#import "PublishNewPdtViewController.h"
+#import "MMCollectionController.h"
 
 
 
@@ -43,6 +48,8 @@
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
 
+@property (nonatomic, strong)NSNumber *activityId;
+
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
 
@@ -59,8 +66,6 @@
     
     NSString *shareUrllink;
     
-    
-    
 }
 
 - (YoumengShare *)youmengShare {
@@ -75,21 +80,22 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     //与js交互代码。。
-    /*
+    
     
     [WebViewJavascriptBridge enableLogging];
     
-    _bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
-    [_bridge registerHandler:@"testObjcCallback" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"testObjcCallback called: %@", data);
-        responseCallback(@"Response from testObjcCallback");
+    [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"--------jumpToJsLocation called: %@", data);
+//        responseCallback(@"响应事件...");
+        NSDictionary *dic = data[@"foo"];
+        [self jumpToJsLocation:dic];
     }];
     
-    [_bridge  callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
-    */
-    
-    
+    [self.bridge registerHandler:@"getNativeShareWidget" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"调用了分享功能呦－－－－－－");
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -101,12 +107,9 @@
     NSDictionary *userInfo = notification.userInfo;
     NSString *ID = [userInfo objectForKey:@"productID"];
    
-    
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
     
     [self.navigationController pushViewController:detailsVC animated:YES];
-    
-    
     
 }
 
@@ -114,10 +117,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tiaozhuan:) name:@"productTransate" object:nil];
-//    [[NSNotificationCenter defaultCenter]]
     
-    
+    //取出活动id
+    self.activityId = [self.diction objectForKey:@"id"];
     
 //
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -149,7 +151,7 @@
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
     
@@ -162,14 +164,16 @@
     self.webView.delegate = self;
     
     [self.webView loadRequest:request];
-    
-    
 }
 
 
 
 - (void)rightBarButtonAction {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
+    if (!self.activityId || [self.activityId class] == [NSNull class]) {
+        NSLog(@"原生分享参数错误");
+        return;
+    }
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"string = %@", string);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -194,12 +198,15 @@
     
     self.kuaizhaoLink = dicShare[@"qrcode_link"];
     
-    NSString *imageUrlString = dicShare[@"share_img"];
+    NSString *imageUrlString = dicShare[@"share_icon"];
     NSData *imageData = nil;
     do {
         NSLog(@"image = %@", [imageUrlString URLEncodedString]);
         imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
         if (imageData != nil) {
+            break;
+        }
+        if (imageUrlString.length == 0 || [NSNull class] == [imageUrlString class]) {
             break;
         }
         
@@ -255,6 +262,7 @@
     }else {
         [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
         [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+//        [UMSocialData defaultData].extConfig.wechatSessionData.url = @"https://www.baidu.com";
         [UMSocialData defaultData].extConfig.wxMessageType = 0;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -262,7 +270,6 @@
         }];
         
         [self cancleShareBtnClick:nil];
-
     }
     
 }
@@ -595,6 +602,117 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
+    
+}
+
+#pragma mark 解析targeturl 跳转到不同的界面
+- (void)jumpToJsLocation:(NSDictionary *)dic{
+    NSLog(@"dic = %@", dic);
+    NSString *target_url = [dic objectForKey:@"target_url"];
+    if (target_url == nil) {
+        return;
+    }
+    
+    //跳转到每日上新－－－－
+    NSLog(@"target_url = %@", target_url);
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
+        NSLog(@"跳到今日上新");
+//        [self buttonClicked:100];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
+        NSLog(@"跳到昨日推荐");
+//        [self buttonClicked:101];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"previous"}];
+        
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
+        NSLog(@"跳到潮童专区");
+//        [self buttonClicked:102];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"child"}];
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
+        NSLog(@"跳到时尚女装");
+//        [self buttonClicked:103];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"woman"}];
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
+        NSLog(@"跳转到用户未过期优惠券列表");
+        
+        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        youhuiVC.isSelectedYHQ = NO;
+        [self.navigationController pushViewController:youhuiVC animated:YES];
+        
+        
+        
+    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+        
+        //  跳转到小鹿妈妈界面。。。
+        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+        [self.navigationController pushViewController:ma animated:YES];
+        
+        
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
+        
+        NSLog(@"跳转到小鹿妈妈每日上新");
+        
+        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        [self.navigationController pushViewController:publish animated:YES];
+        
+    }else {
+        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+        
+        NSString *parameter = [components lastObject];
+        NSArray *params = [parameter componentsSeparatedByString:@"="];
+        NSString *firstparam = [params firstObject];
+        if ([firstparam isEqualToString:@"model_id"]) {
+            NSLog(@"跳到集合页面");
+            NSLog(@"model_id = %@", [params lastObject]);
+            
+            
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+            
+            [self.navigationController pushViewController:collectionVC animated:YES];
+            
+            
+            
+        } else if ([firstparam isEqualToString:@"product_id"]){
+            NSLog(@"跳到商品详情");
+            NSLog(@"product_id = %@", [params lastObject]);
+            
+            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
+            [self.navigationController pushViewController:details animated:YES];
+            
+            
+        } else if ([firstparam isEqualToString:@"trade_id"]){
+            NSLog(@"跳到订单详情");
+            NSLog(@"trade_id = %@", [params lastObject]);
+            
+            
+            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+            //http://m.xiaolu.so/rest/v1/trades/86412/details
+            
+            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            NSLog(@"url = %@", xiangqingVC.urlString);
+            
+            
+            [self.navigationController pushViewController:xiangqingVC animated:YES];
+            
+            
+        } else {
+            
+            //  跳转到H5 界面 。。。。。
+            
+            
+            NSLog(@"跳到H5首页");
+            
+        }
+    }
+    
+    
+    
     
 }
 

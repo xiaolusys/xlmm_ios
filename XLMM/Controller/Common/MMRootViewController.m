@@ -308,6 +308,8 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpHome:) name:@"fromActivityToToday" object:nil];
+    
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -332,6 +334,20 @@
     
     
 }
+
+- (void)jumpHome:(NSNotification *)notification {
+    NSDictionary *info = notification.userInfo;
+    NSString *jumpType = info[@"param"];
+    if ([jumpType isEqualToString:@"previous"]) {
+        [self buttonClicked:101];
+    }else if ([jumpType isEqualToString:@"child"]) {
+        [self buttonClicked:102];
+    }else if ([jumpType isEqualToString:@"woman"]) {
+        [self buttonClicked:103];
+    }
+    NSLog(@"---跳转－－－－%@", jumpType);
+}
+
 - (NSArray *)randomArray{
     NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
     
