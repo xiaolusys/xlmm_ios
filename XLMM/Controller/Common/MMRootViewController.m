@@ -337,7 +337,15 @@
 
 - (void)jumpHome:(NSNotification *)notification {
     NSDictionary *info = notification.userInfo;
-    NSLog(@"---跳转－－－－%@", info);
+    NSString *jumpType = info[@"param"];
+    if ([jumpType isEqualToString:@"previous"]) {
+        [self buttonClicked:101];
+    }else if ([jumpType isEqualToString:@"child"]) {
+        [self buttonClicked:102];
+    }else if ([jumpType isEqualToString:@"woman"]) {
+        [self buttonClicked:103];
+    }
+    NSLog(@"---跳转－－－－%@", jumpType);
 }
 
 - (NSArray *)randomArray{

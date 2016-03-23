@@ -179,12 +179,14 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)updateRequestTime {
     _requestTime++;
+//    NSLog(@"--------------%ld", (long)_requestTime);
     if (_requestTime > 10) {
         [self.myCollectionView.mj_header endRefreshing];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"哎呦，网不好呦！请重新刷新" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         alert.tag = 200;
         [alert show];
         _requestTime = 0;
+//        NSLog(@"执行了一次刷新。。。%ld", (long)_requestTime);
     }
 }
 

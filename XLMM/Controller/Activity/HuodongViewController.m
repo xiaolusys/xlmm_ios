@@ -48,6 +48,8 @@
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
 
+@property (nonatomic, strong)NSNumber *activityId;
+
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
 
@@ -63,8 +65,6 @@
     NSString *shareType;
     
     NSString *shareUrllink;
-    
-    
     
 }
 
@@ -87,7 +87,7 @@
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
     [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        NSLog(@"--------jumpToJsLocation called: %@", data);
+        NSLog(@"--------jumpToJsLocation called: %@", data);
 //        responseCallback(@"响应事件...");
         NSDictionary *dic = data[@"foo"];
         [self jumpToJsLocation:dic];
@@ -117,6 +117,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
+    
+    //取出活动id
+    self.activityId = [self.diction objectForKey:@"id"];
     
 //
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -161,14 +164,16 @@
     self.webView.delegate = self;
     
     [self.webView loadRequest:request];
-    
-    
 }
 
 
 
 - (void)rightBarButtonAction {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
+    if (!self.activityId || [self.activityId class] == [NSNull class]) {
+        NSLog(@"原生分享参数错误");
+        return;
+    }
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"string = %@", string);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -193,12 +198,15 @@
     
     self.kuaizhaoLink = dicShare[@"qrcode_link"];
     
-    NSString *imageUrlString = dicShare[@"share_img"];
+    NSString *imageUrlString = dicShare[@"share_icon"];
     NSData *imageData = nil;
     do {
         NSLog(@"image = %@", [imageUrlString URLEncodedString]);
         imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
         if (imageData != nil) {
+            break;
+        }
+        if (imageUrlString.length == 0 || [NSNull class] == [imageUrlString class]) {
             break;
         }
         
@@ -254,6 +262,7 @@
     }else {
         [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
         [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
+//        [UMSocialData defaultData].extConfig.wechatSessionData.url = @"https://www.baidu.com";
         [UMSocialData defaultData].extConfig.wxMessageType = 0;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -261,7 +270,6 @@
         }];
         
         [self cancleShareBtnClick:nil];
-
     }
     
 }
