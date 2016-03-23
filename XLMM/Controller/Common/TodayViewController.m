@@ -87,12 +87,15 @@ static NSString *khuodongCell = @"HuodongCell";
     CGFloat _contentY;
     
     NSInteger _requestTime;
+    
+    
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 @property (nonatomic, strong) NSMutableArray *posterImages;
+@property (nonatomic, strong) NSMutableArray *activityArray;
 
 @property (nonatomic, strong)NSTimer *timer;
 
@@ -255,12 +258,37 @@ static NSString *khuodongCell = @"HuodongCell";
     }];
   
     [self ishavemobel];
+    self.activityArray = [[NSMutableArray alloc] init];
+    
+    
+    [self downloadActivityData];
+    
     
     
 //    [self dingshishuaxin];
 
 }
-
+- (void)downloadActivityData{
+   // http://dev.xiaolumeimei.com/rest/v1/activitys
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
+    
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+    
+    
+    
+}
+- (void)fetchActivities:(NSData *)data{
+    if (data == nil) {
+        return;
+    }
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    self.activityArray = [array mutableCopy];
+    
+    
+    NSLog(@"activity = %@", self.activityArray);
+    [self.myCollectionView reloadData];
+    
+}
 //- (void)dingshishuaxin{
 //    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
 //    
@@ -500,46 +528,46 @@ static NSString *khuodongCell = @"HuodongCell";
         NSString *userNumber = [defaults objectForKey:@"activityid"];
         
       
-        if ([activityID isEqualToString:userNumber]) {
-  
-        } else {
-            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-            } else {
-
-                
-                
-                    backView = [[UIView alloc] initWithFrame:self.view.bounds];
-                    backView.backgroundColor = [UIColor blackColor];
-                    backView.alpha = 0.5;
-                    [self.view addSubview:backView];
-                    NSArray *array;
-                    array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-                  
-                    
-                    activityView = array[0];
-                    activityView.frame = CGRectMake(0, 0, 300, 280);
-                    UIButton *button = (UIButton *)[activityView viewWithTag:200];
-                    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-                    UIImageView *imageView = [activityView viewWithTag:100];
-                    activityView.center = self.view.center;
-                    
-                   
-                    NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
-                    
-                    UIImage *image = [UIImage imagewithURLString:imageUrl];
-                    imageView.image = image;
-                  
-                    
-                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-                    [imageView addGestureRecognizer:tap];
-                    imageView.contentMode = UIViewContentModeScaleAspectFill;
-                    imageView.layer.masksToBounds = YES;
-                    imageView.userInteractionEnabled = YES;
-                    [self.view addSubview:activityView];
-                    [defaults setObject:activityID forKey:@"activityid"];
-
-            }
-        }
+//        if ([activityID isEqualToString:userNumber]) {
+//  
+//        } else {
+//            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
+//            } else {
+//
+//                
+//                
+//                    backView = [[UIView alloc] initWithFrame:self.view.bounds];
+//                    backView.backgroundColor = [UIColor blackColor];
+//                    backView.alpha = 0.5;
+//                    [self.view addSubview:backView];
+//                    NSArray *array;
+//                    array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+//                  
+//                    
+//                    activityView = array[0];
+//                    activityView.frame = CGRectMake(0, 0, 300, 280);
+//                    UIButton *button = (UIButton *)[activityView viewWithTag:200];
+//                    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+//                    UIImageView *imageView = [activityView viewWithTag:100];
+//                    activityView.center = self.view.center;
+//                    
+//                   
+//                    NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+//                    
+//                    UIImage *image = [UIImage imagewithURLString:imageUrl];
+//                    imageView.image = image;
+//                  
+//                    
+//                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+//                    [imageView addGestureRecognizer:tap];
+//                    imageView.contentMode = UIViewContentModeScaleAspectFill;
+//                    imageView.layer.masksToBounds = YES;
+//                    imageView.userInteractionEnabled = YES;
+//                    [self.view addSubview:activityView];
+//                    [defaults setObject:activityID forKey:@"activityid"];
+//
+//            }
+//        }
     }
 
     step1 = YES;
@@ -565,6 +593,7 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)huodongrukou{
     //统计进入活动页人数
+    
     [MobClick event:@"activity"];
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -849,11 +878,8 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        if (_ishaveHuodong) {
-            return 2;
-        } else {
-            return 1;
-        }
+            return self.activityArray.count + 1;
+        
     } else if (section == 1){
         if (ladyDataArray.count == 0) {
             return 2;
@@ -1100,7 +1126,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 return cell0;
 
             } else {
-                
+                huodongJson = self.activityArray[indexPath.row - 1];
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
                 cell1.huodongImageView.layer.masksToBounds = YES;
 //                UIImage *image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
@@ -1276,6 +1302,9 @@ static NSString *khuodongCell = @"HuodongCell";
         } else{
           [MobClick event:@"activity"];
             
+            huodongJson = self.activityArray[indexPath.row - 1];
+            login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
               
                 [self ishavemobel];
@@ -1291,6 +1320,9 @@ static NSString *khuodongCell = @"HuodongCell";
                     
                     
                 } else {
+                    
+                    huodongJson = self.activityArray[indexPath.row - 1];
+                    
                     HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                     
                     huodongVC.diction = huodongJson;
@@ -1316,6 +1348,10 @@ static NSString *khuodongCell = @"HuodongCell";
                         [self.navigationController pushViewController:wxloginVC animated:YES];
                         
                     } else {
+                        
+                        huodongJson = self.activityArray[indexPath.row - 1];
+                        
+                        
                         HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                         
                         huodongVC.diction = huodongJson;

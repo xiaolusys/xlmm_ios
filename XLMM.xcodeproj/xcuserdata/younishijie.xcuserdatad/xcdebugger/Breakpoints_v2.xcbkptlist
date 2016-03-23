@@ -904,11 +904,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480221728.833407"
+            timestampString = "480411192.763914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
+            startingLineNumber = "429"
+            endingLineNumber = "429"
             landmarkName = "-createCollectionView"
             landmarkType = "5">
          </BreakpointContent>
@@ -920,11 +920,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480221755.032876"
+            timestampString = "480408591.907802"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "-reachabilityChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -936,11 +936,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480221758.360404"
+            timestampString = "480408591.907802"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "-reachabilityChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -952,11 +952,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480222879.426745"
+            timestampString = "480411192.763914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "400"
-            endingLineNumber = "400"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-createCollectionView"
             landmarkType = "5">
          </BreakpointContent>
@@ -968,11 +968,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480393194.524055"
+            timestampString = "480411326.502774"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "964"
-            endingLineNumber = "964"
+            startingLineNumber = "990"
+            endingLineNumber = "990"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -984,11 +984,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480393194.524055"
+            timestampString = "480411326.502774"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "952"
-            endingLineNumber = "952"
+            startingLineNumber = "978"
+            endingLineNumber = "978"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1048,11 +1048,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480393194.524055"
+            timestampString = "480411192.763914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "684"
-            endingLineNumber = "684"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
             landmarkName = "-fetchedPromotePageData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1064,12 +1064,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480393194.524055"
+            timestampString = "480411192.763914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
+            startingLineNumber = "711"
+            endingLineNumber = "711"
             landmarkName = "-fetchedPromotePageData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411273.242404"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "-fetchActivities:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411326.502774"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "881"
+            endingLineNumber = "881"
+            landmarkName = "-collectionView:numberOfItemsInSection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411421.539597"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "905"
+            endingLineNumber = "905"
+            landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411423.564697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "902"
+            endingLineNumber = "902"
+            landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411447.338949"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1117"
+            endingLineNumber = "1117"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480411450.146736"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1130"
+            endingLineNumber = "1130"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/TixianViewController.m"
+            timestampString = "480412422.985555"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
