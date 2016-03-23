@@ -200,7 +200,7 @@
             break;
         }
         case 101:{
-            NSString *title = [NSString stringWithFormat:@"%@ %@", self.shopShareName, self.shopDesc];
+            NSString *title = [NSString stringWithFormat:@"%@", self.shopDesc];
             
             
             [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;
