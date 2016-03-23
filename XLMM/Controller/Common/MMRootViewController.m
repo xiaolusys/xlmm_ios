@@ -312,6 +312,8 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpHome:) name:@"fromActivityToToday" object:nil];
+    
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -336,6 +338,12 @@
     
     
 }
+
+- (void)jumpHome:(NSNotification *)notification {
+    NSDictionary *info = notification.userInfo;
+    NSLog(@"---跳转－－－－%@", info);
+}
+
 - (NSArray *)randomArray{
     NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
     
