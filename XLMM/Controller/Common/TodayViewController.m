@@ -501,10 +501,8 @@ static NSString *khuodongCell = @"HuodongCell";
         } else {
             if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
             } else {
-                if ([[huodongJson objectForKey:@"mask_link"] isEqualToString:@""]) {
-                    
-                } else{
-                    
+
+                
                 
                     backView = [[UIView alloc] initWithFrame:self.view.bounds];
                     backView.backgroundColor = [UIColor blackColor];
@@ -535,7 +533,7 @@ static NSString *khuodongCell = @"HuodongCell";
                     imageView.userInteractionEnabled = YES;
                     [self.view addSubview:activityView];
                     [defaults setObject:activityID forKey:@"activityid"];
-                }
+
             }
         }
     }
