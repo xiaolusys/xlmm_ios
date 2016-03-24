@@ -441,7 +441,7 @@
     
     
     for (int i = 0; i < allDingdan.count; i++) {
-        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 0, SCREENWIDTH - 40, 120)];
+        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 30, SCREENWIDTH - 40, 120)];
         
         shartView.tag = 1001 + i;
         
@@ -477,10 +477,13 @@
         [self.mamaScrollView addSubview:shartView];
         
     }
-    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 115, SCREENWIDTH *allDingdan.count, 0.5)];
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 148, SCREENWIDTH - 40, 0.5)];
     bottomLine.backgroundColor = [UIColor lineGrayColor];
     [self.mamaScrollView addSubview:bottomLine];
-
+    
+    bottomLine = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH + 20, 148, SCREENWIDTH - 40, 0.5)];
+    bottomLine.backgroundColor = [UIColor lineGrayColor];
+    [self.mamaScrollView addSubview:bottomLine];
 }
 
 // 点击表格 更新数据
