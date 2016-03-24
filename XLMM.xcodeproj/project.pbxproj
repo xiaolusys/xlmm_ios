@@ -1647,8 +1647,8 @@
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiaright.png; sourceTree = "<group>"; };
 		3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiajia.png; sourceTree = "<group>"; };
-		3234739C1CA3E3DF00BDE172 /* DotLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotLineView.h; sourceTree = "<group>"; };
-		3234739D1CA3E3DF00BDE172 /* DotLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotLineView.m; sourceTree = "<group>"; };
+		3234739C1CA3E3DF00BDE172 /* DotLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DotLineView.h; path = ../CartView/DotLineView.h; sourceTree = "<group>"; };
+		3234739D1CA3E3DF00BDE172 /* DotLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DotLineView.m; path = ../CartView/DotLineView.m; sourceTree = "<group>"; };
 		325B79781C97E6F10022F930 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		325B79791C97E6F10022F930 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		325B797A1C97E6F10022F930 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -1874,8 +1874,6 @@
 		18306FC71C97B5BD00B7665E /* CartView */ = {
 			isa = PBXGroup;
 			children = (
-				3234739C1CA3E3DF00BDE172 /* DotLineView.h */,
-				3234739D1CA3E3DF00BDE172 /* DotLineView.m */,
 				325B79781C97E6F10022F930 /* AddressTableCell.h */,
 				325B79791C97E6F10022F930 /* AddressTableCell.m */,
 				325B797A1C97E6F10022F930 /* AddressTableCell.xib */,
@@ -1959,6 +1957,8 @@
 		1830700E1C97B5BD00B7665E /* MaMaView */ = {
 			isa = PBXGroup;
 			children = (
+				3234739C1CA3E3DF00BDE172 /* DotLineView.h */,
+				3234739D1CA3E3DF00BDE172 /* DotLineView.m */,
 				325B79EA1C97E73A0022F930 /* CarryLogHeaderView.h */,
 				325B79EB1C97E73A0022F930 /* CarryLogHeaderView.m */,
 				325B79EC1C97E73A0022F930 /* CarryLogHeaderView.xib */,
