@@ -618,8 +618,8 @@
 		183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */; };
 		183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */; };
 		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
-		18AC6C771CA265D600316E65 /* HuodongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC6C751CA265D600316E65 /* HuodongViewController.m */; };
-		18AC6C781CA265D600316E65 /* HuodongViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C761CA265D600316E65 /* HuodongViewController.xib */; };
+		18315F771CA3E023003A9AFD /* HuodongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18315F751CA3E023003A9AFD /* HuodongViewController.m */; };
+		18315F781CA3E023003A9AFD /* HuodongViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18315F761CA3E023003A9AFD /* HuodongViewController.xib */; };
 		18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */; };
 		18AC6C801CA2AF1000316E65 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7F1CA2AF1000316E65 /* heart.png */; };
 		18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D862751CA0EE78004A19BD /* AboutFansViewController.m */; };
@@ -1612,9 +1612,9 @@
 		183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaPersonCenterViewController.xib; sourceTree = "<group>"; };
 		183076AC1C97E31A00B7665E /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		183076AD1C97E31A00B7665E /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
-		18AC6C741CA265D600316E65 /* HuodongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuodongViewController.h; sourceTree = "<group>"; };
-		18AC6C751CA265D600316E65 /* HuodongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuodongViewController.m; sourceTree = "<group>"; };
-		18AC6C761CA265D600316E65 /* HuodongViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongViewController.xib; sourceTree = "<group>"; };
+		18315F741CA3E023003A9AFD /* HuodongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuodongViewController.h; sourceTree = "<group>"; };
+		18315F751CA3E023003A9AFD /* HuodongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuodongViewController.m; sourceTree = "<group>"; };
+		18315F761CA3E023003A9AFD /* HuodongViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongViewController.xib; sourceTree = "<group>"; };
 		18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FansEmpty.xib; sourceTree = "<group>"; };
 		18AC6C7F1CA2AF1000316E65 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		18D862741CA0EE77004A19BD /* AboutFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutFansViewController.h; sourceTree = "<group>"; };
@@ -3512,9 +3512,9 @@
 		18AC6C731CA247C600316E65 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
-				18AC6C741CA265D600316E65 /* HuodongViewController.h */,
-				18AC6C751CA265D600316E65 /* HuodongViewController.m */,
-				18AC6C761CA265D600316E65 /* HuodongViewController.xib */,
+				18315F741CA3E023003A9AFD /* HuodongViewController.h */,
+				18315F751CA3E023003A9AFD /* HuodongViewController.m */,
+				18315F761CA3E023003A9AFD /* HuodongViewController.xib */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -3844,7 +3844,6 @@
 				1830762A1C97D49A00B7665E /* refund.png in Resources */,
 				183075E91C97D49A00B7665E /* childImage.png in Resources */,
 				183076511C97D49A00B7665E /* yishiyong.png in Resources */,
-				18AC6C781CA265D600316E65 /* HuodongViewController.xib in Resources */,
 				183075D01C97D49A00B7665E /* mamaShare.png in Resources */,
 				1830760F1C97D49A00B7665E /* Icon-40@2x.png in Resources */,
 				183074421C97D17900B7665E /* ios-social-sdk-like.html in Resources */,
@@ -3976,6 +3975,7 @@
 				183076551C97D49A00B7665E /* 圈圈加载0001.png in Resources */,
 				183074401C97D17900B7665E /* ios-social-sdk-comment-detail.html in Resources */,
 				183075FD1C97D49A00B7665E /* hide_passwd_icon.png in Resources */,
+				18315F781CA3E023003A9AFD /* HuodongViewController.xib in Resources */,
 				183075951C97D49A00B7665E /* icon_loading.gif in Resources */,
 				183072021C97BE3700B7665E /* TixianHistoryViewController.xib in Resources */,
 				183076421C97D49A00B7665E /* uparrowicon.png in Resources */,
@@ -4380,7 +4380,7 @@
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
 				18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */,
 				1830723A1C97BE3700B7665E /* PersonCenterViewController1.m in Sources */,
-				18AC6C771CA265D600316E65 /* HuodongViewController.m in Sources */,
+				18315F771CA3E023003A9AFD /* HuodongViewController.m in Sources */,
 				183074191C97D17800B7665E /* NSData+ImageContentType.m in Sources */,
 				183074121C97D17800B7665E /* QNUploadOption.m in Sources */,
 				325B7A161C97E73A0022F930 /* TixianTableViewCell.m in Sources */,
