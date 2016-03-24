@@ -305,12 +305,15 @@ static NSString *khuodongCell = @"HuodongCell";
             if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
             } else {
                 
+                backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//                backView.backgroundColor = [UIColor c];
+//                backView.alpha = 0.5;
+                backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
                 
+//                [self.view addSubview:backView];
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                [window addSubview:backView];
                 
-                backView = [[UIView alloc] initWithFrame:self.view.bounds];
-                backView.backgroundColor = [UIColor blackColor];
-                backView.alpha = 0.5;
-                [self.view addSubview:backView];
                 NSArray *array;
                 array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
                 
@@ -320,7 +323,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 UIButton *button = (UIButton *)[activityView viewWithTag:200];
                 [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
                 UIImageView *imageView = [activityView viewWithTag:100];
-                activityView.center = self.view.center;
+                activityView.center = backView.center;
                 
                 
                 NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
@@ -334,7 +337,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 imageView.contentMode = UIViewContentModeScaleAspectFill;
                 imageView.layer.masksToBounds = YES;
                 imageView.userInteractionEnabled = YES;
-                [self.view addSubview:activityView];
+                [backView addSubview:activityView];
                 [defaults setObject:activityID forKey:@"activityid"];
                 
             }
@@ -596,7 +599,7 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)guanbiClicked:(UIButton *)button{
     [backView removeFromSuperview];
-    [activityView removeFromSuperview];
+//    [activityView removeFromSuperview];
     
 }
 
@@ -612,8 +615,6 @@ static NSString *khuodongCell = @"HuodongCell";
         huodongVC.diction = huodongJson;
         
         [self.navigationController pushViewController:huodongVC animated:YES];
-        [backView removeFromSuperview];
-        [activityView removeFromSuperview];
     } else{
         if (login_required) {
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
@@ -625,13 +626,9 @@ static NSString *khuodongCell = @"HuodongCell";
             
             
             [self.navigationController pushViewController:huodongVC animated:YES];
-            [backView removeFromSuperview];
-            [activityView removeFromSuperview];
         }
-        
     }
-
-    
+    [backView removeFromSuperview];
 }
 
 - (void)fetchedPromoteMorePageData:(NSData *)data{
