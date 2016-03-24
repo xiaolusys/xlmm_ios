@@ -48,7 +48,7 @@
     float ableTixianJine;
     
     float mamahuoyueduValue;
-    
+    UIView *orongeCircleView;
     
     NSMutableArray *allDingdan;
     
@@ -71,6 +71,7 @@
 @property (nonatomic, strong)NSString *orderRecord;
 
 @property (nonatomic, copy) NSArray *mamaOrderArray;
+@property (nonatomic, strong) NSMutableArray *labelArray;
 
 
 //分享点击补贴
@@ -113,6 +114,7 @@
     dataArray = [[NSMutableArray alloc] initWithCapacity:30];
     self.dataArr = [[NSMutableArray alloc] init];
     allDingdan = [[NSMutableArray alloc] init];
+    self.labelArray = [[NSMutableArray alloc] init];
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
     
@@ -448,7 +450,7 @@
     
     
     for (int i = 0; i < allDingdan.count; i++) {
-        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 30, SCREENWIDTH - 40, 120)];
+        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 30, SCREENWIDTH - 40, 150)];
         
         shartView.tag = 1001 + i;
         
@@ -491,6 +493,38 @@
     bottomLine = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH + 20, 148, SCREENWIDTH - 40, 0.5)];
     bottomLine.backgroundColor = [UIColor lineGrayColor];
     [self.mamaScrollView addSubview:bottomLine];
+    
+    
+    self.mamaScrollView.scrollEnabled = NO;
+    
+    //
+    
+    orongeCircleView = [[UIView alloc] init];
+    orongeCircleView.layer.cornerRadius = 10;
+    orongeCircleView.backgroundColor = [UIColor orangeThemeColor];
+ //   orongeCircleView.alpha = 0.3;
+    [self.mamaScrollView addSubview:orongeCircleView];
+    
+    
+    //
+    NSArray *text = @[@"一", @"二", @"三", @"四",@"五",@"六",@"日"];
+    for (int i = 0; i < 7; i++) {
+        UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(SCREENWIDTH + i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
+        label.text = text[i];
+        label.font = [UIFont systemFontOfSize:14];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor orangeThemeColor];
+        label.tag = 8000+ i;
+        label.userInteractionEnabled = NO;
+        [self.mamaScrollView addSubview:label];
+        [self.labelArray addObject:label];
+    }
+    NSLog(@"%@", self.labelArray);
+  
+    
+    
+    
+    
 }
 
 // 点击表格 更新数据
@@ -513,7 +547,7 @@
   //  NSLog(@"unit = %.0f", unitwidth);
     int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
-  //  NSLog(@"index = %d", index);
+    NSLog(@"index = %d", index);
 
     
 
@@ -544,6 +578,23 @@
     self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
     self.shouyiLabel.text = [dic[@"carry"] stringValue];
     self.todayNum.text = [dic[@"visitor_num"] stringValue];
+    __block UILabel *label = (UILabel *)self.labelArray[index];
+    CGRect rect = label.frame;
+    
+    label = [self.mamaScrollView viewWithTag:(8000 + index)];
+    NSLog(@"label = %@", label);
+    
+    for (int i = 0; i < 7; i++) {
+        UILabel *theLabel = [self.mamaScrollView viewWithTag:(8000 + i)];
+        theLabel.textColor = [UIColor orangeThemeColor];
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        orongeCircleView.frame = rect;
+    } completion:^(BOOL finished) {
+        label.textColor = [UIColor whiteColor];
+        
+        
+    }];
     
     
  
