@@ -597,7 +597,7 @@
     
     NSString *urlString = [url absoluteString];
     
-    NSLog(@"url = %@", urlString);
+    NSLog(@"----------url = %@", urlString);
     NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
     NSURL *url1 = [NSURL URLWithString:newUrl];
     
@@ -608,8 +608,6 @@
     } else if(array.count == 2) {
         NSString *productID ;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"productTransate" object:nil userInfo:@{@"productID":productID}];
-        
-        
     }
    
     

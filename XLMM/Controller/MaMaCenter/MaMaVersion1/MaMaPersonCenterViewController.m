@@ -90,6 +90,7 @@
 @property (nonatomic, strong)NSNumber *fansNum;
 
 @property (nonatomic, strong)NSNumber *visitorDate;
+@property (nonatomic, strong)NSNumber *carryValue;
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -117,6 +118,7 @@
     
     self.earningsRecord = @"0.00";
     self.orderRecord = @"0";
+    self.carryValue = [NSNumber numberWithInt:0];
     
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     
@@ -185,7 +187,9 @@
     nickName = [fortune objectForKey:@"mama_name"];
     
     //账户金额
-    self.jineLabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"cash_value"]];
+    self.jineLabel.text = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"cash_value"] floatValue]];
+    self.carryValue = [fortune objectForKey:@"cash_value"];
+    
     self.huoyuedulabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"active_value_num"]];
   
     self.huoyueduString = [[fortune objectForKey:@"active_value_num"] stringValue];
@@ -340,7 +344,7 @@
 
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
     TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
-  
+    vc.carryNum = self.carryValue;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

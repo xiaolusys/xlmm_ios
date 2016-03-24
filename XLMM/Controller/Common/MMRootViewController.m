@@ -497,10 +497,6 @@
             self.navigationItem.rightBarButtonItem = nil;
         }
         
-
-        
-        
-        
     }
    
 }

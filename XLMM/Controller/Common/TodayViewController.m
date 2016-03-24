@@ -179,14 +179,14 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)updateRequestTime {
     _requestTime++;
-//    NSLog(@"--------------%ld", (long)_requestTime);
+    NSLog(@"--------------%ld", (long)_requestTime);
     if (_requestTime > 10) {
         [self.myCollectionView.mj_header endRefreshing];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"哎呦，网不好呦！请重新刷新" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         alert.tag = 200;
         [alert show];
         _requestTime = 0;
-//        NSLog(@"执行了一次刷新。。。%ld", (long)_requestTime);
+        NSLog(@"执行了一次刷新。。。%ld", (long)_requestTime);
     }
 }
 
@@ -265,19 +265,14 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     [self downloadActivityData];
-    
-    
-    
 //    [self dingshishuaxin];
 
 }
 - (void)downloadActivityData{
    // http://dev.xiaolumeimei.com/rest/v1/activitys
-//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
-//    
-//    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
     
-    
+    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
     
 }
 - (void)fetchActivities:(NSData *)data{
@@ -286,6 +281,9 @@ static NSString *khuodongCell = @"HuodongCell";
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     self.activityArray = [array mutableCopy];
+    if ( self.activityArray.count == 0) {
+        return;
+    }
     
     huodongJson = self.activityArray[0];
     
@@ -301,46 +299,46 @@ static NSString *khuodongCell = @"HuodongCell";
         NSString *userNumber = [defaults objectForKey:@"activityid"];
         
         
-//        if ([activityID isEqualToString:userNumber]) {
-//            
-//        } else {
-//            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-//            } else {
-//                
-//                
-//                
-//                backView = [[UIView alloc] initWithFrame:self.view.bounds];
-//                backView.backgroundColor = [UIColor blackColor];
-//                backView.alpha = 0.5;
-//                [self.view addSubview:backView];
-//                NSArray *array;
-//                array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-//                
-//                
-//                activityView = array[0];
-//                activityView.frame = CGRectMake(0, 0, 300, 280);
-//                UIButton *button = (UIButton *)[activityView viewWithTag:200];
-//                [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-//                UIImageView *imageView = [activityView viewWithTag:100];
-//                activityView.center = self.view.center;
-//                
-//                
-//                NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
-//                
-//                UIImage *image = [UIImage imagewithURLString:imageUrl];
-//                imageView.image = image;
-//                
-//                
-//                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-//                [imageView addGestureRecognizer:tap];
-//                imageView.contentMode = UIViewContentModeScaleAspectFill;
-//                imageView.layer.masksToBounds = YES;
-//                imageView.userInteractionEnabled = YES;
-//                [self.view addSubview:activityView];
-//                [defaults setObject:activityID forKey:@"activityid"];
-//                
-//            }
-//        }
+        if ([activityID isEqualToString:userNumber]) {
+            
+        } else {
+            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
+            } else {
+                
+                
+                
+                backView = [[UIView alloc] initWithFrame:self.view.bounds];
+                backView.backgroundColor = [UIColor blackColor];
+                backView.alpha = 0.5;
+                [self.view addSubview:backView];
+                NSArray *array;
+                array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
+                
+                
+                activityView = array[0];
+                activityView.frame = CGRectMake(0, 0, 300, 280);
+                UIButton *button = (UIButton *)[activityView viewWithTag:200];
+                [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+                UIImageView *imageView = [activityView viewWithTag:100];
+                activityView.center = self.view.center;
+                
+                
+                NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+                
+                UIImage *image = [UIImage imagewithURLString:imageUrl];
+                imageView.image = image;
+                
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+                [imageView addGestureRecognizer:tap];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.layer.masksToBounds = YES;
+                imageView.userInteractionEnabled = YES;
+                [self.view addSubview:activityView];
+                [defaults setObject:activityID forKey:@"activityid"];
+                
+            }
+        }
     }
 
     
