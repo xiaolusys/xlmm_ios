@@ -47,7 +47,8 @@
     
     NSString *nickName;
     float ableTixianJine;
-    
+    int quxiaodays;
+
     float mamahuoyueduValue;
     UIView *orongeCircleView;
     
@@ -93,6 +94,9 @@
 
 @property (nonatomic, strong)NSNumber *visitorDate;
 @property (nonatomic, strong)NSNumber *carryValue;
+
+@property (nonatomic, strong) NSNumber *weekDay;
+
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -147,6 +151,8 @@
         
     }];
     
+    [self createWeekDay];
+    
     [self prepareData];
     [self createChart:dataArray];
     
@@ -163,6 +169,22 @@
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huoyueduDetails)];
     
     [self.mamaHuoyueduView addGestureRecognizer:tap1];
+    
+}
+- (void)createWeekDay{
+    
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *now;
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags =NSYearCalendarUnit | NSMonthCalendarUnit |NSDayCalendarUnit | NSWeekdayCalendarUnit |
+    NSHourCalendarUnit |NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    now=[NSDate date];
+    comps = [calendar components:unitFlags fromDate:now];
+    NSLog(@"comps = %@", comps);
+    self.weekDay = [NSNumber numberWithInteger:[comps weekday]];
+    
+    NSLog(@"今天是周%@", self.weekDay);
     
 }
 
@@ -451,7 +473,7 @@
     
     
     for (int i = 0; i < allDingdan.count; i++) {
-        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * (count - i - 1) + 20, 30, SCREENWIDTH - 40, 150)];
+        UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * i + 20, 30, SCREENWIDTH - 40, 150)];
         
         shartView.tag = 1001 + i;
         
@@ -460,9 +482,7 @@
         
         NSMutableArray *mutabledingdan = [allDingdan[i] mutableCopy];
         
-        for (int k = 0; k < mutabledingdan.count/2; k++) {
-            [mutabledingdan exchangeObjectAtIndex:k withObjectAtIndex:mutabledingdan.count- k - 1];
-        }
+        
         
        // NSLog(@"每周订单数%@", mutabledingdan);
         
@@ -511,7 +531,6 @@
     [self.mamaScrollView addSubview:bottomLine];
     
     
-    self.mamaScrollView.scrollEnabled = NO;
     
     //
     
@@ -550,7 +569,13 @@
     UIView *weekView = [recognizer view];
     NSInteger week = weekView.tag - 1000;
     
-   // NSLog(@"第 %ld 周订单数据", week);
+    if (week == 2) {
+        week =1;
+    } else if (week == 1){
+        week = 2;
+    }
+    
+    NSLog(@"第 %ld 周订单数据", week);
     
    // NSLog(@"weekView subView = %@", [weekView subviews]);
     
@@ -583,12 +608,17 @@
     NSInteger days = (6 - index) + (week - 1)*7;
     
     self.visitorDate = [NSNumber numberWithInteger:days];
-   // NSLog(@"days = %ld", days);
+    NSLog(@"days = %ld", days);
+   // NSLog(@"array = %@", self.mamaOrderArray);
+   // NSLog(@"%ld", quxiaodays);
     
+    if (days - quxiaodays < 0) {
+        return;
+    }
     
-    NSDictionary *dic = self.mamaOrderArray[days];
+    NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
     
- //   NSLog(@"info = %@", dic);
+    NSLog(@"info = %@", dic);
     
     
     self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
@@ -658,23 +688,60 @@
         self.todayNum.text = [dic[@"visitor_num"] stringValue];
         
         
-       // NSLog(@"orderArray = %@", self.mamaOrderArray);
+        NSLog(@"orderArray = %@", self.mamaOrderArray);
+        data = responseObject;
         
-        
-     //   NSLog(@"%@", responseObject);
+        NSLog(@"%@", responseObject);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
-        
-        for (int i = 0; i < data.count; i++) {
-            NSNumber *order_num = [data[i] objectForKey:@"order_num"];
-            [weekArray addObject:order_num];
+        int xingqiji = (int)[self.weekDay integerValue];
+        switch (xingqiji) {
+            case 1:
+                quxiaodays = 0;
+                break;
+            case 2:
+                quxiaodays = 6;
+                break;
+            case 3:
+                quxiaodays = 5;
+                break;
+            case 4:
+                quxiaodays = 4;
+                break;
+            case 5:
+                quxiaodays = 3;
+                break;
+            case 6:
+                quxiaodays = 2;
+                break;
+            case 7:
+                quxiaodays = 1;
+                break;
+                
+            default:
+                break;
+        }
+        for (int i = quxiaodays; i < data.count + quxiaodays; i++) {
+            if (i>data.count - 1) {
+
+                [weekArray addObject:@0];
+            } else {
+                NSNumber *order_num = [data[i] objectForKey:@"order_num"];
+
+                [weekArray addObject:order_num];
+                
+            }
             
-            if ((i +1)%7 == 0) {
+            
+            if ((i +1 - quxiaodays)%7 == 0) {
                 NSInteger sum = [self sumofoneWeek:weekArray];
                 //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
                 }
                 [allDingdan addObject:[weekArray copy]];
+                
+                NSLog(@"weekArray ＝ %@", weekArray);
+                
                 [weekArray removeAllObjects];
             }
             
