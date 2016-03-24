@@ -641,6 +641,7 @@
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
 		3226D2E61C9932210095D766 /* xuanpinshangjiaright.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */; };
 		3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */; };
+		3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3234739D1CA3E3DF00BDE172 /* DotLineView.m */; };
 		325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B79791C97E6F10022F930 /* AddressTableCell.m */; };
 		325B79941C97E6F10022F930 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325B797A1C97E6F10022F930 /* AddressTableCell.xib */; };
 		325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B797C1C97E6F10022F930 /* BuyCartsView.m */; };
@@ -1646,6 +1647,8 @@
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiaright.png; sourceTree = "<group>"; };
 		3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiajia.png; sourceTree = "<group>"; };
+		3234739C1CA3E3DF00BDE172 /* DotLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotLineView.h; sourceTree = "<group>"; };
+		3234739D1CA3E3DF00BDE172 /* DotLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotLineView.m; sourceTree = "<group>"; };
 		325B79781C97E6F10022F930 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		325B79791C97E6F10022F930 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		325B797A1C97E6F10022F930 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -1871,6 +1874,8 @@
 		18306FC71C97B5BD00B7665E /* CartView */ = {
 			isa = PBXGroup;
 			children = (
+				3234739C1CA3E3DF00BDE172 /* DotLineView.h */,
+				3234739D1CA3E3DF00BDE172 /* DotLineView.m */,
 				325B79781C97E6F10022F930 /* AddressTableCell.h */,
 				325B79791C97E6F10022F930 /* AddressTableCell.m */,
 				325B797A1C97E6F10022F930 /* AddressTableCell.xib */,
@@ -4241,6 +4246,7 @@
 				183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */,
 				183073D81C97D17800B7665E /* QNDomain.m in Sources */,
 				1830724E1C97BE3700B7665E /* ShenQingTuikuanController.m in Sources */,
+				3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */,
 				181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */,
 				325B79D21C97E7160022F930 /* HuodongCollectionViewCell.m in Sources */,
 				183070E81C97B83900B7665E /* MaMaSelectProduct.m in Sources */,

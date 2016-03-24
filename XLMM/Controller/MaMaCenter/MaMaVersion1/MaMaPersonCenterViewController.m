@@ -32,6 +32,7 @@
 #import "ShopPreviousViewController.h"
 #import "TodayVisitorViewController.h"
 
+#import "DotLineView.h"
 
 
 
@@ -485,6 +486,21 @@
         
         [self.mamaScrollView addSubview:shartView];
         
+        
+        for (int i = 0; i < 7; i++) {
+            CGPoint point2 = [linechart getPointForIndex:i];
+
+            NSLog(@"%@", NSStringFromCGPoint(point2));
+            
+            DotLineView *line = [[DotLineView alloc] initWithFrame:CGRectMake(point2.x, 0 , 1, point2.y) andColor:[UIColor orangeThemeColor]];
+            line.backgroundColor = [UIColor clearColor];
+            
+            [shartView addSubview:line];
+            
+            
+        }
+        
+        
     }
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 148, SCREENWIDTH - 40, 0.5)];
     bottomLine.backgroundColor = [UIColor lineGrayColor];
@@ -519,7 +535,7 @@
         [self.mamaScrollView addSubview:label];
         [self.labelArray addObject:label];
     }
-    NSLog(@"%@", self.labelArray);
+   // NSLog(@"%@", self.labelArray);
   
     
     
