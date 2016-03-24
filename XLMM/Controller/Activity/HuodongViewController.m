@@ -179,7 +179,7 @@
     
     self.url = dicShare[@"share_link"];
     
-    self.kuaizhaoLink = dicShare[@"qrcode_link"];
+    self.kuaizhaoLink = dicShare[@"share_link"];
     
     NSString *imageUrlString = dicShare[@"share_icon"];
 //    NSData *imageData = nil;

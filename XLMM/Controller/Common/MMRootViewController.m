@@ -333,7 +333,9 @@
     }
     
     
+    
 }
+
 
 - (void)jumpHome:(NSNotification *)notification {
     NSDictionary *info = notification.userInfo;
