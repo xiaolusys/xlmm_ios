@@ -124,7 +124,7 @@
         if (zhanghuyue >= 200) {
             
         } else {
-            self.hongbaoImage2.image = [UIImage imageNamed:@"lo9    `hongbaounused200.png"];
+            self.hongbaoImage2.image = [UIImage imageNamed:@"hongbaounused200.png"];
             self.hongbaoImage2.userInteractionEnabled = NO;
             
             
