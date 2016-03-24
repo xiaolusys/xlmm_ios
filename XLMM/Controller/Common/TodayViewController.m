@@ -265,9 +265,6 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     [self downloadActivityData];
-    
-    
-    
 //    [self dingshishuaxin];
 
 }
@@ -276,6 +273,7 @@ static NSString *khuodongCell = @"HuodongCell";
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
     
     [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+    
 }
 - (void)fetchActivities:(NSData *)data{
     if (data == nil) {
@@ -283,6 +281,9 @@ static NSString *khuodongCell = @"HuodongCell";
     }
     NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     self.activityArray = [array mutableCopy];
+    if ( self.activityArray.count == 0) {
+        return;
+    }
     
     huodongJson = self.activityArray[0];
     

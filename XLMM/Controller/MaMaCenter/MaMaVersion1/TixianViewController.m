@@ -76,22 +76,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
- 
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        self.name = @"小鹿妈妈";
-        self.cantixianjine = 0.00;
-        
-        
-    } else {
-        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSDictionary *dic = array[0];
-        MMLOG(dic);
-        self.cantixianjine = [[dic objectForKey:@"coulde_cashout"] floatValue];
-        self.name = [dic objectForKey:@"weikefu"];
-    }
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
+// 
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        self.name = @"小鹿妈妈";
+//        self.cantixianjine = 0.00;
+//        
+//        
+//    } else {
+//        NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//        NSDictionary *dic = array[0];
+//        MMLOG(dic);
+//        self.cantixianjine = [[dic objectForKey:@"coulde_cashout"] floatValue];
+//        self.name = [dic objectForKey:@"weikefu"];
+//    }
     
+    self.cantixianjine = [self.carryNum floatValue];
    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hongbaoClicked:)];
     UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hongbaoClicked:)];
@@ -292,7 +293,6 @@
 }
 
 - (IBAction)fabuClicked:(id)sender {
-    
  //   NSLog(@"发布产品");
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];

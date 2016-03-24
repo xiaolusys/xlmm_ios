@@ -54,14 +54,13 @@
     
     NSString *title = nil;
     
-//    if ([self.fansNum integerValue] == 0) {
-//        title = @"暂无粉丝";
-//        [self displayDefaultView];
-//    }else {
-//        title = @"粉丝列表";
-//        [self createTableView];
-//    }
-    [self displayDefaultView];
+    if ([self.fansNum integerValue] == 0) {
+        title = @"暂无粉丝";
+        [self displayDefaultView];
+    }else {
+        title = @"粉丝列表";
+        [self createTableView];
+    }
     
     [self createNavigationBarWithTitle:title selecotr:@selector(backClicked:)];
 }
