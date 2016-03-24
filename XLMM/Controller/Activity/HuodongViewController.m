@@ -334,13 +334,6 @@
 }
 
 - (void)shareForPlatform:(NSDictionary *)data{
-//    NSDictionary *info = notification.userInfo;
-    //NSLog(@"info = %@", info);
-    
-   // http://dev.xiaolumeimei.com/rest/v1/pmt/free_order/get_share_content
-    
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
-//    NSLog(@"string = %@", string);
     
     NSNumber *activeid = data[@"active_id"];
     NSString *platform = data[@"share_to"];
@@ -440,7 +433,6 @@
                 
             } else {
                 [SVProgressHUD showWithStatus:@"正在生成快照..."];
-                //                  isWXFriends = NO;
                 [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
             }
             
@@ -448,7 +440,7 @@
             
             NSLog(@"friends");
             
-            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"links"]) {
                 [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
                 [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
                 

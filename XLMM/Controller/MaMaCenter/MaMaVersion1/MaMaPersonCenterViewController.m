@@ -410,7 +410,7 @@
      NSDictionary *dic = self.mamaOrderArray[days];
    // NSLog(@"dic = %@", dic);
     self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
-    self.shouyiLabel.text = [dic[@"carry"] stringValue];
+    self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]];
     self.todayNum.text = [dic[@"visitor_num"] stringValue];
     
     //改变竖线的位置。。。。
