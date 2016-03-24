@@ -125,15 +125,15 @@
     
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
-    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        NSLog(@"--------jumpToJsLocation called: %@", data);
+    [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"--------jumpToJsLocation called: %@", data);
         //        responseCallback(@"响应事件...");
         [self jumpToJsLocation:data];
     }];
     
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
 //        NSLog(@"--------getNativeShareWidget called: %@", data);
-//        NSLog(@"调用了分享功能呦－－－－－－");
+        NSLog(@"调用了分享功能呦－－－－－－");
         [self shareForPlatform:data];
     }];
 
@@ -333,7 +333,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)shareForPlatform:(NSDictionary *)dic{
+- (void)shareForPlatform:(NSDictionary *)data{
 //    NSDictionary *info = notification.userInfo;
     //NSLog(@"info = %@", info);
     
@@ -341,164 +341,146 @@
     
 //    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/free_order/get_share_content", Root_URL];
 //    NSLog(@"string = %@", string);
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
-
     
+    NSNumber *activeid = data[@"active_id"];
+    NSString *platform = data[@"share_to"];
     
-    
-    
-    NSString *param = @"";
-    NSArray *array = [param componentsSeparatedByString:@"&"];
-    NSString *platform = dic[@"share_to"];
-    NSString *url = [array[1] componentsSeparatedByString:@"="][1];
-    NSString *url1;
-    NSString *sharelink;
-    shareType = dic[@"share_to"];
-    @try {
-        url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
-        sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
-        NSLog(@"link = %@", sharelink);
+    if ([activeid integerValue] == 0) {
+        activeid = self.activityId;
     }
-    @catch (NSException *exception) {
-     //   NSLog(@"exception = %@", exception);
-        sharelink = nil;
-    }
-    @finally {
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];\
+    
+//    NSString *param = @"";
+//    NSArray *array = [param componentsSeparatedByString:@"&"];
+//    NSString *platform = data[@"share_to"];
+//    NSString *url = [array[1] componentsSeparatedByString:@"="][1];
+//    NSString *url1;
+   
+//    shareType = data[@"share_to"];
+//    @try {
+//        url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
+//        sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
+//        NSLog(@"link = %@", sharelink);
+//    }
+//    @catch (NSException *exception) {
+//     //   NSLog(@"exception = %@", exception);
+//        sharelink = nil;
+//    }
+//    @finally {
+//        
+//    }
+    
+//    NSLog(@"link = %@", sharelink);
+//    shareUrllink = sharelink;
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        shareTitle = [responseObject objectForKey:@"title"];
+        NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"link_qrcode"]];
+        NSLog(@"imageUrl = %@", imageurl);
+        newshareImage = [UIImage imagewithURLString:imageurl];
+        content = [responseObject objectForKey:@"active_dec"];
+        shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+        NSString *sharelink = [responseObject objectForKey:@"share_link"];
+        
+        if ([platform isEqualToString:@"qq"]) {
+            NSLog(@"qq");
+            
+            [UMSocialData defaultData].extConfig.qqData.url = sharelink;
+            [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+            
+            
+        }else if ([platform isEqualToString:@"sinawb"]){
+            NSLog(@"wb");
+            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
+            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:UIImagePNGRepresentation(shareImage)];
+            
+        } else if ([platform isEqualToString:@"web"]){
+            NSLog(@"copy");
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            NSString *str = sharelink;
+            if (str == nil) {
+                [SVProgressHUD showSuccessWithStatus:@"复制失败"];
+                return ;
+            }
+            [pab setString:str];
+            if (pab == nil) {
+                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+            }else
+            {
+                [SVProgressHUD showSuccessWithStatus:@"已复制"];
+            }
+            
+            [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
+        } else if ([platform isEqualToString:@"qqspa"]){
+            NSLog(@"zone");
+            
+            [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
+            [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image: shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+            
+            
+        } else if ([platform isEqualToString:@"wxapp"]){
+            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                NSLog(@"wx");
+                [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+                [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
+                
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    
+                }];
+                
+            } else {
+                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                //                  isWXFriends = NO;
+                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+            }
+            
+        }  else if ([platform isEqualToString:@"pyq"]){
+            
+            NSLog(@"friends");
+            
+            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
+                [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
+                
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    
+                }];
+            } else{
+                
+                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                //                  isWXFriends = NO;
+                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+                
+                
+            }
+            
+            
+            
+            
+        } else{
+            
+            NSLog(@"others");
+        }
+        
+        
+        
         
     }
-    
-    NSLog(@"link = %@", sharelink);
-    shareUrllink = sharelink;
-   
-    
-    NSDictionary *param0 = @{@"ufrom":platform};
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    
-    [manager POST:string parameters:param0
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              //  NSError *error;
-             NSLog(@"JSON: %@", responseObject);
-              //  active_dec   //  link_qrcode   title
-              shareTitle = [responseObject objectForKey:@"title"];
-              NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"link_qrcode"]];
-              NSLog(@"imageUrl = %@", imageurl);
-              newshareImage = [UIImage imagewithURLString:imageurl];
-              content = [responseObject objectForKey:@"active_dec"];
-              shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_img"]];
-              
-              
-              if ([platform isEqualToString:@"qq"]) {
-                  NSLog(@"qq");
-                  
-                  [UMSocialData defaultData].extConfig.qqData.url = sharelink;
-                  [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-                  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                  }];
-                  
-                  
-              }else if ([platform isEqualToString:@"sinawb"]){
-                  NSLog(@"wb");
-                  NSString *sinaContent = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
-                  [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:UIImagePNGRepresentation(shareImage)];
-                  
-                  
-                  
-                  
-              } else if ([platform isEqualToString:@"web"]){
-                  NSLog(@"copy");
-                  UIPasteboard *pab = [UIPasteboard generalPasteboard];
-                  NSString *str = sharelink;
-                  if (str == nil) {
-                      [SVProgressHUD showSuccessWithStatus:@"复制失败"];
-                      return ;  
-                  }
-                  [pab setString:str];
-                  if (pab == nil) {
-                      [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-                  }else
-                  {
-                      [SVProgressHUD showSuccessWithStatus:@"已复制"];
-                  }
-                  
-                  [SVProgressHUD showWithStatus:@"正在下载二维码..."];
-                  //                  isWXFriends = NO;
-                  NSLog(@"0000 = %@", [responseObject objectForKey:@"qrcode_link"]);
-                  [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
-                  
-                  
-              } else if ([platform isEqualToString:@"qqspa"]){
-                  NSLog(@"zone");
-                  
-                  [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
-                  [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
-                  
-                  [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image: shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                  }];
-                  
-                  
-              } else if ([platform isEqualToString:@"wxapp"]){
-                  if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
-                      NSLog(@"wx");
-                      [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-                      [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-                      
-                      [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                          
-                      }];
-
-                  } else {
-                      
-                      [SVProgressHUD showWithStatus:@"正在生成快照..."];
-                      //                  isWXFriends = NO;
-                      [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
-
-                      
-                  }
-                  
-                  
-                  
-                  
-                  
-              }  else if ([platform isEqualToString:@"pyq"]){
-                  
-                  NSLog(@"friends");
-                  
-                  if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
-                      [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
-                      [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-                      
-                      [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                          
-                      }];
-                  } else{
-                      
-                      [SVProgressHUD showWithStatus:@"正在生成快照..."];
-                      //                  isWXFriends = NO;
-                      [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
-
-                      
-                  }
-                  
-                  
-                  
-                  
-              } else{
-                  
-                  NSLog(@"others");
-              }
-
-
-              
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-              
-              
-          }];
-
-    
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+             
+             
+         }];
     
 }
 
@@ -682,7 +664,6 @@
             
         } else {
             NSLog(@"跳到H5首页");
-            
         }
     }
     
