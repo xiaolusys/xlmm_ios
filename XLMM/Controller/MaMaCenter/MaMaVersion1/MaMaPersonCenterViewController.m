@@ -246,7 +246,10 @@
     
     frame.origin.x += huoyuezhi;
     
-    
+    NSLog(@"huoyuezhi = %ld", huoyuezhi);
+    if (huoyuezhi < 36) {
+        huoyuezhi = 36;
+    }
     [UIView animateWithDuration:1.0 animations:^{
          self.huoyueduRight.constant = SCREENWIDTH - huoyuezhi;
 
