@@ -208,7 +208,9 @@
     NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
     
     
-    
+    if (totalPayment < 0) {
+        totalPayment = 0;
+    }
     //self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
@@ -339,7 +341,10 @@
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
     NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
     
-    
+    if (totalPayment < 0) {
+        totalPayment = 0;
+        
+    }
     
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
@@ -591,6 +596,9 @@
 
     float allpay = totalfee - discountfee + postfee - lijianpay;
     
+    if (allpay < 0) {
+        allpay = 0;
+    }
    // NSLog(@"allpay = %.1f", allpay);
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
     
@@ -667,7 +675,9 @@
     
     //pid:1:value:2
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",pay_ex[@"pid"],pay_ex[@"value"]];
-    
+    if (allpay < 0) {
+        allpay = 0;
+    }
     
     
     if (yhqModel.ID == nil) {
@@ -728,6 +738,8 @@
         NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"charge = %@", charge);
         errorCharge = charge;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        errorCharge = [dic objectForKey:@"detail"];
         
         
         
