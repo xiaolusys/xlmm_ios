@@ -598,17 +598,18 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
-    NSURL *url1 = [NSURL URLWithString:newUrl];
-    
-    NSString *paramString = [url1 query];
-    NSArray *array = [paramString componentsSeparatedByString:@"&"];
-    if (array.count == 3) {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"activityShare" object:nil userInfo:@{@"param":paramString}];     
-    } else if(array.count == 2) {
-        NSString *productID ;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"productTransate" object:nil userInfo:@{@"productID":productID}];
-    }
+//    NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
+//    NSURL *url1 = [NSURL URLWithString:newUrl];
+//    
+//    NSString *paramString = [url1 query];
+//    NSArray *array = [paramString componentsSeparatedByString:@"&"];
+//    if (array.count == 3) {
+//    [[NSNotificationCenter defaultCenter]postNotificationName:@"activityShare" object:nil userInfo:@{@"param":paramString}];
+//    }
+//    } else if(array.count == 2) {
+//        NSString *productID ;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"productTransate" object:nil userInfo:@{@"productID":productID}];
+//    }
    
     
     
