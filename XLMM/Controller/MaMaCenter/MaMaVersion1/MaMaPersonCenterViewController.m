@@ -58,6 +58,8 @@
     
     NSString *share_mmcode;
     
+    
+    
 //    NSNumber *_money;
 //    NSNumber *_clickTotalMoney;
 }
@@ -65,6 +67,11 @@
 @property (nonatomic, strong)FSLineChart *lineChart;
 
 @property (nonatomic, copy) NSString *huoyueduString;
+
+
+@property (nonatomic, strong) NSMutableArray *anotherLabelArray;
+
+@property (nonatomic, strong) UIView *anotherOrongeView;
 
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -122,6 +129,7 @@
     allDingdan = [[NSMutableArray alloc] init];
     self.labelArray = [[NSMutableArray alloc] init];
     self.lastweeknames = [[NSMutableArray alloc] init];
+    self.anotherLabelArray = [[NSMutableArray alloc] init];
     
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
@@ -156,9 +164,12 @@
     
     [self createWeekDay];
     
+    
     [self prepareData];
     [self createChart:dataArray];
-    
+
+    [self createButtons];
+
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.jineLabel addGestureRecognizer:tap];
@@ -174,6 +185,47 @@
     [self.mamaHuoyueduView addGestureRecognizer:tap1];
     
 }
+
+- (void)createButtons{
+    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn1.frame = CGRectMake(SCREENWIDTH - 20, 60, 20, 30);
+    [btn1 addTarget:self action:@selector(btn1Clicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.mamaScrollView addSubview:btn1];
+    [btn1 setBackgroundImage:[UIImage imageNamed:@"zhexianyou.png"] forState:UIControlStateNormal];
+   
+    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn2.frame = CGRectMake(SCREENWIDTH, 60, 20, 30);
+    [btn2 addTarget:self action:@selector(btn2Clicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.mamaScrollView addSubview:btn2];
+    [btn2 setBackgroundImage:[UIImage imageNamed:@"zhexianzuo.png"] forState:UIControlStateNormal];
+    
+  
+    
+    UIButton *btn4 = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn4.frame = CGRectMake(0, 60, 20, 30);
+    [self.mamaScrollView addSubview:btn4];
+    [btn4 setBackgroundImage:[UIImage imageNamed:@"zhexianzuo.png"] forState:UIControlStateNormal];
+ 
+}
+- (void)btn2Clicked{
+    NSLog(@"quxiazhou");
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.mamaScrollView.contentOffset = CGPointMake(0, 0);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)btn1Clicked{
+    NSLog(@"qubenzhou");
+    [UIView animateWithDuration:0.3 animations:^{
+        self.mamaScrollView.contentOffset = CGPointMake(SCREENWIDTH, 0);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 - (void)createWeekDay{
     
     
@@ -520,6 +572,12 @@
         
         [self.mamaScrollView addSubview:orongeCircleView];
         
+        self.anotherOrongeView = [[UIView alloc] init];
+        self.anotherOrongeView.layer.cornerRadius = 10;
+        self.anotherOrongeView.backgroundColor = [UIColor orangeThemeColor];
+        //   orongeCircleView.alpha = 0.3;
+        
+        [self.mamaScrollView addSubview:self.anotherOrongeView];
         
         
         
@@ -527,12 +585,19 @@
 
         
         
-        for (int i = 0; i < 7; i++) {
-            CGPoint point2 = [linechart getPointForIndex:i];
+        for (int j = 0; j < 7; j++) {
+            CGPoint point2 = [linechart getPointForIndex:j];
 
             NSLog(@"%@", NSStringFromCGPoint(point2));
+            UIColor *lineColor = [UIColor orangeColor];
+            if (i == 1) {
+                if ([self.weekDay integerValue] != 1 && [self.weekDay integerValue] < j+2  ) {
+                    lineColor = [UIColor imageViewBorderColor];
+                }
+            }
             
-            DotLineView *line = [[DotLineView alloc] initWithFrame:CGRectMake(point2.x, 0 , 1, point2.y) andColor:[UIColor orangeThemeColor]];
+            
+            DotLineView *line = [[DotLineView alloc] initWithFrame:CGRectMake(point2.x, 0 , 1, point2.y) andColor:lineColor];
             line.backgroundColor = [UIColor clearColor];
             
             [shartView addSubview:line];
@@ -669,9 +734,17 @@
         label.tag = 80+ i;
         label.userInteractionEnabled = NO;
         [self.mamaScrollView addSubview:label];
-        [self.labelArray addObject:label];
+        [self.anotherLabelArray addObject:label];
+        if (i == 6) {
+            label.textColor = [UIColor whiteColor];
+            self.anotherOrongeView.frame = label.frame;
+            
+            
+        }
     }
     
+    
+    [self createButtons];
     
 }
 
@@ -737,23 +810,49 @@
     self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
     self.shouyiLabel.text = [dic[@"carry"] stringValue];
     self.todayNum.text = [dic[@"visitor_num"] stringValue];
-    __block UILabel *label = (UILabel *)self.labelArray[index];
-    CGRect rect = label.frame;
     
-    label = [self.mamaScrollView viewWithTag:(8000 + index)];
-    NSLog(@"label = %@", label);
+    if (week == 1) {
+   
+        __block UILabel *label = (UILabel *)self.labelArray[index];
+        CGRect rect = label.frame;
+        
+        label = [self.mamaScrollView viewWithTag:(8000 + index)];
+        NSLog(@"label = %@", label);
+        
+        for (int i = 0; i < 7; i++) {
+            UILabel *theLabel = [self.mamaScrollView viewWithTag:(8000 + i)];
+            theLabel.textColor = [UIColor orangeThemeColor];
+        }
+        [UIView animateWithDuration:0.3 animations:^{
+            orongeCircleView.frame = rect;
+        } completion:^(BOOL finished) {
+            label.textColor = [UIColor whiteColor];
+            
+            
+        }];
+    } else if(week == 2) {
+        NSLog(@"index = %ld", (long)index);
     
-    for (int i = 0; i < 7; i++) {
-        UILabel *theLabel = [self.mamaScrollView viewWithTag:(8000 + i)];
-        theLabel.textColor = [UIColor orangeThemeColor];
+        __block UILabel *label = (UILabel *)self.anotherLabelArray[index];
+        CGRect rect = label.frame;
+        
+        label = [self.mamaScrollView viewWithTag:(80 + index)];
+        NSLog(@"label = %@", label);
+        
+        for (int i = 0; i < 7; i++) {
+            UILabel *theLabel = [self.mamaScrollView viewWithTag:(80 + i)];
+            theLabel.textColor = [UIColor orangeThemeColor];
+        }
+        [UIView animateWithDuration:0.3 animations:^{
+            self.anotherOrongeView.frame = rect;
+        } completion:^(BOOL finished) {
+            label.textColor = [UIColor whiteColor];
+            
+            
+        }];
+
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        orongeCircleView.frame = rect;
-    } completion:^(BOOL finished) {
-        label.textColor = [UIColor whiteColor];
-        
-        
-    }];
+   
     
     
  
