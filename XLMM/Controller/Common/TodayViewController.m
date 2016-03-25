@@ -173,7 +173,7 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)reload
 {
     //超过10秒请求处理
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateRequestTime) userInfo:nil repeats:YES];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateRequestTime) userInfo:nil repeats:YES];
     [self downloadData];
 }
 
@@ -525,8 +525,8 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)fetchedPosterData:(NSData *)data{
     [self.myCollectionView.mj_header endRefreshing];
-    [self.timer invalidate];
-    self.timer = nil;
+//    [self.timer invalidate];
+//    self.timer = nil;
     if (data == nil) {
         return;
     }
@@ -679,8 +679,8 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 - (void)fetchedPromotePageData:(NSData *)data{
     [self.myCollectionView.mj_footer endRefreshing];
-    [self.timer invalidate];
-    self.timer = nil;
+//    [self.timer invalidate];
+//    self.timer = nil;
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {

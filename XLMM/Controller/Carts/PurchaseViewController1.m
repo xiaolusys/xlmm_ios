@@ -50,11 +50,6 @@
     NSArray *pay_extras;
     
     float lijianpay;
-    
-    
-    
-    
-   
 }
 
 @property (nonatomic, strong)NSMutableArray *MutCatrsArray;     //购物车数组
@@ -69,26 +64,26 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    if ([WXApi isWXAppInstalled]) {
-      //  NSLog(@"安装了微信");
-        self.weixinView.hidden = YES;
-        
-    }
-    else{
-    //    NSLog(@"没有安装微信");
-        self.weixinView.hidden = NO;
-        payMethod = @"alipay";
-        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-        /*
-         icon-radio.png
-         icon-radio-select.png
-         wx
-         alipay
-         
-         */
-   //     NSLog(@"zhifu = %@", payMethod);
-        
-    }
+//    if ([WXApi isWXAppInstalled]) {
+//      //  NSLog(@"安装了微信");
+//        self.weixinView.hidden = YES;
+//        
+//    }
+//    else{
+//    //    NSLog(@"没有安装微信");
+//        self.weixinView.hidden = NO;
+//        payMethod = @"alipay";
+//        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+//        /*
+//         icon-radio.png
+//         icon-radio-select.png
+//         wx
+//         alipay
+//         
+//         */
+//   //     NSLog(@"zhifu = %@", payMethod);
+//        
+//    }
 
     
 }
