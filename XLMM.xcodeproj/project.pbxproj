@@ -628,6 +628,7 @@
 		18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */; };
 		18EE10DD1C9C132B00E52313 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */; };
 		18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */; };
+		18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -1632,6 +1633,8 @@
 		18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewLeftViewController.xib; sourceTree = "<group>"; };
 		18EE10DE1C9C134300E52313 /* PersonOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonOrderViewController.h; sourceTree = "<group>"; };
 		18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonOrderViewController.m; sourceTree = "<group>"; };
+		18F392CE1CA55CC5000969C2 /* SelectedActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedActivitiesViewController.h; sourceTree = "<group>"; };
+		18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedActivitiesViewController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -2306,6 +2309,8 @@
 				1830716A1C97BE3700B7665E /* TuijianErweimaViewController.xib */,
 				181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */,
 				181ABB101CA12813001307C0 /* TodayVisitorViewController.m */,
+				18F392CE1CA55CC5000969C2 /* SelectedActivitiesViewController.h */,
+				18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */,
 			);
 			path = NewController;
 			sourceTree = "<group>";
@@ -4359,6 +4364,7 @@
 				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
+				18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */,
 				325B799D1C97E6F10022F930 /* MMLoadingAnimation.m in Sources */,
 				183074161C97D17800B7665E /* UIViewController+RESideMenu.m in Sources */,
 				183072131C97BE3700B7665E /* MaMaHuoyueduViewController.m in Sources */,
