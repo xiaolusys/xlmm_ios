@@ -68,6 +68,7 @@
 
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
+@property (nonatomic, strong) NSMutableArray *lastweeknames;
 
 @property (nonatomic, strong)NSString *earningsRecord;
 @property (nonatomic, strong)NSString *orderRecord;
@@ -120,6 +121,8 @@
     self.dataArr = [[NSMutableArray alloc] init];
     allDingdan = [[NSMutableArray alloc] init];
     self.labelArray = [[NSMutableArray alloc] init];
+    self.lastweeknames = [[NSMutableArray alloc] init];
+    
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
     
@@ -532,7 +535,7 @@
     
     
     
-    //
+    //画圆圈
     
     orongeCircleView = [[UIView alloc] init];
     orongeCircleView.layer.cornerRadius = 10;
@@ -541,7 +544,7 @@
     [self.mamaScrollView addSubview:orongeCircleView];
     
     
-    //
+    //本周日期
     NSArray *text = @[@"一", @"二", @"三", @"四",@"五",@"六",@"日"];
     for (int i = 0; i < 7; i++) {
         UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(SCREENWIDTH + i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
@@ -555,9 +558,86 @@
         [self.labelArray addObject:label];
     }
    // NSLog(@"%@", self.labelArray);
-  
+    
+    //下周日期
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *now;
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags =NSYearCalendarUnit | NSMonthCalendarUnit |NSDayCalendarUnit | NSWeekdayCalendarUnit |
+    NSHourCalendarUnit |NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    now=[NSDate date];
+    
+    NSLog(@"now = %@", now);
+    comps = [calendar components:unitFlags fromDate:now];
+    NSLog(@"comps = %@", comps);
+    now = [calendar dateFromComponents:comps];
+    
+    NSLog(@"now = %@", now);
+    self.weekDay = [NSNumber numberWithInteger:[comps weekday]];
+    
+    //self.weekDay
+    NSLog(@"%@", self.weekDay);
+    int today = (int)[self.weekDay integerValue];
+    int lastday = 0;
+    switch (today) {
+        case 1:
+            lastday = 7;
+            break;
+        case 2:
+            lastday = 1;
+            break;
+        case 3:
+            lastday = 2;
+            break;
+        case 4:
+            lastday = 3;
+            break;
+        case 5:
+            lastday = 4;
+            break;
+        case 6:
+            lastday = 5;
+            break;
+        case 7:
+            lastday = 6;
+            break;
+            
+        default:
+            break;
+    }
+    lastday += 7;
+    NSLog(@"lastDay = %d", lastday);
     
     
+    [self.lastweeknames removeAllObjects];
+    
+    for (int i = 0; i < 7; i++) {
+        NSTimeInterval timeInterval = -(lastday - i - 1) * 24 * 60 * 60;
+        NSDate *lastDate = [NSDate dateWithTimeIntervalSinceNow:timeInterval];
+        
+        comps = [calendar components:unitFlags fromDate:lastDate];
+
+        NSLog(@"lastDate = %@", comps);
+        
+        NSString *string = [NSString stringWithFormat:@"%ld/%ld", (long)[comps month], (long)[comps day]];
+        [self.lastweeknames addObject:string];
+    }
+    
+    NSLog(@"%@", self.lastweeknames);
+    
+    
+    
+    for (int i = 0; i < 7; i++) {
+        UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
+        label.text = self.lastweeknames[i];
+        label.font = [UIFont systemFontOfSize:14];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor orangeThemeColor];
+        label.tag = 80+ i;
+        label.userInteractionEnabled = NO;
+        [self.mamaScrollView addSubview:label];
+        [self.labelArray addObject:label];
+    }
     
     
 }
