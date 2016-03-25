@@ -285,6 +285,8 @@ static NSString *khuodongCell = @"HuodongCell";
         return;
     }
     
+
+//    
     huodongJson = self.activityArray[0];
     
     if ([huodongJson isKindOfClass:[NSDictionary class]]) {
