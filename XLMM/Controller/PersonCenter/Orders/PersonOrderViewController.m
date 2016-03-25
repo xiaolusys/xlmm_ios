@@ -48,7 +48,7 @@ static NSString *identifier = @"orderStatic";
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
+   self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad {

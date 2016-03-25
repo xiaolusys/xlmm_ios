@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface PersonOrderViewController : UIViewController<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (nonatomic, assign)NSInteger index;
 

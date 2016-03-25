@@ -642,6 +642,10 @@
 		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
 		3226D2E61C9932210095D766 /* xuanpinshangjiaright.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */; };
 		3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */; };
+		3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3234739D1CA3E3DF00BDE172 /* DotLineView.m */; };
+		323473A11CA52DE900BDE172 /* zhexianzuo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3234739F1CA52DE900BDE172 /* zhexianzuo.png */; };
+		323473A21CA52DE900BDE172 /* zhexianyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 323473A01CA52DE900BDE172 /* zhexianyou.png */; };
+		323473A41CA5361900BDE172 /* shouyiwei0.png in Resources */ = {isa = PBXBuildFile; fileRef = 323473A31CA5361900BDE172 /* shouyiwei0.png */; };
 		325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B79791C97E6F10022F930 /* AddressTableCell.m */; };
 		325B79941C97E6F10022F930 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325B797A1C97E6F10022F930 /* AddressTableCell.xib */; };
 		325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B797C1C97E6F10022F930 /* BuyCartsView.m */; };
@@ -1649,6 +1653,11 @@
 		321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiaright.png; sourceTree = "<group>"; };
 		3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xuanpinshangjiajia.png; sourceTree = "<group>"; };
+		3234739C1CA3E3DF00BDE172 /* DotLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DotLineView.h; path = ../CartView/DotLineView.h; sourceTree = "<group>"; };
+		3234739D1CA3E3DF00BDE172 /* DotLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DotLineView.m; path = ../CartView/DotLineView.m; sourceTree = "<group>"; };
+		3234739F1CA52DE900BDE172 /* zhexianzuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhexianzuo.png; sourceTree = "<group>"; };
+		323473A01CA52DE900BDE172 /* zhexianyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhexianyou.png; sourceTree = "<group>"; };
+		323473A31CA5361900BDE172 /* shouyiwei0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shouyiwei0.png; sourceTree = "<group>"; };
 		325B79781C97E6F10022F930 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		325B79791C97E6F10022F930 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		325B797A1C97E6F10022F930 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -1958,6 +1967,8 @@
 		1830700E1C97B5BD00B7665E /* MaMaView */ = {
 			isa = PBXGroup;
 			children = (
+				3234739C1CA3E3DF00BDE172 /* DotLineView.h */,
+				3234739D1CA3E3DF00BDE172 /* DotLineView.m */,
 				325B79EA1C97E73A0022F930 /* CarryLogHeaderView.h */,
 				325B79EB1C97E73A0022F930 /* CarryLogHeaderView.m */,
 				325B79EC1C97E73A0022F930 /* CarryLogHeaderView.xib */,
@@ -2524,6 +2535,7 @@
 		183072921C97D0C000B7665E /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				323473A31CA5361900BDE172 /* shouyiwei0.png */,
 				183072931C97D0C000B7665E /* MMClass.h */,
 			);
 			path = Macro;
@@ -3169,6 +3181,8 @@
 		183074501C97D49A00B7665E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3234739F1CA52DE900BDE172 /* zhexianzuo.png */,
+				323473A01CA52DE900BDE172 /* zhexianyou.png */,
 				321648AD1C9D25C100E2BE56 /* jianicons.png */,
 				183074511C97D49A00B7665E /* font-xinpin.png */,
 				183074521C97D49A00B7665E /* friendskuaizhao.png */,
@@ -3837,6 +3851,7 @@
 				183076891C97D49A00B7665E /* redPkgjian.png in Resources */,
 				183076381C97D49A00B7665E /* shizhong.png in Resources */,
 				1830725B1C97BE3700B7665E /* ThirdAccountViewController.xib in Resources */,
+				323473A41CA5361900BDE172 /* shouyiwei0.png in Resources */,
 				183075AF1C97D49A00B7665E /* loading动画0017.png in Resources */,
 				1830758E1C97D49A00B7665E /* icon-shouye2.png in Resources */,
 				325B79E11C97E7160022F930 /* StartActivityView.xib in Resources */,
@@ -4058,6 +4073,7 @@
 				183076771C97D49A00B7665E /* 圈圈加载0035.png in Resources */,
 				183075C71C97D49A00B7665E /* mamashouyi.png in Resources */,
 				183075961C97D49A00B7665E /* info-bg.png in Resources */,
+				323473A21CA52DE900BDE172 /* zhexianyou.png in Resources */,
 				183075DA1C97D49A00B7665E /* wodejingxuandanpinfenxiang.png in Resources */,
 				183076141C97D49A00B7665E /* ios8_retina_HD5.5.png in Resources */,
 				183076001C97D49A00B7665E /* hongbao80.png in Resources */,
@@ -4116,6 +4132,7 @@
 				1830722C1C97BE3700B7665E /* ChangeNicknameViewController.xib in Resources */,
 				325B79981C97E6F10022F930 /* CartTableCellTableViewCell1.xib in Resources */,
 				325B79E31C97E7160022F930 /* TuihuoCollectionCell.xib in Resources */,
+				323473A11CA52DE900BDE172 /* zhexianzuo.png in Resources */,
 				1830760A1C97D49A00B7665E /* hongbaounused200.png in Resources */,
 				183072211C97BE3700B7665E /* WithdrawalsEmpty.xib in Resources */,
 				183075C21C97D49A00B7665E /* havenodingdan.png in Resources */,
@@ -4254,6 +4271,7 @@
 				183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */,
 				183073D81C97D17800B7665E /* QNDomain.m in Sources */,
 				1830724E1C97BE3700B7665E /* ShenQingTuikuanController.m in Sources */,
+				3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */,
 				181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */,
 				325B79D21C97E7160022F930 /* HuodongCollectionViewCell.m in Sources */,
 				183070E81C97B83900B7665E /* MaMaSelectProduct.m in Sources */,
