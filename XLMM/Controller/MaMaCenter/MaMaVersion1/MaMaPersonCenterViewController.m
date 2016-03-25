@@ -510,6 +510,23 @@
         [self.mamaScrollView addSubview:shartView];
         
         
+        
+        
+        
+        orongeCircleView = [[UIView alloc] init];
+        orongeCircleView.layer.cornerRadius = 10;
+        orongeCircleView.backgroundColor = [UIColor orangeThemeColor];
+        //   orongeCircleView.alpha = 0.3;
+        
+        [self.mamaScrollView addSubview:orongeCircleView];
+        
+        
+        
+        
+       
+
+        
+        
         for (int i = 0; i < 7; i++) {
             CGPoint point2 = [linechart getPointForIndex:i];
 
@@ -537,11 +554,7 @@
     
     //画圆圈
     
-    orongeCircleView = [[UIView alloc] init];
-    orongeCircleView.layer.cornerRadius = 10;
-    orongeCircleView.backgroundColor = [UIColor orangeThemeColor];
- //   orongeCircleView.alpha = 0.3;
-    [self.mamaScrollView addSubview:orongeCircleView];
+
     
     
     //本周日期
@@ -558,6 +571,9 @@
         [self.labelArray addObject:label];
     }
    // NSLog(@"%@", self.labelArray);
+    
+    
+   
     
     //下周日期
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -607,6 +623,23 @@
     }
     lastday += 7;
     NSLog(@"lastDay = %d", lastday);
+    
+    int tag = (today + 6)%7;
+    if (tag == 0) {
+        tag = 7;
+    }
+    UILabel *label = [self.mamaScrollView viewWithTag:8000 + tag - 1];
+   // label.textColor = [UIColor redColor];
+    
+    
+    [UIView animateWithDuration:0 animations:^{
+        orongeCircleView.frame = label.frame;
+    } completion:^(BOOL finished) {
+        label.textColor = [UIColor whiteColor];
+        
+        
+    }];
+    
     
     
     [self.lastweeknames removeAllObjects];
