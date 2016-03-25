@@ -168,7 +168,6 @@
     [self prepareData];
     [self createChart:dataArray];
 
-    [self createButtons];
 
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
@@ -525,6 +524,10 @@
     for (UIView *view in array) {
         [view removeFromSuperview];
     }
+    if (allDingdan.count == 0) {
+        self.mamaScrollView.scrollEnabled = NO;
+        return;
+    }
     
     
     for (int i = 0; i < allDingdan.count; i++) {
@@ -554,10 +557,16 @@
         lineView.tag = 400;
         [shartView addSubview:lineView];
         
-        
-        CGPoint point = [linechart getPointForIndex:6];
-        circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
-        lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+        if (i == 0) {
+            CGPoint point = [linechart getPointForIndex:6];
+            circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+            lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+        } else {
+            CGPoint point = [linechart getPointForIndex:(6 - quxiaodays)];
+            circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
+            lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+        }
+      
         
         [self.mamaScrollView addSubview:shartView];
         
@@ -775,8 +784,10 @@
     int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
     NSLog(@"index = %d", index);
-
-    
+    NSInteger days = (6 - index) + (week - 1)*7;
+    if (days - quxiaodays < 0) {
+        return;
+    }
 
     FSLineChart *linechart = [weekView subviews][0];
     UIView *circleView = [weekView viewWithTag:300];
@@ -791,16 +802,14 @@
     circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
     lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
     
-    NSInteger days = (6 - index) + (week - 1)*7;
+
     
     self.visitorDate = [NSNumber numberWithInteger:days];
     NSLog(@"days = %ld", days);
    // NSLog(@"array = %@", self.mamaOrderArray);
    // NSLog(@"%ld", quxiaodays);
     
-    if (days - quxiaodays < 0) {
-        return;
-    }
+   
     
     NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
     
@@ -959,6 +968,10 @@
             
         }
         
+//        [allDingdan removeAllObjects];
+//        if (allDingdan.count == 0) {
+//            return;
+//        }
       
         if (allDingdan.count > 0) {
             self.mamaimage.hidden = YES;

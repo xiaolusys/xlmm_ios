@@ -952,11 +952,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "-updateMaMaHome:"
             landmarkType = "5">
          </BreakpointContent>
@@ -968,11 +968,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "-updateMaMaHome:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1048,11 +1048,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "777"
-            endingLineNumber = "777"
+            startingLineNumber = "786"
+            endingLineNumber = "786"
             landmarkName = "-tapClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1064,11 +1064,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "955"
-            endingLineNumber = "955"
+            startingLineNumber = "964"
+            endingLineNumber = "964"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1080,11 +1080,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "938"
-            endingLineNumber = "938"
+            startingLineNumber = "947"
+            endingLineNumber = "947"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1096,11 +1096,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "942"
-            endingLineNumber = "942"
+            startingLineNumber = "951"
+            endingLineNumber = "951"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1112,11 +1112,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "948"
-            endingLineNumber = "948"
+            startingLineNumber = "957"
+            endingLineNumber = "957"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1128,11 +1128,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "710"
-            endingLineNumber = "710"
+            startingLineNumber = "719"
+            endingLineNumber = "719"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1144,11 +1144,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "680"
-            endingLineNumber = "680"
+            startingLineNumber = "689"
+            endingLineNumber = "689"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1160,11 +1160,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "727"
-            endingLineNumber = "727"
+            startingLineNumber = "736"
+            endingLineNumber = "736"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1176,11 +1176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "654"
-            endingLineNumber = "654"
+            startingLineNumber = "663"
+            endingLineNumber = "663"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1192,11 +1192,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "825"
+            endingLineNumber = "825"
             landmarkName = "-tapClicked:"
             landmarkType = "5">
             <Locations>
@@ -1255,11 +1255,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "836"
-            endingLineNumber = "836"
+            startingLineNumber = "845"
+            endingLineNumber = "845"
             landmarkName = "-tapClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1271,11 +1271,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "840"
-            endingLineNumber = "840"
+            startingLineNumber = "849"
+            endingLineNumber = "849"
             landmarkName = "-tapClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1287,11 +1287,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "747"
-            endingLineNumber = "747"
+            startingLineNumber = "756"
+            endingLineNumber = "756"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1303,11 +1303,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "-createButtons"
             landmarkType = "5">
          </BreakpointContent>
@@ -1319,11 +1319,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "-btn2Clicked"
             landmarkType = "5">
          </BreakpointContent>
@@ -1335,11 +1335,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-btn1Clicked"
             landmarkType = "5">
          </BreakpointContent>
@@ -1351,11 +1351,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587901.705637"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "746"
-            endingLineNumber = "746"
+            startingLineNumber = "755"
+            endingLineNumber = "755"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1367,11 +1367,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587349.865322"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "-btn2Clicked"
             landmarkType = "5">
          </BreakpointContent>
@@ -1383,11 +1383,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587571.996226"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "591"
-            endingLineNumber = "591"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1399,11 +1399,91 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "480587897.267088"
+            timestampString = "480590325.575409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "595"
-            endingLineNumber = "595"
+            startingLineNumber = "565"
+            endingLineNumber = "565"
+            landmarkName = "-createChart:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "480590325.575409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "981"
+            endingLineNumber = "981"
+            landmarkName = "-prepareData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "480590325.575409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
+            landmarkName = "-createChart:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "480590325.575409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
+            landmarkName = "-createChart:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "480590325.575409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
+            landmarkName = "-createChart:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "480590325.575409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "635"
+            endingLineNumber = "635"
             landmarkName = "-createChart:"
             landmarkType = "5">
          </BreakpointContent>

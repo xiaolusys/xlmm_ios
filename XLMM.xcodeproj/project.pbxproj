@@ -644,6 +644,7 @@
 		3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3234739D1CA3E3DF00BDE172 /* DotLineView.m */; };
 		323473A11CA52DE900BDE172 /* zhexianzuo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3234739F1CA52DE900BDE172 /* zhexianzuo.png */; };
 		323473A21CA52DE900BDE172 /* zhexianyou.png in Resources */ = {isa = PBXBuildFile; fileRef = 323473A01CA52DE900BDE172 /* zhexianyou.png */; };
+		323473A41CA5361900BDE172 /* shouyiwei0.png in Resources */ = {isa = PBXBuildFile; fileRef = 323473A31CA5361900BDE172 /* shouyiwei0.png */; };
 		325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B79791C97E6F10022F930 /* AddressTableCell.m */; };
 		325B79941C97E6F10022F930 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325B797A1C97E6F10022F930 /* AddressTableCell.xib */; };
 		325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325B797C1C97E6F10022F930 /* BuyCartsView.m */; };
@@ -1653,6 +1654,7 @@
 		3234739D1CA3E3DF00BDE172 /* DotLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DotLineView.m; path = ../CartView/DotLineView.m; sourceTree = "<group>"; };
 		3234739F1CA52DE900BDE172 /* zhexianzuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhexianzuo.png; sourceTree = "<group>"; };
 		323473A01CA52DE900BDE172 /* zhexianyou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhexianyou.png; sourceTree = "<group>"; };
+		323473A31CA5361900BDE172 /* shouyiwei0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shouyiwei0.png; sourceTree = "<group>"; };
 		325B79781C97E6F10022F930 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		325B79791C97E6F10022F930 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
 		325B797A1C97E6F10022F930 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
@@ -2529,6 +2531,7 @@
 		183072921C97D0C000B7665E /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				323473A31CA5361900BDE172 /* shouyiwei0.png */,
 				183072931C97D0C000B7665E /* MMClass.h */,
 			);
 			path = Macro;
@@ -3835,6 +3838,7 @@
 				183076891C97D49A00B7665E /* redPkgjian.png in Resources */,
 				183076381C97D49A00B7665E /* shizhong.png in Resources */,
 				1830725B1C97BE3700B7665E /* ThirdAccountViewController.xib in Resources */,
+				323473A41CA5361900BDE172 /* shouyiwei0.png in Resources */,
 				183075AF1C97D49A00B7665E /* loading动画0017.png in Resources */,
 				1830758E1C97D49A00B7665E /* icon-shouye2.png in Resources */,
 				325B79E11C97E7160022F930 /* StartActivityView.xib in Resources */,
