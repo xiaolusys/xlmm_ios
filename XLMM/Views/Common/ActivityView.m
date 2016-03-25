@@ -10,6 +10,22 @@
 
 @implementation ActivityView
 
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+//        self.backgroundColor = [UIColor greenColor];
+        [self createImage];
+    }
+    return self;
+}
+
+- (void)createImage {
+    self.imageV = [[UIImageView alloc] initWithFrame:self.frame];
+    [self addSubview:self.imageV];
+//    self.imageV.backgroundColor = [UIColor redColor];
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

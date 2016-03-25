@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ActivityView : UIView
-
+@property (nonatomic, strong)UIImageView *imageV;
 @end
