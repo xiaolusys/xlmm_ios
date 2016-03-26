@@ -29,6 +29,8 @@
 #import "AFNetworking.h"
 #import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
+#import "ActivityView.h"
+#import "NSString+URL.h"
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -57,6 +59,13 @@
     NSTimer *theTimer;
     
 }
+
+@property (nonatomic, strong)ActivityView *startV;
+@property (nonatomic, strong)NSTimer *sttime;
+@property (nonatomic, assign)NSInteger timeCount;
+
+@property (nonatomic, strong)NSString *imageUrl;
+
 @end
 
 @implementation MMRootViewController
@@ -299,6 +308,22 @@
 //        self.edgesForExtendedLayout = UIRectEdgeNone;
 //    }
     
+    self.timeCount = 0;
+    //启动活动页
+    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:self.startV];
+    
+    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self startDeal:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
@@ -329,11 +354,39 @@
         [self autologin];
     } else {
         NSLog(@"no login");
-        
     }
     
+    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+}
+
+- (void)startDeal:(NSDictionary *)dic {
+    self.imageUrl = [dic objectForKey:@"picture"];
     
-    
+    if (self.imageUrl.length == 0 || [self.imageUrl class] == [NSNull class]) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+    }
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:self.imageUrl]];
+}
+
+- (void)ActivityTimeUpdate {
+    self.timeCount++;
+    NSLog(@"-------------------");
+    if (self.timeCount > 2) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+
+    }
 }
 
 

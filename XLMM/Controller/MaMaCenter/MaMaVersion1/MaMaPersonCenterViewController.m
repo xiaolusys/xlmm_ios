@@ -33,6 +33,7 @@
 #import "TodayVisitorViewController.h"
 
 #import "DotLineView.h"
+#import "SelectedActivitiesViewController.h"
 
 
 
@@ -104,6 +105,8 @@
 @property (nonatomic, strong)NSNumber *carryValue;
 
 @property (nonatomic, strong) NSNumber *weekDay;
+
+@property (nonatomic, strong)NSString *eventLink;
 
 @end
 
@@ -287,6 +290,9 @@
     self.account.text = [NSString stringWithFormat:@"%.2f元", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
     self.orderRecord = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"order_num"]];
+    
+    //精选活动链接
+    self.eventLink = [fortune objectForKey:@"mama_event_link"];
 }
 
 - (void)huoyueduDetails{
@@ -1064,6 +1070,7 @@
     [self.navigationController pushViewController:erweima animated:YES];
     
     
+
 }
 
 - (IBAction)jingxuanliebiao:(id)sender {
@@ -1103,7 +1110,11 @@
 
 - (IBAction)boutiqueActivities:(id)sender {
     //精品活动
-    [SVProgressHUD showInfoWithStatus:@"程序猿正在努力开发..."];
+//    [SVProgressHUD showInfoWithStatus:@"程序猿正在努力开发..."];
+    SelectedActivitiesViewController *activity = [[SelectedActivitiesViewController alloc] init];
+    activity.eventLink = self.eventLink;
+    [self.navigationController pushViewController:activity animated:YES];
+    
 }
 
 - (IBAction)todayVisitor:(id)sender {

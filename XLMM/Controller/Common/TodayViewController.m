@@ -263,23 +263,30 @@ static NSString *khuodongCell = @"HuodongCell";
     [self ishavemobel];
     self.activityArray = [[NSMutableArray alloc] init];
     
-    
-    [self downloadActivityData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bombBox) name:@"bombbox" object:nil];
 //    [self dingshishuaxin];
-
 }
+
+- (void)bombBox {
+    [self downloadActivityData];
+}
+
 - (void)downloadActivityData{
    // http://dev.xiaolumeimei.com/rest/v1/activitys
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
     
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+//    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self fetchActivities:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
 }
-- (void)fetchActivities:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+- (void)fetchActivities:(NSArray *)array{
+    if (array.count == 0) return;
     self.activityArray = [array mutableCopy];
     if ( self.activityArray.count == 0) {
         return;
@@ -292,73 +299,65 @@ static NSString *khuodongCell = @"HuodongCell";
     if ([huodongJson isKindOfClass:[NSDictionary class]]) {
         
         _ishaveHuodong = YES;
-//        huodongJson = [jsonDic objectForKey:@"activity"];
         
         login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
-        NSString *userNumber = [defaults objectForKey:@"activityid"];
+        
+        NSNumber *activityID = [huodongJson objectForKey:@"id"];
+        
+        NSNumber *userNumber = [defaults objectForKey:@"activityid"];
         
         
-        if ([activityID isEqualToString:userNumber]) {
+        if ([userNumber integerValue] == [activityID integerValue]) return;
+        if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])) {
+            NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
             
-        } else {
-            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-            } else {
+            //根据url获得图片并得到图片大小
+            SDWebImageManager *mage = [SDWebImageManager sharedManager];
+            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                 
-                backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//                backView.backgroundColor = [UIColor c];
-//                backView.alpha = 0.5;
-                backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
-                
-//                [self.view addSubview:backView];
-                UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                [window addSubview:backView];
-                
-                NSArray *array;
-                array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-                
-                
-                activityView = array[0];
-                activityView.frame = CGRectMake(0, 0, 300, 280);
-                UIButton *button = (UIButton *)[activityView viewWithTag:200];
-                [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-                UIImageView *imageView = [activityView viewWithTag:100];
-                activityView.center = backView.center;
-                
-                
-                NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
-                
-                UIImage *image = [UIImage imagewithURLString:imageUrl];
-                imageView.image = image;
-                
-                
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-                [imageView addGestureRecognizer:tap];
-                imageView.contentMode = UIViewContentModeScaleAspectFill;
-                imageView.layer.masksToBounds = YES;
-                imageView.userInteractionEnabled = YES;
-                [backView addSubview:activityView];
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 [defaults setObject:activityID forKey:@"activityid"];
-                
-            }
+                [self createActivityView:image];
+            }];
         }
     }
 
-    
-    
-    
-    NSLog(@"activity = %@", self.activityArray);
     [self.myCollectionView reloadData];
-    
-    
-    
-    
+
 }
+
+- (void)createActivityView:(UIImage *)image {
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:backView];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH - imageWidth) * 0.5 , (SCREENHEIGHT - imageHeight) * 0.5, imageWidth, imageHeight)];
+    imageView.image = image;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+    [imageView addGestureRecognizer:tap];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.masksToBounds = YES;
+    imageView.userInteractionEnabled = YES;
+    
+    [backView addSubview:imageView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 30, (SCREENHEIGHT - imageHeight) * 0.5 - 30, 30, 30);
+    [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [backView addSubview:button];
+}
+
 //- (void)dingshishuaxin{
 //    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
-//    
+//
 //}
 
 //- (void)updatePosters{
@@ -1323,9 +1322,6 @@ static NSString *khuodongCell = @"HuodongCell";
                     WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
                     wxloginVC.userInfo = dic;
                     [self.navigationController pushViewController:wxloginVC animated:YES];
-                    
-                    
-                    
                     
                 } else {
                     

@@ -25,8 +25,11 @@
 #import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
+#import "UUID.h"
+#import "SSKeychain.h"
 
-
+#define kService [NSBundle mainBundle].bundleIdentifier
+#define kAccount @"so.xiaolu.m.xiaolumeimei"
 
 @interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 
@@ -126,26 +129,40 @@
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
     [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        NSLog(@"--------jumpToJsLocation called: %@", data);
-        //        responseCallback(@"响应事件...");
         [self jumpToJsLocation:data];
     }];
     
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        NSLog(@"--------getNativeShareWidget called: %@", data);
-//        NSLog(@"调用了分享功能呦－－－－－－");
+        NSString *share_to = data[@"share_to"];
+        //传的参数为空调用原生的分享
+        if (share_to.length == 0) {
+            [self rightBarButtonAction];
+            return;
+        }
         [self shareForPlatform:data];
+    }];
+    
+    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
+       NSString *device = [self getMobileSNCode];
+        responseCallback(device);
     }];
 
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareForPlatform:) name:@"activityShare" object:nil];
+
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
 }
 
-
+- (NSString *)getMobileSNCode {
+    if (![SSKeychain passwordForService:kService account:kAccount]) {
+        NSString *uuid = [UUID gen_uuid];
+        [SSKeychain setPassword:uuid forService:kService account:kAccount];
+    }
+    
+    NSString *devicenumber = [SSKeychain passwordForService:kService account:kAccount];
+    return devicenumber;
+}
 
 - (void)rightBarButtonAction {
     if (!self.activityId || [self.activityId class] == [NSNull class]) {
