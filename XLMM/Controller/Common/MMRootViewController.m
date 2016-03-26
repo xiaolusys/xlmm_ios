@@ -367,20 +367,25 @@
         self.sttime = nil;
         
         [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
     }
     [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:self.imageUrl]];
 }
 
 - (void)ActivityTimeUpdate {
     self.timeCount++;
-//    NSLog(@"------%@", self.imageUrl);
-//    NSLog(@"------%d", [self.imageUrl class] == [NSNull class]);
-    
-    if (self.timeCount > 4) {
+    NSLog(@"-------------------");
+    if (self.timeCount > 2) {
         [self.sttime invalidate];
         self.sttime = nil;
         
         [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+
     }
 }
 
