@@ -621,6 +621,8 @@
 		18315F771CA3E023003A9AFD /* HuodongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18315F751CA3E023003A9AFD /* HuodongViewController.m */; };
 		18315F781CA3E023003A9AFD /* HuodongViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18315F761CA3E023003A9AFD /* HuodongViewController.xib */; };
 		18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18315F7B1CA41549003A9AFD /* ActivityView.m */; };
+		184FCFB91CA6681E00F8FC94 /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFB81CA6681E00F8FC94 /* UUID.m */; };
+		184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */; };
 		18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */; };
 		18AC6C801CA2AF1000316E65 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7F1CA2AF1000316E65 /* heart.png */; };
 		18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D862751CA0EE78004A19BD /* AboutFansViewController.m */; };
@@ -1623,6 +1625,10 @@
 		18315F761CA3E023003A9AFD /* HuodongViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuodongViewController.xib; sourceTree = "<group>"; };
 		18315F7A1CA41549003A9AFD /* ActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityView.h; sourceTree = "<group>"; };
 		18315F7B1CA41549003A9AFD /* ActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityView.m; sourceTree = "<group>"; };
+		184FCFB71CA6681E00F8FC94 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
+		184FCFB81CA6681E00F8FC94 /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
+		184FCFBB1CA6699C00F8FC94 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FansEmpty.xib; sourceTree = "<group>"; };
 		18AC6C7F1CA2AF1000316E65 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		18D862741CA0EE77004A19BD /* AboutFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutFansViewController.h; sourceTree = "<group>"; };
@@ -2549,6 +2555,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				184FCFBA1CA6699C00F8FC94 /* Source */,
 				321857B51CA109550085FF21 /* WebViewJavascriptBridge */,
 				183072951C97D17800B7665E /* AFNetworking */,
 				183072AB1C97D17800B7665E /* AGAsyncTestHelper */,
@@ -3541,6 +3548,24 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		184FCFB61CA667E200F8FC94 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				184FCFB71CA6681E00F8FC94 /* UUID.h */,
+				184FCFB81CA6681E00F8FC94 /* UUID.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		184FCFBA1CA6699C00F8FC94 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				184FCFBB1CA6699C00F8FC94 /* SSKeychain.h */,
+				184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		18AC6C731CA247C600316E65 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
@@ -3597,6 +3622,7 @@
 				1830725E1C97C00900B7665E /* General */,
 				183072921C97D0C000B7665E /* Macro */,
 				1830744F1C97D49A00B7665E /* Resources */,
+				184FCFB61CA667E200F8FC94 /* Helpers */,
 				183072941C97D17800B7665E /* Venders */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
 			);
@@ -4267,6 +4293,7 @@
 				1830740A1C97D17800B7665E /* QNStats.m in Sources */,
 				1830741E1C97D17800B7665E /* SDWebImageDownloaderOperation.m in Sources */,
 				183074221C97D17800B7665E /* UIImage+GIF.m in Sources */,
+				184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */,
 				183074021C97D17800B7665E /* QNFile.m in Sources */,
 				183071FB1C97BE3700B7665E /* MaMaCarryLogViewController.m in Sources */,
 				183073D61C97D17800B7665E /* UIColor+FSPalette.m in Sources */,
@@ -4348,6 +4375,7 @@
 				183074271C97D17800B7665E /* UIView+WebCacheOperation.m in Sources */,
 				325B79E81C97E7160022F930 /* YoumengShare.m in Sources */,
 				183072261C97BE3700B7665E /* AddAdressViewController.m in Sources */,
+				184FCFB91CA6681E00F8FC94 /* UUID.m in Sources */,
 				183071E71C97BE3700B7665E /* TodayViewController.m in Sources */,
 				1830740C1C97D17800B7665E /* QNReachability.m in Sources */,
 				183072851C97C00900B7665E /* NSString+URL.m in Sources */,
