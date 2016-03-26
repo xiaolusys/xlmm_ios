@@ -533,6 +533,9 @@
     if (allDingdan.count == 0) {
         self.mamaScrollView.scrollEnabled = NO;
         return;
+    } else {
+        self.mamaScrollView.scrollEnabled = YES;
+        
     }
     
     
