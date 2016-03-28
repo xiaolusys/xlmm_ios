@@ -911,12 +911,15 @@
 //  获取表格数据
 - (void)prepareData{
     
-    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/order_carry_visitor?from=0&days=14", Root_URL];
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return ;
-        
-        NSArray *data = [NSArray reverse:responseObject];
+        NSArray *arr = responseObject[@"results"];
+        if (arr.count == 0)return;
+        NSArray *data = [NSArray reverse:arr];
+      
+    
         self.mamaOrderArray = data;
         
         NSDictionary *dic = data[0];
@@ -929,9 +932,9 @@
         
         
         NSLog(@"orderArray = %@", self.mamaOrderArray);
-        data = responseObject;
+        data = arr;
         
-        NSLog(@"%@", responseObject);
+        NSLog(@"%@", arr);
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         int xingqiji = (int)[self.weekDay integerValue];
         switch (xingqiji) {
@@ -965,6 +968,7 @@
 
                 [weekArray addObject:@0];
             } else {
+                NSLog(@"-----------%@", [data[i] objectForKey:@"order_num"]);
                 NSNumber *order_num = [data[i] objectForKey:@"order_num"];
 
                 [weekArray addObject:order_num];
