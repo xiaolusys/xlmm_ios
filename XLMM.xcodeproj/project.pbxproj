@@ -739,6 +739,7 @@
 		327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */; };
 		327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367041C1827D3008AAE86 /* libiconv.2.dylib */; };
 		327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367061C182800008AAE86 /* libsqlite3.dylib */; };
+		3277205F1CA8CCD600FC376F /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3277205E1CA8CCD600FC376F /* area.plist */; };
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
@@ -1802,6 +1803,7 @@
 		327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "/usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<absolute>"; };
 		327367041C1827D3008AAE86 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /usr/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
 		327367061C182800008AAE86 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
+		3277205E1CA8CCD600FC376F /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XLMM copy-Info.plist"; path = "/Users/younishijie/Desktop/xlmm/XLMM/XLMM copy-Info.plist"; sourceTree = "<absolute>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -3179,6 +3181,7 @@
 		1830744F1C97D49A00B7665E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3277205D1CA8CCD000FC376F /* plists */,
 				1830768E1C97D51B00B7665E /* StartImage */,
 				183074501C97D49A00B7665E /* Images */,
 				183074861C97D49A00B7665E /* Loading */,
@@ -3660,6 +3663,14 @@
 				325BA10C1B68B18A006D64BD /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3277205D1CA8CCD000FC376F /* plists */ = {
+			isa = PBXGroup;
+			children = (
+				3277205E1CA8CCD600FC376F /* area.plist */,
+			);
+			path = plists;
 			sourceTree = "<group>";
 		};
 		328422B81B84217100C4EA76 /* framework */ = {
@@ -4175,6 +4186,7 @@
 				1830762F1C97D49A00B7665E /* retina_HD4.7.png in Resources */,
 				183075BA1C97D49A00B7665E /* loading动画009.png in Resources */,
 				325B7A131C97E73A0022F930 /* PicFooterCollectionReusableView.xib in Resources */,
+				3277205F1CA8CCD600FC376F /* area.plist in Resources */,
 				1830765C1C97D49A00B7665E /* 圈圈加载0008.png in Resources */,
 				1830720A1C97BE3700B7665E /* ActivityViewController2.xib in Resources */,
 				325B79DA1C97E7160022F930 /* MoreOrdersViewCell.xib in Resources */,

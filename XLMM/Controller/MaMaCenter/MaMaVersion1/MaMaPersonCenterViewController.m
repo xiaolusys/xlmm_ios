@@ -574,6 +574,16 @@
             CGPoint point = [linechart getPointForIndex:(6 - quxiaodays)];
             circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
             lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+            if (6 - quxiaodays + 1 < 7) {
+                point = [linechart getPointForIndex:(6 - quxiaodays + 1)];
+                NSLog(@"%@", NSStringFromCGPoint(point));
+                
+                UIView *whiteLine = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y - 1, SCREENWIDTH - point.x, 2)];
+                whiteLine.backgroundColor = [UIColor whiteColor];
+                [shartView addSubview:whiteLine];
+                
+                
+            }
         }
       
         
