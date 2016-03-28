@@ -461,6 +461,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
     NSURL *url = [NSURL URLWithString:urlString];
    // NSLog(@"urlString = %@", urlString);
+    if (url == nil) {
+        return;
+    }
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
@@ -468,6 +471,9 @@
     
   //  NSLog(@"params = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    if (data == nil) {
+        return;
+    }
     [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];

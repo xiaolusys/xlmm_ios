@@ -98,26 +98,13 @@
 }
 
 - (void)downloadImage{
-//    NSLog(@"imagelink = %@", self.imagelink);
-//   // imagelink = @"http://192.168.1.31:9000/media/mm/coupon.png";
-//    UIImage *image = [UIImage imagewithURLString:self.imagelink];
-//    NSLog(@"image = %@", image);
-//    NSError *error = nil;
-//    
-//    NSURL *url = [NSURL URLWithString:self.imagelink];
-//    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
-//    if (error == nil) {
-//      //  NSLog(@"data = %@", data);
-//    } else{
-//        NSLog(@"error = %@", error);
-//    }
-//    image = [UIImage imageWithData:data];
+
     NSURL *url = [NSURL URLWithString:self.imagelink];
     [self.imageView sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.mamaPicView.bounds = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 1.1);
         shareImages = [UIImage imageFromView:self.mamaPicView];
         NSLog(@"shareImage = %@", shareImages);
-    }] ;
+    }];
     
     NSLog(@"view = %@", self.whiteView);
     //self.whiteView.bounds = CGRectMake(0, 0, 240, 360);
