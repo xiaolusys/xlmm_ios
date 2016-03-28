@@ -968,7 +968,6 @@
 
                 [weekArray addObject:@0];
             } else {
-                NSLog(@"-----------%@", [data[i] objectForKey:@"order_num"]);
                 NSNumber *order_num = [data[i] objectForKey:@"order_num"];
 
                 [weekArray addObject:order_num];
