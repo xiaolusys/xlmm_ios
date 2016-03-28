@@ -318,6 +318,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
+        if (responseObject[@"picture"] == nil)return;
         [self startDeal:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -376,7 +377,6 @@
 
 - (void)ActivityTimeUpdate {
     self.timeCount++;
-    NSLog(@"-------------------");
     if (self.timeCount > 2) {
         [self.sttime invalidate];
         self.sttime = nil;

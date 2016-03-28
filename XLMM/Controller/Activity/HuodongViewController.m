@@ -55,7 +55,7 @@
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
-
+@property (nonatomic, strong)NSDictionary *nativeShare;
 @end
 
 @implementation HuodongViewController{
@@ -136,6 +136,7 @@
         NSString *share_to = data[@"share_to"];
         //传的参数为空调用原生的分享
         if (share_to.length == 0) {
+            self.nativeShare = data;
             [self rightBarButtonAction];
             return;
         }
@@ -165,12 +166,16 @@
 }
 
 - (void)rightBarButtonAction {
-    if (!self.activityId || [self.activityId class] == [NSNull class]) {
-        NSLog(@"原生分享参数错误");
-        return;
+//    NSLog(@"===========data======%@", self.nativeShare);
+    NSNumber *activityID = nil;
+    if (self.nativeShare == nil) {
+        activityID = self.activityId;
+    }else {
+        activityID = self.nativeShare[@"active_id"];
     }
+    
     [SVProgressHUD showWithStatus:@"请稍后..."];
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
     NSLog(@"string = %@", string);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
