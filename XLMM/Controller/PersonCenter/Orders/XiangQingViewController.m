@@ -636,9 +636,15 @@
         
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         [connection start];
+        
+        [self performSelector:@selector(poptoView) withObject:nil afterDelay:.3];
     }
 }
 
+- (void)poptoView{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 - (IBAction)goumai:(id)sender {
     NSLog(@"重新购买");
     
