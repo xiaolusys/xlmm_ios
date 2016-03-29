@@ -538,6 +538,7 @@ static NSString *khuodongCell = @"HuodongCell";
    // NSLog(@"posters = %@", jsonDic);
     
     NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
+    NSLog(@"child = %@", childArray);
     self.posterImages = [[NSMutableArray alloc] init];
     
     if (childArray.count == 0)return;
@@ -549,7 +550,11 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
-        UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
+        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
+        
+        NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
+        
+        NSLog(@"image = %@", image0);
         if (image0 == nil) {
             image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
         }
@@ -561,6 +566,7 @@ static NSString *khuodongCell = @"HuodongCell";
    
 
     NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
+    NSLog(@"lady = %@", ladyArray);
     if (ladyArray.count == 0)return;
     for (NSDictionary *ladyDic in ladyArray) {
     
@@ -570,7 +576,9 @@ static NSString *khuodongCell = @"HuodongCell";
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
+        UIImage *image1 = [UIImage imagewithURLString:[[ladyModel.imageURL URLEncodedString] imagePostersCompression]];
+        NSLog(@"url = %@", [ladyModel.imageURL URLEncodedString]);
+        NSLog(@"image = %@", image1);
         if (image1 == nil) {
             image1 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
         }
