@@ -372,7 +372,7 @@
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
     }
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:self.imageUrl]];
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]]];
 }
 
 - (void)ActivityTimeUpdate {

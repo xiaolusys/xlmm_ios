@@ -397,7 +397,7 @@
 //    NSString *url1;
    
     shareType = data[@"share_to"];
-//    shareType = @"web";
+    //shareType = @"web";
     
 //    @try {
 //        url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
