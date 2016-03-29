@@ -157,10 +157,10 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 - (NSString *)numbersOfSelected{
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=1", Root_URL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSString *string = [NSString stringWithFormat:@"%ld", (long)[array count]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
     NSLog(@"count = %@", string);
     
     return string;
