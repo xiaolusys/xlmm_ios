@@ -287,6 +287,7 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 - (void)fetchActivities:(NSArray *)array{
     if (array.count == 0) return;
+    NSLog(@"array = %@", array);
     self.activityArray = [array mutableCopy];
     if ( self.activityArray.count == 0) {
         return;
@@ -295,6 +296,9 @@ static NSString *khuodongCell = @"HuodongCell";
 
 //    
     huodongJson = self.activityArray[0];
+    
+    [self.myCollectionView reloadData];
+
     
     if ([huodongJson isKindOfClass:[NSDictionary class]]) {
         
@@ -324,7 +328,6 @@ static NSString *khuodongCell = @"HuodongCell";
         }
     }
 
-    [self.myCollectionView reloadData];
 
 }
 

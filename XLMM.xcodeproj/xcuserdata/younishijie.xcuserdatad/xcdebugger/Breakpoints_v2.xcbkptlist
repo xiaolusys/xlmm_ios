@@ -904,11 +904,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1008"
-            endingLineNumber = "1008"
+            startingLineNumber = "1011"
+            endingLineNumber = "1011"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -920,11 +920,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "996"
-            endingLineNumber = "996"
+            startingLineNumber = "999"
+            endingLineNumber = "999"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -984,7 +984,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "926"
+            endingLineNumber = "926"
+            landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "923"
@@ -1000,27 +1016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "920"
-            endingLineNumber = "920"
-            landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1135"
-            endingLineNumber = "1135"
+            startingLineNumber = "1138"
+            endingLineNumber = "1138"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1032,11 +1032,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1148"
-            endingLineNumber = "1148"
+            startingLineNumber = "1151"
+            endingLineNumber = "1151"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1671,11 +1671,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "554"
-            endingLineNumber = "554"
+            startingLineNumber = "557"
+            endingLineNumber = "557"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1687,11 +1687,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "582"
+            endingLineNumber = "582"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1703,11 +1703,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910469.913452"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "544"
+            endingLineNumber = "544"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1719,11 +1719,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480910634.091264"
+            timestampString = "480953341.68676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "569"
-            endingLineNumber = "569"
+            startingLineNumber = "572"
+            endingLineNumber = "572"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1901,6 +1901,54 @@
             startingLineNumber = "217"
             endingLineNumber = "217"
             landmarkName = "-tableView:moveRowAtIndexPath:toIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480953341.68676"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "-fetchActivities:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480953153.10225"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
+            landmarkName = "-fetchActivities:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/Common/TodayViewController.m"
+            timestampString = "480953342.679879"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "-fetchActivities:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
