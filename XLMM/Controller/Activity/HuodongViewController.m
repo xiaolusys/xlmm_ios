@@ -104,11 +104,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
     
-    //取出活动id
-    self.activityId = [self.diction objectForKey:@"id"];
-
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
     imageView1.frame = CGRectMake(25, 13, 20, 20);
@@ -117,7 +113,28 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[self.diction objectForKey:@"act_link"]]];
+    NSString *loadStr = nil;
+    if (self.diction.count == 0) {
+        [self createNavigationBarWithTitle:@"精品活动" selecotr:@selector(backClicked:)];
+        loadStr = self.eventLink;
+        button1.hidden = YES;
+        button1.userInteractionEnabled = NO;
+        imageView1.hidden = YES;
+    }else {
+        [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
+        //取出活动id
+        self.activityId = [self.diction objectForKey:@"id"];
+        loadStr = [self.diction objectForKey:@"act_link"];
+        button1.hidden = NO;
+        button1.userInteractionEnabled = YES;
+        imageView1.hidden = NO;
+    }
+    
+    
+    
+    
+
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     
     self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;

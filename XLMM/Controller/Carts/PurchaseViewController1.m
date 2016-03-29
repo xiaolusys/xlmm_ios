@@ -25,6 +25,8 @@
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 #import "SVProgressHUD.h"
 
+#import "NSDictionary+UrlEncoding.h"
+
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
     AddressModel *addressModel;//默认收货地址
@@ -49,14 +51,39 @@
     
     NSArray *pay_extras;
     
+     NSString *dict;
+    
     float lijianpay;
+    
+   
 }
 
 @property (nonatomic, strong)NSMutableArray *MutCatrsArray;     //购物车数组
 @property (weak, nonatomic) IBOutlet UIImageView *zhifubaoImageView;//选中图片
 @property (weak, nonatomic) IBOutlet UIImageView *wxImageView;      //未选中图片
 
+@property (nonatomic, strong)NSString *availableString;
+@property (nonatomic, assign)CGFloat availableFloat;
+@property (nonatomic, assign)BOOL isUseXLW;
+
+@property (nonatomic, assign)NSInteger userPayMent;
+@property (nonatomic, assign)NSInteger enough;
+
+@property (nonatomic, strong)NSDictionary *rightReduce;
+@property (nonatomic, strong)NSDictionary *xlWallet;
+@property (nonatomic, strong)NSDictionary *couponInfo;
+
+@property (nonatomic, assign)BOOL isCanCoupon;
+
+
+@property (nonatomic, assign)BOOL isEnoughCoupon;
+@property (nonatomic, assign)BOOL isEnoughRight;
+@property (nonatomic, assign)BOOL isEnoughBudget;
+
+@property (nonatomic, assign)BOOL isUserCoupon;
+
 @end
+
 
 @implementation PurchaseViewController1
 
@@ -112,8 +139,24 @@
     addressModel = [AddressModel new];
     [self downloadCartsData];
     
-    payMethod = @"alipay";
+//    payMethod = @"alipay";
     
+    
+    self.xlwButton.selected = NO;
+    self.alipayButton.selected = NO;
+    self.wxButton.selected = NO;
+    
+    self.isUseXLW = NO;
+    self.enough = 0;
+    
+    //新的
+    self.isCanCoupon = NO;
+    
+    self.isEnoughRight = NO;
+    self.isEnoughBudget = NO;
+    self.isEnoughCoupon = NO;
+    
+    self.isUserCoupon = NO;
     
     MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
     if (coupons.couponValue == 0) {
@@ -122,7 +165,6 @@
         
         
     } else {
-        
         self.couponImageView.hidden = NO;
         self.couponLabel.hidden = YES;
     }
@@ -133,11 +175,10 @@
     
 }
 
+//首次进来请求数据
 - (void)downloadCartsData{
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
     if (self.cartsArray.count == 0) {
-        //购物车为空。
-      //  NSLog(@"购物车为空");
         return;
     }
     //构造参数字符串
@@ -148,7 +189,7 @@
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-  //  NSLog(@"cartsURLString = %@", urlString);
+    NSLog(@"------cartsURLString = %@", urlString);
     
    
     //下载购物车支付界面数据
@@ -162,6 +203,7 @@
     });
 }
 
+//首次数据请求
 - (void)fetchedCartsData2:(NSData *)responseData{
     NSError *error = nil;
     if (responseData == nil) {
@@ -170,54 +212,108 @@
     }
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    
     if (error != nil) {
         NSLog(@"解析失败");
     }
-    NSLog(@"dic = %@", dic);
+    NSLog(@"-----------------%@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
-    
-    
     coupon_message = [dic objectForKey:@"coupon_message"];
-    
-  //  NSLog(@"coupon_message= %@", coupon_message);
+
     pay_extras = [dic objectForKey:@"pay_extras"];
-    NSLog(@"pay_extras = %@", pay_extras);
-   
     
-    NSString *name = pay_extras[0][@"name"];
-    NSDictionary *pay_ex = pay_extras[0];
-    lijianpay = [pay_ex[@"value"] floatValue];
+    totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
+    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
+    for (NSDictionary *dicExtras in pay_extras) {
+        //优惠券
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 2) {
+            self.couponInfo = dicExtras;
+            if ([[dicExtras objectForKey:@"use_coupon_allowed"] integerValue] == 1) {
+                self.isCanCoupon = YES;
+            }
+            continue;
+        }
+        //app立减
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 1) {
+            self.rightReduce = dicExtras;
+            CGFloat appcut = [[dicExtras objectForKey:@"value"] floatValue];
+            if ([[dic objectForKey:@"total_payment"] compare:[dicExtras objectForKey:@"value"]] == NSOrderedDescending) {
+                totalPayment = totalPayment - appcut;
+                discountfee = discountfee + appcut;
+            }else {
+                //app立减已够使用
+                totalPayment = 0.0;
+                discountfee = [[dic objectForKey:@"total_payment"] floatValue];
+                
+                self.isEnoughRight = YES;
+            }
+            self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", dicExtras[@"value"]];
+            continue;
+        }
+        //余额
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 3 && totalPayment > 0) {
+            self.xlWallet = dicExtras;
+            self.availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
+            self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
+            
+            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedSame) {
+                //足够支付
+                self.isEnoughBudget = YES;
+            }else {
+                //不足支付
+                self.isEnoughBudget = NO;
+            }
+            
+        }
+    }
     
-    self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", pay_ex[@"value"]];
-    
-    
+//    app支付立减
+//    self.rightReduce = pay_extras[0];
+//    NSString *name = pay_extras[0][@"name"];
+//    NSDictionary *pay_ex = pay_extras[0];
+//    lijianpay = [pay_ex[@"value"] floatValue];
+//    
+//    
+//    
+//    //遍历小鹿钱包
+//    self.availableFloat = 0.0;
+//    for (NSDictionary *dic in pay_extras) {
+//        if ([dic[@"pid"] integerValue] == 3) {
+//            self.xlWallet = dic;
+//            
+//            self.availableString = [NSString stringWithFormat:@"%.2f", [self.xlWallet[@"value"] floatValue]];
+//            self.availableFloat = [self.availableString floatValue];
+//            
+//            self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
+//        }
+//    }
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
     totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
+//    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
     postfee = [[dic objectForKey:@"post_fee"] floatValue];
-    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
-    NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
+//    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
+//    NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
     
     
-    if (totalPayment < 0) {
-        totalPayment = 0;
-    }
+//    if (totalPayment < 0) {
+//        totalPayment = 0;
+//    }
     //self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
+    
+    //合计
     self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
+    //邮费
     self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
+    //节省
     self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
+    //应付
     self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
   
-    
-  
-    
-    MMLOG(name);
-    
-    
+
+//    MMLOG(name);
+
     
     [self.MutCatrsArray removeAllObjects];
     
@@ -250,28 +346,28 @@
     
     [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
     
-    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
-        isWallPay = YES;
-    } else {
-        isWallPay = NO;
-    }
-    
-    if ([coupon_message isEqualToString:@""]) {
-        NSLog(@"okokoko");
-        
-    } else {
-        
-        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertViewError.tag = 2000;
-        [alertViewError show];
-        
-        
-    }
+//    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
+//        isWallPay = YES;
+//    } else {
+//        isWallPay = NO;
+//    }
+//    
+//    if ([coupon_message isEqualToString:@""]) {
+//        NSLog(@"okokoko");
+//        
+//    } else {
+//        
+//        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        alertViewError.tag = 2000;
+//        [alertViewError show];
+//        
+//        
+//    }
     
     // NSLog(@"****************");
 }
 
--(void) performDismiss:(NSTimer *)timer
+-(void)performDismiss:(NSTimer *)timer
 {
     self.couponLabel.hidden = YES;
     yhqModel = nil;
@@ -280,113 +376,6 @@
     [alertViewError dismissWithClickedButtonIndex:0 animated:NO];
 }
 
-
-- (void)fetchedCartsData:(NSData *)responseData{
-    NSError *error = nil;
-    // 返回数据为空 异常处理。。。。
-    if (responseData == nil) {
-        return;
-    }
- 
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-
-    if (error != nil) {
-        NSLog(@"解析失败");
-    }
-    NSLog(@"dic = %@", dic);
-    
-    NSArray *array = [dic objectForKey:@"cart_list"];
-    
-    
-    coupon_message = [dic objectForKey:@"coupon_message"];
-    
-    //  NSLog(@"coupon_message= %@", coupon_message);
-    pay_extras = [dic objectForKey:@"pay_extras"];
-    NSLog(@"pay_extras = %@", pay_extras);
-    
-    NSDictionary *pay_ex = pay_extras[0];
-    lijianpay = [pay_ex[@"value"] floatValue];
-    
-    self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", pay_ex[@"value"]];
-    
-   // NSLog(@"coupon_message= %@", coupon_message);
-    
-    if ([coupon_message isEqualToString:@""]) {
-        NSLog(@"okokoko");
-        
-    } else {
-        
-        yhqModel = nil;
-        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
-
-        alertViewError.tag = 2000;
-        
-        
-        [alertViewError show];
-        return;
-        
-    }
-   
-    uuid = [dic objectForKey:@"uuid"];
-    cartIDs = [dic objectForKey:@"cart_ids"];
-    totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
-    postfee = [[dic objectForKey:@"post_fee"] floatValue];
-    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
-    NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
-    
-    if (totalPayment < 0) {
-        totalPayment = 0;
-        
-    }
-    
-    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
-    self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
-    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
-    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
-    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
-    
-    pay_extras = [dic objectForKey:@"pay_extras"];
-    NSLog(@"pay_extras = %@", pay_extras);
-    
-    
-    [self.MutCatrsArray removeAllObjects];
-
-    for (NSDictionary *dicInfo in array) {
-        BuyModel *model = [BuyModel new];
-        
-        model.addressID = [dicInfo objectForKey:@"id"];
-        model.payment = [dic objectForKey:@"total_payment"];
-        model.postFee = [dic objectForKey:@"post_fee"];
-        model.discountFee = [dic objectForKey:@"discount_fee"];
-        model.totalFee = [dic objectForKey:@"total_fee"];
-        totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-        model.uuID = [dic objectForKey:@"uuid"];
-        model.itemID = [dicInfo objectForKey:@"item_id"];
-        model.skuID = [dicInfo objectForKey:@"sku_id"];
-        model.buyNumber = [[dicInfo objectForKey:@"num"]integerValue];
-        model.imageURL = [dicInfo objectForKey:@"pic_path"];
-        model.name = [dicInfo objectForKey:@"title"];
-        model.sizeName = [dicInfo objectForKey:@"sku_name"];
-        model.price = [dicInfo objectForKey:@"price"];
-        model.oldPrice = [dicInfo objectForKey:@"std_sale_price"];
-        
-        
-        [self.MutCatrsArray addObject:model];
-    }
-
-    //NSLog(@"cartsDataArray = %@", self.MutCatrsArray);
-    
-    [self createCartsListView];
-    
-    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
-
-    
-   
-    
-   // NSLog(@"****************");
-}
 
 - (void)createCartsListView{
     BuyCartsView * cartOwner = [BuyCartsView new];
@@ -490,312 +479,425 @@
 }
 
 - (IBAction)yhqClicked:(id)sender {
-    //NSLog(@"使用优惠券");
-
+    if (!self.isCanCoupon) {
+        [SVProgressHUD showInfoWithStatus:@"当前优惠券不能使用！"];
+        return;
+    }
     
-    
-   // NSLog(@"选择优惠券");
     YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
     vc.isSelectedYHQ = YES;
     vc.payment = totalfee;
     vc.delegate = self;
     vc.selectedModelID = yhqModelID;
     
-    
     [self.navigationController pushViewController:vc animated:YES];
-    
-    
 }
-
-- (void)downloadCartsData2{
-    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
-    if (self.cartsArray.count == 0) {
-        //购物车为空。
-        //  NSLog(@"购物车为空");
-        return;
-    }
-    //构造参数字符串
-    for (NewCartsModel *model in self.cartsArray) {
-        NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
-        [paramstring appendString:str];
-    }
-    NSRange rang =  {paramstring.length -1, 1};
-    [paramstring deleteCharactersInRange:rang];
-    NSString *urlString;
-    if (yhqModel == nil) {
-         urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-        
-        
-    } else {
-  urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,paramstring, yhqModel.ID];
-    }
-   
-    
-    NSLog(@"cartsURLString = %@", urlString);
-    
-
-    
-    //下载购物车支付界面数据
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error = nil;
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSLog(@"url = %@", url);
-        if (url == nil) {
-            return ;
-        }
-        
-        NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
-        NSLog(@"error = %@", error);
-        if (data == nil) {
-               NSLog(@"下载失败");
-            return;
-        }
-        [self performSelectorOnMainThread:@selector(fetchedCartsData:) withObject:data waitUntilDone:YES];
-    });
-}
-
 
 
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
-    
-    //NSLog(@"立即购买优惠券更新");
-    //NSLog(@"model = %@", model);
+    //优惠券一定可以使用
     yhqModel = model;
-    
-    
-    [self downloadCartsData2];
+
     if (model == nil) {
         self.couponLabel.hidden = YES;
         yhqModelID = @"";
-        
+        [self updateUI];
+        //未使用优惠券
+        self.isUserCoupon = NO;
     } else {
+        self.isUserCoupon = YES;
+        
         self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
         self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
         self.couponLabel.hidden = NO;
-        
         yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+        
+        //使用优惠券后
+        if (yhqModel && yhqModel.coupon_value) {
+            CGFloat couponV = [yhqModel.coupon_value floatValue];
+            NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
+            NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];
+            
+            CGFloat aftertotalPayment = 0.00;
+            CGFloat afterdiscountfee = 0.00;
+            
+            if ([totalNS compare:couponNS] == NSOrderedDescending) {
+                aftertotalPayment = totalPayment - couponV;
+                afterdiscountfee = discountfee + couponV;
+                self.isEnoughCoupon = NO;
+            }else {
+                aftertotalPayment = 0.00;
+                afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+                self.isEnoughCoupon = YES;
+            }
+            
+            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
+            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
+            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+        }
+
     }
-    
-    
-    //NSLog(@"model.title = %@, %@-%@", yhqModel.title, yhqModel.deadline, yhqModel.created);
-    
-    //NSLog(@"coupon_id = %@", yhqModel.ID);
-    
-    //   NSFontAttributeName
 }
 
 - (void)updateUI{
-    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f",[yhqModel.coupon_value floatValue]];
-    
-    discountfee = [yhqModel.coupon_value floatValue];
-
-    float allpay = totalfee - discountfee + postfee - lijianpay;
-    
-    if (allpay < 0) {
-        allpay = 0;
-    }
-   // NSLog(@"allpay = %.1f", allpay);
-    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", allpay];
-    
+    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
+    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
+    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
 }
+
 - (IBAction)zhifubaoClicked:(id)sender {
-   //  NSLog(@"选择支付宝");
-    payMethod = @"alipay";
-    self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-    self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-    self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-  //  NSLog(@"payMethod = %@", payMethod);
     
+    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
+    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
+    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
+    
+    if (self.isEnoughBudget && self.isUseXLW) {
+        //支付宝可选可不选
+        self.alipayButton.selected = !self.alipayButton.selected;
+        
+        if (self.alipayButton.selected) {
+            self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            self.wxButton.selected = NO;
+            payMethod = @"alipay";
+        }else {
+            self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            payMethod = nil;
+        }
+    }else {
+        payMethod = @"alipay";
+        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+        self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+    }
 }
-
 
 
 - (IBAction)weixinZhifuClicked:(id)sender {
- //    NSLog(@"选择微信支付");
-    payMethod = @"wx";
-    self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-    self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-    self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-  //  NSLog(@"payMethod = %@", payMethod);
+    
+    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
+    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
+    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
+    //NSOrderedAscending = -1L, NSOrderedSame, NSOrderedDescending
+    
+    if (self.isEnoughBudget && self.isUseXLW) {
+        //微信可选可不选
+        self.wxButton.selected = !self.wxButton.selected;
+        
+        if (self.wxButton.selected) {
+            self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            self.alipayButton.selected = NO;
+            payMethod = @"wx";
+        }else {
+            self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            payMethod = nil;
+        }
+    }else {
+        payMethod = @"wx";
+        self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+        self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+    }
 
 }
 - (IBAction)xiaoluqianbaoSelected:(id)sender {
-    
-    if (isWallPay == YES) {
-    
-        payMethod = @"budget";
-        self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-        self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-        self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
-        NSLog(@"payMethod = %@", payMethod);
-    } else {
+    if (self.availableFloat > 0) {
+        self.xlwButton.selected = !self.xlwButton.selected;
         
-        [SVProgressHUD showInfoWithStatus:@"不能使用钱包支付"];
-        
-        
+        if (self.xlwButton.selected) {
+            self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.isUseXLW = YES;
+        }else {
+            self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            self.isUseXLW = NO;
+        }
+    }else {
+        //钱包不可用
+        [SVProgressHUD showInfoWithStatus:@"钱包不可用"];
     }
-    
-    
-
     
 }
 - (IBAction)buyClicked:(id)sender {
-  //   NSLog(@"购买商品");
-    
+    //检查地址
     if (addressModel.addressID == nil) {
-    //    NSLog(@"地址为空");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请填写收货地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
-    //   http://m.xiaolu.so/rest/v1/trades/shoppingcart_create
+
+    //检查支付方式
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/shoppingcart_create", Root_URL];
- //   NSLog(@"urlstring = %@", urlString);
+//    pid:1:value:2
+    NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",self.rightReduce[@"pid"],self.rightReduce[@"value"]];
+//    NSString *parms = nil;
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    float allpay = totalfee - discountfee + postfee - lijianpay;
-    
-  //  NSLog(@"allpay = %.1f", allpay);
-    
-    
-    
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    NSString* dict;
-  //  NSLog(@"youhuiquan.ID = %@", yhqModel.ID);
+    dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
     
 
-    NSDictionary *pay_ex = pay_extras[0];
-    
-    //pid:1:value:2
-    NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",pay_ex[@"pid"],pay_ex[@"value"]];
-    if (allpay < 0) {
-        allpay = 0;
+//    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
+    //是否使用了优惠券
+    if (self.isUserCoupon && self.isEnoughCoupon) {
+        //足够
+        totalPayment = 0.00;
+        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+        
+        //拼提交信息
+        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
+        dict = [NSString stringWithFormat:@"%.2f&discount_fee=%@&payment=%@&channel=%@&pay_extras=%@",discountfee, dict,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
+        //提交
+        [self submitBuyGoods];
+    }else {
+        if (self.isUserCoupon) {
+            //使用不足
+            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
+            discountfee = discountfee + [yhqModel.coupon_value floatValue];
+            
+            NSLog(@"----->%.2f", discountfee);
+        }else{
+            
+            //未使用
+            if (!self.isUseXLW && payMethod == nil) {
+                [SVProgressHUD showErrorWithStatus:@"请至少选择一种支付方式"];
+                return;
+            }
+        }
+        
+        //不足需要使用小鹿钱包或者其它支付方式
+        totalPayment = totalPayment - [yhqModel.coupon_value floatValue];
+//        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + [yhqModel.coupon_value floatValue]) || totalPayment == (self.availableFloat + [yhqModel.coupon_value floatValue]))) {
+            //使用了小鹿钱包 足够提交信息
+            CGFloat value = [[self.xlWallet objectForKey:@"value"] floatValue];
+            if (totalPayment > value) {
+                parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], value];
+            }else {
+                parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
+            }
+            
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discountfee,[[NSNumber numberWithFloat:totalPayment] floatValue], @"budget", parms];
+            //提交
+            [self submitBuyGoods];
+        }else {
+            if (self.isUseXLW) {
+                //使用不足
+                CGFloat value = [[self.xlWallet objectForKey:@"value"] floatValue];
+                if (totalPayment > value) {
+                    parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], value];
+                }else {
+                    parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
+                }
+            }else {
+                //未使用
+                if (payMethod == nil) {
+                    [SVProgressHUD showErrorWithStatus:@"请选择支付方式"];
+                    return;
+                }
+            }
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",dict,discountfee, [[NSNumber numberWithFloat:totalPayment] floatValue], payMethod, parms];
+            //提交
+            [self submitBuyGoods];
+        }
+
     }
     
+//    if (!([avaiPay compare:waitPay] == NSOrderedAscending) && self.isUseXLW) {
+//        //小鹿钱包钱大于或者等于待支付且选择了小鹿钱包支付
+////        accoutM = [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
+//        self.enough = 1;
+//        
+//    }else {
+//        //选择了支付宝或者微信的一种，小鹿钱包不一定选择
+//        if (payMethod == nil) {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择一种支付方式" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
+//            return;
+//        }
+////        if (self.isUseXLW) {
+////            accoutM = [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
+////        }
+//    }
+//    
+        //   http://m.xiaolu.so/rest/v1/trades/shoppingcart_create
     
-    if (yhqModel.ID == nil) {
-        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, parms];
-    } else {
-        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, yhqModel.ID, parms];
+    //    if (yhqModel.ID == nil) {
+//        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, parms];
+//    } else {
+//        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, yhqModel.ID, parms];
+//    }
     
+//    NSLog(@"********************%ld", (long)self.userPayMent);
+////    return;
+//    NSLog(@"dict = %@", dict);
+}
+
+
+- (NSDictionary *)returnDic:(NSString *)str {
+    NSArray *arr = [str componentsSeparatedByString:@"&"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    for (NSString *str1 in arr) {
+        NSArray *keyAndV  = [str1 componentsSeparatedByString:@"="];
+        [dic setObject:keyAndV[1] forKey:keyAndV[0]];
     }
+    return dic;
+}
+
+- (void)submitBuyGoods {
+    NSLog(@"dict---%@", dict);
     
-    NSLog(@"dict = %@", dict);
+//   NSDictionary *test = [self returnDic:dict];
+////
+//    NSString *str = [test urlEncodedString];
+    
+    NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
+    NSURL *url = [NSURL URLWithString:postPay];
+    
+    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     
+//    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+
     
     PurchaseViewController1 * __weak weakSelf = self;
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"%@", postRequest);
         
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
         
         NSLog(@"response = %@", httpResponse);
-        
-        if ([payMethod isEqualToString:@"budget"]) {
-          
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            
-            NSLog(@"dic = %@", dic);
-            
-            /*
-             dic = {
-             channel = budget;
-             id = 305313;
-             info = "\U8ba2\U5355\U652f\U4ed8\U6210\U529f";
-             success = 1;
-             */
-            MMLOG([dic objectForKey:@"info"]);
-            mamaqianbaoInfo = [dic objectForKey:@"info"];
-            
-            [self performSelectorOnMainThread:@selector(showXiaoluQianbaoView) withObject:nil waitUntilDone:YES];
-//            
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[dic objectForKey:@"info"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//            [alertView show];
-           // [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"info"]];
-            
-            
-            
-            return ;
-        }
-        
-      
-        if (connectionError != nil) {
-            NSLog(@"error = %@", connectionError);
-        }
-        
-        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"charge = %@", charge);
-        errorCharge = charge;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        errorCharge = [dic objectForKey:@"detail"];
-        
-        
-        
-        
-        
-        
-        
         if (httpResponse.statusCode != 200) {
-         //   NSLog(@"出错了");
+            //出错
             self.couponLabel.hidden = YES;
-            [self performSelectorOnMainThread:@selector(showAlertView) withObject:nil waitUntilDone:YES];
-           
             return;
         }
         
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//        NSLog(@"-------%@", dic);
+//        NSLog(@"-------%@", dic[@"info"]);
         
+        if ([[dic objectForKey:@"code"] integerValue] != 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
+                [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+            });
+            return;
+        }if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+            });
+            return;
+        }
         
-       
+        NSDictionary *chargeDic = [dic objectForKey:@"charge"];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                
-             //   NSLog(@"completion block: %@", result);
-                
-                if (error == nil) {
-                    NSLog(@"PingppError is nil");
-                    paySucceed = YES;
-                    
-                    [SVProgressHUD showInfoWithStatus:@"支付成功"];
-                    
-                    
-                } else {
-                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                    
-                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                        
+        NSError *parseError = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
+        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        NSLog(@"-----------%@", parseError);
+//        NSLog(@"==========%@", charge);
+        
+        if (![[dic objectForKey:@"channel"] isEqualToString:@"budget"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                    if (error == nil) {
+//                        paySucceed = YES;
+                        [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                     } else {
-                        [SVProgressHUD showErrorWithStatus:@"支付失败"];
-                        
+                        NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+                            [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                        } else {
+                            [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                        }
+//                        paySucceed = NO;
                     }
-                    paySucceed = NO;
-                }
-                //[weakSelf showAlertMessage:result];
-            }];
-        });
+                    [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+        
+                }];
+            });
+        }
+        
+        
+        
+        //        if (self.userPayMent == 1 || self.userPayMent == 2) {
+        //
+        //        }
+        
+        //        if ([payMethod isEqualToString:@"budget"]) {
+        //
+        //            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        //
+        //            NSLog(@"dic = %@", dic);
+        //
+        //            /*
+        //             dic = {
+        //             channel = budget;
+        //             id = 305313;
+        //             info = "\U8ba2\U5355\U652f\U4ed8\U6210\U529f";
+        //             success = 1;
+        //             */
+        //            MMLOG([dic objectForKey:@"info"]);
+        //            mamaqianbaoInfo = [dic objectForKey:@"info"];
+        //
+        //            [self performSelectorOnMainThread:@selector(showXiaoluQianbaoView) withObject:nil waitUntilDone:YES];
+        ////
+        ////            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[dic objectForKey:@"info"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        ////            [alertView show];
+        //           // [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"info"]];
+        //
+        //
+        //
+        //            return ;
+        //        }
+        //
+        //
+        //        if (connectionError != nil) {
+        //            NSLog(@"error = %@", connectionError);
+        //        }
+        //
+        //        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //        NSLog(@"charge = %@", charge);
+        //        errorCharge = charge;
+        //        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        //        errorCharge = [dic objectForKey:@"detail"];
+        //
+        //
+        //        if (httpResponse.statusCode != 200) {
+        //         //   NSLog(@"出错了");
+        //            self.couponLabel.hidden = YES;
+        //            [self performSelectorOnMainThread:@selector(showAlertView) withObject:nil waitUntilDone:YES];
+        //
+        //            return;
+        //        }
+        //
+        //
+        //
+        //
         
         
         
     }];
+
     
 }
 
-- (void)showXiaoluQianbaoView{
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mamaqianbaoInfo delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    alertView.tag = 666;
-    
-    [alertView show];
-    
+- (void)returnCart {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+//- (void)showXiaoluQianbaoView{
+//    
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mamaqianbaoInfo delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+//    alertView.tag = 666;
+//    
+//    [alertView show];
+//    
+//}
 
 - (void)showAlertView{
     
@@ -815,7 +917,6 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
         return;
     }
-    
     
     [self downloadCartsData];
 }

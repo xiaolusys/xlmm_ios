@@ -34,6 +34,7 @@
 
 #import "DotLineView.h"
 #import "SelectedActivitiesViewController.h"
+#import "HuodongViewController.h"
 
 
 
@@ -1123,8 +1124,11 @@
 
 - (IBAction)boutiqueActivities:(id)sender {
     //精品活动
-//    [SVProgressHUD showInfoWithStatus:@"程序猿正在努力开发..."];
-    SelectedActivitiesViewController *activity = [[SelectedActivitiesViewController alloc] init];
+    if (self.eventLink == nil || self.eventLink.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
+        return;
+    }
+    HuodongViewController *activity = [[HuodongViewController alloc] init];
     activity.eventLink = self.eventLink;
     [self.navigationController pushViewController:activity animated:YES];
     

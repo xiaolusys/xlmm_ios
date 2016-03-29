@@ -44,5 +44,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *couponButton;
 @property (weak, nonatomic) IBOutlet UILabel *couponLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *availableLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *xlwButton;
+@property (weak, nonatomic) IBOutlet UIButton *alipayButton;
+@property (weak, nonatomic) IBOutlet UIButton *wxButton;
+
 
 @end
