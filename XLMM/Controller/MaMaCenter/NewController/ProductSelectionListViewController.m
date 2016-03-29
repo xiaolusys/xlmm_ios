@@ -302,11 +302,12 @@ static NSString *cellIdentifier = @"productSelection";
         return;
     }
     NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error != nil) {
         NSLog(@"error = %@", error);
         return;
     }
+    NSArray *array = [dic objectForKey:@"results"];
     if (array.count == 0) {
         return;
     }
@@ -330,7 +331,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
@@ -341,7 +342,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"child");
     category = 1;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
@@ -352,7 +353,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
@@ -361,7 +362,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"yongjin");
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
    // NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
@@ -369,7 +370,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
    // NSLog(@"xiaoliang");
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
 //    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
