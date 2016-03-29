@@ -13,7 +13,7 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "YixuanTableViewController.h"
-
+#import "MJRefresh.h"
 #import "MaMaSelectProduct.h"
 
 
@@ -29,6 +29,8 @@
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
+
+@property (nonatomic, copy) NSString *nextUrl;
 
 @property (nonatomic, strong) UIView *headView;
 @property (nonatomic, strong) UIButton *allButton;
@@ -68,8 +70,10 @@ static NSString *cellIdentifier = @"productSelection";
     
     [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20", Root_URL];
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
+    
+    NSLog(@"url = %@", url);
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -102,12 +106,58 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        NSLog(@"loadMore");
+        [self loadMore];
+    }];
+    
+    
+    
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [self createHeadView];
    
     [self createrightItem];
     
+}
+
+- (void)dealMoreData:(NSDictionary *)dic{
+    NSLog(@"dic");
+    self.nextUrl = dic[@"next"];
+    NSArray *array = [dic objectForKey:@"results"];
+    
+    for (NSDictionary *pdt in array) {
+        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
+        [productM setValuesForKeysWithDictionary:pdt];
+        [self.dataArr addObject:productM];
+    }
+    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
+    NSLog(@"%ld", self.dataArr.count);
+    [self.tableView reloadData];
+}
+
+- (void)loadMore{
+    NSLog(@"下载更多。。。");
+    
+    [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
+    
+    if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        
+        
+        return;
+    }
+    
+    
+    [[AFHTTPRequestOperationManager manager] GET:self.nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self dealMoreData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    NSLog(@"next = %@", self.nextUrl);
 }
 
 - (void)createrightItem{
@@ -301,6 +351,7 @@ static NSString *cellIdentifier = @"productSelection";
     if (data == nil) {
         return;
     }
+    self.nextUrl = nil;
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error != nil) {
@@ -308,6 +359,9 @@ static NSString *cellIdentifier = @"productSelection";
         return;
     }
     NSArray *array = [dic objectForKey:@"results"];
+    self.nextUrl = dic[@"next"];
+    
+    NSLog(@"next = %@", self.nextUrl);
     if (array.count == 0) {
         return;
     }
@@ -380,10 +434,16 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark --数据处理
 - (void)dealData:(NSDictionary *)data {
+    NSLog(@"data = %@", data);
     
     [self.dataArr removeAllObjects];
+    self.nextUrl = nil;
     NSArray *array = data[@"results"];
     
+    self.nextUrl = data[@"next"];
+    
+    NSLog(@"next = %@", self.nextUrl);
+
     
     for (NSDictionary *pdt in array) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];

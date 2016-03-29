@@ -68,7 +68,9 @@ static NSString *const cellIdentifier = @"YixuanCell";
         
     }];
     
-    [self createRightItem];
+    [self.tableView setEditing:YES animated:YES];
+
+  //  [self createRightItem];
     
 
 }
@@ -83,7 +85,6 @@ static NSString *const cellIdentifier = @"YixuanCell";
     
     if (!self.isTableViewEdit) {
         self.navigationItem.rightBarButtonItem.title = @"Done";
-        [self.tableView setEditing:YES animated:YES];
         self.tableViewEdit = YES;
         
     } else {
@@ -196,7 +197,26 @@ static NSString *const cellIdentifier = @"YixuanCell";
 
 -(void) tableView: (UITableView *) tableView moveRowAtIndexPath: (NSIndexPath *) oldPath toIndexPath:(NSIndexPath *) newPath
 {
-    MaMaSelectProduct *newModel = self.dataArr[newPath.row];
+    
+    for (MaMaSelectProduct *model in self.dataArr) {
+        NSLog(@"id = %@", model.productId);
+    }
+    
+    NSLog(@"old: %ld -> new: %ld", oldPath.row, newPath.row);
+    MaMaSelectProduct *newModel;
+    if (oldPath.row < newPath.row) {
+        if (newPath.row + 1 == self.dataArr.count) {
+            newModel = self.dataArr[newPath.row];
+        } else {
+            newModel = self.dataArr[newPath.row +1];
+        }
+
+        
+
+    } else {
+        newModel = self.dataArr[newPath.row];
+
+    }
     MaMaSelectProduct *oldModel = self.dataArr[oldPath.row];
     
     NSString *change_id = [oldModel.productId stringValue];
@@ -207,6 +227,11 @@ static NSString *const cellIdentifier = @"YixuanCell";
 
     [self.dataArr removeObjectAtIndex:oldPath.row];
     [self.dataArr insertObject:oldModel atIndex:newPath.row];
+    
+    for (MaMaSelectProduct *model in self.dataArr) {
+        NSLog(@"id = %@", model.productId);
+    }
+    
     
     //[self.dataArr exchangeObjectAtIndex:newPath.row withObjectAtIndex:oldPath.row];
     ///rest/v1/pmt/cushoppros/change_pro_position
@@ -220,33 +245,57 @@ static NSString *const cellIdentifier = @"YixuanCell";
                                  @"target_id":target_id
                                  };
     
-    NSLog(@"params = %@", parameters);
+   // NSLog(@"params = %@", parameters);
     
     [manager POST:string parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
-              NSLog(@"%@", [responseObject objectForKey:@"message"]);
+         //     NSLog(@"JSON: %@", responseObject);
+             NSLog(@"%@", [responseObject objectForKey:@"message"]);
               
-              
+              if (newPath.row == self.dataArr.count - 1) {
+                  
+                  
+                  for (MaMaSelectProduct *model in self.dataArr) {
+                      NSLog(@"id = %@", model.productId);
+                  }
+                  
+                  
+                  NSDictionary *parameters = @{@"change_id":[((MaMaSelectProduct *)self.dataArr[newPath.row - 1]).productId stringValue],
+                                               @"target_id":[((MaMaSelectProduct *)self.dataArr[newPath.row]).productId stringValue]
+                                               };
+                  
+                  // NSLog(@"params = %@", parameters);
+                  
+                  [manager POST:string parameters:parameters
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            //  NSError *error;
+                            //     NSLog(@"JSON: %@", responseObject);
+                            NSLog(@"%@", [responseObject objectForKey:@"message"]);
+                            
+                            
+                            
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            //    NSLog(@"Error: %@", error);
+                            //
+                            
+                        }];
+              }
+
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-              
+          //    NSLog(@"Error: %@", error);
+          //
               
           }];
-
-    
-    
-    NSLog(@"%@ --> %@", change_id, target_id);
-    
-    for (MaMaSelectProduct *modle in self.dataArr) {
-        NSLog(@"model id = %@", modle.productId);
-    }
     
     
     
+   
+    
+  
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
