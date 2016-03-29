@@ -24,6 +24,9 @@ static NSString *const cellIdentifier = @"YixuanCell";
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArr;
+
+@property (nonatomic, getter=isTableViewEdit) BOOL tableViewEdit;
+
 @end
 
 @implementation YixuanTableViewController{
@@ -58,19 +61,45 @@ static NSString *const cellIdentifier = @"YixuanCell";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/shop_product?page_size=200", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+    
+    [self createRightItem];
+    
 
 }
 
+- (void)createRightItem{
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+
+- (void)editClick{
+    
+    if (!self.isTableViewEdit) {
+        self.navigationItem.rightBarButtonItem.title = @"Done";
+        [self.tableView setEditing:YES animated:YES];
+        self.tableViewEdit = YES;
+        
+    } else {
+        self.tableViewEdit = NO;
+        self.navigationItem.rightBarButtonItem.title = @"Edit";
+        [self.tableView setEditing:NO animated:YES];
+    }
+    
+}
+
 #pragma mark --数据处理
-- (void)dealData:(NSArray *)data {
+- (void)dealData:(NSDictionary *)data {
     NSLog(@"data = %@", data);
-    for ( NSDictionary *pdt in data) {
+    NSArray *array = [data objectForKey:@"results"];
+    
+    for ( NSDictionary *pdt in array) {
         
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         
@@ -142,7 +171,8 @@ static NSString *const cellIdentifier = @"YixuanCell";
 
     }
     MaMaSelectProduct *model = self.dataArr[indexPath.row];
-    NSLog(@"model = %@", model);
+    NSLog(@"model = %@", model.productId);
+    
 
     [cell fillData:model];
     cell.delegate = self;
@@ -150,6 +180,81 @@ static NSString *const cellIdentifier = @"YixuanCell";
     
     return cell;
 }
+
+-(BOOL)tableView:(UITableView *) tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //打开编辑
+    return YES;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //允许移动
+    return YES;
+}
+
+
+
+-(void) tableView: (UITableView *) tableView moveRowAtIndexPath: (NSIndexPath *) oldPath toIndexPath:(NSIndexPath *) newPath
+{
+    MaMaSelectProduct *newModel = self.dataArr[newPath.row];
+    MaMaSelectProduct *oldModel = self.dataArr[oldPath.row];
+    
+    NSString *change_id = [oldModel.productId stringValue];
+    
+    NSString *target_id = [newModel.productId stringValue];
+    
+    
+
+    [self.dataArr removeObjectAtIndex:oldPath.row];
+    [self.dataArr insertObject:oldModel atIndex:newPath.row];
+    
+    //[self.dataArr exchangeObjectAtIndex:newPath.row withObjectAtIndex:oldPath.row];
+    ///rest/v1/pmt/cushoppros/change_pro_position
+    NSString  *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/change_pro_position", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  
+    
+    
+    
+    NSDictionary *parameters = @{@"change_id":change_id,
+                                 @"target_id":target_id
+                                 };
+    
+    NSLog(@"params = %@", parameters);
+    
+    [manager POST:string parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              //  NSError *error;
+              NSLog(@"JSON: %@", responseObject);
+              NSLog(@"%@", [responseObject objectForKey:@"message"]);
+              
+              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              
+              
+          }];
+
+    
+    
+    NSLog(@"%@ --> %@", change_id, target_id);
+    
+    for (MaMaSelectProduct *modle in self.dataArr) {
+        NSLog(@"model id = %@", modle.productId);
+    }
+    
+    
+    
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
+
 
 
 - (void)productxiajiaBtnClick:(YixuanTableViewCell *)cell btn:(UIButton *)btn {
@@ -165,6 +270,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
     [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
     
     [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"res = %@", responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"店铺－－Error: %@", error);

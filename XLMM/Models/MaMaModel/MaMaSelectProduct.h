@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSNumber *rebet_amount;
 
 
+@property (nonatomic, strong) NSNumber *product;
 
 
 @end

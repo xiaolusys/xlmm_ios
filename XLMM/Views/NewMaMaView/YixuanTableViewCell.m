@@ -38,7 +38,7 @@
     self.stdPriceLabel.text = [NSString stringWithFormat:@"/¥%.0f", [model.std_sale_price floatValue]];
     self.headImageView.layer.masksToBounds = YES;
     self.headImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.pdtID = [model.productId stringValue];
+    self.pdtID = [model.product stringValue];
     self.model = model;
     
 }
