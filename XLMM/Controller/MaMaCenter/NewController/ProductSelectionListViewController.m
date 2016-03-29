@@ -68,7 +68,7 @@ static NSString *cellIdentifier = @"productSelection";
     
     [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20", Root_URL];
     [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -378,13 +378,13 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 #pragma mark --数据处理
-- (void)dealData:(NSArray *)data {
+- (void)dealData:(NSDictionary *)data {
     
     [self.dataArr removeAllObjects];
+    NSArray *array = data[@"results"];
     
     
-    
-    for (NSDictionary *pdt in data) {
+    for (NSDictionary *pdt in array) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         [productM setValuesForKeysWithDictionary:pdt];
         [self.dataArr addObject:productM];
