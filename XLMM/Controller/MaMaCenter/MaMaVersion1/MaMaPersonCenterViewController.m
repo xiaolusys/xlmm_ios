@@ -491,7 +491,8 @@
     
     NSInteger days = (count - page - 1)*7;
     self.visitorDate = [NSNumber numberWithInteger:days];
-  //  NSLog(@"days = %ld", days);
+  
+    NSLog(@"days = %ld", days);
     
      NSDictionary *dic = self.mamaOrderArray[days];
    // NSLog(@"dic = %@", dic);
@@ -824,8 +825,8 @@
     
 
     
-    self.visitorDate = [NSNumber numberWithInteger:days];
-    NSLog(@"days = %ld", days);
+    self.visitorDate = [NSNumber numberWithInteger:days - quxiaodays];
+    NSLog(@"days = %ld", days - quxiaodays);
    // NSLog(@"array = %@", self.mamaOrderArray);
    // NSLog(@"%ld", quxiaodays);
     
