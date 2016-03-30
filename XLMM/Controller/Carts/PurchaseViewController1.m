@@ -987,13 +987,13 @@
                 self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 //合计
-                self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
+                self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", amontPayment - couponValue - rightAmount - canUseWallet];
                 //节省
                 self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
                 //应付
-                self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+                self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", amontPayment - couponValue - rightAmount - canUseWallet];
                 //小鹿钱包
-                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", canUseWallet];
             }
         }else {
             //未使用
