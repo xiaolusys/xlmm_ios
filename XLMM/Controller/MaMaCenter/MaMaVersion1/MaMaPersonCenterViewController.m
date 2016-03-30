@@ -910,7 +910,8 @@
     return self.lineChart;
 }
 
-//  获取表格数据
+//  获取表格数据  2016 － 3-30 订单折线图 改为收益折线图。。。。
+
 - (void)prepareData{
     
     NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];

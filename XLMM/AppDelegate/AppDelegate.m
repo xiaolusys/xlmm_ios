@@ -17,9 +17,9 @@
 #import "MMDetailsViewController.h"
 #import "MobClick.h"
 #import "SVProgressHUD.h"
-
+#import "ActivityView.h"
 #define login @"login"
-
+#import "NSString+URL.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
 @interface AppDelegate ()<UIAlertViewDelegate, MiPushSDKDelegate>
@@ -38,7 +38,11 @@
 @property (nonatomic, copy) NSDictionary *pushInfo;
 @property (nonatomic, assign) BOOL isFirst;
 
+@property (nonatomic, strong)ActivityView *startV;
+@property (nonatomic, strong)NSTimer *sttime;
+@property (nonatomic, assign)NSInteger timeCount;
 
+@property (nonatomic, strong)NSString *imageUrl;
 
 @end
 
@@ -66,10 +70,41 @@
     }
     return string;
 }
+
+- (void)ActivityTimeUpdate {
+    self.timeCount++;
+    if (self.timeCount > 2) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+        
+    }
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    [NSThread sleepForTimeInterval:2.0];
+    
+    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:self.startV];
+     self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+
+    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        if (responseObject[@"picture"] == nil)return;
+        [self startDeal:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
   
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -182,6 +217,29 @@
     
     return YES;
 }
+
+
+- (void)startDeal:(NSDictionary *)dic {
+    self.imageUrl = [dic objectForKey:@"picture"];
+    
+    if (self.imageUrl.length == 0 || [self.imageUrl class] == [NSNull class]) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+    }
+    self.startV.imageV.alpha = 1;
+    
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:.3 animations:^{
+            self.startV.imageV.alpha = 0;
+        }];
+    }];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     //  https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985
