@@ -254,6 +254,8 @@
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 3 && totalPayment > 0) {
             self.xlWallet = dicExtras;
             self.availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
+            
+            //设置小鹿钱包提示信息。。。。
             self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
             
             if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedSame) {
@@ -534,6 +536,11 @@
             self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
             self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
             self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+            
+            //更新小鹿钱包提示信息。。。。。
+            // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
+            // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
+            
         }
 
     }

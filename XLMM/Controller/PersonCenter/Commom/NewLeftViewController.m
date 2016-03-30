@@ -58,7 +58,10 @@
 }
 
 - (void)updateUserInfo:(NSDictionary *)dic {
+    NSLog(@"dic = %@", dic);
     NSString *nickName = [dic objectForKey:@"nick"];
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
+    
     if (nickName.length >= 4) {
         self.nameLabel.text = [dic objectForKey:@"nick"];
     }
