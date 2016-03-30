@@ -39,6 +39,13 @@
     float postfee;       //运费金额
     float discountfee;   //优惠券金额
     
+    float couponValue;//优惠券金额
+    float amontPayment;//总需支付金额
+    float canUseWallet;
+    float rightAmount;
+    
+    float discount;
+    
     BOOL paySucceed;
     NSString *coupon_message;
     NSString *errorCharge;
@@ -222,6 +229,8 @@
 
     pay_extras = [dic objectForKey:@"pay_extras"];
     
+    amontPayment = [[dic objectForKey:@"total_payment"] floatValue];
+    
     totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
     for (NSDictionary *dicExtras in pay_extras) {
@@ -247,6 +256,7 @@
                 
                 self.isEnoughRight = YES;
             }
+            rightAmount = [[dicExtras objectForKey:@"value"] floatValue];
             self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", dicExtras[@"value"]];
             continue;
         }
@@ -255,8 +265,9 @@
             self.xlWallet = dicExtras;
             self.availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
             
+            canUseWallet = [[dicExtras objectForKey:@"value"] floatValue];
             //设置小鹿钱包提示信息。。。。
-            self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
+//            self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
             
             if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:totalPayment]] == NSOrderedSame) {
                 //足够支付
@@ -293,30 +304,20 @@
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
     totalfee = [[dic objectForKey:@"total_fee"] floatValue];
-//    totalPayment = [[dic objectForKey:@"total_payment"] floatValue] - lijianpay;
     postfee = [[dic objectForKey:@"post_fee"] floatValue];
-//    discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
-//    NSLog(@"--->>>%@", [dic objectForKey:@"coupon_ticket"]);
     
+    [self calculationLabelValue];
     
-//    if (totalPayment < 0) {
-//        totalPayment = 0;
-//    }
-    //self.totalFeeLabel.text = [NSString stringWithFormat:@"合计:¥%.1f", totalfee];
-    
-    //合计
-    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
-    //邮费
-    self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
-    //节省
-    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
-    //应付
-    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
-  
+//    //合计
+//    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
+//    //邮费
+//    self.postFeeLabel.text = [NSString stringWithFormat:@"¥%.1f", postfee];
+//    //节省
+//    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
+//    //应付
+//    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
 
-//    MMLOG(name);
 
-    
     [self.MutCatrsArray removeAllObjects];
     
     for (NSDictionary *dicInfo in array) {
@@ -346,7 +347,7 @@
     
     [self createCartsListView];
     
-    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+//    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
     
 //    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
 //        isWallPay = YES;
@@ -499,13 +500,15 @@
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
     //优惠券一定可以使用
     yhqModel = model;
-
+    
+    couponValue = [yhqModel.coupon_value floatValue];
+    
     if (model == nil) {
         self.couponLabel.hidden = YES;
         yhqModelID = @"";
-        [self updateUI];
         //未使用优惠券
         self.isUserCoupon = NO;
+        [self calculationLabelValue];
     } else {
         self.isUserCoupon = YES;
         
@@ -533,9 +536,10 @@
                 self.isEnoughCoupon = YES;
             }
             
-            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
-            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
-            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+            [self calculationLabelValue];
+//            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
+//            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
+//            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
             
             //更新小鹿钱包提示信息。。。。。
             // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
@@ -547,9 +551,9 @@
 }
 
 - (void)updateUI{
-    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
-    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
-    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
+//    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
+//    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
+//    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
@@ -613,9 +617,11 @@
         if (self.xlwButton.selected) {
             self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
             self.isUseXLW = YES;
+            [self calculationLabelValue];
         }else {
             self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
             self.isUseXLW = NO;
+            [self calculationLabelValue];
         }
     }else {
         //钱包不可用
@@ -645,11 +651,11 @@
     if (self.isUserCoupon && self.isEnoughCoupon) {
         //足够
         totalPayment = 0.00;
-//        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+        discountfee = discountfee + [yhqModel.coupon_value floatValue];
         
         //拼提交信息
         parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
-        dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",dict,totalPayment,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
+        dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",dict,discount,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
         //提交
         [self submitBuyGoods];
     }else {
@@ -943,9 +949,61 @@
     
     self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
     self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",model.provinceName, model.cityName, model.countyName, model.streetName];
-    
-    
 }
 
+- (void)calculationLabelValue {
+    discount = couponValue + rightAmount;
+    if (discount - amontPayment > 0.000001) {
+        
+        discount = amontPayment;
+        //合计
+        self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
+        //节省
+        self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", amontPayment];
+        //应付
+        self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+        //小鹿钱包
+        self.availableLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
+    }else {
+        if (self.isUseXLW) {
+            CGFloat surplus = amontPayment - couponValue - rightAmount;
+            if (canUseWallet - surplus > 0.000001 || (fabs(canUseWallet - surplus) < 0.000001 || fabs(surplus - couponValue) < 0.000001)) {
+                //钱包金额够实用
+                //合计
+                self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
+                //节省
+                self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
+                //应付
+                self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+                //小鹿钱包
+                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+            }else {
+                //合计
+                self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
+                //节省
+                self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
+                //应付
+                self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+                //小鹿钱包
+                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+            }
+        }else {
+            //未使用
+            CGFloat surplus = amontPayment - couponValue - rightAmount;
+            if (canUseWallet - surplus > 0.000001 || (fabs(canUseWallet - surplus) < 0.000001 || fabs(surplus - couponValue) < 0.000001)) {
+                //钱包金额够实用
+                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+            }else {
+                self.availableLabel.text = [NSString stringWithFormat:@"%.2f", canUseWallet];
+            }
+            //合计
+            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", amontPayment  - discount];
+            //节省
+            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
+            //应付
+            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", amontPayment  - discount];
+        }
+    }
+}
 
 @end

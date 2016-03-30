@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PurchaseViewController1">
@@ -70,7 +69,7 @@
                                             <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="上海市杨浦区平凉路怀德路366弄18号楼2303" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSZ-Ly-Vgp">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海市杨浦区平凉路怀德路366弄18号楼2303" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSZ-Ly-Vgp">
                                             <rect key="frame" x="43" y="42" width="220" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
@@ -238,7 +237,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付立减2元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNU-8d-WxL">
                                             <rect key="frame" x="231" y="66" width="79" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -276,7 +275,7 @@
                                     <rect key="frame" x="0.0" y="318" width="320" height="190"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rr6-7O-R8y" userLabel="微信支付">
-                                            <rect key="frame" x="0.0" y="136" width="320" height="54"/>
+                                            <rect key="frame" x="0.0" y="138" width="320" height="54"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weixinzhifu.png" translatesAutoresizingMaskIntoConstraints="NO" id="bgb-8x-ywS">
                                                     <rect key="frame" x="12" y="20" width="22" height="22"/>
@@ -334,45 +333,14 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wNO-pg-EuD" userLabel="合计">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G1T-pL-1Qu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="fqV-7B-T7y"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ev7-aS-zFV">
-                                                    <rect key="frame" x="0.0" y="33" width="320" height="1"/>
-                                                    <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="Xoy-ud-Y3j"/>
-                                                    </constraints>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合计:￥168.8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77l-2U-pE7">
-                                                    <rect key="frame" x="241" y="10" width="71" height="15"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="14"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="G1T-pL-1Qu" firstAttribute="trailing" secondItem="ev7-aS-zFV" secondAttribute="trailing" id="2Jv-BT-J5m"/>
-                                                <constraint firstItem="77l-2U-pE7" firstAttribute="top" secondItem="G1T-pL-1Qu" secondAttribute="bottom" constant="9" id="CiK-7c-3xn"/>
-                                                <constraint firstItem="ev7-aS-zFV" firstAttribute="top" secondItem="77l-2U-pE7" secondAttribute="bottom" constant="8" symbolic="YES" id="DXx-mu-90a"/>
-                                                <constraint firstAttribute="trailing" secondItem="G1T-pL-1Qu" secondAttribute="trailing" id="LLH-dW-xc1"/>
-                                                <constraint firstItem="G1T-pL-1Qu" firstAttribute="leading" secondItem="wNO-pg-EuD" secondAttribute="leading" id="Lpp-4F-40l"/>
-                                                <constraint firstItem="G1T-pL-1Qu" firstAttribute="top" secondItem="wNO-pg-EuD" secondAttribute="top" id="ODj-bs-FD3"/>
-                                                <constraint firstItem="77l-2U-pE7" firstAttribute="centerY" secondItem="wNO-pg-EuD" secondAttribute="centerY" id="WvV-oj-RvJ"/>
-                                                <constraint firstItem="G1T-pL-1Qu" firstAttribute="leading" secondItem="ev7-aS-zFV" secondAttribute="leading" id="YbO-Ij-R2M"/>
-                                                <constraint firstAttribute="height" constant="34" id="Zf7-U7-9eQ"/>
-                                                <constraint firstItem="77l-2U-pE7" firstAttribute="trailing" secondItem="wNO-pg-EuD" secondAttribute="trailingMargin" id="a9C-dJ-hbg"/>
+                                                <constraint firstAttribute="height" constant="14" id="Zf7-U7-9eQ"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FMm-DX-2B9">
-                                            <rect key="frame" x="0.0" y="218" width="320" height="16"/>
+                                            <rect key="frame" x="0.0" y="220" width="320" height="16"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zpr-xE-Z71">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
@@ -401,14 +369,28 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEf-WG-lIs" userLabel="分栏">
-                                            <rect key="frame" x="0.0" y="82" width="320" height="12"/>
+                                            <rect key="frame" x="0.0" y="62" width="320" height="34"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合计:￥0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77l-2U-pE7">
+                                                    <rect key="frame" x="240" y="9" width="65" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="5xX-Z1-P8a"/>
+                                                        <constraint firstAttribute="width" constant="65" id="Feb-do-cAf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="12" id="YrP-WR-SQE"/>
+                                                <constraint firstAttribute="trailing" secondItem="77l-2U-pE7" secondAttribute="trailing" constant="15" id="8O5-Dd-fPV"/>
+                                                <constraint firstItem="77l-2U-pE7" firstAttribute="centerY" secondItem="NEf-WG-lIs" secondAttribute="centerY" id="IOJ-mv-sKh"/>
+                                                <constraint firstAttribute="height" constant="34" id="YrP-WR-SQE"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2df-gw-z4H" userLabel="支付宝">
-                                            <rect key="frame" x="0.0" y="94" width="320" height="50"/>
+                                            <rect key="frame" x="0.0" y="96" width="320" height="50"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWT-MF-sYU" userLabel="支付宝">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
@@ -476,7 +458,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D99-L7-H9m" userLabel="小鹿钱包">
-                                            <rect key="frame" x="0.0" y="34" width="320" height="48"/>
+                                            <rect key="frame" x="0.0" y="14" width="320" height="48"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unselected_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="a5d-XD-A32">
                                                     <rect key="frame" x="284" y="13" width="22" height="22"/>
