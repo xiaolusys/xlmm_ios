@@ -645,11 +645,11 @@
     if (self.isUserCoupon && self.isEnoughCoupon) {
         //足够
         totalPayment = 0.00;
-        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+//        discountfee = discountfee + [yhqModel.coupon_value floatValue];
         
         //拼提交信息
         parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
-        dict = [NSString stringWithFormat:@"%.2f&discount_fee=%@&payment=%@&channel=%@&pay_extras=%@",discountfee, dict,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
+        dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",dict,totalPayment,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
         //提交
         [self submitBuyGoods];
     }else {
