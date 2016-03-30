@@ -17,44 +17,45 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hrh-Oa-XYi">
-                        <rect key="frame" x="30" y="10" width="59" height="59"/>
+                        <rect key="frame" x="20" y="10" width="59" height="59"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="hrh-Oa-XYi" secondAttribute="height" multiplier="1:1" id="J7P-hl-obx"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥49" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cy-Ib-wQU">
-                        <rect key="frame" x="99" y="40" width="39" height="29"/>
+                        <rect key="frame" x="89" y="40" width="39" height="29"/>
                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="21"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lwb-GJ-IDb">
-                        <rect key="frame" x="-12" y="25" width="30" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lwb-GJ-IDb">
+                        <rect key="frame" x="-7" y="25" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="48q-hd-agh"/>
                             <constraint firstAttribute="width" constant="30" id="wCk-N1-PnK"/>
                         </constraints>
-                        <state key="normal" backgroundImage="jianicons.png"/>
+                        <inset key="imageEdgeInsets" minX="-16" minY="0.0" maxX="16" maxY="0.0"/>
+                        <state key="normal" image="jianicons.png"/>
                         <connections>
                             <action selector="xiajiaClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="F0k-Nv-NzO"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeT-eq-d8N">
-                        <rect key="frame" x="99" y="16" width="201" height="20"/>
+                        <rect key="frame" x="89" y="16" width="241" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiL-bU-rYO">
-                        <rect key="frame" x="138" y="48" width="36" height="17"/>
+                        <rect key="frame" x="128" y="48" width="36" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hrh-Oa-XYi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="5Ds-zs-tsa"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="FeT-eq-d8N" secondAttribute="trailing" constant="30" id="5GL-6C-ZxA"/>
+                    <constraint firstItem="hrh-Oa-XYi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="5Ds-zs-tsa"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="FeT-eq-d8N" secondAttribute="trailing" id="5GL-6C-ZxA"/>
                     <constraint firstItem="Lwb-GJ-IDb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AWl-nj-uwl"/>
                     <constraint firstItem="8cy-Ib-wQU" firstAttribute="top" secondItem="FeT-eq-d8N" secondAttribute="bottom" constant="4" id="ECM-gq-Kh0"/>
                     <constraint firstAttribute="bottom" secondItem="hrh-Oa-XYi" secondAttribute="bottom" constant="10" id="EMv-Ee-YLd"/>
@@ -64,7 +65,7 @@
                     <constraint firstItem="FeT-eq-d8N" firstAttribute="leading" secondItem="hrh-Oa-XYi" secondAttribute="trailing" constant="10" id="gus-eD-RNP"/>
                     <constraint firstItem="8cy-Ib-wQU" firstAttribute="leading" secondItem="FeT-eq-d8N" secondAttribute="leading" id="jhe-BV-Y7f"/>
                     <constraint firstItem="fiL-bU-rYO" firstAttribute="baseline" secondItem="8cy-Ib-wQU" secondAttribute="baseline" id="kuU-ti-msn"/>
-                    <constraint firstItem="Lwb-GJ-IDb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-20" id="vqW-el-JxC"/>
+                    <constraint firstItem="Lwb-GJ-IDb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-15" id="vqW-el-JxC"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
