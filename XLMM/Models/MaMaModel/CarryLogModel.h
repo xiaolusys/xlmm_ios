@@ -39,6 +39,8 @@
 @property (nonatomic, strong)NSString *carry_description;
 @property (nonatomic, strong)NSString *date_field;
 @property (nonatomic, strong)NSString *status_display;
+@property (nonatomic, strong)NSString *contributor_img;
+@property (nonatomic, strong)NSString *contributor_nick;
 
 
 @end

@@ -233,7 +233,6 @@
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
-
     
     [self setDevice];
     NSLog(@"33isBangDing = %d", isBangding);

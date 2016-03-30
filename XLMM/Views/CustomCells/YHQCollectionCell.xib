@@ -11,6 +11,7 @@
                 <outlet property="requireLabel" destination="CiJ-pO-JFQ" id="yDn-jy-YsC"/>
                 <outlet property="timeLabel" destination="pIB-Ak-sKU" id="QKq-qf-0Z4"/>
                 <outlet property="valueLabel" destination="HIX-mG-fHb" id="0aS-LO-ag3"/>
+                <outlet property="xianzhiLabel" destination="XqA-XK-mgT" id="LyX-Pc-oWU"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newyouhuiquanbukeyongbg.png" translatesAutoresizingMaskIntoConstraints="NO" id="b4Z-Kt-qT5">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
+                                <rect key="frame" x="8" y="8" width="359" height="100"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIX-mG-fHb">
                                 <rect key="frame" x="72" y="4" width="105" height="82"/>
@@ -61,14 +62,14 @@
                         <constraints>
                             <constraint firstItem="XqA-XK-mgT" firstAttribute="top" secondItem="CiJ-pO-JFQ" secondAttribute="bottom" constant="4" id="3cx-99-Fuz"/>
                             <constraint firstAttribute="bottom" secondItem="b4Z-Kt-qT5" secondAttribute="bottom" id="ETV-t6-kL1"/>
-                            <constraint firstAttribute="trailing" secondItem="b4Z-Kt-qT5" secondAttribute="trailing" id="HL5-Cd-UNN"/>
+                            <constraint firstAttribute="trailing" secondItem="b4Z-Kt-qT5" secondAttribute="trailing" constant="8" id="HL5-Cd-UNN"/>
                             <constraint firstItem="CiJ-pO-JFQ" firstAttribute="leading" secondItem="HIX-mG-fHb" secondAttribute="trailing" constant="14" id="NOK-mV-IYb"/>
                             <constraint firstItem="pIB-Ak-sKU" firstAttribute="centerY" secondItem="smf-tj-WdK" secondAttribute="centerY" id="Nfg-6w-e9s"/>
                             <constraint firstItem="CiJ-pO-JFQ" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="24" id="nAv-UP-LXQ"/>
                             <constraint firstItem="HIX-mG-fHb" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="4" id="nFI-QA-Tlt"/>
                             <constraint firstItem="XqA-XK-mgT" firstAttribute="leading" secondItem="CiJ-pO-JFQ" secondAttribute="leading" id="nRN-28-Ack"/>
-                            <constraint firstItem="b4Z-Kt-qT5" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" id="rlh-8d-VAh"/>
-                            <constraint firstItem="b4Z-Kt-qT5" firstAttribute="leading" secondItem="hF0-p5-hzY" secondAttribute="leading" id="t4h-KQ-XMl"/>
+                            <constraint firstItem="b4Z-Kt-qT5" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="8" id="rlh-8d-VAh"/>
+                            <constraint firstItem="b4Z-Kt-qT5" firstAttribute="leading" secondItem="hF0-p5-hzY" secondAttribute="leading" constant="8" id="t4h-KQ-XMl"/>
                             <constraint firstItem="pIB-Ak-sKU" firstAttribute="leading" secondItem="smf-tj-WdK" secondAttribute="trailing" constant="8" id="toj-2k-xDS"/>
                             <constraint firstItem="smf-tj-WdK" firstAttribute="leading" secondItem="HIX-mG-fHb" secondAttribute="leading" id="xAo-OP-pRY"/>
                             <constraint firstItem="HIX-mG-fHb" firstAttribute="leading" secondItem="hF0-p5-hzY" secondAttribute="leading" constant="72" id="yrt-zF-OIR"/>

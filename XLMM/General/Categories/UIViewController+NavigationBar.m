@@ -33,7 +33,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         if (data == nil) {
-            return ;
+            return;
         }
         [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
         

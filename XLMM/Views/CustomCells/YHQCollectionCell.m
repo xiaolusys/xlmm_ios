@@ -52,6 +52,8 @@
     NSMutableString *mutableend = [deadlineTime mutableCopy];
     [mutableend deleteCharactersInRange:range];
     NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutablestart, mutableend];
+    self.myimageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.myimageView.layer.masksToBounds = YES;
     
     
     self.requireLabel.text = [NSString stringWithFormat:@"满%@元使用", useFee];

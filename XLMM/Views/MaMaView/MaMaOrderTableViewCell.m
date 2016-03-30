@@ -32,7 +32,8 @@
     self.imageV.layer.borderWidth = 0.5;
     self.imageV.contentMode = UIViewContentModeScaleAspectFill;
     
-   self.purchaser.text = orderM.contributor_nick;
+    self.purchaser.text = orderM.contributor_nick;
+
 //    self.purchaser.text = orderM.linkname;
     self.purchaser.font = [UIFont systemFontOfSize:13];
     
@@ -40,7 +41,10 @@
     
     self.orderStatic.text = orderM.status_display;
     self.orderStatic.font = [UIFont systemFontOfSize:12];
-   
+   // new add things.
+    
+    self.jinelabel.text = [NSString stringWithFormat:@"实付%.2f", [orderM.order_value floatValue]];
+    self.fromlabel.text = orderM.carry_type_name;
 
     self.times.text = [self dealDate:orderM.created];
     self.times.font = [UIFont systemFontOfSize:12];

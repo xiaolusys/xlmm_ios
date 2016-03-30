@@ -200,8 +200,10 @@
             break;
         }
         case 101:{
+            NSString *title = [NSString stringWithFormat:@"%@", self.shopDesc];
             
-            [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.shopShareName;
+            
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.shopShareLink;
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){

@@ -29,6 +29,8 @@
 #import "AFNetworking.h"
 #import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
+#import "ActivityView.h"
+#import "NSString+URL.h"
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -57,6 +59,13 @@
     NSTimer *theTimer;
     
 }
+
+@property (nonatomic, strong)ActivityView *startV;
+@property (nonatomic, strong)NSTimer *sttime;
+@property (nonatomic, assign)NSInteger timeCount;
+
+@property (nonatomic, strong)NSString *imageUrl;
+
 @end
 
 @implementation MMRootViewController
@@ -76,15 +85,15 @@
 - (void)updataAfterLogin:(NSNotification *)notification{
   //  NSLog(@"微信登录");
     
-    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
-    if (login.isxlmm) {
-        [self createRightItem];
-    } else {
-          self.navigationItem.rightBarButtonItem = nil;
-    }
+//    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
+//    if (login.isxlmm) {
+//        [self createRightItem];
+//    } else {
+//          self.navigationItem.rightBarButtonItem = nil;
+//    }
 
   
-    if ([self isXiaolumama]) {
+    if ([self loginUpdateIsXiaoluMaMa]) {
         [self createRightItem];
     } else{
         self.navigationItem.rightBarButtonItem = nil;
@@ -93,7 +102,7 @@
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
   //  NSLog(@"手机登录");
-    if ([self isXiaolumama]) {
+    if ([self loginUpdateIsXiaoluMaMa]) {
         [self createRightItem];
     } else{
         self.navigationItem.rightBarButtonItem = nil;
@@ -101,13 +110,36 @@
 }
 
 - (BOOL)isXiaolumama{
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject)return ;
+//        return YES;
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        return NO;
+//    }];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        return NO;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"dic = %@", dic);
+//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+//    return YES;
+    
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:@"isXLMM"];
+    return isXLMM;
+}
+
+- (BOOL)loginUpdateIsXiaoluMaMa {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     if (data == nil) {
         return NO;
     }
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"dic = %@", dic);
+    NSLog(@"dic = %@", dic);
     return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
@@ -227,10 +259,6 @@
             
         }
     }
-
-    
- 
-    
 }
 
 - (void)showNotification:(NSNotification *)notification{
@@ -280,6 +308,23 @@
 //        self.edgesForExtendedLayout = UIRectEdgeNone;
 //    }
     
+    self.timeCount = 0;
+    //启动活动页
+//    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    [window addSubview:self.startV];
+    
+//    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        if (responseObject[@"picture"] == nil)return;
+//        [self startDeal:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+    
+    
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
@@ -288,6 +333,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpHome:) name:@"fromActivityToToday" object:nil];
     
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
@@ -308,11 +355,60 @@
         [self autologin];
     } else {
         NSLog(@"no login");
-        
     }
     
-    
+    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
 }
+
+- (void)startDeal:(NSDictionary *)dic {
+    self.imageUrl = [dic objectForKey:@"picture"];
+    
+    if (self.imageUrl.length == 0 || [self.imageUrl class] == [NSNull class]) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+    }
+    self.startV.imageV.alpha = 1;
+    
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:.3 animations:^{
+            self.startV.imageV.alpha = 1;
+        }];
+    }];
+}
+
+- (void)ActivityTimeUpdate {
+    self.timeCount++;
+    if (self.timeCount > 2) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+
+    }
+}
+
+
+- (void)jumpHome:(NSNotification *)notification {
+    NSDictionary *info = notification.userInfo;
+    NSString *jumpType = info[@"param"];
+    if ([jumpType isEqualToString:@"previous"]) {
+        [self buttonClicked:101];
+    }else if ([jumpType isEqualToString:@"child"]) {
+        [self buttonClicked:102];
+    }else if ([jumpType isEqualToString:@"woman"]) {
+        [self buttonClicked:103];
+    }
+    NSLog(@"---跳转－－－－%@", jumpType);
+}
+
 - (NSArray *)randomArray{
     NSMutableArray *mutable = [[NSMutableArray alloc] initWithCapacity:62];
     
@@ -371,6 +467,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
     NSURL *url = [NSURL URLWithString:urlString];
    // NSLog(@"urlString = %@", urlString);
+    if (url == nil) {
+        return;
+    }
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
@@ -378,6 +477,9 @@
     
   //  NSLog(@"params = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+    if (data == nil) {
+        return;
+    }
     [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -385,6 +487,9 @@
     
     
     NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+    if (data2 == nil) {
+        return;
+    }
   __unused  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
     
     
@@ -458,10 +563,6 @@
         } else{
             self.navigationItem.rightBarButtonItem = nil;
         }
-        
-
-        
-        
         
     }
    
@@ -640,21 +741,33 @@
         label.text = @"0";
         return;
     }
+    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-    NSError *error = nil;
-    if (data == nil) {
-        label.text = @"0";
-        dotView.hidden = YES;
-        countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
-        CGRect rect = view.frame;
-        rect.size.width = 44;
-        view.frame = rect;
-        return;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-   // NSLog(@"dic = %@", dic);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            label.text = @"0";
+            dotView.hidden = YES;
+            countLabel.hidden = YES;
+            UIView *view = [_view viewWithTag:123];
+            CGRect rect = view.frame;
+            rect.size.width = 44;
+            view.frame = rect;
+            return ;
+        }else {
+            [self cartViewUpdate:responseObject];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+   
+    
+}
+
+- (void)cartViewUpdate:(NSDictionary *)dic {
+    // NSLog(@"dic = %@", dic);
     last_created = [dic objectForKey:@"last_created"];
     goodsCount = [[dic objectForKey:@"result"]integerValue];
     if (goodsCount == 0) {

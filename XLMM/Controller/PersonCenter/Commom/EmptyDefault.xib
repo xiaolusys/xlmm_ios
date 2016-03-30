@@ -12,14 +12,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" tag="400" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dingdanemptyimage.png" translatesAutoresizingMaskIntoConstraints="NO" id="qj2-sQ-ALv">
-                    <rect key="frame" x="100" y="155" width="120" height="120"/>
+                    <rect key="frame" x="100" y="100" width="120" height="120"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="ERb-XF-KE2"/>
                         <constraint firstAttribute="height" constant="120" id="aDD-Yz-FAf"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" tag="300" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲，您暂时还没有订单哦～ 快去看看吧！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Js-pw-OmX">
-                    <rect key="frame" x="32" y="299" width="256" height="29"/>
+                    <rect key="frame" x="32" y="244" width="256" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="zuo-1G-hc2"/>
                     </constraints>
@@ -28,7 +28,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="再不抢购，就卖光啦～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxa-0E-LxT">
-                    <rect key="frame" x="100" y="328" width="120" height="26"/>
+                    <rect key="frame" x="100" y="273" width="120" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="Dfa-5F-IMP"/>
                     </constraints>
@@ -37,7 +37,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGD-cO-3EX">
-                    <rect key="frame" x="110" y="366" width="100" height="30"/>
+                    <rect key="frame" x="110" y="311" width="100" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="HqX-vL-LfV"/>
                         <constraint firstAttribute="height" constant="30" id="txL-A9-zfU"/>
@@ -56,7 +56,7 @@
                 <constraint firstItem="qj2-sQ-ALv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="U0S-JW-Sq8"/>
                 <constraint firstItem="2Js-pw-OmX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gre-7J-vWd"/>
                 <constraint firstItem="oxa-0E-LxT" firstAttribute="top" secondItem="qj2-sQ-ALv" secondAttribute="bottom" constant="53" id="rbf-7I-0fA"/>
-                <constraint firstItem="qj2-sQ-ALv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="155" id="y38-ym-FSX"/>
+                <constraint firstItem="qj2-sQ-ALv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="y38-ym-FSX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -300,7 +300,7 @@
             
             //    cell.contentView.backgroundColor = [UIColor redColor];
             cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
-            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
         }

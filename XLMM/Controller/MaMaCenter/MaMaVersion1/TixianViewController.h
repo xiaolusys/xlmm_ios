@@ -29,5 +29,6 @@
 @property (nonatomic, assign) float cantixianjine;
 @property (nonatomic, copy) NSString *name;
 
+@property (nonatomic, strong)NSNumber *carryNum;
 
 @end

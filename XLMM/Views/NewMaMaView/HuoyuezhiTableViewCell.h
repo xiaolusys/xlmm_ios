@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class HuoyuezhiModel;
 
 @interface HuoyuezhiTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *carryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *desLabel;
 
+- (void)fillDataOfCell:(HuoyuezhiModel *)activeM;
 @end

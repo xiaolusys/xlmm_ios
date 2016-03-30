@@ -16,6 +16,7 @@
 
 @property (nonatomic, copy) NSString *value_type_name;
 @property (nonatomic, copy) NSString *uni_key;
+@property (nonatomic, copy) NSString *value_description;
 @property (nonatomic, copy) NSString *date_field;
 @property (nonatomic, strong) NSNumber *status;
 @property (nonatomic, copy) NSString *status_display;

@@ -85,12 +85,19 @@ static NSString *khuodongCell = @"HuodongCell";
     
     NSString *mobel;
     CGFloat _contentY;
+    
+    NSInteger _requestTime;
+    
+    
 }
 @property (nonatomic, copy) NSString *latestVersion;
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 @property (nonatomic, retain) UICollectionView *myCollectionView;
 @property (nonatomic, strong) NSMutableArray *posterImages;
+@property (nonatomic, strong) NSMutableArray *activityArray;
+
+@property (nonatomic, strong)NSTimer *timer;
 
 @end
 
@@ -107,6 +114,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
    
@@ -121,6 +129,8 @@ static NSString *khuodongCell = @"HuodongCell";
     }
     
 }
+
+
 
 - (NSString *)stringFromStatus:(NetworkStatus)status{
     NSString *string;
@@ -162,7 +172,22 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)reload
 {
+    //超过10秒请求处理
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateRequestTime) userInfo:nil repeats:YES];
     [self downloadData];
+}
+
+- (void)updateRequestTime {
+    _requestTime++;
+    NSLog(@"--------------%ld", (long)_requestTime);
+    if (_requestTime > 10) {
+        [self.myCollectionView.mj_header endRefreshing];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"哎呦，网不好呦！请重新刷新" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        alert.tag = 200;
+        [alert show];
+        _requestTime = 0;
+        NSLog(@"执行了一次刷新。。。%ld", (long)_requestTime);
+    }
 }
 
 - (void)loadMore
@@ -203,9 +228,13 @@ static NSString *khuodongCell = @"HuodongCell";
     step2 = NO;
     _isFirst = YES;
     _isDone = NO;
+    
+    _requestTime = 0;
+    
     [self createCollectionView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     
     MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
@@ -220,69 +249,146 @@ static NSString *khuodongCell = @"HuodongCell";
             self.myCollectionView.mj_footer = footer;
     }
     
-//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
-  //  [footer setAutomaticallyHidden:YES];
-//    self.myCollectionView.mj_footer = footer;
+    //首页网络请求
+//    [self downLoadWithURLString:UPDATE_URLSTRING andSelector:@selector(fetchedUpdateData:)];
     
-    
-//    _isShouldLoad = YES;
-  //  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]];
-    [self downLoadWithURLString:UPDATE_URLSTRING andSelector:@selector(fetchedUpdateData:)];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:url];
-//        [self performSelectorOnMainThread:@selector(fetchedUpdateData:)withObject:data waitUntilDone:YES];
-//        
-//    });
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self fetchedUpdateData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
   
     [self ishavemobel];
+    self.activityArray = [[NSMutableArray alloc] init];
     
-    
-    [self dingshishuaxin];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bombBox) name:@"bombbox" object:nil];
+//    [self dingshishuaxin];
 }
 
-- (void)dingshishuaxin{
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
-    
+- (void)bombBox {
+    [self downloadActivityData];
 }
 
-- (void)updatePosters{
-    NSDate *date = [NSDate date];
+- (void)downloadActivityData{
+   // http://dev.xiaolumeimei.com/rest/v1/activitys
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
     
-    
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
-    NSInteger hour = [comps hour];
-    NSInteger minute = [comps minute];
-    NSInteger second = [comps second];
-    
-    if (hour == 10 && minute == 0 && second == 0) {
-        [self downloadData];
+//    [self downLoadWithURLString:urlString andSelector:@selector(fetchActivities:)];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self fetchActivities:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-    }
-   
+    }];
     
 }
-
-- (void)fetchedUpdateData:(NSData *)data{
-    NSError *error = nil;
-    if (data == nil) {
-        [self.myCollectionView.mj_header endRefreshing];
+- (void)fetchActivities:(NSArray *)array{
+    if (array.count == 0) return;
+    NSLog(@"array = %@", array);
+    self.activityArray = [array mutableCopy];
+    if ( self.activityArray.count == 0) {
         return;
     }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    //NSLog(@"appInfoDic = %@", appInfoDic);
-    if (error) {
+    
+
+//    
+    huodongJson = self.activityArray[0];
+    
+    [self.myCollectionView reloadData];
+
+    
+    if ([huodongJson isKindOfClass:[NSDictionary class]]) {
+        
+        _ishaveHuodong = YES;
+        
+        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSNumber *activityID = [huodongJson objectForKey:@"id"];
+        
+        NSNumber *userNumber = [defaults objectForKey:@"activityid"];
+        
+        
+        if ([userNumber integerValue] == [activityID integerValue]) return;
+        if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])) {
+            NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+            
+            //根据url获得图片并得到图片大小
+            SDWebImageManager *mage = [SDWebImageManager sharedManager];
+            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                [defaults setObject:activityID forKey:@"activityid"];
+                [self createActivityView:image];
+            }];
+        }
     }
+
+
+}
+
+- (void)createActivityView:(UIImage *)image {
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:backView];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH - imageWidth) * 0.5 , (SCREENHEIGHT - imageHeight) * 0.5, imageWidth, imageHeight)];
+    imageView.image = image;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+    [imageView addGestureRecognizer:tap];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.masksToBounds = YES;
+    imageView.userInteractionEnabled = YES;
+    
+    [backView addSubview:imageView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 30, (SCREENHEIGHT - imageHeight) * 0.5 - 30, 30, 30);
+    [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [backView addSubview:button];
+}
+
+//- (void)dingshishuaxin{
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updatePosters) userInfo:nil repeats:YES];
+//
+//}
+
+//- (void)updatePosters{
+//    NSDate *date = [NSDate date];
+//    
+//    
+//    
+//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+//    
+//    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
+//    NSInteger hour = [comps hour];
+//    NSInteger minute = [comps minute];
+//    NSInteger second = [comps second];
+//    
+//    if (hour == 10 && minute == 0 && second == 0) {
+//        [self downloadData];
+//        
+//    }
+//   
+//    
+//}
+
+- (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
     NSArray *reluts = [appInfoDic objectForKey:@"results"];
-    if (![reluts count]) {
-    }
+    if ([reluts count] == 0) return;
     NSDictionary *infoDic = reluts[0];
     
-    
-    
+
     self.latestVersion = [infoDic objectForKey:@"version"];
     self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
@@ -422,18 +528,23 @@ static NSString *khuodongCell = @"HuodongCell";
 #pragma mark --今题推荐数据解析
 
 - (void)fetchedPosterData:(NSData *)data{
-    NSError *error;
-    [posterDataArray removeAllObjects];
+    [self.myCollectionView.mj_header endRefreshing];
+//    [self.timer invalidate];
+//    self.timer = nil;
     if (data == nil) {
-        [self downloadData];
         return;
     }
+    NSError *error;
+    [posterDataArray removeAllObjects];
+
    NSDictionary * jsonDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
    // NSLog(@"posters = %@", jsonDic);
     
     NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
+    NSLog(@"child = %@", childArray);
     self.posterImages = [[NSMutableArray alloc] init];
-
+    
+    if (childArray.count == 0)return;
     for (NSDictionary *childDic in childArray) {
         PosterModel *childModel = [PosterModel new];
 
@@ -442,7 +553,15 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
-        UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL URLEncodedString]];
+        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
+        
+        NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
+        
+        NSLog(@"image = %@", image0);
+        if (image0 == nil) {
+            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+        }
+        
         [self.posterImages addObject:image0];
         [posterDataArray addObject:childModel];
 
@@ -450,6 +569,8 @@ static NSString *khuodongCell = @"HuodongCell";
    
 
     NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
+    NSLog(@"lady = %@", ladyArray);
+    if (ladyArray.count == 0)return;
     for (NSDictionary *ladyDic in ladyArray) {
     
         PosterModel *ladyModel = [PosterModel new];
@@ -458,7 +579,12 @@ static NSString *khuodongCell = @"HuodongCell";
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL URLEncodedString]];
+        UIImage *image1 = [UIImage imagewithURLString:[[ladyModel.imageURL URLEncodedString] imagePostersCompression]];
+        NSLog(@"url = %@", [ladyModel.imageURL URLEncodedString]);
+        NSLog(@"image = %@", image1);
+        if (image1 == nil) {
+            image1 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+        }
         [self.posterImages addObject:image1];
         [posterDataArray addObject:ladyModel];
 
@@ -467,65 +593,7 @@ static NSString *khuodongCell = @"HuodongCell";
     
     
     
-    if ([[jsonDic objectForKey:@"activity"] isKindOfClass:[NSDictionary class]]) {
-        
-        _ishaveHuodong = YES;
-        huodongJson = [jsonDic objectForKey:@"activity"];
-        
-        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *activityID = [[huodongJson objectForKey:@"id"] stringValue];
-        NSString *userNumber = [defaults objectForKey:@"activityid"];
-        
-      
-        if ([activityID isEqualToString:userNumber]) {
-  
-        } else {
-            if ([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class]) {
-            } else {
-                if ([[huodongJson objectForKey:@"mask_link"] isEqualToString:@""]) {
-                    
-                } else{
-                    
-                
-                    backView = [[UIView alloc] initWithFrame:self.view.bounds];
-                    backView.backgroundColor = [UIColor blackColor];
-                    backView.alpha = 0.5;
-                    [self.view addSubview:backView];
-                    NSArray *array;
-                    array = [[NSBundle mainBundle] loadNibNamed:@"StartActivityView" owner:nil options:nil];
-                  
-                    
-                    activityView = array[0];
-                    activityView.frame = CGRectMake(0, 0, 300, 280);
-                    UIButton *button = (UIButton *)[activityView viewWithTag:200];
-                    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
-                    UIImageView *imageView = [activityView viewWithTag:100];
-                    activityView.center = self.view.center;
-                    
-                   
-                    NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
-                    
-                    UIImage *image = [UIImage imagewithURLString:imageUrl];
-                    imageView.image = image;
-                  
-                    
-                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
-                    [imageView addGestureRecognizer:tap];
-                    imageView.contentMode = UIViewContentModeScaleAspectFill;
-                    imageView.layer.masksToBounds = YES;
-                    imageView.userInteractionEnabled = YES;
-                    [self.view addSubview:activityView];
-                    [defaults setObject:activityID forKey:@"activityid"];
-                }
-            }
-          
-        }
-        
-        
-    }
-
+    
     step1 = YES;
     if (step1 && step2) {
         step1 = NO;
@@ -543,12 +611,13 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)guanbiClicked:(UIButton *)button{
     [backView removeFromSuperview];
-    [activityView removeFromSuperview];
+//    [activityView removeFromSuperview];
     
 }
 
 - (void)huodongrukou{
     //统计进入活动页人数
+    
     [MobClick event:@"activity"];
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -558,8 +627,6 @@ static NSString *khuodongCell = @"HuodongCell";
         huodongVC.diction = huodongJson;
         
         [self.navigationController pushViewController:huodongVC animated:YES];
-        [backView removeFromSuperview];
-        [activityView removeFromSuperview];
     } else{
         if (login_required) {
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
@@ -571,13 +638,9 @@ static NSString *khuodongCell = @"HuodongCell";
             
             
             [self.navigationController pushViewController:huodongVC animated:YES];
-            [backView removeFromSuperview];
-            [activityView removeFromSuperview];
         }
-        
     }
-
-    
+    [backView removeFromSuperview];
 }
 
 - (void)fetchedPromoteMorePageData:(NSData *)data{
@@ -627,12 +690,14 @@ static NSString *khuodongCell = @"HuodongCell";
     
 }
 - (void)fetchedPromotePageData:(NSData *)data{
-    
+    [self.myCollectionView.mj_footer endRefreshing];
+//    [self.timer invalidate];
+//    self.timer = nil;
     [childDataArray removeAllObjects];
     [ladyDataArray removeAllObjects];
     if (data == nil) {
         //如果数据是空就重新加载
-        [self downloadData];
+       // [self downloadData];
         return;
     }
     NSError *error = nil;
@@ -664,12 +729,11 @@ static NSString *khuodongCell = @"HuodongCell";
     if (step1 && step2) {
         step1 = NO;
         step2 = NO;
-        NSRange range = {1,2};
         if (_isFirst == YES) {
             _isFirst = NO;
             [self.myCollectionView reloadData];
         } else{
-            [self.myCollectionView reloadSections:[[NSIndexSet alloc] initWithIndexesInRange:range]];
+            [self.myCollectionView reloadData];
         }
            [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
         
@@ -832,11 +896,8 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        if (_ishaveHuodong) {
-            return 2;
-        } else {
-            return 1;
-        }
+            return self.activityArray.count + 1;
+        
     } else if (section == 1){
         if (ladyDataArray.count == 0) {
             return 2;
@@ -969,9 +1030,6 @@ static NSString *khuodongCell = @"HuodongCell";
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         
         //  跳转到小鹿妈妈界面。。。
-        
-        
-        
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
@@ -1011,7 +1069,6 @@ static NSString *khuodongCell = @"HuodongCell";
         } else if ([firstparam isEqualToString:@"trade_id"]){
             NSLog(@"跳到订单详情");
             NSLog(@"trade_id = %@", [params lastObject]);
-            
             
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             //http://m.xiaolu.so/rest/v1/trades/86412/details
@@ -1087,7 +1144,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 return cell0;
 
             } else {
-                
+                huodongJson = self.activityArray[indexPath.row - 1];
                 cell1.huodongImageView.contentMode = UIViewContentModeScaleAspectFill;
                 cell1.huodongImageView.layer.masksToBounds = YES;
 //                UIImage *image = [UIImage imagewithURLString:[huodongJson objectForKey:@"act_img"]];
@@ -1236,26 +1293,35 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)ishavemobel{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    NSURL *url = [NSURL URLWithString:string];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        return;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    mobel = [dic objectForKey:@"mobile"];
-    NSLog(@"mobel = %@", mobel);
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        mobel = [responseObject objectForKey:@"mobile"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+   
+//    NSURL *url = [NSURL URLWithString:string];
+//    NSData *data = [NSData dataWithContentsOfURL:url];
+//    if (data == nil) {
+//        return;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"dic = %@", dic);
+//    mobel = [dic objectForKey:@"mobile"];
+//    NSLog(@"mobel = %@", mobel);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            
-            
         } else{
           [MobClick event:@"activity"];
+            
+            huodongJson = self.activityArray[indexPath.row - 1];
+            login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
               
@@ -1268,16 +1334,50 @@ static NSString *khuodongCell = @"HuodongCell";
                     wxloginVC.userInfo = dic;
                     [self.navigationController pushViewController:wxloginVC animated:YES];
                     
-                    
-                    
-                    
                 } else {
-                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                     
-                    huodongVC.diction = huodongJson;
+                    huodongJson = self.activityArray[indexPath.row - 1];
                     
+                    if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                  
+                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                        
+                        huodongVC.diction = huodongJson;
+                        
+                        
+                        [self.navigationController pushViewController:huodongVC animated:YES];
+                    } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                        NSLog(@"youhuiquan");
+                        
+                        NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                        NSString *params = [huodongJson objectForKey:@"extras"];
+                        
+                        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                        
+                        
+                        
+                        
+                        NSLog(@"%@\n%@", urlstring, params);
+                        
+                        [manager POST:urlstring parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  //  NSError *error;
+                                  NSLog(@"JSON: %@", responseObject);
+                                  
+                                  UIAlertView *alertVew = [[UIAlertView alloc] initWithTitle:[responseObject objectForKey:@"res"] message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                                  [alertVew show];
+                                  
+                                  
+                                  
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  NSLog(@"Error: %@", error);
+                                  
+                                  
+                              }];
+                    }
                     
-                    [self.navigationController pushViewController:huodongVC animated:YES];
+                  
                 }
                 
                 
@@ -1297,12 +1397,48 @@ static NSString *khuodongCell = @"HuodongCell";
                         [self.navigationController pushViewController:wxloginVC animated:YES];
                         
                     } else {
-                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
                         
-                        huodongVC.diction = huodongJson;
+                        huodongJson = self.activityArray[indexPath.row - 1];
                         
                         
-                        [self.navigationController pushViewController:huodongVC animated:YES];
+                        
+                        if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                            
+                            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                            
+                            huodongVC.diction = huodongJson;
+                            
+                            
+                            [self.navigationController pushViewController:huodongVC animated:YES];
+                        } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                            NSLog(@"youhuiquan");
+                            
+                            NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                            NSDictionary *params = [huodongJson objectForKey:@"extras"];
+                            
+                            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                           
+                            
+                            
+                            
+                            NSLog(@"%@\n%@", urlstring, params);
+                            
+                            [manager POST:urlstring parameters:params
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      //  NSError *error;
+                                      NSLog(@"JSON: %@", responseObject);
+                                      
+                                      
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      NSLog(@"Error: %@", error);
+                                      
+                                      
+                                  }];
+
+                            
+                        }
+
                     }
                 }
             }

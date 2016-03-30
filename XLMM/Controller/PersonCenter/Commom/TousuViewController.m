@@ -101,6 +101,11 @@
     
     //第三步，连接服务器
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if (received == nil) {
+        [self successCommit];
+
+        return;
+    }
     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
     NSLog(@"result = %@", result);
     

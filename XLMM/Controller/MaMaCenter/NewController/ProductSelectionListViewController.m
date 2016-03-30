@@ -12,13 +12,15 @@
 #import "MMClass.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
+#import "YixuanTableViewController.h"
+#import "MJRefresh.h"
 #import "MaMaSelectProduct.h"
 
 
 
 #define HeadViewHeight 35
 
-@interface ProductSelectionListViewController ()
+@interface ProductSelectionListViewController ()<UIAlertViewDelegate>
 {
     int count;
    
@@ -27,6 +29,8 @@
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
 @property (nonatomic, strong)UITableView *tableView;
+
+@property (nonatomic, copy) NSString *nextUrl;
 
 @property (nonatomic, strong) UIView *headView;
 @property (nonatomic, strong) UIButton *allButton;
@@ -40,6 +44,10 @@
 @property (nonatomic, strong) UIImageView *backImageView;
 
 
+@property (nonatomic, strong) UILabel *numberLabel;
+
+
+@property (nonatomic, copy) NSString *numbersOfSelected;
 
 
 
@@ -57,6 +65,22 @@ static NSString *cellIdentifier = @"productSelection";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    
+    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
+    
+    NSLog(@"url = %@", url);
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self dealData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    self.numberLabel.text = self.numbersOfSelected;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -82,15 +106,117 @@ static NSString *cellIdentifier = @"productSelection";
     [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
     
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        NSLog(@"loadMore");
+        [self loadMore];
+    }];
+    
+    
+    
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [self createHeadView];
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro", Root_URL];
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self dealData:responseObject];
+   
+    [self createrightItem];
+    
+}
+
+- (void)dealMoreData:(NSDictionary *)dic{
+    NSLog(@"dic");
+    self.nextUrl = dic[@"next"];
+    NSArray *array = [dic objectForKey:@"results"];
+    
+    for (NSDictionary *pdt in array) {
+        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
+        [productM setValuesForKeysWithDictionary:pdt];
+        [self.dataArr addObject:productM];
+    }
+    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
+    NSLog(@"%ld", self.dataArr.count);
+    [self.tableView reloadData];
+}
+
+- (void)loadMore{
+    NSLog(@"下载更多。。。");
+    
+    [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
+    
+    if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        
+        
+        return;
+    }
+    
+    
+    [[AFHTTPRequestOperationManager manager] GET:self.nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self dealMoreData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+    
+    NSLog(@"next = %@", self.nextUrl);
+}
+
+- (void)createrightItem{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
+    //已选label
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    label.text = @"已选";
+    label.font = [UIFont systemFontOfSize:14];
+    label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+    label.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:label];
+    
+    //number
+    
+    UIView *orongeView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, 22, 22)];
+    orongeView.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [view addSubview:orongeView];
+    orongeView.layer.cornerRadius = 11;
+
+    self.numberLabel = [[UILabel alloc] initWithFrame:orongeView.bounds];
+    self.numberLabel.text = @"0";
+    self.numberLabel.textColor = [UIColor whiteColor];
+    self.numberLabel.textAlignment = NSTextAlignmentCenter;
+    self.numberLabel.font = [UIFont systemFontOfSize:12];
+    [orongeView addSubview:self.numberLabel];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = view.bounds;
+    [btn addTarget:self action:@selector(yixuanClicked) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btn];
+    
+    
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+
+
+- (void)yixuanClicked{
+    NSLog(@"yixuan de");
+    
+    YixuanTableViewController *vc = [[YixuanTableViewController alloc] init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (NSString *)numbersOfSelected{
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=1", Root_URL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
+    NSLog(@"count = %@", string);
+    
+    return string;
+    
+    
+    
 }
 
 - (void)createHeadView{
@@ -225,12 +351,17 @@ static NSString *cellIdentifier = @"productSelection";
     if (data == nil) {
         return;
     }
+    self.nextUrl = nil;
     NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (error != nil) {
         NSLog(@"error = %@", error);
         return;
     }
+    NSArray *array = [dic objectForKey:@"results"];
+    self.nextUrl = dic[@"next"];
+    
+    NSLog(@"next = %@", self.nextUrl);
     if (array.count == 0) {
         return;
     }
@@ -254,7 +385,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
@@ -265,7 +396,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"child");
     category = 1;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
@@ -276,7 +407,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d", Root_URL, category];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
@@ -285,7 +416,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"yongjin");
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
    // NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
@@ -293,7 +424,7 @@ static NSString *cellIdentifier = @"productSelection";
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
    // NSLog(@"xiaoliang");
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
+     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
 //    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
 }
@@ -302,19 +433,32 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 #pragma mark --数据处理
-- (void)dealData:(NSArray *)data {
+- (void)dealData:(NSDictionary *)data {
+    NSLog(@"data = %@", data);
     
+    [self.dataArr removeAllObjects];
+    self.nextUrl = nil;
+    NSArray *array = data[@"results"];
     
-    for (NSDictionary *pdt in data) {
+    self.nextUrl = data[@"next"];
+    
+    NSLog(@"next = %@", self.nextUrl);
+
+    
+    for (NSDictionary *pdt in array) {
         MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
         [productM setValuesForKeysWithDictionary:pdt];
         [self.dataArr addObject:productM];
     }
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [SVProgressHUD dismiss];
+    
     [self.tableView reloadData];
     
+    
+   
 }
+
 
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -357,6 +501,8 @@ static NSString *cellIdentifier = @"productSelection";
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
             //修改数据源中的数据
             cell.pdtModel.in_customer_shop = @0;
+            
+            self.numberLabel.text = self.numbersOfSelected;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         }];
@@ -376,6 +522,9 @@ static NSString *cellIdentifier = @"productSelection";
 //            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
             //修改数据源中的数据
             cell.pdtModel.in_customer_shop = @1;
+            
+            self.numberLabel.text = self.numbersOfSelected;
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         }];

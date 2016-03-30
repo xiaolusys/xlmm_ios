@@ -32,6 +32,8 @@
 @property (nonatomic, assign)NSInteger currentIndex;
 @property (nonatomic, strong)NSMutableArray *allkey;
 @property (nonatomic, strong)NSMutableDictionary *nextdic;
+
+
 //存储旧的位置
 @property (nonatomic, strong)NSMutableDictionary *oldDic;
 @property (nonatomic, strong)NSMutableDictionary *contentOffsetYDic;

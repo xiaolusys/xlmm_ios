@@ -313,35 +313,42 @@
 }
 
 - (void)downloadDetailsData{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
-        [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
+//        [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
+//    });
     
-//    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-//    [manage GET:self.imageWebUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"-----------------%@", responseObject);
 //        [self createContentView];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
+        if (!responseObject)  {
+            [MMLoadingAnimation dismissLoadingView];
+            cartsButton.hidden = NO;
+            return;
+        }
+        [self fetchedDetailsData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 //    [self createContentView];
 }
 
-- (void)fetchedDetailsData:(NSData *)data{
-    if (data == nil) {
-        [MMLoadingAnimation dismissLoadingView];
-        cartsButton.hidden = NO;
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    json = dic; 
+- (void)fetchedDetailsData:(NSDictionary *)dic{
+//    if (data == nil) {
+//        [MMLoadingAnimation dismissLoadingView];
+//        cartsButton.hidden = NO;
+//        return;
+//    }
+//    NSError *error = nil;
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    json = dic;
     //设置底部图片,调整高度
     self.midLabel.hidden = NO;
     [MMLoadingAnimation dismissLoadingView];
 
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       //[MMLoadingAnimation dismissLoadingView];
+       [MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {
 
@@ -379,7 +386,7 @@
     //名字 价格 原价
     self.nameLabel.text = [dic objectForKey:@"name"];
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"product_lowest_price"] floatValue]];
-    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%@", [dic objectForKey:@"std_sale_price"]];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[dic objectForKey:@"std_sale_price" ] floatValue]];
     
     details = [dic objectForKey:@"details"];
     self.bianhao.text = [dic objectForKey:@"outer_id"];
@@ -425,6 +432,8 @@
     normalSkus = [dic objectForKey:@"normal_skus"];
     saleTime = [dic objectForKey:@"sale_time"];
     offShelfTime = [dic objectForKey:@"offshelf_time"];
+    
+    [self createShareData];
   
 //    [self createShareData];
    
@@ -438,7 +447,7 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     [self setTime];
     
-    [self createShareData];
+    
     NSString *imageUrlString = [json objectForKey:@"pic_path"];
     NSData *imageData = nil;
     do {
@@ -485,7 +494,7 @@
             self.url = [shareDic objectForKey:@"share_link"];
 
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+//            NSLog(@"error-------%@", error);
         }];
                                                 
         
@@ -1226,13 +1235,15 @@
     [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    
-    
 }
 
 #pragma mark --分享按钮事件
+//提示分享失败
+- (void)createPrompt {
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"网络不好，分享失败" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
 - (void)cancleShareBtnClick:(UIButton *)btn{
     [UIView animateWithDuration:0.3 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
@@ -1245,6 +1256,12 @@
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
     [UMSocialData defaultData].extConfig.wxMessageType = 0;
     
+    NSLog(@"--------%@", self.url);
+    if (self.url == nil) {
+        [self createPrompt];
+        return;
+    }
+    
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
     }];
@@ -1256,7 +1273,11 @@
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
     [UMSocialData defaultData].extConfig.wechatTimelineData.title = self.titleStr;
     [UMSocialData defaultData].extConfig.wxMessageType = 0;
-
+    
+    if (self.url == nil) {
+        [self createPrompt];
+        return;
+    }
     
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
@@ -1273,6 +1294,11 @@
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
     [UMSocialData defaultData].extConfig.qqData.title = self.titleStr;
     
+    if (self.url == nil) {
+        [self createPrompt];
+        return;
+    }
+    
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
     }];
@@ -1285,6 +1311,11 @@
     [UMSocialData defaultData].extConfig.qzoneData.url = self.url;
     [UMSocialData defaultData].extConfig.qzoneData.title = self.titleStr;
     
+    if (self.url == nil) {
+        [self createPrompt];
+        return;
+    }
+    
     [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.des image:self.shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         [self hiddenNavigationView];
     }];
@@ -1295,7 +1326,12 @@
 - (void)weiboShareBtnClick:(UIButton *)btn {
     NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.titleStr, self.url];
     [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:self.imageD];
-
+    
+    if (self.url == nil) {
+        [self createPrompt];
+        return;
+    }
+    
     [self cancleShareBtnClick:nil];
 }
 

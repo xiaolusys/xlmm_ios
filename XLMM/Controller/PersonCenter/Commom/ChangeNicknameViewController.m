@@ -127,6 +127,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        return;
+    }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSDictionary *result = [dict objectForKey:@"results"][0];
     NSString *userId = [result objectForKey:@"id"];
@@ -149,6 +152,11 @@
     
     // requesting for changing nickname
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if (received == nil) {
+        return;
+        
+    }
+    
    __unused NSDictionary *response = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
     NSLog(@"result = %@", response);
     

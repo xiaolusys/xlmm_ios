@@ -17,9 +17,9 @@
 #import "MMDetailsViewController.h"
 #import "MobClick.h"
 #import "SVProgressHUD.h"
-
+#import "ActivityView.h"
 #define login @"login"
-
+#import "NSString+URL.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
 @interface AppDelegate ()<UIAlertViewDelegate, MiPushSDKDelegate>
@@ -38,7 +38,11 @@
 @property (nonatomic, copy) NSDictionary *pushInfo;
 @property (nonatomic, assign) BOOL isFirst;
 
+@property (nonatomic, strong)ActivityView *startV;
+@property (nonatomic, strong)NSTimer *sttime;
+@property (nonatomic, assign)NSInteger timeCount;
 
+@property (nonatomic, strong)NSString *imageUrl;
 
 @end
 
@@ -66,10 +70,41 @@
     }
     return string;
 }
+
+- (void)ActivityTimeUpdate {
+    self.timeCount++;
+    if (self.timeCount > 2) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+         [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+        
+    }
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    [NSThread sleepForTimeInterval:2.0];
+    
+    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:self.startV];
+     self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+
+    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        if (responseObject[@"picture"] == nil)return;
+        [self startDeal:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
   
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -141,7 +176,6 @@
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
- 
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
@@ -150,13 +184,11 @@
 //    
 //    
 //    leftMenu.pushVCDelegate = root;
-    
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
 //    leftMenu.push
 
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    
    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
@@ -185,6 +217,29 @@
     
     return YES;
 }
+
+
+- (void)startDeal:(NSDictionary *)dic {
+    self.imageUrl = [dic objectForKey:@"picture"];
+    
+    if (self.imageUrl.length == 0 || [self.imageUrl class] == [NSNull class]) {
+        [self.sttime invalidate];
+        self.sttime = nil;
+        
+        [self.startV removeFromSuperview];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
+    }
+    self.startV.imageV.alpha = 1;
+    
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:.3 animations:^{
+            self.startV.imageV.alpha = 0;
+        }];
+    }];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     //  https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985
@@ -317,28 +372,28 @@
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
-    NSLog(@"data = %@", data);
-    
-    // 长连接收到的消息。消息格式跟APNs格式一样
-    // 返回数据
-    NSString *target_url = nil;
-    target_url = [data objectForKey:@"target_url"];
-    
-    if (target_url != nil) {
-        if (self.isLaunchedByNotification == YES) {
-            
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-            return;
-        }
-        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
-            return;
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-        }
-
-    }
+//    NSLog(@"data = %@", data);
+//    
+//    // 长连接收到的消息。消息格式跟APNs格式一样
+//    // 返回数据
+//    NSString *target_url = nil;
+//    target_url = [data objectForKey:@"target_url"];
+//    
+//    if (target_url != nil) {
+//        if (self.isLaunchedByNotification == YES) {
+//            
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+//            return;
+//        }
+//        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+//            return;
+//        } else {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+//        }
+//
+//    }
    
     
 
@@ -600,24 +655,8 @@
     
     NSString *urlString = [url absoluteString];
     
-    NSLog(@"url = %@", urlString);
-    NSString *newUrl = [NSString stringWithFormat:@"http://%@", urlString];
-    NSURL *url1 = [NSURL URLWithString:newUrl];
-    
-    NSString *paramString = [url1 query];
-    NSArray *array = [paramString componentsSeparatedByString:@"&"];
-    if (array.count == 3) {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"activityShare" object:nil userInfo:@{@"param":paramString}];     
-    }
-   
-    
-    
-    
-//    
-//    NSLog(@"param = %@", paramString);
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:paramString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//    [alertView show];
-    
+    NSLog(@"----------url = %@", urlString);
+
     
    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
@@ -633,15 +672,8 @@
                    // 支付失败或取消
                    // 发送支付不成功的 通知
                  
-                   //[[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
-                   NSLog(@"AppDelegate ... Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
-                   if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                       [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                       
-                   } else {
-                       [SVProgressHUD showErrorWithStatus:@"支付失败"];
-                       
-                   }
+                   [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+               
                    
                    
                    

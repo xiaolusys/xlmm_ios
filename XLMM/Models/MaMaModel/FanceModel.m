@@ -10,14 +10,7 @@
 
 @implementation FanceModel
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 
-- (instancetype)initWithInfo:(NSDictionary *)info{
-    self = [super init];
-    if (self) {
-        _fanID = [[info objectForKey:@"id"] integerValue];
-        _name = [info objectForKey:@"nick"];
-        _imagelink = [info objectForKey:@"thumbnail"];
-    }
-    return self;
 }
 @end

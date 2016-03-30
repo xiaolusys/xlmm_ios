@@ -110,7 +110,7 @@
    //NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
     
     
-    self.imageView.alpha = 0.0;
+    self.imageView.alpha = 0.3;
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.imageView.alpha = 1.0;
@@ -129,12 +129,12 @@
     if ([model.agentPrice integerValue]!=[model.agentPrice floatValue]) {
         self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
     } else {
-        self.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
     }
     
     
     
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%@",model.stdSalePrice];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.stdSalePrice floatValue]];
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {

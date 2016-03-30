@@ -13,9 +13,12 @@
 #import "FanceModel.h"
 #import "MJRefresh.h"
 #import "SVProgressHUD.h"
+#import "AboutFansViewController.h"
 
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSString *nextPage;
@@ -47,9 +50,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(backClicked:)];
+    [self createrightItem];
+    
+    NSString *title = nil;
+    
+    if ([self.fansNum integerValue] == 0) {
+        title = @"暂无粉丝";
+        [self displayDefaultView];
+    }else {
+        title = @"粉丝列表";
+        [self createTableView];
+    }
+    
+    [self createNavigationBarWithTitle:title selecotr:@selector(backClicked:)];
+}
+
+- (void)createTableView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"FensiTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FensiCell"];
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         if([self.nextPage class] == [NSNull class]) {
@@ -61,10 +84,79 @@
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     [self downloadData];
+
 }
 
+- (void)createrightItem{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 44)];
+    //已选label
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 55, 44)];
+    label.text = @"关于粉丝";
+    label.font = [UIFont systemFontOfSize:12];
+    label.textColor = [UIColor colorWithR:98 G:98 B:98 alpha:1];
+    label.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:label];
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(55, 15, 15, 15)];
+    imageV.image = [UIImage imageNamed:@"aboutfans"];
+    
+    [view addSubview:label];
+    [view addSubview:imageV];
+    
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = view.bounds;
+    [btn addTarget:self action:@selector(AboutFansClick) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btn];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+-(void)displayDefaultView{
+//    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
+//    UIView *defaultView = views[0];
+//    UIButton *button = [defaultView viewWithTag:100];
+//    button.layer.cornerRadius = 15;
+//    button.layer.borderWidth = 1;
+//    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+//    [button setTitle:@"我的精选" forState:UIControlStateNormal];
+//    
+//    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
+//    label.text = @"您还没有粉丝哦...";
+//    UILabel *desLabel = (UILabel *)[defaultView viewWithTag:200];
+//    desLabel.text = @"分享您的精选给好友，就会获得粉丝哦～";
+//    
+//    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 64, self.view.frame.size.width, self.view.frame.size.height);
+//    [self.view addSubview:defaultView];
+    
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FansEmpty" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, SCREENWIDTH, SCREENHEIGHT);
+    
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:defaultView];
+}
+
+-(void)gotoLandingPage{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)AboutFansClick {
+    AboutFansViewController *about = [[AboutFansViewController alloc] init];
+    [self.navigationController pushViewController:about animated:YES];
+}
+
+
 - (void)downloadData{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_fans_list", Root_URL];
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_fans_list", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
     //    NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
     
@@ -95,11 +187,12 @@
 
 - (void)createFanlistWithArray:(NSArray *)array{
     for (NSDictionary *dic in array) {
-        FanceModel *fan = [[FanceModel alloc] initWithInfo:dic];
+        FanceModel *fan = [[FanceModel alloc] init];
+        [fan setValuesForKeysWithDictionary:dic];
         [self.dataArray addObject:fan];
     }
     [self.tableView reloadData];
-}
+} 
 
 
 
@@ -124,20 +217,14 @@
     return 80;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString *cellIdentify = @"CellIdentify";
-    
-    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentify];
+
+    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FensiCell"];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"FensiTableViewCell" owner:self options:nil] lastObject];
+        cell = [[FensiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FensiCell"];
     }
     FanceModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
     [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    //    UIImageView *image = [[UIImageView alloc] init];
-    //    image.image = [UIImage imageNamed:@"Icon-60@3x"];
     return cell;
 }
 @end

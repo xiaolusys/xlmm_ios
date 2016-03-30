@@ -35,6 +35,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *youhuiquanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *accountLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *waitReceiveNum;
+@property (weak, nonatomic) IBOutlet UILabel *waitPayNum;
+@property (weak, nonatomic) IBOutlet UILabel *exchangeNum;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitPayNumWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitReceiveNumWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *exchangeNumWidth;
+
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;

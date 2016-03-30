@@ -11,7 +11,6 @@
 @implementation HuoyuezhiModel
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{
-    NSLog(@"************************");
     
 }
 
