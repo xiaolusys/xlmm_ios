@@ -692,6 +692,12 @@
                     return;
                 }
             }
+            
+            if (payMethod == nil) {
+                [SVProgressHUD showErrorWithStatus:@"余额不足请选择支付方式"];
+                return;
+            }
+            
             dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",dict,discountfee, [[NSNumber numberWithFloat:totalPayment] floatValue], payMethod, parms];
             //提交
             [self submitBuyGoods];
@@ -782,13 +788,13 @@
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
-                [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+                [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
             });
             return;
         }if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+                [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
             });
             return;
         }
@@ -816,7 +822,7 @@
                         }
 //                        paySucceed = NO;
                     }
-                    [self performSelector:@selector(returnCart) withObject:nil afterDelay:2.0];
+                    [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
         
                 }];
             });
