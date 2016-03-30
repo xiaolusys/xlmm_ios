@@ -77,7 +77,7 @@
         [self.sttime invalidate];
         self.sttime = nil;
         
-        [self.startV removeFromSuperview];
+         [self.startV removeFromSuperview];
         
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
