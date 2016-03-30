@@ -826,7 +826,7 @@
 
     
     self.visitorDate = [NSNumber numberWithInteger:days - quxiaodays];
-    NSLog(@"days = %ld", days - quxiaodays);
+    NSLog(@"days = %ld", days - quxiaodayse);
    // NSLog(@"array = %@", self.mamaOrderArray);
    // NSLog(@"%ld", quxiaodays);
     
