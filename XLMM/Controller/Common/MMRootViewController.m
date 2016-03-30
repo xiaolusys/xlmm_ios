@@ -310,19 +310,19 @@
     
     self.timeCount = 0;
     //启动活动页
-    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window addSubview:self.startV];
+//    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    [window addSubview:self.startV];
     
-    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        if (responseObject[@"picture"] == nil)return;
-        [self startDeal:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+//    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        if (responseObject[@"picture"] == nil)return;
+//        [self startDeal:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
     
     
     //订阅展示视图消息，将直接打开某个分支视图
@@ -372,7 +372,13 @@
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
     }
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]]];
+    self.startV.imageV.alpha = 1;
+    
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:.3 animations:^{
+            self.startV.imageV.alpha = 1;
+        }];
+    }];
 }
 
 - (void)ActivityTimeUpdate {

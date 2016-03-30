@@ -259,8 +259,10 @@ static NSString *const cellIdentifier = @"YixuanCell";
                   for (MaMaSelectProduct *model in self.dataArr) {
                       NSLog(@"id = %@", model.productId);
                   }
-                  
-                  
+                  //一个不需要交换位置。。0
+                  if (self.dataArr.count == 1) {
+                      return ;
+                  }
                   NSDictionary *parameters = @{@"change_id":[((MaMaSelectProduct *)self.dataArr[newPath.row - 1]).productId stringValue],
                                                @"target_id":[((MaMaSelectProduct *)self.dataArr[newPath.row]).productId stringValue]
                                                };

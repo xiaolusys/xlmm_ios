@@ -708,9 +708,11 @@
     
     
     
+    //申请退货 上传图片bug修复
     
-    
-    for (int i = 0; i< self.imagesArray.count; i++) {
+    for (int i = 0; i< self.imagesArray.count && i < self.keysArray.count; i++) {
+        
+        
          [self uploadImages:self.imagesArray[i] andKeys:self.keysArray[i]];
         
 

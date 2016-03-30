@@ -98,6 +98,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
 //    if ([WXApi isWXAppInstalled]) {
 //      //  NSLog(@"安装了微信");
 //        self.weixinView.hidden = YES;
@@ -122,6 +123,10 @@
     
 }
 
+- (void)popview{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)paySuccessful{
     
   //  NSLog(@"恭喜你支付成功，");
@@ -132,6 +137,7 @@
 
 }
 - (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -830,6 +836,8 @@
                         NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                            
+                            [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                         }
