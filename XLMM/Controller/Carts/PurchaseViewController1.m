@@ -692,7 +692,7 @@
                 parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
             }
             
-            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discountfee,[[NSNumber numberWithFloat:totalPayment] floatValue], @"budget", parms];
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue], @"budget", parms];
             //提交
             [self submitBuyGoods];
         }else {
