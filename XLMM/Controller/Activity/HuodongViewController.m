@@ -145,7 +145,7 @@
     
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
-    [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self jumpToJsLocation:data];
     }];
     

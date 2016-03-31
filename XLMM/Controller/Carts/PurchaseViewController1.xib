@@ -375,7 +375,6 @@
                                                     <rect key="frame" x="240" y="9" width="65" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="5xX-Z1-P8a"/>
-                                                        <constraint firstAttribute="width" constant="65" id="Feb-do-cAf"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
