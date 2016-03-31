@@ -352,7 +352,7 @@ static NSString *khuodongCell = @"HuodongCell";
     [backView addSubview:imageView];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 30, (SCREENHEIGHT - imageHeight) * 0.5 - 30, 30, 30);
+    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 40, (SCREENHEIGHT - imageHeight) * 0.5 - 40, 40, 40);
     [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:button];
@@ -610,6 +610,8 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)guanbiClicked:(UIButton *)button{
+    
+    NSLog(@"guanbi");
     [backView removeFromSuperview];
 //    [activityView removeFromSuperview];
     
