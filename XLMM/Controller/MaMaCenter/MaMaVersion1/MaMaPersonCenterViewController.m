@@ -417,10 +417,10 @@
 }
 
 // 返回一周的订单数。。。。
-- (NSInteger)sumofoneWeek:(NSArray *)weekArray{
-    NSInteger sum = 0;
+- (float)sumofoneWeek:(NSArray *)weekArray{
+    float sum = 0.0;
     for (int i = 0; i < weekArray.count; i++) {
-        sum += [weekArray[i] integerValue];
+        sum += [weekArray[i] floatValue];
     }
     return sum;
     
@@ -938,6 +938,9 @@
         data = arr;
         
         NSLog(@"%@", arr);
+        
+        
+        
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         int xingqiji = (int)[self.weekDay integerValue];
         switch (xingqiji) {
@@ -969,17 +972,22 @@
         for (int i = quxiaodays; i < data.count + quxiaodays; i++) {
             if (i>data.count - 1) {
 
-                [weekArray addObject:@0];
+                [weekArray addObject:@0.1];
             } else {
-                NSNumber *order_num = [data[i] objectForKey:@"carry"];
+                float number = [[data[i] objectForKey:@"carry"] floatValue] + 0.01;
+                NSNumber *order_num = [NSNumber numberWithFloat:number];
 
+                NSLog(@" shouyi = %@", order_num);
+                
                 [weekArray addObject:order_num];
                 
             }
             
             
             if ((i +1 - quxiaodays)%7 == 0) {
-                NSInteger sum = [self sumofoneWeek:weekArray];
+                
+                NSLog(@" weekarray = %@", weekArray);
+                float sum = [self sumofoneWeek:weekArray];
                 //   NSLog(@"第%d周订单的和为：%ld",(int)i/7, sum);
                 if (sum == 0) {
                     break;
