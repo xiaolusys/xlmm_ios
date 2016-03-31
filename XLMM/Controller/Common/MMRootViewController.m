@@ -356,8 +356,8 @@
     } else {
         NSLog(@"no login");
     }
-    
-    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+//    
+//    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
 }
 
 - (void)startDeal:(NSDictionary *)dic {

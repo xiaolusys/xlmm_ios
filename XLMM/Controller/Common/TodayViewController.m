@@ -334,6 +334,8 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)createActivityView:(UIImage *)image {
     CGFloat imageWidth = image.size.width;
     CGFloat imageHeight = image.size.height;
+    [backView removeFromSuperview];
+    
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
@@ -613,7 +615,6 @@ static NSString *khuodongCell = @"HuodongCell";
     
     NSLog(@"guanbi");
     [backView removeFromSuperview];
-//    [activityView removeFromSuperview];
     
 }
 
@@ -621,6 +622,7 @@ static NSString *khuodongCell = @"HuodongCell";
     //统计进入活动页人数
     
     [MobClick event:@"activity"];
+      [backView removeFromSuperview];
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         

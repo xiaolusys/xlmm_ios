@@ -717,7 +717,7 @@
                 return;
             }
             
-            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",dict,discountfee, [[NSNumber numberWithFloat:totalPayment] floatValue], payMethod, parms];
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",dict,discount, [[NSNumber numberWithFloat:totalPayment] floatValue], payMethod, parms];
             //提交
             [self submitBuyGoods];
         }
