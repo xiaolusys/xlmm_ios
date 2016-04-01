@@ -350,43 +350,8 @@
 
     }];
     
- 
-    
-    
-    
 }
 
-//- (void)updateMaMaHome:(NSDictionary *)dataDic {
-////    NSLog(@"%@", dataDic);
-//    NSDictionary *mamaDic = [dataDic objectForKey:@"mama_fortune"];
-//    self.inviteLabel.text = [mamaDic objectForKey:@"invite_num"];
-////    self.
-//    
-//}
-
-
-//- (void)fensiList:(UITapGestureRecognizer *)recognizer{
-//    NSLog(@"fensi");
-//    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
-//    [self.navigationController pushViewController:fensiVC animated:YES];
-//}
-
-#pragma mark -获取订单记录
-
-- (void)fetchedDingdanjilu:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (!error) {
-        NSString *count = [dic objectForKey:@"count"];
-        self.dingdanyilu.text = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
-        self.orderRecord = [NSString stringWithFormat:@"%ld", (long)[count integerValue]];
-        self.order.text = [NSString stringWithFormat:@"%@个订单", self.orderRecord];
-    }
-    
-}
 
 - (void)downloadData{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/fanlist", Root_URL];
@@ -921,7 +886,14 @@
         NSArray *arr = responseObject[@"results"];
         if (arr.count == 0)return;
         NSArray *data = [NSArray reverse:arr];
-      
+        
+        //遍历数据如果都为零的时候显示默认图
+//        BOOL have = [self isHaveData:data];
+//        
+//        if (!have) {
+//            [self createDefaultPicture];
+//            return;
+//        }
     
         self.mamaOrderArray = data;
         
@@ -972,9 +944,9 @@
         for (int i = quxiaodays; i < data.count + quxiaodays; i++) {
             if (i>data.count - 1) {
 
-                [weekArray addObject:@0.1];
+                [weekArray addObject:@0.00];
             } else {
-                float number = [[data[i] objectForKey:@"carry"] floatValue] + 0.01;
+                float number = [[data[i] objectForKey:@"carry"] floatValue] + 0.00;
                 NSNumber *order_num = [NSNumber numberWithFloat:number];
 
                 NSLog(@" shouyi = %@", order_num);
@@ -1015,6 +987,26 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+}
+
+//便利数组
+- (BOOL)isHaveData:(NSArray *)arr {
+    for (NSDictionary *daysDic in arr) {
+        CGFloat carry = [[daysDic objectForKey:@"carry"] floatValue];
+        if (carry > 0.000001) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+//创建默认图片
+- (void)createDefaultPicture {
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:self.mamaScrollView.bounds];
+    imageV.image = [UIImage imageNamed:@"mamanodata"];
+    [self.mamaScrollView addSubview:imageV];
+    
+    NSLog(@"%@", NSStringFromCGRect(self.mamaScrollView.frame));
 }
 
 #pragma mark --TableViewDelegate

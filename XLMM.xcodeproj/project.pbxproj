@@ -623,6 +623,7 @@
 		184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */; };
 		184FCFC11CA67CF800F8FC94 /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFC01CA67CF800F8FC94 /* UUID.m */; };
 		184FCFC41CA67DF100F8FC94 /* HtmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFC31CA67DF100F8FC94 /* HtmlViewController.m */; };
+		1865CA4D1CAE4C4C00772458 /* mamanodata.png in Resources */ = {isa = PBXBuildFile; fileRef = 1865CA4C1CAE4C4C00772458 /* mamanodata.png */; };
 		18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */; };
 		18AC6C801CA2AF1000316E65 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7F1CA2AF1000316E65 /* heart.png */; };
 		18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D862751CA0EE78004A19BD /* AboutFansViewController.m */; };
@@ -1631,6 +1632,7 @@
 		184FCFC01CA67CF800F8FC94 /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
 		184FCFC21CA67DF100F8FC94 /* HtmlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlViewController.h; path = XLMM/Helpers/HtmlViewController.h; sourceTree = SOURCE_ROOT; };
 		184FCFC31CA67DF100F8FC94 /* HtmlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HtmlViewController.m; path = XLMM/Helpers/HtmlViewController.m; sourceTree = SOURCE_ROOT; };
+		1865CA4C1CAE4C4C00772458 /* mamanodata.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamanodata.png; sourceTree = "<group>"; };
 		18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FansEmpty.xib; sourceTree = "<group>"; };
 		18AC6C7F1CA2AF1000316E65 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		18D862741CA0EE77004A19BD /* AboutFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutFansViewController.h; sourceTree = "<group>"; };
@@ -3338,6 +3340,7 @@
 				183074A61C97D49A00B7665E /* mamadingdan.png */,
 				183074A71C97D49A00B7665E /* mamaeryaoqing.png */,
 				183074A81C97D49A00B7665E /* mamafensi.png */,
+				1865CA4C1CAE4C4C00772458 /* mamanodata.png */,
 				18D862771CA1105C004A19BD /* aboutfans.png */,
 				183074A91C97D49A00B7665E /* mamashouyi.png */,
 			);
@@ -3918,6 +3921,7 @@
 				183075B21C97D49A00B7665E /* loading动画002.png in Resources */,
 				183072251C97BE3700B7665E /* WithdrwaIsNo.xib in Resources */,
 				1830767C1C97D49A00B7665E /* 圈圈加载0040.png in Resources */,
+				1865CA4D1CAE4C4C00772458 /* mamanodata.png in Resources */,
 				183075E11C97D49A00B7665E /*  lianxikkefu_icon.png in Resources */,
 				183075A31C97D49A00B7665E /* wxkuaizhao.png in Resources */,
 				1830723D1C97BE3700B7665E /* PersonCenterViewController2.xib in Resources */,
