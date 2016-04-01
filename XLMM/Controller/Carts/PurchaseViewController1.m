@@ -25,8 +25,6 @@
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 #import "SVProgressHUD.h"
 
-#import "NSDictionary+UrlEncoding.h"
-
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
     AddressModel *addressModel;//默认收货地址
@@ -89,6 +87,8 @@
 
 @property (nonatomic, assign)BOOL isUserCoupon;
 
+@property (nonatomic, assign)BOOL isInstallWX;
+
 @end
 
 
@@ -99,28 +99,13 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-//    if ([WXApi isWXAppInstalled]) {
-//      //  NSLog(@"安装了微信");
-//        self.weixinView.hidden = YES;
-//        
-//    }
-//    else{
-//    //    NSLog(@"没有安装微信");
-//        self.weixinView.hidden = NO;
-//        payMethod = @"alipay";
-//        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-//        /*
-//         icon-radio.png
-//         icon-radio-select.png
-//         wx
-//         alipay
-//         
-//         */
-//   //     NSLog(@"zhifu = %@", payMethod);
-//        
-//    }
-
-    
+    if ([WXApi isWXAppInstalled]) {
+      //  NSLog(@"安装了微信");
+        self.isInstallWX = YES;
+    }
+    else{
+        self.isInstallWX = NO;
+    }
 }
 
 - (void)popview{
@@ -128,8 +113,6 @@
 }
 
 - (void)paySuccessful{
-    
-  //  NSLog(@"恭喜你支付成功，");
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alterView show];
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -202,7 +185,7 @@
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-    NSLog(@"------cartsURLString = %@", urlString);
+//    NSLog(@"------cartsURLString = %@", urlString);
     
    
     //下载购物车支付界面数据
@@ -228,7 +211,7 @@
     if (error != nil) {
         NSLog(@"解析失败");
     }
-    NSLog(@"-----------------%@", dic);
+//    NSLog(@"-----------------%@", dic);
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     coupon_message = [dic objectForKey:@"coupon_message"];
@@ -285,27 +268,7 @@
             
         }
     }
-    
-//    app支付立减
-//    self.rightReduce = pay_extras[0];
-//    NSString *name = pay_extras[0][@"name"];
-//    NSDictionary *pay_ex = pay_extras[0];
-//    lijianpay = [pay_ex[@"value"] floatValue];
-//    
-//    
-//    
-//    //遍历小鹿钱包
-//    self.availableFloat = 0.0;
-//    for (NSDictionary *dic in pay_extras) {
-//        if ([dic[@"pid"] integerValue] == 3) {
-//            self.xlWallet = dic;
-//            
-//            self.availableString = [NSString stringWithFormat:@"%.2f", [self.xlWallet[@"value"] floatValue]];
-//            self.availableFloat = [self.availableString floatValue];
-//            
-//            self.availableLabel.text = [NSString stringWithFormat:@"本次可用%.2f", self.availableFloat];
-//        }
-//    }
+
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
@@ -352,36 +315,14 @@
     //NSLog(@"cartsDataArray = %@", self.MutCatrsArray);
     
     [self createCartsListView];
-    
-//    [self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
-    
-//    if ([[dic objectForKey:@"budget_payable"] boolValue]) {
-//        isWallPay = YES;
-//    } else {
-//        isWallPay = NO;
-//    }
-//    
-//    if ([coupon_message isEqualToString:@""]) {
-//        NSLog(@"okokoko");
-//        
-//    } else {
-//        
-//        alertViewError = [[UIAlertView alloc] initWithTitle:nil message:coupon_message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        alertViewError.tag = 2000;
-//        [alertViewError show];
-//        
-//        
-//    }
-    
-    // NSLog(@"****************");
 }
 
 -(void)performDismiss:(NSTimer *)timer
 {
     self.couponLabel.hidden = YES;
     yhqModel = nil;
-    
-      [self downloadCartsData];
+
+    [self downloadCartsData];
     [alertViewError dismissWithClickedButtonIndex:0 animated:NO];
 }
 
@@ -556,17 +497,11 @@
     }
 }
 
-- (void)updateUI{
-//    self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", discountfee];
-//    self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", totalPayment];
-//    self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", totalPayment];
-}
-
 - (IBAction)zhifubaoClicked:(id)sender {
     
-    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
-    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
-    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
+//    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
+//    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
+//    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
     
     if (self.isEnoughBudget && self.isUseXLW) {
         //支付宝可选可不选
@@ -591,10 +526,15 @@
 
 - (IBAction)weixinZhifuClicked:(id)sender {
     
-    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
-    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
-    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
+//    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
+//    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
+//    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
     //NSOrderedAscending = -1L, NSOrderedSame, NSOrderedDescending
+    
+    if (!self.isInstallWX) {
+        [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+        return;
+    }
     
     if (self.isEnoughBudget && self.isUseXLW) {
         //微信可选可不选
@@ -669,8 +609,6 @@
             //使用不足
             parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
             discountfee = discountfee + [yhqModel.coupon_value floatValue];
-            
-            NSLog(@"----->%.2f", discountfee);
         }else{
             
             //未使用
@@ -724,62 +662,16 @@
 
     }
     
-//    if (!([avaiPay compare:waitPay] == NSOrderedAscending) && self.isUseXLW) {
-//        //小鹿钱包钱大于或者等于待支付且选择了小鹿钱包支付
-////        accoutM = [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
-//        self.enough = 1;
-//        
-//    }else {
-//        //选择了支付宝或者微信的一种，小鹿钱包不一定选择
-//        if (payMethod == nil) {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择一种支付方式" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            [alert show];
-//            return;
-//        }
-////        if (self.isUseXLW) {
-////            accoutM = [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
-////        }
-//    }
-//    
-        //   http://m.xiaolu.so/rest/v1/trades/shoppingcart_create
-    
-    //    if (yhqModel.ID == nil) {
-//        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, parms];
-//    } else {
-//        dict  = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&channel=%@&payment=%@&post_fee=%@&discount_fee=%@&total_fee=%@&uuid=%@&coupon_id=%@&pay_extras=%@",cartIDs,addressModel.addressID ,payMethod, [NSString stringWithFormat:@"%.1f", allpay],[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", discountfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid, yhqModel.ID, parms];
-//    }
-    
-//    NSLog(@"********************%ld", (long)self.userPayMent);
-////    return;
-//    NSLog(@"dict = %@", dict);
 }
 
-
-- (NSDictionary *)returnDic:(NSString *)str {
-    NSArray *arr = [str componentsSeparatedByString:@"&"];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    for (NSString *str1 in arr) {
-        NSArray *keyAndV  = [str1 componentsSeparatedByString:@"="];
-        [dic setObject:keyAndV[1] forKey:keyAndV[0]];
-    }
-    return dic;
-}
 
 - (void)submitBuyGoods {
-    NSLog(@"dict---%@", dict);
-    
-//   NSDictionary *test = [self returnDic:dict];
-////
-//    NSString *str = [test urlEncodedString];
-    
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
     NSURL *url = [NSURL URLWithString:postPay];
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    
-//    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     [postRequest setHTTPBody:data];
     [postRequest setHTTPMethod:@"POST"];
@@ -823,14 +715,11 @@
         NSError *parseError = nil;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//        NSLog(@"-----------%@", parseError);
-//        NSLog(@"==========%@", charge);
         
         if (![[dic objectForKey:@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
-//                        paySucceed = YES;
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                     } else {
                         NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
@@ -841,73 +730,12 @@
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                         }
-//                        paySucceed = NO;
                     }
                     [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
         
                 }];
             });
         }
-        
-        
-        
-        //        if (self.userPayMent == 1 || self.userPayMent == 2) {
-        //
-        //        }
-        
-        //        if ([payMethod isEqualToString:@"budget"]) {
-        //
-        //            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        //
-        //            NSLog(@"dic = %@", dic);
-        //
-        //            /*
-        //             dic = {
-        //             channel = budget;
-        //             id = 305313;
-        //             info = "\U8ba2\U5355\U652f\U4ed8\U6210\U529f";
-        //             success = 1;
-        //             */
-        //            MMLOG([dic objectForKey:@"info"]);
-        //            mamaqianbaoInfo = [dic objectForKey:@"info"];
-        //
-        //            [self performSelectorOnMainThread:@selector(showXiaoluQianbaoView) withObject:nil waitUntilDone:YES];
-        ////
-        ////            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[dic objectForKey:@"info"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        ////            [alertView show];
-        //           // [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"info"]];
-        //
-        //
-        //
-        //            return ;
-        //        }
-        //
-        //
-        //        if (connectionError != nil) {
-        //            NSLog(@"error = %@", connectionError);
-        //        }
-        //
-        //        NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //        NSLog(@"charge = %@", charge);
-        //        errorCharge = charge;
-        //        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        //        errorCharge = [dic objectForKey:@"detail"];
-        //
-        //
-        //        if (httpResponse.statusCode != 200) {
-        //         //   NSLog(@"出错了");
-        //            self.couponLabel.hidden = YES;
-        //            [self performSelectorOnMainThread:@selector(showAlertView) withObject:nil waitUntilDone:YES];
-        //
-        //            return;
-        //        }
-        //
-        //
-        //
-        //
-        
-        
-        
     }];
 
     
