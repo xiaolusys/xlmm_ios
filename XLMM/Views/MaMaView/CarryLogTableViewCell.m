@@ -61,7 +61,8 @@
         self.sourceLabel.text = [self dateDeal:carryModel.created];
         
     }else if(type == 3) {
-        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
+//        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
+        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
         self.sourceLabel.text = [self dateDeal:carryModel.created];
     }
 
