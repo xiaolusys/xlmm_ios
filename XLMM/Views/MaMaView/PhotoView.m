@@ -35,7 +35,7 @@
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-        _scrollView.contentSize = CGSizeMake(SWIDTH * self.picArr.count, SHEIGHT);
+        
         _scrollView.pagingEnabled = YES;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.delegate = self;
@@ -47,7 +47,6 @@
 - (UIPageControl *)pageControl {
     if (!_pageControl) {
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(SWIDTH * 0.5 - 60, SHEIGHT - 34, 120, 20)];
-        _pageControl.numberOfPages = self.picArr.count;
         _pageControl.currentPageIndicatorTintColor = [UIColor pagecontrolBackgroundColor];
         _pageControl.pageIndicatorTintColor = [UIColor pagecontrolCurrentIndicatorColor];
         [self addSubview:_pageControl];
@@ -63,6 +62,10 @@
        cellFrame:(CGRect)cellFrame {
     self.index = index;
     self.cellFrame = cellFrame;
+    
+    self.scrollView.contentSize = CGSizeMake(SWIDTH * self.picArr.count, SHEIGHT);
+    self.pageControl.numberOfPages = self.picArr.count;
+    
     //初始位置
     self.scrollView.contentOffset = CGPointMake(SWIDTH * self.index, 0);
     self.pageControl.currentPage = self.index;
@@ -150,6 +153,7 @@
     }];
     for (UIImageView *imageV in self.scrollView.subviews) {
         imageV.image = nil;
+        
     }
 }
 
