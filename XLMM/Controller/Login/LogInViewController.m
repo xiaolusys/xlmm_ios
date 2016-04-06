@@ -335,7 +335,7 @@
                                  @"password":password
                                  };
    
-    
+//    /rest/v1/register/customer_login
     
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -374,8 +374,6 @@
                   // 发送手机号码登录成功的通知
                   
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-                  
-                  
                  
                   [self setDevice];
                   [self.navigationController popViewControllerAnimated:NO];
