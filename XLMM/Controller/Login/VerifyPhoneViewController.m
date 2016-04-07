@@ -382,11 +382,12 @@
 
 - (void)verifyAfter:(NSDictionary *)dic {
     if (dic.count == 0)return;
-    NSLog(@"-----%@", dic[@"msg"]);
-    
     NSString *phoneNumber = self.phoneNumberTextField.text;
     
-    if ([[dic objectForKey:@"rcode"] integerValue] != 0) return;
+    if ([[dic objectForKey:@"rcode"] integerValue] != 0){
+        [self alertMessage:[dic objectForKey:@"msg"]];
+        return;
+    }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
         [self alertMessage:[dic objectForKey:@"msg"]];
         //设置用户名在newLeft中使用
