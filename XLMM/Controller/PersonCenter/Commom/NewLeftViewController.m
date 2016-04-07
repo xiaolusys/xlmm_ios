@@ -457,6 +457,8 @@
     self.youhuiquanLabel.text = @"0";
     self.accountLabel.text = @"0.00";
     
+    self.redCircle.hidden = YES;
+    
     self.waitPayNum.hidden = YES;
     self.waitReceiveNum.hidden = YES;
     self.exchangeNum.hidden = YES;
