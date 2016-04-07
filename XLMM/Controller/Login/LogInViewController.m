@@ -353,7 +353,6 @@
 }
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
-    NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
@@ -361,7 +360,6 @@
 
 - (IBAction)registerClicked:(UIButton *)sender {
     //登录界面进入手机注册界面
-    NSLog(@"注册");
     
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     
@@ -372,7 +370,7 @@
 
 - (IBAction)verifyMessageClicked:(id)sender {
     
-    NSLog(@"短信验证");
+//    NSLog(@"短信验证");
     
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     verifyVC.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};

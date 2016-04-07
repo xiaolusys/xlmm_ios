@@ -27,10 +27,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vln-Ah-H5Q">
-                                    <rect key="frame" x="10" y="21" width="200" height="19"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="FLe-Gg-kly"/>
-                                    </constraints>
+                                    <rect key="frame" x="10" y="21" width="300" height="19"/>
                                     <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
@@ -41,6 +38,7 @@
                                 <constraint firstItem="vln-Ah-H5Q" firstAttribute="leading" secondItem="4oO-Qo-KG5" secondAttribute="leading" constant="10" id="BqP-jR-4bd"/>
                                 <constraint firstItem="vln-Ah-H5Q" firstAttribute="centerY" secondItem="4oO-Qo-KG5" secondAttribute="centerY" id="HcE-EL-idx"/>
                                 <constraint firstAttribute="height" constant="60" id="VAK-rd-lMR"/>
+                                <constraint firstAttribute="trailing" secondItem="vln-Ah-H5Q" secondAttribute="trailing" constant="10" id="uBv-t1-MkA"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIi-jb-pw8">

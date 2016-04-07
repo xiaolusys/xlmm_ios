@@ -218,70 +218,10 @@
     
     [manager POST:stringurl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSLog(@"info = %@", [responseObject objectForKey:@"info"]);
-              NSLog(@"msg = %@", [responseObject objectForKey:@"msg"]);
-              
               [self alertMessage:[responseObject objectForKey:@"msg"]];
-              
-              if ([self.config[@"isMessageLogin"] boolValue]) {
-//                  if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
-//                      [self alertMessage:[responseObject objectForKey:@"msg"]];
-//                  }
-              } else {
-//                  NSString *result = [responseObject objectForKey:@"result"];
-//                  if ([result isEqualToString:@"false"])
-//                  {
-//                      [self alertMessage:@"手机号输入错误!"];
-//                      [self stopCountingDown];
-//                      return;
-//                  }
-                  if ([self.config[@"isRegister"] boolValue]) {
-                      //注册接口返回结果。。。。。
-//                      if ([result isEqualToString:@"OK"] || [result isEqualToString:@"ok"]) {
-//                          return;
-//                      }
-//                      if ([result integerValue] == 0) {
-//                          // 该手机号已被注册
-//                          [self alertMessage:@"该手机号已被注册!"];
-//                          
-//                      } else if ([result integerValue] == 1){
-//                          // 验证码已发送
-//                          [self alertMessage:@"验证码已发送!"];
-//                          
-//                      } else if ([result integerValue] == 2){
-//                          // 验证次数已达今日上限
-//                          [self alertMessage:@"验证次数已达今日上限!"];
-//                          
-//                      }
-//                      [self alertMessage:[responseObject objectForKey:@"msg"]];n
-                      
-                  } else {
-                      //修改密码接口返回结果。。。
-//                      if ([result integerValue] == 1) {
-//                          // 尚无用户或者手机未绑定。。。
-//                          [self alertMessage:@"该手机号未被注册!"];
-//                          
-//                      } else if ([result integerValue] == 2){
-//                          // 验证次数已达今日上限
-//                          [self alertMessage:@"验证次数已达今日上限!"];
-//                          
-//                      } else if ([result integerValue] == 3){
-//                          // 验证码过期
-//                          [self alertMessage:@"验证码过期!"];
-//                          
-//                      }
-                  }
-                  
-              }
-          
-        }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
-              
-          }];
+    }];
 }
 
 -(void) startCountingDown
@@ -443,6 +383,7 @@
 - (void)verifyAfter:(NSDictionary *)dic {
     if (dic.count == 0)return;
     NSLog(@"-----%@", dic[@"msg"]);
+    
     NSString *phoneNumber = self.phoneNumberTextField.text;
     
     if ([[dic objectForKey:@"rcode"] integerValue] != 0) return;
