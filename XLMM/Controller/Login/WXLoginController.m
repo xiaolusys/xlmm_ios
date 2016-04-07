@@ -166,89 +166,35 @@
 //
 
 - (IBAction)getCodeClicked:(id)sender {
-    NSLog(@"验证码");
     NSString *phoneStr = self.phoneTextField.text;
-    
-  
-    
     if (phoneStr.length != 11) {
         NSLog(@"不是11位");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请输入正确的手机号码" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
-        
-        
         return;
-        
     }
     
-    
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile_code", Root_URL];
-    NSLog(@"url = %@", urlString);
-    
-    
-    
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile_code", Root_URL];
+    NSLog(@"TSendCode_URL = %@", TSendCode_URL);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-   
-    NSDictionary *parameters = @{@"vmobile": phoneStr};
+    NSDictionary *parameters = @{@"mobile":phoneStr, @"action":@"bind"};
     NSLog(@"parameters = %@", parameters);
     
-    
-    
- 
-    
-    [manager POST:urlString parameters:parameters
+    [manager POST:TSendCode_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              if (!responseObject) return;
               
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"result"];
-              NSLog(@"result = %@", string);
-              NSString *message = [responseObject objectForKey:@"info"];
-              NSLog(@"info = %@", message);
-              
-              UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-              
-              if ([string isEqualToString:@"ok"]) {
-                  
-              } else if ([string isEqualToString:@"1"]){
-                  alterView.message = @"该手机已绑定,请使用其他手机号";
-                  [alterView show];
-//                  [self.navigationController popToRootViewControllerAnimated:YES];
-              } else if ([string isEqualToString:@"false"]){
-                  alterView.message = @"手机号错误,请重新输入";
-                  [alterView show];
-              } else if ([string isEqualToString:@"2"]){
-                  alterView.message = @"超过当日获取验证码次数";
-                  [alterView show];
-                  
-              } else if ([string isEqualToString:@"3"]){
-                  alterView.message = @"验证码依然有效,无须重新获取";
-                  [alterView show];
-              }
-              
-              
-              
+              UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+              [alterView show];
+              if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) return;
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-         
-              
               NSLog(@"Error: %@", error);
               
           }];
-
-    
-    
-    //  094783
-    
-    
     NSLog(@"phoneNumber = %@", phoneStr);
     self.codeButton.enabled = NO;
-   
-    
-    
     myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     
 }
@@ -293,124 +239,27 @@
 
 
 - (IBAction)commitClicked:(id)sender {
-    NSLog(@"下一步");
-    
-    
-    // rest/v1/users/check_code
-    
-    // username  valid_code
-    
-   // NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/check_code", Root_URL];
-    
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile_unpassword", Root_URL];
 
-    NSLog(@"url = %@", urlString);
-    
-   // AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
-    __unused NSDictionary *parameters = @{@"username": self.phoneTextField.text,
-                                 @"valid_code":self.codeTextField.text
-                                 };
+    NSDictionary *parameters = @{@"mobile": self.phoneTextField.text, @"action":@"bind", @"verify_code":self.codeTextField.text};
     NSLog(@"parameters = %@", parameters);
-    
-    
-    
-    //第一步，创建URL
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    //第二步，创建请求
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    
-    NSString *str = [NSString stringWithFormat:@"username=%@&valid_code=%@", self.phoneTextField.text, self.codeTextField.text];//设置参数
-    NSLog(@"params = %@", str);
-    
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [request setHTTPBody:data];
-    
-    //第三步，连接服务器
-    
-    
-    
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-    
-    
-    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions
-                                                           error:nil];
-    NSString *result = [json objectForKey:@"result"];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    NSLog(@"%@",str1);
-    if ([result isEqualToString:@"0"]) {
-        NSLog(@"the result is ok");
-        alertView.message = @"来绑定成功";
-        [alertView show];
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
         [self.navigationController popToRootViewControllerAnimated:YES];
-        return;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-    } else if ([result isEqualToString:@"4"]){
-        NSLog(@"the result is 4");
-        
-        alertView.message = @"验证码已过期";
-        [alertView show];
-        return;
-        
-    
-    } else if ([result isEqualToString:@"3"]){
-        alertView.message = @"验证码输入错误";
-        [alertView show];
-        return;
-    } else if ([result isEqualToString:@"2"]){
-        alertView.message = @"参数错误";
-        [alertView show];
-        return;
-        
-    } else {
-        alertView.message = [json objectForKey:@"info"];
-        [alertView show];
-        return;
-    }
-  
-
-    
-    
-    NSLog(@"%@ %@", self.phoneTextField.text, self.codeTextField.text);
-    SetPasswordController *nextVC = [[SetPasswordController alloc] initWithNibName:@"SetPasswordController" bundle:nil phone:self.phoneTextField.text code:self.codeTextField.text];
-    
-    NSLog(@"%@  %@", nextVC.phone, nextVC.code);
-    
-    [self.navigationController pushViewController:nextVC animated:YES];
-    
-    
-   /*
-    
-   
-    
-
-    
-    */
-    
-    
+    }];
 }
 
-
-
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    if (buttonIndex == 0) {
-//    }
-//}
 
 - (IBAction)backClicked:(id)sender {
     
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
 }
 @end

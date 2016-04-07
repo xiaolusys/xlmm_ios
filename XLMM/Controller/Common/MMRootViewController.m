@@ -83,7 +83,8 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-  //  NSLog(@"微信登录");
+  //  NSLog(@"微信登录");\
+    
     
 //    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
 //    if (login.isxlmm) {
@@ -541,7 +542,7 @@
 - (void)autologin{
     
    
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {
       //  NSLog(@"微信登录");

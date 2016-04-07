@@ -74,6 +74,7 @@ static NSString *cellIdentifier = @"productSelection";
     
     NSLog(@"url = %@", url);
     [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
         [self dealData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -434,6 +435,7 @@ static NSString *cellIdentifier = @"productSelection";
 
 #pragma mark --数据处理
 - (void)dealData:(NSDictionary *)data {
+    if (data.count == 0)return;
     NSLog(@"data = %@", data);
     
     [self.dataArr removeAllObjects];

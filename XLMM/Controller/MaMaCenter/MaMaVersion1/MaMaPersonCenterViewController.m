@@ -109,6 +109,7 @@
 
 @property (nonatomic, strong)NSString *eventLink;
 
+//@property (nonatomic, strong)
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -508,7 +509,6 @@
     
     for (int i = 0; i < allDingdan.count; i++) {
         UIView *shartView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * i + 20, 30, SCREENWIDTH - 40, 150)];
-        
         shartView.tag = 1001 + i;
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
@@ -516,6 +516,16 @@
         
         NSMutableArray *mutabledingdan = [allDingdan[i] mutableCopy];
         
+        
+//        float sum = [self sumofoneWeek:allDingdan[i]];
+//        if (sum == 0) {
+//            UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 40 + SCREENWIDTH, SCREENHEIGHT * 0.5 - 40 + SCREENHEIGHT, 80, 80)];
+//            imageV.backgroundColor = [UIColor redColor];
+//            imageV.image = [UIImage imageNamed:@"defaultPig"];
+//            
+//            [self.mamaScrollView bringSubviewToFront:imageV];
+//            continue;
+//        }
         
         
        // NSLog(@"每周订单数%@", mutabledingdan);
@@ -537,6 +547,7 @@
             CGPoint point = [linechart getPointForIndex:6];
             circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
             lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
+            
         } else {
             CGPoint point = [linechart getPointForIndex:(6 - quxiaodays)];
             circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
@@ -576,10 +587,6 @@
         
         
         
-       
-
-        
-        
         for (int j = 0; j < 7; j++) {
             CGPoint point2 = [linechart getPointForIndex:j];
 
@@ -599,8 +606,6 @@
             
             
         }
-        
-        
     }
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 148, SCREENWIDTH - 40, 0.5)];
     bottomLine.backgroundColor = [UIColor lineGrayColor];
@@ -696,8 +701,6 @@
         orongeCircleView.frame = label.frame;
     } completion:^(BOOL finished) {
         label.textColor = [UIColor whiteColor];
-        
-        
     }];
     
     
@@ -748,6 +751,9 @@
 
     
     UIView *weekView = [recognizer view];
+    weekView.backgroundColor = [UIColor redColor];
+    
+    
     NSInteger week = weekView.tag - 1000;
     
     if (week == 2) {
@@ -886,12 +892,14 @@
         NSArray *arr = responseObject[@"results"];
         if (arr.count == 0)return;
         NSArray *data = [NSArray reverse:arr];
+//        NSArray *data = [NSArray arrayWithObjects:@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00", nil];
         
         //遍历数据如果都为零的时候显示默认图
 //        BOOL have = [self isHaveData:data];
 //        
 //        if (!have) {
-//            [self createDefaultPicture];
+//            self.mamaimage.hidden = NO;
+//            self.mamalabel.hidden = NO;
 //            return;
 //        }
     
@@ -911,6 +919,9 @@
         
         NSLog(@"%@", arr);
         
+//        for (NSMutableDictionary *testDic in data) {
+//            testDic[@"carry"] = [NSNumber numberWithFloat:0.00];
+//        }
         
         
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
@@ -941,22 +952,22 @@
             default:
                 break;
         }
+        
         for (int i = quxiaodays; i < data.count + quxiaodays; i++) {
             if (i>data.count - 1) {
-
-                [weekArray addObject:@0.00];
+                [weekArray addObject:@0.01];
             } else {
-                float number = [[data[i] objectForKey:@"carry"] floatValue] + 0.00;
+                float number = [[data[i] objectForKey:@"carry"] floatValue] + 0.01;
                 NSNumber *order_num = [NSNumber numberWithFloat:number];
 
-                NSLog(@" shouyi = %@", order_num);
+                NSLog(@"------carry = %@, shouyi = %@",[data[i] objectForKey:@"carry"], order_num);
                 
                 [weekArray addObject:order_num];
                 
             }
             
-            
-            if ((i +1 - quxiaodays)%7 == 0) {
+//            if ((i +1 - quxiaodays)%7 == 0)
+            if ((i + 1 - quxiaodays)% 7 == 0) {
                 
                 NSLog(@" weekarray = %@", weekArray);
                 float sum = [self sumofoneWeek:weekArray];
@@ -964,6 +975,7 @@
                 if (sum == 0) {
                     break;
                 }
+                
                 [allDingdan addObject:[weekArray copy]];
                 
                 NSLog(@"weekArray ＝ %@", weekArray);
@@ -972,6 +984,7 @@
             }
             
         }
+        
         
 //        [allDingdan removeAllObjects];
 //        if (allDingdan.count == 0) {
@@ -982,7 +995,7 @@
             self.mamaimage.hidden = YES;
             self.mamalabel.hidden = YES;
         }
-        scrollViewContentOffset = CGPointMake(SCREENWIDTH*allDingdan.count - SCREENWIDTH, 0);
+        scrollViewContentOffset = CGPointMake(SCREENWIDTH * allDingdan.count - SCREENWIDTH, 0);
        [self createChart:allDingdan];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -1002,9 +1015,12 @@
 
 //创建默认图片
 - (void)createDefaultPicture {
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:self.mamaScrollView.bounds];
-    imageV.image = [UIImage imageNamed:@"mamanodata"];
-    [self.mamaScrollView addSubview:imageV];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 40, SCREENHEIGHT * 0.5 - 40, 80, 80)];
+    imageV.backgroundColor = [UIColor redColor];
+    imageV.image = [UIImage imageNamed:@"defaultPig"];
+    
+    [self.mamaScrollView bringSubviewToFront:imageV];
+//    [self.mamaScrollView addSubview:imageV];
     
     NSLog(@"%@", NSStringFromCGRect(self.mamaScrollView.frame));
 }

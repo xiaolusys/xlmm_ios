@@ -43,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitReceiveNumWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *exchangeNumWidth;
 
+@property (weak, nonatomic) IBOutlet UIView *redCircle;
+
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;

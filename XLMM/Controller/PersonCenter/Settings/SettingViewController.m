@@ -179,7 +179,7 @@
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     //return;
-    
+     
     [self ishavemobel];
     if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
@@ -199,7 +199,7 @@
 //    [self.navigationController pushViewController:setPasswordVC animated:YES];
     NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO};
+    verifyVC.config = @{@"title":@"请验证手机",@"isUpdateMobile":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
     
 }

@@ -1297,7 +1297,7 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)ishavemobel{
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;
@@ -1320,7 +1320,6 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        
         if (indexPath.row != 0) {
             [self clickActivity:indexPath];
         }

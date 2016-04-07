@@ -435,22 +435,43 @@
     
   //  NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
 
-    if([resp isKindOfClass:[SendMessageToWXResp class]])
-    {
-//        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-//        NSString *strMsg;
-//        if (resp.errCode == 0) {
-//            strMsg = @"分享成功";
-//        } else {
-//            strMsg = @"分享失败";
+//    if([resp isKindOfClass:[SendMessageToWXResp class]])
+//    {
+////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+////        NSString *strMsg;
+////        if (resp.errCode == 0) {
+////            strMsg = @"分享成功";
+////        } else {
+////            strMsg = @"分享失败";
+////        }
+////        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+////        [alert show];
+//        
+//    } else if([resp isKindOfClass:[PayResp class]]){
+//
+//
+//    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+//        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+//        SendAuthResp *aresp = (SendAuthResp *)resp;
+//        if (aresp.errCode== 0) {
+//            NSString *code = aresp.code;
+//            self.wxCode = code;
+//            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//            [userDefaults setValue:code forKey:@"wxCode"];
+//            [userDefaults synchronize];
+////            NSDictionary *dic = @{@"code":code};
+////            NSLog(@"dic11111 = %@", dic);
+//            
+//        }else {
+//            NSLog(@"取消登录");
+//            NSLog(@"88888888888");
+//            return;
 //        }
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alert show];
-        
-    } else if([resp isKindOfClass:[PayResp class]]){
-
-
-    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+//        //获取token和openid；
+//        [self getAccess_token];
+//    } //启动微信支付的response
+    
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
         [SVProgressHUD showInfoWithStatus:@"登录中....."];
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
@@ -459,18 +480,13 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setValue:code forKey:@"wxCode"];
             [userDefaults synchronize];
-//            NSDictionary *dic = @{@"code":code};
-//            NSLog(@"dic11111 = %@", dic);
-            
         }else {
             NSLog(@"取消登录");
-            NSLog(@"88888888888");
             return;
         }
         //获取token和openid；
         [self getAccess_token];
-    } //启动微信支付的response
-    
+    }
 }
 
 
@@ -503,7 +519,6 @@
                 self.access_token = [dic objectForKey:@"access_token"];
                 self.openid = [dic objectForKey:@"openid"];
                 
-                //
                 [self getUserInfo];
                 //传入openID and
             }
@@ -575,11 +590,6 @@
                     [notificationCenter postNotification: broadcastMessage];
                 }
                 
-             
-
-            //    NSLog(@"登录成功");
-                
-//                传递参数：
             }
         });
         
