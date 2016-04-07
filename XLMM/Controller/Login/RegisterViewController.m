@@ -172,13 +172,13 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
-    NSDictionary *parameters = @{@"vmobile": phoneNumber};
+    NSDictionary *parameters = @{@"mobile": phoneNumber, @"action":@"register"};
     
+    NSLog(@"--------------%@", parameters);
+//    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
+//    NSLog(@"url = %@", stringurl);
     
-    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
-    NSLog(@"url = %@", stringurl);
-    
-    [manager POST:stringurl parameters:parameters
+    [manager POST:TSendCode_URL parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
              NSLog(@"JSON: %@", responseObject);

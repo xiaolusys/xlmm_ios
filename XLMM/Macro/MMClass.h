@@ -61,7 +61,8 @@
 //#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://192.168.1.13:8000"
 //#define Root_URL @"http://192.168.1.11:9000"
-#define Root_URL @"http://dev.xiaolumeimei.com"
+//#define Root_URL @"http://dev.xiaolumeimei.com"
+#define Root_URL @"http://staging.xiaolumeimei.com"
 #else
 
 
@@ -99,7 +100,11 @@
 #define kRefunds_URL [NSString stringWithFormat:@"%@/rest/v1/refunds.json",Root_URL]
 #define KUserCoupins_URL [NSString stringWithFormat:@"%@/rest/v1/usercoupons.json",Root_URL]
 
-
+//新的注册登录验证码接口
+#define TPasswordLogin_URL [NSString stringWithFormat:@"%@/rest/v2/passwordlogin",Root_URL]
+#define TSendCode_URL [NSString stringWithFormat:@"%@/rest/v2/send_code",Root_URL]
+#define TVerifyCode_URL [NSString stringWithFormat:@"%@/rest/v2/verify_code",Root_URL]
+#define TResetPwd_URL [NSString stringWithFormat:@"%@/rest/v2/reset_password",Root_URL]
 
 #endif
 

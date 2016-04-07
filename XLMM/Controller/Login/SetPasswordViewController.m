@@ -149,46 +149,47 @@
     NSString *password1 = self.passwordTextField.text;
     NSString *password2 = self.confirmTextField.text;
 
-    NSDictionary *parameters = @{@"username": self.config[@"phone"],
-                                 @"valid_code":self.config[@"vcode"],
+    NSDictionary *parameters = @{@"mobile": self.config[@"phone"],
+                                 @"verify_code":self.config[@"vcode"],
                                  @"password1":password1,
                                  @"password2":password2,
                                  };
     NSLog(@"%@", parameters);
-    NSString *string;
-    if ([self.config[@"isRegister"] boolValue]) {
-        NSLog(@"注册密码");
-        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
-    } else {
-        NSLog(@"修改密码");
-        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
-    }
+    NSString *string = TResetPwd_URL;
+//    if ([self.config[@"isRegister"] boolValue]) {
+//        NSLog(@"注册密码");
+//        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
+//    } else {
+//        NSLog(@"修改密码");
+//        string = [NSString stringWithFormat:@"%@/rest/v1/register/change_user_pwd", Root_URL];
+//    }
+    
    
- 
     MMLOG(string);
     
     [manager POST:string parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
-              // [self.navigationController popViewControllerAnimated:YES];
-
-              NSString *result = [responseObject objectForKey:@"result"];
-              if ([result intValue] == 0) {
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"密码设置成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                  [alterView show];
-                  [self.navigationController popToRootViewControllerAnimated:YES];
+              //isVerifyPsd
+              if ([self.config[@"isVerifyPsd"] boolValue]) {
+                  NSString *result = [responseObject objectForKey:@"rcode"];
+                  if ([result intValue] == 0) {
+                      UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"密码设置成功,快去登陆吧！" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                      [alterView show];
+                      [self.navigationController popToRootViewControllerAnimated:YES];
+                  }
+              }else {
+                  NSString *result = [responseObject objectForKey:@"rcode"];
+                  if ([result intValue] == 0) {
+                      UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"密码设置成功!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                      [alterView show];
+                      [self.navigationController popToRootViewControllerAnimated:YES];
+                  }
               }
               //修改密码成功，要怎么做。。。。
-              
-
-
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
               NSLog(@"Error: %@", error);
-              
-              
           }];
 
     

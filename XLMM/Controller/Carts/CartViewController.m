@@ -543,7 +543,7 @@
     myview.alpha = 0.7;
     myview.layer.cornerRadius = 8;
     UILabel *mylabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 240, 60)];
-    mylabel.text = @"客观至少买一件嘛";
+    mylabel.text = @"客官至少买一件嘛";
     mylabel.textColor = [UIColor whiteColor];
     mylabel.textAlignment = NSTextAlignmentCenter;
     mylabel.font = [UIFont systemFontOfSize:24];

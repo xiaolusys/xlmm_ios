@@ -53,7 +53,6 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
         }];
-        
     }
 }
 
@@ -93,6 +92,15 @@
         [users setBool:NO forKey:@"isXLMM"];
     }
     [users synchronize];
+    
+    //判断是否绑定手机号或者设置密码
+    NSString *mobile = [dic objectForKey:@"mobile"];
+    if ([[dic objectForKey:@"has_usable_password"] integerValue] == 0 ||  ([mobile class] == [NSNull null] || [mobile isEqualToString:@""])) {
+        [self setRedCircleDisplay];
+    }else {
+        self.redCircle.hidden = YES;
+    }
+
 }
 
 - (void)orderNumSet:(NSInteger)num
@@ -127,9 +135,6 @@
     [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
-- (void)setImage{
-    
-}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -189,9 +194,6 @@
         
     }
     //[self setJifenInfo];
-  
-    
-    
     
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod];
     
@@ -204,38 +206,14 @@
         [self phoneNumberLogin:nil];
         
     }
-    
-    
-    
-  //  self.yuelabel.text = @"100.0 0";
-    
-    
 }
 
-- (void)setJifenInfo{
-  //  http://m.xiaolu.so/rest/v1/integral
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/integral", Root_URL];
-//    NSLog(@"jifen Url = %@", string);
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        self.jifenLabel.text = @"0";
-        
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//    NSLog(@"dic = %@", dic);
-    NSArray *array = [dic objectForKey:@"results"];
-    if (array.count != 0) {
-   
-        NSDictionary *results = [array objectAtIndex:0];
-        
-       // NSLog(@"results = %@", results);
-        
-        self.jifenLabel.text = [NSString stringWithFormat:@"%ld", (long)[[results objectForKey:@"integral_value"] integerValue]];
-    }
-   
+- (void)setRedCircleDisplay {
+    self.redCircle.backgroundColor = [UIColor redColor];
     
+    self.redCircle.layer.cornerRadius = 5;
+    self.redCircle.layer.masksToBounds = YES;
+    self.redCircle.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -254,7 +232,6 @@
 */
 
 - (IBAction)jifenClicked:(id)sender {
-    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
@@ -287,15 +264,9 @@
         
         [self.sideMenuViewController hideMenuViewController];
         
-        
         [self displayLoginView];
         return;
     }
-    
-    
-   
-    
-    
 }
 
 - (IBAction)yueClicked:(id)sender {
