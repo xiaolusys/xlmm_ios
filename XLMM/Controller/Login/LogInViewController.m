@@ -281,35 +281,17 @@
     [SVProgressHUD showInfoWithStatus:@"登录中....."];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSLog(@"userName : %@, password : %@", userName, password);
-    
-    
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password
                                  };
-   
-//    /rest/v1/register/customer_login
-    
+
     [manager POST:TPasswordLogin_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"JSON: %@", responseObject);
               
-//              if ([[responseObject objectForKey:@"result"] isEqualToString:@"null"]) {
-//              }
-//              
-//              if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
-//                  [self alertMessage:@"用户名或密码错误!"];
-//              }
-//              if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
-//                  [self alertMessage:@"用户名或密码错误!"];
-//              }
-//              if ([[responseObject objectForKey:@"result"] isEqualToString:@"no_pwd"]) {
-//                  [self alertMessage:@"未设置密码，请用短信验证登录!"];
-//              }
-              
-//              [self alertMessage:[responseObject objectForKey:@"msg"]];
-              if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) return;
+              if ([[responseObject objectForKey:@"rcode"] integerValue] != 0){
+                  [self alertMessage:[responseObject objectForKey:@"msg"]];
+                  return ;
+              }
               
               NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
               // 手机登录成功 ，保存用户信息以及登录途径
