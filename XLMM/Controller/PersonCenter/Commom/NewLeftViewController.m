@@ -95,7 +95,7 @@
     
     //判断是否绑定手机号或者设置密码
     NSString *mobile = [dic objectForKey:@"mobile"];
-    if ([[dic objectForKey:@"has_usable_password"] integerValue] == 0 ||  ([mobile class] == [NSNull null] || [mobile isEqualToString:@""])) {
+    if ([[dic objectForKey:@"has_password"] integerValue] == 0 ||  ([mobile class] == [NSNull null] || [mobile isEqualToString:@""])) {
         [self setRedCircleDisplay];
     }else {
         self.redCircle.hidden = YES;
@@ -412,7 +412,6 @@
 
 - (IBAction)tuichuClicked:(id)sender {
    
-    
     if ([self.quitButton.titleLabel.text isEqualToString:@"登录"] ) {
         [self.sideMenuViewController hideMenuViewController];
         [self displayLoginView];

@@ -155,7 +155,7 @@
     
     NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
     
-    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
+    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
     
     NSLog(@"params = %@", dict);
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
@@ -282,8 +282,8 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"username":userName,
-                                 @"password":password
-                                 };
+                                 @"password":password,
+                                 @"devtype":LOGINDEVTYPE};
 
     [manager POST:TPasswordLogin_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {

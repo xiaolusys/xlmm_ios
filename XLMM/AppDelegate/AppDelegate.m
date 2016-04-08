@@ -346,8 +346,6 @@
                       NSLog(@"user_account = %@", user_account);
                       [MiPushSDK setAccount:user_account];
                   }
-               
-                  
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   NSLog(@"Error: %@-------", error);
@@ -370,30 +368,27 @@
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
-//    NSLog(@"data = %@", data);
-//    
+    NSLog(@"---------------data = %@", data);
+//
 //    // 长连接收到的消息。消息格式跟APNs格式一样
 //    // 返回数据
-//    NSString *target_url = nil;
-//    target_url = [data objectForKey:@"target_url"];
-//    
-//    if (target_url != nil) {
-//        if (self.isLaunchedByNotification == YES) {
-//            
-//            
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-//            return;
-//        }
-//        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
-//            return;
-//        } else {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-//        }
-//
-//    }
-   
+    NSString *target_url = nil;
+    target_url = [data objectForKey:@"target_url"];
     
+    if (target_url != nil) {
+        if (self.isLaunchedByNotification == YES) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        }
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+        }
+
+    }
 
 }
 
