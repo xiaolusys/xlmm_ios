@@ -638,6 +638,7 @@
 		1F88D57A1CB67DCC0050A2E2 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */; };
 		1F88D57D1CB6804C0050A2E2 /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D57C1CB6804C0050A2E2 /* iPhone6Plus@3x.png */; };
 		1F88D57F1CB681010050A2E2 /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D57E1CB681010050A2E2 /* iPhone6Plus@2x.png */; };
+		1F88D5821CB77AC90050A2E2 /* MyInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -1657,6 +1658,8 @@
 		1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
 		1F88D57C1CB6804C0050A2E2 /* iPhone6Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@3x.png"; sourceTree = "<group>"; };
 		1F88D57E1CB681010050A2E2 /* iPhone6Plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@2x.png"; sourceTree = "<group>"; };
+		1F88D5801CB77AC90050A2E2 /* MyInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInvitationViewController.h; sourceTree = "<group>"; };
+		1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInvitationViewController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -2285,6 +2288,8 @@
 				183071451C97BE3700B7665E /* TixianViewController.h */,
 				183071461C97BE3700B7665E /* TixianViewController.m */,
 				183071471C97BE3700B7665E /* TixianViewController.xib */,
+				1F88D5801CB77AC90050A2E2 /* MyInvitationViewController.h */,
+				1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */,
 			);
 			path = MaMaVersion1;
 			sourceTree = "<group>";
@@ -4404,6 +4409,7 @@
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
 				183074131C97D17800B7665E /* QNUpToken.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,
+				1F88D5821CB77AC90050A2E2 /* MyInvitationViewController.m in Sources */,
 				183073E11C97D17800B7665E /* QNHex.m in Sources */,
 				183073EC1C97D17800B7665E /* MJRefreshComponent.m in Sources */,
 				1830744E1C97D17900B7665E /* SendMessageToWeibo.m in Sources */,

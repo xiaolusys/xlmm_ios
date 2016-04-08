@@ -35,6 +35,7 @@
 #import "DotLineView.h"
 #import "SelectedActivitiesViewController.h"
 #import "HuodongViewController.h"
+#import "MyInvitationViewController.h"
 
 
 
@@ -109,7 +110,7 @@
 
 @property (nonatomic, strong)NSString *eventLink;
 
-//@property (nonatomic, strong)
+@property (nonatomic, strong)NSString *myInvitation;
 @end
 
 @implementation MaMaPersonCenterViewController
@@ -295,6 +296,9 @@
     
     //精选活动链接
     self.eventLink = [fortune objectForKey:@"mama_event_link"];
+    
+    //我的邀请链接
+    self.myInvitation = [fortune objectForKey:@"share_code"];
 }
 
 - (void)huoyueduDetails{
@@ -415,8 +419,7 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
         
-        //获取点击补贴
-        
+        self.myInvitation = [dicJson objectForKey:@"fetchedInfoData"];
        }
 }
 
@@ -1097,19 +1100,19 @@
     
     NSLog(@"推荐二维码");
     
-    TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
- 
-    [self.navigationController pushViewController:erweima animated:YES];
+//    TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
+//    [self.navigationController pushViewController:erweima animated:YES];
+    if ([self.myInvitation class] == [NSNull class])return;
     
-    
-
+    MyInvitationViewController *invitation = [[MyInvitationViewController alloc] init];
+    invitation.requestURL = self.myInvitation;
+    [self.navigationController pushViewController:invitation animated:YES];
 }
 
 - (IBAction)jingxuanliebiao:(id)sender {
     
     ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
     [self.navigationController pushViewController:previous animated:YES];
-    
     
 //    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
 //    [self.navigationController pushViewController:shop animated:YES];
