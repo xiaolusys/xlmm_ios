@@ -969,14 +969,6 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
   //  NSLog(@"22222");
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
-//    NSLog(@"view = %@", view);
-//    NSLog(@"%ld", view.currentImageIndex);
-//    NSInteger index = [view currentImageIndex];
-//    if (targetUrls.count >1) {
-//        NSString *urlString = [targetUrls objectAtIndex:index];
-//        NSLog(@"urlString = %@", urlString);
-//        
-//    }
     
     PosterModel *model = posterDataArray[view.currentImageIndex];
     

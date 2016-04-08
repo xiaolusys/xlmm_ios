@@ -205,7 +205,7 @@
     }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
         //修改密码
         parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
-    }else if ([self.config[@"isMessageLogin"] boolValue] == YES){
+    }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
         //短信登录
         parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
     }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
