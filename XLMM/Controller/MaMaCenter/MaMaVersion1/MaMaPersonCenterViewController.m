@@ -419,7 +419,7 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
         
-        self.myInvitation = [dicJson objectForKey:@"fetchedInfoData"];
+        self.myInvitation = [dicJson objectForKey:@"share_mmcode"];
        }
 }
 
@@ -1104,9 +1104,15 @@
 //    [self.navigationController pushViewController:erweima animated:YES];
     if ([self.myInvitation class] == [NSNull class])return;
     
-    MyInvitationViewController *invitation = [[MyInvitationViewController alloc] init];
-    invitation.requestURL = self.myInvitation;
-    [self.navigationController pushViewController:invitation animated:YES];
+//    MyInvitationViewController *invitation = [[MyInvitationViewController alloc] init];
+//    
+//    invitation.requestURL = self.myInvitation;
+//    [self.navigationController pushViewController:invitation animated:YES];
+    
+    HuodongViewController *activity = [[HuodongViewController alloc] init];
+    activity.eventLink = self.myInvitation;
+    activity.titleName = @"我的邀请";
+    [self.navigationController pushViewController:activity animated:YES];
 }
 
 - (IBAction)jingxuanliebiao:(id)sender {
@@ -1151,6 +1157,8 @@
     }
     HuodongViewController *activity = [[HuodongViewController alloc] init];
     activity.eventLink = self.eventLink;
+    
+    activity.titleName = @"精品活动";
     [self.navigationController pushViewController:activity animated:YES];
     
 }

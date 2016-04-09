@@ -249,14 +249,12 @@
 
 - (void)pickerDidChangeStatus:(AddressPickerView *)picker{
 
-
     province = picker.address.provinceName;
     city = picker.address.cityName;
     county = picker.address.countyName;
 
     NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
     self.provinceTextField.text = string;
-    
 }
 
 -(void)cancelLocatePicker
@@ -404,7 +402,6 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-  
     if (_isAdd == YES) {
         NSDictionary *parameters = @{
                                      @"receiver_state": province,
@@ -454,18 +451,11 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
-                  
                   [self.navigationController popViewControllerAnimated:YES];
-                  
-                  
                   NSLog(@"修改成功");
-                  
-                  
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  
                   NSLog(@"Error: %@", error);
-                  
               }];
 
     }
