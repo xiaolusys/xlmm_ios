@@ -419,7 +419,7 @@
         share_mmcode = [dicJson objectForKey:@"share_mmcode"];
         self.mamalink = [dicJson objectForKey:@"mama_link"];
         
-        self.myInvitation = [dicJson objectForKey:@"fetchedInfoData"];
+        self.myInvitation = [dicJson objectForKey:@"share_mmcode"];
        }
 }
 
@@ -1105,6 +1105,7 @@
     if ([self.myInvitation class] == [NSNull class])return;
     
     MyInvitationViewController *invitation = [[MyInvitationViewController alloc] init];
+    
     invitation.requestURL = self.myInvitation;
     [self.navigationController pushViewController:invitation animated:YES];
 }

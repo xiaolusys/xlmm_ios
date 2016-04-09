@@ -26,6 +26,7 @@
 #import "UIColor+RGBColor.h"
 
 #import "AFHTTPRequestOperationManager.h"
+#import "CommonProblemViewController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -39,6 +40,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
 }
 
 - (void)setUserInfo{
@@ -61,9 +64,10 @@
     NSString *nickName = [dic objectForKey:@"nick"];
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
     
-    if (nickName.length >= 4) {
+    if (nickName.length > 0 || [nickName class] != [NSNull null]) {
         self.nameLabel.text = [dic objectForKey:@"nick"];
     }
+    
     self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
     //判断是否为0
     if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
@@ -125,6 +129,7 @@
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"quit" object:nil];
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
@@ -132,7 +137,6 @@
 //    [self setJifenInfo];
 //    [self setYHQInfo];
     [self setUserInfo];
-    [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
 
@@ -149,7 +153,6 @@
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
     self.nameLabel.text = [userInfo objectForKey:@"nickname"];
     [self setUserInfo];
-    [self.quitButton setTitle:@"退出账号" forState:UIControlStateNormal];
 }
 
 //- (void)setYHQInfo{
@@ -180,9 +183,6 @@
     //[self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
     self.nameLabel.text = @"未登录";
 //    NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
-    self.quitButton.layer.borderWidth = 1.0;
-    self.quitButton.layer.borderColor = [UIColor blackColor].CGColor;
-    self.quitButton.layer.cornerRadius = 18.5;
     self.touxiangImage.layer.cornerRadius = 30;
     self.touxiangImage.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
     self.touxiangImage.layer.masksToBounds = YES;
@@ -274,22 +274,6 @@
     NSLog(@"查看余额详情");
 }
 
-- (IBAction)settingClicked:(id)sender {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:addressVC];
-        }
-        [self.sideMenuViewController hideMenuViewController];
-    }else{
-        
-        [self.sideMenuViewController hideMenuViewController];
-        
-        
-        [self displayLoginView];
-        return;
-    }
-}
 
 - (IBAction)suggestionClicked:(id)sender {
     
@@ -303,19 +287,14 @@
         
         [self.sideMenuViewController hideMenuViewController];
         
-        
         [self displayLoginView];
         return;
     }
-    
-   
-    
-    
+
     
 }
 
 - (IBAction)waitPayClicked:(id)sender {
-    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self.sideMenuViewController hideMenuViewController];
@@ -332,7 +311,6 @@
     }else{
         
         [self.sideMenuViewController hideMenuViewController];
-        
         
         [self displayLoginView];
         return;
@@ -410,46 +388,7 @@
  
 }
 
-- (IBAction)tuichuClicked:(id)sender {
-   
-    if ([self.quitButton.titleLabel.text isEqualToString:@"登录"] ) {
-        [self.sideMenuViewController hideMenuViewController];
-        [self displayLoginView];
-        return;
-    }
-    if ([self.quitButton.titleLabel.text isEqualToString:@"退出账号"]) {
-        
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:NO forKey:@"login"];
-        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-        
-        [userDefaults setBool:NO forKey:@"isXLMM"];
-        [userDefaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
-
-        
-        
-        
-        //   http://m.xiaolu.so/rest/v1/users/customer_logout
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-       // NSLog(@"urlString = %@", urlString);
-        NSURL *url = [NSURL URLWithString:urlString];  
-        
-        //第二步，创建请求
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-       // NSLog(@"%@",str1);
-        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
-
-        [alterView show];
-    }
-
-
-//     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+- (void)quitLogin {
     self.touxiangImageView.image = nil;
     self.nameLabel.text = @"未登录";
     self.jifenLabel.text = @"0";
@@ -461,11 +400,8 @@
     self.waitPayNum.hidden = YES;
     self.waitReceiveNum.hidden = YES;
     self.exchangeNum.hidden = YES;
-    
-    [self.quitButton setTitle:@"登录" forState:UIControlStateNormal];
-    
-    [self.sideMenuViewController hideMenuViewController];
 }
+
 
 -(void) performDismiss:(NSTimer *)timer
 {
@@ -502,6 +438,22 @@
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:account];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        [self displayLoginView];
+        return;
+    }
+}
+
+- (IBAction)commonProblemBtnAction:(id)sender {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        CommonProblemViewController *common = [[CommonProblemViewController alloc]init];
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:common];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
