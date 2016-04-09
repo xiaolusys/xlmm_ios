@@ -93,13 +93,13 @@
                                     <rect key="frame" x="90" y="0.0" width="80" height="59"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Vz-Sv-C4T">
-                                            <rect key="frame" x="40" y="24" width="18" height="11"/>
+                                            <rect key="frame" x="40" y="25.5" width="18" height="11"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pointicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="faZ-LB-XbQ">
-                                            <rect key="frame" x="22" y="24" width="14" height="11"/>
+                                            <rect key="frame" x="22" y="25.5" width="14" height="11"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="14" id="5dU-qY-0uB"/>
                                                 <constraint firstAttribute="height" constant="11" id="Sie-iZ-Qgb"/>
@@ -125,7 +125,7 @@
                                         <constraint firstItem="cp1-6e-2Uu" firstAttribute="top" secondItem="flH-0p-25x" secondAttribute="top" id="Bci-wL-lfn"/>
                                         <constraint firstItem="cXN-dV-E42" firstAttribute="top" secondItem="flH-0p-25x" secondAttribute="top" constant="4" id="MhJ-dX-DPy"/>
                                         <constraint firstItem="cXN-dV-E42" firstAttribute="centerX" secondItem="flH-0p-25x" secondAttribute="centerX" id="OJX-u9-r6T"/>
-                                        <constraint firstItem="faZ-LB-XbQ" firstAttribute="top" secondItem="cXN-dV-E42" secondAttribute="bottom" id="Sll-0f-dmy"/>
+                                        <constraint firstItem="faZ-LB-XbQ" firstAttribute="top" secondItem="cXN-dV-E42" secondAttribute="bottom" constant="2" id="Sll-0f-dmy"/>
                                         <constraint firstAttribute="bottom" secondItem="cp1-6e-2Uu" secondAttribute="bottom" id="YJF-hb-Dyb"/>
                                         <constraint firstItem="faZ-LB-XbQ" firstAttribute="leading" secondItem="flH-0p-25x" secondAttribute="leading" constant="22" id="Zmz-gJ-fso"/>
                                         <constraint firstItem="cp1-6e-2Uu" firstAttribute="leading" secondItem="flH-0p-25x" secondAttribute="leading" id="ZvV-yB-P9v"/>
@@ -187,14 +187,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accounticon.png" translatesAutoresizingMaskIntoConstraints="NO" id="SEG-6A-Ulj">
-                                            <rect key="frame" x="15" y="24" width="15" height="10"/>
+                                            <rect key="frame" x="15" y="25.5" width="15" height="10"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="V3S-IS-Ecx"/>
                                                 <constraint firstAttribute="height" constant="10" id="dhz-Ix-l9B"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="余额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCE-O6-gPB">
-                                            <rect key="frame" x="30" y="24" width="18" height="11"/>
+                                            <rect key="frame" x="30" y="25.5" width="18" height="11"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -212,7 +212,7 @@
                                         <constraint firstItem="n7a-AY-C49" firstAttribute="leading" secondItem="K53-p2-UDG" secondAttribute="leading" id="2fC-ka-uLd"/>
                                         <constraint firstAttribute="width" constant="60" id="6wn-d4-Oci"/>
                                         <constraint firstItem="DCE-O6-gPB" firstAttribute="leading" secondItem="SEG-6A-Ulj" secondAttribute="trailing" id="8mG-7t-QDb"/>
-                                        <constraint firstItem="SEG-6A-Ulj" firstAttribute="top" secondItem="Vwv-dj-aTp" secondAttribute="bottom" id="DhT-Vw-pXX"/>
+                                        <constraint firstItem="SEG-6A-Ulj" firstAttribute="top" secondItem="Vwv-dj-aTp" secondAttribute="bottom" constant="2" id="DhT-Vw-pXX"/>
                                         <constraint firstItem="SEG-6A-Ulj" firstAttribute="leading" secondItem="K53-p2-UDG" secondAttribute="leading" constant="15" id="Kol-am-rX0"/>
                                         <constraint firstItem="Vwv-dj-aTp" firstAttribute="centerX" secondItem="K53-p2-UDG" secondAttribute="centerX" id="VYj-z3-UTH"/>
                                         <constraint firstItem="n7a-AY-C49" firstAttribute="top" secondItem="K53-p2-UDG" secondAttribute="top" id="ebc-X2-w5B"/>
