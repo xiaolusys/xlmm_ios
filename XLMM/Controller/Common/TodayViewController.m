@@ -319,13 +319,22 @@ static NSString *khuodongCell = @"HuodongCell";
             NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
             
             //根据url获得图片并得到图片大小
-            SDWebImageManager *mage = [SDWebImageManager sharedManager];
-            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                [defaults setObject:activityID forKey:@"activityid"];
-                [self createActivityView:image];
-            }];
+//            SDWebImageManager *mage = [SDWebImageManager sharedManager];
+//            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//
+//                
+//                [defaults setObject:activityID forKey:@"activityid"];
+//                [self createActivityView:image];
+//            }];
+            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    [defaults setObject:activityID forKey:@"activityid"];
+                    [self createActivityView:image];
+                });
+            });
         }
     }
 
@@ -355,7 +364,9 @@ static NSString *khuodongCell = @"HuodongCell";
     [backView addSubview:imageView];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 40, (SCREENHEIGHT - imageHeight) * 0.5 - 40, 40, 40);
+    CGFloat imageMaxX = CGRectGetMaxX(imageView.frame);
+    CGFloat imageMinY = CGRectGetMinY(imageView.frame);
+    button.frame = CGRectMake(imageMaxX - 40, imageMinY, 40, 40);
     [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:button];
