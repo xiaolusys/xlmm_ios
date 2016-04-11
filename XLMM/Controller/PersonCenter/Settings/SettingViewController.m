@@ -18,8 +18,8 @@
 #import "VersionController.h"
 #import "WXLoginController.h"
 #import "ThirdAccountViewController.h"
-
-
+#import "TSettingViewController.h"
+#import "MiPushSDK.h"
 
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
@@ -55,48 +55,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self createNavigationBarWithTitle:@"设置" selecotr:@selector(backClicked:)];
-    self.deleteButton.layer.borderWidth = 1;
-    self.deleteButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    self.deleteButton.layer.cornerRadius = 13;
-
-    [self setcacheSize];
+    [self createNavigationBarWithTitle:@"个人信息" selecotr:@selector(backClicked:)];
+    
+    self.headerImageView.layer.cornerRadius = 25;
+    self.headerImageView.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
+    self.headerImageView.layer.masksToBounds = YES;
+    self.headerImageView.layer.borderWidth = 1;
+    
     [self setUserInfo];
-    
-    [self setAppInfo];
-    
-    
-}
-// 获取当前版本号。。。。。。。 与appStore 版本号比较 自动更新。。。。
-
-- (void)setAppInfo{
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    MMLOG(infoDictionary);
-    // app名称
-    __unused NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-    // app版本
-    MMLOG(app_Name);
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    // app build版本
-    MMLOG(app_Version);
-    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    MMLOG(app_build);
-    NSString *versionString = [NSString stringWithFormat:@"V%@.%@", app_Version, app_build];
-    self.versionLabel.text = versionString;
 }
 
-- (void)setcacheSize{
-    NSString * path = [NSHomeDirectory() stringByAppendingString:@"/Library/Caches/default/com.hackemist.SDWebImageCache.default"];
-    NSLog(@"path = %@", path);
-    
-    NSDictionary * dict = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
-    NSLog(@"file size = %@",[dict objectForKey:NSFileSize]);
-    float sizeValue = [[dict objectForKey:NSFileSize] integerValue]/200.0f;
-    if (sizeValue < 1.0) {
-        sizeValue = 0.0f;
-    }
-    self.cacheLabel.text = [NSString stringWithFormat:@"%.1fM", sizeValue];
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 - (void)setUserInfo{
    // http://m.xiaolu.so/rest/v1/users
@@ -124,6 +96,9 @@
     self.nameLabel.text = nick;
     self.phoneLabel.text = mutablePhoneNumber;
     
+    //头像信息
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[result objectForKey:@"thumbnail"]]];
+    
 }
 
 - (void)clearTmpPics
@@ -131,12 +106,6 @@
     [[SDImageCache sharedImageCache] clearDisk];
 }
 
-
-
-- (void)backClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -179,7 +148,7 @@
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     //return;
-    
+     
     [self ishavemobel];
     if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
@@ -190,7 +159,6 @@
         [self.navigationController pushViewController:wxloginVC animated:YES];
     }
     
-
  }
 
 - (IBAction)modifyButtonClicked:(id)sender {
@@ -199,7 +167,7 @@
 //    [self.navigationController pushViewController:setPasswordVC animated:YES];
     NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO};
+    verifyVC.config = @{@"title":@"请验证手机",@"isUpdateMobile":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
     
 }
@@ -212,60 +180,65 @@
     
 }
 
-- (IBAction)versionButtonClicked:(id)sender {
-    NSLog(@"版本号");
-    
-    VersionController *versionVC = [[VersionController alloc] initWithNibName:@"VersionController" bundle:nil];
-    
-    versionVC.versionString = self.versionLabel.text;
-    
-    [self.navigationController pushViewController:versionVC animated:YES];
-    
-    
-}
-
-- (IBAction)deleteButtonClicked:(id)sender {
-    NSLog(@"清除缓存");
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要清空缓存吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alterView.tag = 222;
-    alterView.delegate = self;
-    
-    [alterView show];
-    
-}
 
 - (IBAction)thirdAccountBind:(id)sender {
     ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
     [self.navigationController pushViewController:third animated:YES];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 222) {
-        if (buttonIndex == 1) {
-            [self clearTmpPics];
-            [self performSelector:@selector(alterMessage) withObject:nil afterDelay:1.0f];
-            [self performSelector:@selector(setcacheSize) withObject:nil afterDelay:2.0f];
-            
-        }
-    }
-}
-- (void)alterMessage{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"缓存清理完成！" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alertView show];
+- (IBAction)settingBtnClick:(id)sender {
+    TSettingViewController *set = [[TSettingViewController alloc] init];
+    [self.navigationController pushViewController:set animated:YES];
 }
 
-+(void)clearCache:(NSString *)path{
-    NSFileManager *fileManager=[NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:path]) {
-        NSArray *childerFiles=[fileManager subpathsAtPath:path];
-        for (NSString *fileName in childerFiles) {
-            //如有需要，加入条件，过滤掉不想删除的文件
-            NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
-            [fileManager removeItemAtPath:absolutePath error:nil];
-        }
+- (IBAction)quitBtnAction:(id)sender {
+    //退出
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:@"login"];
+    [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+    
+    [userDefaults setBool:NO forKey:@"isXLMM"];
+    [userDefaults synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
+    
+    //   http://m.xiaolu.so/rest/v1/users/customer_logout
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
+    // NSLog(@"urlString = %@", urlString);
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //第二步，创建请求
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    //注销账号
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *user_account = [user objectForKey:@"user_account"];
+    if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
+        [MiPushSDK unsetAccount:user_account];
+        [user setObject:@"" forKey:@"user_account"];
     }
-    [[SDImageCache sharedImageCache] cleanDisk];
+    
+    //发送通知修改NewLeft中的用户信息
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
+    
+    [alterView show];
+
 }
+
+-(void) performDismiss:(NSTimer *)timer
+{
+    UIAlertView *Alert = [timer.userInfo objectForKey:@"alterView"];
+    [Alert dismissWithClickedButtonIndex:0 animated:NO];
+}
+
 
 + (float)folderSizeAtPath:(NSString *)path{
     NSFileManager *fileManager=[NSFileManager defaultManager];

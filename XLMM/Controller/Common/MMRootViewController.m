@@ -31,6 +31,7 @@
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
 #import "NSString+URL.h"
+#import "TuihuoViewController.h"
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -83,7 +84,8 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-  //  NSLog(@"微信登录");
+  //  NSLog(@"微信登录");\
+    
     
 //    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
 //    if (login.isxlmm) {
@@ -190,14 +192,8 @@
         youhuiVC.isSelectedYHQ = NO;
         [self.navigationController pushViewController:youhuiVC animated:YES];
         
-        
-        
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-        
         //  跳转到小鹿妈妈界面。。。
-        
-        
-        
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
@@ -209,6 +205,11 @@
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [self.navigationController pushViewController:publish animated:YES];
         
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+        //跳转到退款退货列表
+        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        [self.navigationController pushViewController:tuihuoVC animated:YES];
+        
     }else {
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
@@ -218,8 +219,6 @@
         if ([firstparam isEqualToString:@"model_id"]) {
             NSLog(@"跳到集合页面");
             NSLog(@"model_id = %@", [params lastObject]);
-            
-            
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
             
             [self.navigationController pushViewController:collectionVC animated:YES];
@@ -289,9 +288,6 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
-    
-
-    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -356,8 +352,8 @@
     } else {
         NSLog(@"no login");
     }
-    
-    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+//    
+//    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
 }
 
 - (void)startDeal:(NSDictionary *)dic {
@@ -541,7 +537,7 @@
 - (void)autologin{
     
    
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {
       //  NSLog(@"微信登录");

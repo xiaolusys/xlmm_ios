@@ -115,7 +115,7 @@
     
     NSString *loadStr = nil;
     if (self.diction.count == 0) {
-        [self createNavigationBarWithTitle:@"精品活动" selecotr:@selector(backClicked:)];
+        [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
         loadStr = self.eventLink;
         button1.hidden = YES;
         button1.userInteractionEnabled = NO;
@@ -145,8 +145,8 @@
     
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     
-    [self.bridge registerHandler:@"jumpToJsLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jumpToJsLocation:data];
+    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self jumpToJsLocation:data]; 
     }];
     
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {

@@ -340,19 +340,16 @@
                   //  NSError *error;
                   NSLog(@"JSON: %@", responseObject);
                   NSString *user_account = [responseObject objectForKey:@"user_account"];
-                  if ([user_account isEqualToString:@""]) {
-                      
-                  } else {
-                      NSLog(@"user_account = %@", user_account);
+                  
+                  if (![user_account isEqualToString:@""]){
                       [MiPushSDK setAccount:user_account];
+                      //保存user_account
+                      NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                      [user setObject:user_account forKey:@"user_account"];
+                      [user synchronize];
                   }
-               
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"Error: %@", error);
-                  
-                  
+              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"Error: %@-------", error);
               }];
 //
         
@@ -372,30 +369,27 @@
 
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
-//    NSLog(@"data = %@", data);
-//    
+    NSLog(@"---------------data = %@", data);
+//
 //    // 长连接收到的消息。消息格式跟APNs格式一样
 //    // 返回数据
-//    NSString *target_url = nil;
-//    target_url = [data objectForKey:@"target_url"];
-//    
-//    if (target_url != nil) {
-//        if (self.isLaunchedByNotification == YES) {
-//            
-//            
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-//            return;
-//        }
-//        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
-//            return;
-//        } else {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
-//        }
-//
-//    }
-   
+    NSString *target_url = nil;
+    target_url = [data objectForKey:@"target_url"];
     
+    if (target_url != nil) {
+        if (self.isLaunchedByNotification == YES) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        }
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+            return;
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+        }
+
+    }
 
 }
 
@@ -437,22 +431,43 @@
     
   //  NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
 
-    if([resp isKindOfClass:[SendMessageToWXResp class]])
-    {
-//        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-//        NSString *strMsg;
-//        if (resp.errCode == 0) {
-//            strMsg = @"分享成功";
-//        } else {
-//            strMsg = @"分享失败";
+//    if([resp isKindOfClass:[SendMessageToWXResp class]])
+//    {
+////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+////        NSString *strMsg;
+////        if (resp.errCode == 0) {
+////            strMsg = @"分享成功";
+////        } else {
+////            strMsg = @"分享失败";
+////        }
+////        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+////        [alert show];
+//        
+//    } else if([resp isKindOfClass:[PayResp class]]){
+//
+//
+//    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+//        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+//        SendAuthResp *aresp = (SendAuthResp *)resp;
+//        if (aresp.errCode== 0) {
+//            NSString *code = aresp.code;
+//            self.wxCode = code;
+//            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//            [userDefaults setValue:code forKey:@"wxCode"];
+//            [userDefaults synchronize];
+////            NSDictionary *dic = @{@"code":code};
+////            NSLog(@"dic11111 = %@", dic);
+//            
+//        }else {
+//            NSLog(@"取消登录");
+//            NSLog(@"88888888888");
+//            return;
 //        }
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alert show];
-        
-    } else if([resp isKindOfClass:[PayResp class]]){
-
-
-    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+//        //获取token和openid；
+//        [self getAccess_token];
+//    } //启动微信支付的response
+    
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
         [SVProgressHUD showInfoWithStatus:@"登录中....."];
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
@@ -461,18 +476,13 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setValue:code forKey:@"wxCode"];
             [userDefaults synchronize];
-//            NSDictionary *dic = @{@"code":code};
-//            NSLog(@"dic11111 = %@", dic);
-            
         }else {
             NSLog(@"取消登录");
-            NSLog(@"88888888888");
             return;
         }
         //获取token和openid；
         [self getAccess_token];
-    } //启动微信支付的response
-    
+    }
 }
 
 
@@ -505,7 +515,6 @@
                 self.access_token = [dic objectForKey:@"access_token"];
                 self.openid = [dic objectForKey:@"openid"];
                 
-                //
                 [self getUserInfo];
                 //传入openID and
             }
@@ -577,11 +586,6 @@
                     [notificationCenter postNotification: broadcastMessage];
                 }
                 
-             
-
-            //    NSLog(@"登录成功");
-                
-//                传递参数：
             }
         });
         

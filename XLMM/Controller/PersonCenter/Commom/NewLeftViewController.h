@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *yuelabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeight;
-@property (weak, nonatomic) IBOutlet UIButton *quitButton;
 @property (weak, nonatomic) IBOutlet UIView *touxiangImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomDistance;
@@ -43,14 +42,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *waitReceiveNumWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *exchangeNumWidth;
 
+@property (weak, nonatomic) IBOutlet UIView *redCircle;
+
 
 - (IBAction)jifenClicked:(id)sender;
 - (IBAction)youhuquanClicked:(id)sender;
 - (IBAction)yueClicked:(id)sender;
 
 
-
-- (IBAction)settingClicked:(id)sender;
 - (IBAction)suggestionClicked:(id)sender;
 
 - (IBAction)waitPayClicked:(id)sender;
@@ -64,5 +63,6 @@
 
 - (IBAction)accountBtnAction:(id)sender;
 
+- (IBAction)commonProblemBtnAction:(id)sender;
 
 @end

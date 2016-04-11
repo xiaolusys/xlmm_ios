@@ -131,6 +131,7 @@
         return;
     }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    if (dict.count == 0)return;
     NSDictionary *result = [dict objectForKey:@"results"][0];
     NSString *userId = [result objectForKey:@"id"];
     

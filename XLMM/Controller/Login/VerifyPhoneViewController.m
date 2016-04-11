@@ -194,93 +194,34 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    NSDictionary *parameters = @{@"vmobile": phoneNumber};
-    NSLog(@"paramters = %@", parameters);
+    NSDictionary *parameters = nil;
     
-    NSString *stringurl = nil;
-    NSLog(@" isRegister---%d", [self.config[@"isRegister"] boolValue]);
     
-    if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO)
-    {
-        stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
-    }
-    else if ([self.config[@"isRegister"] boolValue] == NO && [self.config[@"isMessageLogin"] boolValue] == NO)
-    {
-        stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/change_pwd_code", Root_URL];
-    } else if ([self.config[@"isMessageLogin"] boolValue] == YES){
-        stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/send_code", Root_URL];
-        parameters = @{@"mobile": phoneNumber};
-        NSLog(@"paramters = %@", parameters);
-
+    NSString *stringurl = TSendCode_URL;;
+    
+    if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
+        //手机注册
+        parameters = @{@"mobile": phoneNumber, @"action":@"register"};
+    }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
+        //修改密码
+        parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
+    }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
+        //短信登录
+        parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
+    }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
+        //忘记密码
+        parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
     }
     
     NSLog(@"url = %@", stringurl);
+    NSLog(@"paramters = %@", parameters);
     
     [manager POST:stringurl parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSLog(@"info = %@", [responseObject objectForKey:@"info"]);
-              
-              if ([self.config[@"isMessageLogin"] boolValue]) {
-                  if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
-                      [self alertMessage:[responseObject objectForKey:@"info"]];
-                      
-                  }
-              } else {
-                  NSString *result = [responseObject objectForKey:@"result"];
-                  if ([result isEqualToString:@"false"])
-                  {
-                      [self alertMessage:@"手机号输入错误!"];
-                      [self stopCountingDown];
-                      return;
-                  }
-                  if ([self.config[@"isRegister"] boolValue]) {
-                      //注册接口返回结果。。。。。
-                      if ([result isEqualToString:@"OK"] || [result isEqualToString:@"ok"]) {
-                          return;
-                      }
-                      if ([result integerValue] == 0) {
-                          // 该手机号已被注册
-                          [self alertMessage:@"该手机号已被注册!"];
-                          
-                      } else if ([result integerValue] == 1){
-                          // 验证码已发送
-                          [self alertMessage:@"验证码已发送!"];
-                          
-                      } else if ([result integerValue] == 2){
-                          // 验证次数已达今日上限
-                          [self alertMessage:@"验证次数已达今日上限!"];
-                          
-                      }
-                      
-                      
-                      
-                  } else {
-                      //修改密码接口返回结果。。。
-                      if ([result integerValue] == 1) {
-                          // 尚无用户或者手机未绑定。。。
-                          [self alertMessage:@"该手机号未被注册!"];
-                          
-                      } else if ([result integerValue] == 2){
-                          // 验证次数已达今日上限
-                          [self alertMessage:@"验证次数已达今日上限!"];
-                          
-                      } else if ([result integerValue] == 3){
-                          // 验证码过期
-                          [self alertMessage:@"验证码过期!"];
-                          
-                      }
-                  }
-                  
-              }
-          
-        }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
+              [self alertMessage:[responseObject objectForKey:@"msg"]];
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
-              
-          }];
+    }];
 }
 
 -(void) startCountingDown
@@ -322,110 +263,146 @@
 {
     SetPasswordViewController *setPasswordVC = [[SetPasswordViewController alloc] initWithNibName:@"SetPasswordViewController" bundle:nil];
     
-    if ([self.config[@"isRegister"] boolValue])
-    {
-        // 注册 设置密码
-        setPasswordVC.config = @{@"title":@"设置密码",@"isRegister":@YES,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位登录密码"};
-    }
-    else
-    {
+    if ([self.config[@"isVerifyPsd"] boolValue]){
+        //忘记密码
+        setPasswordVC.config = @{@"title":@"设置密码",@"isVerifyPsd":@YES,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位登录密码"};
+    }else{
         //修改密码 设置密码
-        setPasswordVC.config = @{@"title":@"重置密码",@"isRegister":@NO,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位新密码"};
+        setPasswordVC.config = @{@"title":@"重置密码",@"isUpdateMobile":@NO,@"phone":self.phoneNumberTextField.text,@"vcode":self.codeTextField.text,@"text1":@"请输入6-16位新密码"};
     }
     [self.navigationController pushViewController:setPasswordVC animated:YES];
 }
 
 - (IBAction)nextButtonClicked:(id)sender {
     //NSLog(@"验证验证码是否正确");
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//    NSString *phoneNumber = self.phoneNumberTextField.text;
+//    NSString *vcode = self.codeTextField.text;
+//    if ([self.config[@"isMessageLogin"] boolValue]) {
+//        //短信验证
+//        NSDictionary *parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode};
+//        NSLog(@"dic = %@", parameters);
+//        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/sms_login", Root_URL];
+//        NSLog(@"url = %@", stringurl);
+//        
+//        [manager POST:stringurl parameters:parameters
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  NSLog(@"responseObject = %@", responseObject);
+//                  //                  responseObject = {
+//                  //                      code = 0;
+//                  //                      info =     {
+//                  //                          created = "2015-12-03T15:04:49";
+//                  //                          email = "";
+//                  //                          "has_usable_password" = 1;
+//                  //                          id = 665152;
+//                  //                          mobile = 13816404857;
+//                  //                          modified = "2015-12-03T15:04:49";
+//                  //                          nick = "";
+//                  //                          phone = "";
+//                  //                          score = 0;
+//                  //                          status = 1;
+//                  //                          url = "http://m.xiaolu.so/rest/v1/users/665152";
+//                  //                          "user_id" = 665297;
+//                  //                          username = 13816404857;
+//                  //                          xiaolumm = "<null>";
+//                  //                      };
+//                  //                  }
+//                  if ([[[responseObject objectForKey:@"info"] objectForKey:@"has_usable_password"] integerValue] == 1){   // 校验成功。。。
+//                      
+//                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//                      // 手机登录成功 ，保存用户信息以及登录途径
+//                      [defaults setBool:YES forKey:kIsLogin];
+//                    
+//                      [defaults synchronize];
+//                      
+//                      [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+//                      [self.navigationController popToRootViewControllerAnimated:YES];
+//                      //                      [self displaySetPasswordPage];
+//                  }else{
+//                      [self displaySetPasswordPage];
+//                  }
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  NSLog(@"Error: %@", error);
+//              }];
+//        
+//
+//        
+//        
+//    } else {
+//        //手机注册校验验证码
+//        NSDictionary *parameters = @{@"mobile":phoneNumber, @"action":@"register", @"verify_code":vcode};
+//        NSLog(@"dic = %@", parameters);
+////        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
+//        NSLog(@"url = %@", TVerifyCode_URL);
+//        [manager POST:TVerifyCode_URL parameters:parameters
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  NSLog(@"responseObject = %@", responseObject);
+//                  NSLog(@"msg = %@", responseObject[@"msg"]);
+//                  [self alertMessage:[responseObject objectForKey:@"msg"]];
+//                  if ([[responseObject objectForKey:@"rcode"] integerValue] == 0) {
+//                      //设置用户名在newLeft中使用
+//                      NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//                      [user setObject:phoneNumber forKey:kUserName];
+//                      [user setBool:YES forKey:kIsLogin];
+//                      //发送通知在root中接收
+//                      [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+//                      [self.navigationController popToRootViewControllerAnimated:YES];
+//                  }
+//            }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  NSLog(@"Error: %@", error);
+//              }];
+//    }
+  
     NSString *phoneNumber = self.phoneNumberTextField.text;
     NSString *vcode = self.codeTextField.text;
+
+    NSDictionary *parameters = nil;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
-        
-        NSDictionary *parameters = @{@"mobile":phoneNumber,
-                                     @"sms_code":vcode};
-        NSLog(@"dic = %@", parameters);
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/sms_login", Root_URL];
-        NSLog(@"url = %@", stringurl);
-        
-        [manager POST:stringurl parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSLog(@"responseObject = %@", responseObject);
-                  //                  responseObject = {
-                  //                      code = 0;
-                  //                      info =     {
-                  //                          created = "2015-12-03T15:04:49";
-                  //                          email = "";
-                  //                          "has_usable_password" = 1;
-                  //                          id = 665152;
-                  //                          mobile = 13816404857;
-                  //                          modified = "2015-12-03T15:04:49";
-                  //                          nick = "";
-                  //                          phone = "";
-                  //                          score = 0;
-                  //                          status = 1;
-                  //                          url = "http://m.xiaolu.so/rest/v1/users/665152";
-                  //                          "user_id" = 665297;
-                  //                          username = 13816404857;
-                  //                          xiaolumm = "<null>";
-                  //                      };
-                  //                  }
-                  if ([[[responseObject objectForKey:@"info"] objectForKey:@"has_usable_password"] integerValue] == 1)
-                  {   // 校验成功。。。
-                      
-                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                      // 手机登录成功 ，保存用户信息以及登录途径
-                      [defaults setBool:YES forKey:kIsLogin];
-                    
-                      [defaults synchronize];
-                      
-                      [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-                      [self.navigationController popToRootViewControllerAnimated:YES];
-                      //                      [self displaySetPasswordPage];
-                  }
-                  else
-                  {
-                      [self displaySetPasswordPage];
-                  }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"Error: %@", error);
-              }];
-        
-
-        
-        
-    } else {
-        NSDictionary *parameters = @{@"mobile":phoneNumber,
-                                     @"vcode":vcode};
-        NSLog(@"dic = %@", parameters);
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register/check_vcode", Root_URL];
-        NSLog(@"url = %@", stringurl);
-        [manager POST:stringurl parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSInteger result = [[responseObject objectForKey:@"result"] intValue];
-                  NSLog(@"responseObject = %@", responseObject);
-
-                  if (result == 0)
-                  {   // 校验成功。。。
-                      
-                          [self displaySetPasswordPage];
-//
-                  }
-                  else
-                  {
-                      [self alertMessage:@"验证码错误，请重试!"];
-                  }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"Error: %@", error);
-              }];
+        parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
+    }else if ([self.config[@"isRegister"] boolValue]){
+        parameters = @{@"mobile":phoneNumber, @"action":@"register", @"verify_code":vcode,  @"devtype":LOGINDEVTYPE};
+    }else if ([self.config[@"isVerifyPsd"] boolValue]){
+        parameters = @{@"mobile":phoneNumber, @"action":@"find_pwd", @"verify_code":vcode};
+    }else if ([self.config[@"isUpdateMobile"] boolValue]) {
+        parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
     }
-  
+    
+    
+    [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self verifyAfter:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"-------%@", error);
+    }];
+    
+}
+
+- (void)verifyAfter:(NSDictionary *)dic {
+    if (dic.count == 0)return;
+    NSString *phoneNumber = self.phoneNumberTextField.text;
+    
+    if ([[dic objectForKey:@"rcode"] integerValue] != 0){
+        [self alertMessage:[dic objectForKey:@"msg"]];
+        return;
+    }
+    if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
+        [self alertMessage:[dic objectForKey:@"msg"]];
+        //设置用户名在newLeft中使用
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        [user setObject:phoneNumber forKey:kUserName];
+        [user setBool:YES forKey:kIsLogin];
+        //发送通知在root中接收
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
+        [self displaySetPasswordPage];
+    }
 }
 @end
 
-//第二步，创建请求
 
 

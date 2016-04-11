@@ -24,7 +24,7 @@
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
-#import "MMLoadingAnimation.h"
+//#import "MMLoadingAnimation.h"
 #import "AFNetworking.h"
 #import "MobClick.h"
 #import "MJRefresh.h"
@@ -207,7 +207,7 @@
     
     [self createCartView];
 
-    [self.view addSubview:[MMLoadingAnimation sharedView]];
+//    [self.view addSubview:[MMLoadingAnimation sharedView]];
 
     self.addCartButton.layer.cornerRadius = 20;
     self.addCartButton.layer.borderWidth = 1;
@@ -218,7 +218,7 @@
     self.line5Height.constant = 0.5;
     self.line6height.constant = 0.5;
     [self downloadDetailsData];
-    [MMLoadingAnimation showLoadingView];
+//    [MMLoadingAnimation showLoadingView];
 
     if ([WXApi isWXAppInstalled]) {
         
@@ -323,7 +323,7 @@
 //        NSLog(@"-----------------%@", responseObject);
 //        [self createContentView];
         if (!responseObject)  {
-            [MMLoadingAnimation dismissLoadingView];
+//            [MMLoadingAnimation dismissLoadingView];
             cartsButton.hidden = NO;
             return;
         }
@@ -345,10 +345,10 @@
     json = dic;
     //设置底部图片,调整高度
     self.midLabel.hidden = NO;
-    [MMLoadingAnimation dismissLoadingView];
+//    [MMLoadingAnimation dismissLoadingView];
 
    [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-       [MMLoadingAnimation dismissLoadingView];
+//       [MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {
 

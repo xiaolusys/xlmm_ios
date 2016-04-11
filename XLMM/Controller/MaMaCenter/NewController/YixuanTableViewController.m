@@ -198,7 +198,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
 -(void) tableView: (UITableView *) tableView moveRowAtIndexPath: (NSIndexPath *) oldPath toIndexPath:(NSIndexPath *) newPath
 {
     
-    for (MaMaSelectProduct *model in self.dataArr) {
+    for ( __unused MaMaSelectProduct *model in self.dataArr) {
         NSLog(@"id = %@", model.productId);
     }
     
