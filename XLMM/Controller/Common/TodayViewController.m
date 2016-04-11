@@ -313,6 +313,7 @@ static NSString *khuodongCell = @"HuodongCell";
         NSNumber *userNumber = [defaults objectForKey:@"activityid"];
         
         
+        
         if ([userNumber integerValue] == [activityID integerValue]) return;
         if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])) {
             NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];

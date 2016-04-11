@@ -371,11 +371,12 @@
         parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
     }
     
+    
     [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"-------%@", error);
     }];
     
 }

@@ -37,7 +37,7 @@
     self.webView.scalesPageToFit = YES;
     [self.view addSubview:self.webView];
     
-    NSString *loadString = [NSString stringWithFormat:@"%@/pages/fans-explain.html", Root_URL];
+    NSString *loadString = [NSString stringWithFormat:@"%@/faq", Root_URL];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:loadString]]];
 }

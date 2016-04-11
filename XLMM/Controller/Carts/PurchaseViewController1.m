@@ -722,17 +722,14 @@
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                     } else {
-                        NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                            
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                         }
                     }
                     [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
-        
                 }];
             });
         }
@@ -743,6 +740,10 @@
 
 - (void)returnCart {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)returnOrderList {
+    
 }
 
 //- (void)showXiaoluQianbaoView{

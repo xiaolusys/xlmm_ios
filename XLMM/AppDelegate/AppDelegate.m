@@ -340,14 +340,15 @@
                   //  NSError *error;
                   NSLog(@"JSON: %@", responseObject);
                   NSString *user_account = [responseObject objectForKey:@"user_account"];
-                  if ([user_account isEqualToString:@""]) {
-                      
-                  } else {
-                      NSLog(@"user_account = %@", user_account);
+                  
+                  if (![user_account isEqualToString:@""]){
                       [MiPushSDK setAccount:user_account];
+                      //保存user_account
+                      NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                      [user setObject:user_account forKey:@"user_account"];
+                      [user synchronize];
                   }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   NSLog(@"Error: %@-------", error);
               }];
 //
