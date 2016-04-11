@@ -110,13 +110,7 @@
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
     youhuiquanValud = 0;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpWaitGoods) name:@"jumpWaitgood" object:nil];
-    
     [self createYhqValue];
-}
-
-- (void)jumpWaitGoods {
-    
 }
 
 // 获取可用优惠券金额 。。。

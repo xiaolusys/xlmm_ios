@@ -439,7 +439,7 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //设计倒计时方法。。。。
