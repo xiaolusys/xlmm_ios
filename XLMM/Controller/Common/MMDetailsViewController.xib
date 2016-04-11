@@ -71,7 +71,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYX-qE-1cH">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oPv-BN-vFb">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail.png" translatesAutoresizingMaskIntoConstraints="NO" id="oPv-BN-vFb">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                                 </imageView>
                             </subviews>
@@ -785,6 +785,7 @@
         </view>
     </objects>
     <resources>
+        <image name="detail.png" width="750" height="996"/>
         <image name="mmback_icon.png" width="80" height="80"/>
         <image name="qitiantuihuo.png" width="64" height="64"/>
         <image name="quabguobaoyou.png" width="64" height="64"/>

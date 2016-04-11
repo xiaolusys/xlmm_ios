@@ -19,8 +19,7 @@
 #import "WXLoginController.h"
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
-
-
+#import "MiPushSDK.h"
 
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
@@ -213,6 +212,14 @@
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+    
+    //注销账号
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *user_account = [user objectForKey:@"user_account"];
+    if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
+        [MiPushSDK unsetAccount:user_account];
+        [user setObject:@"" forKey:@"user_account"];
+    }
     
     //发送通知修改NewLeft中的用户信息
     [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];

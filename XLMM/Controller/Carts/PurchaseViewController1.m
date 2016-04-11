@@ -24,6 +24,7 @@
 #import "WXApi.h"
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 #import "SVProgressHUD.h"
+#import "PersonOrderViewController.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
@@ -705,7 +706,7 @@
         }if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
+                [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
             });
             return;
         }
@@ -721,18 +722,17 @@
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
                     } else {
-                        NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                            
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                         }
+                        [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
                     }
-                    [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
-        
+                    
                 }];
             });
         }
@@ -743,6 +743,12 @@
 
 - (void)returnCart {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)returnOrderList {
+    PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
+    order.index = 102;
+    [self.navigationController pushViewController:order animated:YES];
 }
 
 //- (void)showXiaoluQianbaoView{

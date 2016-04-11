@@ -188,6 +188,8 @@
 }
 
 - (void)requestData:(NSArray *)data {
+    
+    
     if (data.count == 0) {
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];

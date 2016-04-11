@@ -444,7 +444,6 @@
 		183075E81C97D49A00B7665E /* childIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074CB1C97D49A00B7665E /* childIcon.png */; };
 		183075E91C97D49A00B7665E /* childImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074CC1C97D49A00B7665E /* childImage.png */; };
 		183075EA1C97D49A00B7665E /* countdowmBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074CD1C97D49A00B7665E /* countdowmBackImage.png */; };
-		183075EB1C97D49A00B7665E /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074CE1C97D49A00B7665E /* coupon.png */; };
 		183075EC1C97D49A00B7665E /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074CF1C97D49A00B7665E /* default.png */; };
 		183075ED1C97D49A00B7665E /* defaultmamaimageicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074D01C97D49A00B7665E /* defaultmamaimageicon.png */; };
 		183075EE1C97D49A00B7665E /* deletaBtnIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 183074D11C97D49A00B7665E /* deletaBtnIcon.png */; };
@@ -622,6 +621,8 @@
 		18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */; };
 		18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */; };
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
+		1F074FAD1CBB3BF9008A03FC /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FAC1CBB3BF9008A03FC /* coupon.png */; };
+		1F074FF01CBB9EE5008A03FC /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FEF1CBB9EE5008A03FC /* detail.png */; };
 		1F0AC6E51CB3A831001F21D7 /* defaultPig.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0AC6E41CB3A831001F21D7 /* defaultPig.png */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
 		1F88D5791CB67DCC0050A2E2 /* iPhone4S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */; };
@@ -1453,7 +1454,6 @@
 		183074CB1C97D49A00B7665E /* childIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childIcon.png; sourceTree = "<group>"; };
 		183074CC1C97D49A00B7665E /* childImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = childImage.png; sourceTree = "<group>"; };
 		183074CD1C97D49A00B7665E /* countdowmBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = countdowmBackImage.png; sourceTree = "<group>"; };
-		183074CE1C97D49A00B7665E /* coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coupon.png; sourceTree = "<group>"; };
 		183074CF1C97D49A00B7665E /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		183074D01C97D49A00B7665E /* defaultmamaimageicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultmamaimageicon.png; sourceTree = "<group>"; };
 		183074D11C97D49A00B7665E /* deletaBtnIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletaBtnIcon.png; sourceTree = "<group>"; };
@@ -1643,6 +1643,8 @@
 		18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedActivitiesViewController.m; sourceTree = "<group>"; };
 		18FCFA211CAAC1BE006C75BC /* NSDictionary+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+UrlEncoding.h"; sourceTree = "<group>"; };
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
+		1F074FAC1CBB3BF9008A03FC /* coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coupon.png; sourceTree = "<group>"; };
+		1F074FEF1CBB9EE5008A03FC /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
 		1F0AC6E41CB3A831001F21D7 /* defaultPig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPig.png; sourceTree = "<group>"; };
 		1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
 		1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone4S@2x.png"; sourceTree = "<group>"; };
@@ -3385,7 +3387,6 @@
 				183074CB1C97D49A00B7665E /* childIcon.png */,
 				183074CC1C97D49A00B7665E /* childImage.png */,
 				183074CD1C97D49A00B7665E /* countdowmBackImage.png */,
-				183074CE1C97D49A00B7665E /* coupon.png */,
 				183074CF1C97D49A00B7665E /* default.png */,
 				183074D01C97D49A00B7665E /* defaultmamaimageicon.png */,
 				183074D11C97D49A00B7665E /* deletaBtnIcon.png */,
@@ -3618,8 +3619,10 @@
 			isa = PBXGroup;
 			children = (
 				1F88D5AD1CB8ED150050A2E2 /* accounticon.png */,
+				1F074FEF1CBB9EE5008A03FC /* detail.png */,
 				1F88D5AF1CB8ED4B0050A2E2 /* pointicon.png */,
 				1F88D5A11CB8EA350050A2E2 /* questions.png */,
+				1F074FAC1CBB3BF9008A03FC /* coupon.png */,
 				1F88D5A51CB8EBE50050A2E2 /* refund.png */,
 				1F88D5A61CB8EBE50050A2E2 /* waitsend.png */,
 				1F88D5A71CB8EBE50050A2E2 /* waitpay.png */,
@@ -3865,12 +3868,12 @@
 				183075E61C97D49A00B7665E /* CameraImage.png in Resources */,
 				325B79D51C97E7160022F930 /* JiFenCollectionCell.xib in Resources */,
 				1830764C1C97D49A00B7665E /* wodejingxuannavviewnew.png in Resources */,
+				1F074FF01CBB9EE5008A03FC /* detail.png in Resources */,
 				183075B61C97D49A00B7665E /* loading动画005.png in Resources */,
 				183075D11C97D49A00B7665E /* mamashop.png in Resources */,
 				183076681C97D49A00B7665E /* 圈圈加载0020.png in Resources */,
 				183072121C97BE3700B7665E /* MamaActivityViewController.xib in Resources */,
 				183075861C97D49A00B7665E /* icon-quanbudingdan.png in Resources */,
-				183075EB1C97D49A00B7665E /* coupon.png in Resources */,
 				1F88D5AB1CB8EBE50050A2E2 /* waitpay.png in Resources */,
 				183075D31C97D49A00B7665E /* mamatuan.png in Resources */,
 				183076781C97D49A00B7665E /* 圈圈加载0036.png in Resources */,
@@ -4038,6 +4041,7 @@
 				183075B71C97D49A00B7665E /* loading动画006.png in Resources */,
 				325B79CF1C97E7160022F930 /* Head1View.xib in Resources */,
 				183075C91C97D49A00B7665E /* mamabu.png in Resources */,
+				1F074FAD1CBB3BF9008A03FC /* coupon.png in Resources */,
 				183076571C97D49A00B7665E /* 圈圈加载0003.png in Resources */,
 				183075DD1C97D49A00B7665E /* wodejingxuanfenxiang.png in Resources */,
 				1830724A1C97BE3700B7665E /* RefundDetailsViewController.xib in Resources */,
