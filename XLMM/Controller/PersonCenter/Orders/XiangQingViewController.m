@@ -19,6 +19,7 @@
 #import "ShenQingTuiHuoController.h"
 #import "NSString+URL.h"
 #import "WuliuViewController.h"
+#import "AFNetworking.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -98,9 +99,7 @@
     self.buyBtn.layer.cornerRadius = 20;
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-    
 
-    
     
 }
 
@@ -131,6 +130,7 @@
     NSError *error = nil;
     
     NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    
     if (error != nil) {
        // NSLog(@"解析失败");
         return;
@@ -187,15 +187,21 @@
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
     } else if (([statusDisplay isEqualToString:@"已发货"])){
-        self.zhuangtaiLabel.text = @"查看详细物流信息";
-        self.headdingdanzhuangtai.text = @"待收货";
-        NSString *timeString = [dicJson objectForKey:@"consign_time"];//发货时间。。。。
-        NSString *newStr = [self formatterTimeString:timeString];
-        self.timeLabel.text = newStr;
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-        self.rightImageView.hidden = NO;
-        
-        [self.WuliuView addGestureRecognizer:tapGesture];
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        NSString *str = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_tid?tid=%@", Root_URL,[dicJson objectForKey:@"tid"]];
+        [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self setWuLiuMsg:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+//        self.zhuangtaiLabel.text = @"查看详细物流信息";
+//        self.headdingdanzhuangtai.text = @"待收货";
+//        NSString *timeString = [dicJson objectForKey:@"consign_time"];//发货时间。。。。
+//        NSString *newStr = [self formatterTimeString:timeString];
+//        self.timeLabel.text = newStr;
+//        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+//        self.rightImageView.hidden = NO;
+    
     } else if (([statusDisplay isEqualToString:@"交易成功"])){
         self.zhuangtaiLabel.text = @"已签收";
         self.headdingdanzhuangtai.text = @"交易成功";
@@ -283,7 +289,26 @@
     NSLog(@"tid = %@", tid);
     [self createXiangQing];
 
+}
+
+- (void)setWuLiuMsg:(NSDictionary *)dic {
+    if (dic.count == 0)return;
+    NSLog(@"%@", dic);
+    NSArray *firstMsg = [dic objectForKey:@"data"];
+    if (firstMsg.count == 0) return;
     
+    NSDictionary *wlMsg = [firstMsg firstObject];
+    self.zhuangtaiLabel.text = [wlMsg objectForKey:@"content"];
+    self.headdingdanzhuangtai.text = @"待收货";
+    
+    NSString *time = [wlMsg objectForKey:@"time"];
+    NSString *timeString = [time stringByReplacingOccurrencesOfString:@"T" withString:@" "];//发货时间。。。。
+    self.timeLabel.text = timeString;
+//    NSString *newStr = [self formatterTimeString:timeString];
+//    self.timeLabel.text = newStr;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+    self.rightImageView.hidden = NO;
+    [self.WuliuView addGestureRecognizer:tapGesture];
 }
 
 //设计倒计时方法。。。。
@@ -474,13 +499,7 @@
         
     }
     [frontView removeFromSuperview];
-    
-    
-
 }
-
-
-
 
 #pragma mark -- 退货--
 

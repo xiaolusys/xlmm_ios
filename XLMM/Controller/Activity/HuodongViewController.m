@@ -130,10 +130,6 @@
         imageView1.hidden = NO;
     }
     
-    
-    
-    
-
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     
     self.webView.scalesPageToFit = YES;

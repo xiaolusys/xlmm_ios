@@ -109,6 +109,10 @@
 #define TVerifyCode_URL [NSString stringWithFormat:@"%@/rest/v2/verify_code",Root_URL]
 #define TResetPwd_URL [NSString stringWithFormat:@"%@/rest/v2/reset_password",Root_URL]
 
+//加载的webView链接
+#define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/faq", Root_URL]
+
 #endif
 
 
