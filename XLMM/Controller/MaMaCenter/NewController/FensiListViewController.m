@@ -13,7 +13,7 @@
 #import "FanceModel.h"
 #import "MJRefresh.h"
 #import "SVProgressHUD.h"
-#import "AboutFansViewController.h"
+#import "CommonWebViewViewController.h"
 
 
 @interface FensiListViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -149,8 +149,10 @@
 }
 
 - (void)AboutFansClick {
-    AboutFansViewController *about = [[AboutFansViewController alloc] init];
-    [self.navigationController pushViewController:about animated:YES];
+    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] init];
+    common.titleName = @"关于粉丝";
+    common.loadLink = ABOUTFANS_URL;
+    [self.navigationController pushViewController:common animated:YES];
 }
 
 

@@ -451,51 +451,33 @@
     NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
     //获得参数，升序排列
     NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
- //   NSLog(@"1.————》%@", sign_params);
     
     NSString *sign = [sign_params sha1];
-    NSString *dict;
-    
- //   NSLog(@"sign = %@", sign);
-    
     
     //http://m.xiaolu.so/rest/v1/register/wxapp_login
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
-    NSURL *url = [NSURL URLWithString:urlString];
-   // NSLog(@"urlString = %@", urlString);
-    if (url == nil) {
-        return;
-    }
-    
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    
-    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
-    
-  //  NSLog(@"params = %@", dict);
-    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    if (data == nil) {
-        return;
-    }
-    [postRequest setHTTPBody:data];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    
-    
-    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-    if (data2 == nil) {
-        return;
-    }
-  __unused  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
-    
-    
-   // NSLog(@"dictionary = %@", dictionary);
-    
-    //   http://m.xiaolu.so/rest/v1/users/need_set_info
-    
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setBool:YES forKey:@"login"];
-    [userdefaults synchronize];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
+//
+    NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
+                             @"nickname":[dic objectForKey:@"nickname"],
+                             @"openid":[dic objectForKey:@"openid"],
+                             @"unionid":[dic objectForKey:@"unionid"],
+                             @"devtype":LOGINDEVTYPE};
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject){
+        
+        NSDictionary *result = responseObject;
+        if (result.count == 0) return;
+        if ([[result objectForKey:@"rcode"]integerValue] != 0) {
+            return;
+        }
+        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+        [userdefaults setBool:YES forKey:@"login"];
+        [userdefaults synchronize];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 
 }
 
@@ -516,8 +498,6 @@
                                  @"password":password
                                  };
     
-    
-    
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
@@ -535,8 +515,7 @@
 }
 
 - (void)autologin{
-    
-   
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {

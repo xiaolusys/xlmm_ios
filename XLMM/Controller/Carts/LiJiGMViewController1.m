@@ -19,6 +19,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "PersonCenterViewController1.h"
 #import "MMUserCoupons.h"
+#import "AFNetworking.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -426,6 +427,8 @@
    
     uuid = nil;
     
+    
+    
     NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", dict);
     // NSLog(@"string ------>>>%@", bodyData);
@@ -437,6 +440,8 @@
     LiJiGMViewController1 * __weak weakSelf = self;
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     //  [self showAlertWait];
+    
+    
     [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
@@ -476,9 +481,7 @@
                 
             }];
         });
-        
-        
-        
+
     }];
 
 }

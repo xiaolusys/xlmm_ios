@@ -492,37 +492,39 @@
 - (void)deleteCatr{
     NSLog(@"确认删除");
 //    [self.myView removeFromSuperview];
-//    self.frontView.hidden = YES;
+    self.frontView.hidden = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
-    NSLog(@"url = %@", urlString);
+//    NSLog(@"url = %@", urlString);
+//    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+//    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+//    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+//    NSLog(@"%@",str1);
     
-    NSLog(@"%@",str1);
-    
-    
-    
-    [self downloadData];
-    [self downloadHistoryData];
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    NSLog(@"data = %@", data);
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self downloadData];
+        [self downloadHistoryData];
         
-        NSLog(@"dic = %@", dic);
-        
-       __unused NSInteger count = [[dic objectForKey:@"result"] integerValue];
-        NSLog(@"count = %ld", (long)count);
-       
-    } else{
-     
-    }
-    
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+        NSLog(@"data = %@", data);
+        if (data != nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            
+            NSLog(@"dic = %@", dic);
+            
+            __unused NSInteger count = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"count = %ld", (long)count);
+            
+        }
 
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+    
 }
 
 /*
@@ -669,29 +671,34 @@
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
-    NSLog(@"url = %@", urlString);
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",str1);
-    [self downloadData];
-    [self downloadHistoryData];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    NSLog(@"data = %@", data);
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        NSLog(@"dic = %@", dic);
-        
-        NSInteger count = [[dic objectForKey:@"result"] integerValue];
-        NSLog(@"count = %ld", (long)count);
-        if (count == 0) {
-       
+//    NSLog(@"url = %@", urlString);
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+//    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+//    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
+//    NSLog(@"%@",str1);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self downloadData];
+        [self downloadHistoryData];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+        NSLog(@"data = %@", data);
+        if (data != nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            
+            NSLog(@"dic = %@", dic);
+            
+            NSInteger count = [[dic objectForKey:@"result"] integerValue];
+            NSLog(@"count = %ld", (long)count);
+            if (count == 0) {
+                
+            }
         }
-    } else{
-     
-    }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
 }
 
 

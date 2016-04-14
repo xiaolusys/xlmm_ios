@@ -78,10 +78,6 @@
                 
                 NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
                 [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
-                
-           
-            
-           
         }
         NSInteger MAX = 4; // we only display at most 3 wuliu info.
         if (length < MAX) {

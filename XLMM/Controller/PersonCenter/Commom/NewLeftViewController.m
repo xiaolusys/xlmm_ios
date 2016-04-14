@@ -26,7 +26,7 @@
 #import "UIColor+RGBColor.h"
 
 #import "AFHTTPRequestOperationManager.h"
-#import "CommonProblemViewController.h"
+#import "CommonWebViewViewController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -451,7 +451,10 @@
 
 - (IBAction)commonProblemBtnAction:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        CommonProblemViewController *common = [[CommonProblemViewController alloc]init];
+        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] init];
+        common.titleName = @"常见问题";
+        common.loadLink = COMMONPROBLEM_URL;
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:common];
         }
