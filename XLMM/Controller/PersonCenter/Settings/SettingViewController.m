@@ -20,6 +20,7 @@
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
+#import "AFNetworking.h"
 
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
@@ -203,34 +204,33 @@
     
     //   http://m.xiaolu.so/rest/v1/users/customer_logout
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-    // NSLog(@"urlString = %@", urlString);
-    NSURL *url = [NSURL URLWithString:urlString];
     
-    //第二步，创建请求
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        if ([[dic objectForKey:@"code"] integerValue] != 0) return;
+        //注销账号
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        NSString *user_account = [user objectForKey:@"user_account"];
+        if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
+            [MiPushSDK unsetAccount:user_account];
+            [user setObject:@"" forKey:@"user_account"];
+        }
+        
+        //发送通知修改NewLeft中的用户信息
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
+        
+        [alterView show];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
-    //注销账号
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSString *user_account = [user objectForKey:@"user_account"];
-    if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
-        [MiPushSDK unsetAccount:user_account];
-        [user setObject:@"" forKey:@"user_account"];
-    }
-    
-    //发送通知修改NewLeft中的用户信息
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
-    
-    [alterView show];
-
 }
 
 -(void) performDismiss:(NSTimer *)timer

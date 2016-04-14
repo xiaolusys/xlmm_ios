@@ -512,45 +512,27 @@
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderID];
     NSLog(@"url string = %@", string);
-    NSURL *url = [NSURL URLWithString:string];
-    
-    //第二步，创建请求
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    
-//    NSString *str = @"type=focus-c";//设置参数
-//    
-//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    [request setHTTPBody:data];
-    
-    //第三步，连接服务器
-    
-    
-    
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-       UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    if ([[dic objectForKey:@"ok"]boolValue] == YES) {
-        alterView.message = @"签收成功";
-        [button setTitle:@"退货退款" forState:UIControlStateNormal];
-        [button removeTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
-        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) return;
+        NSDictionary *dic = responseObject;
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        if ([[dic objectForKey:@"ok"]boolValue] == YES) {
+            alterView.message = @"签收成功";
+            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+            [button removeTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+        } else {
+            alterView.message = @"签收失败";
+        }
+        [alterView show];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
-    } else {
-        alterView.message = @"签收失败";
-    }
-    [alterView show];
-    //[self.navigationController popViewControllerAnimated:YES];
-    
-    
+    }];
  
-    
 }
 
 #pragma mark
@@ -674,14 +656,32 @@
     [string appendString:@"/charge"];
     NSLog(@"newstring = %@", string);
     
-    NSURL *url = [NSURL URLWithString:string];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        if (!responseObject)return;
+        NSError *parseError = nil;
+        NSDictionary *dic = responseObject;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        XiangQingViewController * __weak weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                if (error == nil) {
+                    NSLog(@"PingppError is nil");
+                } else {
+                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    // [self.navigationController popViewControllerAnimated:YES];
+                }
+                //[weakSelf showAlertMessage:result];
+            }];
+        });
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
-    
-    
+
 }
 
 

@@ -25,6 +25,7 @@
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 #import "SVProgressHUD.h"
 #import "PersonOrderViewController.h"
+#import "AFNetworking.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
@@ -665,38 +666,30 @@
     
 }
 
+- (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
+    NSArray *firstArr = [str componentsSeparatedByString:@"&"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    for (NSString *segment in firstArr) {
+        NSArray *secondArr = [segment componentsSeparatedByString:@"="];
+        [dic setObject:secondArr[1] forKey:secondArr[0]];
+//        [dic ];
+    }
+    
+    return dic;
+}
 
 - (void)submitBuyGoods {
+    
+   NSMutableDictionary *dic = [self stringChangeDictionary:dict];
+    
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
-    NSURL *url = [NSURL URLWithString:postPay];
-    
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    
-    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [postRequest setHTTPBody:data];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 
-    
     PurchaseViewController1 * __weak weakSelf = self;
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:postRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSLog(@"%@", postRequest);
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-        
-        NSLog(@"response = %@", httpResponse);
-        if (httpResponse.statusCode != 200) {
-            //出错
-            self.couponLabel.hidden = YES;
-            return;
-        }
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//        NSLog(@"-------%@", dic);
-//        NSLog(@"-------%@", dic[@"info"]);
-        
+        NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
@@ -736,10 +729,12 @@
                 }];
             });
         }
-    }];
 
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
-}
+ }
 
 - (void)returnCart {
     [self.navigationController popViewControllerAnimated:YES];
