@@ -80,8 +80,9 @@
     
     [self.view addSubview:backView];
     
-    if (self.model.good_status == 1 && [self.model.status_display isEqualToString:@"审核通过"]) {
-    self.topToRefundHeight.constant = 1;
+    //没有订单号显示填写退货地址
+    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
+        self.topToRefundHeight.constant = 0;
     }
     
     NSLog(@"%@", self.model.return_address);
@@ -90,13 +91,7 @@
 
 - (void)setHeadInfo{
     self.bianhaoLabel.text = self.model.refund_no;
-    if ([self.model.status_display isEqualToString:@"买家已经申请退款"] ||[self.model.status_display isEqualToString:@"买家已经退货"]) {
-        self.model.status_display = @"卖家处理中";
-    }
-    if ([self.model.status_display isEqualToString:@"卖家已经同意退款"]) {
-        self.model.status_display = @"审核通过";
-        
-    }
+
     self.displayLabel.text = self.model.status_display;
     self.titleLabel.text = self.model.title;
     self.sizeLabel.text = self.model.sku_name;
@@ -176,65 +171,32 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
     [infoView addGestureRecognizer:tap];
     
-//    NSString *backAddress1 = @"上海市松江区佘山镇吉业路245号5号楼优尼世界 售后(收)";
-//    NSString *phone1 = @"021-50939326-818  201602";
-//    
-//
-//    NSString *backAddress2 = @"广州市白云区太和镇永兴村龙归路口悦博大酒店对面龙门公寓3楼 售后(收)";
-//    NSString *phone2 = @"15821245603  510000";
-    
-//    NSDictionary *dic1 = @{@"address":backAddress1,
-//                           @"phone":phone1,
-//                        
-//                           
-//                           };
-//    NSDictionary *dic2 = @{@"address":backAddress2,
-//                           @"phone":phone2,
-//                        
-//                           };
-//    NSArray *array = @[dic1, dic1, dic2];
-    
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.model.item_id];
-    NSLog(@"url = %@", urlstring);
+//    NSLog(@"url = %@", urlstring);
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
+//    NSLog(@"json = %@", json);
     NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
     
-    NSLog(@"wear_by = %ld", (long)wear_by);
+//    NSLog(@"wear_by = %ld", (long)wear_by);
     
-//    NSDictionary *addressDetails = [array objectAtIndex:wear_by];
-    
-
     
     UILabel *addressLabel = [infoView viewWithTag:500];
-//    UILabel *phoneLabel = [infoView viewWithTag:600];
     UIButton *kefuButton = [infoView viewWithTag:800];
     [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
     addressLabel.text = self.model.return_address;
     
-    
-    
-   // phoneLabel.text = [addressDetails objectForKey:@"phone"];
-    
-    
-    
-    
- 
     [self.view addSubview:infoView];
     
 }
 
 - (void)lianxikefu:(UIButton *)button{
-    NSLog(@"客服");
+//    NSLog(@"客服");
 }
 - (void)removeInfoView:(UIGestureRecognizer *)recognizer{
-    
-    NSLog(@"move");
+//    NSLog(@"move");
     backView.hidden = YES;
     self.navigationController.navigationBarHidden = NO;
     [recognizer.view removeFromSuperview];
@@ -242,7 +204,7 @@
 }
 
 - (IBAction)wuliuInfoClicked:(id)sender {
-    NSLog(@"填写物流信息");
+//    NSLog(@"填写物流信息");
     FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
     wuliuVC.model = self.model;
     
