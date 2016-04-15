@@ -38,6 +38,7 @@
 
 @property (nonatomic, assign)BOOL isLoad;
 
+@property (nonatomic, assign)NSInteger cellNum;
 @end
 
 @implementation PublishNewPdtViewController{
@@ -68,12 +69,12 @@
     [SVProgressHUD dismiss];
 }
 
-- (PhotoView *)photoView {
-    if (!_photoView) {
-        self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    }
-    return _photoView;
-}
+//- (PhotoView *)photoView {
+//    if (!_photoView) {
+//        self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    }
+//    return _photoView;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -127,7 +128,7 @@
 - (void)createCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
    // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
-    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
+//    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
     
@@ -187,6 +188,8 @@
 }
 
 - (void)requestData:(NSArray *)data {
+    
+    
     if (data.count == 0) {
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];
@@ -226,6 +229,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     SharePicModel *picModel = self.dataArr[section];
+//    self.cellNum = picModel.pic_arry.count;
     return picModel.pic_arry.count;
 }
 
@@ -237,6 +241,12 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    SharePicModel *picModel = self.dataArr[indexPath.section];
+    self.cellNum = picModel.pic_arry.count;
+
+    if (self.cellNum == 1) {
+        return CGSizeMake(CELLWIDTH + 30, CELLWIDTH + 80);
+    }
     return CGSizeMake(CELLWIDTH, CELLWIDTH);
 }
 
@@ -246,6 +256,9 @@
     
     //取到当前数组
     SharePicModel *picModel = self.dataArr[indexPath.section];
+    
+    self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
     self.photoView.picArr = [picModel.pic_arry mutableCopy];
     self.photoView.index = indexPath.row;
 
@@ -318,6 +331,16 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 54);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    SharePicModel *picModel = self.dataArr[section];
+    self.cellNum = picModel.pic_arry.count;
+
+    if (self.cellNum == 4) {
+        return UIEdgeInsetsMake(10, 68, 10, CELLWIDTH + 10);
+    }
+    return UIEdgeInsetsMake(10, 68, 10, 10);
 }
 
 #pragma mark --保存事件

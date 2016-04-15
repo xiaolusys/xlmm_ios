@@ -12,7 +12,7 @@
 @property (nonatomic, strong)NSNumber *budget_type;
 @property (nonatomic, strong)NSString *budget_log_type;
 @property (nonatomic, strong)NSString *budget_date;
-@property (nonatomic, strong)NSNumber *status;
+@property (nonatomic, strong)NSString *get_status_display;
 @property (nonatomic, strong)NSNumber *budeget_detail_cash;
 @property (nonatomic, strong)NSString *desc;
 @end
