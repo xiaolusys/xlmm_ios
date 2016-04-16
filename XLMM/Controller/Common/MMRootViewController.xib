@@ -14,6 +14,7 @@
                 <outlet property="categoryView" destination="YDK-Oo-Z7L" id="dJP-ke-P6K"/>
                 <outlet property="categoryViewHeight" destination="Yvf-yh-AHJ" id="ai6-BU-1P1"/>
                 <outlet property="collectionView" destination="Tvs-3o-2cY" id="Sow-oj-f06"/>
+                <outlet property="collectionViewScrollview" destination="I6e-uj-dlA" id="MZ4-Un-INJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -65,7 +66,40 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tvs-3o-2cY">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <subviews>
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I6e-uj-dlA">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        </scrollView>
+                                    </subviews>
                                     <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="I6e-uj-dlA" secondAttribute="trailing" id="ClA-uy-ttz"/>
+                                        <constraint firstItem="I6e-uj-dlA" firstAttribute="top" secondItem="Tvs-3o-2cY" secondAttribute="top" id="fV3-Z8-SaT"/>
+                                        <constraint firstAttribute="bottom" secondItem="I6e-uj-dlA" secondAttribute="bottom" id="nvB-si-jcw"/>
+                                        <constraint firstItem="I6e-uj-dlA" firstAttribute="leading" secondItem="Tvs-3o-2cY" secondAttribute="leading" id="qgf-Py-O5a"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="I6e-uj-dlA"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="ClA-uy-ttz"/>
+                                            <exclude reference="fV3-Z8-SaT"/>
+                                            <exclude reference="nvB-si-jcw"/>
+                                            <exclude reference="qgf-Py-O5a"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="I6e-uj-dlA"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="ClA-uy-ttz"/>
+                                            <include reference="fV3-Z8-SaT"/>
+                                            <include reference="nvB-si-jcw"/>
+                                            <include reference="qgf-Py-O5a"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" red="0.70317978112491775" green="1" blue="0.68747983628690423" alpha="1" colorSpace="calibratedRGB"/>

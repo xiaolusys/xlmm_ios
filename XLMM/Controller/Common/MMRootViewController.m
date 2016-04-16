@@ -370,6 +370,10 @@
 }
 
 - (void)createCollectionView {
+    //设置collectionViewScrollview属性
+    self.collectionViewScrollview.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
+    self.collectionViewScrollview.pagingEnabled = YES;
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
     flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
@@ -382,7 +386,7 @@
 
     self.homeCollectionView.backgroundColor = [UIColor whiteColor];
     
-    [self.collectionView addSubview:self.homeCollectionView];
+    [self.collectionViewScrollview addSubview:self.homeCollectionView];
     
     self.homeCollectionView.delegate = self;
     self.homeCollectionView.dataSource = self;
@@ -937,7 +941,7 @@
     
     NSLog(@"-----------%.2f", self.backScrollview.contentOffset.y);
     
-    if (scrollView.tag == 110 && scrollView.contentOffset.y < 374)return;
+    if ((scrollView.tag == 110 && scrollView.contentOffset.y < 374) || scrollView.tag == 111)return;
     
     self.homeCollectionView.scrollEnabled = YES;
     self.backScrollview.scrollEnabled = NO;
@@ -946,16 +950,10 @@
         self.homeCollectionView.scrollEnabled = NO;
         //下拉
         NSLog(@"下拉");
-//        CGFloat sizeheight = contentTopHeight- contentOffset.y;
-//        self.bottomImageViewHeight.constant = sizeheight;
-//        self.imageleading.constant = (contentOffset.y + distance)/2;
-//        self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
     if (scrollView.contentOffset.y > 0) {
         //上滑
         NSLog(@"上滑");
-//        self.imageViewTop.constant = -contentOffset.y/3;
-//        self.imageBottom.constant = (contentOffset.y)/3;
     }
 
 }
