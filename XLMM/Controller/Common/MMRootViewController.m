@@ -33,7 +33,9 @@
 #import "NSString+URL.h"
 #import "TuihuoViewController.h"
 #import "MMAdvertiseView.h"
+#import "SVProgressHUD.h"
 
+#import "PicCollectionViewCell.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -42,6 +44,8 @@
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+#define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
@@ -74,6 +78,9 @@
 //@property (nonatomic, strong)UIView *bannerView;
 //@property (nonatomic, strong)UIView *childAndWomanView;
 //@property (nonatomic, strong)UIView *goodsView;
+
+@property (nonatomic, strong)UICollectionView *homeCollectionView;
+
 @end
 
 @implementation MMRootViewController
@@ -289,15 +296,9 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-  
-    if (_isFirst) {
-
-    }else{
-        
-//        UIView *cartView = [_view viewWithTag:123];
-//        cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
-    }
-
+    
+    self.backScrollview.delegate = self;
+    self.categoryViewHeight.constant = SCREENHEIGHT + 64;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -344,6 +345,9 @@
 //    [self creatPageData];
     
     //[self islogin];
+    
+    [self createCollectionView];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
     } else {
@@ -365,11 +369,69 @@
     
 }
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
+- (void)createCollectionView {
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
+    flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+    flowLayout.minimumInteritemSpacing = 5;
+    flowLayout.minimumLineSpacing = 5;
     
-    self.categoryViewHeight.constant = 1000.0;
+    
+    self.homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
+    self.homeCollectionView.scrollEnabled = NO;
+
+    self.homeCollectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.collectionView addSubview:self.homeCollectionView];
+    
+    self.homeCollectionView.delegate = self;
+    self.homeCollectionView.dataSource = self;
+    
+    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
+//    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
+//    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
+//    
+//    [SVProgressHUD showWithStatus:@"正在加载..."];
+    //网络请求
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+//        NSArray *arrPic = responseObject;
+//        [self requestData:arrPic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //未登录处理
+        //        [self showDefaultView];
+    }];
 }
+
+#pragma mark --collection的代理
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 5;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 8;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(SCREENWIDTH, 30);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH-15) * 0.5 * 8/6 + 60);
+}
+
+//- (void)updateViewConstraints {
+//    [super updateViewConstraints];
+//    
+//    self.categoryViewHeight.constant = 1000;
+//}
 
 //- (void)createBanner {
 //    UIView *bannerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
@@ -653,7 +715,7 @@
 #pragma mark 生成pageController数据。。。
 - (void)creatPageData{
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = _view.bounds;
+    _pageVC.view.frame = self.collectionView.bounds;
     _pageVC.view.userInteractionEnabled = YES;
     _pageVC.dataSource = self;
     _pageVC.delegate = self;
@@ -674,7 +736,8 @@
     _pageContentVC = @[todayVC, preVC, childVC, womanVC];
     [_pageVC setViewControllers:@[todayVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:_pageVC];
-    [_view addSubview:_pageVC.view];
+    [self.collectionView addSubview:_pageVC.view];
+//    [_view addSubview:_pageVC.view];
     [self createCartsView];
     [_pageVC didMoveToParentViewController:self];
     for (UIView *v in  _pageVC.view.subviews) {
@@ -865,12 +928,36 @@
 */
 
 #pragma mark UIscrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    NSLog(@"hahahah");
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_currentIndex == 0) {
-        scrollView.bounces = NO;
-    } else{
-        scrollView.bounces = YES;
+    
+    
+    NSLog(@"-----------%.2f", self.backScrollview.contentOffset.y);
+    
+    if (scrollView.tag == 110 && scrollView.contentOffset.y < 374)return;
+    
+    self.homeCollectionView.scrollEnabled = YES;
+    self.backScrollview.scrollEnabled = NO;
+    if (scrollView.contentOffset.y <= 0) {
+        self.backScrollview.scrollEnabled = YES;
+        self.homeCollectionView.scrollEnabled = NO;
+        //下拉
+        NSLog(@"下拉");
+//        CGFloat sizeheight = contentTopHeight- contentOffset.y;
+//        self.bottomImageViewHeight.constant = sizeheight;
+//        self.imageleading.constant = (contentOffset.y + distance)/2;
+//        self.imageTrailing.constant = (contentOffset.y + distance)/2;
     }
+    if (scrollView.contentOffset.y > 0) {
+        //上滑
+        NSLog(@"上滑");
+//        self.imageViewTop.constant = -contentOffset.y/3;
+//        self.imageBottom.constant = (contentOffset.y)/3;
+    }
+
 }
 
 #pragma mark 左滑进入个人中心界面
