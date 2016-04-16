@@ -69,36 +69,36 @@
 @property (nonatomic, strong)NSString *imageUrl;
 
 //新页面属性
-@property (nonatomic, strong)UIScrollView *backScrollview;
-@property (nonatomic, strong)UIView *aboveView;
+//@property (nonatomic, strong)UIScrollView *backScrollview;
+//@property (nonatomic, strong)UIView *aboveView;
 //@property (nonatomic, strong)UIView *bannerView;
 //@property (nonatomic, strong)UIView *childAndWomanView;
-@property (nonatomic, strong)UIView *goodsView;
+//@property (nonatomic, strong)UIView *goodsView;
 @end
 
 @implementation MMRootViewController
 
-- (UIScrollView *)backScrollview {
-    if (!_backScrollview) {
-        self.backScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT)];
-    }
-    return _backScrollview;
-}
-
-- (UIView *)aboveView {
-    if (!_aboveView) {
-        self.aboveView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, ABOVEHIGHT)];
-    }
-    return _aboveView;
-}
-
-- (UIView *)goodsView {
-    if (!_goodsView) {
-        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
-    }
-    return _goodsView;
-}
-
+//- (UIScrollView *)backScrollview {
+//    if (!_backScrollview) {
+//        self.backScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT)];
+//    }
+//    return _backScrollview;
+//}
+//
+//- (UIView *)aboveView {
+//    if (!_aboveView) {
+//        self.aboveView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, ABOVEHIGHT)];
+//    }
+//    return _aboveView;
+//}
+//
+//- (UIView *)goodsView {
+//    if (!_goodsView) {
+//        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
+//    }
+//    return _goodsView;
+//}
+//
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -336,8 +336,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
-    [self.view addSubview:_view];
     _pageCurrentIndex = 0;
     
     
@@ -367,19 +365,25 @@
     
 }
 
-- (void)createBanner {
-    UIView *bannerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
-    bannerView.backgroundColor = [UIColor redColor];
-    [self.aboveView addSubview:bannerView];
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
     
-    UIView *childAndWomanView = [[UIView alloc] initWithFrame:CGRectMake(0, 180, SCREENWIDTH, 120)];
-    childAndWomanView.backgroundColor = [UIColor greenColor];
-    [self.aboveView addSubview:childAndWomanView];
-    //创建童装和女装
-    
-    //创建分类
-    
+    self.categoryViewHeight.constant = 1000.0;
 }
+
+//- (void)createBanner {
+//    UIView *bannerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+//    bannerView.backgroundColor = [UIColor redColor];
+//    [self.aboveView addSubview:bannerView];
+//    
+//    UIView *childAndWomanView = [[UIView alloc] initWithFrame:CGRectMake(0, 180, SCREENWIDTH, 120)];
+//    childAndWomanView.backgroundColor = [UIColor greenColor];
+//    [self.aboveView addSubview:childAndWomanView];
+//    //创建童装和女装
+//    
+//    //创建分类
+//    
+//}
 
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];

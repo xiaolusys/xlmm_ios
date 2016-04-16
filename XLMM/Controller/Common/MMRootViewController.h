@@ -18,4 +18,14 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
+
+@property (weak, nonatomic) IBOutlet UIScrollView *backScrollview;
+@property (weak, nonatomic) IBOutlet UIView *aboveView;
+@property (weak, nonatomic) IBOutlet UIView *brandView;
+@property (weak, nonatomic) IBOutlet UIView *categoryView;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
+
+
 @end

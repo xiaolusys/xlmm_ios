@@ -7,6 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMRootViewController">
             <connections>
+                <outlet property="aboveView" destination="xRi-aW-krT" id="Rs0-KM-Gxw"/>
+                <outlet property="backScrollview" destination="10F-pu-z61" id="8ci-FR-DXW"/>
+                <outlet property="brandView" destination="lbE-SI-q4D" id="Ecx-KL-Q9p"/>
+                <outlet property="categoryView" destination="YDK-Oo-Z7L" id="dJP-ke-P6K"/>
+                <outlet property="categoryViewHeight" destination="Yvf-yh-AHJ" id="ai6-BU-1P1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,31 +27,79 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="128"/>
                             <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="128" id="YN1-Bf-1Bd"/>
+                                <constraint firstAttribute="height" constant="128" id="YN1-Bf-1Bd">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="300"/>
+                                </constraint>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
                             <rect key="frame" x="0.0" y="128" width="320" height="300"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="0.051865301029999998" blue="0.085083512190000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="300" id="qeY-6g-9tx"/>
+                                <constraint firstAttribute="height" constant="300" id="qeY-6g-9tx">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                </constraint>
                             </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDK-Oo-Z7L">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <color key="backgroundColor" red="0.70317978112491775" green="1" blue="0.68747983628690423" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="Yvf-yh-AHJ">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                </constraint>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Yvf-yh-AHJ"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="Yvf-yh-AHJ"/>
+                                </mask>
+                            </variation>
                         </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="lbE-SI-q4D" secondAttribute="trailing" id="1ez-MU-V69"/>
                         <constraint firstItem="xRi-aW-krT" firstAttribute="leading" secondItem="10F-pu-z61" secondAttribute="leading" id="Aay-qw-r7M"/>
+                        <constraint firstItem="YDK-Oo-Z7L" firstAttribute="top" secondItem="lbE-SI-q4D" secondAttribute="bottom" id="DG5-iI-bDa"/>
                         <constraint firstItem="xRi-aW-krT" firstAttribute="top" secondItem="10F-pu-z61" secondAttribute="top" id="Hdd-fD-olf"/>
                         <constraint firstItem="lbE-SI-q4D" firstAttribute="top" secondItem="xRi-aW-krT" secondAttribute="bottom" id="JhS-wu-fmw"/>
                         <constraint firstItem="lbE-SI-q4D" firstAttribute="leading" secondItem="10F-pu-z61" secondAttribute="leading" id="M5S-DN-nXr"/>
                         <constraint firstAttribute="trailing" secondItem="xRi-aW-krT" secondAttribute="trailing" id="PFk-Yi-i5Z"/>
                         <constraint firstAttribute="trailing" secondItem="xRi-aW-krT" secondAttribute="trailing" id="R7Q-iE-Ga6"/>
+                        <constraint firstAttribute="bottom" secondItem="YDK-Oo-Z7L" secondAttribute="bottom" constant="10" id="es6-aP-BAR">
+                            <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="YDK-Oo-Z7L" secondAttribute="trailing" id="g5R-ns-GdD"/>
                         <constraint firstAttribute="bottom" secondItem="lbE-SI-q4D" secondAttribute="bottom" constant="5" id="jMK-L2-xG5"/>
+                        <constraint firstItem="YDK-Oo-Z7L" firstAttribute="leading" secondItem="10F-pu-z61" secondAttribute="leading" id="keA-o0-qxM"/>
                         <constraint firstItem="xRi-aW-krT" firstAttribute="centerX" secondItem="10F-pu-z61" secondAttribute="centerX" id="vMK-qL-5gg"/>
                     </constraints>
                     <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="YDK-Oo-Z7L"/>
+                        </mask>
                         <mask key="constraints">
                             <exclude reference="R7Q-iE-Ga6"/>
+                            <exclude reference="DG5-iI-bDa"/>
+                            <exclude reference="es6-aP-BAR"/>
+                            <exclude reference="g5R-ns-GdD"/>
+                            <exclude reference="keA-o0-qxM"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="subviews">
+                            <include reference="YDK-Oo-Z7L"/>
+                        </mask>
+                        <mask key="constraints">
+                            <exclude reference="jMK-L2-xG5"/>
+                            <include reference="DG5-iI-bDa"/>
+                            <include reference="es6-aP-BAR"/>
+                            <include reference="g5R-ns-GdD"/>
+                            <include reference="keA-o0-qxM"/>
                         </mask>
                     </variation>
                 </scrollView>
