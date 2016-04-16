@@ -32,10 +32,11 @@
 #import "ActivityView.h"
 #import "NSString+URL.h"
 #import "TuihuoViewController.h"
+#import "MMAdvertiseView.h"
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
-
+#define ABOVEHIGHT 300
 
 
 
@@ -67,9 +68,36 @@
 
 @property (nonatomic, strong)NSString *imageUrl;
 
+//新页面属性
+@property (nonatomic, strong)UIScrollView *backScrollview;
+@property (nonatomic, strong)UIView *aboveView;
+//@property (nonatomic, strong)UIView *bannerView;
+//@property (nonatomic, strong)UIView *childAndWomanView;
+@property (nonatomic, strong)UIView *goodsView;
 @end
 
 @implementation MMRootViewController
+
+- (UIScrollView *)backScrollview {
+    if (!_backScrollview) {
+        self.backScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _backScrollview;
+}
+
+- (UIView *)aboveView {
+    if (!_aboveView) {
+        self.aboveView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, ABOVEHIGHT)];
+    }
+    return _aboveView;
+}
+
+- (UIView *)goodsView {
+    if (!_goodsView) {
+        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
+    }
+    return _goodsView;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -84,17 +112,7 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-  //  NSLog(@"微信登录");\
-    
-    
-//    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
-//    if (login.isxlmm) {
-//        [self createRightItem];
-//    } else {
-//          self.navigationItem.rightBarButtonItem = nil;
-//    }
-
-  
+  // 微信登录
     if ([self loginUpdateIsXiaoluMaMa]) {
         [self createRightItem];
     } else{
@@ -300,26 +318,7 @@
 {
     [super viewDidLoad];
     
-//    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
-//    }
-    
     self.timeCount = 0;
-    //启动活动页
-//    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    [window addSubview:self.startV];
-    
-//    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject) return;
-//        if (responseObject[@"picture"] == nil)return;
-//        [self startDeal:responseObject];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
-    
     
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
@@ -344,7 +343,7 @@
     
     [self createInfo];
     
-    [self creatPageData];
+//    [self creatPageData];
     
     //[self islogin];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -354,6 +353,32 @@
     }
 //    
 //    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+    
+    //创建新的页面
+//    self.backScrollview.contentSize = CGSizeMake(0, 1000);
+//    [self.view addSubview:self.backScrollview];
+//    
+////    [self createBanner];
+//    
+//    [self.backScrollview addSubview:self.aboveView];
+//    [self.backScrollview addSubview:self.goodsView];
+//    self.goodsView.backgroundColor = [UIColor redColor];
+//    self.aboveView.backgroundColor = [UIColor yellowColor];
+    
+}
+
+- (void)createBanner {
+    UIView *bannerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+    bannerView.backgroundColor = [UIColor redColor];
+    [self.aboveView addSubview:bannerView];
+    
+    UIView *childAndWomanView = [[UIView alloc] initWithFrame:CGRectMake(0, 180, SCREENWIDTH, 120)];
+    childAndWomanView.backgroundColor = [UIColor greenColor];
+    [self.aboveView addSubview:childAndWomanView];
+    //创建童装和女装
+    
+    //创建分类
+    
 }
 
 - (void)startDeal:(NSDictionary *)dic {

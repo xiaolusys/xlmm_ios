@@ -18,6 +18,8 @@
 #import "MobClick.h"
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
+#import "HomeViewController.h"
+
 #define login @"login"
 #import "NSString+URL.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
@@ -123,9 +125,6 @@
 
     }
     
-    
-   
-
     self.isFirst = YES;
    [MiPushSDK registerMiPush:self type:0 connect:YES];
 
@@ -177,13 +176,13 @@
     
     //创建导航控制器，添加根视图控制器
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+//    MMRootViewController *root = [[MMRootViewController alloc] init];
+//    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
 //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
 //    // 设置代理
-//    
-//    
-//    leftMenu.pushVCDelegate = root;
+//
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
 //    leftMenu.push
 

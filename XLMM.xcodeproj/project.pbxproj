@@ -622,6 +622,8 @@
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
 		1F074FF01CBB9EE5008A03FC /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FEF1CBB9EE5008A03FC /* detail.png */; };
 		1F0AC6E51CB3A831001F21D7 /* defaultPig.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0AC6E41CB3A831001F21D7 /* defaultPig.png */; };
+		1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7395991CC0C945000F9D94 /* HomeViewController.m */; };
+		1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F73959A1CC0C945000F9D94 /* HomeViewController.xib */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
 		1F88D5791CB67DCC0050A2E2 /* iPhone4S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */; };
 		1F88D57A1CB67DCC0050A2E2 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */; };
@@ -1642,6 +1644,9 @@
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
 		1F074FEF1CBB9EE5008A03FC /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
 		1F0AC6E41CB3A831001F21D7 /* defaultPig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPig.png; sourceTree = "<group>"; };
+		1F7395981CC0C945000F9D94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		1F7395991CC0C945000F9D94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		1F73959A1CC0C945000F9D94 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
 		1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone4S@2x.png"; sourceTree = "<group>"; };
 		1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
@@ -2212,6 +2217,9 @@
 				1830710A1C97BE3700B7665E /* MMRootViewController.h */,
 				1830710B1C97BE3700B7665E /* MMRootViewController.m */,
 				1830710C1C97BE3700B7665E /* MMRootViewController.xib */,
+				1F7395981CC0C945000F9D94 /* HomeViewController.h */,
+				1F7395991CC0C945000F9D94 /* HomeViewController.m */,
+				1F73959A1CC0C945000F9D94 /* HomeViewController.xib */,
 				1830710D1C97BE3700B7665E /* PostersViewController.h */,
 				1830710E1C97BE3700B7665E /* PostersViewController.m */,
 				1830710F1C97BE3700B7665E /* PostersViewController.xib */,
@@ -4023,6 +4031,7 @@
 				183075D81C97D49A00B7665E /* totalClick.png in Resources */,
 				1830767E1C97D49A00B7665E /* 圈圈加载0042.png in Resources */,
 				183072361C97BE3700B7665E /* AddYouhuiquanViewController.xib in Resources */,
+				1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */,
 				183071F51C97BE3700B7665E /* TiaoKuanViewController.xib in Resources */,
 				183071EF1C97BE3700B7665E /* RegisterViewController.xib in Resources */,
 				183071D41C97BE3700B7665E /* LiJiGMViewController1.xib in Resources */,
@@ -4363,6 +4372,7 @@
 				183071FB1C97BE3700B7665E /* MaMaCarryLogViewController.m in Sources */,
 				183073D61C97D17800B7665E /* UIColor+FSPalette.m in Sources */,
 				183070EC1C97B83900B7665E /* AccountModel.m in Sources */,
+				1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */,
 				183073F01C97D17800B7665E /* MJRefreshAutoNormalFooter.m in Sources */,
 				183070DF1C97B83900B7665E /* PromoteModel.m in Sources */,
 				183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */,
