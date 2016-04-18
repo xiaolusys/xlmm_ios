@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UIView *collectionView;
 @property (weak, nonatomic) IBOutlet UIScrollView *collectionViewScrollview;
 
+@property (weak, nonatomic) IBOutlet UIView *bannerView;
+
+
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *brandViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
