@@ -61,7 +61,7 @@
 
 #if 0
 //#define Root_URL @"http://192.168.1.57:8000"
-#define Root_URL @"http://192.168.1.31:9000"
+//#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://192.168.1.13:8000"
 //#define Root_URL @"http://192.168.1.11:9000"
 //#define Root_URL @"http://dev.xiaolumeimei.com"
@@ -111,7 +111,7 @@
 
 //加载的webView链接
 #define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
-#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/fag", Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
 
 #endif
 
