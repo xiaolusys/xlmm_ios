@@ -31,6 +31,7 @@
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
 #import "NSString+URL.h"
+#import "TuihuoViewController.h"
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -83,7 +84,8 @@
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-  //  NSLog(@"微信登录");
+  //  NSLog(@"微信登录");\
+    
     
 //    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
 //    if (login.isxlmm) {
@@ -190,14 +192,8 @@
         youhuiVC.isSelectedYHQ = NO;
         [self.navigationController pushViewController:youhuiVC animated:YES];
         
-        
-        
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-        
         //  跳转到小鹿妈妈界面。。。
-        
-        
-        
         MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
         [self.navigationController pushViewController:ma animated:YES];
         
@@ -209,6 +205,11 @@
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [self.navigationController pushViewController:publish animated:YES];
         
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+        //跳转到退款退货列表
+        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        [self.navigationController pushViewController:tuihuoVC animated:YES];
+        
     }else {
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
@@ -218,8 +219,6 @@
         if ([firstparam isEqualToString:@"model_id"]) {
             NSLog(@"跳到集合页面");
             NSLog(@"model_id = %@", [params lastObject]);
-            
-            
             MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
             
             [self.navigationController pushViewController:collectionVC animated:YES];
@@ -289,9 +288,6 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
-    
-
-    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -356,8 +352,8 @@
     } else {
         NSLog(@"no login");
     }
-    
-    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+//    
+//    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
 }
 
 - (void)startDeal:(NSDictionary *)dic {
@@ -455,51 +451,33 @@
     NSString *noncestr = [NSString stringWithFormat:@"%@%@", timeSp, randomstring];
     //获得参数，升序排列
     NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
- //   NSLog(@"1.————》%@", sign_params);
     
     NSString *sign = [sign_params sha1];
-    NSString *dict;
-    
- //   NSLog(@"sign = %@", sign);
-    
     
     //http://m.xiaolu.so/rest/v1/register/wxapp_login
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
-    NSURL *url = [NSURL URLWithString:urlString];
-   // NSLog(@"urlString = %@", urlString);
-    if (url == nil) {
-        return;
-    }
-    
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
-    
-    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
-    
-  //  NSLog(@"params = %@", dict);
-    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    if (data == nil) {
-        return;
-    }
-    [postRequest setHTTPBody:data];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    
-    
-    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-    if (data2 == nil) {
-        return;
-    }
-  __unused  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
-    
-    
-   // NSLog(@"dictionary = %@", dictionary);
-    
-    //   http://m.xiaolu.so/rest/v1/users/need_set_info
-    
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setBool:YES forKey:@"login"];
-    [userdefaults synchronize];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
+//
+    NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
+                             @"nickname":[dic objectForKey:@"nickname"],
+                             @"openid":[dic objectForKey:@"openid"],
+                             @"unionid":[dic objectForKey:@"unionid"],
+                             @"devtype":LOGINDEVTYPE};
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject){
+        
+        NSDictionary *result = responseObject;
+        if (result.count == 0) return;
+        if ([[result objectForKey:@"rcode"]integerValue] != 0) {
+            return;
+        }
+        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+        [userdefaults setBool:YES forKey:@"login"];
+        [userdefaults synchronize];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 
 }
 
@@ -520,8 +498,6 @@
                                  @"password":password
                                  };
     
-    
-    
     [manager POST:kLOGIN_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //  NSError *error;
@@ -539,9 +515,8 @@
 }
 
 - (void)autologin{
-    
-   
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *loginMethon = [defaults objectForKey:kLoginMethod];
     if ([loginMethon isEqualToString:kWeiXinLogin]) {
       //  NSLog(@"微信登录");

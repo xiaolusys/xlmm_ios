@@ -24,6 +24,7 @@
 
 - (void)fillDataOfCell:(AccountModel *)accountM {
     //budget_type 0收入1支出
+    self.statusLabel.text = accountM.get_status_display;
     self.timeLabel.text = accountM.budget_date;
     self.sourceLabel.text = accountM.desc;
     

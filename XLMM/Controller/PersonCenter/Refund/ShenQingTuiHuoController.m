@@ -731,84 +731,47 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 88) {
-        if (buttonIndex == 0) {
-            NSLog(@"0000");
-        } else if (buttonIndex == 1)
-        {
-            //  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-            NSLog(@"urlstring = %@", urlString);
-            
-            
-            NSURL *url = [NSURL URLWithString:urlString];
-            
-            //第二步，创建请求
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-            
-            [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-            
-            //     NSDictionary *parameters = @{@"id":self.oid,
-            //                                         @"reason":[NSNumber numberWithInt:(int)self.reasonnumber],
-            //                                         @"num":self.number.text,
-            //                                         @"sum_price":self.myTextField2.text,
-            //                                         @"description":self.myTextView.text
-            //                                         };
-            //[NSString stringWithFormat:@"",]
-            NSString *descStr;
-            if ([self.inputTextView.text isEqualToString:@""]) {
-                descStr = @"七天无理由退货";
-                
-            }
-          
-            NSMutableString *linkstr = [[NSMutableString alloc] init];
-            for (int i = 0; i < self.imagesArray.count; i++) {
-                [linkstr appendString:self.linksArray[i]];
-                [linkstr appendString:@","];
-            }
-            
-            NSRange range = {linkstr.length - 1, 1};
-            if (linkstr.length >0 ) {
-                [linkstr deleteCharactersInRange:range];
-                
-            }
-            NSLog(@"str = %@", linkstr);
-            
-            NSString *str =[NSString stringWithFormat:@"id=%@&reason=%@&num=%@&sum_price=%@&description=%@&proof_pic=%@",self.oid, [NSNumber numberWithInt:reasonCode], self.refundNumLabel.text, [NSNumber numberWithFloat:self.refundPrice], descStr, linkstr];//设置参数
-            NSLog(@"params = %@", str);
-            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-            
-            [request setHTTPBody:data];
-            
-            //第三步，连接服务器
-            
-            
-            
-            NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-            NSError *error = nil;
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:&error];
-            if (error != nil) {
-                NSLog(@"%@", error);
-            } else{
-                NSLog(@"dic = %@", dic);
-            }
-            
-            
-            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-                
-            }
-            
-            __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-            
-            
-            
-            NSLog(@"000000%@",str1);
+    if (alertView.tag != 88) return;
+    if (buttonIndex == 1){
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+        NSString *descStr;
+        if ([self.inputTextView.text isEqualToString:@""]) {
+            descStr = @"七天无理由退货";
         }
         
+        NSMutableString *linkstr = [[NSMutableString alloc] init];
+        for (int i = 0; i < self.imagesArray.count; i++) {
+            [linkstr appendString:self.linksArray[i]];
+            [linkstr appendString:@","];
+        }
+        
+        NSRange range = {linkstr.length - 1, 1};
+        if (linkstr.length >0 ) {
+            [linkstr deleteCharactersInRange:range];
+            
+        }
+        NSLog(@"str = %@", linkstr);
+        
+        NSDictionary *parameters = @{@"id":self.oid,
+                                     @"reason":[NSNumber numberWithInt:reasonCode],
+                                     @"num":self.refundNumLabel.text,
+                                     @"sum_price":[NSNumber numberWithFloat:self.refundPrice],
+                                     @"description":descStr,
+                                     @"proof_pic":linkstr,
+                                     };
+        
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dic = responseObject;
+            if (dic.count == 0) return;
+            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
     }
+
 }
 
 

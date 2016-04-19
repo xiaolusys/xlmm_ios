@@ -19,8 +19,10 @@
 #import "WXLoginController.h"
 #import "MiPushSDK.h"
 #import "MobClick.h"
-#define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #import "SVProgressHUD.h"
+#import "AFNetworking.h"
+
+#define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 @interface LogInViewController ()
 
@@ -114,14 +116,11 @@
 - (void)update:(NSNotificationCenter *)notification{
     NSLog(@"微信一键登录成功， 请您绑定手机号");
     
-    
-    
     dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     NSLog(@"用户信息 = %@", dic);
     //微信登录 hash算法。。。。
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
-    NSLog(@"count = %lu", count);
     int index = 0;
     
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
@@ -144,116 +143,85 @@
     NSLog(@"1.————》%@", sign_params);
     
     NSString *sign = [sign_params sha1];
-    NSString *dict;
     
     NSLog(@"sign = %@", sign);
     
     
     //http://m.xiaolu.so/rest/v1/register/wxapp_login
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/register/wxapp_login?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSLog(@"urlString = %@", urlString);
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
     
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
+                             @"nickname":[dic objectForKey:@"nickname"],
+                             @"openid":[dic objectForKey:@"openid"],
+                             @"unionid":[dic objectForKey:@"unionid"],
+                             @"devtype":LOGINDEVTYPE};
     
-    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"]];
+//    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
     
-    NSLog(@"params = %@", dict);
-    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    [postRequest setHTTPBody:data];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
+    NSLog(@"params = %@", newDic);
+//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+//    [postRequest setHTTPBody:data];
+//    [postRequest setHTTPMethod:@"POST"];
+//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+//   
+//    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+//
+//    if ([[dictionary objectForKey:@"rcode"] integerValue] != 0 || dictionary.count == 0 || [dictionary class] == [NSNull null]) {
+//        [self alertMessage:[dictionary objectForKey:@"msg"]];
+//        return;
+//    }
 
+//    NSLog(@"msg = %@", [dictionary objectForKey:@"msg"]);
+//    NSLog(@"dictionary = %@", dictionary);
     
-    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
     
-    
-    NSLog(@"dictionary = %@", dictionary);
-    
-    //   http://m.xiaolu.so/rest/v1/users/need_set_info
-    
-    if ([[dictionary objectForKey:@"info"] isKindOfClass:[NSDictionary class]]) {
-        
-        if ([[[dictionary objectForKey:@"info"] objectForKey:@"mobile"] isEqualToString:@""]) {
-//            NSLog(@"未绑定手机号码");
-            isBangding = NO;
-//            
-//            NSLog(@"%@", [dictionary objectForKey:@"info"]);
-//            NSLog(@"11isBangDing = %d", isBangding);
-            
-            
-        } else {
-//            NSLog(@"22已绑定手机号码");
-            isBangding = YES;
-            
-            phoneNumber = [[dictionary objectForKey:@"info"] objectForKey:@"mobile"];
-//            NSLog(@"%@", phoneNumber);
-//            NSLog(@"22isBangDing = %d", isBangding);
-            //  http://m.xiaolu.so/rest/v1/users/need_set_info
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/need_set_info", Root_URL];
-            NSLog(@"string = %@", string);
-            NSError *error = nil;
-            
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string] options:NSDataReadingMapped error:&error];
-            if (error == nil) {
-                NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-                if (error == nil) {
-               
-                    NSLog(@"%@", result);
-                    if ([[result objectForKey:@"result"] isEqualToString:@"1"]) {
-                        isSettingPsd = NO;
-                    } else {
-                        isSettingPsd = YES;
-                    }
-                } else {
-                    NSLog(@"jsonError = %@", error);
-                }
-               
-            } else {
-                NSLog(@"dataError = %@", error);
-            }
-            
-            
-           
-            
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *result = responseObject;
+        if (result.count == 0) return;
+        if ([[result objectForKey:@"rcode"]integerValue] != 0) {
+            [self alertMessage:[result objectForKey:@"msg"]];
+            return;
         }
-    }
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setBool:YES forKey:@"login"];
-    [userdefaults synchronize];
-    [self loginSuccessful];
+        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+        [userdefaults setBool:YES forKey:@"login"];
+        [userdefaults synchronize];
+        [self loginSuccessful];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
 }
 
 - (void) loginSuccessful {
     [MobClick profileSignInWithPUID:@"playerID"];
-    
     
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
     
     [self setDevice];
-    NSLog(@"33isBangDing = %d", isBangding);
-    if (isBangding) {
-        NSLog(@"跳转首页");
-        if (isSettingPsd == YES) {
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        } else {
-            
-            NSLog(@"请绑定手机");
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil phoneNumber:phoneNumber];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
-        }
-    } else {
-        NSLog(@"请绑定手机");
-        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-        wxloginVC.userInfo = dic;
-        [self.navigationController pushViewController:wxloginVC animated:YES];
-    }
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    if (isBangding) {
+//        NSLog(@"跳转首页");
+//        if (isSettingPsd == YES) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//            
+//        } else {
+//            
+//            NSLog(@"请绑定手机");
+//            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil phoneNumber:phoneNumber];
+//            wxloginVC.userInfo = dic;
+//            [self.navigationController pushViewController:wxloginVC animated:YES];
+//        }
+//    } else {
+//        NSLog(@"请绑定手机");
+//        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+//        wxloginVC.userInfo = dic;
+//        [self.navigationController pushViewController:wxloginVC animated:YES];
+//    }
 }
 
 
@@ -315,79 +283,47 @@
 }
 
 - (IBAction)loginClicked:(UIButton *)sender {
-
-//    [MobClick profileSignInWithPUID:@"playerID"];
-    
-    NSLog(@"登录");
+    NSString *userName = _userIDTextField.text;
+    NSString *password = _passwordTextField.text;
+    if (userName.length == 0 || password.length == 0) {
+        [self alertMessage:@"用户名或者密码为空呢"];
+        return;
+    }
     
     [SVProgressHUD showInfoWithStatus:@"登录中....."];
     
-    
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *userName = _userIDTextField.text;
-    NSString *password = _passwordTextField.text;
-    
-    NSLog(@"userName : %@, password : %@", userName, password);
-    
-    
     NSDictionary *parameters = @{@"username":userName,
-                                 @"password":password
-                                 };
-   
-    
-    
-    [manager POST:kLOGIN_URL parameters:parameters
+                                 @"password":password,
+                                 @"devtype":LOGINDEVTYPE};
+
+    [manager POST:TPasswordLogin_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
               
-              if ([[responseObject objectForKey:@"result"] isEqualToString:@"null"]) {
-              }
-              // result = null;
-              
-              //  result = "u_error";
-              //  result = "p_error";
-              
-              if ([[responseObject objectForKey:@"result"] isEqualToString:@"u_error"]) {
-                  [self alertMessage:@"用户名或密码错误!"];
-              }
-              if ([[responseObject objectForKey:@"result"] isEqualToString:@"p_error"]) {
-                  [self alertMessage:@"用户名或密码错误!"];
-              }
-              if ([[responseObject objectForKey:@"result"] isEqualToString:@"no_pwd"]) {
-                  [self alertMessage:@"未设置密码，请用短信验证登录!"];
-              }
-              
-              if ([[responseObject objectForKey:@"result"] isEqualToString:@"login"]) {
-                  NSLog(@"succeed");
-                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                  // 手机登录成功 ，保存用户信息以及登录途径
-                  [defaults setBool:YES forKey:kIsLogin];
-                  
-                  NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
-                                             kPassWord:self.passwordTextField.text};
-                  [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
-                  
-                  [defaults setObject:kPhoneLogin forKey:kLoginMethod];
-                  [defaults synchronize];
-                  // 发送手机号码登录成功的通知
-                  
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-                  
-                  
-                 
-                  [self setDevice];
-                  [self.navigationController popViewControllerAnimated:NO];
+              if ([[responseObject objectForKey:@"rcode"] integerValue] != 0){
+                  [self alertMessage:[responseObject objectForKey:@"msg"]];
                   return ;
               }
-           
               
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+              // 手机登录成功 ，保存用户信息以及登录途径
+              [defaults setBool:YES forKey:kIsLogin];
+              
+              NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
+                                         kPassWord:self.passwordTextField.text};
+              [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
+              
+              [defaults setObject:kPhoneLogin forKey:kLoginMethod];
+              [defaults synchronize];
+              // 发送手机号码登录成功的通知
+              
+              [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+              
+              [self setDevice];
+              [self.navigationController popViewControllerAnimated:NO];
+              
+          }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
-              
-              
           }];
 }
 
@@ -395,12 +331,8 @@
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    
-    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-    
-    
-    
+
     NSLog(@"urlStr = %@", urlString);
     NSLog(@"params = %@", params);
     
@@ -415,8 +347,6 @@
               } else {
                   [MiPushSDK setAccount:user_account];
               }
-              
-              
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -435,7 +365,6 @@
 }
 
 - (IBAction)forgetPasswordClicked:(UIButton *)sender {
-    NSLog(@"忘记密码");
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
@@ -443,7 +372,6 @@
 
 - (IBAction)registerClicked:(UIButton *)sender {
     //登录界面进入手机注册界面
-    NSLog(@"注册");
     
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     
@@ -454,7 +382,7 @@
 
 - (IBAction)verifyMessageClicked:(id)sender {
     
-    NSLog(@"短信验证");
+//    NSLog(@"短信验证");
     
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
     verifyVC.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};

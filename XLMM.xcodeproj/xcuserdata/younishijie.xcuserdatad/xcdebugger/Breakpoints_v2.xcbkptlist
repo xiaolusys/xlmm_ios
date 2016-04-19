@@ -904,11 +904,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
+            startingLineNumber = "1015"
+            endingLineNumber = "1015"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -920,11 +920,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "999"
-            endingLineNumber = "999"
+            startingLineNumber = "1003"
+            endingLineNumber = "1003"
             landmarkName = "-tapgesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -984,11 +984,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "926"
-            endingLineNumber = "926"
+            startingLineNumber = "930"
+            endingLineNumber = "930"
             landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1000,11 +1000,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "923"
-            endingLineNumber = "923"
+            startingLineNumber = "927"
+            endingLineNumber = "927"
             landmarkName = "-collectionView:layout:sizeForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1016,11 +1016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1138"
-            endingLineNumber = "1138"
+            startingLineNumber = "1142"
+            endingLineNumber = "1142"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1032,11 +1032,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1151"
-            endingLineNumber = "1151"
+            startingLineNumber = "1155"
+            endingLineNumber = "1155"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1064,11 +1064,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "481015371.4632"
+            timestampString = "481083773.714463"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "979"
-            endingLineNumber = "979"
+            startingLineNumber = "965"
+            endingLineNumber = "965"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1080,11 +1080,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "481015371.4632"
+            timestampString = "481083773.714463"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "962"
-            endingLineNumber = "962"
+            startingLineNumber = "969"
+            endingLineNumber = "969"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1096,27 +1096,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "481015371.4632"
+            timestampString = "481083773.714463"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "966"
-            endingLineNumber = "966"
-            landmarkName = "-prepareData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "481015371.4632"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "972"
-            endingLineNumber = "972"
+            startingLineNumber = "975"
+            endingLineNumber = "975"
             landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1415,22 +1399,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
-            timestampString = "481015371.4632"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "996"
-            endingLineNumber = "996"
-            landmarkName = "-prepareData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
             timestampString = "481003103.290753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -1607,11 +1575,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1623,11 +1591,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "582"
-            endingLineNumber = "582"
+            startingLineNumber = "584"
+            endingLineNumber = "584"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1639,11 +1607,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
+            startingLineNumber = "546"
+            endingLineNumber = "546"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1655,11 +1623,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
+            timestampString = "481094971.742366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "572"
-            endingLineNumber = "572"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
             landmarkName = "-fetchedPosterData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1843,38 +1811,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953341.68676"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
-            landmarkName = "-fetchActivities:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/Common/TodayViewController.m"
-            timestampString = "480953153.10225"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
-            landmarkName = "-fetchActivities:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1987,22 +1923,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XLMM/Controller/MaMaCenter/NewController/YixuanTableViewController.m"
-            timestampString = "481021226.60585"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "-tableView:moveRowAtIndexPath:toIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2044,7 +1964,39 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
             endingLineNumber = "120"
-            landmarkName = "-popview"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "481083755.244267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "937"
+            endingLineNumber = "937"
+            landmarkName = "-prepareData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XLMM/Controller/MaMaCenter/MaMaVersion1/MaMaPersonCenterViewController.m"
+            timestampString = "481083773.714463"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "941"
+            endingLineNumber = "941"
+            landmarkName = "-prepareData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

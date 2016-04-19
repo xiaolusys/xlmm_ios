@@ -313,18 +313,28 @@ static NSString *khuodongCell = @"HuodongCell";
         NSNumber *userNumber = [defaults objectForKey:@"activityid"];
         
         
+        
         if ([userNumber integerValue] == [activityID integerValue]) return;
         if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])) {
             NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
             
             //根据url获得图片并得到图片大小
-            SDWebImageManager *mage = [SDWebImageManager sharedManager];
-            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                [defaults setObject:activityID forKey:@"activityid"];
-                [self createActivityView:image];
-            }];
+//            SDWebImageManager *mage = [SDWebImageManager sharedManager];
+//            [mage downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//
+//                
+//                [defaults setObject:activityID forKey:@"activityid"];
+//                [self createActivityView:image];
+//            }];
+            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    [defaults setObject:activityID forKey:@"activityid"];
+                    [self createActivityView:image];
+                });
+            });
         }
     }
 
@@ -334,6 +344,8 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)createActivityView:(UIImage *)image {
     CGFloat imageWidth = image.size.width;
     CGFloat imageHeight = image.size.height;
+    [backView removeFromSuperview];
+    
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
@@ -352,7 +364,9 @@ static NSString *khuodongCell = @"HuodongCell";
     [backView addSubview:imageView];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake((SCREENWIDTH + imageWidth) * 0.5 - 30, (SCREENHEIGHT - imageHeight) * 0.5 - 30, 30, 30);
+    CGFloat imageMaxX = CGRectGetMaxX(imageView.frame);
+    CGFloat imageMinY = CGRectGetMinY(imageView.frame);
+    button.frame = CGRectMake(imageMaxX - 40, imageMinY, 40, 40);
     [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:button];
@@ -436,7 +450,7 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //设计倒计时方法。。。。
@@ -610,8 +624,9 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)guanbiClicked:(UIButton *)button{
+    
+    NSLog(@"guanbi");
     [backView removeFromSuperview];
-//    [activityView removeFromSuperview];
     
 }
 
@@ -619,6 +634,7 @@ static NSString *khuodongCell = @"HuodongCell";
     //统计进入活动页人数
     
     [MobClick event:@"activity"];
+      [backView removeFromSuperview];
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
@@ -965,14 +981,6 @@ static NSString *khuodongCell = @"HuodongCell";
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
   //  NSLog(@"22222");
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
-//    NSLog(@"view = %@", view);
-//    NSLog(@"%ld", view.currentImageIndex);
-//    NSInteger index = [view currentImageIndex];
-//    if (targetUrls.count >1) {
-//        NSString *urlString = [targetUrls objectAtIndex:index];
-//        NSLog(@"urlString = %@", urlString);
-//        
-//    }
     
     PosterModel *model = posterDataArray[view.currentImageIndex];
     
@@ -1293,7 +1301,7 @@ static NSString *khuodongCell = @"HuodongCell";
 }
 
 - (void)ishavemobel{
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject)return;
@@ -1316,132 +1324,8 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-        } else{
-          [MobClick event:@"activity"];
-            
-            huodongJson = self.activityArray[indexPath.row - 1];
-            login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-              
-                [self ishavemobel];
-                if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-                    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
-;
-                    NSLog(@"请绑定手机");
-                    WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-                    wxloginVC.userInfo = dic;
-                    [self.navigationController pushViewController:wxloginVC animated:YES];
-                    
-                } else {
-                    
-                    huodongJson = self.activityArray[indexPath.row - 1];
-                    
-                    if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
-                  
-                        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-                        
-                        huodongVC.diction = huodongJson;
-                        
-                        
-                        [self.navigationController pushViewController:huodongVC animated:YES];
-                    } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
-                        NSLog(@"youhuiquan");
-                        
-                        NSString *urlstring = [huodongJson objectForKey:@"act_link"];
-                        NSString *params = [huodongJson objectForKey:@"extras"];
-                        
-                        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                        
-                        
-                        
-                        
-                        NSLog(@"%@\n%@", urlstring, params);
-                        
-                        [manager POST:urlstring parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  //  NSError *error;
-                                  NSLog(@"JSON: %@", responseObject);
-                                  
-                                  UIAlertView *alertVew = [[UIAlertView alloc] initWithTitle:[responseObject objectForKey:@"res"] message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                                  [alertVew show];
-                                  
-                                  
-                                  
-                              }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  NSLog(@"Error: %@", error);
-                                  
-                                  
-                              }];
-                    }
-                    
-                  
-                }
-                
-                
-            } else{
-                if (login_required) {
-                    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-                    [self.navigationController pushViewController:loginVC animated:YES];
-                } else{
-                    [self ishavemobel];
-                    if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-                        
-                        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
-                        ;
-                        NSLog(@"请绑定手机");
-                        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-                        wxloginVC.userInfo = dic;
-                        [self.navigationController pushViewController:wxloginVC animated:YES];
-                        
-                    } else {
-                        
-                        huodongJson = self.activityArray[indexPath.row - 1];
-                        
-                        
-                        
-                        if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
-                            
-                            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-                            
-                            huodongVC.diction = huodongJson;
-                            
-                            
-                            [self.navigationController pushViewController:huodongVC animated:YES];
-                        } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
-                            NSLog(@"youhuiquan");
-                            
-                            NSString *urlstring = [huodongJson objectForKey:@"act_link"];
-                            NSDictionary *params = [huodongJson objectForKey:@"extras"];
-                            
-                            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                           
-                            
-                            
-                            
-                            NSLog(@"%@\n%@", urlstring, params);
-                            
-                            [manager POST:urlstring parameters:params
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      //  NSError *error;
-                                      NSLog(@"JSON: %@", responseObject);
-                                      
-                                      
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      NSLog(@"Error: %@", error);
-                                      
-                                      
-                                  }];
-
-                            
-                        }
-
-                    }
-                }
-            }
+        if (indexPath.row != 0) {
+            [self clickActivity:indexPath];
         }
     } else if (indexPath.section == 2){
         if (childDataArray.count == 0) {
@@ -1517,5 +1401,130 @@ static NSString *khuodongCell = @"HuodongCell";
     }
 }
 
+#pragma mark --点击活动banner及弹框
+- (void)clickActivity:(NSIndexPath *)indexPath {
+    [MobClick event:@"activity"];
+    
+    huodongJson = self.activityArray[indexPath.row - 1];
+    login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        
+        [self ishavemobel];
+        if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+            NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+            ;
+            NSLog(@"请绑定手机");
+            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+            wxloginVC.userInfo = dic;
+            [self.navigationController pushViewController:wxloginVC animated:YES];
+            
+        } else {
+            
+            huodongJson = self.activityArray[indexPath.row - 1];
+            
+            if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                
+                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                
+                huodongVC.diction = huodongJson;
+                
+                
+                [self.navigationController pushViewController:huodongVC animated:YES];
+            } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                NSLog(@"youhuiquan");
+                
+                NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                NSString *params = [huodongJson objectForKey:@"extras"];
+                
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                
+                
+                
+                
+                NSLog(@"%@\n%@", urlstring, params);
+                
+                [manager POST:urlstring parameters:params
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          //  NSError *error;
+                          NSLog(@"JSON: %@", responseObject);
+                          
+                          UIAlertView *alertVew = [[UIAlertView alloc] initWithTitle:[responseObject objectForKey:@"res"] message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                          [alertVew show];
+                          
+                          
+                          
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          NSLog(@"Error: %@", error);
+                          
+                          
+                      }];
+            }
+            
+            
+        }
+    } else{
+        if (login_required) {
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            [self ishavemobel];
+            if ([mobel isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+                
+                NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+                ;
+                NSLog(@"请绑定手机");
+                WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+                wxloginVC.userInfo = dic;
+                [self.navigationController pushViewController:wxloginVC animated:YES];
+                
+            } else {
+                
+                huodongJson = self.activityArray[indexPath.row - 1];
+                
+                
+                
+                if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
+                    
+                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    
+                    huodongVC.diction = huodongJson;
+                    
+                    
+                    [self.navigationController pushViewController:huodongVC animated:YES];
+                } else if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"coupon"]){
+                    NSLog(@"youhuiquan");
+                    
+                    NSString *urlstring = [huodongJson objectForKey:@"act_link"];
+                    NSDictionary *params = [huodongJson objectForKey:@"extras"];
+                    
+                    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                    
+                    
+                    
+                    
+                    NSLog(@"%@\n%@", urlstring, params);
+                    
+                    [manager POST:urlstring parameters:params
+                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                              //  NSError *error;
+                              NSLog(@"JSON: %@", responseObject);
+                              
+                              
+                          }
+                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              NSLog(@"Error: %@", error);
+                              
+                              
+                          }];
+                    
+                    
+                }
+                
+            }
+        }
+    }
+}
 
 @end
