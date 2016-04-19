@@ -1,20 +1,20 @@
 //
-//  CommonProblemViewController.m
+//  CommonWebViewViewController.m
 //  XLMM
 //
-//  Created by zhang on 16/4/9.
+//  Created by zhang on 16/4/12.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "CommonProblemViewController.h"
+#import "CommonWebViewViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
-@interface CommonProblemViewController ()
+@interface CommonWebViewViewController ()
 @property (nonatomic, strong)UIWebView *webView;
 @end
 
-@implementation CommonProblemViewController
+@implementation CommonWebViewViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -31,15 +31,15 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self createNavigationBarWithTitle:@"常见问题" selecotr:@selector(backClicked:)];
+    [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
+    
+    if (self.loadLink.length == 0 || [self.loadLink class] == [NSNull null]) return;
     
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.webView.scalesPageToFit = YES;
     [self.view addSubview:self.webView];
     
-    NSString *loadString = [NSString stringWithFormat:@"%@/faq", Root_URL];
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:loadString]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
 }
 
 - (void)backClicked:(UIButton *)button{

@@ -614,14 +614,12 @@
 		1865CA4D1CAE4C4C00772458 /* mamanodata.png in Resources */ = {isa = PBXBuildFile; fileRef = 1865CA4C1CAE4C4C00772458 /* mamanodata.png */; };
 		18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */; };
 		18AC6C801CA2AF1000316E65 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC6C7F1CA2AF1000316E65 /* heart.png */; };
-		18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D862751CA0EE78004A19BD /* AboutFansViewController.m */; };
 		18D862781CA1105C004A19BD /* aboutfans.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D862771CA1105C004A19BD /* aboutfans.png */; };
 		18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */; };
 		18EE10DD1C9C132B00E52313 /* NewLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18EE10DB1C9C132B00E52313 /* NewLeftViewController.xib */; };
 		18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EE10DF1C9C134300E52313 /* PersonOrderViewController.m */; };
 		18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */; };
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
-		1F074FAD1CBB3BF9008A03FC /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FAC1CBB3BF9008A03FC /* coupon.png */; };
 		1F074FF01CBB9EE5008A03FC /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FEF1CBB9EE5008A03FC /* detail.png */; };
 		1F0AC6E51CB3A831001F21D7 /* defaultPig.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0AC6E41CB3A831001F21D7 /* defaultPig.png */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
@@ -630,17 +628,18 @@
 		1F88D57D1CB6804C0050A2E2 /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D57C1CB6804C0050A2E2 /* iPhone6Plus@3x.png */; };
 		1F88D57F1CB681010050A2E2 /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D57E1CB681010050A2E2 /* iPhone6Plus@2x.png */; };
 		1F88D5821CB77AC90050A2E2 /* MyInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */; };
-		1F88D5851CB89D9F0050A2E2 /* CommonProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F88D5841CB89D9F0050A2E2 /* CommonProblemViewController.m */; };
 		1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F88D58C1CB8B5460050A2E2 /* TSettingViewController.m */; };
 		1F88D58F1CB8B5460050A2E2 /* TSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D58D1CB8B5460050A2E2 /* TSettingViewController.xib */; };
-		1F88D5A31CB8EA350050A2E2 /* questions.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A11CB8EA350050A2E2 /* questions.png */; };
-		1F88D5A41CB8EA350050A2E2 /* suggestions.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A21CB8EA350050A2E2 /* suggestions.png */; };
-		1F88D5A91CB8EBE50050A2E2 /* refund.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A51CB8EBE50050A2E2 /* refund.png */; };
-		1F88D5AA1CB8EBE50050A2E2 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A61CB8EBE50050A2E2 /* waitsend.png */; };
-		1F88D5AB1CB8EBE50050A2E2 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A71CB8EBE50050A2E2 /* waitpay.png */; };
-		1F88D5AC1CB8EBE50050A2E2 /* alltrades.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5A81CB8EBE50050A2E2 /* alltrades.png */; };
-		1F88D5AE1CB8ED150050A2E2 /* accounticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5AD1CB8ED150050A2E2 /* accounticon.png */; };
-		1F88D5B01CB8ED4B0050A2E2 /* pointicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5AF1CB8ED4B0050A2E2 /* pointicon.png */; };
+		1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */; };
+		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
+		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
+		1FF4C9D71CBCF57800CCDCF7 /* refund.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D21CBCF57800CCDCF7 /* refund.png */; };
+		1FF4C9D81CBCF57800CCDCF7 /* alltrades.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D31CBCF57800CCDCF7 /* alltrades.png */; };
+		1FF4C9D91CBCF57800CCDCF7 /* questions.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D41CBCF57800CCDCF7 /* questions.png */; };
+		1FF4C9DB1CBCF58100CCDCF7 /* suggestions.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DA1CBCF58100CCDCF7 /* suggestions.png */; };
+		1FF4C9DF1CBCF58900CCDCF7 /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DC1CBCF58900CCDCF7 /* coupon.png */; };
+		1FF4C9E01CBCF58900CCDCF7 /* accounticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DD1CBCF58900CCDCF7 /* accounticon.png */; };
+		1FF4C9E11CBCF58900CCDCF7 /* pointicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -1631,8 +1630,6 @@
 		1865CA4C1CAE4C4C00772458 /* mamanodata.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mamanodata.png; sourceTree = "<group>"; };
 		18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FansEmpty.xib; sourceTree = "<group>"; };
 		18AC6C7F1CA2AF1000316E65 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
-		18D862741CA0EE77004A19BD /* AboutFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutFansViewController.h; sourceTree = "<group>"; };
-		18D862751CA0EE78004A19BD /* AboutFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutFansViewController.m; sourceTree = "<group>"; };
 		18D862771CA1105C004A19BD /* aboutfans.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutfans.png; sourceTree = "<group>"; };
 		18EE10D91C9C132B00E52313 /* NewLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLeftViewController.h; sourceTree = "<group>"; };
 		18EE10DA1C9C132B00E52313 /* NewLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLeftViewController.m; sourceTree = "<group>"; };
@@ -1643,7 +1640,6 @@
 		18F392CF1CA55CC5000969C2 /* SelectedActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedActivitiesViewController.m; sourceTree = "<group>"; };
 		18FCFA211CAAC1BE006C75BC /* NSDictionary+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+UrlEncoding.h"; sourceTree = "<group>"; };
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
-		1F074FAC1CBB3BF9008A03FC /* coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coupon.png; sourceTree = "<group>"; };
 		1F074FEF1CBB9EE5008A03FC /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
 		1F0AC6E41CB3A831001F21D7 /* defaultPig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPig.png; sourceTree = "<group>"; };
 		1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
@@ -1653,19 +1649,20 @@
 		1F88D57E1CB681010050A2E2 /* iPhone6Plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@2x.png"; sourceTree = "<group>"; };
 		1F88D5801CB77AC90050A2E2 /* MyInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInvitationViewController.h; sourceTree = "<group>"; };
 		1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInvitationViewController.m; sourceTree = "<group>"; };
-		1F88D5831CB89D9F0050A2E2 /* CommonProblemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonProblemViewController.h; sourceTree = "<group>"; };
-		1F88D5841CB89D9F0050A2E2 /* CommonProblemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonProblemViewController.m; sourceTree = "<group>"; };
 		1F88D58B1CB8B5460050A2E2 /* TSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSettingViewController.h; sourceTree = "<group>"; };
 		1F88D58C1CB8B5460050A2E2 /* TSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSettingViewController.m; sourceTree = "<group>"; };
 		1F88D58D1CB8B5460050A2E2 /* TSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSettingViewController.xib; sourceTree = "<group>"; };
-		1F88D5A11CB8EA350050A2E2 /* questions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions.png; sourceTree = "<group>"; };
-		1F88D5A21CB8EA350050A2E2 /* suggestions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suggestions.png; sourceTree = "<group>"; };
-		1F88D5A51CB8EBE50050A2E2 /* refund.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refund.png; sourceTree = "<group>"; };
-		1F88D5A61CB8EBE50050A2E2 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
-		1F88D5A71CB8EBE50050A2E2 /* waitpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitpay.png; sourceTree = "<group>"; };
-		1F88D5A81CB8EBE50050A2E2 /* alltrades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alltrades.png; sourceTree = "<group>"; };
-		1F88D5AD1CB8ED150050A2E2 /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
-		1F88D5AF1CB8ED4B0050A2E2 /* pointicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointicon.png; sourceTree = "<group>"; };
+		1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonWebViewViewController.h; sourceTree = "<group>"; };
+		1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonWebViewViewController.m; sourceTree = "<group>"; };
+		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
+		1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitpay.png; sourceTree = "<group>"; };
+		1FF4C9D21CBCF57800CCDCF7 /* refund.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refund.png; sourceTree = "<group>"; };
+		1FF4C9D31CBCF57800CCDCF7 /* alltrades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alltrades.png; sourceTree = "<group>"; };
+		1FF4C9D41CBCF57800CCDCF7 /* questions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions.png; sourceTree = "<group>"; };
+		1FF4C9DA1CBCF58100CCDCF7 /* suggestions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suggestions.png; sourceTree = "<group>"; };
+		1FF4C9DC1CBCF58900CCDCF7 /* coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coupon.png; sourceTree = "<group>"; };
+		1FF4C9DD1CBCF58900CCDCF7 /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
+		1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointicon.png; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -2313,8 +2310,6 @@
 				183071501C97BE3700B7665E /* FensiListViewController.m */,
 				183071511C97BE3700B7665E /* FensiListViewController.xib */,
 				18AC6C7D1CA2A1FB00316E65 /* FansEmpty.xib */,
-				18D862741CA0EE77004A19BD /* AboutFansViewController.h */,
-				18D862751CA0EE78004A19BD /* AboutFansViewController.m */,
 				183071551C97BE3700B7665E /* HuojiangListViewController.h */,
 				183071561C97BE3700B7665E /* HuojiangListViewController.m */,
 				183071571C97BE3700B7665E /* HuojiangListViewController.xib */,
@@ -2411,8 +2406,6 @@
 				1830718D1C97BE3700B7665E /* TousuViewController.h */,
 				1830718E1C97BE3700B7665E /* TousuViewController.m */,
 				1830718F1C97BE3700B7665E /* TousuViewController.xib */,
-				1F88D5831CB89D9F0050A2E2 /* CommonProblemViewController.h */,
-				1F88D5841CB89D9F0050A2E2 /* CommonProblemViewController.m */,
 			);
 			path = Commom;
 			sourceTree = "<group>";
@@ -3611,6 +3604,8 @@
 				18315F741CA3E023003A9AFD /* HuodongViewController.h */,
 				18315F751CA3E023003A9AFD /* HuodongViewController.m */,
 				18315F761CA3E023003A9AFD /* HuodongViewController.xib */,
+				1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */,
+				1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -3618,16 +3613,16 @@
 		1F88D5901CB8E3460050A2E2 /* NewSetting */ = {
 			isa = PBXGroup;
 			children = (
-				1F88D5AD1CB8ED150050A2E2 /* accounticon.png */,
 				1F074FEF1CBB9EE5008A03FC /* detail.png */,
-				1F88D5AF1CB8ED4B0050A2E2 /* pointicon.png */,
-				1F88D5A11CB8EA350050A2E2 /* questions.png */,
-				1F074FAC1CBB3BF9008A03FC /* coupon.png */,
-				1F88D5A51CB8EBE50050A2E2 /* refund.png */,
-				1F88D5A61CB8EBE50050A2E2 /* waitsend.png */,
-				1F88D5A71CB8EBE50050A2E2 /* waitpay.png */,
-				1F88D5A81CB8EBE50050A2E2 /* alltrades.png */,
-				1F88D5A21CB8EA350050A2E2 /* suggestions.png */,
+				1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */,
+				1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */,
+				1FF4C9DA1CBCF58100CCDCF7 /* suggestions.png */,
+				1FF4C9D21CBCF57800CCDCF7 /* refund.png */,
+				1FF4C9DC1CBCF58900CCDCF7 /* coupon.png */,
+				1FF4C9DD1CBCF58900CCDCF7 /* accounticon.png */,
+				1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */,
+				1FF4C9D31CBCF57800CCDCF7 /* alltrades.png */,
+				1FF4C9D41CBCF57800CCDCF7 /* questions.png */,
 			);
 			path = NewSetting;
 			sourceTree = "<group>";
@@ -3874,7 +3869,6 @@
 				183076681C97D49A00B7665E /* 圈圈加载0020.png in Resources */,
 				183072121C97BE3700B7665E /* MamaActivityViewController.xib in Resources */,
 				183075861C97D49A00B7665E /* icon-quanbudingdan.png in Resources */,
-				1F88D5AB1CB8EBE50050A2E2 /* waitpay.png in Resources */,
 				183075D31C97D49A00B7665E /* mamatuan.png in Resources */,
 				183076781C97D49A00B7665E /* 圈圈加载0036.png in Resources */,
 				1F88D57D1CB6804C0050A2E2 /* iPhone6Plus@3x.png in Resources */,
@@ -3883,7 +3877,6 @@
 				183075BD1C97D49A00B7665E /* 0lun@2x.png in Resources */,
 				325B7A3A1C97E7530022F930 /* AccountTableViewCell.xib in Resources */,
 				1830763A1C97D49A00B7665E /* shopping_cart_jian.png in Resources */,
-				1F88D5AC1CB8EBE50050A2E2 /* alltrades.png in Resources */,
 				183075811C97D49A00B7665E /* icon-jiantouyou.png in Resources */,
 				183076101C97D49A00B7665E /* Icon-60@2x.png in Resources */,
 				183071DA1C97BE3700B7665E /* ChiMaBiaoViewController.xib in Resources */,
@@ -3937,7 +3930,7 @@
 				183075AC1C97D49A00B7665E /* loading动画0014.png in Resources */,
 				183076261C97D49A00B7665E /* placeHolderPosterImage.png in Resources */,
 				183075F61C97D49A00B7665E /* emptyYouhuiquanIcon.png in Resources */,
-				1F88D5A91CB8EBE50050A2E2 /* refund.png in Resources */,
+				1FF4C9D71CBCF57800CCDCF7 /* refund.png in Resources */,
 				1830759B1C97D49A00B7665E /* select-bg.png in Resources */,
 				183075CA1C97D49A00B7665E /* mamafan.png in Resources */,
 				1830758D1C97D49A00B7665E /* icon-shouye.png in Resources */,
@@ -3945,6 +3938,7 @@
 				183076171C97D49A00B7665E /* ladyImage.png in Resources */,
 				325B79DC1C97E7160022F930 /* PersonTableCell.xib in Resources */,
 				183076861C97D49A00B7665E /* redNo.png in Resources */,
+				1FF4C9D81CBCF57800CCDCF7 /* alltrades.png in Resources */,
 				1830722D1C97BE3700B7665E /* EmptyDefault.xib in Resources */,
 				183076721C97D49A00B7665E /* 圈圈加载0030.png in Resources */,
 				183076891C97D49A00B7665E /* redPkgjian.png in Resources */,
@@ -3977,10 +3971,9 @@
 				183074441C97D17900B7665E /* ios-social-sdk-login-quick.html in Resources */,
 				183075FF1C97D49A00B7665E /* hongbao200.png in Resources */,
 				183074311C97D17800B7665E /* UMSCommentInputControlleriPad.xib in Resources */,
+				1FF4C9DB1CBCF58100CCDCF7 /* suggestions.png in Resources */,
 				183075CD1C97D49A00B7665E /* mamahuodong.png in Resources */,
-				1F88D5B01CB8ED4B0050A2E2 /* pointicon.png in Resources */,
 				183076741C97D49A00B7665E /* 圈圈加载0032.png in Resources */,
-				1F88D5A41CB8EA350050A2E2 /* suggestions.png in Resources */,
 				183076241C97D49A00B7665E /* newyouhuiquanyiyongbg.png in Resources */,
 				325B79961C97E6F10022F930 /* BuyCartsView.xib in Resources */,
 				183075B91C97D49A00B7665E /* loading动画008.png in Resources */,
@@ -4004,13 +3997,13 @@
 				183076791C97D49A00B7665E /* 圈圈加载0037.png in Resources */,
 				1F88D5791CB67DCC0050A2E2 /* iPhone4S@2x.png in Resources */,
 				1830757C1C97D49A00B7665E /* icon-gerenzhongxin2.png in Resources */,
-				1F88D5AA1CB8EBE50050A2E2 /* waitsend.png in Resources */,
 				183071ED1C97BE3700B7665E /* LogInViewController.xib in Resources */,
 				325B7A111C97E73A0022F930 /* PicCollectionViewCell.xib in Resources */,
 				183075B01C97D49A00B7665E /* loading动画0018.png in Resources */,
 				325B79D31C97E7160022F930 /* HuodongCollectionViewCell.xib in Resources */,
 				183075C01C97D49A00B7665E /* 3lun@2x.png in Resources */,
 				1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */,
+				1FF4C9E11CBCF58900CCDCF7 /* pointicon.png in Resources */,
 				183075CE1C97D49A00B7665E /* mamajiang.png in Resources */,
 				325B7A2B1C97E74B0022F930 /* FensiTableViewCell.xib in Resources */,
 				183076631C97D49A00B7665E /* 圈圈加载0015.png in Resources */,
@@ -4041,7 +4034,6 @@
 				183075B71C97D49A00B7665E /* loading动画006.png in Resources */,
 				325B79CF1C97E7160022F930 /* Head1View.xib in Resources */,
 				183075C91C97D49A00B7665E /* mamabu.png in Resources */,
-				1F074FAD1CBB3BF9008A03FC /* coupon.png in Resources */,
 				183076571C97D49A00B7665E /* 圈圈加载0003.png in Resources */,
 				183075DD1C97D49A00B7665E /* wodejingxuanfenxiang.png in Resources */,
 				1830724A1C97BE3700B7665E /* RefundDetailsViewController.xib in Resources */,
@@ -4077,11 +4069,11 @@
 				183075A21C97D49A00B7665E /* tag-shixiao.png in Resources */,
 				1830764D1C97D49A00B7665E /* xiala.png in Resources */,
 				1830757A1C97D49A00B7665E /* icon-fanhuidingbu.png in Resources */,
-				1F88D5AE1CB8ED150050A2E2 /* accounticon.png in Resources */,
 				183075D91C97D49A00B7665E /* wodejingxuanback.png in Resources */,
 				1830724F1C97BE3700B7665E /* ShenQingTuikuanController.xib in Resources */,
 				1830762C1C97D49A00B7665E /* retina4.png in Resources */,
 				183074431C97D17900B7665E /* ios-social-sdk-login-detail.html in Resources */,
+				1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */,
 				183072081C97BE3700B7665E /* ActivityErweimaViewController.xib in Resources */,
 				321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */,
 				183076651C97D49A00B7665E /* 圈圈加载0017.png in Resources */,
@@ -4115,6 +4107,7 @@
 				183072391C97BE3700B7665E /* YouHuiQuanViewController.xib in Resources */,
 				183075BE1C97D49A00B7665E /* 1lun@2x.png in Resources */,
 				1830761B1C97D49A00B7665E /* mamashareicon.png in Resources */,
+				1FF4C9E01CBCF58900CCDCF7 /* accounticon.png in Resources */,
 				1F88D57F1CB681010050A2E2 /* iPhone6Plus@2x.png in Resources */,
 				183075741C97D49A00B7665E /* icon-daishouhuo.png in Resources */,
 				1830764F1C97D49A00B7665E /* yiguoqi.png in Resources */,
@@ -4154,6 +4147,7 @@
 				183076151C97D49A00B7665E /* keshiyong.png in Resources */,
 				183075EC1C97D49A00B7665E /* default.png in Resources */,
 				1830758B1C97D49A00B7665E /* icon-shengyu3.png in Resources */,
+				1FF4C9DF1CBCF58900CCDCF7 /* coupon.png in Resources */,
 				183076041C97D49A00B7665E /* hongbaoclose200.png in Resources */,
 				18D862781CA1105C004A19BD /* aboutfans.png in Resources */,
 				183071D61C97BE3700B7665E /* PurchaseViewController1.xib in Resources */,
@@ -4240,8 +4234,9 @@
 				3277205F1CA8CCD600FC376F /* area.plist in Resources */,
 				1830765C1C97D49A00B7665E /* 圈圈加载0008.png in Resources */,
 				1830720A1C97BE3700B7665E /* ActivityViewController2.xib in Resources */,
+				1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */,
 				325B79DA1C97E7160022F930 /* MoreOrdersViewCell.xib in Resources */,
-				1F88D5A31CB8EA350050A2E2 /* questions.png in Resources */,
+				1FF4C9D91CBCF57800CCDCF7 /* questions.png in Resources */,
 				183075BB1C97D49A00B7665E /* run.gif in Resources */,
 				1830763B1C97D49A00B7665E /* shopping_coupon.png in Resources */,
 				183075F11C97D49A00B7665E /* downArrow1.png in Resources */,
@@ -4388,12 +4383,12 @@
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				183070DE1C97B83900B7665E /* PosterModel.m in Sources */,
 				183073F51C97D17800B7665E /* MJRefreshGifHeader.m in Sources */,
-				18D862761CA0EE78004A19BD /* AboutFansViewController.m in Sources */,
 				1830721F1C97BE3700B7665E /* GuanzhuViewController.m in Sources */,
 				183074211C97D17800B7665E /* UIButton+WebCache.m in Sources */,
 				183073D71C97D17800B7665E /* QNDnsManager.m in Sources */,
 				321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */,
 				183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */,
+				1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */,
 				183073DB1C97D17800B7665E /* QNDnspodEnterprise.m in Sources */,
 				184FCFC41CA67DF100F8FC94 /* HtmlViewController.m in Sources */,
 				325B79D81C97E7160022F930 /* MMAdvertiseView.m in Sources */,
@@ -4457,7 +4452,6 @@
 				183073FA1C97D17800B7665E /* UIScrollView+MJExtension.m in Sources */,
 				1830721B1C97BE3700B7665E /* TuijianErweimaViewController.m in Sources */,
 				183071E31C97BE3700B7665E /* PostersViewController.m in Sources */,
-				1F88D5851CB89D9F0050A2E2 /* CommonProblemViewController.m in Sources */,
 				183074051C97D17800B7665E /* QNUrlSafeBase64.m in Sources */,
 				183071D51C97BE3700B7665E /* PurchaseViewController1.m in Sources */,
 				183074101C97D17800B7665E /* QNResumeUpload.m in Sources */,

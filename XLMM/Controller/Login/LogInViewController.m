@@ -143,42 +143,54 @@
     NSLog(@"1.————》%@", sign_params);
     
     NSString *sign = [sign_params sha1];
-    NSString *dict;
     
     NSLog(@"sign = %@", sign);
     
     
     //http://m.xiaolu.so/rest/v1/register/wxapp_login
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSLog(@"urlString = %@", urlString);
     
-    NSMutableURLRequest * postRequest=[NSMutableURLRequest requestWithURL:url];
+    NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
+                             @"nickname":[dic objectForKey:@"nickname"],
+                             @"openid":[dic objectForKey:@"openid"],
+                             @"unionid":[dic objectForKey:@"unionid"],
+                             @"devtype":LOGINDEVTYPE};
     
-    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
+//    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
     
-    NSLog(@"params = %@", dict);
-    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-    [postRequest setHTTPBody:data];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-   
-    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+    NSLog(@"params = %@", newDic);
+//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
+//    [postRequest setHTTPBody:data];
+//    [postRequest setHTTPMethod:@"POST"];
+//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+//   
+//    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
+//
+//    if ([[dictionary objectForKey:@"rcode"] integerValue] != 0 || dictionary.count == 0 || [dictionary class] == [NSNull null]) {
+//        [self alertMessage:[dictionary objectForKey:@"msg"]];
+//        return;
+//    }
 
-
-    if ([[dictionary objectForKey:@"rcode"] integerValue] != 0 || dictionary.count == 0 || [dictionary class] == [NSNull null]) {
-        [self alertMessage:[dictionary objectForKey:@"msg"]];
-        return;
-    }
-
-    NSLog(@"msg = %@", [dictionary objectForKey:@"msg"]);
-    NSLog(@"dictionary = %@", dictionary);
-
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setBool:YES forKey:@"login"];
-    [userdefaults synchronize];
-    [self loginSuccessful];
+//    NSLog(@"msg = %@", [dictionary objectForKey:@"msg"]);
+//    NSLog(@"dictionary = %@", dictionary);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *result = responseObject;
+        if (result.count == 0) return;
+        if ([[result objectForKey:@"rcode"]integerValue] != 0) {
+            [self alertMessage:[result objectForKey:@"msg"]];
+            return;
+        }
+        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+        [userdefaults setBool:YES forKey:@"login"];
+        [userdefaults synchronize];
+        [self loginSuccessful];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 
 }
 

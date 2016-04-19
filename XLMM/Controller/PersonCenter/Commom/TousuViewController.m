@@ -85,39 +85,48 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/complain", Root_URL];
     NSLog(@"urlString = %@", urlString);
     
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *dic = @{@"com_content":self.tousuTextView.text};
     
-    //第二步，创建请求
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-    
-    NSString *str = [NSString stringWithFormat:@"com_content=%@", self.tousuTextView.text];//设置参数
-    
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [request setHTTPBody:data];
-    
-    //第三步，连接服务器
-    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if (received == nil) {
-        [self successCommit];
-
-        return;
-    }
-    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
-    NSLog(@"result = %@", result);
-    
-    if ([[result objectForKey:@"res"] boolValue]) {
-        [self successCommit];
-
-    }
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    
+//    //第二步，创建请求
+//    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+//    
+//    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+//    
+//    NSString *str = [NSString stringWithFormat:@"com_content=%@", self.tousuTextView.text];//设置参数
+//    
+//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+//    
+//    [request setHTTPBody:data];
+//    
+//    //第三步，连接服务器
+//    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//    if (received == nil) {
+//        [self successCommit];
+//
+//        return;
+//    }
+//    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:received options:kNilOptions error:nil];
+//    NSLog(@"result = %@", result);
+//    
+//    if ([[result objectForKey:@"res"] boolValue]) {
+//        [self successCommit];
+//
+//    }
     
 //    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
 //    NSLog(@"%@",str1);
 //    if ([str1 isEqualToString:@"\"OK\""]){
 //    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil)return;
+        [self successCommit];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
 }
 
 - (void)successCommit{
