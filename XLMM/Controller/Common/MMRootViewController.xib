@@ -94,7 +94,7 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVs-4L-uc3">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.70317978110000001" green="1" blue="0.68747983629999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="180" id="UhI-d8-XDl"/>
                                     </constraints>

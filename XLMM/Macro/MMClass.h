@@ -111,7 +111,7 @@
 
 //加载的webView链接
 #define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
-#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/fag", Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
 
 #endif
 

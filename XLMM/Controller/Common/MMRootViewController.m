@@ -38,6 +38,7 @@
 #import "HuodongViewController.h"
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
+#import "PromoteModel.h"
 
 #import "PicCollectionViewCell.h"
 
@@ -45,6 +46,9 @@
 #define ABOVEHIGHT 300
 #define ACTIVITYHEIGHT 120
 
+#define YESTDAY @"yestday"
+#define TODAY @"today"
+#define TOMORROW @"tomorrow"
 
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
@@ -101,6 +105,7 @@
 @property (nonatomic, strong)NSMutableArray *collectionDataArr;
 @property (nonatomic, strong)NSMutableDictionary *categoryDic;
 @property (nonatomic, strong)NSMutableArray *urlArr;
+@property (nonatomic, strong)NSArray *dickey;
 //@property (nonatomic, strong)NSMutableArray *btnArr;
 
 @property (nonatomic, assign)NSInteger currentIndex;
@@ -138,27 +143,33 @@
     return _activityDataArr;
 }
 
-//- (NSMutableArray *)collectionArr {
-//    if (!_collectionArr) {
-//        self.collectionArr = [NSMutableArray arrayWithCapacity:0];
-//    }
-//    return _collectionArr;
-//}
-//
-//- (NSMutableArray *)collectionDataArr {
-//    if (!_collectionDataArr) {
-//        self.collectionDataArr = [NSMutableArray arrayWithCapacity:0];
-//    }
-//    
-//    return _collectionDataArr;
-//}
-//
-//- (NSMutableDictionary *)categoryDic {
-//    if (!_categoryDic) {
-//        self.categoryDic = [NSMutableDictionary dictionaryWithCapacity:0];
-//    }
-//    return _categoryDic;
-//}
+- (NSMutableArray *)collectionArr {
+    if (!_collectionArr) {
+        self.collectionArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _collectionArr;
+}
+
+- (NSMutableArray *)collectionDataArr {
+    if (!_collectionDataArr) {
+        self.collectionDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _collectionDataArr;
+}
+
+- (NSMutableDictionary *)categoryDic {
+    if (!_categoryDic) {
+        self.categoryDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    return _categoryDic;
+}
+
+- (NSMutableArray *)urlArr {
+    if (!_urlArr) {
+        self.urlArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _urlArr;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -364,6 +375,7 @@
     
     //商品请求链接
     [self createRequestURL];
+    self.dickey = @[YESTDAY, TODAY, TOMORROW];
     
     self.timeCount = 0;
     
@@ -384,6 +396,8 @@
     _isFirst = YES;
     
     _pageCurrentIndex = 0;
+    
+    self.currentIndex = 1;
     
     [self createInfo];
     
@@ -417,7 +431,7 @@
 }
 
 - (void)createRequestURL {
-    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous", @"/rest/v1/products/promote_today_paging",
+    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous?page_size=10", @"/rest/v1/products/promote_today_paging?page_size=10",
                            @""];
     for (int i = 0; i < 3; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
@@ -431,28 +445,28 @@
     self.collectionViewScrollview.pagingEnabled = YES;
     
     //创建3个collection
-//    for (int i = 0; i < 3; i++) {
-//        
-//    }
+    for (int i = 0; i < 3; i++) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
+        flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumLineSpacing = 5;
+        
+        
+        self.homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
+        self.homeCollectionView.scrollEnabled = NO;
+        
+        self.homeCollectionView.backgroundColor = [UIColor whiteColor];
+        
+        [self.collectionViewScrollview addSubview:self.homeCollectionView];
+        
+        self.homeCollectionView.delegate = self;
+        self.homeCollectionView.dataSource = self;
+        
+        [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
+    }
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
-    flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
-    flowLayout.minimumInteritemSpacing = 5;
-    flowLayout.minimumLineSpacing = 5;
     
-    
-    self.homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
-    self.homeCollectionView.scrollEnabled = NO;
-
-    self.homeCollectionView.backgroundColor = [UIColor whiteColor];
-    
-    [self.collectionViewScrollview addSubview:self.homeCollectionView];
-    
-    self.homeCollectionView.delegate = self;
-    self.homeCollectionView.dataSource = self;
-    
-    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
 //    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
 //    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
 //    
@@ -460,7 +474,6 @@
     
     //网络请求海报
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/posters/today", Root_URL];
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
@@ -476,6 +489,15 @@
         self.activityArr = responseObject;
         if (self.activityArr.count == 0) return;
         [self activityDeal:self.activityArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    //今日商品
+    NSString *goodsUrl = self.urlArr[1];
+    [manage GET:goodsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self goodsResult:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -532,9 +554,32 @@
     MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
     [adView.scrollView addGestureRecognizer:tap];
+//    NSLog(@"===============%@", NSStringFromCGRect(self.bannerView.frame));
+//     NSLog(@"===============----%@", NSStringFromCGRect(adView.frame));
+//    UIView *view = [[UIView alloc] initWithFrame:self.bannerView.bounds];
+//    view.backgroundColor = [UIColor redColor];
+//    [self.bannerView addSubview:view];
     [self.bannerView addSubview:adView];
     
     //品牌
+    
+}
+
+#pragma mark --商品列表
+
+- (void)goodsResult:(NSDictionary *)dic {
+    if ([[dic objectForKey:@"next"] class] == [NSNull class]) {
+        [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+    }else {
+        [self.nextdic setObject:[dic objectForKey:@"next"] forKey:self.dickey[self.currentIndex]];
+    }
+    NSArray *results = [dic objectForKey:@"results"];
+    if (results.count == 0) return;
+    
+    //判断在数据源字典中是否有对应的数组
+    for (NSDictionary *goods in results) {
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:goods];
+    }
     
 }
 
