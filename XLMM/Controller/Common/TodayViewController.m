@@ -99,6 +99,7 @@ static NSString *khuodongCell = @"HuodongCell";
 
 @property (nonatomic, strong)NSTimer *timer;
 
+
 @end
 
 @implementation TodayViewController
@@ -1167,11 +1168,6 @@ static NSString *khuodongCell = @"HuodongCell";
                 return cell1;
 
             }
-            
-            
-
-
-            
            
         }
         

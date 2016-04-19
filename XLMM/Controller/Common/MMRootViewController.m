@@ -35,11 +35,15 @@
 #import "MMAdvertiseView.h"
 #import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
+#import "HuodongViewController.h"
+#import "ActivityModel.h"
+#import "UIImageView+WebCache.h"
 
 #import "PicCollectionViewCell.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
+#define ACTIVITYHEIGHT 120
 
 
 
@@ -65,6 +69,10 @@
     NSNumber *last_created;
     NSTimer *theTimer;
     
+    
+    BOOL login_required;
+    UIView *backView;
+    NSDictionary *huodongJson;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -84,6 +92,19 @@
 
 @property (nonatomic, strong) NSMutableArray *posterImages;
 @property (nonatomic, strong) NSMutableArray *posterDataArray;
+
+@property (nonatomic, strong)NSArray *activityArr;
+@property (nonatomic, strong)NSMutableArray *activityDataArr;
+
+//商品
+@property (nonatomic, strong)NSMutableArray *collectionArr;
+@property (nonatomic, strong)NSMutableArray *collectionDataArr;
+@property (nonatomic, strong)NSMutableDictionary *categoryDic;
+@property (nonatomic, strong)NSMutableArray *urlArr;
+//@property (nonatomic, strong)NSMutableArray *btnArr;
+
+@property (nonatomic, assign)NSInteger currentIndex;
+//@property (nonatomic, strong)NSMutableDictionary *nextdic;
 @end
 
 @implementation MMRootViewController
@@ -109,6 +130,36 @@
 //    return _goodsView;
 //}
 //
+
+- (NSMutableArray *)activityDataArr {
+    if (!_activityDataArr) {
+        self.activityDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _activityDataArr;
+}
+
+- (NSMutableArray *)collectionArr {
+    if (!_collectionArr) {
+        self.collectionArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _collectionArr;
+}
+
+- (NSMutableArray *)collectionDataArr {
+    if (!_collectionDataArr) {
+        self.collectionDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    
+    return _collectionDataArr;
+}
+
+- (NSMutableDictionary *)categoryDic {
+    if (!_categoryDic) {
+        self.categoryDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    return _categoryDic;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -269,8 +320,6 @@
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
             xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
             NSLog(@"url = %@", xiangqingVC.urlString);
-            
-            
             [self.navigationController pushViewController:xiangqingVC animated:YES];
         } else {
             //  跳转到H5 界面 。。。。。
@@ -312,6 +361,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //商品请求链接
+    [self createRequestURL];
     
     self.timeCount = 0;
     
@@ -364,10 +416,24 @@
     
 }
 
+- (void)createRequestURL {
+    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous", @"/rest/v1/products/promote_today_paging",
+                           @""];
+    for (int i = 0; i < 4; i++) {
+        NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
+        [self.urlArr addObject:url];
+    }
+}
+
 - (void)createCollectionView {
     //设置collectionViewScrollview属性
     self.collectionViewScrollview.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
     self.collectionViewScrollview.pagingEnabled = YES;
+    
+    //创建3个collection
+//    for (int i = 0; i < 3; i++) {
+//        
+//    }
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
@@ -403,11 +469,20 @@
         //未登录处理
         //        [self showDefaultView];
     }];
+    
+    //活动
+    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
+    [manage GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.activityArr = responseObject;
+        if (self.activityArr.count == 0) return;
+        [self activityDeal:self.activityArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 - (void)fetchedPosterData:(NSDictionary *)jsonDic{
     if (jsonDic.count == 0) return;
-    
     
     NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
     self.posterImages = [[NSMutableArray alloc] init];
@@ -424,7 +499,6 @@
         UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
         
         NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
-        
         NSLog(@"image = %@", image0);
         if (image0 == nil) {
             image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
@@ -436,7 +510,6 @@
     }
 
     NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
-    NSLog(@"lady = %@", ladyArray);
     if (ladyArray.count == 0)return;
     for (NSDictionary *ladyDic in ladyArray) {
         
@@ -454,15 +527,146 @@
         }
         [self.posterImages addObject:image1];
         [self.posterDataArray addObject:ladyModel];
-        
     }
-    
     
     MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
     [adView.scrollView addGestureRecognizer:tap];
+    [self.bannerView addSubview:adView];
+    
+    //品牌
+    
 }
 
+#pragma mark --活动处理
+- (void)activityDeal:(NSArray *)activityArr {
+    for (NSDictionary *actityDic in activityArr) {
+        ActivityModel *activityM = [[ActivityModel alloc] init];
+        [activityM setValuesForKeysWithDictionary:actityDic];
+        [self.activityDataArr addObject:activityM];
+    }
+    
+    //创建活动展示图
+    for (int i = 0; i < self.activityDataArr.count; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, i * ACTIVITYHEIGHT, SCREENWIDTH, ACTIVITYHEIGHT)];
+        imageView.tag = 120 + i;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(activityTapAction:)];
+        imageView.userInteractionEnabled = YES;
+        [imageView addGestureRecognizer:tap];
+        [self.activityView addSubview:imageView];
+    
+        ActivityModel *acM = self.activityDataArr[i];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil];
+    }
+    
+    self.activityHeight.constant = ACTIVITYHEIGHT * self.activityDataArr.count;
+    
+    huodongJson = [activityArr firstObject];
+    if ([huodongJson isKindOfClass:[NSDictionary class]]) {
+        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *activityID = [huodongJson objectForKey:@"id"];
+        NSNumber *userNumber = [defaults objectForKey:@"activityid"];
+        
+        if ([userNumber integerValue] == [activityID integerValue]) return;
+        //活动弹框
+        if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])) {
+            NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+            
+            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    [defaults setObject:activityID forKey:@"activityid"];
+                    [self createActivityView:image];
+                });
+            });
+        }
+    }
+}
+
+//活动展示点击
+- (void)activityTapAction:(UITapGestureRecognizer *)tap {
+    NSLog(@"点击了。。。。。");
+    //判断点击的活动
+    UIImageView *imageV = (UIImageView *)tap.view;
+    NSInteger imageTag = imageV.tag - 120;
+    
+    [self activityClick:self.activityArr[imageTag]];
+}
+
+
+- (void)createActivityView:(UIImage *)image {
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    [backView removeFromSuperview];
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:backView];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH - imageWidth) * 0.5 , (SCREENHEIGHT - imageHeight) * 0.5, imageWidth, imageHeight)];
+    imageView.image = image;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+    [imageView addGestureRecognizer:tap];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.masksToBounds = YES;
+    imageView.userInteractionEnabled = YES;
+    
+    [backView addSubview:imageView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat imageMaxX = CGRectGetMaxX(imageView.frame);
+    CGFloat imageMinY = CGRectGetMinY(imageView.frame);
+    button.frame = CGRectMake(imageMaxX - 40, imageMinY, 40, 40);
+    [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [backView addSubview:button];
+}
+
+- (void)guanbiClicked:(UIButton *)button{
+    [backView removeFromSuperview];
+}
+
+- (void)huodongrukou{
+    [backView removeFromSuperview];
+    [self activityClick:self.activityArr[0]];
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+//        huodongVC.diction = huodongJson;
+//        [self.navigationController pushViewController:huodongVC animated:YES];
+//    } else{
+//        if (login_required) {
+//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+//            [self.navigationController pushViewController:loginVC animated:YES];
+//        } else{
+//            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+//            huodongVC.diction = huodongJson;
+//            [self.navigationController pushViewController:huodongVC animated:YES];
+//        }
+//    }
+}
+
+- (void)activityClick:(NSDictionary *)dic {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        huodongVC.diction = dic;
+        [self.navigationController pushViewController:huodongVC animated:YES];
+    } else{
+        if (login_required) {
+            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            huodongVC.diction = dic;
+            [self.navigationController pushViewController:huodongVC animated:YES];
+        }
+    }
+}
+
+#pragma mark --海报点击
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
@@ -999,22 +1203,22 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    
-    NSLog(@"-----------%.2f", self.backScrollview.contentOffset.y);
-    
-    if ((scrollView.tag == 110 && scrollView.contentOffset.y < 374) || scrollView.tag == 111)return;
+    CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
+    NSLog(@"------------%f", brandMaxY);
+    NSLog(@"==========%f", scrollView.contentOffset.y);
+    if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
     self.homeCollectionView.scrollEnabled = YES;
-    self.backScrollview.scrollEnabled = NO;
+//    self.backScrollview.scrollEnabled = NO;
     if (scrollView.contentOffset.y <= 0) {
-        self.backScrollview.scrollEnabled = YES;
+//        self.backScrollview.scrollEnabled = YES;
         self.homeCollectionView.scrollEnabled = NO;
         //下拉
         NSLog(@"下拉");
-    }
-    if (scrollView.contentOffset.y > 0) {
+    }if (scrollView.contentOffset.y > 0) {
         //上滑
         NSLog(@"上滑");
+//        self.backScrollview.scrollEnabled = YES;
     }
 
 }
