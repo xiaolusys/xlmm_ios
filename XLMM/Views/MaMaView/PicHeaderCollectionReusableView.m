@@ -18,4 +18,5 @@
     [self.propagandaLabel sizeToFit];
 }
 
+
 @end
