@@ -57,8 +57,6 @@
 		183071DE1C97BE3700B7665E /* MMCollectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071051C97BE3700B7665E /* MMCollectionController.xib */; };
 		183071DF1C97BE3700B7665E /* MMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071071C97BE3700B7665E /* MMDetailsViewController.m */; };
 		183071E01C97BE3700B7665E /* MMDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071081C97BE3700B7665E /* MMDetailsViewController.xib */; };
-		183071E11C97BE3700B7665E /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830710B1C97BE3700B7665E /* MMRootViewController.m */; };
-		183071E21C97BE3700B7665E /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830710C1C97BE3700B7665E /* MMRootViewController.xib */; };
 		183071E31C97BE3700B7665E /* PostersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830710E1C97BE3700B7665E /* PostersViewController.m */; };
 		183071E41C97BE3700B7665E /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830710F1C97BE3700B7665E /* PostersViewController.xib */; };
 		183071E51C97BE3700B7665E /* PreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071111C97BE3700B7665E /* PreviousViewController.m */; };
@@ -622,6 +620,15 @@
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
 		1F074FF01CBB9EE5008A03FC /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F074FEF1CBB9EE5008A03FC /* detail.png */; };
 		1F0AC6E51CB3A831001F21D7 /* defaultPig.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0AC6E41CB3A831001F21D7 /* defaultPig.png */; };
+		1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D60D1CC6047200410EC0 /* ActivityModel.m */; };
+		1F14D6161CC6059100410EC0 /* today.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6101CC6059100410EC0 /* today.png */; };
+		1F14D6171CC6059100410EC0 /* today1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6111CC6059100410EC0 /* today1.png */; };
+		1F14D6181CC6059100410EC0 /* tomorrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6121CC6059100410EC0 /* tomorrow.png */; };
+		1F14D6191CC6059100410EC0 /* tomorrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6131CC6059100410EC0 /* tomorrow1.png */; };
+		1F14D61A1CC6059100410EC0 /* yestday.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6141CC6059100410EC0 /* yestday.png */; };
+		1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6151CC6059100410EC0 /* yestday1.png */; };
+		1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D61D1CC6064400410EC0 /* MMRootViewController.m */; };
+		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
 		1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7395991CC0C945000F9D94 /* HomeViewController.m */; };
 		1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F73959A1CC0C945000F9D94 /* HomeViewController.xib */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
@@ -861,9 +868,6 @@
 		183071071C97BE3700B7665E /* MMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsViewController.m; sourceTree = "<group>"; };
 		183071081C97BE3700B7665E /* MMDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMDetailsViewController.xib; sourceTree = "<group>"; };
 		183071091C97BE3700B7665E /* MMNavigationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
-		1830710A1C97BE3700B7665E /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
-		1830710B1C97BE3700B7665E /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
-		1830710C1C97BE3700B7665E /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
 		1830710D1C97BE3700B7665E /* PostersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostersViewController.h; sourceTree = "<group>"; };
 		1830710E1C97BE3700B7665E /* PostersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostersViewController.m; sourceTree = "<group>"; };
 		1830710F1C97BE3700B7665E /* PostersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostersViewController.xib; sourceTree = "<group>"; };
@@ -1644,6 +1648,17 @@
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
 		1F074FEF1CBB9EE5008A03FC /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
 		1F0AC6E41CB3A831001F21D7 /* defaultPig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPig.png; sourceTree = "<group>"; };
+		1F14D60C1CC6046C00410EC0 /* ActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModel.h; sourceTree = "<group>"; };
+		1F14D60D1CC6047200410EC0 /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
+		1F14D6101CC6059100410EC0 /* today.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = today.png; sourceTree = "<group>"; };
+		1F14D6111CC6059100410EC0 /* today1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = today1.png; sourceTree = "<group>"; };
+		1F14D6121CC6059100410EC0 /* tomorrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tomorrow.png; sourceTree = "<group>"; };
+		1F14D6131CC6059100410EC0 /* tomorrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tomorrow1.png; sourceTree = "<group>"; };
+		1F14D6141CC6059100410EC0 /* yestday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yestday.png; sourceTree = "<group>"; };
+		1F14D6151CC6059100410EC0 /* yestday1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yestday1.png; sourceTree = "<group>"; };
+		1F14D61C1CC6064400410EC0 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
+		1F14D61D1CC6064400410EC0 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
+		1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
 		1F7395981CC0C945000F9D94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		1F7395991CC0C945000F9D94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		1F73959A1CC0C945000F9D94 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -2078,6 +2093,7 @@
 		183070921C97B83900B7665E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1F14D60B1CC6044C00410EC0 /* NewHome */,
 				183070931C97B83900B7665E /* AppleVersion1 */,
 				183070BA1C97B83900B7665E /* MaMaModel */,
 				183070CD1C97B83900B7665E /* Setting */,
@@ -2210,13 +2226,13 @@
 				183071031C97BE3700B7665E /* MMCollectionController.h */,
 				183071041C97BE3700B7665E /* MMCollectionController.m */,
 				183071051C97BE3700B7665E /* MMCollectionController.xib */,
+				1F14D61C1CC6064400410EC0 /* MMRootViewController.h */,
+				1F14D61D1CC6064400410EC0 /* MMRootViewController.m */,
+				1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */,
 				183071061C97BE3700B7665E /* MMDetailsViewController.h */,
 				183071071C97BE3700B7665E /* MMDetailsViewController.m */,
 				183071081C97BE3700B7665E /* MMDetailsViewController.xib */,
 				183071091C97BE3700B7665E /* MMNavigationDelegate.h */,
-				1830710A1C97BE3700B7665E /* MMRootViewController.h */,
-				1830710B1C97BE3700B7665E /* MMRootViewController.m */,
-				1830710C1C97BE3700B7665E /* MMRootViewController.xib */,
 				1F7395981CC0C945000F9D94 /* HomeViewController.h */,
 				1F7395991CC0C945000F9D94 /* HomeViewController.m */,
 				1F73959A1CC0C945000F9D94 /* HomeViewController.xib */,
@@ -3215,6 +3231,7 @@
 		1830744F1C97D49A00B7665E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1F14D60F1CC6057D00410EC0 /* Home */,
 				1F88D5901CB8E3460050A2E2 /* NewSetting */,
 				3277205D1CA8CCD000FC376F /* plists */,
 				1830768E1C97D51B00B7665E /* StartImage */,
@@ -3618,6 +3635,28 @@
 			path = Activity;
 			sourceTree = "<group>";
 		};
+		1F14D60B1CC6044C00410EC0 /* NewHome */ = {
+			isa = PBXGroup;
+			children = (
+				1F14D60C1CC6046C00410EC0 /* ActivityModel.h */,
+				1F14D60D1CC6047200410EC0 /* ActivityModel.m */,
+			);
+			path = NewHome;
+			sourceTree = "<group>";
+		};
+		1F14D60F1CC6057D00410EC0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1F14D6101CC6059100410EC0 /* today.png */,
+				1F14D6111CC6059100410EC0 /* today1.png */,
+				1F14D6121CC6059100410EC0 /* tomorrow.png */,
+				1F14D6131CC6059100410EC0 /* tomorrow1.png */,
+				1F14D6141CC6059100410EC0 /* yestday.png */,
+				1F14D6151CC6059100410EC0 /* yestday1.png */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		1F88D5901CB8E3460050A2E2 /* NewSetting */ = {
 			isa = PBXGroup;
 			children = (
@@ -3874,6 +3913,7 @@
 				1F074FF01CBB9EE5008A03FC /* detail.png in Resources */,
 				183075B61C97D49A00B7665E /* loading动画005.png in Resources */,
 				183075D11C97D49A00B7665E /* mamashop.png in Resources */,
+				1F14D6161CC6059100410EC0 /* today.png in Resources */,
 				183076681C97D49A00B7665E /* 圈圈加载0020.png in Resources */,
 				183072121C97BE3700B7665E /* MamaActivityViewController.xib in Resources */,
 				183075861C97D49A00B7665E /* icon-quanbudingdan.png in Resources */,
@@ -3955,7 +3995,6 @@
 				183075AF1C97D49A00B7665E /* loading动画0017.png in Resources */,
 				1830758E1C97D49A00B7665E /* icon-shouye2.png in Resources */,
 				325B79E11C97E7160022F930 /* StartActivityView.xib in Resources */,
-				183071E21C97BE3700B7665E /* MMRootViewController.xib in Resources */,
 				183076331C97D49A00B7665E /* selected_icon.png in Resources */,
 				183075DF1C97D49A00B7665E /* wodejingxuanyulan.png in Resources */,
 				1830765F1C97D49A00B7665E /* 圈圈加载0011.png in Resources */,
@@ -3977,6 +4016,7 @@
 				183074421C97D17900B7665E /* ios-social-sdk-like.html in Resources */,
 				183076701C97D49A00B7665E /* 圈圈加载0028.png in Resources */,
 				183074441C97D17900B7665E /* ios-social-sdk-login-quick.html in Resources */,
+				1F14D61A1CC6059100410EC0 /* yestday.png in Resources */,
 				183075FF1C97D49A00B7665E /* hongbao200.png in Resources */,
 				183074311C97D17800B7665E /* UMSCommentInputControlleriPad.xib in Resources */,
 				1FF4C9DB1CBCF58100CCDCF7 /* suggestions.png in Resources */,
@@ -4004,6 +4044,7 @@
 				183074491C97D17900B7665E /* markdown.css in Resources */,
 				183076791C97D49A00B7665E /* 圈圈加载0037.png in Resources */,
 				1F88D5791CB67DCC0050A2E2 /* iPhone4S@2x.png in Resources */,
+				1F14D6171CC6059100410EC0 /* today1.png in Resources */,
 				1830757C1C97D49A00B7665E /* icon-gerenzhongxin2.png in Resources */,
 				183071ED1C97BE3700B7665E /* LogInViewController.xib in Resources */,
 				325B7A111C97E73A0022F930 /* PicCollectionViewCell.xib in Resources */,
@@ -4062,6 +4103,7 @@
 				1830765E1C97D49A00B7665E /* 圈圈加载0010.png in Resources */,
 				1830768A1C97D49A00B7665E /* shop.png in Resources */,
 				325B799F1C97E6F10022F930 /* PeopleCollectionCell.xib in Resources */,
+				1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */,
 				1830723F1C97BE3700B7665E /* PersonCenterViewController3.xib in Resources */,
 				183075DB1C97D49A00B7665E /* wodejingxuandanpinxiajia.png in Resources */,
 				183071F71C97BE3700B7665E /* VerifyPhoneViewController.xib in Resources */,
@@ -4162,6 +4204,7 @@
 				183071D61C97BE3700B7665E /* PurchaseViewController1.xib in Resources */,
 				3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */,
 				183076821C97D49A00B7665E /* grayJian.png in Resources */,
+				1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */,
 				183076801C97D49A00B7665E /* 圈圈加载0044.png in Resources */,
 				1830759C1C97D49A00B7665E /* sharecopylink.png in Resources */,
 				1830761E1C97D49A00B7665E /* mmback_icon.png in Resources */,
@@ -4258,6 +4301,7 @@
 				183076181C97D49A00B7665E /* leftArrowIcon.png in Resources */,
 				183071D01C97BE3700B7665E /* CartViewController.xib in Resources */,
 				183071E81C97BE3700B7665E /* TodayViewController.xib in Resources */,
+				1F14D6191CC6059100410EC0 /* tomorrow1.png in Resources */,
 				183075E41C97D49A00B7665E /* back_image.png in Resources */,
 				183074481C97D17900B7665E /* ios-social-sdk-socialbar.html in Resources */,
 				1830759D1C97D49A00B7665E /* shareFirends.png in Resources */,
@@ -4283,6 +4327,7 @@
 				183072511C97BE3700B7665E /* TuihuoViewController.xib in Resources */,
 				1830767A1C97D49A00B7665E /* 圈圈加载0038.png in Resources */,
 				183075971C97D49A00B7665E /* jifen-kv.png in Resources */,
+				1F14D6181CC6059100410EC0 /* tomorrow.png in Resources */,
 				1830766B1C97D49A00B7665E /* 圈圈加载0023.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4482,7 +4527,6 @@
 				321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */,
 				183073ED1C97D17800B7665E /* MJRefreshFooter.m in Sources */,
 				183073EF1C97D17800B7665E /* MJRefreshAutoGifFooter.m in Sources */,
-				183071E11C97BE3700B7665E /* MMRootViewController.m in Sources */,
 				321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */,
 				183074201C97D17800B7665E /* SDWebImagePrefetcher.m in Sources */,
 				325B79DD1C97E7160022F930 /* PosterCollectionCell2.m in Sources */,
@@ -4549,6 +4593,7 @@
 				183073DD1C97D17800B7665E /* QNHijackingDetectWrapper.m in Sources */,
 				1830724C1C97BE3700B7665E /* ShenQingTuiHuoController.m in Sources */,
 				184FCFC11CA67CF800F8FC94 /* UUID.m in Sources */,
+				1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */,
 				183072071C97BE3700B7665E /* ActivityErweimaViewController.m in Sources */,
 				1830723E1C97BE3700B7665E /* PersonCenterViewController3.m in Sources */,
 				183070D51C97B83900B7665E /* DingdanModel.m in Sources */,
@@ -4563,6 +4608,7 @@
 				183073FF1C97D17800B7665E /* QNAsyncRun.m in Sources */,
 				183074041C97D17800B7665E /* QNSystem.m in Sources */,
 				183072581C97BE3700B7665E /* SettingViewController.m in Sources */,
+				1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */,
 				183073F41C97D17800B7665E /* MJRefreshBackStateFooter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
