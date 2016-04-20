@@ -39,8 +39,7 @@
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
-
-#import "PicCollectionViewCell.h"
+#import "PeopleCollectionCell.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -112,6 +111,8 @@
 @property (nonatomic, strong)NSMutableDictionary *nextdic;
 @end
 
+
+static NSString *ksimpleCell = @"simpleCell";
 @implementation MMRootViewController
 
 //- (UIScrollView *)backScrollview {
@@ -160,6 +161,10 @@
 - (NSMutableDictionary *)categoryDic {
     if (!_categoryDic) {
         self.categoryDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        for (int i = 0; i < 3; i++) {
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+            [self.categoryDic setObject:arr forKey:self.dickey[i]];
+        }
     }
     return _categoryDic;
 }
@@ -202,23 +207,6 @@
 }
 
 - (BOOL)isXiaolumama{
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject)return ;
-//        return YES;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        return NO;
-//    }];
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-//    if (data == nil) {
-//        return NO;
-//    }
-//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//    NSLog(@"dic = %@", dic);
-//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-//    return YES;
-    
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
     BOOL isXLMM = [users boolForKey:@"isXLMM"];
     return isXLMM;
@@ -408,6 +396,8 @@
     self.posterImages = [[NSMutableArray alloc] init];
     self.posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self createCollectionView];
+    //设置商品scrollview的偏转
+    self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
@@ -431,8 +421,8 @@
 }
 
 - (void)createRequestURL {
-    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous?page_size=10", @"/rest/v1/products/promote_today_paging?page_size=10",
-                           @""];
+    NSArray *urlBefroe = @[@"/rest/v1/products/promote_today_paging?page_size=10", @"/rest/v1/products/promote_today_paging?page_size=10",
+                           @"/rest/v1/products/promote_today_paging?page_size=10"];
     for (int i = 0; i < 3; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
         [self.urlArr addObject:url];
@@ -453,24 +443,22 @@
         flowLayout.minimumLineSpacing = 5;
         
         
-        self.homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
-        self.homeCollectionView.scrollEnabled = NO;
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
+        homeCollectionView.scrollEnabled = NO;
         
-        self.homeCollectionView.backgroundColor = [UIColor whiteColor];
+        homeCollectionView.backgroundColor = [UIColor whiteColor];
         
-        [self.collectionViewScrollview addSubview:self.homeCollectionView];
+        [self.collectionViewScrollview addSubview:homeCollectionView];
         
-        self.homeCollectionView.delegate = self;
-        self.homeCollectionView.dataSource = self;
+        homeCollectionView.delegate = self;
+        homeCollectionView.dataSource = self;
         
-        [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
+//        [homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
+        [homeCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        
+        [self.collectionArr addObject:homeCollectionView];
     }
     
-    
-//    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
-//    [self.homeCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
-//    
-//    [SVProgressHUD showWithStatus:@"正在加载..."];
     
     //网络请求海报
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
@@ -494,13 +482,7 @@
     }];
     
     //今日商品
-    NSString *goodsUrl = self.urlArr[1];
-    [manage GET:goodsUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        [self goodsResult:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+    [self goodsRequest];
 }
 
 - (void)fetchedPosterData:(NSDictionary *)jsonDic{
@@ -567,6 +549,17 @@
 
 #pragma mark --商品列表
 
+- (void)goodsRequest{
+    NSString *currentUrl = self.urlArr[self.currentIndex];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self goodsResult:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 - (void)goodsResult:(NSDictionary *)dic {
     if ([[dic objectForKey:@"next"] class] == [NSNull class]) {
         [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
@@ -577,10 +570,14 @@
     if (results.count == 0) return;
     
     //判断在数据源字典中是否有对应的数组
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     for (NSDictionary *goods in results) {
         PromoteModel *model = [[PromoteModel alloc] initWithDictionary:goods];
+        [currentArr addObject:model];
     }
     
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection reloadData];
 }
 
 #pragma mark --活动处理
@@ -678,20 +675,6 @@
 - (void)huodongrukou{
     [backView removeFromSuperview];
     [self activityClick:self.activityArr[0]];
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-//        huodongVC.diction = huodongJson;
-//        [self.navigationController pushViewController:huodongVC animated:YES];
-//    } else{
-//        if (login_required) {
-//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-//            [self.navigationController pushViewController:loginVC animated:YES];
-//        } else{
-//            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
-//            huodongVC.diction = huodongJson;
-//            [self.navigationController pushViewController:huodongVC animated:YES];
-//        }
-//    }
 }
 
 - (void)activityClick:(NSDictionary *)dic {
@@ -719,17 +702,45 @@
     [self pushAndBannerJump:target_url];
 }
 
-#pragma mark --collection的代理
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 5;
+//今昨明按钮点击
+- (void)categoryBtnClick:(UIButton *)btn {
+    NSInteger tag = btn.tag - 130;
+    self.currentIndex = tag;
+    //循环遍历改变背景
+//    for (int i = 0; i < 3; i++) {
+//        
+//    }
+    
+    //改变scrollview的偏移
+    NSLog(@"---------%ld", (long)self.currentIndex);
+    self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
+    
+    //如果没有数据重新请求，有的话不作操作
+    NSString *key = self.dickey[tag];
+    NSLog(@"---------%ld", (long)self.currentIndex);
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    
+    if (!(currentArr.count > 0)) {
+        [self goodsRequest];
+    }
 }
+
+
+#pragma mark --collection的代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 8;
+    NSString *key = self.dickey[self.currentIndex];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    
+    return currentArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+    
+    NSString *key = self.dickey[self.currentIndex];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+    [cell fillData:model];
     return cell;
 }
 
@@ -1249,6 +1260,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
+//    brandMaxY = brandMaxY - 1;
     NSLog(@"------------%f", brandMaxY);
     NSLog(@"==========%f", scrollView.contentOffset.y);
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
@@ -1414,4 +1426,15 @@
 }
 
 
+- (IBAction)yestdayBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
+
+- (IBAction)tomottowBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
+
+- (IBAction)todayBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
 @end
