@@ -57,12 +57,13 @@
     _scrollView.showsHorizontalScrollIndicator=NO;
     self.scrollView.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"-----contentOffset.x----%f", _scrollView.contentOffset.x);
 }
 
 #pragma mark 添加图片三个控件
 -(void)addImageViews{
     _leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
-    _leftImageView.contentMode=UIViewContentModeScaleAspectFill;
+//    _leftImageView.contentMode=UIViewContentModeScaleAspectFill;
     NSLog(@"%f  %f", width, height);
     [_scrollView addSubview:_leftImageView];
     
@@ -113,8 +114,6 @@
     _currentImageIndex = 0;
     //设置当前页
     _pageControl.currentPage = _currentImageIndex;
-    
-
    
 }
 

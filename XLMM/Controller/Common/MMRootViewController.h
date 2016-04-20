@@ -10,12 +10,30 @@
 #import "NewLeftViewController.h"
 
 
-@interface MMRootViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate, UIScrollViewDelegate>
+@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate,UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *btnView;
 
 - (IBAction)btnClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
+
+
+@property (weak, nonatomic) IBOutlet UIScrollView *backScrollview;
+@property (weak, nonatomic) IBOutlet UIView *aboveView;
+@property (weak, nonatomic) IBOutlet UIView *brandView;
+@property (weak, nonatomic) IBOutlet UIView *categoryView;
+@property (weak, nonatomic) IBOutlet UIView *collectionView;
+@property (weak, nonatomic) IBOutlet UIScrollView *collectionViewScrollview;
+
+
+@property (weak, nonatomic) IBOutlet UIView *activityView;
+@property (weak, nonatomic) IBOutlet UIView *bannerView;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *brandViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
+
 
 @end
