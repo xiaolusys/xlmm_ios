@@ -555,7 +555,6 @@
                             <exclude reference="es6-aP-BAR"/>
                             <exclude reference="g5R-ns-GdD"/>
                             <exclude reference="keA-o0-qxM"/>
-                            <exclude reference="R7Q-iE-Ga6"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -572,7 +571,6 @@
                             <include reference="es6-aP-BAR"/>
                             <include reference="g5R-ns-GdD"/>
                             <include reference="keA-o0-qxM"/>
-                            <exclude reference="jMK-L2-xG5"/>
                         </mask>
                     </variation>
                 </scrollView>
