@@ -497,7 +497,9 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T6-Xw-5MS">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="QPC-Ur-ksZ"/>
+                                <constraint firstAttribute="height" constant="50" id="QPC-Ur-ksZ">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="60"/>
+                                </constraint>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
@@ -515,7 +517,7 @@
                             <color key="backgroundColor" red="1" green="0.051865301029999998" blue="0.085083512190000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="qeY-6g-9tx">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                                 </constraint>
                             </constraints>
                         </view>
