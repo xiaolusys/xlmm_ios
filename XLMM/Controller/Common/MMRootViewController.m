@@ -444,7 +444,7 @@ static NSString *ksimpleCell = @"simpleCell";
         
         
         UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
-        homeCollectionView.scrollEnabled = NO;
+//        homeCollectionView.scrollEnabled = NO;
         
         homeCollectionView.backgroundColor = [UIColor whiteColor];
         
@@ -1258,7 +1258,7 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+
     CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
 //    brandMaxY = brandMaxY - 1;
     NSLog(@"------------%f", brandMaxY);
@@ -1268,6 +1268,7 @@ static NSString *ksimpleCell = @"simpleCell";
     self.homeCollectionView.scrollEnabled = YES;
 //    self.backScrollview.scrollEnabled = NO;
     if (scrollView.contentOffset.y <= 0) {
+
 //        self.backScrollview.scrollEnabled = YES;
         self.homeCollectionView.scrollEnabled = NO;
         //下拉
