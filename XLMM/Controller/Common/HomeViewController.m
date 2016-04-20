@@ -701,11 +701,13 @@
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_currentIndex == 0) {
-        scrollView.bounces = NO;
-    } else{
-        scrollView.bounces = YES;
-    }
+//    if (_currentIndex == 0) {
+//        scrollView.bounces = NO;
+//    } else{
+//        scrollView.bounces = YES;
+//    }
+    
+    
 }
 
 #pragma mark --mmNavigationDelegate--
