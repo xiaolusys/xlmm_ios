@@ -156,26 +156,6 @@
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
     
-//    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
-    
-    NSLog(@"params = %@", newDic);
-//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-//    [postRequest setHTTPBody:data];
-//    [postRequest setHTTPMethod:@"POST"];
-//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-//   
-//    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
-//
-//    if ([[dictionary objectForKey:@"rcode"] integerValue] != 0 || dictionary.count == 0 || [dictionary class] == [NSNull null]) {
-//        [self alertMessage:[dictionary objectForKey:@"msg"]];
-//        return;
-//    }
-
-//    NSLog(@"msg = %@", [dictionary objectForKey:@"msg"]);
-//    NSLog(@"dictionary = %@", dictionary);
-    
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *result = responseObject;
@@ -204,24 +184,7 @@
     [self setDevice];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
-//    if (isBangding) {
-//        NSLog(@"跳转首页");
-//        if (isSettingPsd == YES) {
-//            [self.navigationController popViewControllerAnimated:YES];
-//            
-//        } else {
-//            
-//            NSLog(@"请绑定手机");
-//            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil phoneNumber:phoneNumber];
-//            wxloginVC.userInfo = dic;
-//            [self.navigationController pushViewController:wxloginVC animated:YES];
-//        }
-//    } else {
-//        NSLog(@"请绑定手机");
-//        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-//        wxloginVC.userInfo = dic;
-//        [self.navigationController pushViewController:wxloginVC animated:YES];
-//    }
+
 }
 
 

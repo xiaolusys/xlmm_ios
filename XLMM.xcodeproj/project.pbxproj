@@ -747,7 +747,6 @@
 		325B7A3F1C98000C0022F930 /* qqiconthird.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B7A3C1C98000C0022F930 /* qqiconthird.png */; };
 		325B7A401C98000C0022F930 /* zhifubaoiconthird.png in Resources */ = {isa = PBXBuildFile; fileRef = 325B7A3D1C98000C0022F930 /* zhifubaoiconthird.png */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
-		325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325BA0FE1B68B18A006D64BD /* Images.xcassets */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676271BB51FE000307EC4 /* libc++.tbd */; };
 		3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
@@ -1832,7 +1831,6 @@
 		325BA0EE1B68B18A006D64BD /* XLMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLMM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA0F21B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA0F31B68B18A006D64BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		325BA0FE1B68B18A006D64BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		325BA1071B68B18A006D64BD /* XLMMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLMMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325BA10C1B68B18A006D64BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		325BA10D1B68B18A006D64BD /* XLMMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLMMTests.m; sourceTree = "<group>"; };
@@ -3712,7 +3710,6 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
-				325BA0FE1B68B18A006D64BD /* Images.xcassets */,
 				18306F6A1C97AA1600B7665E /* AppDelegate */,
 				18306FC61C97B5BC00B7665E /* Views */,
 				183070921C97B83900B7665E /* Models */,
@@ -4272,7 +4269,6 @@
 				1830759E1C97D49A00B7665E /* shareqq.png in Resources */,
 				1830761F1C97D49A00B7665E /* name.png in Resources */,
 				1830721E1C97BE3700B7665E /* AccountEmpty.xib in Resources */,
-				325BA0FF1B68B18A006D64BD /* Images.xcassets in Resources */,
 				1830722C1C97BE3700B7665E /* ChangeNicknameViewController.xib in Resources */,
 				325B79981C97E6F10022F930 /* CartTableCellTableViewCell1.xib in Resources */,
 				325B79E31C97E7160022F930 /* TuihuoCollectionCell.xib in Resources */,
