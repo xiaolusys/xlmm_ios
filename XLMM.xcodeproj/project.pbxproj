@@ -629,6 +629,7 @@
 		1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6151CC6059100410EC0 /* yestday1.png */; };
 		1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D61D1CC6064400410EC0 /* MMRootViewController.m */; };
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
+		1F329E711CC75F8400995655 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F329E701CC75F8400995655 /* Images.xcassets */; };
 		1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7395991CC0C945000F9D94 /* HomeViewController.m */; };
 		1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F73959A1CC0C945000F9D94 /* HomeViewController.xib */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
@@ -1658,6 +1659,7 @@
 		1F14D61C1CC6064400410EC0 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
 		1F14D61D1CC6064400410EC0 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
 		1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
+		1F329E701CC75F8400995655 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1F7395981CC0C945000F9D94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		1F7395991CC0C945000F9D94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		1F73959A1CC0C945000F9D94 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -3719,6 +3721,7 @@
 				1830744F1C97D49A00B7665E /* Resources */,
 				184FCFB61CA667E200F8FC94 /* Helpers */,
 				183072941C97D17800B7665E /* Venders */,
+				1F329E701CC75F8400995655 /* Images.xcassets */,
 				325BA0F11B68B18A006D64BD /* Supporting Files */,
 			);
 			path = XLMM;
@@ -3999,6 +4002,7 @@
 				183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */,
 				325B79A11C97E6F10022F930 /* ReBuyTableViewCell.xib in Resources */,
 				183075B21C97D49A00B7665E /* loading动画002.png in Resources */,
+				1F329E711CC75F8400995655 /* Images.xcassets in Resources */,
 				183072251C97BE3700B7665E /* WithdrwaIsNo.xib in Resources */,
 				1830767C1C97D49A00B7665E /* 圈圈加载0040.png in Resources */,
 				1865CA4D1CAE4C4C00772458 /* mamanodata.png in Resources */,
