@@ -36,7 +36,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
 
 
-
 - (IBAction)yestdayBtnClick:(id)sender;
 
 - (IBAction)tomottowBtnClick:(id)sender;

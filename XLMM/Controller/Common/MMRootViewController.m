@@ -341,7 +341,6 @@ static NSString *ksimpleCell = @"simpleCell";
     
     self.backScrollview.delegate = self;
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
-//    self.categoryViewHeight.constant = 1000;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -362,8 +361,6 @@ static NSString *ksimpleCell = @"simpleCell";
 {
     [super viewDidLoad];
     
-//    self.collectionViewScrollview.
-//    self.categoryViewHeight.constant = 1000;
     //商品请求链接
     [self createRequestURL];
     self.dickey = @[YESTDAY, TODAY, TOMORROW];
@@ -456,6 +453,7 @@ static NSString *ksimpleCell = @"simpleCell";
         homeCollectionView.delegate = self;
         homeCollectionView.dataSource = self;
         
+//        [homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
         [homeCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
         
         [self.collectionArr addObject:homeCollectionView];
@@ -1262,23 +1260,23 @@ static NSString *ksimpleCell = @"simpleCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
-    brandMaxY = brandMaxY - 1;
+//    brandMaxY = brandMaxY - 1;
     NSLog(@"------------%f", brandMaxY);
     NSLog(@"==========%f", scrollView.contentOffset.y);
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    self.homeCollectionView.scrollEnabled = NO;
-    self.backScrollview.scrollEnabled = YES;
-//    if (scrollView.contentOffset.y <= 0) {
+    self.homeCollectionView.scrollEnabled = YES;
+//    self.backScrollview.scrollEnabled = NO;
+    if (scrollView.contentOffset.y <= 0) {
 //        self.backScrollview.scrollEnabled = YES;
-//        self.homeCollectionView.scrollEnabled = NO;
-//        //下拉
-//        NSLog(@"下拉");
-//    }if (scrollView.contentOffset.y > 0) {
-//        //上滑
-//        NSLog(@"上滑");
+        self.homeCollectionView.scrollEnabled = NO;
+        //下拉
+        NSLog(@"下拉");
+    }if (scrollView.contentOffset.y > 0) {
+        //上滑
+        NSLog(@"上滑");
 //        self.backScrollview.scrollEnabled = YES;
-//    }
+    }
 
 }
 
