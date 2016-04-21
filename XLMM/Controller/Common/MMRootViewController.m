@@ -40,6 +40,7 @@
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
 #import "PeopleCollectionCell.h"
+#import "MJRefresh.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -55,6 +56,12 @@
 
 #define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
+#define TAG_BACK_SCROLLVIEW  1000
+#define TAG_GOODS_YESTODAY_SCROLLVIEW 1001
+#define TAG_GOODS_TODAY_SCROLLVIEW 1002
+#define TAG_GOODS_TOMORROW_SCROLLVIEW 1003
+#define TAG_COLLECTION_SCROLLVIEW 1004
+
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
     UIPageViewController *_pageVC;
@@ -66,6 +73,7 @@
     UILabel *label;
     CGRect frame;
     NSInteger _currentIndex;
+    NSInteger _currentPage;
     UIBarButtonItem *rightItem;
     UIView *dotView;
     UILabel *countLabel;
@@ -167,6 +175,17 @@ static NSString *ksimpleCell = @"simpleCell";
         }
     }
     return _categoryDic;
+}
+
+- (NSMutableDictionary *)nextdic {
+    if (!_nextdic) {
+        self.nextdic = [NSMutableDictionary dictionaryWithCapacity:0];
+        for (int i = 0; i < 3; i++) {
+            NSString *arr = [NSString stringWithFormat:@""];
+            [self.nextdic setObject:arr forKey:self.dickey[i]];
+        }
+    }
+    return _nextdic;
 }
 
 - (NSMutableArray *)urlArr {
@@ -336,6 +355,7 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    NSLog(@"viewDidAppear");
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
@@ -392,6 +412,9 @@ static NSString *ksimpleCell = @"simpleCell";
 //    [self creatPageData];
     
     //[self islogin];
+    NSLog(@"backScrollview %f", self.backScrollview.contentOffset.x);
+    self.backScrollview.delegate = self;
+    self.backScrollview.tag = TAG_BACK_SCROLLVIEW;
     
     self.posterImages = [[NSMutableArray alloc] init];
     self.posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -404,6 +427,8 @@ static NSString *ksimpleCell = @"simpleCell";
     } else {
         NSLog(@"no login");
     }
+    
+
 //    
 //    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
     
@@ -421,8 +446,9 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 - (void)createRequestURL {
-    NSArray *urlBefroe = @[@"/rest/v1/products/promote_today_paging?page_size=10", @"/rest/v1/products/promote_today_paging?page_size=10",
-                           @"/rest/v1/products/promote_today_paging?page_size=10"];
+    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous_paging?page=1&page_size=10",
+        @"/rest/v1/products/promote_today_paging?page=1&page_size=10",
+        @"/rest/v1/products/promote_tomorrow_paging?page=1&page_size=10"];
     for (int i = 0; i < 3; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
         [self.urlArr addObject:url];
@@ -433,6 +459,8 @@ static NSString *ksimpleCell = @"simpleCell";
     //设置collectionViewScrollview属性
     self.collectionViewScrollview.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
     self.collectionViewScrollview.pagingEnabled = YES;
+    self.collectionViewScrollview.tag = TAG_COLLECTION_SCROLLVIEW;
+    self.collectionViewScrollview.delegate = self;
     
     //创建3个collection
     for (int i = 0; i < 3; i++) {
@@ -443,10 +471,24 @@ static NSString *ksimpleCell = @"simpleCell";
         flowLayout.minimumLineSpacing = 5;
         
         
-        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
-//        homeCollectionView.scrollEnabled = NO;
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-70) collectionViewLayout:flowLayout];
         
         homeCollectionView.backgroundColor = [UIColor whiteColor];
+        homeCollectionView.tag = TAG_GOODS_YESTODAY_SCROLLVIEW + i;
+        homeCollectionView.scrollEnabled = NO;
+        
+        //添加上拉加载
+        homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
+            NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
+            NSLog(@"MJFresh nextstr %@",nextStr);
+            if([nextStr class] == [NSNull class]) {
+                [homeCollectionView.mj_footer endRefreshingWithNoMoreData];
+                return;
+            }
+            [self loadMore];
+        }];
+
         
         [self.collectionViewScrollview addSubview:homeCollectionView];
         
@@ -551,6 +593,7 @@ static NSString *ksimpleCell = @"simpleCell";
 
 - (void)goodsRequest{
     NSString *currentUrl = self.urlArr[self.currentIndex];
+    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,self.currentIndex);
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
@@ -563,11 +606,16 @@ static NSString *ksimpleCell = @"simpleCell";
 - (void)goodsResult:(NSDictionary *)dic {
     if ([[dic objectForKey:@"next"] class] == [NSNull class]) {
         [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+        NSLog(@"goodsResult NEXT=null");
     }else {
         [self.nextdic setObject:[dic objectForKey:@"next"] forKey:self.dickey[self.currentIndex]];
+        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], self.currentIndex);
     }
     NSArray *results = [dic objectForKey:@"results"];
-    if (results.count == 0) return;
+    if (results.count == 0) {
+        return;
+    }
+    NSLog(@"result count=%ld", results.count );
     
     //判断在数据源字典中是否有对应的数组
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
@@ -579,6 +627,24 @@ static NSString *ksimpleCell = @"simpleCell";
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     [collection reloadData];
 }
+
+- (void)loadMore {
+    //NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
+    NSString *url = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
+    
+    NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
+    if(nil == url)
+        return;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
+        if (!responseObject)return ;
+        [self goodsResult:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+
 
 #pragma mark --活动处理
 - (void)activityDeal:(NSArray *)activityArr {
@@ -730,12 +796,15 @@ static NSString *ksimpleCell = @"simpleCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    
     return currentArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+    //wulei 20160421 防止超过1屏后出现重复和错乱
+    //for (UIView *view in cell.contentView.subviews) {
+    //    [view removeFromSuperview];
+    //}
     
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
@@ -1254,31 +1323,115 @@ static NSString *ksimpleCell = @"simpleCell";
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"hahahah");
+    NSLog(@"scrollViewWillBeginDragging");
 }
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
+{
+    return YES;
+    //返回NO   关闭此功能
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    //if (scrollView.tag == kInnerScrollViewTag) {
+    //    [scrollView resignFirstResponder];
+    ///}
+    NSLog(@"***scrollViewDidScrollToTop");
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
     CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
+    CGPoint currentContentOffset = self.backScrollview.contentOffset;
+    float allPostHeight = self.aboveView.frame.size.height+
+    self.brandView.frame.size.height+self.activityView.frame.size.height;
+    
 //    brandMaxY = brandMaxY - 1;
-    NSLog(@"------------%f", brandMaxY);
-    NSLog(@"==========%f", scrollView.contentOffset.y);
+    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
+    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+    //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    self.homeCollectionView.scrollEnabled = YES;
-//    self.backScrollview.scrollEnabled = NO;
-    if (scrollView.contentOffset.y <= 0) {
-
-//        self.backScrollview.scrollEnabled = YES;
-        self.homeCollectionView.scrollEnabled = NO;
-        //下拉
-        NSLog(@"下拉");
-    }if (scrollView.contentOffset.y > 0) {
-        //上滑
-        NSLog(@"上滑");
-//        self.backScrollview.scrollEnabled = YES;
+    //NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+//self.brandView.frame.size.height,self.activityView.frame.size.height);
+    
+    //在最外层back scrollview上进行滑动
+    if (scrollView.tag == TAG_BACK_SCROLLVIEW
+        && scrollView.dragging){
+        if (scrollView.contentOffset.y <= 0) {
+            //下拉
+            NSLog(@"backScrollview 下拉");
+        }if (scrollView.contentOffset.y > 0) {
+            //上滑
+            NSLog(@"backScrollview 上滑");
+            if(scrollView.contentOffset.y + 64 - allPostHeight > 5.0f){
+                NSLog(@"backScrollview enter category");
+                self.backScrollview.scrollEnabled = NO;
+                [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,allPostHeight-64)
+                                             animated:YES];
+                
+                [self enableAllGoodsCollectionScroll];
+            }
+            else{
+                self.backScrollview.scrollEnabled = YES;
+                [self disableAllGoodsCollectionScroll];
+            }
+        }
     }
+    
+    //在中间层水平滑动
+    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
+        && scrollView.dragging){
+        int index = 1;
+        if(scrollView.contentOffset.x <= (1e-6)){
+            index = 0;
+        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
+            index = 1;
+        }else if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            index = 2;
+        }
+        NSLog(@"index %d",  index);
+        if(self.currentIndex != index){
+            self.currentIndex = index;
+            [self goodsRequest];
+        }
+        else{
+            self.currentIndex = index;
+        }
+    }
+    
+    //在最内层的collection上进行滑动
+    if (((scrollView.tag == TAG_GOODS_YESTODAY_SCROLLVIEW)
+        || (scrollView.tag == TAG_GOODS_TODAY_SCROLLVIEW)
+        || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
+        && scrollView.dragging){
+        if( scrollView.contentOffset.y <= 0) {
+            NSLog(@"today scroll down");
+            self.backScrollview.scrollEnabled = YES;
+            [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
+                                      animated:YES];
+            
+            [self disableAllGoodsCollectionScroll];
+        }
+        else if( scrollView.contentOffset.y > 0) {
+            NSLog(@"today scroll up");
+        }
+    }
+}
 
+-(void)enableAllGoodsCollectionScroll{
+    for(int i=0; i<3; i++){
+        UICollectionView* cv=[self.collectionArr objectAtIndex:i];
+        cv.scrollEnabled = YES;
+    }
+}
+
+-(void)disableAllGoodsCollectionScroll{
+    for(int i=0; i<3; i++){
+        UICollectionView* cv=[self.collectionArr objectAtIndex:i];
+        cv.scrollEnabled = NO;
+    }
 }
 
 #pragma mark 左滑进入个人中心界面
