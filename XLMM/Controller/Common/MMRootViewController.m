@@ -780,9 +780,22 @@ static NSString *ksimpleCell = @"simpleCell";
     NSInteger tag = btn.tag - (TAG_BTN_YESTODAY);
     self.currentIndex = tag;
     //循环遍历改变背景
-//    for (int i = 0; i < 3; i++) {
-//        
-//    }
+    for (int i = 0; i < 3; i++) {
+        /*UIImageView *viewImg=(UIImageView *)[self.categoryView viewWithTag:TAG_IMG_YESTODAY];
+        [viewImg setImage:[UIImage imageNamed:@"today1"]];
+        for (UIView *v in  self.categoryView.subviews) {
+            if ([v isKindOfClass:[UIView class]]) {
+                for (UIView *varr in  v.subviews) {
+                    if ([varr isKindOfClass:[UIImageView class]]
+                        && varr.tag == TAG_IMG_TODAY) {
+                        
+
+                    }
+                }
+            }
+        }*/
+
+    }
     
     //改变scrollview的偏移
     NSLog(@"---------%ld", (long)self.currentIndex);
