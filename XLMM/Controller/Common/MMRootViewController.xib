@@ -216,7 +216,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="130" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwS-G5-jfp">
+                                                <button opaque="NO" tag="1005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwS-G5-jfp">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="yestdayBtnClick:" destination="-1" eventType="touchUpInside" id="XNm-kY-Ye5"/>
@@ -283,7 +283,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="132" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDe-GA-zjc">
+                                                <button opaque="NO" tag="1007" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDe-GA-zjc">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="tomottowBtnClick:" destination="-1" eventType="touchUpInside" id="OrJ-sO-BD8"/>
@@ -350,7 +350,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="131" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26f-cK-s0c">
+                                                <button opaque="NO" tag="1006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26f-cK-s0c">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="todayBtnClick:" destination="-1" eventType="touchUpInside" id="uIL-vx-8A2"/>
