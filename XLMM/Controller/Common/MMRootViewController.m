@@ -779,10 +779,10 @@ static NSString *ksimpleCell = @"simpleCell";
 - (void)categoryBtnClick:(UIButton *)btn {
     NSInteger tag = btn.tag - (TAG_BTN_YESTODAY);
     self.currentIndex = tag;
+    
     //循环遍历改变背景
-//    for (int i = 0; i < 3; i++) {
-//        
-//    }
+    [self changeBtnImg];
+    
     
     //改变scrollview的偏移
     NSLog(@"---------%ld", (long)self.currentIndex);
@@ -798,6 +798,39 @@ static NSString *ksimpleCell = @"simpleCell";
     }
 }
 
+-(void)changeBtnImg{
+    UIImageView *uiv;
+    
+    if(self.currentIndex == 0){
+        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
+        [uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
+        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
+        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+    }
+    else if(self.currentIndex == 1){
+        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
+        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
+        [uiv setImage:[UIImage imageNamed:@"today1.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
+        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+    } if(self.currentIndex == 2){
+        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
+        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
+        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        
+        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
+        [uiv setImage:[UIImage imageNamed:@"tomorrow1.png"]];
+    }
+}
 
 #pragma mark --collection的代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
