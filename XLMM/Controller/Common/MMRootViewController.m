@@ -56,11 +56,18 @@
 
 #define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
-#define TAG_BACK_SCROLLVIEW  1000
-#define TAG_GOODS_YESTODAY_SCROLLVIEW 1001
-#define TAG_GOODS_TODAY_SCROLLVIEW 1002
-#define TAG_GOODS_TOMORROW_SCROLLVIEW 1003
-#define TAG_COLLECTION_SCROLLVIEW 1004
+#define TAG_ROOT_VIEW_BASE 1000
+#define TAG_BACK_SCROLLVIEW  (TAG_ROOT_VIEW_BASE)
+#define TAG_GOODS_YESTODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+1)
+#define TAG_GOODS_TODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+2)
+#define TAG_GOODS_TOMORROW_SCROLLVIEW (TAG_ROOT_VIEW_BASE+3)
+#define TAG_COLLECTION_SCROLLVIEW (TAG_ROOT_VIEW_BASE+4)
+#define TAG_BTN_YESTODAY (TAG_ROOT_VIEW_BASE+5)
+#define TAG_BTN_TODAY (TAG_ROOT_VIEW_BASE+6)
+#define TAG_BTN_TOMORROW (TAG_ROOT_VIEW_BASE+7)
+#define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
+#define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
+#define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
 
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
@@ -770,7 +777,7 @@ static NSString *ksimpleCell = @"simpleCell";
 
 //今昨明按钮点击
 - (void)categoryBtnClick:(UIButton *)btn {
-    NSInteger tag = btn.tag - 130;
+    NSInteger tag = btn.tag - (TAG_BTN_YESTODAY);
     self.currentIndex = tag;
     //循环遍历改变背景
 //    for (int i = 0; i < 3; i++) {

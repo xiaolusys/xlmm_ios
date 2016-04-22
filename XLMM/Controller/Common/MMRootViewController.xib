@@ -197,7 +197,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3vK-2C-Hh8">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yestday.png" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-rv-JHr">
+                                                <imageView userInteractionEnabled="NO" tag="1008" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yestday.png" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-rv-JHr">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="RsS-Qb-f5V"/>
@@ -216,7 +216,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="130" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwS-G5-jfp">
+                                                <button opaque="NO" tag="1005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwS-G5-jfp">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="yestdayBtnClick:" destination="-1" eventType="touchUpInside" id="XNm-kY-Ye5"/>
@@ -264,7 +264,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="45C-tJ-E47">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tomorrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="hhg-yZ-mUo">
+                                                <imageView userInteractionEnabled="NO" tag="1010" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tomorrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="hhg-yZ-mUo">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="06e-xa-wdJ"/>
@@ -283,7 +283,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="132" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDe-GA-zjc">
+                                                <button opaque="NO" tag="1007" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDe-GA-zjc">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="tomottowBtnClick:" destination="-1" eventType="touchUpInside" id="OrJ-sO-BD8"/>
@@ -331,7 +331,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GaC-fw-aWd">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="today.png" translatesAutoresizingMaskIntoConstraints="NO" id="EMa-rh-56V">
+                                                <imageView userInteractionEnabled="NO" tag="1009" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="today.png" translatesAutoresizingMaskIntoConstraints="NO" id="EMa-rh-56V">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="q4t-oX-fFr"/>
@@ -350,7 +350,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" tag="131" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26f-cK-s0c">
+                                                <button opaque="NO" tag="1006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26f-cK-s0c">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <connections>
                                                         <action selector="todayBtnClick:" destination="-1" eventType="touchUpInside" id="uIL-vx-8A2"/>
