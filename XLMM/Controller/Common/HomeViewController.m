@@ -298,12 +298,6 @@
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpHome:) name:@"fromActivityToToday" object:nil];
-    
     //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -316,14 +310,8 @@
     
 //    [self createInfo];
     
-    //    [self creatPageData];
+        [self creatPageData];
     
-    //[self islogin];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
 
 }
 
@@ -376,94 +364,6 @@
     }
 }
 
-- (void)weixinzidongdenglu{
-    
-}
-
-- (void)shoujizidongdenglu{
-    //  NSLog(@"手机自动登录");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *username = [defaults objectForKey:kUserName];
-    NSString *password = [defaults objectForKey:kPassWord];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
-    //  NSLog(@"userName : %@, password : %@", username, password);
-    
-    
-    NSDictionary *parameters = @{@"username":username,
-                                 @"password":password
-                                 };
-    
-    [manager POST:kLOGIN_URL parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              //  NSError *error;
-              //   NSLog(@"JSON: %@", responseObject);
-              //     NSLog(@"手机自动登录成功。。。。");
-              
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              //     NSLog(@"Error: %@", error);
-              
-              
-          }];
-    
-}
-
-- (void)autologin{
-    
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
-//    if ([loginMethon isEqualToString:kWeiXinLogin]) {
-//        //  NSLog(@"微信登录");
-//        
-//        [self weixinzidongdenglu];
-//        __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-//        //  NSLog(@"userinfo = %@", userinfo);
-//        if ([self isXiaolumama]) {
-//            [self createRightItem];
-//        } else{
-//            self.navigationItem.rightBarButtonItem = nil;
-//        }
-//    } else if ([loginMethon isEqualToString:kPhoneLogin]){
-//        
-//        __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-//        //  NSLog(@"userinfo = %@", userinfo);
-//        if ([self isXiaolumama]) {
-//            [self createRightItem];
-//        } else{
-//            self.navigationItem.rightBarButtonItem = nil;
-//        }
-//        
-//    }
-    
-}
-
-
-//- (void)islogin{
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
-//    NSURL *url = [NSURL URLWithString:string];
-//    NSError *error = nil;
-//    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
-//    if (error == nil) {
-//        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//        if (error == nil) {
-//            //  NSLog(@"dic = %@", dic);
-//        } else{
-//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-//            [self.navigationController pushViewController:loginVC animated:YES];
-//        }
-//        
-//    } else{
-//        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-//        [self.navigationController pushViewController:loginVC animated:YES];
-//    }
-//    
-//}
-
 #pragma mark  设置导航栏样式
 //- (void)createInfo{
 //    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"name.png"]];
@@ -488,83 +388,53 @@
 //    [self.view addSubview:[[UIView alloc] init]];
 //}
 //
-//#pragma mark 小鹿妈妈入口
-//- (void)rightClicked:(UIButton *)button{
-//    //    NSString *str =@"weixin://qr/JnXv90fE6hqVrQOU9yA0";
-//    //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-//    
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    BOOL islogin = [defaults boolForKey:kIsLogin];
-//    if (islogin == YES) {
-//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-//        NSError *error = nil;
-//        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
-//        //  NSLog(@"error = %@", error);
-//        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
-//        if (data == nil) {
-//            return;
-//        }
-//        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//        // NSLog(@"json = %@", json);
-//        if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-//            MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-//            [self.navigationController pushViewController:ma animated:YES];
-//        } else {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            [alertView show];
-//        }
-//    } else {
-//        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-//        [self.navigationController pushViewController:loginVC animated:YES];
-//    }
-//}
-//
-//#pragma mark 创建购物车按钮。。
-//- (void)createCartsView{
-//    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
-//    view.tag = 123;
-//    [_view addSubview:view];
-//    view.backgroundColor = [UIColor blackColor];
-//    view.alpha = 0.8;
-//    
-//    view.layer.cornerRadius = 22;
-//    view.layer.borderWidth = 1;
-//    view.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
-//    UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
-//    [button addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
-//    [view addSubview:button];
-//    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
-//    iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
-//    iconView.userInteractionEnabled = NO;
-//    [button addSubview:iconView];
-//    //    button.backgroundColor = [UIColor redColor];
-//    
-//    dotView = [[UIView alloc] initWithFrame:CGRectMake(26, 4, 16, 16)];
-//    dotView.layer.cornerRadius = 8;
-//    dotView.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
-//    [button addSubview:dotView];
-//    dotView.hidden = YES;
-//    
-//    
-//    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 60, 24)];
-//    countLabel.text = @"";
-//    countLabel.textColor = [UIColor whiteColor];
-//    countLabel.textAlignment = NSTextAlignmentLeft;
-//    [button addSubview:countLabel];
-//    label = [[UILabel alloc] initWithFrame:dotView.bounds];
-//    label.font = [UIFont systemFontOfSize:10];
-//    [dotView addSubview:label];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor whiteColor];
-//    countLabel.userInteractionEnabled = NO;
-//    dotView.userInteractionEnabled = NO;
-//    label.userInteractionEnabled = NO;
-//    countLabel.hidden = YES;
-//    
-//    
-//    
-//}
+
+#pragma mark 创建购物车按钮。。
+- (void)createCartsView{
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
+    view.tag = 123;
+    [_view addSubview:view];
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.8;
+    
+    view.layer.cornerRadius = 22;
+    view.layer.borderWidth = 1;
+    view.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
+    UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
+    [button addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
+    iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
+    iconView.userInteractionEnabled = NO;
+    [button addSubview:iconView];
+    //    button.backgroundColor = [UIColor redColor];
+    
+    dotView = [[UIView alloc] initWithFrame:CGRectMake(26, 4, 16, 16)];
+    dotView.layer.cornerRadius = 8;
+    dotView.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    [button addSubview:dotView];
+    dotView.hidden = YES;
+    
+    
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 60, 24)];
+    countLabel.text = @"";
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.textAlignment = NSTextAlignmentLeft;
+    [button addSubview:countLabel];
+    label = [[UILabel alloc] initWithFrame:dotView.bounds];
+    label.font = [UIFont systemFontOfSize:10];
+    [dotView addSubview:label];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    countLabel.userInteractionEnabled = NO;
+    dotView.userInteractionEnabled = NO;
+    label.userInteractionEnabled = NO;
+    countLabel.hidden = YES;
+    
+    
+    
+}
 #pragma mark 设置购物车数量
 
 
@@ -750,5 +620,146 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark 生成pageController数据。。。
+- (void)creatPageData{
+    _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    _pageVC.view.frame = _view.bounds;
+    _pageVC.view.userInteractionEnabled = YES;
+    _pageVC.dataSource = self;
+    _pageVC.delegate = self;
+    /*TodayViewController *todayVC = [[TodayViewController alloc] initWithNibName:@"TodayViewController" bundle:nil];
+    todayVC.delegate = self;
+    PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
+    preVC.delegate = self;*/
+    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+    childVC.urlString = kCHILD_LIST_URL;
+    childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+    childVC.childClothing = YES;
+    childVC.delegate = self;
+    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+    womanVC.urlString = kLADY_LIST_URL;
+    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+    womanVC.childClothing = NO;
+    womanVC.delegate = self;
+    _pageContentVC = @[childVC, womanVC];
+    [_pageVC setViewControllers:@[childVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
+    [self addChildViewController:_pageVC];
+    [_view addSubview:_pageVC.view];
+    [self createCartsView];
+    [_pageVC didMoveToParentViewController:self];
+    for (UIView *v in  _pageVC.view.subviews) {
+        if ([v isKindOfClass:[UIScrollView class]]) {
+            ((UIScrollView *)v).delegate = self;
+        }
+    }
+}
+
+#pragma mark --PageViewControllerDelegate--
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+    _currentIndex = [_pageContentVC indexOfObject:viewController];
+    if (_currentIndex < _pageContentVC.count - 1) {
+        _pageCurrentIndex = _currentIndex + 1;
+        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
+    } else{
+    }
+    return nil;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+    _currentIndex = [_pageContentVC indexOfObject:viewController];
+    if (_currentIndex > 0) {
+        _pageCurrentIndex = _currentIndex - 1;
+        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
+    } else{
+    }
+    return nil;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
+    if (completed)
+    {
+        NSInteger btnTag = _currentIndex + 100;
+        for (int i = 100; i<104; i++) {
+            if (btnTag == i) {
+                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+            }
+            else{
+                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+            }
+        }
+        
+        // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
+    }else
+    {
+        if (finished)
+        {
+            
+            NSInteger btnTag = _currentIndex + 100;
+            for (int i = 100; i<104; i++) {
+                if (btnTag == i) {
+                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+                    [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+                    
+                }
+                else{
+                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+                    
+                }
+            }
+        }
+    }
+    
+}
+
+#pragma mark 点击按钮进入不同的专区列表。。
+- (void)buttonClicked:(NSInteger)btnTag{
+    _currentIndex = btnTag - 100+1;
+    for (int i = 100; i<104; i++) {
+        if (btnTag == i) {
+            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
+            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+            
+        }else{
+            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        }
+    }
+    NSInteger index = btnTag - 100;
+    BOOL state = 0;
+    if (_pageCurrentIndex < index) {
+        state = 1;
+    }
+    _pageCurrentIndex = index;
+    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+}
+
+- (IBAction)btnClicked:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSInteger btnTag = button.tag;
+    _currentIndex = btnTag - 100+1;
+    
+    for (int i = 100; i<104; i++) {
+        if (btnTag == i) {
+            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+            
+        }else{
+            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+        }
+    }
+    NSInteger index = btnTag - 100;
+    BOOL state = 0;
+    if (_pageCurrentIndex < index) {
+        state = 1;
+    }
+    _pageCurrentIndex = index;
+    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+}
 
 @end

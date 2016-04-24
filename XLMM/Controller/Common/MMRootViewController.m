@@ -41,6 +41,7 @@
 #import "PromoteModel.h"
 #import "PeopleCollectionCell.h"
 #import "MJRefresh.h"
+#import "HomeViewController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -272,20 +273,20 @@ static NSString *ksimpleCell = @"simpleCell";
     
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
         NSLog(@"跳到今日上新");
-        [self buttonClicked:100];
+        //[self buttonClicked:100];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
         NSLog(@"跳到昨日推荐");
-        [self buttonClicked:101];
+        //[self buttonClicked:101];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         NSLog(@"跳到潮童专区");
-        [self buttonClicked:102];
+        //[self buttonClicked:102];
         
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
         NSLog(@"跳到时尚女装");
-        [self buttonClicked:103];
+        //[self buttonClicked:103];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         NSLog(@"跳转到用户未过期优惠券列表");
         
@@ -429,6 +430,8 @@ static NSString *ksimpleCell = @"simpleCell";
     //设置商品scrollview的偏转
     self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
     
+    [self initCategoryLvl1Img];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
     } else {
@@ -486,7 +489,6 @@ static NSString *ksimpleCell = @"simpleCell";
         
         //添加上拉加载
         homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
             NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
             NSLog(@"MJFresh nextstr %@",nextStr);
             if([nextStr class] == [NSNull class]) {
@@ -594,6 +596,13 @@ static NSString *ksimpleCell = @"simpleCell";
     
     //品牌
     
+}
+
+- (void)initCategoryLvl1Img{
+    [self.womenImgView setUserInteractionEnabled:YES];
+    [self.childImgView setUserInteractionEnabled:YES];
+    [self.womenImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
+    [self.childImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
 }
 
 #pragma mark --商品列表
@@ -717,7 +726,7 @@ static NSString *ksimpleCell = @"simpleCell";
     [backView removeFromSuperview];
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    backView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+    backView.backgroundColor = [UIColor whiteColor];
     
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:backView];
@@ -767,12 +776,30 @@ static NSString *ksimpleCell = @"simpleCell";
     }
 }
 
-#pragma mark --海报点击
+#pragma mark --点击
+//poster click
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
     [self pushAndBannerJump:target_url];
+}
+
+//women child click
+-(void)clickCategoryLvl1:(UITapGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"clickCategoryLvl1 click");
+    //NSLog(@"%hhd",[gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]);
+    
+    UIView *viewClicked=[gestureRecognizer view];
+    if (viewClicked==self.womenImgView) {
+        NSLog(@"womenImgView");
+        HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    }else if(viewClicked==self.childImgView)
+    {
+        NSLog(@"childImgView");
+    }
+    
 }
 
 //今昨明按钮点击
@@ -921,11 +948,11 @@ static NSString *ksimpleCell = @"simpleCell";
     NSDictionary *info = notification.userInfo;
     NSString *jumpType = info[@"param"];
     if ([jumpType isEqualToString:@"previous"]) {
-        [self buttonClicked:101];
+        //[self buttonClicked:101];
     }else if ([jumpType isEqualToString:@"child"]) {
-        [self buttonClicked:102];
+        //[self buttonClicked:102];
     }else if ([jumpType isEqualToString:@"woman"]) {
-        [self buttonClicked:103];
+        //[self buttonClicked:103];
     }
     NSLog(@"---跳转－－－－%@", jumpType);
 }
@@ -1146,40 +1173,7 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 
-#pragma mark 生成pageController数据。。。
-- (void)creatPageData{
-    _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = self.collectionView.bounds;
-    _pageVC.view.userInteractionEnabled = YES;
-    _pageVC.dataSource = self;
-    _pageVC.delegate = self;
-    TodayViewController *todayVC = [[TodayViewController alloc] initWithNibName:@"TodayViewController" bundle:nil];
-    todayVC.delegate = self;
-    PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
-    preVC.delegate = self;
-    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    childVC.urlString = kCHILD_LIST_URL;
-    childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-    childVC.childClothing = YES;
-    childVC.delegate = self;
-    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    womanVC.urlString = kLADY_LIST_URL;
-    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
-    womanVC.childClothing = NO;
-    womanVC.delegate = self;
-    _pageContentVC = @[todayVC, preVC, childVC, womanVC];
-    [_pageVC setViewControllers:@[todayVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
-    [self addChildViewController:_pageVC];
-    [self.collectionView addSubview:_pageVC.view];
-//    [_view addSubview:_pageVC.view];
-    [self createCartsView];
-    [_pageVC didMoveToParentViewController:self];
-    for (UIView *v in  _pageVC.view.subviews) {
-        if ([v isKindOfClass:[UIScrollView class]]) {
-            ((UIScrollView *)v).delegate = self;
-        }
-    }
-}
+
 
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
@@ -1439,6 +1433,8 @@ static NSString *ksimpleCell = @"simpleCell";
         else{
             self.currentIndex = index;
         }
+        
+        [self changeBtnImg];
     }
     
     //在最内层的collection上进行滑动
@@ -1482,112 +1478,6 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 
-#pragma mark --PageViewControllerDelegate--
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
-    _currentIndex = [_pageContentVC indexOfObject:viewController];
-    if (_currentIndex < _pageContentVC.count - 1) {
-        _pageCurrentIndex = _currentIndex + 1;
-        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
-    } else{
-    }
-    return nil;
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
-    _currentIndex = [_pageContentVC indexOfObject:viewController];
-    if (_currentIndex > 0) {
-        _pageCurrentIndex = _currentIndex - 1;
-        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
-    } else{
-    }
-    return nil;
-}
-
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
-    if (completed)
-    {
-        NSInteger btnTag = _currentIndex + 100;
-        for (int i = 100; i<104; i++) {
-            if (btnTag == i) {
-                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-              [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            }
-            else{
-                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-            }
-        }
-        
-       // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
-    }else
-    {
-        if (finished)
-        {
-            
-            NSInteger btnTag = _currentIndex + 100;
-            for (int i = 100; i<104; i++) {
-                if (btnTag == i) {
-                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                  [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-                    
-                }
-                else{
-                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-                    
-                }
-            }
-        }
-    }
-    
-}
-
-#pragma mark 点击按钮进入不同的专区列表。。
-- (void)buttonClicked:(NSInteger)btnTag{
-    _currentIndex = btnTag - 100+1;
-    for (int i = 100; i<104; i++) {
-        if (btnTag == i) {
-            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 100;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
-
-- (IBAction)btnClicked:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSInteger btnTag = button.tag;
-    _currentIndex = btnTag - 100+1;
-   
-    for (int i = 100; i<104; i++) {
-        if (btnTag == i) {
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 100;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
 
 #pragma mark --mmNavigationDelegate--
 

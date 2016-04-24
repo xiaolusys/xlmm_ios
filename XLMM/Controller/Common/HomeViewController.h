@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "NewLeftViewController.h"
 
-@interface HomeViewController : UIViewController<RootVCPushOtherVCDelegate>
+@interface HomeViewController : UIViewController<UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate, UIScrollViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIView *btnView;
+
+- (IBAction)btnClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
 @end

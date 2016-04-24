@@ -10,11 +10,9 @@
 #import "NewLeftViewController.h"
 
 
-@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate,UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *btnView;
 
-- (IBAction)btnClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
@@ -41,6 +39,7 @@
 - (IBAction)tomottowBtnClick:(id)sender;
 - (IBAction)todayBtnClick:(id)sender;
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *womenImgView;
+@property (weak, nonatomic) IBOutlet UIImageView *childImgView;
 
 @end

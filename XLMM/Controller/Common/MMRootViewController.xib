@@ -17,9 +17,11 @@
                 <outlet property="brandViewHeight" destination="3uQ-P2-81f" id="5Gr-Ie-Kui"/>
                 <outlet property="categoryView" destination="YDK-Oo-Z7L" id="dJP-ke-P6K"/>
                 <outlet property="categoryViewHeight" destination="Yvf-yh-AHJ" id="ai6-BU-1P1"/>
+                <outlet property="childImgView" destination="ZUI-Ol-3IX" id="GN0-KG-HcH"/>
                 <outlet property="collectionView" destination="Tvs-3o-2cY" id="Sow-oj-f06"/>
                 <outlet property="collectionViewScrollview" destination="I6e-uj-dlA" id="MZ4-Un-INJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="womenImgView" destination="OT5-M7-DoD" id="1qb-1K-oAo"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -36,10 +38,10 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DH9-Oz-eTC">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OT5-M7-DoD">
+                                        <imageView userInteractionEnabled="NO" tag="1011" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="OT5-M7-DoD">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZUI-Ol-3IX">
+                                        <imageView userInteractionEnabled="NO" tag="1012" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZUI-Ol-3IX">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         </imageView>
                                     </subviews>
@@ -505,7 +507,6 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
                             <rect key="frame" x="0.0" y="128" width="320" height="300"/>
-                            <color key="backgroundColor" red="1" green="0.051865301029999998" blue="0.085083512190000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="qeY-6g-9tx">
                                     <variation key="heightClass=regular-widthClass=compact" constant="40"/>
@@ -598,6 +599,7 @@
         </view>
     </objects>
     <resources>
+        <image name="logo.png" width="328" height="382"/>
         <image name="today.png" width="240" height="240"/>
         <image name="tomorrow.png" width="240" height="240"/>
         <image name="yestday.png" width="240" height="240"/>
