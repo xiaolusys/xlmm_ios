@@ -33,6 +33,7 @@
 #import "NSString+URL.h"
 #import "TuihuoViewController.h"
 #import "MMAdvertiseView.h"
+#import "XlmmMall.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -146,109 +147,19 @@
 //}
 
 
-#pragma mark 解析targeturl 跳转到不同的界面
-- (void)presentView:(NSNotification *)notification{
-    NSLog(@"跳转新的界面");
-//    
-//    NSLog(@"userInfo = %@", notification.userInfo);
-//    NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
-//    
-//    if (target_url == nil) {
-//        return;
-//    }
-//    
-//    NSLog(@"target_url = %@", target_url);
-//    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
-//        NSLog(@"跳到今日上新");
-//        [self buttonClicked:100];
-//        
-//        
-//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
-//        NSLog(@"跳到昨日推荐");
-//        [self buttonClicked:101];
-//        
-//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
-//        NSLog(@"跳到潮童专区");
-//        [self buttonClicked:102];
-//        
-//        
-//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
-//        NSLog(@"跳到时尚女装");
-//        [self buttonClicked:103];
-//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-//        NSLog(@"跳转到用户未过期优惠券列表");
-//        
-//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-//        youhuiVC.isSelectedYHQ = NO;
-//        [self.navigationController pushViewController:youhuiVC animated:YES];
-//        
-//    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-//        //  跳转到小鹿妈妈界面。。。
-//        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-//        [self.navigationController pushViewController:ma animated:YES];
-//        
-//        
-//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
-//        
-//        NSLog(@"跳转到小鹿妈妈每日上新");
-//        
-//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-//        [self.navigationController pushViewController:publish animated:YES];
-//        
-//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
-//        //跳转到退款退货列表
-//        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
-//        [self.navigationController pushViewController:tuihuoVC animated:YES];
-//        
-//    }else {
-//        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-//        
-//        NSString *parameter = [components lastObject];
-//        NSArray *params = [parameter componentsSeparatedByString:@"="];
-//        NSString *firstparam = [params firstObject];
-//        if ([firstparam isEqualToString:@"model_id"]) {
-//            NSLog(@"跳到集合页面");
-//            NSLog(@"model_id = %@", [params lastObject]);
-//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-//            
-//            [self.navigationController pushViewController:collectionVC animated:YES];
-//            
-//            
-//            
-//        } else if ([firstparam isEqualToString:@"product_id"]){
-//            NSLog(@"跳到商品详情");
-//            NSLog(@"product_id = %@", [params lastObject]);
-//            
-//            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-//            [self.navigationController pushViewController:details animated:YES];
-//            
-//            
-//        } else if ([firstparam isEqualToString:@"trade_id"]){
-//            NSLog(@"跳到订单详情");
-//            NSLog(@"trade_id = %@", [params lastObject]);
-//            
-//            
-//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-//            //http://m.xiaolu.so/rest/v1/trades/86412/details
-//            
-//            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-//            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
-//            NSLog(@"url = %@", xiangqingVC.urlString);
-//            
-//            
-//            [self.navigationController pushViewController:xiangqingVC animated:YES];
-//            
-//            
-//        } else {
-//            
-//            //  跳转到H5 界面 。。。。。
-//            
-//            
-//            NSLog(@"跳到H5首页");
-//            
-//        }
-//    }
+
+#pragma mark init
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  type:(NSInteger)type{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (type == TYPE_JUMP_CHILD) {
+        
+    }
+    else{
+        
+    }
+    return self;
 }
+
 
 - (void)showNotification:(NSNotification *)notification{
     NSLog(@"弹出提示框");
@@ -293,8 +204,6 @@
     
     self.timeCount = 0;
     
-    //订阅展示视图消息，将直接打开某个分支视图
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     
@@ -623,6 +532,7 @@
 
 #pragma mark 生成pageController数据。。。
 - (void)creatPageData{
+    NSLog(@"creatPageData");
     _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageVC.view.frame = _view.bounds;
     _pageVC.view.userInteractionEnabled = YES;

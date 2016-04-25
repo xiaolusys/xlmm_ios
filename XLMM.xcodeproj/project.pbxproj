@@ -765,6 +765,7 @@
 		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
+		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1853,6 +1854,9 @@
 		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
+		3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpUtils.m; sourceTree = "<group>"; };
+		3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlmmMall.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2529,6 +2533,7 @@
 		1830725E1C97C00900B7665E /* General */ = {
 			isa = PBXGroup;
 			children = (
+				3A5DF7B51CCE135D00FFE818 /* Utils */,
 				1830725F1C97C00900B7665E /* Categories */,
 				183072781C97C00900B7665E /* Classes */,
 				183072791C97C00900B7665E /* Views */,
@@ -2599,6 +2604,7 @@
 			isa = PBXGroup;
 			children = (
 				183072931C97D0C000B7665E /* MMClass.h */,
+				3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -3790,6 +3796,15 @@
 			name = framework;
 			sourceTree = "<group>";
 		};
+		3A5DF7B51CCE135D00FFE818 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */,
+				3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4475,6 +4490,7 @@
 				183074071C97D17800B7665E /* QNHttpManager.m in Sources */,
 				183072171C97BE3700B7665E /* MaMaShareSubsidiesViewController.m in Sources */,
 				183073D11C97D17800B7665E /* AFURLRequestSerialization.m in Sources */,
+				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
 				183074131C97D17800B7665E /* QNUpToken.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,

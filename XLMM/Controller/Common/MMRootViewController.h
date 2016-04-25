@@ -12,11 +12,6 @@
 
 @interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
-
-
 @property (weak, nonatomic) IBOutlet UIScrollView *backScrollview;
 @property (weak, nonatomic) IBOutlet UIView *aboveView;
 @property (weak, nonatomic) IBOutlet UIView *brandView;

@@ -42,6 +42,7 @@
 #import "PeopleCollectionCell.h"
 #import "MJRefresh.h"
 #import "HomeViewController.h"
+#import "JumpUtils.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -265,7 +266,8 @@ static NSString *ksimpleCell = @"simpleCell";
 - (void)presentView:(NSNotification *)notification{
     //跳转到新的页面
     NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
-    [self pushAndBannerJump:target_url];
+    //[self pushAndBannerJump:target_url];
+    [JumpUtils jumpToLocation:notification.userInfo viewController:self];
 }
 
 - (void)pushAndBannerJump:(NSString *)target_url {
@@ -711,7 +713,7 @@ static NSString *ksimpleCell = @"simpleCell";
 
 //活动展示点击
 - (void)activityTapAction:(UITapGestureRecognizer *)tap {
-    NSLog(@"点击了。。。。。");
+    NSLog(@"点击了 activityTapAction。。。。。");
     //判断点击的活动
     UIImageView *imageV = (UIImageView *)tap.view;
     NSInteger imageTag = imageV.tag - 120;
@@ -782,7 +784,8 @@ static NSString *ksimpleCell = @"simpleCell";
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
-    [self pushAndBannerJump:target_url];
+    //[self pushAndBannerJump:target_url];
+    [JumpUtils jumpToLocation:target_url viewController:self];
 }
 
 //women child click
@@ -947,14 +950,18 @@ static NSString *ksimpleCell = @"simpleCell";
 - (void)jumpHome:(NSNotification *)notification {
     NSDictionary *info = notification.userInfo;
     NSString *jumpType = info[@"param"];
-    if ([jumpType isEqualToString:@"previous"]) {
+    
+    NSLog(@"-rootview jumphome--跳转－－－－%@", jumpType);
+    if ([jumpType isEqualToString:@"today"]) {
         //[self buttonClicked:101];
+    }else if ([jumpType isEqualToString:@"previous"]) {
+            
     }else if ([jumpType isEqualToString:@"child"]) {
-        //[self buttonClicked:102];
+        
     }else if ([jumpType isEqualToString:@"woman"]) {
         //[self buttonClicked:103];
     }
-    NSLog(@"---跳转－－－－%@", jumpType);
+
 }
 
 - (NSArray *)randomArray{

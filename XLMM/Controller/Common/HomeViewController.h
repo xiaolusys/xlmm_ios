@@ -17,4 +17,5 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger)type;
 @end

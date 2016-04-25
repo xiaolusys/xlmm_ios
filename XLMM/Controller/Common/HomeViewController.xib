@@ -8,8 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController">
             <connections>
                 <outlet property="btnView" destination="qrf-17-OWC" id="Wpd-bu-kbe"/>
-                <outlet property="topHeight" destination="ab5-dO-aNf" id="cgB-E2-uYW"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="topHeight" destination="ab5-dO-aNf" id="lL5-gj-aOG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="DY5-cn-dKd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,7 +20,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrf-17-OWC">
                     <rect key="frame" x="0.0" y="64" width="320" height="35"/>
                     <subviews>
-                        <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcO-VZ-7Ct">
+                        <button opaque="NO" tag="102" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcO-VZ-7Ct">
                             <rect key="frame" x="161" y="2" width="78" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="萌娃专区">
@@ -30,7 +30,7 @@
                                 <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="xbA-mC-KvG"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chf-aF-1bs">
+                        <button opaque="NO" tag="103" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chf-aF-1bs">
                             <rect key="frame" x="241" y="2" width="77" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="时尚女装">
@@ -64,16 +64,16 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="3FW-I5-F9w"/>
                             <exclude reference="02h-Gw-EmW"/>
                             <exclude reference="3Fy-s2-fUu"/>
-                            <exclude reference="3FW-I5-F9w"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
+                            <include reference="3FW-I5-F9w"/>
                             <include reference="02h-Gw-EmW"/>
                             <include reference="3Fy-s2-fUu"/>
-                            <include reference="3FW-I5-F9w"/>
                         </mask>
                     </variation>
                 </view>
