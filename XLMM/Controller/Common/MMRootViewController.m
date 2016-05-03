@@ -43,6 +43,7 @@
 #import "MJRefresh.h"
 #import "HomeViewController.h"
 #import "JumpUtils.h"
+#import "ImageUtils.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -70,6 +71,7 @@
 #define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
 #define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
 #define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
+#define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
 
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
@@ -386,14 +388,10 @@ static NSString *ksimpleCell = @"simpleCell";
     frame = self.view.frame;
 }
 
-#pragma mark 注册观察者
+#pragma mark 主界面初始化
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //商品请求链接
-    [self createRequestURL];
-    self.dickey = @[YESTDAY, TODAY, TOMORROW];
     
     self.timeCount = 0;
     
@@ -414,9 +412,9 @@ static NSString *ksimpleCell = @"simpleCell";
     _isFirst = YES;
     
     _pageCurrentIndex = 0;
-    
     self.currentIndex = 1;
     
+    //设置导航栏样式
     [self createInfo];
     
 //    [self creatPageData];
@@ -428,11 +426,19 @@ static NSString *ksimpleCell = @"simpleCell";
     
     self.posterImages = [[NSMutableArray alloc] init];
     self.posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    //海报和活动展示
+    [self showPromotion];
+
+    
+    //商品请求链接
+    [self createRequestURL];
+    //推荐商品展示
     [self createCollectionView];
     //设置商品scrollview的偏转
     self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
     
-    [self initCategoryLvl1Img];
+
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
@@ -458,13 +464,39 @@ static NSString *ksimpleCell = @"simpleCell";
 }
 
 - (void)createRequestURL {
-    NSArray *urlBefroe = @[@"/rest/v1/products/promote_previous_paging?page=1&page_size=10",
-        @"/rest/v1/products/promote_today_paging?page=1&page_size=10",
-        @"/rest/v1/products/promote_tomorrow_paging?page=1&page_size=10"];
+    NSArray *urlBefroe = @[@"/rest/v2/products/yesterday?page=1&page_size=10",
+        @"/rest/v2/products?page=1&page_size=10",
+        @"/rest/v2/products/tomorrow?page=1&page_size=10"];
     for (int i = 0; i < 3; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
         [self.urlArr addObject:url];
     }
+    
+    self.dickey = @[YESTDAY, TODAY, TOMORROW];
+}
+
+- (void)showPromotion{
+    //网络请求海报
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self fetchedPromotionData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //未登录处理
+        //        [self showDefaultView];
+        NSLog(@"get poster failed.");
+    }];
+    
+    //活动
+    /*NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
+    [manage GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.activityArr = responseObject;
+        if (self.activityArr.count == 0) return;
+        [self activityDeal:self.activityArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];*/
 }
 
 - (void)createCollectionView {
@@ -512,36 +544,14 @@ static NSString *ksimpleCell = @"simpleCell";
         [self.collectionArr addObject:homeCollectionView];
     }
     
-    
-    //网络请求海报
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/posters/today", Root_URL];
-    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        [self fetchedPosterData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //未登录处理
-        //        [self showDefaultView];
-    }];
-    
-    //活动
-    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
-    [manage GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.activityArr = responseObject;
-        if (self.activityArr.count == 0) return;
-        [self activityDeal:self.activityArr];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
     //今日商品
     [self goodsRequest];
 }
 
-- (void)fetchedPosterData:(NSDictionary *)jsonDic{
+- (void)fetchedPromotionData:(NSDictionary *)jsonDic{
     if (jsonDic.count == 0) return;
     
-    NSArray *childArray = [jsonDic objectForKey:@"chd_posters"];
+    NSArray *childArray = [jsonDic objectForKey:@"posters"];
     self.posterImages = [[NSMutableArray alloc] init];
     
     if (childArray.count == 0)return;
@@ -553,7 +563,7 @@ static NSString *ksimpleCell = @"simpleCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
+        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
         
         NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
         NSLog(@"image = %@", image0);
@@ -564,26 +574,6 @@ static NSString *ksimpleCell = @"simpleCell";
         [self.posterImages addObject:image0];
         [self.posterDataArray addObject:childModel];
         
-    }
-
-    NSArray *ladyArray = [jsonDic objectForKey:@"wem_posters"];
-    if (ladyArray.count == 0)return;
-    for (NSDictionary *ladyDic in ladyArray) {
-        
-        PosterModel *ladyModel = [PosterModel new];
-        ladyModel.target_link = [ladyDic objectForKey:@"app_link"];
-        ladyModel.imageURL = [ladyDic objectForKey:@"pic_link"];
-        ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
-        ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
-        
-        UIImage *image1 = [UIImage imagewithURLString:[[ladyModel.imageURL URLEncodedString] imagePostersCompression]];
-        NSLog(@"url = %@", [ladyModel.imageURL URLEncodedString]);
-        NSLog(@"image = %@", image1);
-        if (image1 == nil) {
-            image1 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
-        }
-        [self.posterImages addObject:image1];
-        [self.posterDataArray addObject:ladyModel];
     }
     
     MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
@@ -596,15 +586,113 @@ static NSString *ksimpleCell = @"simpleCell";
 //    [self.bannerView addSubview:view];
     [self.bannerView addSubview:adView];
     
-    //品牌
+    [self initCategoryLvl1Img:jsonDic];
     
+    //活动
+    [self initActivity:jsonDic];
+    //品牌
+    [self initBrand:jsonDic];
 }
 
-- (void)initCategoryLvl1Img{
+- (void)initCategoryLvl1Img:(NSDictionary *)jsonDic{
+    NSArray *categorys = [jsonDic objectForKey:@"categorys"];
+    
+    if (categorys.count < 2)return;
+
+    [ImageUtils loadImage:self.childImgView url:[categorys[0] objectForKey:@"cat_img"]];
+    [ImageUtils loadImage:self.womenImgView url:[categorys[1] objectForKey:@"cat_img"]];
+    
     [self.womenImgView setUserInteractionEnabled:YES];
     [self.childImgView setUserInteractionEnabled:YES];
     [self.womenImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
     [self.childImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
+    
+}
+
+- (void)initActivity:(NSDictionary *)jsonDic{
+    NSArray *activitys = [jsonDic objectForKey:@"activitys"];
+    NSLog(@"initActivity count=%lu",(unsigned long)activitys.count );
+    
+    if (activitys.count ==0){
+        self.activityHeight.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    }
+    self.activityHeight.constant = 90 * activitys.count;
+    [self.view layoutIfNeeded];
+    
+    int index = 0;
+    for(NSDictionary *activity in activitys){
+        NSLog(@"x=%f y=%f url=%@",self.activityView.frame.origin.x,
+              self.activityView.frame.origin.y,
+              [activity objectForKey:@"act_img"]);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.activityView.frame.origin.x , self.activityView.frame.origin.y + 90 * index, SCREENWIDTH, 90)];
+        
+        [ImageUtils loadImage:imageView url:[[activity objectForKey:@"act_img"] imageNormalCompression]];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+        [imageView addGestureRecognizer:tap];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.masksToBounds = YES;
+        imageView.userInteractionEnabled = YES;
+    
+        [self.activityView addSubview:imageView];
+        index++;
+    }
+}
+
+- (void)initBrand:(NSDictionary *)jsonDic{
+    NSArray *brands = [jsonDic objectForKey:@"promotion_brands"];
+    NSLog(@"initBrand count=%lu",(unsigned long)brands.count );
+    
+    if (brands.count ==0){
+        self.brandViewHeight.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    }
+    self.brandViewHeight.constant = 200 * brands.count;
+
+    [self.view layoutIfNeeded];
+    
+    int index = 0;
+    for(NSDictionary *brand in brands){
+        NSLog(@"x=%f y=%f url=%@",self.brandView.frame.origin.x,
+              self.brandView.frame.origin.y,
+              [brand objectForKey:@"brand_pic"]);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 18)];
+        
+        [ImageUtils loadImage:imageView url:[brand objectForKey:@"brand_pic"]];
+
+        [self.brandView addSubview:imageView];
+        
+        UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(300, 15, 50, 18)];
+        textView.text = [brand objectForKey:@"brand_desc"];
+        textView.font
+        = [UIFont fontWithName:@"Arial" size:10.0];
+        textView.editable = NO;
+        textView.textColor = [UIColor blackColor];
+        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [self.brandView addSubview:textView];
+        
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(355, 15, 10, 10)];
+        UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
+        arrowView.image = image;
+        [self.brandView addSubview:arrowView];
+        
+        //展示品牌商品
+        UICollectionView *brandCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(15, 60, SCREENWIDTH, 110)];
+        
+        brandCollectionView.backgroundColor = [UIColor whiteColor];
+        brandCollectionView.tag = TAG_COLLECTION_BRAND;
+        brandCollectionView.scrollEnabled = NO;
+        
+        brandCollectionView.delegate = self;
+        brandCollectionView.dataSource = self;
+        
+        [brandCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        [self.brandView addSubview:brandCollectionView];
+        
+        index++;
+    }
 }
 
 #pragma mark --商品列表

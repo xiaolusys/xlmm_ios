@@ -38,10 +38,10 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DH9-Oz-eTC">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1011" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="OT5-M7-DoD">
+                                        <imageView userInteractionEnabled="NO" tag="1011" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OT5-M7-DoD">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" tag="1012" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZUI-Ol-3IX">
+                                        <imageView userInteractionEnabled="NO" tag="1012" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZUI-Ol-3IX">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         </imageView>
                                     </subviews>
@@ -96,7 +96,6 @@
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVs-4L-uc3">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <color key="backgroundColor" red="0.70317978110000001" green="1" blue="0.68747983629999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="180" id="UhI-d8-XDl"/>
                                     </constraints>
@@ -508,15 +507,15 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
                             <rect key="frame" x="0.0" y="128" width="320" height="300"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="300" id="qeY-6g-9tx">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                <constraint firstAttribute="height" constant="90" id="qeY-6g-9tx">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                                 </constraint>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T6-Xw-5MS">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="10" id="3uQ-P2-81f">
+                                <constraint firstAttribute="height" constant="200" id="3uQ-P2-81f">
                                     <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                                 </constraint>
                             </constraints>
@@ -599,7 +598,6 @@
         </view>
     </objects>
     <resources>
-        <image name="logo.png" width="328" height="382"/>
         <image name="today.png" width="240" height="240"/>
         <image name="tomorrow.png" width="240" height="240"/>
         <image name="yestday.png" width="240" height="240"/>
