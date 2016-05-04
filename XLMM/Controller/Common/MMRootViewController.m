@@ -44,6 +44,8 @@
 #import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
+#import "BrandCollectionCell.h"
+#import "BrandGoodsModel.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -71,6 +73,7 @@
 #define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
 #define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
 #define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
+//因为可能有多个品牌,那么先预留10个
 #define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
 
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
@@ -118,6 +121,7 @@
 @property (nonatomic, strong)NSArray *activityArr;
 @property (nonatomic, strong)NSMutableArray *activityDataArr;
 
+@property (nonatomic, strong)NSMutableArray *brandDataArr;
 //商品
 @property (nonatomic, strong)NSMutableArray *collectionArr;
 @property (nonatomic, strong)NSMutableArray *collectionDataArr;
@@ -132,6 +136,8 @@
 
 
 static NSString *ksimpleCell = @"simpleCell";
+static NSString *kbrandCell = @"brandCell";
+
 @implementation MMRootViewController
 
 //- (UIScrollView *)backScrollview {
@@ -161,6 +167,13 @@ static NSString *ksimpleCell = @"simpleCell";
         self.activityDataArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _activityDataArr;
+}
+
+- (NSMutableArray *)brandDataArr {
+    if (!_brandDataArr) {
+        self.brandDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _brandDataArr;
 }
 
 - (NSMutableArray *)collectionArr {
@@ -626,7 +639,7 @@ static NSString *ksimpleCell = @"simpleCell";
         NSLog(@"x=%f y=%f url=%@",self.activityView.frame.origin.x,
               self.activityView.frame.origin.y,
               [activity objectForKey:@"act_img"]);
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.activityView.frame.origin.x , self.activityView.frame.origin.y + 90 * index, SCREENWIDTH, 90)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0 , 90 * index, SCREENWIDTH, 90)];
         
         [ImageUtils loadImage:imageView url:[[activity objectForKey:@"act_img"] imageNormalCompression]];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
@@ -658,6 +671,8 @@ static NSString *ksimpleCell = @"simpleCell";
         NSLog(@"x=%f y=%f url=%@",self.brandView.frame.origin.x,
               self.brandView.frame.origin.y,
               [brand objectForKey:@"brand_pic"]);
+        [self getBrandGoods:[brand objectForKey:@"id"]];
+        
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 18)];
         
         [ImageUtils loadImage:imageView url:[brand objectForKey:@"brand_pic"]];
@@ -679,17 +694,25 @@ static NSString *ksimpleCell = @"simpleCell";
         [self.brandView addSubview:arrowView];
         
         //展示品牌商品
-        UICollectionView *brandCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(15, 60, SCREENWIDTH, 110)];
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumLineSpacing = 5;
+        flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
+        
+        UICollectionView *brandCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 60, SCREENWIDTH, 145) collectionViewLayout:flowLayout];
         
         brandCollectionView.backgroundColor = [UIColor whiteColor];
-        brandCollectionView.tag = TAG_COLLECTION_BRAND;
-        brandCollectionView.scrollEnabled = NO;
+        brandCollectionView.tag = TAG_COLLECTION_BRAND + index;
+        brandCollectionView.scrollEnabled = YES;
         
         brandCollectionView.delegate = self;
         brandCollectionView.dataSource = self;
         
-        [brandCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        [brandCollectionView registerClass:[BrandCollectionCell class] forCellWithReuseIdentifier:kbrandCell];
         [self.brandView addSubview:brandCollectionView];
+        
+        
         
         index++;
     }
@@ -866,6 +889,48 @@ static NSString *ksimpleCell = @"simpleCell";
     }
 }
 
+#pragma mark --品牌信息处理
+-(void)getBrandGoods:(NSString*)brandId{
+    NSLog(@"getBrandGoods %@", brandId);
+    //网络请求
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self fetchedBrandData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //未登录处理
+        //        [self showDefaultView];
+        NSLog(@"get brand goods failed.");
+    }];
+}
+
+- (void)fetchedBrandData:(NSArray *)jsonDic{
+    if (jsonDic.count == 0) return;
+    
+    NSArray *goodsArray = jsonDic;
+    NSMutableArray *goods = [[NSMutableArray alloc] init];
+    
+    if (goodsArray.count == 0)return;
+    for (NSDictionary *product in goodsArray) {
+        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
+        
+        goodsModel.brandID = [product objectForKey:@"id"];
+        goodsModel.product_id = [product objectForKey:@"product_id"];
+        goodsModel.product_name = [product objectForKey:@"product_name"] ;
+        goodsModel.product_img = [product objectForKey:@"product_img"];
+        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
+        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
+        
+        [goods addObject:goodsModel];
+        [self.brandDataArr addObject:goods];
+        
+        
+    }
+    
+    
+}
+
 #pragma mark --点击
 //poster click
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
@@ -952,31 +1017,85 @@ static NSString *ksimpleCell = @"simpleCell";
 
 #pragma mark --collection的代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSString *key = self.dickey[self.currentIndex];
-    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    return currentArr.count;
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+            && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        NSLog(@"brand collection");
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                return obj.count;
+            }
+            index++;
+        }
+        return 0;
+    }
+    else{
+        NSLog(@"arr collection");
+        NSString *key = self.dickey[self.currentIndex];
+        NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+        return currentArr.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
-    //wulei 20160421 防止超过1屏后出现重复和错乱
-    //for (UIView *view in cell.contentView.subviews) {
-    //    [view removeFromSuperview];
-    //}
     
-    NSString *key = self.dickey[self.currentIndex];
-    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-    [cell fillData:model];
-    return cell;
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        NSLog(@"brand collection cellForItemAtIndexPath");
+        BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
+        
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                [cell fillDataWithModel:model];
+                return cell;
+
+            }
+            index++;
+        }
+        return cell;
+    }
+    else{
+        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+        //wulei 20160421 防止超过1屏后出现重复和错乱
+        //for (UIView *view in cell.contentView.subviews) {
+        //    [view removeFromSuperview];
+        //}
+        
+        NSString *key = self.dickey[self.currentIndex];
+        NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+        [cell fillData:model];
+        return cell;
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(SCREENWIDTH, 30);
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        return CGSizeMake(0, 0);
+
+    }
+    else{
+        return CGSizeMake(SCREENWIDTH, 30);
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH-15) * 0.5 * 8/6 + 60);
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        NSLog(@"brand collection");
+        return CGSizeMake(110, 145);
+    }
+    else{
+        return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH-15) * 0.5 * 8/6 + 60);
+    }
 }
 
 //- (void)updateViewConstraints {

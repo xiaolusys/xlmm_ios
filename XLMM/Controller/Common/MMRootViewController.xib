@@ -504,7 +504,7 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
                             <rect key="frame" x="0.0" y="128" width="320" height="300"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="90" id="qeY-6g-9tx">
