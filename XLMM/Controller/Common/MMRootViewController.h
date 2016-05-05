@@ -36,5 +36,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *womenImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *childImgView;
+@property (weak, nonatomic) IBOutlet UILabel *labelTime;
 
 @end

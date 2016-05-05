@@ -150,13 +150,17 @@
 
 #pragma mark init
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  type:(NSInteger)type{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSLog(@"initWithNibName");
+    
     if (type == TYPE_JUMP_CHILD) {
-        
+
     }
     else{
-        
+
+
     }
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     return self;
 }
 
@@ -199,9 +203,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [super viewDidLoad];
-    
+    NSLog(@"viewDidLoad");
     self.timeCount = 0;
     
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
@@ -212,9 +214,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
 //    _isFirst = YES;
     
-//    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
-//    [self.view addSubview:_view];
-//    _pageCurrentIndex = 0;
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
+    [self.view addSubview:_view];
+    _pageCurrentIndex = 0;
     
     
 //    [self createInfo];
@@ -591,8 +593,8 @@
     _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
     if (completed)
     {
-        NSInteger btnTag = _currentIndex + 100;
-        for (int i = 100; i<104; i++) {
+        NSInteger btnTag = _currentIndex + 102;
+        for (int i = 102; i<104; i++) {
             if (btnTag == i) {
                 UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
                 [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
@@ -609,8 +611,8 @@
         if (finished)
         {
             
-            NSInteger btnTag = _currentIndex + 100;
-            for (int i = 100; i<104; i++) {
+            NSInteger btnTag = _currentIndex + 102;
+            for (int i = 102; i<104; i++) {
                 if (btnTag == i) {
                     UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
                     [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
@@ -629,8 +631,8 @@
 
 #pragma mark 点击按钮进入不同的专区列表。。
 - (void)buttonClicked:(NSInteger)btnTag{
-    _currentIndex = btnTag - 100+1;
-    for (int i = 100; i<104; i++) {
+    _currentIndex = btnTag - 102+1;
+    for (int i = 102; i<104; i++) {
         if (btnTag == i) {
             UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
             [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
@@ -640,7 +642,7 @@
             [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         }
     }
-    NSInteger index = btnTag - 100;
+    NSInteger index = btnTag - 102;
     BOOL state = 0;
     if (_pageCurrentIndex < index) {
         state = 1;
@@ -652,9 +654,9 @@
 - (IBAction)btnClicked:(id)sender {
     UIButton *button = (UIButton *)sender;
     NSInteger btnTag = button.tag;
-    _currentIndex = btnTag - 100+1;
+    _currentIndex = btnTag - 102+1;
     
-    for (int i = 100; i<104; i++) {
+    for (int i = 102; i<104; i++) {
         if (btnTag == i) {
             [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
             
@@ -663,7 +665,7 @@
             [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         }
     }
-    NSInteger index = btnTag - 100;
+    NSInteger index = btnTag - 102;
     BOOL state = 0;
     if (_pageCurrentIndex < index) {
         state = 1;

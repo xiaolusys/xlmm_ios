@@ -41,7 +41,7 @@
     
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.product_lowest_price floatValue]];
 
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"/¥%@",model.product_std_sale_price];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"/¥%.1f",[model.product_std_sale_price floatValue]];
     
 }
 @end

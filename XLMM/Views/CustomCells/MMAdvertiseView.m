@@ -17,13 +17,13 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andImages:(NSArray *)images{
     self = [super initWithFrame:frame];
-    NSLog(@"------%f", width);
+    NSLog(@"-MMAdvertiseView-initWithFrame----%f %@", width, NSStringFromCGRect(frame));
     if (self) {
         _images = images;
-        NSLog(@"_images = %@", _images);
+        NSLog(@"MMAdvertiseView _images = %@", _images);
         _imageCount = _images.count;
         
-        NSLog(@"_count = %ld", (long)_imageCount);
+        NSLog(@"MMAdvertiseView _count = %ld", (long)_imageCount);
         _currentImageIndex = 0;
         self.looptime = 4.0;
         //添加滚动控件
@@ -43,7 +43,7 @@
 #pragma mark 添加控件
 -(void)addScrollView{
     _scrollView=[[UIScrollView alloc]initWithFrame:self.bounds];
-    NSLog(@"%@", NSStringFromCGRect(_scrollView.frame));
+    NSLog(@"MMAdvertiseView addScrollView frame=%@", NSStringFromCGRect(_scrollView.frame));
     [self addSubview:_scrollView];
     //设置代理
     _scrollView.delegate=self;
@@ -51,7 +51,7 @@
     _scrollView.contentSize=CGSizeMake(width * 3, height);
     //设置当前显示的位置为中间图片
     [_scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
-    NSLog(@"----------偏移-----%f", _scrollView.contentOffset.x);
+    NSLog(@"-MMAdvertiseView--偏移-----%f", _scrollView.contentOffset.x);
     //设置分页
     _scrollView.pagingEnabled=YES;
     
@@ -59,14 +59,14 @@
     _scrollView.showsHorizontalScrollIndicator=NO;
     self.scrollView.backgroundColor = [UIColor whiteColor];
     
-    NSLog(@"-----contentOffset.x----%f", _scrollView.contentOffset.x);
+    NSLog(@"-MMAdvertiseView----contentOffset.x----%f", _scrollView.contentOffset.x);
 }
 
 #pragma mark 添加图片三个控件
 -(void)addImageViews{
     _leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
-//    _leftImageView.contentMode=UIViewContentModeScaleAspectFill;
-    NSLog(@"%f  %f", width, height);
+    _leftImageView.contentMode=UIViewContentModeScaleAspectFill;
+    NSLog(@"MMAdvertiseView width=%f  height=%f", width, height);
     [_scrollView addSubview:_leftImageView];
     
     _centerImageView=[[UIImageView alloc]initWithFrame:CGRectMake(width, 0, width, height)];
@@ -106,7 +106,7 @@
     _rightImageView.image = self.images[1];
     
     
-    NSLog(@"_left = %@", _leftImageView.image);
+    NSLog(@"MMAdvertiseView _left = %@", _leftImageView.image);
     _currentImageIndex = 0;
     //设置当前页
     _pageControl.currentPage = _currentImageIndex;

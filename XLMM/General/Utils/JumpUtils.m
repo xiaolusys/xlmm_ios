@@ -16,6 +16,7 @@
 #import "XiangQingViewController.h"
 #import "HomeViewController.h"
 #import "XlmmMall.h"
+#import "ChildViewController.h"
 
 
 @implementation JumpUtils
@@ -37,14 +38,20 @@
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
-        HomeViewController *collectionVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil type:TYPE_JUMP_CHILD];
+        ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.childClothing = YES;
         
-        [vc.navigationController pushViewController:collectionVC animated:YES];
+        [vc.navigationController pushViewController:childVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
         //跳到时尚女装
-        HomeViewController *collectionVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil  type:TYPE_JUMP_WOMAN];
+        ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        womanVC.urlString = kLADY_LIST_URL;
+        womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        womanVC.childClothing = NO;
         
-        [vc.navigationController pushViewController:collectionVC animated:YES];
+        [vc.navigationController pushViewController:womanVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
         YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
