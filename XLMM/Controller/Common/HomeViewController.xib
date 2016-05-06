@@ -7,8 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController">
             <connections>
-                <outlet property="btnView" destination="qrf-17-OWC" id="Wpd-bu-kbe"/>
-                <outlet property="topHeight" destination="ab5-dO-aNf" id="lL5-gj-aOG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="DY5-cn-dKd"/>
             </connections>
         </placeholder>
@@ -16,73 +14,6 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrf-17-OWC">
-                    <rect key="frame" x="0.0" y="64" width="320" height="35"/>
-                    <subviews>
-                        <button opaque="NO" tag="102" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcO-VZ-7Ct">
-                            <rect key="frame" x="161" y="2" width="78" height="32"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="萌娃专区">
-                                <color key="titleColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="xbA-mC-KvG"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="103" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chf-aF-1bs">
-                            <rect key="frame" x="241" y="2" width="77" height="32"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="时尚女装">
-                                <color key="titleColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="btnClicked:" destination="-1" eventType="touchUpInside" id="USm-ED-PDL"/>
-                            </connections>
-                        </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQa-JN-lWX">
-                            <rect key="frame" x="0.0" y="34" width="320" height="1"/>
-                            <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="7yn-M7-UBl"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="xcO-VZ-7Ct" firstAttribute="leading" secondItem="qrf-17-OWC" secondAttribute="leading" constant="2" id="02h-Gw-EmW"/>
-                        <constraint firstItem="bQa-JN-lWX" firstAttribute="top" secondItem="xcO-VZ-7Ct" secondAttribute="bottom" id="3FW-I5-F9w"/>
-                        <constraint firstItem="xcO-VZ-7Ct" firstAttribute="centerY" secondItem="qrf-17-OWC" secondAttribute="centerY" id="3Fy-s2-fUu"/>
-                        <constraint firstAttribute="bottom" secondItem="bQa-JN-lWX" secondAttribute="bottom" id="6Qf-cb-2Hp"/>
-                        <constraint firstAttribute="trailing" secondItem="Chf-aF-1bs" secondAttribute="trailing" constant="2" id="Ghv-aQ-ITB"/>
-                        <constraint firstItem="Chf-aF-1bs" firstAttribute="leading" secondItem="xcO-VZ-7Ct" secondAttribute="trailing" constant="2" id="Ild-cE-eJ0"/>
-                        <constraint firstItem="Chf-aF-1bs" firstAttribute="height" secondItem="xcO-VZ-7Ct" secondAttribute="height" id="Krh-7l-CHq"/>
-                        <constraint firstAttribute="trailing" secondItem="bQa-JN-lWX" secondAttribute="trailing" id="Q5s-71-L5B"/>
-                        <constraint firstItem="Chf-aF-1bs" firstAttribute="top" secondItem="xcO-VZ-7Ct" secondAttribute="top" id="b3C-QE-3gd"/>
-                        <constraint firstItem="bQa-JN-lWX" firstAttribute="leading" secondItem="qrf-17-OWC" secondAttribute="leading" id="l0D-ws-jpq"/>
-                        <constraint firstAttribute="height" constant="35" id="rPw-cl-f9M"/>
-                        <constraint firstItem="Chf-aF-1bs" firstAttribute="width" secondItem="xcO-VZ-7Ct" secondAttribute="width" id="rZi-7T-5Ii"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="3FW-I5-F9w"/>
-                            <exclude reference="02h-Gw-EmW"/>
-                            <exclude reference="3Fy-s2-fUu"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="3FW-I5-F9w"/>
-                            <include reference="02h-Gw-EmW"/>
-                            <include reference="3Fy-s2-fUu"/>
-                        </mask>
-                    </variation>
-                </view>
-            </subviews>
-            <constraints>
-                <constraint firstItem="qrf-17-OWC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="G23-SH-sby"/>
-                <constraint firstItem="qrf-17-OWC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ab5-dO-aNf"/>
-                <constraint firstAttribute="trailing" secondItem="qrf-17-OWC" secondAttribute="trailing" id="p9o-Ea-Kjh"/>
-            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="347" y="223"/>
         </view>

@@ -11,11 +11,5 @@
 
 @interface HomeViewController : UIViewController<UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate, UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *btnView;
-
-- (IBAction)btnClicked:(id)sender;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
-
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger)type;
 @end

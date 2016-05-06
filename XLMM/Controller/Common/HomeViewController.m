@@ -67,7 +67,7 @@
 @property (nonatomic, assign)NSInteger timeCount;
 
 @property (nonatomic, strong)NSString *imageUrl;
- 
+@property (nonatomic, assign)NSInteger type;
 @end
 
 @implementation HomeViewController
@@ -152,13 +152,7 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  type:(NSInteger)type{
     NSLog(@"initWithNibName");
     
-    if (type == TYPE_JUMP_CHILD) {
-
-    }
-    else{
-
-
-    }
+    self.type = type;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     return self;
@@ -214,15 +208,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
 //    _isFirst = YES;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
+    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT)];
     [self.view addSubview:_view];
     _pageCurrentIndex = 0;
-    
+    _currentIndex = 0;
     
 //    [self createInfo];
     
-        [self creatPageData];
-    
+        //[self creatPageData];
+    [self creatGoodsView];
 
 }
 
@@ -275,6 +269,32 @@
     }
 }
 
+- (void)creatGoodsView{
+    NSLog(@"creatGoodsView");
+    ChildViewController *vc = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle] type:self.type];
+    vc.delegate = self;
+
+//    if(TYPE_JUMP_CHILD == self.type){
+//
+//        vc.urlString = kCHILD_LIST_URL;
+//        vc.orderUrlString = kCHILD_LIST_ORDER_URL;
+//        vc.childClothing = YES;
+//        vc.delegate = self;
+//    }
+//    else{
+//
+//        vc.urlString = kLADY_LIST_URL;
+//        vc.orderUrlString = kLADY_LIST_ORDER_URL;
+//        vc.childClothing = NO;
+//        vc.delegate = self;
+//    }
+    
+    [_view addSubview:vc.view];
+
+    [self createCartsView];
+}
+
+
 #pragma mark  设置导航栏样式
 //- (void)createInfo{
 //    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"name.png"]];
@@ -303,7 +323,7 @@
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 15, 108, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
@@ -545,16 +565,24 @@
     PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
     preVC.delegate = self;*/
     ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    childVC.urlString = kCHILD_LIST_URL;
-    childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-    childVC.childClothing = YES;
-    childVC.delegate = self;
-    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    womanVC.urlString = kLADY_LIST_URL;
-    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
-    womanVC.childClothing = NO;
-    womanVC.delegate = self;
-    _pageContentVC = @[childVC, womanVC];
+    if(TYPE_JUMP_CHILD == self.type){
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.childClothing = YES;
+        childVC.delegate = self;
+    }
+    else{
+        childVC.urlString = kLADY_LIST_URL;
+        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        childVC.childClothing = NO;
+        childVC.delegate = self;
+    }
+//    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+//    womanVC.urlString = kLADY_LIST_URL;
+//    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+//    womanVC.childClothing = NO;
+//    womanVC.delegate = self;
+    _pageContentVC = @[childVC];
     [_pageVC setViewControllers:@[childVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:_pageVC];
     [_view addSubview:_pageVC.view];
@@ -591,87 +619,87 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
-    if (completed)
-    {
-        NSInteger btnTag = _currentIndex + 102;
-        for (int i = 102; i<104; i++) {
-            if (btnTag == i) {
-                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            }
-            else{
-                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-            }
-        }
-        
-        // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
-    }else
-    {
-        if (finished)
-        {
-            
-            NSInteger btnTag = _currentIndex + 102;
-            for (int i = 102; i<104; i++) {
-                if (btnTag == i) {
-                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                    [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-                    
-                }
-                else{
-                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-                    
-                }
-            }
-        }
-    }
+//    if (completed)
+//    {
+//        NSInteger btnTag = _currentIndex + 102;
+//        for (int i = 102; i<104; i++) {
+//            if (btnTag == i) {
+//                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+//                [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+//            }
+//            else{
+//                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+//                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+//            }
+//        }
+//        
+//        // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
+//    }else
+//    {
+//        if (finished)
+//        {
+//            
+//            NSInteger btnTag = _currentIndex + 102;
+//            for (int i = 102; i<104; i++) {
+//                if (btnTag == i) {
+//                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
+//                    [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+//                    
+//                }
+//                else{
+//                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+//                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+//                    
+//                }
+//            }
+//        }
+//    }
     
 }
 
 #pragma mark 点击按钮进入不同的专区列表。。
-- (void)buttonClicked:(NSInteger)btnTag{
-    _currentIndex = btnTag - 102+1;
-    for (int i = 102; i<104; i++) {
-        if (btnTag == i) {
-            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 102;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
-
-- (IBAction)btnClicked:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSInteger btnTag = button.tag;
-    _currentIndex = btnTag - 102+1;
-    
-    for (int i = 102; i<104; i++) {
-        if (btnTag == i) {
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 102;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
+//- (void)buttonClicked:(NSInteger)btnTag{
+//    _currentIndex = btnTag - 102+1;
+//    for (int i = 102; i<104; i++) {
+//        if (btnTag == i) {
+//            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
+//            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+//            
+//        }else{
+//            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+//            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+//        }
+//    }
+//    NSInteger index = btnTag - 102;
+//    BOOL state = 0;
+//    if (_pageCurrentIndex < index) {
+//        state = 1;
+//    }
+//    _pageCurrentIndex = index;
+//    //[_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+//}
+//
+//- (IBAction)btnClicked:(id)sender {
+//    UIButton *button = (UIButton *)sender;
+//    NSInteger btnTag = button.tag;
+//    _currentIndex = btnTag - 102+1;
+//    
+//    for (int i = 102; i<104; i++) {
+//        if (btnTag == i) {
+//            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+//            
+//        }else{
+//            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
+//            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
+//        }
+//    }
+//    NSInteger index = btnTag - 102;
+//    BOOL state = 0;
+//    if (_pageCurrentIndex < index) {
+//        state = 1;
+//    }
+//    _pageCurrentIndex = index;
+//    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+//}
 
 @end

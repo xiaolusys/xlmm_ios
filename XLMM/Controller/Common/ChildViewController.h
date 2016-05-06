@@ -24,5 +24,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *jiageButton;
 @property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
 
-
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type;
 @end

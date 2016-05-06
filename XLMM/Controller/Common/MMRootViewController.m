@@ -40,6 +40,7 @@
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
 #import "PeopleCollectionCell.h"
+#import "MJPullGifHeader.h"
 #import "MJRefresh.h"
 #import "HomeViewController.h"
 #import "JumpUtils.h"
@@ -47,6 +48,7 @@
 #import "BrandCollectionCell.h"
 #import "BrandGoodsModel.h"
 #import "XlmmMall.h"
+#import "MMDetailsViewController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -57,9 +59,9 @@
 #define TODAY @"today"
 #define TOMORROW @"tomorrow"
 
-
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
+
 
 #define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
@@ -455,7 +457,6 @@ static NSString *kbrandCell = @"brandCell";
     _pageCurrentIndex = 0;
     self.currentIndex = 1;
     
-    
     //设置导航栏样式
     [self createInfo];
     
@@ -480,6 +481,10 @@ static NSString *kbrandCell = @"brandCell";
     //设置商品scrollview的偏转
     self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
     [self changeBtnImg];
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.backScrollview.mj_header = header;
 
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -522,6 +527,7 @@ static NSString *kbrandCell = @"brandCell";
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
     [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.backScrollview.mj_header endRefreshing];
         if (!responseObject) return;
         [self fetchedPromotionData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -595,7 +601,10 @@ static NSString *kbrandCell = @"brandCell";
     if (jsonDic.count == 0) return;
     
     NSArray *childArray = [jsonDic objectForKey:@"posters"];
-    self.posterImages = [[NSMutableArray alloc] init];
+    
+    
+    [self.posterImages removeAllObjects];
+    [self.posterDataArray removeAllObjects];
     
     if (childArray.count == 0)return;
     for (NSDictionary *childDic in childArray) {
@@ -622,13 +631,7 @@ static NSString *kbrandCell = @"brandCell";
     MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
     [adView.scrollView addGestureRecognizer:tap];
-    NSLog(@"==MMAdvertiseView bounds==%@", NSStringFromCGRect(self.bannerView.bounds));
-    NSLog(@"==MMAdvertiseView aboveview=%@", NSStringFromCGRect(self.aboveView.frame));
-    NSLog(@"==MMAdvertiseView backview=%@", NSStringFromCGRect(self.backScrollview.frame));
 
-//    UIView *view = [[UIView alloc] initWithFrame:self.bannerView.bounds];
-//    view.backgroundColor = [UIColor redColor];
-//    [self.bannerView addSubview:view];
     [self.bannerView addSubview:adView];
     
     [self initCategoryLvl1Img:jsonDic];
@@ -751,6 +754,21 @@ static NSString *kbrandCell = @"brandCell";
     }
 }
 
+- (void )refreshView{
+    [self removeAllSubviews:self.bannerView];
+    [self removeAllSubviews:self.activityView];
+    [self removeAllSubviews:self.brandView];
+    [self showPromotion];
+}
+
+- (void)removeAllSubviews:(UIView *)v{
+    while (v.subviews.count) {
+        UIView* child = v.subviews.lastObject;
+        [child removeFromSuperview];
+    }
+}
+#pragma mark --定时器callback
+
 - (void)saleTimerCallback:(NSTimer*)theTimer
 {
     if(self.endTime.count==0 ||
@@ -832,14 +850,27 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"result count=%ld", results.count );
     
     //判断在数据源字典中是否有对应的数组
+    NSMutableArray *numArray = [[NSMutableArray alloc] init];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     for (NSDictionary *goods in results) {
         PromoteModel *model = [[PromoteModel alloc] initWithDictionary:goods];
+        
+        
+        NSIndexPath *index ;
+        
+        index = [NSIndexPath indexPathForRow:currentArr.count inSection:0];
         [currentArr addObject:model];
+        [numArray addObject:index];
     }
     
     UICollectionView *collection = self.collectionArr[self.currentIndex];
+    
+    [collection insertItemsAtIndexPaths:numArray];
+    [numArray removeAllObjects];
+    numArray = nil;
+
     [collection reloadData];
+    
 }
 
 - (void)loadMore {
@@ -924,6 +955,7 @@ static NSString *kbrandCell = @"brandCell";
     CGFloat imageHeight = image.size.height;
     [backView removeFromSuperview];
     
+    //活动弹窗
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     backView.backgroundColor = [UIColor whiteColor];
     
@@ -959,6 +991,8 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)activityClick:(NSDictionary *)dic {
+    login_required = [[dic objectForKey:@"login_required"] boolValue];
+    NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
         huodongVC.diction = dic;
@@ -1039,11 +1073,22 @@ static NSString *kbrandCell = @"brandCell";
     UIView *viewClicked=[gestureRecognizer view];
     if (viewClicked==self.womenImgView) {
         NSLog(@"womenImgView");
-        HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:[NSBundle mainBundle] type:TYPE_JUMP_WOMAN];
-        [self.navigationController pushViewController:home animated:YES];
-    }else if(viewClicked==self.childImgView)
+        //跳到时尚女装
+        ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        womanVC.urlString = kLADY_LIST_URL;
+        womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        womanVC.childClothing = NO;
+        
+        [self.navigationController pushViewController:womanVC animated:YES];    }else if(viewClicked==self.childImgView)
     {
         NSLog(@"childImgView");
+        //跳到潮童专区
+        ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.childClothing = YES;
+        
+        [self.navigationController pushViewController:childVC animated:YES];
     }
     
 }
@@ -1161,8 +1206,10 @@ static NSString *kbrandCell = @"brandCell";
         
         NSString *key = self.dickey[self.currentIndex];
         NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-        [cell fillData:model];
+        if(currentArr.count > indexPath.row){
+            PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+            [cell fillData:model];
+        }
         return cell;
     }
 }
@@ -1190,13 +1237,22 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 //选择了某个cell
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        NSLog(@"brand collection didSelectItemAtIndexPath");
-        
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    NSString *key = self.dickey[self.currentIndex];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+    if (model.productModel == nil) {
+        MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
+        [self.navigationController pushViewController:detailsVC animated:YES];
+    } else{
+        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
+            [self.navigationController pushViewController:detailsVC animated:YES];
+        } else {
+            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+            [self.navigationController pushViewController:collectionVC animated:YES];
+        }
     }
     
 }
