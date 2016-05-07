@@ -99,6 +99,7 @@ static NSString *khuodongCell = @"HuodongCell";
 
 @property (nonatomic, strong)NSTimer *timer;
 
+
 @end
 
 @implementation TodayViewController
@@ -505,9 +506,10 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5 );
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
+    self.myCollectionView.bounces = NO;
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     self.myCollectionView.delegate = self;
@@ -941,10 +943,7 @@ static NSString *khuodongCell = @"HuodongCell";
         }
         
     }
-
     return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6 + 60);
-  
-    
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
@@ -1169,11 +1168,6 @@ static NSString *khuodongCell = @"HuodongCell";
                 return cell1;
 
             }
-            
-            
-
-
-            
            
         }
         

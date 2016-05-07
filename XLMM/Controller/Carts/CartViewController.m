@@ -760,7 +760,7 @@
               view.backgroundColor = [UIColor blackColor];
               view.layer.cornerRadius = 8;
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
-              label.text = @"商品库存不足";
+              label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
               label.textColor = [UIColor whiteColor];
               label.font = [UIFont systemFontOfSize:24];
