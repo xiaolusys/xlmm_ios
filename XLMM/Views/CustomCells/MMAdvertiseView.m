@@ -19,7 +19,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andImages:(NSArray *)imageurls{
     self = [super initWithFrame:frame];
-    NSLog(@"-MMAdvertiseView-initWithFrame----%f %@", width, NSStringFromCGRect(frame));
+    NSLog(@"-MMAdvertiseView-initWithFrame----width %f height %f %@", width, height, NSStringFromCGRect(frame));
     if (self) {
         _imageurls = imageurls;
         NSLog(@"MMAdvertiseView _images = %@", _imageurls);

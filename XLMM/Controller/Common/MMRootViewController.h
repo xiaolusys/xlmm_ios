@@ -23,7 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 @property (weak, nonatomic) IBOutlet UIView *bannerView;
 
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aboveHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bannerHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *brandViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
