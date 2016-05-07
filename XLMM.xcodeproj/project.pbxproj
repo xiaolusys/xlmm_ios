@@ -766,6 +766,11 @@
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
+		3A7BCCF41CD9E1E6000212B0 /* BrandCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */; };
+		3A7BCCF61CD9E2E0000212B0 /* BrandCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */; };
+		3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF81CDA1FD1000212B0 /* BrandModel.m */; };
+		3A7BCCFC1CDA259D000212B0 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCFB1CDA259D000212B0 /* BrandGoodsModel.m */; };
+		3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1857,6 +1862,15 @@
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
 		3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpUtils.m; sourceTree = "<group>"; };
 		3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlmmMall.h; sourceTree = "<group>"; };
+		3A7BCCF21CD9E1E6000212B0 /* BrandCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandCollectionCell.h; sourceTree = "<group>"; };
+		3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandCollectionCell.m; sourceTree = "<group>"; };
+		3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrandCollectionCell.xib; sourceTree = "<group>"; };
+		3A7BCCF71CDA1FD1000212B0 /* BrandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandModel.h; sourceTree = "<group>"; };
+		3A7BCCF81CDA1FD1000212B0 /* BrandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandModel.m; sourceTree = "<group>"; };
+		3A7BCCFA1CDA259D000212B0 /* BrandGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandGoodsModel.h; sourceTree = "<group>"; };
+		3A7BCCFB1CDA259D000212B0 /* BrandGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandGoodsModel.m; sourceTree = "<group>"; };
+		3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtils.m; sourceTree = "<group>"; };
+		3ABCA54E1CD8F468007D5145 /* ImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3599,6 +3613,9 @@
 			children = (
 				18315F7A1CA41549003A9AFD /* ActivityView.h */,
 				18315F7B1CA41549003A9AFD /* ActivityView.m */,
+				3A7BCCF21CD9E1E6000212B0 /* BrandCollectionCell.h */,
+				3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */,
+				3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3646,6 +3663,10 @@
 			children = (
 				1F14D60C1CC6046C00410EC0 /* ActivityModel.h */,
 				1F14D60D1CC6047200410EC0 /* ActivityModel.m */,
+				3A7BCCF71CDA1FD1000212B0 /* BrandModel.h */,
+				3A7BCCF81CDA1FD1000212B0 /* BrandModel.m */,
+				3A7BCCFA1CDA259D000212B0 /* BrandGoodsModel.h */,
+				3A7BCCFB1CDA259D000212B0 /* BrandGoodsModel.m */,
 			);
 			path = NewHome;
 			sourceTree = "<group>";
@@ -3801,6 +3822,8 @@
 			children = (
 				3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */,
 				3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */,
+				3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */,
+				3ABCA54E1CD8F468007D5145 /* ImageUtils.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4216,6 +4239,7 @@
 				1830758B1C97D49A00B7665E /* icon-shengyu3.png in Resources */,
 				1FF4C9DF1CBCF58900CCDCF7 /* coupon.png in Resources */,
 				183076041C97D49A00B7665E /* hongbaoclose200.png in Resources */,
+				3A7BCCF61CD9E2E0000212B0 /* BrandCollectionCell.xib in Resources */,
 				18D862781CA1105C004A19BD /* aboutfans.png in Resources */,
 				183071D61C97BE3700B7665E /* PurchaseViewController1.xib in Resources */,
 				3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */,
@@ -4374,6 +4398,7 @@
 				183073FD1C97D17800B7665E /* GTM_Base64.m in Sources */,
 				183073FB1C97D17800B7665E /* UIScrollView+MJRefresh.m in Sources */,
 				183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */,
+				3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */,
 				325B7A081C97E73A0022F930 /* CarryLogTableViewCell.m in Sources */,
 				325B7A391C97E7530022F930 /* AccountTableViewCell.m in Sources */,
 				183071EE1C97BE3700B7665E /* RegisterViewController.m in Sources */,
@@ -4403,6 +4428,7 @@
 				183072821C97C00900B7665E /* NSArray+Log.m in Sources */,
 				325B79CE1C97E7160022F930 /* Head1View.m in Sources */,
 				183072091C97BE3700B7665E /* ActivityViewController2.m in Sources */,
+				3A7BCCFC1CDA259D000212B0 /* BrandGoodsModel.m in Sources */,
 				325B79D01C97E7160022F930 /* Head2View.m in Sources */,
 				183072181C97BE3700B7665E /* MaMaShopViewController.m in Sources */,
 				325B7A2A1C97E74B0022F930 /* FensiTableViewCell.m in Sources */,
@@ -4471,6 +4497,7 @@
 				183074261C97D17800B7665E /* UIImageView+WebCache.m in Sources */,
 				183072881C97C00900B7665E /* UIImage+ColorImage.m in Sources */,
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
+				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,
 				183071E91C97BE3700B7665E /* XidiShuomingViewController.m in Sources */,
 				183071D71C97BE3700B7665E /* ChildViewController.m in Sources */,
@@ -4565,6 +4592,7 @@
 				1830742B1C97D17800B7665E /* SVRadialGradientLayer.m in Sources */,
 				183073D41C97D17800B7665E /* Reachability.m in Sources */,
 				183073FE1C97D17800B7665E /* QNALAssetFile.m in Sources */,
+				3A7BCCF41CD9E1E6000212B0 /* BrandCollectionCell.m in Sources */,
 				321857BE1CA109550085FF21 /* WebViewJavascriptBridge.m in Sources */,
 				183072431C97BE3700B7665E /* XiangQingViewController.m in Sources */,
 				183071CF1C97BE3700B7665E /* CartViewController.m in Sources */,
