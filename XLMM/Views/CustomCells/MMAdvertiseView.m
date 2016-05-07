@@ -8,6 +8,8 @@
 
 #import "MMAdvertiseView.h"
 #import "UIColor+RGBColor.h"
+#import "ImageUtils.h"
+#import "NSString+URL.h"
 
 #define width [[UIScreen mainScreen] bounds].size.width
 #define height self.frame.size.height
@@ -15,13 +17,13 @@
 
 
 
-- (instancetype)initWithFrame:(CGRect)frame andImages:(NSArray *)images{
+- (instancetype)initWithFrame:(CGRect)frame andImages:(NSArray *)imageurls{
     self = [super initWithFrame:frame];
     NSLog(@"-MMAdvertiseView-initWithFrame----%f %@", width, NSStringFromCGRect(frame));
     if (self) {
-        _images = images;
-        NSLog(@"MMAdvertiseView _images = %@", _images);
-        _imageCount = _images.count;
+        _imageurls = imageurls;
+        NSLog(@"MMAdvertiseView _images = %@", _imageurls);
+        _imageCount = _imageurls.count;
         
         NSLog(@"MMAdvertiseView _count = %ld", (long)_imageCount);
         _currentImageIndex = 0;
@@ -48,7 +50,7 @@
     //设置代理
     _scrollView.delegate=self;
     //设置contentSize
-    _scrollView.contentSize=CGSizeMake(width * 3, height);
+    _scrollView.contentSize=CGSizeMake(width * (_imageCount+1), height);
     //设置当前显示的位置为中间图片
     [_scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
     NSLog(@"-MMAdvertiseView--偏移-----%f", _scrollView.contentOffset.x);
@@ -100,13 +102,13 @@
 #pragma mark 设置默认显示图片
 -(void)setDefaultImage{
     //加载默认图片
-    _leftImageView.image = self.images[_imageCount - 1];
+    [ImageUtils loadImage:_leftImageView url:[self.imageurls[_imageCount - 1] imageNormalCompression] ];
     
-    _centerImageView.image = self.images[0];
-    _rightImageView.image = self.images[1];
+    [ImageUtils loadImage:_centerImageView url:[self.imageurls[0] imageNormalCompression] ];
     
+    [ImageUtils loadImage:_rightImageView url:[self.imageurls[1] imageNormalCompression] ];
     
-    NSLog(@"MMAdvertiseView _left = %@", _leftImageView.image);
+    NSLog(@"MMAdvertiseView _left = %@", [self.imageurls[_imageCount - 1] imageNormalCompression]);
     _currentImageIndex = 0;
     //设置当前页
     _pageControl.currentPage = _currentImageIndex;
@@ -123,13 +125,13 @@
     }];
     
   
-    _centerImageView.image=self.images[self.currentImageIndex];
+    [ImageUtils loadImage:_centerImageView url:[self.imageurls[self.currentImageIndex] imageNormalCompression] ];
     
     //重新设置左右图片
     leftImageIndex = (_currentImageIndex+_imageCount-1)%_imageCount;
     rightImageIndex = (_currentImageIndex+1)%_imageCount;
-    self.leftImageView.image=self.images[leftImageIndex];
-    self.rightImageView.image=self.images[rightImageIndex];
+    [ImageUtils loadImage:_leftImageView url:[self.imageurls[leftImageIndex] imageNormalCompression] ];
+    [ImageUtils loadImage:_rightImageView url:[self.imageurls[rightImageIndex] imageNormalCompression] ];
     
     [_scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
     //设置分页
@@ -169,13 +171,14 @@
         self.currentImageIndex = (_currentImageIndex+_imageCount-1)%_imageCount;
     }
     //UIImageView *centerImageView=(UIImageView *)[_scrollView viewWithTag:2];
-    _centerImageView.image=self.images[self.currentImageIndex];
+    [ImageUtils loadImage:_centerImageView url:[self.imageurls[self.currentImageIndex] imageNormalCompression] ];
     
     //重新设置左右图片
     leftImageIndex = (_currentImageIndex+_imageCount-1)%_imageCount;
     rightImageIndex = (_currentImageIndex+1)%_imageCount;
-    self.leftImageView.image=self.images[leftImageIndex];
-    self.rightImageView.image=self.images[rightImageIndex];
+
+    [ImageUtils loadImage:_leftImageView url:[self.imageurls[leftImageIndex] imageNormalCompression] ];
+    [ImageUtils loadImage:_rightImageView url:[self.imageurls[rightImageIndex] imageNormalCompression] ];
 }
 
 

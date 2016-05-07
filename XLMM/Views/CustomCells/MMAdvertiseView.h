@@ -29,7 +29,7 @@
 @property (nonatomic, assign) NSInteger imageCount;
 
 
-@property (nonatomic, copy) NSArray *images;
+@property (nonatomic, copy) NSArray *imageurls;
 
 // 数组中包含要循环显示的图片。。。
 - (instancetype) initWithFrame:(CGRect)frame andImages:(NSArray *)images;

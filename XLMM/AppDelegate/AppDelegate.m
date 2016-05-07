@@ -257,6 +257,29 @@
     
 }
 
+- (void)updateLoginState{
+    //get /customer/user_profile to check has logined
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // http://m.xiaolu.so/rest/v1/users/profile
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        // 手机登录成功 ，保存用户信息以及登录途径
+        [defaults setBool:YES forKey:kIsLogin];
+        NSLog(@"Still logined");
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // 手机登录成功 ，保存用户信息以及登录途径
+        [defaults setBool:NO forKey:kIsLogin];
+        NSLog(@"maybe cookie timeout,need login");
+    }];
+
+
+}
+
 
 #pragma mark UIApplicationDelegate
 

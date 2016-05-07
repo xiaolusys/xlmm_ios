@@ -615,15 +615,15 @@ static NSString *kbrandCell = @"brandCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
+        
         
         NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
-        NSLog(@"image = %@", image0);
-        if (image0 == nil) {
-            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
-        }
+//        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
+//        if (image0 == nil) {
+//            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+//        }
         
-        [self.posterImages addObject:image0];
+        [self.posterImages addObject:childModel.imageURL];
         [self.posterDataArray addObject:childModel];
         
     }
