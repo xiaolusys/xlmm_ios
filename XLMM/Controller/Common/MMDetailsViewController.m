@@ -364,12 +364,12 @@
                 self.imageTrailing.constant = (origineDistance)/2;
             }
        } else{
-           UIImage *image = [UIImage imagewithURLString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]];
-           if (image != nil) {
-               self.bottomImageView.image = image;
+           UIImage *image_temp = [UIImage imagewithURLString:[[dic objectForKey:@"pic_path"] ImageNoCompression]];
+           if (image_temp != nil) {
+               self.bottomImageView.image = image_temp;
                self.scrollerView.scrollEnabled = YES;
-               self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
-               headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+               self.bottomImageViewHeight.constant = SCREENWIDTH *image_temp.size.height /image_temp.size.width;
+               headImageOrigineHeight = SCREENWIDTH *image.size.height /image_temp.size.width;
 #pragma mark --判断是否拉伸图片
                origineDistance = headImageOrigineHeight - contentTopHeight;
                if (origineDistance < 0 ) {

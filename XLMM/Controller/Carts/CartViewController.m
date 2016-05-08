@@ -110,7 +110,7 @@
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
     youhuiquanValud = 0;
     
-    [self createYhqValue];
+    //[self createYhqValue];
 }
 
 // 获取可用优惠券金额 。。。

@@ -40,6 +40,8 @@
     [self.view addSubview:self.webView];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
+    
+    [self updateUserAgent];
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -50,6 +52,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)updateUserAgent{
+    //get the original user-agent of webview
+    NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSLog(@"old agent :%@", oldAgent);
+    
+    //add my info to the new agent
+    if([oldAgent containsString:@"xlmm;"])
+        return;
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
+    NSLog(@"new agent :%@", newAgent);
+    
+    //regist the new agent
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+}
+
 
 /*
 #pragma mark - Navigation

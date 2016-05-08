@@ -390,6 +390,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 主界面初始化
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"viewWillAppear");
     [super viewWillAppear:animated];
     UIView *cartView = [_view viewWithTag:123];
     CGRect rect = cartView.frame;
@@ -416,6 +417,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
@@ -423,6 +425,7 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
+    NSLog(@"viewDidDisappear");
     [super viewDidDisappear:animated];
     frame = self.view.frame;
 }
@@ -430,6 +433,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)viewDidLoad
 {
+    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     
     self.timeCount = 0;
@@ -452,6 +456,7 @@ static NSString *kbrandCell = @"brandCell";
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
     _isFirst = YES;
+    _view = self.view;
     
     _pageCurrentIndex = 0;
     self.currentIndex = 1;
@@ -728,7 +733,7 @@ static NSString *kbrandCell = @"brandCell";
 
         [self.brandView addSubview:imageView];
         
-        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(300, 10 + BRAND_HEIGHT * index, 50, 20)];
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 + BRAND_HEIGHT * index, 50, 20)];
         textView.text = [brand objectForKey:@"brand_desc"];
         textView.font
         = [UIFont fontWithName:@"Arial" size:10.0];
@@ -736,7 +741,7 @@ static NSString *kbrandCell = @"brandCell";
         textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         [self.brandView addSubview:textView];
         
-        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(355, 15 + BRAND_HEIGHT * index, 10, 10)];
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15 + BRAND_HEIGHT * index, 10, 10)];
         UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
         arrowView.image = image;
         [self.brandView addSubview:arrowView];
@@ -921,7 +926,7 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 
-#pragma mark --活动处理
+#pragma mark --活动和活动弹窗处理
 - (void)activityDeal:(NSArray *)activityArr {
     for (NSDictionary *actityDic in activityArr) {
         ActivityModel *activityM = [[ActivityModel alloc] init];
@@ -1133,12 +1138,11 @@ static NSString *kbrandCell = @"brandCell";
     
     
     //改变scrollview的偏移
-    NSLog(@"---------%ld", (long)self.currentIndex);
+    NSLog(@"--currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
     
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
-    NSLog(@"---------%ld", (long)self.currentIndex);
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
     if(currentArr.count == 0){
         [self goodsRequest];
@@ -1208,7 +1212,7 @@ static NSString *kbrandCell = @"brandCell";
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        NSLog(@"brand collection cellForItemAtIndexPath");
+        //NSLog(@"brand collection cellForItemAtIndexPath");
         BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
         int index = 0;
@@ -1227,7 +1231,7 @@ static NSString *kbrandCell = @"brandCell";
         return cell;
     }
     else{
-        NSLog(@"arr collection cellForItemAtIndexPath");
+        //NSLog(@"arr collection cellForItemAtIndexPath");
         PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
         //wulei 20160421 防止超过1屏后出现重复和错乱
         //for (UIView *view in cell.contentView.subviews) {
@@ -1583,7 +1587,7 @@ static NSString *kbrandCell = @"brandCell";
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 108, 44)];
     view.tag = 123;
-    //[_view addSubview:view];
+    [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.8;
     
@@ -1621,13 +1625,14 @@ static NSString *kbrandCell = @"brandCell";
     label.userInteractionEnabled = NO;
     countLabel.hidden = YES;
 
-    [self.view addSubview:view];
+    //[self.view addSubview:view];
 }
 #pragma mark 设置购物车数量
 
 
 - (void)setLabelNumber{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"] == NO) {
+        NSLog(@"Cart,not login,return");
         dotView.hidden = YES;
         countLabel.hidden = YES;
         UIView *view = [_view viewWithTag:123];
