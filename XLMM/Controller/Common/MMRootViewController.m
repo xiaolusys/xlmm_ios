@@ -1590,7 +1590,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 108, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
