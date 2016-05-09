@@ -734,7 +734,7 @@
     if (alertView.tag != 88) return;
     if (buttonIndex == 1){
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-        NSString *descStr;
+        NSString *descStr = self.inputTextView.text;
         if ([self.inputTextView.text isEqualToString:@""]) {
             descStr = @"七天无理由退货";
         }
@@ -764,11 +764,19 @@
         [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dic = responseObject;
             if (dic.count == 0) return;
-            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
+            NSLog(@"refund return, %@", responseObject);
+            
+            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+                NSLog(@"refund return ok");
+
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }
+            NSLog(@"refund return ok end");
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"refund return failed %@", error);
         }];
     }
 

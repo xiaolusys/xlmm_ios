@@ -455,6 +455,7 @@ static NSString *kbrandCell = @"brandCell";
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
+
     _isFirst = YES;
     _view = self.view;
     
@@ -913,8 +914,11 @@ static NSString *kbrandCell = @"brandCell";
     NSString *url = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
     
     NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
-    if(nil == url)
+    if((nil == url) || ([url isEqualToString:@""])){
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshingWithNoMoreData];
         return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
@@ -1138,7 +1142,7 @@ static NSString *kbrandCell = @"brandCell";
     
     
     //改变scrollview的偏移
-    NSLog(@"--currentIndex---%ld", (long)self.currentIndex);
+    NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
     
     //如果没有数据重新请求，有的话不作操作
@@ -1151,36 +1155,37 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 -(void)changeBtnImg{
-    UIImageView *uiv;
+    UIButton *btn;
     
     if(self.currentIndex == 0){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        //[uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     else if(self.currentIndex == 1){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     } if(self.currentIndex == 2){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     }
 }
 
@@ -1764,7 +1769,7 @@ static NSString *kbrandCell = @"brandCell";
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"scrollViewWillBeginDragging");
+    //NSLog(@"scrollViewWillBeginDragging");
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
@@ -1789,8 +1794,8 @@ static NSString *kbrandCell = @"brandCell";
     self.brandView.frame.size.height+self.activityView.frame.size.height;
     
 //    brandMaxY = brandMaxY - 1;
-    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
     //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
@@ -1850,7 +1855,7 @@ static NSString *kbrandCell = @"brandCell";
         || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
         && scrollView.dragging){
         if( scrollView.contentOffset.y <= 0) {
-            NSLog(@"today scroll down");
+            //NSLog(@"today scroll down");
             self.backScrollview.scrollEnabled = YES;
             [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
                                       animated:YES];
@@ -1858,7 +1863,7 @@ static NSString *kbrandCell = @"brandCell";
             [self disableAllGoodsCollectionScroll];
         }
         else if( scrollView.contentOffset.y > 0) {
-            NSLog(@"today scroll up");
+            //NSLog(@"today scroll up");
         }
     }
 }
