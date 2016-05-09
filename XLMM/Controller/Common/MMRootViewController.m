@@ -290,9 +290,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 解析targeturl 跳转到不同的界面
 - (void)presentView:(NSNotification *)notification{
     //跳转到新的页面
-    NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
-    //[self pushAndBannerJump:target_url];
-    [JumpUtils jumpToLocation:notification.userInfo viewController:self];
+    [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
 
 - (void)pushAndBannerJump:(NSString *)target_url {
@@ -389,12 +387,14 @@ static NSString *kbrandCell = @"brandCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark 主界面初始化
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"viewWillAppear");
     [super viewWillAppear:animated];
     UIView *cartView = [_view viewWithTag:123];
     CGRect rect = cartView.frame;
-    rect.origin.y = SCREENHEIGHT - 156;
+    rect.origin.y = SCREENHEIGHT - 64;
     cartView.frame = rect;
     //    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
     [self setLabelNumber];
@@ -417,6 +417,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
@@ -424,13 +425,15 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
+    NSLog(@"viewDidDisappear");
     [super viewDidDisappear:animated];
     frame = self.view.frame;
 }
 
-#pragma mark 主界面初始化
+
 - (void)viewDidLoad
 {
+    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     
     self.timeCount = 0;
@@ -452,7 +455,9 @@ static NSString *kbrandCell = @"brandCell";
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
+
     _isFirst = YES;
+    _view = self.view;
     
     _pageCurrentIndex = 0;
     self.currentIndex = 1;
@@ -481,6 +486,8 @@ static NSString *kbrandCell = @"brandCell";
     //设置商品scrollview的偏转
     self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
     [self changeBtnImg];
+    
+    [self createCartsView];
     
     MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
     header.lastUpdatedTimeLabel.hidden = YES;
@@ -534,6 +541,7 @@ static NSString *kbrandCell = @"brandCell";
         //未登录处理
         //        [self showDefaultView];
         NSLog(@"get poster failed.");
+        [self.backScrollview.mj_header endRefreshing];
     }];
     
     //活动
@@ -615,24 +623,42 @@ static NSString *kbrandCell = @"brandCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
         
-        NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
-        NSLog(@"image = %@", image0);
-        if (image0 == nil) {
-            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
-        }
         
-        [self.posterImages addObject:image0];
+        NSLog(@"posterImages url = %@", [childModel.imageURL URLEncodedString]);
+//        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
+//        if (image0 == nil) {
+//            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+//        }
+                                                                                                                                                                                      
+        [self.posterImages addObject:childModel.imageURL];
         [self.posterDataArray addObject:childModel];
         
     }
     
-    MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
-    [adView.scrollView addGestureRecognizer:tap];
-
-    [self.bannerView addSubview:adView];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, 150)];
+    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
+    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //通过加载图片得到其高度
+        float h = image.size.height * (WIDTH /image.size.width);
+        NSLog(@"poster height %f %f", image.size.height, h);
+        self.bannerHeight.constant = h;
+        self.aboveHeight.constant = h+120;
+        [imgView removeFromSuperview];
+        MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, h) andImages:self.posterImages];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
+        [adView.scrollView addGestureRecognizer:tap];
+        
+        [self.bannerView addSubview:adView];
+    }];
+    [self.bannerView addSubview:imgView];
+    [imgView removeFromSuperview];
+    
+//    MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
+//    [adView.scrollView addGestureRecognizer:tap];
+//
+//    [self.bannerView addSubview:adView];
     
     [self initCategoryLvl1Img:jsonDic];
     
@@ -647,6 +673,8 @@ static NSString *kbrandCell = @"brandCell";
     
     if (categorys.count < 2)return;
 
+    self.childImgView.contentMode=UIViewContentModeScaleAspectFit;
+    self.womenImgView.contentMode=UIViewContentModeScaleAspectFit;
     [ImageUtils loadImage:self.childImgView url:[categorys[0] objectForKey:@"cat_img"]];
     [ImageUtils loadImage:self.womenImgView url:[categorys[1] objectForKey:@"cat_img"]];
     
@@ -662,7 +690,7 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"initActivity count=%lu",(unsigned long)activitys.count );
     
     self.activityArr = activitys;
-
+    [self.activityDataArr removeAllObjects];
     
     if (activitys.count ==0){
         self.activityHeight.constant = 0;
@@ -706,7 +734,7 @@ static NSString *kbrandCell = @"brandCell";
 
         [self.brandView addSubview:imageView];
         
-        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(300, 10 + BRAND_HEIGHT * index, 50, 20)];
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 + BRAND_HEIGHT * index, 50, 20)];
         textView.text = [brand objectForKey:@"brand_desc"];
         textView.font
         = [UIFont fontWithName:@"Arial" size:10.0];
@@ -714,7 +742,7 @@ static NSString *kbrandCell = @"brandCell";
         textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         [self.brandView addSubview:textView];
         
-        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(355, 15 + BRAND_HEIGHT * index, 10, 10)];
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15 + BRAND_HEIGHT * index, 10, 10)];
         UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
         arrowView.image = image;
         [self.brandView addSubview:arrowView];
@@ -759,6 +787,13 @@ static NSString *kbrandCell = @"brandCell";
     [self removeAllSubviews:self.activityView];
     [self removeAllSubviews:self.brandView];
     [self showPromotion];
+    
+    [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+    [currentArr removeAllObjects];
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection reloadData];
+    [self goodsRequest];
 }
 
 - (void)removeAllSubviews:(UIView *)v{
@@ -797,7 +832,7 @@ static NSString *kbrandCell = @"brandCell";
     NSDate *date = [NSDate date];
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     if ([d hour] < 0 || [d minute] < 0) {
-
+        self.labelTime.text = @"00:00:00";
         //   NSLog(@"已下架");
     } else{
         NSString *string;
@@ -809,7 +844,7 @@ static NSString *kbrandCell = @"brandCell";
             
         }
         
-        self.labelTime.text = [@"距离本场结束" stringByAppendingString:string];
+        self.labelTime.text = string;
 
     }
     
@@ -824,6 +859,7 @@ static NSString *kbrandCell = @"brandCell";
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
+
         [self goodsResult:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -878,8 +914,11 @@ static NSString *kbrandCell = @"brandCell";
     NSString *url = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
     
     NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
-    if(nil == url)
+    if((nil == url) || ([url isEqualToString:@""])){
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshingWithNoMoreData];
         return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
@@ -891,7 +930,7 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 
-#pragma mark --活动处理
+#pragma mark --活动和活动弹窗处理
 - (void)activityDeal:(NSArray *)activityArr {
     for (NSDictionary *actityDic in activityArr) {
         ActivityModel *activityM = [[ActivityModel alloc] init];
@@ -1103,50 +1142,50 @@ static NSString *kbrandCell = @"brandCell";
     
     
     //改变scrollview的偏移
-    NSLog(@"---------%ld", (long)self.currentIndex);
+    NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
     
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
-    NSLog(@"---------%ld", (long)self.currentIndex);
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    
-    if (!(currentArr.count > 0)) {
+    if(currentArr.count == 0){
         [self goodsRequest];
     }
+    
 }
 
 -(void)changeBtnImg{
-    UIImageView *uiv;
+    UIButton *btn;
     
     if(self.currentIndex == 0){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        //[uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     else if(self.currentIndex == 1){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     } if(self.currentIndex == 2){
-        uiv = [self.categoryView viewWithTag:TAG_IMG_YESTODAY];
-        [uiv setImage:[UIImage imageNamed:@"yestday.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TODAY];
-        [uiv setImage:[UIImage imageNamed:@"today.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        uiv = [self.categoryView viewWithTag:TAG_IMG_TOMORROW];
-        [uiv setImage:[UIImage imageNamed:@"tomorrow1.png"]];
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     }
 }
 
@@ -1178,7 +1217,7 @@ static NSString *kbrandCell = @"brandCell";
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        NSLog(@"brand collection cellForItemAtIndexPath");
+        //NSLog(@"brand collection cellForItemAtIndexPath");
         BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
         int index = 0;
@@ -1197,7 +1236,7 @@ static NSString *kbrandCell = @"brandCell";
         return cell;
     }
     else{
-        NSLog(@"arr collection cellForItemAtIndexPath");
+        //NSLog(@"arr collection cellForItemAtIndexPath");
         PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
         //wulei 20160421 防止超过1屏后出现重复和错乱
         //for (UIView *view in cell.contentView.subviews) {
@@ -1551,7 +1590,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
@@ -1590,15 +1629,15 @@ static NSString *kbrandCell = @"brandCell";
     dotView.userInteractionEnabled = NO;
     label.userInteractionEnabled = NO;
     countLabel.hidden = YES;
-    
-    
-    
+
+    //[self.view addSubview:view];
 }
 #pragma mark 设置购物车数量
 
 
 - (void)setLabelNumber{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"] == NO) {
+        NSLog(@"Cart,not login,return");
         dotView.hidden = YES;
         countLabel.hidden = YES;
         UIView *view = [_view viewWithTag:123];
@@ -1730,7 +1769,7 @@ static NSString *kbrandCell = @"brandCell";
 
 #pragma mark UIscrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"scrollViewWillBeginDragging");
+    //NSLog(@"scrollViewWillBeginDragging");
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
@@ -1755,8 +1794,8 @@ static NSString *kbrandCell = @"brandCell";
     self.brandView.frame.size.height+self.activityView.frame.size.height;
     
 //    brandMaxY = brandMaxY - 1;
-    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
     //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
@@ -1816,7 +1855,7 @@ static NSString *kbrandCell = @"brandCell";
         || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
         && scrollView.dragging){
         if( scrollView.contentOffset.y <= 0) {
-            NSLog(@"today scroll down");
+            //NSLog(@"today scroll down");
             self.backScrollview.scrollEnabled = YES;
             [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
                                       animated:YES];
@@ -1824,7 +1863,7 @@ static NSString *kbrandCell = @"brandCell";
             [self disableAllGoodsCollectionScroll];
         }
         else if( scrollView.contentOffset.y > 0) {
-            NSLog(@"today scroll up");
+            //NSLog(@"today scroll up");
         }
     }
 }

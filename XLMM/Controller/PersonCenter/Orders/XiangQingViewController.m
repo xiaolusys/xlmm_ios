@@ -368,6 +368,8 @@
     self.myViewHeight.constant = number * 90;
     XiangQingView *owner = [XiangQingView new];
     PerDingdanModel *model = nil;
+    
+    //判断每个sku的状态来进行按钮显示
     for (int i = 0; i<number ; i++) {
         
         NSLog(@"model.status_disPlay = %@", model.status_display);

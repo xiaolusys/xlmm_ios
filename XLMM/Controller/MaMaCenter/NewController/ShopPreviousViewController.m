@@ -327,7 +327,7 @@
     
     self.shopShareName = dic[@"shop_info"][@"name"];
     
-    NSString *urlString = [[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"] URLEncodedString];
+    NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
     self.shopShareImage = [UIImage imagewithURLString:urlString];
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
         self.shopShareName = @"小鹿妈妈";

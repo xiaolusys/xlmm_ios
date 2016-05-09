@@ -569,7 +569,7 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
-        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
+        UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL  imagePostersCompression]];
         
         NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
         
@@ -595,7 +595,7 @@ static NSString *khuodongCell = @"HuodongCell";
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image1 = [UIImage imagewithURLString:[[ladyModel.imageURL URLEncodedString] imagePostersCompression]];
+        UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL imagePostersCompression]];
         NSLog(@"url = %@", [ladyModel.imageURL URLEncodedString]);
         NSLog(@"image = %@", image1);
         if (image1 == nil) {
