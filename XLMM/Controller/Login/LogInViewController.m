@@ -271,6 +271,7 @@
               NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
               // 手机登录成功 ，保存用户信息以及登录途径
               [defaults setBool:YES forKey:kIsLogin];
+              [defaults setObject:Root_URL forKey:@"serverip"];
               
               NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
                                          kPassWord:self.passwordTextField.text};

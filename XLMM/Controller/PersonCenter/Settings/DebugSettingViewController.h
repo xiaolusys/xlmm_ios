@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DebugSettingViewController :UIViewController
+@interface DebugSettingViewController : UIViewController
 
 @end

@@ -93,6 +93,8 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
     
+    [self getServerIP];
+    
     self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self.startV];
@@ -278,6 +280,17 @@
     }];
 
 
+}
+
+- (void)getServerIP{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSString *serverip = [defaults objectForKey:@"serverip"];
+    if((serverip != nil) && (![serverip isEqualToString:@""])){
+        Root_URL = serverip;
+    }
+    
+    NSLog(@"serverip %@, Root_url %@",serverip, Root_URL);
 }
 
 
