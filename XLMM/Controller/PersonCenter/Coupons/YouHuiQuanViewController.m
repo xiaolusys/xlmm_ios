@@ -155,8 +155,9 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         NSArray *array = [dictionary objectForKey:@"results"];
         
         for (NSDictionary *dic in array) {
+
             // 可用优惠券
-             if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue] == 1) {
+             if ([[dic objectForKey:@"status"] integerValue] == 0) {
                  YHQModel *model1 = [self fillModelWithData:dic];
                  
                  [self.canUsedArray addObject:model1];
