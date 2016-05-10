@@ -61,11 +61,11 @@
 
 #if 0
 //#define Root_URL @"http://192.168.1.57:8000"
-#define Root_URL @"http://192.168.1.31:9000"
+//#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://192.168.1.13:8000"
 //#define Root_URL @"http://192.168.1.11:9000"
 //#define Root_URL @"http://dev.xiaolumeimei.com"
-//#define Root_URL @"http://staging.xiaolumeimei.com"
+#define Root_URL @"http://staging.xiaolumeimei.com"
 #else
 
 
@@ -91,8 +91,8 @@
 #define kLOGIN_URL [NSString stringWithFormat:@"%@/rest/v1/register/customer_login",Root_URL]
 #define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json",Root_URL]
 #define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts.json",Root_URL]
-#define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
-#define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price",Root_URL]
+#define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price&page_size=10",Root_URL]
+#define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price&page_size=10",Root_URL]
 #define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history.json",Root_URL]
 #define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json",Root_URL]
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address.json",Root_URL]
@@ -111,7 +111,7 @@
 
 //加载的webView链接
 #define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
-#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/fag", Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
 
 #endif
 

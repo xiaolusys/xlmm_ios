@@ -25,6 +25,8 @@
 @property (nonatomic, copy) NSString *use_fee;
 @property (nonatomic, copy) NSString *coupon_type_display;
 @property (nonatomic, copy) NSString *modified;
+@property (nonatomic, copy) NSString *use_fee_des;
+@property (nonatomic, copy) NSString *pros_desc;
 
 @property (nonatomic, assign) BOOL isSelected;
 

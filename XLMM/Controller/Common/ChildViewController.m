@@ -19,6 +19,8 @@
 #import "MJRefresh.h"
 #import "UIViewController+NavigationBar.h"
 #import "SVProgressHUD.h"
+#import "XlmmMall.h"
+#import "AFNetworking.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -45,19 +47,51 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @implementation ChildViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
- 
-
-    
-}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
-   return self;
+    return self;
 }
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type{
+    if(TYPE_JUMP_CHILD == type){
+        
+        self.urlString = kCHILD_LIST_URL;
+        self.orderUrlString = kCHILD_LIST_ORDER_URL;
+        self.childClothing = YES;
+
+    }
+    else{
+        
+        self.urlString = kLADY_LIST_URL;
+        self.orderUrlString = kLADY_LIST_ORDER_URL;
+        self.childClothing = NO;
+    }
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+    }
+    return self;
+}
+
+#pragma mark  -----init----
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [SVProgressHUD dismiss];
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -66,44 +100,45 @@ static NSString * ksimpleCell = @"simpleCell";
         //集成刷新控件
         _isFirst = NO;
     }
-    
+
 }
 
 
 
-- (void)reload
+- (void)reloadGoods
 {
-    [self downloadData];
-    
+    NSLog(@"CHILD vc reload");
+    if(isOrder){
+        [self downloadOrderData];
+    }
+    else{
+        [self downloadData];
+    }
 }
 
 - (void)loadMore
 {
     
     NSLog(@"lodeMore url = %@", nextUrl);
-    if ([nextUrl isKindOfClass:[NSString class]]) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:nextUrl]];
-            [self performSelectorOnMainThread:@selector(fetchedPromoteMorePageData:)withObject:data waitUntilDone:YES];
-        });
+    if([nextUrl class] == [NSNull class]
+       || [nextUrl isEqualToString:@""] ) {
+        [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
+        return;
     }
-//     else {
-//        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
-//            [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
-//        }
-//    }
-    
-    
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self stopFooterRefresh];
+        if (!responseObject)return ;
+        [self fetchedMorePageData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
     
 }
 
-- (void)fetchedPromoteMorePageData:(NSData *)data{
-    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
-    NSError *error;
-    if (data == nil) {
-        return;
-    }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+- (void)fetchedMorePageData:(NSDictionary *)data{
+    NSLog(@"fetchedMorePageData");
+    NSDictionary *json =data;
     if (json == nil) {
         return;
     }
@@ -117,10 +152,15 @@ static NSString * ksimpleCell = @"simpleCell";
     
     for (NSDictionary *ladyInfo in array) {
         PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
-        
-        NSIndexPath *index = [NSIndexPath indexPathForRow:_dataArray.count
-                                                inSection:0];
-        [_dataArray addObject:model];
+        NSIndexPath *index ;
+        if(isOrder){
+             index = [NSIndexPath indexPathForRow:_orderDataArray.count inSection:0];
+            [_orderDataArray addObject:model];
+        }
+        else{
+             index = [NSIndexPath indexPathForRow:_dataArray.count inSection:0];
+            [_dataArray addObject:model];
+        }
         [numArray addObject:index];
     }
     [self.childCollectionView insertItemsAtIndexPaths:numArray];
@@ -134,8 +174,8 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"Child vc viewDidLoad");
 
-//    [self.tuijianButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
@@ -146,8 +186,14 @@ static NSString * ksimpleCell = @"simpleCell";
 
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
-    self.topdistant.constant = 0;
+    self.topdistant.constant = 64;
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
+    if(self.childClothing){
+        [self createNavigationBarWithTitle:@"精选童装"  selector:@selector(backClicked:)];
+    }
+    else{
+        [self createNavigationBarWithTitle:@"精选女装"  selector:@selector(backClicked:)];
+    }
     
   //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
@@ -160,12 +206,19 @@ static NSString * ksimpleCell = @"simpleCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     
-    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reload)];
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadGoods)];
     header.lastUpdatedTimeLabel.hidden = YES;
     self.childCollectionView.mj_header = header;
-    [self.childCollectionView.mj_header beginRefreshing];
+    
+    //添加上拉加载
+//    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        [self loadMore];
+//    }];
+    
+    //[self.childCollectionView.mj_header beginRefreshing];
 
- 
+    [self reloadGoods];
+    NSLog(@"Child vc viewDidLoad end");
 }
 
 - (void)saveCurrentState{
@@ -186,24 +239,34 @@ static NSString * ksimpleCell = @"simpleCell";
     self.childCollectionView.showsVerticalScrollIndicator = NO;
 }
 
-- (void)downloadData{
-    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-        [self.delegate showNavigation];
-    }
-    
-    [self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
-}
-
-- (void)stopRefresh{
+- (void)stopHeaderRefresh{
     [self.childCollectionView.mj_header endRefreshing];
 }
 
+- (void)stopFooterRefresh{
+    [self.childCollectionView.mj_footer endRefreshing];
+}
+
+- (void)downloadData{
+//    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
+//        [self.delegate showNavigation];
+//    }
+    
+    //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self stopHeaderRefresh];
+        if (!responseObject)return ;
+        [self fatchedSuggestListData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
 
 
-- (void)fatchedChildListData:(NSData *)responseData{
-    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+- (void)fatchedSuggestListData:(NSDictionary *)responseData{
+    NSLog(@"fatchedSuggestListData");
+
+    NSDictionary *json = responseData;
     if (json == nil) {
         return;
     }
@@ -218,10 +281,67 @@ static NSString * ksimpleCell = @"simpleCell";
         PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
         [_dataArray addObject:model];
     }
+    NSLog(@"_dataArray count %lu",(unsigned long)_dataArray.count);
     [self.childCollectionView reloadData];
 }
 
-#pragma mark  -----CollectionViewDelete----
+- (void)downloadOrderData{
+//    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderListData:)];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.orderUrlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self stopHeaderRefresh];
+        if (!responseObject)return ;
+        [self fatchedOrderListData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+
+- (void)fatchedOrderListData:(NSDictionary *)responseData{
+    NSLog(@"fatchedOrderListData");
+
+    self.orderDataArray = [[NSMutableArray alloc] init];
+    NSDictionary *json = responseData;
+    if (json == nil) {
+        return;
+    }
+    
+    NSArray *array = [json objectForKey:@"results"];
+    nextUrl = [json objectForKey:@"next"];
+    [self.orderDataArray removeAllObjects];
+    for (NSDictionary *ladyInfo in array) {
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        [self.orderDataArray addObject:model];
+        
+    }
+    //[activityIndicator removeFromSuperview];
+    //activityIndicator = nil;
+    
+    [SVProgressHUD dismiss];
+    [self.childCollectionView reloadData];
+}
+
+
+
+
+- (void)createNavigationBarWithTitle:(NSString *)title selector:(SEL)aSelector{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.text = title;
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:16];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
+    imageView.frame = CGRectMake(0, 14, 16, 16);
+    [button addSubview:imageView];
+    [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+#pragma mark  -----CollectionViewDelegate----
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
@@ -262,6 +382,7 @@ static NSString * ksimpleCell = @"simpleCell";
         
        
     }else{
+        //NSLog(@"collectionView cell _dataArray.count=%lu indexPath.row=%ld", (unsigned long)_dataArray.count, (long)indexPath.row);
         if (_dataArray.count > indexPath.row) {
             PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
             
@@ -322,14 +443,11 @@ static NSString * ksimpleCell = @"simpleCell";
 //    }
 //    CGPoint point = scrollView.contentOffset;
 //    CGFloat temp = oldScrollViewTop - point.y;
-//    
-    if (scrollView.contentSize.height - scrollView.contentOffset.y < 1200 && _isupdate) {
-        if (isOrder == NO) {
+//
+    NSLog(@"contentSize.height=%f y=%fl",scrollView.contentSize.height, scrollView.contentOffset.y );
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < SCREENHEIGHT && _isupdate) {
             [self loadMore];
             _isupdate = NO;
-        }
-     
-        
     }
 //
 //    CGFloat marine = 5;
@@ -381,6 +499,11 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 - (IBAction)btnClicked:(UIButton *)sender {
+    NSLog(@"btnClicked");
+    
+    NSIndexPath *bottomIndexPath=[NSIndexPath indexPathForItem:0 inSection:0];
+    [self.childCollectionView scrollToItemAtIndexPath:bottomIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    
     if (sender.tag == 1) {
         isOrder = NO;
         [SVProgressHUD dismiss];
@@ -390,6 +513,7 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.childCollectionView reloadData];
         [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
+        //[self downloadData];
         
         
         
@@ -414,28 +538,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
 }
 
-- (void)downloadOrderData{
-    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderLadyListData:)];
-}
- 
-- (void)fatchedOrderLadyListData:(NSData *)responseData{
-    NSError *error;
-    self.orderDataArray = [[NSMutableArray alloc] init];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    NSArray *array = [json objectForKey:@"results"];
-    for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
-        [self.orderDataArray addObject:model];
-
-    }
-     //[activityIndicator removeFromSuperview];
-    //activityIndicator = nil;
-    
-    [SVProgressHUD dismiss];
-    [self.childCollectionView reloadData];
-}
-
-
 
 
 
@@ -455,5 +557,10 @@ static NSString * ksimpleCell = @"simpleCell";
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 
 @end

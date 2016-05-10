@@ -135,7 +135,10 @@
     self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;
     
+    NSLog(@"webview url %@", request);
     [self.webView loadRequest:request];
+    
+    [self updateUserAgent];
     
     [WebViewJavascriptBridge enableLogging];
     
@@ -553,7 +556,7 @@
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
+    NSLog(@"webViewDidFinishLoad");
     if (webView.tag != 888) {
         
         return;
@@ -602,6 +605,22 @@
         [alert show];
     }
     
+}
+
+- (void)updateUserAgent{
+    //get the original user-agent of webview
+    NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSLog(@"old agent :%@", oldAgent);
+    
+    //add my info to the new agent
+    if([oldAgent containsString:@"xlmm;"])
+        return;
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
+    NSLog(@"new agent :%@", newAgent);
+    
+    //regist the new agent
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
 }
 
 #pragma mark 解析targeturl 跳转到不同的界面

@@ -10,12 +10,33 @@
 #import "NewLeftViewController.h"
 
 
-@interface MMRootViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, RootVCPushOtherVCDelegate, UIScrollViewDelegate>
+@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *btnView;
+@property (weak, nonatomic) IBOutlet UIScrollView *backScrollview;
+@property (weak, nonatomic) IBOutlet UIView *aboveView;
+@property (weak, nonatomic) IBOutlet UIView *brandView;
+@property (weak, nonatomic) IBOutlet UIView *categoryView;
+@property (weak, nonatomic) IBOutlet UIView *collectionView;
+@property (weak, nonatomic) IBOutlet UIScrollView *collectionViewScrollview;
 
-- (IBAction)btnClicked:(id)sender;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
+@property (weak, nonatomic) IBOutlet UIView *activityView;
+@property (weak, nonatomic) IBOutlet UIView *bannerView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aboveHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bannerHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *brandViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
+
+
+- (IBAction)yestdayBtnClick:(id)sender;
+
+- (IBAction)tomottowBtnClick:(id)sender;
+- (IBAction)todayBtnClick:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *womenImgView;
+@property (weak, nonatomic) IBOutlet UIImageView *childImgView;
+@property (weak, nonatomic) IBOutlet UILabel *labelTime;
 
 @end

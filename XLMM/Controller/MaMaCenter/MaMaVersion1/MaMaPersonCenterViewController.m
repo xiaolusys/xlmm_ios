@@ -1098,7 +1098,7 @@
 
 - (IBAction)erweima:(id)sender {
     
-    NSLog(@"推荐二维码");
+    NSLog(@"点击我的邀请");
     
 //    TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
 //    [self.navigationController pushViewController:erweima animated:YES];
