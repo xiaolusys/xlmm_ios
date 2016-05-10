@@ -14,7 +14,7 @@
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
 #import "SVProgressHUD.h"
-
+#import "NSString+URL.h"
 
 @interface ShopPreviousViewController ()
 @property (nonatomic, strong)UIWebView *webView;
@@ -321,18 +321,18 @@
     NSLog(@"dic = %@", dic);
     if ([[dic objectForKey:@"shop_info"] class] == [NSNull class]) {
         
-        
+        NSLog(@"shop_info = null");
         return;
     }
     
     self.shopShareName = dic[@"shop_info"][@"name"];
     
-    self.shopShareImage = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
-    
+    NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
+    self.shopShareImage = [UIImage imagewithURLString:urlString];
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
         self.shopShareName = @"小鹿妈妈";
-        
     }
+    
     self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
     self.shopDesc = [dic[@"shop_info"] objectForKey:@"desc"];
     

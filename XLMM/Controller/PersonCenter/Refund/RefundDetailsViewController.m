@@ -177,7 +177,7 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
 //    NSLog(@"json = %@", json);
-    NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
+//    NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
     
 //    NSLog(@"wear_by = %ld", (long)wear_by);
     

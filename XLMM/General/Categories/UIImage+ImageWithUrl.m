@@ -7,13 +7,14 @@
 //
 
 #import "UIImage+ImageWithUrl.h"
+#import "NSString+URL.h"
 
 @implementation UIImage (ImageWithUrl)
 
 +(UIImage *)imagewithURLString:(NSString *)urlString{
     UIImage *image = nil;
     NSError *imageError = nil;
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError];
     
     NSLog(@"loadingImageError = %@", imageError);
     

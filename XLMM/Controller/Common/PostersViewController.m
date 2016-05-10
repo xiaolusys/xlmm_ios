@@ -390,6 +390,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)fatchedChildListData:(NSData *)responseData{
+
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     
     NSError *error;

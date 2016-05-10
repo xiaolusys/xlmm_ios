@@ -18,6 +18,8 @@
 #import "MobClick.h"
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
+#import "HomeViewController.h"
+
 #define login @"login"
 #import "NSString+URL.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
@@ -123,9 +125,6 @@
 
     }
     
-    
-   
-
     self.isFirst = YES;
    [MiPushSDK registerMiPush:self type:0 connect:YES];
 
@@ -177,13 +176,13 @@
     
     //创建导航控制器，添加根视图控制器
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+//    MMRootViewController *root = [[MMRootViewController alloc] init];
+//    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
 //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
 //    // 设置代理
-//    
-//    
-//    leftMenu.pushVCDelegate = root;
+//
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
 //    leftMenu.push
 
@@ -221,7 +220,7 @@
 
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];
-    
+    NSLog(@"startDeal imageUrl %@", self.imageUrl);
     if (self.imageUrl.length == 0 || [self.imageUrl class] == [NSNull class]) {
         [self.sttime invalidate];
         self.sttime = nil;
@@ -256,6 +255,29 @@
     
     
     
+}
+
+- (void)updateLoginState{
+    //get /customer/user_profile to check has logined
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // http://m.xiaolu.so/rest/v1/users/profile
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        // 手机登录成功 ，保存用户信息以及登录途径
+        [defaults setBool:YES forKey:kIsLogin];
+        NSLog(@"Still logined");
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // 手机登录成功 ，保存用户信息以及登录途径
+        [defaults setBool:NO forKey:kIsLogin];
+        NSLog(@"maybe cookie timeout,need login");
+    }];
+
+
 }
 
 

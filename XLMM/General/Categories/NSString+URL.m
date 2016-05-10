@@ -57,6 +57,11 @@
     return string;
 }
 
+- (NSString *)imageNormalCompression{
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/640/format/jpg/quality/90",self];
+    return string;
+}
+
 
 - (float)imageWidth{
     float screenwidth = [UIScreen mainScreen].bounds.size.width;

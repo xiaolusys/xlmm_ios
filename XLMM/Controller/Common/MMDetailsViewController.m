@@ -364,12 +364,12 @@
                 self.imageTrailing.constant = (origineDistance)/2;
             }
        } else{
-           UIImage *image = [UIImage imagewithURLString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]];
-           if (image != nil) {
-               self.bottomImageView.image = image;
+           UIImage *image_temp = [UIImage imagewithURLString:[[dic objectForKey:@"pic_path"] ImageNoCompression]];
+           if (image_temp != nil) {
+               self.bottomImageView.image = image_temp;
                self.scrollerView.scrollEnabled = YES;
-               self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
-               headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+               self.bottomImageViewHeight.constant = SCREENWIDTH *image_temp.size.height /image_temp.size.width;
+               headImageOrigineHeight = SCREENWIDTH *image.size.height /image_temp.size.width;
 #pragma mark --判断是否拉伸图片
                origineDistance = headImageOrigineHeight - contentTopHeight;
                if (origineDistance < 0 ) {
@@ -1010,7 +1010,7 @@
               view.backgroundColor = [UIColor darkGrayColor];
               view.layer.cornerRadius = 4;
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
-              label.text = @"商品库存不足";
+              label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
               label.textColor = [UIColor imageViewBorderColor];
               label.font = [UIFont systemFontOfSize:14];
