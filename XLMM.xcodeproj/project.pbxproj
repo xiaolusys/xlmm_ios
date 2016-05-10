@@ -764,6 +764,17 @@
 		32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
 		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
+		3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */; };
+		3A1E05911CE1C3FB001018AC /* LGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E057D1CE1C3FB001018AC /* LGButton.m */; };
+		3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05801CE1C3FB001018AC /* LGLabel.m */; };
+		3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05831CE1C3FB001018AC /* LGRadioButton.m */; };
+		3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05851CE1C3FB001018AC /* LGRadioButtonsView.m */; };
+		3A1E05951CE1C3FB001018AC /* LGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05881CE1C3FB001018AC /* LGTextField.m */; };
+		3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E058A1CE1C3FB001018AC /* LGTextFieldDelegateObject.m */; };
+		3A1E05971CE1C3FB001018AC /* LGTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E058D1CE1C3FB001018AC /* LGTextView.m */; };
+		3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E058F1CE1C3FB001018AC /* LGTextViewDelegateObject.m */; };
+		3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E05991CE1C8CC001018AC /* Circle_Normal.png */; };
+		3A1E059C1CE1C8CC001018AC /* Circle_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
 		3A7BCCF41CD9E1E6000212B0 /* BrandCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */; };
@@ -1858,6 +1869,27 @@
 		32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3A1E051E1CE1B208001018AC /* DebugSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSettingViewController.h; sourceTree = "<group>"; };
+		3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugSettingViewController.m; sourceTree = "<group>"; };
+		3A1E057C1CE1C3FB001018AC /* LGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGButton.h; sourceTree = "<group>"; };
+		3A1E057D1CE1C3FB001018AC /* LGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGButton.m; sourceTree = "<group>"; };
+		3A1E057F1CE1C3FB001018AC /* LGLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGLabel.h; sourceTree = "<group>"; };
+		3A1E05801CE1C3FB001018AC /* LGLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGLabel.m; sourceTree = "<group>"; };
+		3A1E05821CE1C3FB001018AC /* LGRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGRadioButton.h; sourceTree = "<group>"; };
+		3A1E05831CE1C3FB001018AC /* LGRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGRadioButton.m; sourceTree = "<group>"; };
+		3A1E05841CE1C3FB001018AC /* LGRadioButtonsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGRadioButtonsView.h; sourceTree = "<group>"; };
+		3A1E05851CE1C3FB001018AC /* LGRadioButtonsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGRadioButtonsView.m; sourceTree = "<group>"; };
+		3A1E05871CE1C3FB001018AC /* LGTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGTextField.h; sourceTree = "<group>"; };
+		3A1E05881CE1C3FB001018AC /* LGTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGTextField.m; sourceTree = "<group>"; };
+		3A1E05891CE1C3FB001018AC /* LGTextFieldDelegateObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGTextFieldDelegateObject.h; sourceTree = "<group>"; };
+		3A1E058A1CE1C3FB001018AC /* LGTextFieldDelegateObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGTextFieldDelegateObject.m; sourceTree = "<group>"; };
+		3A1E058C1CE1C3FB001018AC /* LGTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGTextView.h; sourceTree = "<group>"; };
+		3A1E058D1CE1C3FB001018AC /* LGTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGTextView.m; sourceTree = "<group>"; };
+		3A1E058E1CE1C3FB001018AC /* LGTextViewDelegateObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGTextViewDelegateObject.h; sourceTree = "<group>"; };
+		3A1E058F1CE1C3FB001018AC /* LGTextViewDelegateObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGTextViewDelegateObject.m; sourceTree = "<group>"; };
+		3A1E05901CE1C3FB001018AC /* LGViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGViews.h; sourceTree = "<group>"; };
+		3A1E05991CE1C8CC001018AC /* Circle_Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Normal.png; sourceTree = "<group>"; };
+		3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Selected.png; sourceTree = "<group>"; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
 		3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpUtils.m; sourceTree = "<group>"; };
@@ -2540,6 +2572,8 @@
 				1F88D58B1CB8B5460050A2E2 /* TSettingViewController.h */,
 				1F88D58C1CB8B5460050A2E2 /* TSettingViewController.m */,
 				1F88D58D1CB8B5460050A2E2 /* TSettingViewController.xib */,
+				3A1E051E1CE1B208001018AC /* DebugSettingViewController.h */,
+				3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2626,6 +2660,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				3A1E057A1CE1C3FB001018AC /* LGViews */,
 				184FCFBA1CA6699C00F8FC94 /* Source */,
 				321857B51CA109550085FF21 /* WebViewJavascriptBridge */,
 				183072951C97D17800B7665E /* AFNetworking */,
@@ -3576,6 +3611,8 @@
 		183075641C97D49A00B7665E /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				3A1E05991CE1C8CC001018AC /* Circle_Normal.png */,
+				3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */,
 				325B7A3B1C98000C0022F930 /* weiboiconthird.png */,
 				325B7A3C1C98000C0022F930 /* qqiconthird.png */,
 				325B7A3D1C98000C0022F930 /* zhifubaoiconthird.png */,
@@ -3815,6 +3852,70 @@
 				32F3D96F1B6CCBCE008530BA /* Security.framework */,
 			);
 			name = framework;
+			sourceTree = "<group>";
+		};
+		3A1E057A1CE1C3FB001018AC /* LGViews */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E057B1CE1C3FB001018AC /* LGButton */,
+				3A1E057E1CE1C3FB001018AC /* LGLabel */,
+				3A1E05811CE1C3FB001018AC /* LGRadioButtonsView */,
+				3A1E05861CE1C3FB001018AC /* LGTextField */,
+				3A1E058B1CE1C3FB001018AC /* LGTextView */,
+				3A1E05901CE1C3FB001018AC /* LGViews.h */,
+			);
+			path = LGViews;
+			sourceTree = "<group>";
+		};
+		3A1E057B1CE1C3FB001018AC /* LGButton */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E057C1CE1C3FB001018AC /* LGButton.h */,
+				3A1E057D1CE1C3FB001018AC /* LGButton.m */,
+			);
+			path = LGButton;
+			sourceTree = "<group>";
+		};
+		3A1E057E1CE1C3FB001018AC /* LGLabel */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E057F1CE1C3FB001018AC /* LGLabel.h */,
+				3A1E05801CE1C3FB001018AC /* LGLabel.m */,
+			);
+			path = LGLabel;
+			sourceTree = "<group>";
+		};
+		3A1E05811CE1C3FB001018AC /* LGRadioButtonsView */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E05821CE1C3FB001018AC /* LGRadioButton.h */,
+				3A1E05831CE1C3FB001018AC /* LGRadioButton.m */,
+				3A1E05841CE1C3FB001018AC /* LGRadioButtonsView.h */,
+				3A1E05851CE1C3FB001018AC /* LGRadioButtonsView.m */,
+			);
+			path = LGRadioButtonsView;
+			sourceTree = "<group>";
+		};
+		3A1E05861CE1C3FB001018AC /* LGTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E05871CE1C3FB001018AC /* LGTextField.h */,
+				3A1E05881CE1C3FB001018AC /* LGTextField.m */,
+				3A1E05891CE1C3FB001018AC /* LGTextFieldDelegateObject.h */,
+				3A1E058A1CE1C3FB001018AC /* LGTextFieldDelegateObject.m */,
+			);
+			path = LGTextField;
+			sourceTree = "<group>";
+		};
+		3A1E058B1CE1C3FB001018AC /* LGTextView */ = {
+			isa = PBXGroup;
+			children = (
+				3A1E058C1CE1C3FB001018AC /* LGTextView.h */,
+				3A1E058D1CE1C3FB001018AC /* LGTextView.m */,
+				3A1E058E1CE1C3FB001018AC /* LGTextViewDelegateObject.h */,
+				3A1E058F1CE1C3FB001018AC /* LGTextViewDelegateObject.m */,
+			);
+			path = LGTextView;
 			sourceTree = "<group>";
 		};
 		3A5DF7B51CCE135D00FFE818 /* Utils */ = {
@@ -4177,6 +4278,7 @@
 				325B79E91C97E7160022F930 /* YoumengShare.xib in Resources */,
 				183075831C97D49A00B7665E /* icon-jiantouzuo.png in Resources */,
 				183076161C97D49A00B7665E /* ladyIcon.png in Resources */,
+				3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */,
 				183075C61C97D49A00B7665E /* mamafensi.png in Resources */,
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
@@ -4357,6 +4459,7 @@
 				183075941C97D49A00B7665E /* icon-youhuiquan.png in Resources */,
 				325B7A0C1C97E73A0022F930 /* MaMaHeadView.xib in Resources */,
 				1830760D1C97D49A00B7665E /* Icon-29@3x.png in Resources */,
+				3A1E059C1CE1C8CC001018AC /* Circle_Selected.png in Resources */,
 				183071DE1C97BE3700B7665E /* MMCollectionController.xib in Resources */,
 				183074291C97D17800B7665E /* SVProgressHUD.bundle in Resources */,
 				183075A41C97D49A00B7665E /* yifu.png in Resources */,
@@ -4386,6 +4489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1830740F1C97D17800B7665E /* QNFormUpload.m in Sources */,
+				3A1E05971CE1C3FB001018AC /* LGTextView.m in Sources */,
 				183073CB1C97D17800B7665E /* AFHTTPRequestOperation.m in Sources */,
 				325B7A141C97E73A0022F930 /* PicHeaderCollectionReusableView.m in Sources */,
 				183073EE1C97D17800B7665E /* MJRefreshHeader.m in Sources */,
@@ -4408,6 +4512,7 @@
 				183072831C97C00900B7665E /* NSString+DeleteT.m in Sources */,
 				1830728A1C97C00900B7665E /* UIImage+ImageWithUrl.m in Sources */,
 				325B79E61C97E7160022F930 /* YHQHeadView.m in Sources */,
+				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
 				183072331C97BE3700B7665E /* TousuViewController.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				183072031C97BE3700B7665E /* TixianSucceedViewController.m in Sources */,
@@ -4424,6 +4529,7 @@
 				325B79991C97E6F10022F930 /* LoadingAnimation.m in Sources */,
 				325B7A121C97E73A0022F930 /* PicFooterCollectionReusableView.m in Sources */,
 				183070DB1C97B83900B7665E /* OrderModel.m in Sources */,
+				3A1E05911CE1C3FB001018AC /* LGButton.m in Sources */,
 				325B7A341C97E74B0022F930 /* ProductSelectionListCell2.m in Sources */,
 				183072821C97C00900B7665E /* NSArray+Log.m in Sources */,
 				325B79CE1C97E7160022F930 /* Head1View.m in Sources */,
@@ -4432,6 +4538,7 @@
 				325B79D01C97E7160022F930 /* Head2View.m in Sources */,
 				183072181C97BE3700B7665E /* MaMaShopViewController.m in Sources */,
 				325B7A2A1C97E74B0022F930 /* FensiTableViewCell.m in Sources */,
+				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				325B7A0A1C97E73A0022F930 /* CountdownView.m in Sources */,
 				183073CD1C97D17800B7665E /* AFHTTPSessionManager.m in Sources */,
 				183072451C97BE3700B7665E /* FillWuliuController.m in Sources */,
@@ -4541,6 +4648,7 @@
 				183074271C97D17800B7665E /* UIView+WebCacheOperation.m in Sources */,
 				325B79E81C97E7160022F930 /* YoumengShare.m in Sources */,
 				183072261C97BE3700B7665E /* AddAdressViewController.m in Sources */,
+				3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */,
 				183071E71C97BE3700B7665E /* TodayViewController.m in Sources */,
 				1830740C1C97D17800B7665E /* QNReachability.m in Sources */,
 				183072851C97C00900B7665E /* NSString+URL.m in Sources */,
@@ -4604,6 +4712,7 @@
 				325B79A21C97E6F10022F930 /* XiangQingView.m in Sources */,
 				325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */,
 				1830725C1C97BE3700B7665E /* VersionController.m in Sources */,
+				3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */,
 				183072381C97BE3700B7665E /* YouHuiQuanViewController.m in Sources */,
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
@@ -4615,6 +4724,7 @@
 				183074191C97D17800B7665E /* NSData+ImageContentType.m in Sources */,
 				183074121C97D17800B7665E /* QNUploadOption.m in Sources */,
 				325B7A161C97E73A0022F930 /* TixianTableViewCell.m in Sources */,
+				3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */,
 				325B79D41C97E7160022F930 /* JiFenCollectionCell.m in Sources */,
 				183073EA1C97D17800B7665E /* MJRefreshAutoFooter.m in Sources */,
 				183070E41C97B83900B7665E /* FanceModel.m in Sources */,
@@ -4624,6 +4734,7 @@
 				325B799E1C97E6F10022F930 /* PeopleCollectionCell.m in Sources */,
 				183070DC1C97B83900B7665E /* PeopleModel.m in Sources */,
 				325B7A321C97E74B0022F930 /* ProductSelectionListCell.m in Sources */,
+				3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */,
 				183070E91C97B83900B7665E /* ShareClickModel.m in Sources */,
 				183070DD1C97B83900B7665E /* PerDingdanModel.m in Sources */,
 				1830720F1C97BE3700B7665E /* HuojiangListViewController.m in Sources */,
@@ -4651,6 +4762,7 @@
 				1830740B1C97D17800B7665E /* QNUserAgent.m in Sources */,
 				183073FF1C97D17800B7665E /* QNAsyncRun.m in Sources */,
 				183074041C97D17800B7665E /* QNSystem.m in Sources */,
+				3A1E05951CE1C3FB001018AC /* LGTextField.m in Sources */,
 				183072581C97BE3700B7665E /* SettingViewController.m in Sources */,
 				1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */,
 				183073F41C97D17800B7665E /* MJRefreshBackStateFooter.m in Sources */,
@@ -4705,8 +4817,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -4729,7 +4841,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d6a4cb14-0e1f-4620-b461-8063ad50ccc2";
+				PROVISIONING_PROFILE = "eb266e51-fc3d-449e-9c87-fb7893c75ee6";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4751,8 +4863,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -4767,7 +4879,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d6a4cb14-0e1f-4620-b461-8063ad50ccc2";
+				PROVISIONING_PROFILE = "eb266e51-fc3d-449e-9c87-fb7893c75ee6";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4778,8 +4890,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -4826,7 +4938,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6a4cb14-0e1f-4620-b461-8063ad50ccc2";
+				PROVISIONING_PROFILE = "eb266e51-fc3d-449e-9c87-fb7893c75ee6";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4836,8 +4948,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -4884,7 +4996,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6a4cb14-0e1f-4620-b461-8063ad50ccc2";
+				PROVISIONING_PROFILE = "eb266e51-fc3d-449e-9c87-fb7893c75ee6";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

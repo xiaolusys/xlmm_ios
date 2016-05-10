@@ -21,12 +21,13 @@
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
 #import "AFNetworking.h"
-
+#import "DebugSettingViewController.h"
 
 @interface SettingViewController ()<UIAlertViewDelegate>{
     
     NSString *phoneNumber;
     NSString *mobile;
+    NSInteger clickHeadImgCount;
     
 }
 
@@ -62,6 +63,7 @@
     self.headerImageView.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
     self.headerImageView.layer.masksToBounds = YES;
     self.headerImageView.layer.borderWidth = 1;
+    clickHeadImgCount = 0;
     
     [self setUserInfo];
 }
@@ -99,6 +101,9 @@
     
     //头像信息
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[result objectForKey:@"thumbnail"]]];
+    
+    [self.headerImageView setUserInteractionEnabled:YES];
+    [self.headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickHeadImage:)]];
     
 }
 
@@ -264,5 +269,25 @@
     return 0;
 }
 
+-(void)clickHeadImage:(UITapGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"clickHeadImage");
+    //NSLog(@"%hhd",[gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]);
+    
+    UIView *viewClicked=[gestureRecognizer view];
+    if (viewClicked==self.headerImageView) {
+        NSLog(@"headerImageView");
+        clickHeadImgCount++;
+        //跳到debug vc
+        if(clickHeadImgCount == 8){
+            clickHeadImgCount = 0;
+            
+            DebugSettingViewController *debugVC = [[DebugSettingViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
+            
+            [self.navigationController pushViewController:debugVC animated:YES];
+        }
+    }
+    
+}
 
 @end
