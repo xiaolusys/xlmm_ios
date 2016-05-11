@@ -328,7 +328,9 @@
     self.shopShareName = dic[@"shop_info"][@"name"];
     
     NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
-    self.shopShareImage = [UIImage imagewithURLString:urlString];
+    if(urlString != nil){
+        self.shopShareImage = [UIImage imagewithURLString:urlString];
+    }
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
         self.shopShareName = @"小鹿妈妈";
     }
@@ -339,9 +341,9 @@
     self.webViewUrl = [[dic objectForKey:@"shop_info"] objectForKey:@"preview_shop_link"];
     NSLog(@"web url = %@", self.webViewUrl);
     
-    
-     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webViewUrl]]];
-    
+    if(self.webViewUrl != nil){
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webViewUrl]]];
+    }
     self.title = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
     
     [self createNavigationBarWithTitle:[NSString stringWithFormat:@"%@de精选集", self.shopShareName] selecotr:@selector(backClickAction)];

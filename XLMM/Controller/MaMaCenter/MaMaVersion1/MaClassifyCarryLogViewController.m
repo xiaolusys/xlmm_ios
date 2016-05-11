@@ -414,6 +414,9 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
+    if((nibView == nil) || (nibView.count == 0)){
+        return nil;
+    }
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30);
     //计算金额

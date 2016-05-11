@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *brandViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lefttimeViewHeight;
 
 
 - (IBAction)yestdayBtnClick:(id)sender;
@@ -38,5 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *womenImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *childImgView;
 @property (weak, nonatomic) IBOutlet UILabel *labelTime;
+@property (weak, nonatomic) IBOutlet UILabel *labelIndicate;
 
 @end
