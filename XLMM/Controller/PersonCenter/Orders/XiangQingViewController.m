@@ -187,6 +187,10 @@
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
     } else if (([statusDisplay isEqualToString:@"已发货"])){
+        NSString *timeString = [dicJson objectForKey:@"consign_time"];//发货时间。。。。
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
+        
         AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
         NSString *str = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_tid?tid=%@", Root_URL,[dicJson objectForKey:@"tid"]];
         [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

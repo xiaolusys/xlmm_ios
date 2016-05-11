@@ -267,6 +267,10 @@
 }
 
 -(void)btnClick {
+    if([serverip isEqualToString:@""]){
+        serverip = self.tvip.text;
+    }
+    
     pwd = self.tvpwd.text;
     if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""])
         return;
