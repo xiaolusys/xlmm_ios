@@ -1840,7 +1840,6 @@ static NSString *kbrandCell = @"brandCell";
         NSLog(@"index %d",  index);
         if(self.currentIndex != index){
             self.currentIndex = index;
-            [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
             NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
             if((currentArr != nil) && (currentArr.count == 0)){
                 [self goodsRequest];
