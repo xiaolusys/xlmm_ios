@@ -320,6 +320,11 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
         }
     } else{
         cell.backView.hidden = NO;
+        if([model.isNewgood boolValue]){
+            UILabel *label = [cell.backView viewWithTag:100];
+            label.text = @"即将开售";
+        }
+
     }
     return cell;
 

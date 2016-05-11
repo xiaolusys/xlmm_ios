@@ -640,7 +640,13 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
     [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         //通过加载图片得到其高度
-        float h = image.size.height * (WIDTH /image.size.width);
+        float h;
+        if((image == nil) || (image.size.width == 0)){
+            h = 150;
+        }
+        else{
+            h = image.size.height * (WIDTH /image.size.width);
+        }
         NSLog(@"poster height %f %f", image.size.height, h);
         self.bannerHeight.constant = h;
         self.aboveHeight.constant = h+120;
@@ -877,10 +883,20 @@ static NSString *kbrandCell = @"brandCell";
     
     NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
     NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
-    [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
+    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    if(self.currentIndex != 2){
+        if(deadline != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
+        }
+    }
+    else{
+        if(starttime != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: starttime];
+        }
+    }
     
     NSArray *results = [dic objectForKey:@"results"];
-    if (results.count == 0) {
+    if ((results == nil) || (results.count == 0)) {
         return;
     }
     NSLog(@"result count=%ld", results.count );
@@ -901,9 +917,11 @@ static NSString *kbrandCell = @"brandCell";
     
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     
-    [collection insertItemsAtIndexPaths:numArray];
-    [numArray removeAllObjects];
-    numArray = nil;
+    if(numArray != nil){
+        [collection insertItemsAtIndexPaths:numArray];
+        [numArray removeAllObjects];
+        numArray = nil;
+    }
 
     [collection reloadData];
     
@@ -1167,6 +1185,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
     }
     else if(self.currentIndex == 1){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
@@ -1177,6 +1197,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
     } if(self.currentIndex == 2){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -1186,6 +1208,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场开始";
     }
 }
 
@@ -1280,6 +1304,10 @@ static NSString *kbrandCell = @"brandCell";
 
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    
+    if((currentArr == nil) || (currentArr.count == 0))
+        return;
+    
     PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
     if (model.productModel == nil) {
         MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
@@ -1807,10 +1835,10 @@ static NSString *kbrandCell = @"brandCell";
         && scrollView.dragging){
         if (scrollView.contentOffset.y <= 0) {
             //下拉
-            NSLog(@"backScrollview 下拉");
+            //NSLog(@"backScrollview 下拉");
         }if (scrollView.contentOffset.y > 0) {
             //上滑
-            NSLog(@"backScrollview 上滑");
+            //NSLog(@"backScrollview 上滑");
             if(scrollView.contentOffset.y + 64 - allPostHeight > 5.0f){
                 NSLog(@"backScrollview enter category");
                 self.backScrollview.scrollEnabled = NO;
@@ -1832,12 +1860,15 @@ static NSString *kbrandCell = @"brandCell";
         int index = 1;
         if(scrollView.contentOffset.x <= (1e-6)){
             index = 0;
+            self.labelIndicate.text = @"距本场结束";
         }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
             index = 1;
-        }else if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            self.labelIndicate.text = @"距本场结束";
+        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
             index = 2;
+            self.labelIndicate.text = @"距本场开始";
         }
-        NSLog(@"index %d",  index);
+        //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
         if(self.currentIndex != index){
             self.currentIndex = index;
             NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
@@ -1858,15 +1889,25 @@ static NSString *kbrandCell = @"brandCell";
         || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
         && scrollView.dragging){
         if( scrollView.contentOffset.y <= 0) {
-            //NSLog(@"today scroll down");
+            NSLog(@"today scroll down");
             self.backScrollview.scrollEnabled = YES;
             [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
                                       animated:YES];
             
             [self disableAllGoodsCollectionScroll];
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 45;
+
+            }];
+
+            
         }
         else if( scrollView.contentOffset.y > 0) {
-            //NSLog(@"today scroll up");
+            NSLog(@"today scroll up");
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 0;
+                
+            }];
         }
     }
 }

@@ -14,12 +14,14 @@
 +(UIImage *)imagewithURLString:(NSString *)urlString{
     UIImage *image = nil;
     NSError *imageError = nil;
+    
+    if(urlString == nil) return nil;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError];
-    
-    NSLog(@"loadingImageError = %@", imageError);
-    
+    if(imageError != nil){
+        NSLog(@"loadingImageError = %@", imageError);
+    }
    // NSLog(@"data = %@", data);
-    NSLog(@"%ld", data.length);
+    NSLog(@"%ld", (unsigned long)data.length);
     
     image = [UIImage imageWithData:data];
     
