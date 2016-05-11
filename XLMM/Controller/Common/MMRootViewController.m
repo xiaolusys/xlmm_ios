@@ -1148,7 +1148,7 @@ static NSString *kbrandCell = @"brandCell";
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    if(currentArr.count == 0){
+    if((currentArr != nil) && (currentArr.count == 0)){
         [self goodsRequest];
     }
     
@@ -1840,7 +1840,11 @@ static NSString *kbrandCell = @"brandCell";
         NSLog(@"index %d",  index);
         if(self.currentIndex != index){
             self.currentIndex = index;
-            [self goodsRequest];
+            [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+            if((currentArr != nil) && (currentArr.count == 0)){
+                [self goodsRequest];
+            }
         }
         else{
             self.currentIndex = index;
