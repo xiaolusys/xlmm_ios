@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *allPayLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailsViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressViewWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containterHeight;
 @property (weak, nonatomic) IBOutlet UILabel *addressZeroLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zhifulijianLabel;
 
@@ -51,6 +52,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *wxButton;
 @property (weak, nonatomic) IBOutlet UITextField *tfMsg;
 @property (weak, nonatomic) IBOutlet UIScrollView *baseScrollView;
+@property (weak, nonatomic) IBOutlet UIView *containterView;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCheck;
 @property (weak, nonatomic) IBOutlet UIButton *btnAgree;

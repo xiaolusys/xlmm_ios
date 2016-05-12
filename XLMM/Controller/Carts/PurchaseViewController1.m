@@ -353,6 +353,18 @@
 - (void)createCartsListView{
     BuyCartsView * cartOwner = [BuyCartsView new];
     self.detailsViewHeight.constant = self.MutCatrsArray.count * 80;
+    if(self.MutCatrsArray.count >1){
+//        NSLog(@"containter height  %f", self.containterView.frame.size.height  );
+        self.containterHeight.constant = self.containterView.frame.size.height + (self.MutCatrsArray.count - 1) * 80;
+        
+//        NSArray *views = [self.containterView subviews];
+//        NSInteger containterHeight = 0;
+//        for(UIView* view in views)
+//        {
+//            containterHeight += view.frame.size.height;
+//        }
+//        NSLog(@"containter subview height sum %ld", (long)containterHeight);
+    }
     
     for (int i = 0; i<self.MutCatrsArray.count; i++) {
         

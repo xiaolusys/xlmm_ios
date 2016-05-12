@@ -17,6 +17,8 @@
                 <outlet property="btnAgree" destination="Ttq-m4-I9H" id="qyp-Z5-YZs"/>
                 <outlet property="btnCheck" destination="fvS-3g-4mV" id="BY8-8d-wsu"/>
                 <outlet property="buyButton" destination="ZWy-aw-RH8" id="Yvk-BJ-Wah"/>
+                <outlet property="containterHeight" destination="QB8-0p-1wy" id="Oqk-Pp-Crf"/>
+                <outlet property="containterView" destination="9yf-6P-cYx" id="O2Z-69-itI"/>
                 <outlet property="couponButton" destination="6OM-EV-bT4" id="znc-GV-uWQ"/>
                 <outlet property="couponImageView" destination="gnI-6e-S7z" id="cAY-Ov-vfC"/>
                 <outlet property="couponLabel" destination="KfK-93-pHZ" id="i10-bF-cu9"/>
@@ -74,7 +76,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海市杨浦区平凉路怀德路366弄18号楼2303" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSZ-Ly-Vgp">
-                                            <rect key="frame" x="43" y="42" width="220" height="33.5"/>
+                                            <rect key="frame" x="43" y="42" width="220" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -291,6 +293,9 @@
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="Smr-fy-OgE"/>
+                                    </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bmd-QS-cPF" userLabel="Zhifu View">
                                     <rect key="frame" x="0.0" y="348" width="320" height="190"/>
@@ -608,6 +613,7 @@
                                         <constraint firstItem="fvS-3g-4mV" firstAttribute="centerY" secondItem="Ttq-m4-I9H" secondAttribute="centerY" id="Q8U-BQ-FsE"/>
                                         <constraint firstItem="fvS-3g-4mV" firstAttribute="leading" secondItem="BJI-pZ-KdW" secondAttribute="leading" constant="12" id="dLa-0S-Xv8"/>
                                         <constraint firstItem="Ttq-m4-I9H" firstAttribute="leading" secondItem="fvS-3g-4mV" secondAttribute="trailing" constant="7" id="iH9-ej-ImQ"/>
+                                        <constraint firstAttribute="height" constant="30" id="xSG-jU-PnK"/>
                                         <constraint firstAttribute="trailing" secondItem="wVe-5R-B1D" secondAttribute="trailing" id="xgD-9t-NTv"/>
                                         <constraint firstItem="wVe-5R-B1D" firstAttribute="top" secondItem="BJI-pZ-KdW" secondAttribute="top" id="yuH-rZ-TAX"/>
                                     </constraints>
@@ -684,7 +690,7 @@
                                 <constraint firstItem="Bmd-QS-cPF" firstAttribute="top" secondItem="u0w-aA-L4q" secondAttribute="bottom" id="HMi-Ej-pdU"/>
                                 <constraint firstAttribute="trailing" secondItem="WkE-Kk-YBg" secondAttribute="trailing" id="Kju-rv-jI7"/>
                                 <constraint firstItem="jXK-Zi-Auw" firstAttribute="top" secondItem="WkE-Kk-YBg" secondAttribute="bottom" constant="28" id="MoC-ra-rjb"/>
-                                <constraint firstAttribute="height" constant="648" id="PjR-uf-yAK"/>
+                                <constraint firstAttribute="height" constant="648" id="QB8-0p-1wy"/>
                                 <constraint firstItem="yvR-Bw-Bjp" firstAttribute="top" secondItem="WkE-Kk-YBg" secondAttribute="bottom" id="Ryf-8t-BWj"/>
                                 <constraint firstItem="a3B-je-hS5" firstAttribute="trailing" secondItem="u0w-aA-L4q" secondAttribute="trailing" id="Z5v-mp-xdK"/>
                                 <constraint firstAttribute="trailing" secondItem="re8-u4-A7g" secondAttribute="trailing" id="ZYH-x7-3xw"/>
