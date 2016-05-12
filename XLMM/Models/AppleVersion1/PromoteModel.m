@@ -22,6 +22,7 @@
         _outerID = [dic objectForKey:@"outer_id"];
         _isSaleopen = [dic objectForKey:@"is_saleopen"];
         _isSaleout = [dic objectForKey:@"is_saleout"];
+        _isNewgood = [dic objectForKey:@"is_newgood"];
         _category = [dic objectForKey:@"category"];
         _remainNum = [dic objectForKey:@"remain_num"];
         _saleTime = [dic objectForKey:@"sale_time"];

@@ -92,6 +92,11 @@
         }
     } else{
         self.backView.hidden = NO;
+        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
+        if([model.isNewgood boolValue]){
+            UILabel *label = [self.backView viewWithTag:100];
+            label.text = @"即将开售";
+        }
     }
 }
 
@@ -160,6 +165,12 @@
         
     } else {
         self.backView.hidden = NO;
+        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
+        if([model.isNewgood boolValue]){
+            UILabel *label = [self.backView viewWithTag:100];
+            label.text = @"即将开售";
+        }
+
     }
 }
 
