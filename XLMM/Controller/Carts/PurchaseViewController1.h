@@ -49,6 +49,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *xlwButton;
 @property (weak, nonatomic) IBOutlet UIButton *alipayButton;
 @property (weak, nonatomic) IBOutlet UIButton *wxButton;
+@property (weak, nonatomic) IBOutlet UITextField *tfMsg;
+@property (weak, nonatomic) IBOutlet UIScrollView *baseScrollView;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnCheck;
+@property (weak, nonatomic) IBOutlet UIButton *btnAgree;
 
 @end
