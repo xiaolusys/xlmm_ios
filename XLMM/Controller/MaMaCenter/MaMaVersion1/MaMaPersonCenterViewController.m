@@ -399,7 +399,7 @@
 #pragma mark --进入提现界面
 
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
-    TixianViewController *vc = [[TixianViewController alloc] initWithNibName:@"TixianViewController" bundle:nil];
+    TixianViewController *vc = [[TixianViewController alloc] init];
     vc.carryNum = self.carryValue;
     
     [self.navigationController pushViewController:vc animated:YES];
@@ -1072,7 +1072,7 @@
 }
 */
 
-- (IBAction)backClicked:(id)sender {
+- (void)backClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

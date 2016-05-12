@@ -10,9 +10,28 @@
 #import "UIViewController+NavigationBar.h"
 #import "PublishNewPdtViewController.h"
 #import "UIColor+RGBColor.h"
-
+#import "Masonry.h"
+#import "MMClass.h"
+#import "JMBillDetailController.h"
 
 @interface TixianSucceedViewController ()
+
+
+/*
+    头视图
+ */
+@property (nonatomic,strong) UIView *headView;
+@property (nonatomic,strong) UIImageView *successImageView;
+@property (nonatomic,strong) UILabel *cuccessLabel;
+@property (nonatomic,strong) UILabel *promptLabel;
+/*
+    下侧视图
+ */
+@property (nonatomic,strong) UIView *bottomView;
+@property (nonatomic,strong) UILabel *activeLabel;
+@property (nonatomic,strong) UIButton *completeBtn;
+
+@property (nonatomic,assign) NSInteger numValue;
 
 @end
 
@@ -30,17 +49,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
-    self.fabuButton.layer.cornerRadius = 15;
-    self.fabuButton.layer.borderWidth = 1;
-    self.fabuButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+//    self.fabuButton.layer.cornerRadius = 15;
+//    self.fabuButton.layer.borderWidth = 1;
+//    self.fabuButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     if (self.tixianjine == 100) {
-        self.headImageView.image = [UIImage imageNamed:@"hongbao100.png"];
+//        self.headImageView.image = [UIImage imageNamed:@"hongbao100.png"];
     } else if (self.tixianjine == 200){
         
     }
     
+    [self createLayout];
+    [self createRightButonItem];
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -50,6 +72,131 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -- 布局
+- (void)createLayout {
+    UIView *headView = [[UIView alloc] init];
+    [self.view addSubview:headView];
+    self.headView = headView;
+    
+    UIImageView *successImageView = [[UIImageView alloc] init];
+    [self.headView addSubview:successImageView];
+    self.successImageView = successImageView;
+    successImageView.image = [UIImage imageNamed:@"apply_for_success"];
+    
+    
+    
+    UILabel *cuccessLabel = [[UILabel alloc] init];
+    [self.headView addSubview:cuccessLabel];
+    self.cuccessLabel = cuccessLabel;
+    self.cuccessLabel.font = [UIFont boldSystemFontOfSize:18.];
+    self.cuccessLabel.text = @"申请成功！";
+    self.cuccessLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    UILabel *promptLabel = [[UILabel alloc] init];
+    [self.headView addSubview:promptLabel];
+    self.promptLabel = promptLabel;
+    self.promptLabel.font = [UIFont systemFontOfSize:12.];
+    self.promptLabel.text = @"提现金额已冻结，24小时之内到账";
+    self.promptLabel.textAlignment = NSTextAlignmentCenter;
+
+    
+    UIView *bottomView = [[UIView alloc] init];
+    [self.view addSubview:bottomView];
+    self.bottomView = bottomView;
+    bottomView.backgroundColor = [UIColor lineGrayColor];
+    
+    UILabel *activeLabel = [[UILabel alloc] init];
+    [self.bottomView addSubview:activeLabel];
+    self.activeLabel = activeLabel;
+    self.activeLabel.textAlignment = NSTextAlignmentCenter;
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗10点活跃值，剩余%ld点活跃值",_numValue];
+    self.promptLabel.font = [UIFont systemFontOfSize:13.];
+
+    
+    UIButton *completeBtn = [[UIButton alloc] init];
+    [self.bottomView addSubview:completeBtn];
+    self.completeBtn = completeBtn;
+    [completeBtn setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
+    [completeBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [completeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(64);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_offset(SCREENWIDTH);
+        make.height.mas_offset(@(571/2));
+    }];
+    
+    [self.successImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.headView.mas_top).offset(116/2);
+        make.centerX.equalTo(self.headView.mas_centerX);
+        make.width.mas_offset(@60);
+        make.height.mas_offset(@(79/2));
+    }];
+    
+    [self.cuccessLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.successImageView.mas_bottom).offset(28);
+        make.centerX.equalTo(self.headView.mas_centerX);
+        make.width.mas_offset(@160);
+        make.height.mas_offset(@32);
+    }];
+    
+    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.cuccessLabel.mas_bottom).offset(26);
+        make.centerX.equalTo(self.headView.mas_centerX);
+        make.width.mas_offset(SCREENWIDTH);
+        make.height.mas_offset(@14);
+    }];
+    
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.headView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_offset(SCREENWIDTH);
+        make.bottom.equalTo(self.view.mas_bottom).offset(0);
+    }];
+    
+    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bottomView.mas_top).offset(21/2);
+        make.centerX.equalTo(self.bottomView.mas_centerX);
+        make.width.mas_offset(SCREENWIDTH);
+    }];
+    
+    [self.completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
+        make.left.equalTo(self.bottomView.mas_left).offset(15);
+        make.width.mas_offset(SCREENWIDTH - 30);
+        make.height.mas_offset(40);
+    }];
+    
+    
+    
+}
+
+#pragma mark ----- 提现详情界面 
+
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    label.textColor = [UIColor textDarkGrayColor];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentRight;
+    [rightBtn addSubview:label];
+    label.text = @"查看详情";
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)rightClicked:(UIButton *)button{
+
+    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+    
+    [self.navigationController pushViewController:billDetail animated:YES];
+    
+    
 }
 
 /*

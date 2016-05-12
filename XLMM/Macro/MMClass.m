@@ -20,4 +20,15 @@ NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
+//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budget
+
+//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_amount
+
+
+//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budgetcashout_amount
+
+//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/c1
+
+
+
 #endif

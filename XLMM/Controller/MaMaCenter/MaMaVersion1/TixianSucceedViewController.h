@@ -10,11 +10,11 @@
 
 @interface TixianSucceedViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
-
-@property (weak, nonatomic) IBOutlet UILabel *weixinLabel;
-@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
+//@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+//
+//@property (weak, nonatomic) IBOutlet UILabel *weixinLabel;
+//@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
 @property (assign, nonatomic) float tixianjine;
-- (IBAction)fabuClicked:(id)sender;
+//- (IBAction)fabuClicked:(id)sender;
 
 @end
