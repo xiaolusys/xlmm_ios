@@ -62,7 +62,7 @@
     
     float lijianpay;
     
-   
+
 }
 
 @property (nonatomic, strong)NSMutableArray *MutCatrsArray;     //购物车数组
@@ -90,6 +90,7 @@
 @property (nonatomic, assign)BOOL isUserCoupon;
 
 @property (nonatomic, assign)BOOL isInstallWX;
+@property (nonatomic, assign)BOOL isAgreeTerms;
 
 @end
 
@@ -101,6 +102,15 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    
+    //添加键盘的监听事件
+    
+    //注册通知,监听键盘弹出事件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    //注册通知,监听键盘消失事件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+    
     if ([WXApi isWXAppInstalled]) {
       //  NSLog(@"安装了微信");
         self.isInstallWX = YES;
@@ -108,6 +118,14 @@
     else{
         self.isInstallWX = NO;
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    
 }
 
 - (void)popview{
@@ -155,6 +173,7 @@
     self.isEnoughCoupon = NO;
     
     self.isUserCoupon = NO;
+    self.isAgreeTerms = YES;
     
     MMUserCoupons *coupons = [[MMUserCoupons alloc] init];
     if (coupons.couponValue == 0) {
@@ -166,6 +185,8 @@
         self.couponImageView.hidden = NO;
         self.couponLabel.hidden = YES;
     }
+    
+    [self initMsgTextField];
     
     [self downloadAddressData];
 
@@ -593,6 +614,12 @@
     
     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
     
+    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
+    {
+        dict = [NSString stringWithFormat:@"%@&buyer_message=%@", dict, [self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+    }
+
+    
 
 //    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
     //是否使用了优惠券
@@ -664,7 +691,28 @@
 
     }
     
+    
 }
+
+- (IBAction)btnCheckClicked:(id)sender {
+    UIImage *image = nil;
+    if (self.isAgreeTerms) {
+        self.isAgreeTerms = NO;
+        image = [UIImage imageNamed:@"confirm2.png"];
+    }
+    else{
+        self.isAgreeTerms = YES;
+        image = [UIImage imageNamed:@"confirm.png"];
+    }
+    [self.btnCheck setBackgroundImage:image forState:UIControlStateNormal];
+}
+
+- (IBAction)btnAgreeClicked:(id)sender {
+    NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
 
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
     NSArray *firstArr = [str componentsSeparatedByString:@"&"];
@@ -685,6 +733,14 @@
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
 
     PurchaseViewController1 * __weak weakSelf = self;
+    
+    //检查地址
+    if (!self.isAgreeTerms) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请您阅读和同意购买条款!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -841,6 +897,78 @@
             self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", amontPayment  - discount];
         }
     }
+}
+
+
+#pragma mark --留言处理
+- (void) initMsgTextField{
+    //返回键的类型
+    self.tfMsg.returnKeyType = UIReturnKeyDefault;
+    //键盘类型
+    self.tfMsg.keyboardType = UIKeyboardTypeDefault;
+    //[self.tvip becomeFirstResponder];
+    
+    //定义一个toolBar
+    UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    //设置style
+    [topView setBarStyle:UIBarStyleBlack];
+    
+    //定义两个flexibleSpace的button，放在toolBar上，这样完成按钮就会在最右边
+    UIBarButtonItem * button1 =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    UIBarButtonItem * button2 = [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    //定义完成按钮
+    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone  target:self action:@selector(resignKeyboard)];
+    
+    //在toolBar上加上这些按钮
+    NSArray * buttonsArray = [NSArray arrayWithObjects:button1,button2,doneButton,nil];
+    [topView setItems:buttonsArray];
+    
+    [self.tfMsg setInputAccessoryView:topView];
+}
+
+// 键盘弹出时
+-(void)keyboardDidShow:(NSNotification *)notification
+{
+    
+    //获取键盘高度
+    NSValue *keyboardObject = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect;
+    
+    [keyboardObject getValue:&keyboardRect];
+    
+    //调整放置有textView的view的位置
+    
+    //设置动画
+    [UIView beginAnimations:nil context:nil];
+    
+    //定义动画时间
+    [UIView setAnimationDuration:0.3f];
+    
+    //设置view的frame，往上平移
+    [self.baseScrollView  setFrame:CGRectMake(0, self.view.frame.size.height-keyboardRect.size.height-self.baseScrollView.frame.size.height, self.view.frame.size.width, self.baseScrollView.frame.size.height)];
+    
+    [UIView commitAnimations];
+    
+}
+
+//键盘消失时
+-(void)keyboardDidHidden
+{
+    //定义动画
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3f];
+    //设置view的frame，往下平移
+    [self.baseScrollView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.baseScrollView.frame.size.height)];
+    [UIView commitAnimations];
+}
+
+- (void)resignKeyboard{
+    [self.tfMsg resignFirstResponder];
+
 }
 
 @end
