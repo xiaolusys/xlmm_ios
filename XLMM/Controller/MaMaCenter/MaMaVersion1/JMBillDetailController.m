@@ -107,7 +107,7 @@
     [self createUI];
     [self createLayout];
     
-    [self createRightButonItem];
+//    [self createRightButonItem];
 }
 
 
@@ -474,27 +474,27 @@
 }
 
 
-- (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    label.textColor = [UIColor textDarkGrayColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    [rightBtn addSubview:label];
-    label.text = @"查看详情";
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
-
-- (void)rightClicked:(UIButton *)button{
-    
-//    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+//- (void) createRightButonItem{
+//    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+//    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+//    label.textColor = [UIColor textDarkGrayColor];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.textAlignment = NSTextAlignmentRight;
+//    [rightBtn addSubview:label];
+//    label.text = @"查看详情";
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    self.navigationItem.rightBarButtonItem = rightItem;
+//}
+//
+//- (void)rightClicked:(UIButton *)button{
 //    
-//    [self.navigationController pushViewController:billDetail animated:YES];
-    
-    
-}
+////    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+////    
+////    [self.navigationController pushViewController:billDetail animated:YES];
+//    
+//    
+//}
 
 - (void)backClickedesllect:(id)sender {
     

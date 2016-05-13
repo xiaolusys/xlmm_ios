@@ -56,6 +56,9 @@
 
 @property (nonatomic,strong) NSMutableArray *buttonArray;
 
+@property (nonatomic,assign) BOOL isSelecterMoney;
+
+@property (nonatomic,assign) BOOL isSelecterPay;
 
 @end
 
@@ -66,10 +69,9 @@
     NSString *walletType;
     float zhanghuyue;
     float tixianjine;
-    
-    
     BOOL isXiaolupened;
     BOOL isWeixinpend;
+    
 }
 - (NSMutableArray *)buttonArray {
     if (_buttonArray == nil) {
@@ -242,6 +244,9 @@
     self.sureButton = sureButton;
     [sureButton addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setBackgroundImage:[UIImage imageNamed:@"success_Withdraw"] forState:UIControlStateNormal];
+    
+    sureButton.enabled = NO;//(_isSelecterMoney  && _isSelecterPay );
+    
 //    self.sureButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
 //    self.sureButton.layer.borderColor = [UIColor  buttonEnabledBorderColor].CGColor;
 //    self.sureButton.enabled = NO;
@@ -252,11 +257,16 @@
 //    if ((_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES) && (_xiaoluButton.selected == YES|_wexinButton.selected == YES)) {
 //        self.sureButton.enabled = YES;
 //    }
-//    
+////
+//    _isSelecterMoney = (_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES);
+//    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
+    
+//    sureButton.enabled = (_isSelecterMoney == YES && _isSelecterPay == YES);
     
 }
 #pragma mark ---   选择提现金额按钮点击事件
 - (void)withdrawMoneyClick:(UIButton *)button {
+    
     
     
     if (button.tag == 100) {
@@ -302,6 +312,10 @@
         }
         
     }
+    
+    _isSelecterMoney = (_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES);
+    
+    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
     
 }
 
@@ -350,180 +364,14 @@
         }
         
     }
+    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
     
+    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
 }
 
-- (void)createAutolayouts {
-    
-    [self.myBlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(64);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@60);
-    }];
-    
-    [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@30);
-    }];
-    
-    [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
-        make.left.equalTo(self.myBlanceView.mas_left).offset(11);
-        make.width.mas_equalTo(@70);
-        make.height.mas_equalTo(@(43/2));
-    }];
-    
-    [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
-        make.left.equalTo(self.blanceLabel.mas_right).offset(5);
-        make.width.mas_equalTo(@300);
-        make.height.mas_equalTo(@19);
-    }];
-    
-    /**********/
-    [self.withdrawView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.blanceBottomView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@120);
-    }];
-    
-    [self.xiaoluImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(43/2);
-        make.width.mas_equalTo(@(43/2));
-        make.height.mas_equalTo(@16);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
-    }];
-    
-    
-    
-    [self.xiaoluLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(self.xiaoluImage.mas_centerX);
-        make.top.equalTo(self.withdrawView.mas_top).offset(45/2);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.xiaoluImage.mas_right).offset(23/2);
-    }];
-    
-    [self.firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(60);
-        make.width.mas_offset(SCREENWIDTH);
-        make.left.equalTo(self.withdrawView.mas_left).offset(0);
-        make.height.mas_offset(0.5);
-    }];
-    
-    [self.secondLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.firstLine.mas_top).offset(60);
-        make.width.mas_offset(SCREENWIDTH);
-        make.left.equalTo(self.withdrawView.mas_left).offset(0);
-        make.height.mas_offset(0.5);
-    }];
-    
-    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.top.equalTo(self.withdrawView.mas_top).offset(21);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
-    
-    [self.wexinImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(80);
-        make.width.mas_equalTo(@(45/2));
-        make.height.mas_equalTo(@20);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
-    }];
-    
-    [self.weixinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.xiaoluLabel.mas_bottom).offset(40);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.wexinImage.mas_right).offset(23/2);
-    }];
-    
-    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.bottom.equalTo(self.withdrawView.mas_bottom).offset(-22);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
-    /**************/
-    [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(199/2));
-    }];
-    
-    [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawMonryView.mas_top).offset(11);
-        make.left.equalTo(self.withdrawMonryView.mas_left).offset(11);
-        make.width.mas_equalTo(@60);
-        make.height.mas_equalTo(@(37/2));
-    }];
-    
-    [self.oneHunderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.moneyLabel.mas_bottom).offset(13);
-        make.left.equalTo(self.withdrawMonryView.mas_left).offset(102/2);
-        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
-        make.width.equalTo(self.twoHUnderBtn);
-        make.height.mas_equalTo(@(77/2));
-    }];
-    
-    [self.twoHUnderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.oneHunderBtn);
-        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
-        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-102/2);
-        make.width.equalTo(self.oneHunderBtn);
-        make.height.mas_equalTo(@(77/2));
-    }];
-    
-    /***************/
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(590/2));
-    }];
-    
-    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(10);
-        make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@19);
-    }];
-    
-    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
-        make.left.equalTo(self.bottomView.mas_left).offset(15);
-        make.width.mas_equalTo(SCREENWIDTH - 30);
-        make.height.mas_equalTo(@(79/2));
-    }];
-    
-}
 
-//- (void)xiaoluBtnClick:(UIButton *)sender {
-//    
-////    ((UIButton *)[self.buttonArray objectAtIndex:0]).selected = NO;
-//    
-//    if (sender != _xiaoluButton) {
-//        _xiaoluButton.selected = NO;
-//        _xiaoluButton = sender;
-//    }
-//    if (_xiaoluButton.selected) {
-//        _wexinButton.selected = NO;
-//    }
-//    
-//}
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -538,12 +386,8 @@
   
     
     [self createRightButonItem];
+
     
-//    if (((_oneHunderBtn.selected = YES)|(_twoHUnderBtn.selected = YES))&&((_xiaoluButton.selected = YES)|(_wexinButton.selected = YES))) {
-//        [self enableSureButton];
-//    }else {
-//        [self disableSiureButton];
-//    }
 }
 
 - (void) createRightButonItem{
@@ -660,8 +504,17 @@
         }];
     }else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSString *str = @"cashout_amount";
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget%@", Root_URL,str];
+        ////http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=100
+        NSInteger numMoney = 0;
+        if (_oneHunderBtn.selected == YES) {
+            numMoney = 100;
+        }else {
+            numMoney = 200;
+        }
+        
+        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,numMoney];
+        
+        
         
 //        NSDictionary *paramters = @{@"choice":@"cashout_amount"};
         
@@ -697,11 +550,167 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 //- (IBAction)fabuClicked:(id)sender {
 // //   NSLog(@"发布产品");
 //    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
 //    [self.navigationController pushViewController:publish animated:YES];
 //}
-
+- (void)createAutolayouts {
+    
+    [self.myBlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(64);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
+    
+    [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@30);
+    }];
+    
+    [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
+        make.left.equalTo(self.myBlanceView.mas_left).offset(11);
+        make.width.mas_equalTo(@70);
+        make.height.mas_equalTo(@(43/2));
+    }];
+    
+    [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
+        make.left.equalTo(self.blanceLabel.mas_right).offset(5);
+        make.width.mas_equalTo(@300);
+        make.height.mas_equalTo(@19);
+    }];
+    
+    /**********/
+    [self.withdrawView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blanceBottomView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@120);
+    }];
+    
+    [self.xiaoluImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(43/2);
+        make.width.mas_equalTo(@(43/2));
+        make.height.mas_equalTo(@16);
+        make.left.equalTo(self.withdrawView.mas_left).offset(11);
+    }];
+    
+    
+    
+    [self.xiaoluLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        //        make.centerX.equalTo(self.xiaoluImage.mas_centerX);
+        make.top.equalTo(self.withdrawView.mas_top).offset(45/2);
+        make.height.mas_equalTo(@21);
+        make.width.mas_equalTo(@198);
+        make.left.equalTo(self.xiaoluImage.mas_right).offset(23/2);
+    }];
+    
+    [self.firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(60);
+        make.width.mas_offset(SCREENWIDTH);
+        make.left.equalTo(self.withdrawView.mas_left).offset(0);
+        make.height.mas_offset(0.5);
+    }];
+    
+    [self.secondLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.firstLine.mas_top).offset(60);
+        make.width.mas_offset(SCREENWIDTH);
+        make.left.equalTo(self.withdrawView.mas_left).offset(0);
+        make.height.mas_offset(0.5);
+    }];
+    
+    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@17);
+        make.top.equalTo(self.withdrawView.mas_top).offset(21);
+        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
+    }];
+    
+    [self.wexinImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(80);
+        make.width.mas_equalTo(@(45/2));
+        make.height.mas_equalTo(@20);
+        make.left.equalTo(self.withdrawView.mas_left).offset(11);
+    }];
+    
+    [self.weixinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.xiaoluLabel.mas_bottom).offset(40);
+        make.height.mas_equalTo(@21);
+        make.width.mas_equalTo(@198);
+        make.left.equalTo(self.wexinImage.mas_right).offset(23/2);
+    }];
+    
+    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@17);
+        make.bottom.equalTo(self.withdrawView.mas_bottom).offset(-22);
+        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
+    }];
+    /**************/
+    [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@(199/2));
+    }];
+    
+    [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawMonryView.mas_top).offset(11);
+        make.left.equalTo(self.withdrawMonryView.mas_left).offset(11);
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@(37/2));
+    }];
+    
+    [self.oneHunderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.moneyLabel.mas_bottom).offset(13);
+        make.left.equalTo(self.withdrawMonryView.mas_left).offset(102/2);
+        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
+        make.width.equalTo(self.twoHUnderBtn);
+        make.height.mas_equalTo(@(77/2));
+    }];
+    
+    [self.twoHUnderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.oneHunderBtn);
+        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
+        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-102/2);
+        make.width.equalTo(self.oneHunderBtn);
+        make.height.mas_equalTo(@(77/2));
+    }];
+    
+    /***************/
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@(590/2));
+    }];
+    
+    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bottomView.mas_top).offset(10);
+        make.centerX.equalTo(self.bottomView.mas_centerX);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@19);
+    }];
+    
+    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
+        make.left.equalTo(self.bottomView.mas_left).offset(15);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
+        make.height.mas_equalTo(@(79/2));
+    }];
+    
+}
 
 @end

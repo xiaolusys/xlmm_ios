@@ -126,24 +126,6 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homepage.png" translatesAutoresizingMaskIntoConstraints="NO" id="jaY-1k-U8x">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="220" id="TRE-Z3-9EQ">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="240"/>
-                                        </constraint>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="TRE-Z3-9EQ"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="TRE-Z3-9EQ"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mamaheader.png" translatesAutoresizingMaskIntoConstraints="NO" id="ot8-iA-7G8">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <constraints>
@@ -324,6 +306,24 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homepage.png" translatesAutoresizingMaskIntoConstraints="NO" id="jaY-1k-U8x">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="220" id="TRE-Z3-9EQ">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="240"/>
+                                        </constraint>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="TRE-Z3-9EQ"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="TRE-Z3-9EQ"/>
+                                        </mask>
+                                    </variation>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -367,12 +367,12 @@
                                     <exclude reference="Q51-Vc-n5R"/>
                                     <exclude reference="4ID-ID-LFF"/>
                                     <exclude reference="GZr-sR-GCP"/>
-                                    <exclude reference="jaY-1k-U8x"/>
                                     <exclude reference="ot8-iA-7G8"/>
                                     <exclude reference="H0I-Lv-C9x"/>
                                     <exclude reference="4Pk-XS-lZQ"/>
                                     <exclude reference="OFp-hq-wTR"/>
                                     <exclude reference="HyZ-gn-fx5"/>
+                                    <exclude reference="jaY-1k-U8x"/>
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="bOj-HD-mE8"/>
@@ -404,12 +404,12 @@
                                     <include reference="Q51-Vc-n5R"/>
                                     <include reference="4ID-ID-LFF"/>
                                     <include reference="GZr-sR-GCP"/>
-                                    <include reference="jaY-1k-U8x"/>
                                     <include reference="ot8-iA-7G8"/>
                                     <include reference="H0I-Lv-C9x"/>
                                     <include reference="4Pk-XS-lZQ"/>
                                     <include reference="OFp-hq-wTR"/>
                                     <include reference="HyZ-gn-fx5"/>
+                                    <include reference="jaY-1k-U8x"/>
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="bOj-HD-mE8"/>
