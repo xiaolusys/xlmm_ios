@@ -344,6 +344,9 @@
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
+
+
+
 - (IBAction)verifyMessageClicked:(id)sender {
     
 //    NSLog(@"短信验证");
