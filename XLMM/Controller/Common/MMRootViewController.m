@@ -1305,7 +1305,7 @@ static NSString *kbrandCell = @"brandCell";
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
     
-    if((currentArr == nil) || (currentArr.count == 0))
+    if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
         return;
     
     PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
