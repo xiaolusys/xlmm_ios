@@ -206,7 +206,7 @@
                                                 </constraint>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -259,24 +259,23 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="bXF-KN-PXD"/>
+                                            <exclude reference="L4W-QM-BFL"/>
                                             <exclude reference="1y1-oQ-7YJ"/>
                                             <exclude reference="PVk-iN-aiF"/>
                                             <exclude reference="qf6-Um-KGt"/>
-                                            <exclude reference="L4W-QM-BFL"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="45"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="8MC-MB-gmD"/>
                                             <include reference="Dod-mb-1hx"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="bXF-KN-PXD"/>
+                                            <include reference="L4W-QM-BFL"/>
                                             <include reference="1y1-oQ-7YJ"/>
                                             <include reference="PVk-iN-aiF"/>
                                             <include reference="qf6-Um-KGt"/>
-                                            <include reference="L4W-QM-BFL"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -285,9 +284,6 @@
                                     <subviews>
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I6e-uj-dlA">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="178"/>
-                                            </variation>
                                         </scrollView>
                                     </subviews>
                                     <constraints>
@@ -307,8 +303,7 @@
                                             <exclude reference="qgf-Py-O5a"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="80" width="320" height="178"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="I6e-uj-dlA"/>
                                         </mask>
@@ -331,9 +326,6 @@
                                                     <state key="normal" title="昨日热卖">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="107" height="35"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="yestdayBtnClick:" destination="-1" eventType="touchUpInside" id="XNm-kY-Ye5"/>
                                                     </connections>
@@ -357,8 +349,7 @@
                                                     <exclude reference="zbG-65-dpd"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="0.0" y="0.0" width="107" height="35"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="CwS-G5-jfp"/>
                                                 </mask>
@@ -378,9 +369,6 @@
                                                     <state key="normal" title="即将上新">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="110" height="35"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="tomottowBtnClick:" destination="-1" eventType="touchUpInside" id="OrJ-sO-BD8"/>
                                                     </connections>
@@ -406,8 +394,7 @@
                                                     <exclude reference="uFv-0i-rlH"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="213" y="0.0" width="109" height="35"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="JDe-GA-zjc"/>
                                                 </mask>
@@ -427,9 +414,6 @@
                                                     <state key="normal" title="今日特卖">
                                                         <color key="titleColor" red="1" green="0.6422855063031665" blue="0.075043985505840238" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="107" height="35"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="todayBtnClick:" destination="-1" eventType="touchUpInside" id="uIL-vx-8A2"/>
                                                     </connections>
@@ -453,8 +437,7 @@
                                                     <exclude reference="qov-xP-aFr"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="106" y="0.0" width="107" height="35"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="26f-cK-s0c"/>
                                                 </mask>
@@ -508,8 +491,7 @@
                                             <exclude reference="yZt-vZ-56d"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="3vK-2C-Hh8"/>
                                             <include reference="45C-tJ-E47"/>
@@ -543,8 +525,7 @@
                                             <exclude reference="iNq-KP-YPR"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="1"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="constraints">
                                             <include reference="iNq-KP-YPR"/>
                                         </mask>
@@ -578,19 +559,19 @@
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="SjI-0e-IFJ"/>
-                                    <exclude reference="KuA-p7-5YS"/>
-                                    <exclude reference="X2a-oi-bcM"/>
-                                    <exclude reference="lL8-Ai-5bm"/>
                                     <exclude reference="4L0-hn-tcO"/>
                                     <exclude reference="ce0-dw-oIl"/>
                                     <exclude reference="miu-us-aw0"/>
-                                    <exclude reference="cbS-7c-U9G"/>
-                                    <exclude reference="nm1-P7-fKn"/>
-                                    <exclude reference="o1U-0t-vb6"/>
                                     <exclude reference="RBn-XA-8Ph"/>
                                     <exclude reference="dnv-jI-Ja1"/>
                                     <exclude reference="sFe-OL-ghx"/>
                                     <exclude reference="zf8-IK-NjP"/>
+                                    <exclude reference="cbS-7c-U9G"/>
+                                    <exclude reference="nm1-P7-fKn"/>
+                                    <exclude reference="o1U-0t-vb6"/>
+                                    <exclude reference="KuA-p7-5YS"/>
+                                    <exclude reference="X2a-oi-bcM"/>
+                                    <exclude reference="lL8-Ai-5bm"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
@@ -602,19 +583,19 @@
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="SjI-0e-IFJ"/>
-                                    <include reference="KuA-p7-5YS"/>
-                                    <include reference="X2a-oi-bcM"/>
-                                    <include reference="lL8-Ai-5bm"/>
                                     <include reference="4L0-hn-tcO"/>
                                     <include reference="ce0-dw-oIl"/>
                                     <include reference="miu-us-aw0"/>
-                                    <include reference="cbS-7c-U9G"/>
-                                    <include reference="nm1-P7-fKn"/>
-                                    <include reference="o1U-0t-vb6"/>
                                     <include reference="RBn-XA-8Ph"/>
                                     <include reference="dnv-jI-Ja1"/>
                                     <include reference="sFe-OL-ghx"/>
                                     <include reference="zf8-IK-NjP"/>
+                                    <include reference="cbS-7c-U9G"/>
+                                    <include reference="nm1-P7-fKn"/>
+                                    <include reference="o1U-0t-vb6"/>
+                                    <include reference="KuA-p7-5YS"/>
+                                    <include reference="X2a-oi-bcM"/>
+                                    <include reference="lL8-Ai-5bm"/>
                                 </mask>
                             </variation>
                         </view>
