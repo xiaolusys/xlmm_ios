@@ -63,9 +63,9 @@
 
 @property (nonatomic,strong) UILabel *setUpTimeValueLabel;
 
-@property (nonatomic,strong) UILabel *orderlIDLabel;
-
-@property (nonatomic,strong) UILabel *orderlIDValueLabel;
+//@property (nonatomic,strong) UILabel *orderlIDLabel;
+//
+//@property (nonatomic,strong) UILabel *orderlIDValueLabel;
 
 @property (nonatomic,strong) UILabel *balanceLabel;
 
@@ -384,16 +384,16 @@
     self.setUpTimeValueLabel = setUpTimeValueLabel;
     setUpTimeValueLabel.font = [UIFont systemFontOfSize:12.];
 
-    UILabel *orderlIDLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:orderlIDLabel];
-    self.orderlIDLabel = orderlIDLabel;
-    orderlIDLabel.text = @"交 易 单 号:";
-    orderlIDLabel.font = [UIFont systemFontOfSize:12.];
+//    UILabel *orderlIDLabel = [[UILabel alloc] init];
+//    [self.bottomView addSubview:orderlIDLabel];
+//    self.orderlIDLabel = orderlIDLabel;
+//    orderlIDLabel.text = @"交 易 单 号:";
+//    orderlIDLabel.font = [UIFont systemFontOfSize:12.];
 
-    UILabel *orderlIDValueLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:orderlIDValueLabel];
-    self.orderlIDValueLabel = orderlIDValueLabel;
-    orderlIDValueLabel.font = [UIFont systemFontOfSize:12.];
+//    UILabel *orderlIDValueLabel = [[UILabel alloc] init];
+//    [self.bottomView addSubview:orderlIDValueLabel];
+//    self.orderlIDValueLabel = orderlIDValueLabel;
+//    orderlIDValueLabel.font = [UIFont systemFontOfSize:12.];
 
     UILabel *balanceLabel = [[UILabel alloc] init];
     [self.bottomView addSubview:balanceLabel];
@@ -567,30 +567,30 @@
         make.width.mas_equalTo(SCREENWIDTH - 110);
         make.height.mas_equalTo(@14);
     }];
-    
-    [self.orderlIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountLabel.mas_left);
-        make.width.mas_equalTo(@84);
-        make.height.mas_equalTo(@14);
-    }];
-    
-    [self.orderlIDValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
-        make.width.mas_equalTo(SCREENWIDTH - 110);
-        make.height.mas_equalTo(@14);
-    }];
-    
+//    
+//    [self.orderlIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
+//        make.left.equalTo(self.withdrawToAccountLabel.mas_left);
+//        make.width.mas_equalTo(@84);
+//        make.height.mas_equalTo(@14);
+//    }];
+//    
+//    [self.orderlIDValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
+//        make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
+//        make.width.mas_equalTo(SCREENWIDTH - 110);
+//        make.height.mas_equalTo(@14);
+//    }];
+//    
     [self.balanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.orderlIDLabel.mas_bottom).offset(20);
+        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
         make.left.equalTo(self.withdrawToAccountLabel.mas_left);
         make.width.mas_equalTo(@84);
         make.height.mas_equalTo(@14);
     }];
     
     [self.balanceValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.orderlIDLabel.mas_bottom).offset(20);
+        make.top.equalTo(self.setUpTimeLabel.mas_bottom).offset(20);
         make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
         make.width.mas_equalTo(SCREENWIDTH - 110);
         make.height.mas_equalTo(@14);
