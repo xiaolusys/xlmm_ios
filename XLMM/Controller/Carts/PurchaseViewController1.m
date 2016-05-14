@@ -407,6 +407,8 @@
 }
 
 - (void)fetchedAddressData:(NSData *)data{
+    if(data == nil) return;
+    
     NSError *error = nil;
     
     NSArray *addressArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];

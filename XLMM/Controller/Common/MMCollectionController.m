@@ -117,7 +117,7 @@
 
 - (void)fetchedCollectionData:(NSData *)data{
     if (data == nil) {
-      
+        return;
     }
     NSError *error = nil;
     NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -130,6 +130,7 @@
      [self.dataArray addObject:model];
     }
     
+    if(self.dataArray.count ==0) return;
     CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
     offSheltTime = tempModel.offShelfTime;
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
