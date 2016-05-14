@@ -12,7 +12,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "TuihuoModel.h"
 #import "WuliuCompanyController.h"
-
+#import "SVProgressHUD.h"
 
 
 @interface FillWuliuController ()<UITextFieldDelegate, UIAlertViewDelegate>
@@ -103,6 +103,15 @@
 
 - (IBAction)commitButtonClicked:(id)sender {
     NSLog(@"提交。。。。");
+    if([self.companyTextField.text isEqualToString:@""]){
+        [SVProgressHUD showErrorWithStatus:@"请填写快递公司信息"];
+        return;
+    }
+    
+    if([[self.danhaoTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+        [SVProgressHUD showErrorWithStatus:@"请填写快递单号信息"];
+        return;
+    }
     
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要退吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alterView.tag = 1234;
@@ -149,8 +158,8 @@
                       NSLog(@"Error: %@", error);
                       NSLog(@"erro = %@\n%@", error.userInfo, error.description);
                       NSLog(@"perration = %@", operation);
-                      
-                      
+
+                      [SVProgressHUD showErrorWithStatus:@"退货失败，请检查网络后重试！"];
                   }];
         }
 
