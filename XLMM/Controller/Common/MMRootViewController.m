@@ -392,6 +392,13 @@ static NSString *kbrandCell = @"brandCell";
 {
     NSLog(@"viewWillAppear");
     [super viewWillAppear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    
     UIView *cartView = [_view viewWithTag:123];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 64;
@@ -420,6 +427,8 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
 }
@@ -515,6 +524,12 @@ static NSString *kbrandCell = @"brandCell";
 //    self.goodsView.backgroundColor = [UIColor redColor];
 //    self.aboveView.backgroundColor = [UIColor yellowColor];
     
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    //进入前台时调用此函数
+    NSLog(@"Rootview enter foreground");
 }
 
 - (void)createRequestURL {

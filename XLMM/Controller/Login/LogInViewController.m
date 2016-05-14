@@ -262,6 +262,7 @@
 
     [manager POST:TPasswordLogin_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [SVProgressHUD dismiss];
               
               if ([[responseObject objectForKey:@"rcode"] integerValue] != 0){
                   [self alertMessage:[responseObject objectForKey:@"msg"]];
@@ -288,6 +289,7 @@
               
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
+              [SVProgressHUD dismiss];
           }];
 }
 
