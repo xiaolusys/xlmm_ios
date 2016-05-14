@@ -42,6 +42,24 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkd-Tf-mwI" userLabel="hheadView">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homepage.png" translatesAutoresizingMaskIntoConstraints="NO" id="jaY-1k-U8x">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="220" id="TRE-Z3-9EQ">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="240"/>
+                                        </constraint>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="TRE-Z3-9EQ"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="TRE-Z3-9EQ"/>
+                                        </mask>
+                                    </variation>
+                                </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q51-Vc-n5R">
                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -102,7 +120,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZr-sR-GCP" userLabel="fensiView">
+                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZr-sR-GCP" userLabel="fensiView">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -306,24 +324,6 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homepage.png" translatesAutoresizingMaskIntoConstraints="NO" id="jaY-1k-U8x">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="220" id="TRE-Z3-9EQ">
-                                            <variation key="heightClass=regular-widthClass=compact" constant="240"/>
-                                        </constraint>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="TRE-Z3-9EQ"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="TRE-Z3-9EQ"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -364,6 +364,7 @@
                             </constraints>
                             <variation key="default">
                                 <mask key="subviews">
+                                    <exclude reference="jaY-1k-U8x"/>
                                     <exclude reference="Q51-Vc-n5R"/>
                                     <exclude reference="4ID-ID-LFF"/>
                                     <exclude reference="GZr-sR-GCP"/>
@@ -372,7 +373,6 @@
                                     <exclude reference="4Pk-XS-lZQ"/>
                                     <exclude reference="OFp-hq-wTR"/>
                                     <exclude reference="HyZ-gn-fx5"/>
-                                    <exclude reference="jaY-1k-U8x"/>
                                 </mask>
                                 <mask key="constraints">
                                     <exclude reference="bOj-HD-mE8"/>
@@ -401,6 +401,7 @@
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="subviews">
+                                    <include reference="jaY-1k-U8x"/>
                                     <include reference="Q51-Vc-n5R"/>
                                     <include reference="4ID-ID-LFF"/>
                                     <include reference="GZr-sR-GCP"/>
@@ -409,7 +410,6 @@
                                     <include reference="4Pk-XS-lZQ"/>
                                     <include reference="OFp-hq-wTR"/>
                                     <include reference="HyZ-gn-fx5"/>
-                                    <include reference="jaY-1k-U8x"/>
                                 </mask>
                                 <mask key="constraints">
                                     <include reference="bOj-HD-mE8"/>
@@ -1911,7 +1911,7 @@
                     <include reference="qBP-L7-puV"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-58" y="-59"/>
+            <point key="canvasLocation" x="-268" y="-227"/>
         </view>
     </objects>
     <resources>

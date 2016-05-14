@@ -52,7 +52,7 @@
 @property (nonatomic,strong) UILabel *activeLabel;
 @property (nonatomic,strong) UIButton *sureButton;
 
-@property (nonatomic,assign) NSInteger numValue;
+//@property (nonatomic,assign) NSInteger numValue;
 
 @property (nonatomic,strong) NSMutableArray *buttonArray;
 
@@ -67,10 +67,13 @@
     BOOL ishongbao2Opened;
     NSString *type;
     NSString *walletType;
-    float zhanghuyue;
+//    float zhanghuyue;
     float tixianjine;
+    float activeNum;
     BOOL isXiaolupened;
     BOOL isWeixinpend;
+    
+    NSInteger _active;
     
 }
 - (NSMutableArray *)buttonArray {
@@ -78,6 +81,12 @@
         _buttonArray = [NSMutableArray array];
     }
     return _buttonArray;
+}
+
+
+- (void)setCantixianjine:(float)cantixianjine {
+    
+    _cantixianjine = cantixianjine;
 }
 
 /*
@@ -113,26 +122,37 @@
     self.blanceLabel.font = [UIFont systemFontOfSize:14.];
     self.blanceLabel.text = @"我的余额：";
     
-    zhanghuyue = self.cantixianjine;
+//    zhanghuyue = self.cantixianjine;
     UILabel *blanceMoneyLabel = [[UILabel alloc] init];
     [self.myBlanceView addSubview:blanceMoneyLabel];
     self.blanceMoneyLabel = blanceMoneyLabel;
-    self.blanceMoneyLabel.font = [UIFont systemFontOfSize:13.];
-    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",zhanghuyue];
+    self.blanceMoneyLabel.font = [UIFont systemFontOfSize:12.];
+    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_cantixianjine];
     
     /*
         判断
      */
-    if (zhanghuyue < 100) {
-        self.bottomView.hidden = NO;
-    }else {
-        self.bottomView.hidden = YES;
+    if (_cantixianjine < 100) {
         
-        if (zhanghuyue >= 200) {
+        self.bottomView.hidden = YES;
+        _oneHunderBtn.enabled = NO;
+        
+    }else if (_cantixianjine < 200 && _cantixianjine >=100) {
+        
+        self.bottomView.hidden = NO;
+        
+//        if (_cantixianjine < 200 && _cantixianjine >=100) {
+        
+            _twoHUnderBtn.enabled = NO;
+
             
-        }else {
-            _twoHUnderBtn.selected = NO;
-        }
+//        }else {
+//            
+//        
+//        }
+//        
+    }else {
+        
         
     }
     
@@ -202,7 +222,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     [self.withdrawMonryView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
-    self.moneyLabel.text = @"提现金额";
+    self.moneyLabel.text = @"提现金额:";
     self.moneyLabel.font = [UIFont systemFontOfSize:11.];
     
     UIButton *oneHunderBtn = [[UIButton alloc] init];
@@ -211,7 +231,7 @@
     oneHunderBtn.tag = 100;
     [oneHunderBtn addTarget:self action:@selector(withdrawMoneyClick:) forControlEvents:UIControlEventTouchUpInside];
 //    _oneHunderBtn.selected = YES;
-    [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_normal"] forState:UIControlStateNormal];
+    [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_nomal"] forState:UIControlStateNormal];
     [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_selected"] forState:UIControlStateSelected];
     
     UIButton *twoHUnderBtn = [[UIButton alloc] init];
@@ -220,7 +240,7 @@
     twoHUnderBtn.tag = 101;
     [twoHUnderBtn addTarget:self action:@selector(withdrawMoneyClick:) forControlEvents:UIControlEventTouchUpInside];
     [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_normal"] forState:UIControlStateNormal];
-    [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_selected"] forState:UIControlStateSelected];
+    [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_selected"] forState:UIControlStateSelected];
     
     
 
@@ -236,16 +256,34 @@
     [self.bottomView addSubview:activeLabel];
     self.activeLabel = activeLabel;
     self.activeLabel.font = [UIFont systemFontOfSize:11.];
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗10点活跃值，剩余%ld点活跃值",_numValue];
+    
+//    activeNum = [self.activeValue floatValue];
+    
+    _active = 10;
+//    if (_oneHunderBtn.selected == YES) {
+//        activeV = 10;
+//    }else if(_twoHUnderBtn.selected == YES){
+//        activeV = 20;
+//    }else {
+//    
+//    }
+    
+//    _oneHunderBtn.selected = 1 ? 10 : 20;
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",_active,_activeValue];
     self.activeLabel.textAlignment = NSTextAlignmentCenter;
     
     UIButton *sureButton = [[UIButton alloc] init];
     [self.bottomView addSubview:sureButton];
     self.sureButton = sureButton;
     [sureButton addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [sureButton setBackgroundImage:[UIImage imageNamed:@"success_Withdraw"] forState:UIControlStateNormal];
+    [sureButton setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
+    [sureButton setTitle:@"确认提现" forState:UIControlStateNormal];
     
-    sureButton.enabled = NO;//(_isSelecterMoney  && _isSelecterPay );
+    sureButton.enabled = NO;
+    
+    
+    
+    //(_isSelecterMoney  && _isSelecterPay );
     
 //    self.sureButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
 //    self.sureButton.layer.borderColor = [UIColor  buttonEnabledBorderColor].CGColor;
@@ -264,8 +302,13 @@
 //    sureButton.enabled = (_isSelecterMoney == YES && _isSelecterPay == YES);
     
 }
+- (void)setActiveValue:(NSInteger)activeValue {
+    _activeValue = activeValue;
+}
+
 #pragma mark ---   选择提现金额按钮点击事件
 - (void)withdrawMoneyClick:(UIButton *)button {
+    
     
     
     
@@ -277,6 +320,7 @@
 //            [self enableTijiaoButton];
                 _oneHunderBtn.selected = YES;
                 _twoHUnderBtn.selected = NO;
+                _active = 10;
             tixianjine = 100;
             if (ishongbao2Opened) {
                 ishongbao2Opened = !ishongbao2Opened;
@@ -299,7 +343,8 @@
 //            [self enableTijiaoButton];
             _twoHUnderBtn.selected = YES;
             _oneHunderBtn.selected = NO;
-            tixianjine = 200.;
+            _active = 20;
+            tixianjine = 200;
             if (ishongbao1Opened) {
                 ishongbao1Opened = !ishongbao1Opened;
                 _oneHunderBtn.selected = NO;
@@ -317,6 +362,8 @@
     
     _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
     
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",_active,_activeValue];
+
 }
 
 #pragma mark --- 选择提现到那个钱包
@@ -393,19 +440,29 @@
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    label.textColor = [UIColor textDarkGrayColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    [rightBtn addSubview:label];
-    label.text = @"提现历史";
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+//    label.textColor = [UIColor textDarkGrayColor];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.textAlignment = NSTextAlignmentRight;
+//    [rightBtn addSubview:label];
+//    label.text = @"提现历史";
+    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)rightClicked:(UIButton *)button{
     NSLog(@"历史提现");
+    
+    
+    
     TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
+    
+    
     
     [self.navigationController pushViewController:historyVC animated:YES];
     
@@ -488,6 +545,10 @@
             if (code == 0) {
                 TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
                 vc.tixianjine = tixianjine;
+                vc.activeValueNum = _activeValue;
+                
+                vc.surplusMoney = _cantixianjine;
+                
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (code == 1){
                 [self alterMessage:@"参数错误"];
@@ -512,7 +573,7 @@
             numMoney = 200;
         }
         
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,numMoney];
+        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
         
         
         
@@ -524,6 +585,10 @@
             if (code == 0) {
                 TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
                 vc.tixianjine = tixianjine;
+                
+                vc.surplusMoney = _cantixianjine;
+                vc.activeValueNum = _activeValue;
+                
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (code == 1){
                 [self alterMessage:@"参数错误"];
@@ -663,7 +728,8 @@
         make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(199/2));
+        make.bottom.equalTo(self.oneHunderBtn.mas_bottom).offset(20);
+//        make.height.mas_equalTo(@(199/2));
     }];
     
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -705,7 +771,7 @@
     }];
     
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(35);
         make.left.equalTo(self.bottomView.mas_left).offset(15);
         make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(@(79/2));

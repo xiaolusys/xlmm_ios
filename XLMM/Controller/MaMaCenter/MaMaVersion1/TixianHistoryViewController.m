@@ -56,6 +56,21 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [self createTableView];
     
     [self downloadData];
+    
+    
+    /*
+     使用通知传递数据
+     */
+    
+//    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:model.created,@"createdTime",model.status,@"status", nil];
+    
+//    NSNotification *notification = [NSNotification notificationWithName:@"withdrawTZ" object:nil userInfo:dic];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotification:notification];
+//    
+//    
+    
+    
 }
 
 - (void)downloadData{
@@ -144,7 +159,10 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
+    
+    
     [cell fillModel:model];
+    
     
     
     return cell;

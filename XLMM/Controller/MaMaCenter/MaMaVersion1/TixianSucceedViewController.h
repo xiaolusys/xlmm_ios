@@ -17,4 +17,11 @@
 @property (assign, nonatomic) float tixianjine;
 //- (IBAction)fabuClicked:(id)sender;
 
+@property (nonatomic,assign) float activeNum;
+
+//剩余金额
+@property (nonatomic,assign) float surplusMoney;
+//剩余活跃值
+@property (nonatomic,assign) NSInteger activeValueNum;
+
 @end
