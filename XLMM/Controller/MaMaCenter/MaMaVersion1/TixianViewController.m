@@ -52,10 +52,13 @@
 @property (nonatomic,strong) UILabel *activeLabel;
 @property (nonatomic,strong) UIButton *sureButton;
 
-@property (nonatomic,assign) NSInteger numValue;
+//@property (nonatomic,assign) NSInteger numValue;
 
 @property (nonatomic,strong) NSMutableArray *buttonArray;
 
+@property (nonatomic,assign) BOOL isSelecterMoney;
+
+@property (nonatomic,assign) BOOL isSelecterPay;
 
 @end
 
@@ -64,18 +67,26 @@
     BOOL ishongbao2Opened;
     NSString *type;
     NSString *walletType;
-    float zhanghuyue;
+//    float zhanghuyue;
     float tixianjine;
-    
-    
+    float activeNum;
     BOOL isXiaolupened;
     BOOL isWeixinpend;
+    
+    NSInteger _active;
+    
 }
 - (NSMutableArray *)buttonArray {
     if (_buttonArray == nil) {
         _buttonArray = [NSMutableArray array];
     }
     return _buttonArray;
+}
+
+
+- (void)setCantixianjine:(float)cantixianjine {
+    
+    _cantixianjine = cantixianjine;
 }
 
 /*
@@ -111,26 +122,37 @@
     self.blanceLabel.font = [UIFont systemFontOfSize:14.];
     self.blanceLabel.text = @"我的余额：";
     
-    zhanghuyue = self.cantixianjine;
+//    zhanghuyue = self.cantixianjine;
     UILabel *blanceMoneyLabel = [[UILabel alloc] init];
     [self.myBlanceView addSubview:blanceMoneyLabel];
     self.blanceMoneyLabel = blanceMoneyLabel;
-    self.blanceMoneyLabel.font = [UIFont systemFontOfSize:13.];
-    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",zhanghuyue];
+    self.blanceMoneyLabel.font = [UIFont systemFontOfSize:12.];
+    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_cantixianjine];
     
     /*
         判断
      */
-    if (zhanghuyue < 100) {
-        self.bottomView.hidden = NO;
-    }else {
-        self.bottomView.hidden = YES;
+    if (_cantixianjine < 100) {
         
-        if (zhanghuyue >= 200) {
+        self.bottomView.hidden = YES;
+        _oneHunderBtn.enabled = NO;
+        
+    }else if (_cantixianjine < 200 && _cantixianjine >=100) {
+        
+        self.bottomView.hidden = NO;
+        
+//        if (_cantixianjine < 200 && _cantixianjine >=100) {
+        
+            _twoHUnderBtn.enabled = NO;
+
             
-        }else {
-            _twoHUnderBtn.selected = NO;
-        }
+//        }else {
+//            
+//        
+//        }
+//        
+    }else {
+        
         
     }
     
@@ -200,7 +222,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     [self.withdrawMonryView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
-    self.moneyLabel.text = @"提现金额";
+    self.moneyLabel.text = @"提现金额:";
     self.moneyLabel.font = [UIFont systemFontOfSize:11.];
     
     UIButton *oneHunderBtn = [[UIButton alloc] init];
@@ -209,7 +231,7 @@
     oneHunderBtn.tag = 100;
     [oneHunderBtn addTarget:self action:@selector(withdrawMoneyClick:) forControlEvents:UIControlEventTouchUpInside];
 //    _oneHunderBtn.selected = YES;
-    [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_normal"] forState:UIControlStateNormal];
+    [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_nomal"] forState:UIControlStateNormal];
     [_oneHunderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_selected"] forState:UIControlStateSelected];
     
     UIButton *twoHUnderBtn = [[UIButton alloc] init];
@@ -218,7 +240,7 @@
     twoHUnderBtn.tag = 101;
     [twoHUnderBtn addTarget:self action:@selector(withdrawMoneyClick:) forControlEvents:UIControlEventTouchUpInside];
     [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_normal"] forState:UIControlStateNormal];
-    [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_one_selected"] forState:UIControlStateSelected];
+    [_twoHUnderBtn setBackgroundImage:[UIImage imageNamed:@"chose_withdraw_two_selected"] forState:UIControlStateSelected];
     
     
 
@@ -234,14 +256,35 @@
     [self.bottomView addSubview:activeLabel];
     self.activeLabel = activeLabel;
     self.activeLabel.font = [UIFont systemFontOfSize:11.];
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗10点活跃值，剩余%ld点活跃值",_numValue];
+    
+//    activeNum = [self.activeValue floatValue];
+    
+    _active = 10;
+//    if (_oneHunderBtn.selected == YES) {
+//        activeV = 10;
+//    }else if(_twoHUnderBtn.selected == YES){
+//        activeV = 20;
+//    }else {
+//    
+//    }
+    
+//    _oneHunderBtn.selected = 1 ? 10 : 20;
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",_active,_activeValue];
     self.activeLabel.textAlignment = NSTextAlignmentCenter;
     
     UIButton *sureButton = [[UIButton alloc] init];
     [self.bottomView addSubview:sureButton];
     self.sureButton = sureButton;
     [sureButton addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [sureButton setBackgroundImage:[UIImage imageNamed:@"success_Withdraw"] forState:UIControlStateNormal];
+    [sureButton setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
+    [sureButton setTitle:@"确认提现" forState:UIControlStateNormal];
+    
+    sureButton.enabled = NO;
+    
+    
+    
+    //(_isSelecterMoney  && _isSelecterPay );
+    
 //    self.sureButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
 //    self.sureButton.layer.borderColor = [UIColor  buttonEnabledBorderColor].CGColor;
 //    self.sureButton.enabled = NO;
@@ -252,11 +295,21 @@
 //    if ((_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES) && (_xiaoluButton.selected == YES|_wexinButton.selected == YES)) {
 //        self.sureButton.enabled = YES;
 //    }
-//    
+////
+//    _isSelecterMoney = (_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES);
+//    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
+    
+//    sureButton.enabled = (_isSelecterMoney == YES && _isSelecterPay == YES);
     
 }
+- (void)setActiveValue:(NSInteger)activeValue {
+    _activeValue = activeValue;
+}
+
 #pragma mark ---   选择提现金额按钮点击事件
 - (void)withdrawMoneyClick:(UIButton *)button {
+    
+    
     
     
     if (button.tag == 100) {
@@ -267,6 +320,7 @@
 //            [self enableTijiaoButton];
                 _oneHunderBtn.selected = YES;
                 _twoHUnderBtn.selected = NO;
+                _active = 10;
             tixianjine = 100;
             if (ishongbao2Opened) {
                 ishongbao2Opened = !ishongbao2Opened;
@@ -289,7 +343,8 @@
 //            [self enableTijiaoButton];
             _twoHUnderBtn.selected = YES;
             _oneHunderBtn.selected = NO;
-            tixianjine = 200.;
+            _active = 20;
+            tixianjine = 200;
             if (ishongbao1Opened) {
                 ishongbao1Opened = !ishongbao1Opened;
                 _oneHunderBtn.selected = NO;
@@ -303,6 +358,12 @@
         
     }
     
+    _isSelecterMoney = (_oneHunderBtn.selected == YES | _twoHUnderBtn.selected == YES);
+    
+    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
+    
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",_active,_activeValue];
+
 }
 
 #pragma mark --- 选择提现到那个钱包
@@ -350,180 +411,14 @@
         }
         
     }
+    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
     
+    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
 }
 
-- (void)createAutolayouts {
-    
-    [self.myBlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(64);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@60);
-    }];
-    
-    [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@30);
-    }];
-    
-    [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
-        make.left.equalTo(self.myBlanceView.mas_left).offset(11);
-        make.width.mas_equalTo(@70);
-        make.height.mas_equalTo(@(43/2));
-    }];
-    
-    [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
-        make.left.equalTo(self.blanceLabel.mas_right).offset(5);
-        make.width.mas_equalTo(@300);
-        make.height.mas_equalTo(@19);
-    }];
-    
-    /**********/
-    [self.withdrawView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.blanceBottomView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@120);
-    }];
-    
-    [self.xiaoluImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(43/2);
-        make.width.mas_equalTo(@(43/2));
-        make.height.mas_equalTo(@16);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
-    }];
-    
-    
-    
-    [self.xiaoluLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(self.xiaoluImage.mas_centerX);
-        make.top.equalTo(self.withdrawView.mas_top).offset(45/2);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.xiaoluImage.mas_right).offset(23/2);
-    }];
-    
-    [self.firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(60);
-        make.width.mas_offset(SCREENWIDTH);
-        make.left.equalTo(self.withdrawView.mas_left).offset(0);
-        make.height.mas_offset(0.5);
-    }];
-    
-    [self.secondLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.firstLine.mas_top).offset(60);
-        make.width.mas_offset(SCREENWIDTH);
-        make.left.equalTo(self.withdrawView.mas_left).offset(0);
-        make.height.mas_offset(0.5);
-    }];
-    
-    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.top.equalTo(self.withdrawView.mas_top).offset(21);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
-    
-    [self.wexinImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(80);
-        make.width.mas_equalTo(@(45/2));
-        make.height.mas_equalTo(@20);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
-    }];
-    
-    [self.weixinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.xiaoluLabel.mas_bottom).offset(40);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.wexinImage.mas_right).offset(23/2);
-    }];
-    
-    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.bottom.equalTo(self.withdrawView.mas_bottom).offset(-22);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
-    /**************/
-    [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(199/2));
-    }];
-    
-    [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawMonryView.mas_top).offset(11);
-        make.left.equalTo(self.withdrawMonryView.mas_left).offset(11);
-        make.width.mas_equalTo(@60);
-        make.height.mas_equalTo(@(37/2));
-    }];
-    
-    [self.oneHunderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.moneyLabel.mas_bottom).offset(13);
-        make.left.equalTo(self.withdrawMonryView.mas_left).offset(102/2);
-        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
-        make.width.equalTo(self.twoHUnderBtn);
-        make.height.mas_equalTo(@(77/2));
-    }];
-    
-    [self.twoHUnderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.oneHunderBtn);
-        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
-        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-102/2);
-        make.width.equalTo(self.oneHunderBtn);
-        make.height.mas_equalTo(@(77/2));
-    }];
-    
-    /***************/
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(590/2));
-    }];
-    
-    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(10);
-        make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@19);
-    }];
-    
-    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
-        make.left.equalTo(self.bottomView.mas_left).offset(15);
-        make.width.mas_equalTo(SCREENWIDTH - 30);
-        make.height.mas_equalTo(@(79/2));
-    }];
-    
-}
 
-//- (void)xiaoluBtnClick:(UIButton *)sender {
-//    
-////    ((UIButton *)[self.buttonArray objectAtIndex:0]).selected = NO;
-//    
-//    if (sender != _xiaoluButton) {
-//        _xiaoluButton.selected = NO;
-//        _xiaoluButton = sender;
-//    }
-//    if (_xiaoluButton.selected) {
-//        _wexinButton.selected = NO;
-//    }
-//    
-//}
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -538,30 +433,36 @@
   
     
     [self createRightButonItem];
+
     
-//    if (((_oneHunderBtn.selected = YES)|(_twoHUnderBtn.selected = YES))&&((_xiaoluButton.selected = YES)|(_wexinButton.selected = YES))) {
-//        [self enableSureButton];
-//    }else {
-//        [self disableSiureButton];
-//    }
 }
 
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    label.textColor = [UIColor textDarkGrayColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    [rightBtn addSubview:label];
-    label.text = @"提现历史";
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+//    label.textColor = [UIColor textDarkGrayColor];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.textAlignment = NSTextAlignmentRight;
+//    [rightBtn addSubview:label];
+//    label.text = @"提现历史";
+    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)rightClicked:(UIButton *)button{
     NSLog(@"历史提现");
+    
+    
+    
     TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
+    
+    
     
     [self.navigationController pushViewController:historyVC animated:YES];
     
@@ -644,6 +545,10 @@
             if (code == 0) {
                 TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
                 vc.tixianjine = tixianjine;
+                vc.activeValueNum = _activeValue;
+                
+                vc.surplusMoney = _cantixianjine;
+                
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (code == 1){
                 [self alterMessage:@"参数错误"];
@@ -660,8 +565,17 @@
         }];
     }else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSString *str = @"cashout_amount";
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget%@", Root_URL,str];
+        ////http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=100
+        NSInteger numMoney = 0;
+        if (_oneHunderBtn.selected == YES) {
+            numMoney = 100;
+        }else {
+            numMoney = 200;
+        }
+        
+        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
+        
+        
         
 //        NSDictionary *paramters = @{@"choice":@"cashout_amount"};
         
@@ -671,6 +585,10 @@
             if (code == 0) {
                 TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
                 vc.tixianjine = tixianjine;
+                
+                vc.surplusMoney = _cantixianjine;
+                vc.activeValueNum = _activeValue;
+                
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (code == 1){
                 [self alterMessage:@"参数错误"];
@@ -697,11 +615,168 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 //- (IBAction)fabuClicked:(id)sender {
 // //   NSLog(@"发布产品");
 //    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
 //    [self.navigationController pushViewController:publish animated:YES];
 //}
-
+- (void)createAutolayouts {
+    
+    [self.myBlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(64);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
+    
+    [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@30);
+    }];
+    
+    [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
+        make.left.equalTo(self.myBlanceView.mas_left).offset(11);
+        make.width.mas_equalTo(@70);
+        make.height.mas_equalTo(@(43/2));
+    }];
+    
+    [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.myBlanceView.mas_top).offset(45/2);
+        make.left.equalTo(self.blanceLabel.mas_right).offset(5);
+        make.width.mas_equalTo(@300);
+        make.height.mas_equalTo(@19);
+    }];
+    
+    /**********/
+    [self.withdrawView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blanceBottomView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@120);
+    }];
+    
+    [self.xiaoluImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(43/2);
+        make.width.mas_equalTo(@(43/2));
+        make.height.mas_equalTo(@16);
+        make.left.equalTo(self.withdrawView.mas_left).offset(11);
+    }];
+    
+    
+    
+    [self.xiaoluLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        //        make.centerX.equalTo(self.xiaoluImage.mas_centerX);
+        make.top.equalTo(self.withdrawView.mas_top).offset(45/2);
+        make.height.mas_equalTo(@21);
+        make.width.mas_equalTo(@198);
+        make.left.equalTo(self.xiaoluImage.mas_right).offset(23/2);
+    }];
+    
+    [self.firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(60);
+        make.width.mas_offset(SCREENWIDTH);
+        make.left.equalTo(self.withdrawView.mas_left).offset(0);
+        make.height.mas_offset(0.5);
+    }];
+    
+    [self.secondLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.firstLine.mas_top).offset(60);
+        make.width.mas_offset(SCREENWIDTH);
+        make.left.equalTo(self.withdrawView.mas_left).offset(0);
+        make.height.mas_offset(0.5);
+    }];
+    
+    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@17);
+        make.top.equalTo(self.withdrawView.mas_top).offset(21);
+        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
+    }];
+    
+    [self.wexinImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_top).offset(80);
+        make.width.mas_equalTo(@(45/2));
+        make.height.mas_equalTo(@20);
+        make.left.equalTo(self.withdrawView.mas_left).offset(11);
+    }];
+    
+    [self.weixinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.xiaoluLabel.mas_bottom).offset(40);
+        make.height.mas_equalTo(@21);
+        make.width.mas_equalTo(@198);
+        make.left.equalTo(self.wexinImage.mas_right).offset(23/2);
+    }];
+    
+    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@17);
+        make.bottom.equalTo(self.withdrawView.mas_bottom).offset(-22);
+        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
+    }];
+    /**************/
+    [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.bottom.equalTo(self.oneHunderBtn.mas_bottom).offset(20);
+//        make.height.mas_equalTo(@(199/2));
+    }];
+    
+    [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawMonryView.mas_top).offset(11);
+        make.left.equalTo(self.withdrawMonryView.mas_left).offset(11);
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@(37/2));
+    }];
+    
+    [self.oneHunderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.moneyLabel.mas_bottom).offset(13);
+        make.left.equalTo(self.withdrawMonryView.mas_left).offset(102/2);
+        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
+        make.width.equalTo(self.twoHUnderBtn);
+        make.height.mas_equalTo(@(77/2));
+    }];
+    
+    [self.twoHUnderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.oneHunderBtn);
+        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
+        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-102/2);
+        make.width.equalTo(self.oneHunderBtn);
+        make.height.mas_equalTo(@(77/2));
+    }];
+    
+    /***************/
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@(590/2));
+    }];
+    
+    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bottomView.mas_top).offset(10);
+        make.centerX.equalTo(self.bottomView.mas_centerX);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@19);
+    }];
+    
+    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(35);
+        make.left.equalTo(self.bottomView.mas_left).offset(15);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
+        make.height.mas_equalTo(@(79/2));
+    }];
+    
+}
 
 @end

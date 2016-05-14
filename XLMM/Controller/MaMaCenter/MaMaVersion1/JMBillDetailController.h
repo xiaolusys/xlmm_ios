@@ -10,4 +10,10 @@
 
 @interface JMBillDetailController : UIViewController
 
+@property (nonatomic,assign) NSInteger withdrawMoney;
+
+@property (nonatomic,assign) NSInteger surplusMoney;
+
+@property (nonatomic,assign) NSInteger activeValue;
+
 @end

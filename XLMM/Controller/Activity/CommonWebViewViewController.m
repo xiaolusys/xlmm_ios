@@ -42,6 +42,9 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
     [self updateUserAgent];
+    
+    
+    
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -68,6 +71,7 @@
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
 }
 
 

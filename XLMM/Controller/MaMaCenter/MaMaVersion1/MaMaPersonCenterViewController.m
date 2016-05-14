@@ -168,6 +168,8 @@
         
     }];
     
+    
+    
     [self createWeekDay];
     
     
@@ -401,6 +403,8 @@
 - (void)headimageClicked:(UITapGestureRecognizer *)tap{
     TixianViewController *vc = [[TixianViewController alloc] init];
     vc.carryNum = self.carryValue;
+    vc.activeValue = [self.activeValueNum integerValue];
+    
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -895,7 +899,7 @@
         NSArray *arr = responseObject[@"results"];
         if (arr.count == 0)return;
         NSArray *data = [NSArray reverse:arr];
-//        NSArray *data = [NSArray arrayWithObjects:@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00", nil];
+//        NSArray *data = [NSArray arrayWithObjects:@"0.00",@"0.00", @"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00",@"0.00", nil];
         
         //遍历数据如果都为零的时候显示默认图
 //        BOOL have = [self isHaveData:data];

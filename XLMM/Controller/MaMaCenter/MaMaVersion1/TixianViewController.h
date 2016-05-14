@@ -31,4 +31,7 @@
 
 @property (nonatomic, strong)NSNumber *carryNum;
 
+//活跃值
+@property (nonatomic,assign) NSInteger activeValue;
+
 @end

@@ -20,15 +20,16 @@ NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
-//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budget
+//http://m.xiaolumeimei.com/rest/v1/users/budget_cash_out
 
-//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_amount
+//取消提现的接口
+     //http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cancal_cashout
 
 
-//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budgetcashout_amount
+//   http://m.xiaolumeimei.com/rest/v2/mama/activevalue
 
-//http://m.xiaolumeimei.com/rest/v1/pmt/cashout/c1
 
+//妈妈主页接口 http://m.xiaolumeimei.com/rest/v2/mama/fortune
 
 
 #endif

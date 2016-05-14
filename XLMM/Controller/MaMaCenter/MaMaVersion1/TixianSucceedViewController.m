@@ -16,7 +16,9 @@
 
 @interface TixianSucceedViewController ()
 
-
+{
+    NSInteger _numValue;
+}
 /*
     头视图
  */
@@ -31,7 +33,7 @@
 @property (nonatomic,strong) UILabel *activeLabel;
 @property (nonatomic,strong) UIButton *completeBtn;
 
-@property (nonatomic,assign) NSInteger numValue;
+//@property (nonatomic,assign) NSInteger numValue;
 
 @end
 
@@ -56,10 +58,14 @@
 //    self.fabuButton.layer.borderWidth = 1;
 //    self.fabuButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
     if (self.tixianjine == 100) {
-//        self.headImageView.image = [UIImage imageNamed:@"hongbao100.png"];
-    } else if (self.tixianjine == 200){
+        _numValue = 10;
         
+    } else if (self.tixianjine == 200){
+        _numValue = 20;
+    }else {
+    
     }
+    
     
     [self createLayout];
     [self createRightButonItem];
@@ -73,7 +79,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)setActiveNum:(float)activeNum {
+    
+//    activeNum = _activeNum;
+    _activeNum = activeNum;
+}
 
+- (void)setSurplusMoney:(float)surplusMoney {
+    
+    _surplusMoney = surplusMoney;
+    
+}
 #pragma mark -- 布局
 - (void)createLayout {
     UIView *headView = [[UIView alloc] init];
@@ -112,8 +128,12 @@
     [self.bottomView addSubview:activeLabel];
     self.activeLabel = activeLabel;
     self.activeLabel.textAlignment = NSTextAlignmentCenter;
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗10点活跃值，剩余%ld点活跃值",_numValue];
-    self.promptLabel.font = [UIFont systemFontOfSize:13.];
+    self.activeLabel.font = [UIFont systemFontOfSize:12.];
+    
+    
+    
+    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
+    self.promptLabel.font = [UIFont systemFontOfSize:12.];
 
     
     UIButton *completeBtn = [[UIButton alloc] init];
@@ -122,12 +142,14 @@
     [completeBtn setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
     [completeBtn setTitle:@"完成" forState:UIControlStateNormal];
     [completeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [completeBtn addTarget:self action:@selector(finishButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(64);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_offset(SCREENWIDTH);
-        make.height.mas_offset(@(571/2));
+        make.bottom.equalTo(self.promptLabel.mas_bottom).offset(30);
+//        make.height.mas_offset(@(571/2));
     }];
     
     [self.successImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -165,10 +187,11 @@
     }];
     
     [self.completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(41);
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(35);
         make.left.equalTo(self.bottomView.mas_left).offset(15);
         make.width.mas_offset(SCREENWIDTH - 30);
         make.height.mas_offset(40);
+//        make.bottom.equalTo(self.bottomView.mas_bottom).offset(70);
     }];
     
     
@@ -180,25 +203,40 @@
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    label.textColor = [UIColor textDarkGrayColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    [rightBtn addSubview:label];
-    label.text = @"查看详情";
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+//    label.textColor = [UIColor textDarkGrayColor];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.textAlignment = NSTextAlignmentRight;
+//    [rightBtn addSubview:label];
+//    label.text = @"查看详情";
+    [rightBtn setTitle:@"查看详情" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+    
 }
 
 - (void)rightClicked:(UIButton *)button{
 
     JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
     
+    billDetail.withdrawMoney = _surplusMoney;
+    
+    billDetail.activeValue = _activeValueNum;
+    
     [self.navigationController pushViewController:billDetail animated:YES];
     
     
 }
+- (void)setActiveValueNum:(NSInteger)activeValueNum {
+    
+    _activeValueNum = activeValueNum;
 
+}
 /*
 #pragma mark - Navigation
 
@@ -208,6 +246,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)finishButton:(UIButton *)btn {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 
 - (IBAction)fabuClicked:(id)sender {
     
