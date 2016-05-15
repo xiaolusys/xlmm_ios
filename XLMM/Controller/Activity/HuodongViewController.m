@@ -614,8 +614,15 @@
     if(oldAgent == nil) return;
     
     //add my info to the new agent
-    if((oldAgent != nil) && [oldAgent containsString:@"xlmm;"])
-        return;
+    if(oldAgent != nil) {
+
+        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
+        if(range.length == 0)
+        {
+            return;
+        }
+        
+    }
     NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
     NSLog(@"new agent :%@", newAgent);
     
