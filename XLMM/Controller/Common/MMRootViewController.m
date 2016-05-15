@@ -243,20 +243,15 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)updataAfterLogin:(NSNotification *)notification{
   // 微信登录
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    [self loginUpdateIsXiaoluMaMa];
+
+
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
   //  NSLog(@"手机登录");
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    [self loginUpdateIsXiaoluMaMa];
+
 }
 
 - (BOOL)isXiaolumama{
@@ -265,25 +260,61 @@ static NSString *kbrandCell = @"brandCell";
     return isXLMM;
 }
 
-- (BOOL)loginUpdateIsXiaoluMaMa {
+- (void)loginUpdateIsXiaoluMaMa {
+    NSLog(@"loginUpdateIsXiaoluMaMa ");
+    
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        return NO;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:string parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSDictionary *dic = responseObject;
+        if (!responseObject){
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+            return;
+        }
+        
+        NSLog(@"loginUpdateIsXiaoluMaMa %d", [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]);
+
+        if([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+            [self createRightItem];
+            [users setBool:YES forKey:@"isXLMM"];
+
+        }
+        else{
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSLog(@"get user profile failed.");
+        self.navigationItem.rightBarButtonItem = nil;
+        [users setBool:NO forKey:@"isXLMM"];
+    }];
+
+    
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        return NO;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"loginUpdateIsXiaoluMaMa dic = %@", dic);
+//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
 - (void)createRightItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-    [rightBtn addSubview:rightImageView];
-    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    NSLog(@"createRightItem %@ %@", self.navigationItem.rightBarButtonItem , rightItem);
+    if(self.navigationItem.rightBarButtonItem == nil){
+        NSLog(@"createRightItem ");
+        
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+        rightImageView.frame = CGRectMake(18, 11, 26, 26);
+        [rightBtn addSubview:rightImageView];
+        rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
 }
 
 
@@ -1432,6 +1463,8 @@ static NSString *kbrandCell = @"brandCell";
     return array;
 }
 
+#pragma mark 自动登录
+
 - (void)weixinzidongdenglu{
     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
   //  NSLog(@"用户信息 = %@", dic);
@@ -1523,29 +1556,38 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)autologin{
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
-    if ([loginMethon isEqualToString:kWeiXinLogin]) {
-      //  NSLog(@"微信登录");
-        
-        [self weixinzidongdenglu];
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-    } else if ([loginMethon isEqualToString:kPhoneLogin]){
-      
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-        
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
+//    if ([loginMethon isEqualToString:kWeiXinLogin]) {
+//      //  NSLog(@"微信登录");
+//        
+//        [self weixinzidongdenglu];
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//    } else if ([loginMethon isEqualToString:kPhoneLogin]){
+//      
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//        
+//    }
+    
+    NSLog(@"auto login");
+    if ([self isXiaolumama]) {
+        NSLog(@"isXiaolumama");
+        [self createRightItem];
+    } else{
+        NSLog(@"not xiaolumama");
+        self.navigationItem.rightBarButtonItem = nil;
     }
    
 }
@@ -1689,6 +1731,8 @@ static NSString *kbrandCell = @"brandCell";
         view.frame = rect;
         
         label.text = @"0";
+        
+        self.navigationItem.rightBarButtonItem = nil;
         return;
     }
     
