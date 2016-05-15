@@ -843,8 +843,7 @@ static NSString *kbrandCell = @"brandCell";
     [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     [currentArr removeAllObjects];
-    UICollectionView *collection = self.collectionArr[self.currentIndex];
-    [collection reloadData];
+
     [self goodsRequest];
 }
 
@@ -980,6 +979,7 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
     if((nil == url) || ([url isEqualToString:@""])){
         UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
         [collection.mj_footer endRefreshingWithNoMoreData];
         return;
     }
@@ -990,6 +990,8 @@ static NSString *kbrandCell = @"brandCell";
         if (!responseObject)return ;
         [self goodsResult:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
     }];
 }
 
@@ -1323,16 +1325,16 @@ static NSString *kbrandCell = @"brandCell";
     }
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        return CGSizeMake(10, 10);
-
-    }
-    else{
-        return CGSizeMake(SCREENWIDTH, 30);
-    }
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+//    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+//       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+//        return CGSizeMake(10, 10);
+//
+//    }
+//    else{
+//        return CGSizeMake(SCREENWIDTH, 10);
+//    }
+//}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
@@ -1948,7 +1950,7 @@ static NSString *kbrandCell = @"brandCell";
         || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
         && scrollView.dragging){
         if( scrollView.contentOffset.y <= 0) {
-            NSLog(@"today scroll down");
+//            NSLog(@"today scroll down");
             self.backScrollview.scrollEnabled = YES;
             [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
                                       animated:YES];
@@ -1962,7 +1964,7 @@ static NSString *kbrandCell = @"brandCell";
             
         }
         else if( scrollView.contentOffset.y > 0) {
-            NSLog(@"today scroll up");
+//            NSLog(@"today scroll up");
             [UIView animateWithDuration:1 animations:^{
                 self.lefttimeViewHeight.constant = 0;
                 

@@ -88,7 +88,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+
 }
 
 
@@ -144,7 +144,7 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     NSArray *array = [json objectForKey:@"results"];
     nextUrl = [json objectForKey:@"next"];
-    _isupdate = YES;
+    
     if (array.count == 0) {
         return;
     }
@@ -166,6 +166,8 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView insertItemsAtIndexPaths:numArray];
     [numArray removeAllObjects];
     numArray = nil;
+    
+    _isupdate = YES;
 }
 
 
@@ -183,6 +185,7 @@ static NSString * ksimpleCell = @"simpleCell";
     _isupdate = YES;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
+    self.orderDataArray = [[NSMutableArray alloc] init];
 
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
@@ -211,9 +214,9 @@ static NSString * ksimpleCell = @"simpleCell";
     self.childCollectionView.mj_header = header;
     
     //添加上拉加载
-//    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        [self loadMore];
-//    }];
+    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
+    }];
     
     //[self.childCollectionView.mj_header beginRefreshing];
 
@@ -253,12 +256,15 @@ static NSString * ksimpleCell = @"simpleCell";
 //    }
     
     //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
+    [SVProgressHUD show];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self stopHeaderRefresh];
+        [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self fatchedSuggestListData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -286,24 +292,28 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadOrderData{
+    [SVProgressHUD show];
 //    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderListData:)];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.orderUrlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         [self stopHeaderRefresh];
         if (!responseObject)return ;
         [self fatchedOrderListData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
     }];
 }
 
 - (void)fatchedOrderListData:(NSDictionary *)responseData{
     NSLog(@"fatchedOrderListData");
 
-    self.orderDataArray = [[NSMutableArray alloc] init];
     NSDictionary *json = responseData;
     if (json == nil) {
         return;
     }
+    
+    _isupdate = YES;
     
     NSArray *array = [json objectForKey:@"results"];
     nextUrl = [json objectForKey:@"next"];
@@ -316,7 +326,7 @@ static NSString * ksimpleCell = @"simpleCell";
     //[activityIndicator removeFromSuperview];
     //activityIndicator = nil;
     
-    [SVProgressHUD dismiss];
+
     [self.childCollectionView reloadData];
 }
 
@@ -445,7 +455,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //    CGFloat temp = oldScrollViewTop - point.y;
 //
     NSLog(@"contentSize.height=%f y=%fl",scrollView.contentSize.height, scrollView.contentOffset.y );
-    if (scrollView.contentSize.height - scrollView.contentOffset.y < SCREENHEIGHT && _isupdate) {
+    if (scrollView.contentSize.height - scrollView.contentOffset.y < 2 * SCREENHEIGHT && _isupdate) {
             [self loadMore];
             _isupdate = NO;
     }
@@ -499,14 +509,20 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 - (IBAction)btnClicked:(UIButton *)sender {
-    NSLog(@"btnClicked");
+    NSLog(@"btnClicked %ld", (long)self.childCollectionView.visibleCells.count );
     
-    NSIndexPath *bottomIndexPath=[NSIndexPath indexPathForItem:0 inSection:0];
-    [self.childCollectionView scrollToItemAtIndexPath:bottomIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    if(self.childCollectionView.visibleCells.count > 0){
+        NSIndexPath *bottomIndexPath=[NSIndexPath indexPathForItem:0 inSection:0];
+        [self.childCollectionView scrollToItemAtIndexPath:bottomIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
+    
+    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
+    }];
     
     if (sender.tag == 1) {
         isOrder = NO;
-        [SVProgressHUD dismiss];
+        
         
         //[activityIndicator removeFromSuperview];
         //activityIndicator = nil;
@@ -515,14 +531,23 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         //[self downloadData];
         
-        
+        [self.childCollectionView reloadData];
         
     } else if (sender.tag == 2){
         isOrder = YES;
+        
+        if(self.orderDataArray.count > 0){
+           [self.childCollectionView reloadData];
+        }
+        else{
+            [self downloadOrderData];
+        }
+
+        
         [self.tuijianButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
-        [self downloadOrderData];
+
 //        if (activityIndicator == nil) {
 //            activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 //        }
@@ -531,7 +556,6 @@ static NSString * ksimpleCell = @"simpleCell";
 //        [activityIndicator startAnimating];
 //        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2 - 80);
 //        [self.childCollectionView addSubview:activityIndicator];
-        [SVProgressHUD show];
         
         
     }
