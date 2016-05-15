@@ -289,7 +289,8 @@
               
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
-              [SVProgressHUD dismiss];
+              //[SVProgressHUD dismiss];
+              [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
           }];
 }
 
