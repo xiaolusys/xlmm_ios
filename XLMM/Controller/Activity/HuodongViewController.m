@@ -617,7 +617,7 @@
     if(oldAgent != nil) {
 
         NSRange range = [oldAgent rangeOfString:@"xlmm;"];
-        if(range.length == 0)
+        if(range.length > 0)
         {
             return;
         }
