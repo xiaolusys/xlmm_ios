@@ -401,10 +401,21 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CarryLogTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSString *key = self.allkey[indexPath.section];
-    NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
-    NSMutableArray *order = dic[key];
-    CarryLogModel *carryLogM = order[indexPath.row];
+    CarryLogModel *carryLogM = nil;
+    
+    if((self.allkey != nil) && (self.allkey.count > 0) && (self.tableViewDataArr != nil) && self.tableViewDataArr.count > 0){
+    
+        NSString *key = self.allkey[indexPath.section];
+        NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
+        NSMutableArray *order = nil;
+        if((dic != nil) && (dic.count > 0)){
+            order = dic[key];
+            if((order != nil) && (order.count > 0)){
+                carryLogM = order[indexPath.row];
+            }
+        }
+    }
+    
     if (!cell) {
         cell = [[CarryLogTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }

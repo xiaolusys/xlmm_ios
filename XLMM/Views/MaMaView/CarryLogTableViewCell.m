@@ -34,6 +34,8 @@
 
 - (void)fillCarryModel:(CarryLogModel *)carryModel
                   type:(NSInteger)type {
+    if(carryModel == nil) return;
+    
     NSInteger carry_type = [carryModel.carry_type integerValue];
     self.photoImageV.layer.cornerRadius = 22;
     self.photoImageV.layer.masksToBounds = YES;
