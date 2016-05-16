@@ -29,6 +29,13 @@
 #define NSLog(...) {}
 #endif
 
+
+/**
+ *  循环引用
+ */
+#define kWeakSelf __weak typeof (self) weakSelf = self;
+
+
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 #define KTITLENAME @"小鹿美美"

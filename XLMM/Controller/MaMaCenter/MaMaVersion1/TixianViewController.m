@@ -760,7 +760,8 @@
         make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(590/2));
+//        make.height.mas_equalTo(@(590/2));
+        make.bottom.equalTo(self.view.mas_bottom);
     }];
     
     [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

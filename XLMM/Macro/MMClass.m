@@ -32,4 +32,6 @@ NSString *Root_URL = @"http://m.xiaolumeimei.com";
 //妈妈主页接口 http://m.xiaolumeimei.com/rest/v2/mama/fortune
 
 
+//   http://m.xiaolumeimei.com/rest/v1/portal
+
 #endif

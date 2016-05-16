@@ -159,6 +159,14 @@
         [self shareForPlatform:data];
     }];
     
+//    //js调oc方法
+//    [self.bridge registerHandler:@"callNativeLoginActivity" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        
+//        
+//        
+//    }];
+    
+    
     [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
        NSString *device = [self getMobileSNCode];
         responseCallback(device);
