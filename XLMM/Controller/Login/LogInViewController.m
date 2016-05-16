@@ -322,8 +322,7 @@
 
 }
 
--(void) alertMessage:(NSString*)msg
-{
+-(void) alertMessage:(NSString*)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
 }
