@@ -421,7 +421,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 主界面初始化
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"viewWillAppear");
+    NSLog(@"MMRoot viewWillAppear");
     [super viewWillAppear:animated];
     
     UIApplication *app = [UIApplication sharedApplication];
@@ -445,20 +445,25 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    NSLog(@"viewDidAppear");
+    NSLog(@"MMRoot viewDidAppear");
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
     self.backScrollview.delegate = self;
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self autologin];
+    } else {
+        NSLog(@"no login");
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"viewWillDisappear");
+    NSLog(@"MMRoot viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
@@ -473,7 +478,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)viewDidLoad
 {
-    NSLog(@"viewDidLoad");
+    NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
     
     self.timeCount = 0;
@@ -534,11 +539,7 @@ static NSString *kbrandCell = @"brandCell";
     self.backScrollview.mj_header = header;
 
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
+
     
 
 //    
