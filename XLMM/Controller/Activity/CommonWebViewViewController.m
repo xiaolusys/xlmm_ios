@@ -42,6 +42,9 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
     [self updateUserAgent];
+    
+    
+    
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -57,16 +60,26 @@
     //get the original user-agent of webview
     NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);
+    if(oldAgent == nil) return;
     
     //add my info to the new agent
-    if([oldAgent containsString:@"xlmm;"])
-        return;
+    if(oldAgent != nil) {
+        
+        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
+    
     NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
     NSLog(@"new agent :%@", newAgent);
     
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
 }
 
 

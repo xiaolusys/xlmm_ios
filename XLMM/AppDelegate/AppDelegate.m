@@ -93,6 +93,9 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
     
+    [self getServerIP];
+    [self updateLoginState];
+    
     self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self.startV];
@@ -267,17 +270,37 @@
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
-        // 手机登录成功 ，保存用户信息以及登录途径
-        [defaults setBool:YES forKey:kIsLogin];
-        NSLog(@"Still logined");
+        NSDictionary *result = responseObject;
+        if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
+            // 手机登录成功 ，保存用户信息以及登录途径
+            [defaults setBool:YES forKey:kIsLogin];
+            NSLog(@"Still logined");
+        }
+        else{
+            // 手机登录需要 ，保存用户信息以及登录途径
+            [defaults setBool:NO forKey:kIsLogin];
+            NSLog(@"maybe cookie timeout,need login");
+        }
 
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // 手机登录成功 ，保存用户信息以及登录途径
+        // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
         NSLog(@"maybe cookie timeout,need login");
     }];
 
 
+}
+
+- (void)getServerIP{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSString *serverip = [defaults objectForKey:@"serverip"];
+    if((serverip != nil) && (![serverip isEqualToString:@""])){
+        Root_URL = serverip;
+    }
+    
+    NSLog(@"serverip %@, Root_url %@",serverip, Root_URL);
 }
 
 
@@ -490,7 +513,7 @@
 //    } //启动微信支付的response
     
     if ([resp isKindOfClass:[SendAuthResp class]]) {
-        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+        //[SVProgressHUD showInfoWithStatus:@"登录中....."];
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
@@ -630,7 +653,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-
+    NSLog(@"applicationWillEnterForeground");
     
 }
 
@@ -638,6 +661,9 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    NSLog(@"applicationDidBecomeActive");
+    [self updateLoginState];
+    
     if (_isFirst == YES && self.isLaunchedByNotification == YES) {
         _isFirst = NO;
         

@@ -41,7 +41,7 @@
     [self.myWebView loadRequest:request];//加载
     
 }
-- (void)backClicked:(UIButton *)button{
+- (void)backClicked:(id)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
 

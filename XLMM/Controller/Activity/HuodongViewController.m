@@ -611,10 +611,18 @@
     //get the original user-agent of webview
     NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);
+    if(oldAgent == nil) return;
     
     //add my info to the new agent
-    if([oldAgent containsString:@"xlmm;"])
-        return;
+    if(oldAgent != nil) {
+
+        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
     NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
     NSLog(@"new agent :%@", newAgent);
     

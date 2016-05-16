@@ -16,7 +16,7 @@
 #import "NSString+URL.h"
 #import "RefundDetailsViewController.h"
 #import "SVProgressHUD.h"
-
+#import "AFNetworking.h"
 
 
 @interface TuihuoViewController ()
@@ -73,12 +73,25 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
    // http://m.xiaolu.so/rest/v1/refunds
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"url = %@", urlstring);
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSLog(@"url = %@", urlstring);
+//        
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
+//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+//    });
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlstring parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-    });
+        if (!responseObject) return;
+        
+        [self fetchedRefundData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
     
 }
 //  退货款列表分页下载
@@ -107,16 +120,17 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 
-- (void)fetchedWaipayData:(NSData *)data{
-    [SVProgressHUD dismiss];
+- (void)fetchedRefundData:(NSDictionary *)data{
+
     NSLog(@"11");
     
     if (data == nil) {
         return;
     }
     
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"json = %@", json);
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSDictionary *json = data;
+//    NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的退货列表为空");
         [self displayDefaultView];
@@ -184,17 +198,27 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         // 下载下一页内容
         
         NSString *string = [json objectForKey:@"next"];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSLog(@"url = %@", string);
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            NSLog(@"url = %@", string);
+//            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+//            
+//            
+//        });
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
+            if (!responseObject) return;
             
-        });
+            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+        }];
+
         
     }
     
-    NSLog(@"dataArray = %@", self.dataArray);
+//    NSLog(@"dataArray = %@", self.dataArray);
     
     [self.collectionView reloadData];
     

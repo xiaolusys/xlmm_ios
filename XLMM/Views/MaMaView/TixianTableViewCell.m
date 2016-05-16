@@ -41,6 +41,11 @@
     } else {
         self.cancelButton.hidden = YES;
     }
+    
+   
+    
+    
+    
 }
 
 - (void)cancelButtonClicked:(UIButton *)button{
@@ -62,7 +67,7 @@
                   if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                       [alertView show];
-                  } else if ([[responseObject objectForKey:@"code"] integerValue] == 0){
+                  } else if ([[responseObject objectForKey:@"code"] integerValue] == 1){
                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                       [alertView show];
                   }

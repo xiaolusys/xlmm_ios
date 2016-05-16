@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 - (IBAction)getCodeClicked:(id)sender;
 - (IBAction)commitClicked:(id)sender;
-- (IBAction)backClicked:(id)sender;
+- (UIButton *)backClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *buttonLabel;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 - (IBAction)skipClicked:(id)sender;

@@ -16,7 +16,7 @@
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "SVProgressHUD.h"
-
+#import "AFNetworking.h"
 
 
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
@@ -31,14 +31,13 @@
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = NO;
     
-    [SVProgressHUD showWithStatus:@"加载中..."];
+
     [self downlaodData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
 }
 
 //待收货订单。。。。。。
@@ -62,23 +61,37 @@
 
 - (void)downlaodData{
     //http://192.168.1.79:8000/rest/v1/trades
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSLog(@"wait send = %@", kWaitsend_List_URL);
-       
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+////        NSLog(@"wait send = %@", kWaitsend_List_URL);
+//       
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
+//        
+//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+//    });
+    [SVProgressHUD showWithStatus:@"加载中..."];
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kWaitsend_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-    });
+        if (!responseObject) return;
+        
+        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
 }
 
-- (void)fetchedWaipayData:(NSData *)data{
-    [SVProgressHUD dismiss];
+- (void)fetchedWaipayData:(NSDictionary *)data{
     if (data == nil) {
         NSLog(@"下载失败");
         return;
     }
     NSError *error = nil;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *json = data;
     if (error != nil) {
         NSLog(@"解析出错");
         return;

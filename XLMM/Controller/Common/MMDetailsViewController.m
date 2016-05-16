@@ -1338,7 +1338,9 @@
 - (void)linkCopyBtnClick:(UIButton *)btn {
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
     NSString *str = self.url;
-    [pab setString:str];
+    if(str != nil){
+        [pab setString:str];
+    }
     if (pab == nil) {
         [SVProgressHUD showErrorWithStatus:@"请重新复制"];
     }else
