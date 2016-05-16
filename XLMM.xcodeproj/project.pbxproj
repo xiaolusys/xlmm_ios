@@ -88,7 +88,6 @@
 		183072011C97BE3700B7665E /* TixianHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071401C97BE3700B7665E /* TixianHistoryViewController.m */; };
 		183072021C97BE3700B7665E /* TixianHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071411C97BE3700B7665E /* TixianHistoryViewController.xib */; };
 		183072031C97BE3700B7665E /* TixianSucceedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071431C97BE3700B7665E /* TixianSucceedViewController.m */; };
-		183072051C97BE3700B7665E /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
 		183072071C97BE3700B7665E /* ActivityErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830714A1C97BE3700B7665E /* ActivityErweimaViewController.m */; };
 		183072081C97BE3700B7665E /* ActivityErweimaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830714B1C97BE3700B7665E /* ActivityErweimaViewController.xib */; };
 		183072091C97BE3700B7665E /* ActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830714D1C97BE3700B7665E /* ActivityViewController2.m */; };
@@ -631,6 +630,13 @@
 		1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6151CC6059100410EC0 /* yestday1.png */; };
 		1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D61D1CC6064400410EC0 /* MMRootViewController.m */; };
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
+		1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */; };
+		1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */; };
+		1F2B0BFA1CE9714900B11740 /* weixin_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BF61CE9714900B11740 /* weixin_selecter@2x.png */; };
+		1F2B0BFB1CE9714900B11740 /* xiaolu_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BF71CE9714900B11740 /* xiaolu_nomal@2x.png */; };
+		1F2B0BFC1CE9714900B11740 /* xiaolu_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BF81CE9714900B11740 /* xiaolu_selecter@2x.png */; };
+		1F2B0BFD1CE9714900B11740 /* weixin_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BF91CE9714900B11740 /* weixin_nomal@2x.png */; };
+		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
 		1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */; };
 		1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FC1CE31A4400F78C0D /* MASConstraint.m */; };
 		1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FE1CE31A4400F78C0D /* MASConstraintMaker.m */; };
@@ -1708,6 +1714,12 @@
 		1F14D61C1CC6064400410EC0 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
 		1F14D61D1CC6064400410EC0 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
 		1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
+		1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Normal_new@2x.png"; sourceTree = "<group>"; };
+		1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Selected_new@2x.png"; sourceTree = "<group>"; };
+		1F2B0BF61CE9714900B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
+		1F2B0BF71CE9714900B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
+		1F2B0BF81CE9714900B11740 /* xiaolu_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_selecter@2x.png"; sourceTree = "<group>"; };
+		1F2B0BF91CE9714900B11740 /* weixin_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_nomal@2x.png"; sourceTree = "<group>"; };
 		1F4160F81CE31A4400F78C0D /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		1F4160FA1CE31A4400F78C0D /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -3527,6 +3539,8 @@
 		183074C31C97D49A00B7665E /* NewImages */ = {
 			isa = PBXGroup;
 			children = (
+				1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */,
+				1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */,
 				3A8D5E101CE47C83008730EF /* confirm.png */,
 				3A8D5E111CE47C83008730EF /* confirm2.png */,
 				183074C41C97D49A00B7665E /*  lianxikkefu_icon.png */,
@@ -3689,6 +3703,7 @@
 		183075641C97D49A00B7665E /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				1F2B0BED1CE96A2E00B11740 /* choisestixian */,
 				1F1351431CE5DC5F00D6138D /* success_Withdraw@2x.png */,
 				1F4DE59E1CE4712E00114BDA /* dispose_Image@2x.png */,
 				1F4DE59F1CE4712E00114BDA /* left_line_nomal@2x.png */,
@@ -3816,6 +3831,17 @@
 				1F14D6151CC6059100410EC0 /* yestday1.png */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		1F2B0BED1CE96A2E00B11740 /* choisestixian */ = {
+			isa = PBXGroup;
+			children = (
+				1F2B0BF61CE9714900B11740 /* weixin_selecter@2x.png */,
+				1F2B0BF71CE9714900B11740 /* xiaolu_nomal@2x.png */,
+				1F2B0BF81CE9714900B11740 /* xiaolu_selecter@2x.png */,
+				1F2B0BF91CE9714900B11740 /* weixin_nomal@2x.png */,
+			);
+			name = choisestixian;
 			sourceTree = "<group>";
 		};
 		1F4160F71CE31A4400F78C0D /* Masonry */ = {
@@ -4150,6 +4176,7 @@
 			files = (
 				1830767D1C97D49A00B7665E /* 圈圈加载0041.png in Resources */,
 				183076051C97D49A00B7665E /* hongbaofanicon.png in Resources */,
+				1F2B0BFB1CE9714900B11740 /* xiaolu_nomal@2x.png in Resources */,
 				1830757F1C97D49A00B7665E /* icon-jia.png in Resources */,
 				183076481C97D49A00B7665E /* wash04.png in Resources */,
 				1F88D57A1CB67DCC0050A2E2 /* iPhone6@2x.png in Resources */,
@@ -4161,6 +4188,7 @@
 				183076391C97D49A00B7665E /* shopping_cart_add.png in Resources */,
 				183074321C97D17800B7665E /* UMShareEditViewController.xib in Resources */,
 				183074471C97D17900B7665E /* ios-social-sdk-share-quick.html in Resources */,
+				1F2B0BFD1CE9714900B11740 /* weixin_nomal@2x.png in Resources */,
 				183076871C97D49A00B7665E /* redPkg.png in Resources */,
 				183076071C97D49A00B7665E /* hongbaoopen200.png in Resources */,
 				183075A51C97D49A00B7665E /* yifu2.png in Resources */,
@@ -4170,6 +4198,7 @@
 				1F1351401CE5BF9E00D6138D /* chose_withdraw_two_selected@2x.png in Resources */,
 				1830760B1C97D49A00B7665E /* Icon-29.png in Resources */,
 				1830722A1C97BE3700B7665E /* EmptyAddressView.xib in Resources */,
+				1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */,
 				183076201C97D49A00B7665E /* newyouhuiquanbukeyongbg.png in Resources */,
 				183071E61C97BE3700B7665E /* PreviousViewController.xib in Resources */,
 				1F4DE5A61CE4712E00114BDA /* left_line_nomal@2x.png in Resources */,
@@ -4430,6 +4459,7 @@
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
 				1830743F1C97D17900B7665E /* iOS-social-releasenote.html in Resources */,
+				1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */,
 				325B79A31C97E6F10022F930 /* XiangQingView.xib in Resources */,
 				183072591C97BE3700B7665E /* SettingViewController.xib in Resources */,
 				183076551C97D49A00B7665E /* 圈圈加载0001.png in Resources */,
@@ -4519,10 +4549,12 @@
 				183075901C97D49A00B7665E /* icon-tuihuanhuo.png in Resources */,
 				1830762B1C97D49A00B7665E /* refundSuccessful.png in Resources */,
 				183076471C97D49A00B7665E /* wash03.png in Resources */,
+				1F2B0BFA1CE9714900B11740 /* weixin_selecter@2x.png in Resources */,
 				325B7A071C97E73A0022F930 /* CarryLogHeaderView.xib in Resources */,
 				1830743E1C97D17900B7665E /* iOS-social-analytics-releasenote.html in Resources */,
 				183075F81C97D49A00B7665E /* gouwucheemptyimage.png in Resources */,
 				183076461C97D49A00B7665E /* wash02.png in Resources */,
+				1F2B0BFC1CE9714900B11740 /* xiaolu_selecter@2x.png in Resources */,
 				183075761C97D49A00B7665E /* icon-dizhiguanli.png in Resources */,
 				183074301C97D17800B7665E /* UMSCommentInputController.xib in Resources */,
 				183075CB1C97D49A00B7665E /* mamafens.png in Resources */,
@@ -4756,7 +4788,6 @@
 				1830728D1C97C00900B7665E /* UIViewController+NavigationBar.m in Sources */,
 				183073CE1C97D17800B7665E /* AFNetworkReachabilityManager.m in Sources */,
 				1830740E1C97D17800B7665E /* QNConfiguration.m in Sources */,
-				183072051C97BE3700B7665E /* TixianViewController.m in Sources */,
 				183074261C97D17800B7665E /* UIImageView+WebCache.m in Sources */,
 				183072881C97C00900B7665E /* UIImage+ColorImage.m in Sources */,
 				1F4161171CE31A4400F78C0D /* View+MASAdditions.m in Sources */,
@@ -4847,6 +4878,7 @@
 				1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */,
 				183071F61C97BE3700B7665E /* VerifyPhoneViewController.m in Sources */,
 				1830722B1C97BE3700B7665E /* ChangeNicknameViewController.m in Sources */,
+				1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */,
 				183072111C97BE3700B7665E /* MamaActivityViewController.m in Sources */,
 				183073F21C97D17800B7665E /* MJRefreshBackGifFooter.m in Sources */,
 				325B7A061C97E73A0022F930 /* CarryLogHeaderView.m in Sources */,
