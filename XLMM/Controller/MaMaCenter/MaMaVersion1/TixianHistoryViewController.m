@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
+#import "SVProgressHUD.h"
 
 static NSString *CellIdentify = @"TixianCellIdentify";
 
@@ -40,11 +41,18 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
+    
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
+    [SVProgressHUD dismiss];
+
+    
 }
 
 
@@ -56,7 +64,6 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [self createTableView];
     
     [self downloadData];
-    
     
     /*
      使用通知传递数据
@@ -74,9 +81,17 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 - (void)downloadData{
-    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
+    NSInteger page = 2;
+    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,page];
     NSLog(@"string = %@", self.nextString);
     [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+    
+    
+    [SVProgressHUD showWithStatus:@"疯狂加载中....."];
+
+    
+    
+    
 }
 
 - (void)fetchedHistoryData:(NSData *)data{
@@ -89,6 +104,8 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         NSLog(@"error = %@", error.description);
         
     }
+    
+
  //   NSLog(@"json = %@", dicJson);
     
     NSArray *results = [dicJson objectForKey:@"results"];
@@ -119,7 +136,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
             return ;
         }
         [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
+
     });
 }
 
@@ -155,6 +172,8 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TixianTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentify];
     
+    [SVProgressHUD dismiss];
+
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];

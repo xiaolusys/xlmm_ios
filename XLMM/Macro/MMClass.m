@@ -20,6 +20,8 @@ NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
+//提现历史   http://m.xiaolumeimei.com/rest/v1/pmt/cashout?page=2
+
 //http://m.xiaolumeimei.com/rest/v1/users/budget_cash_out
 
 //取消提现的接口

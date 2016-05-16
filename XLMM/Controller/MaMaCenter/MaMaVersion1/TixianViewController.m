@@ -30,12 +30,15 @@
     提现至--
  */
 @property (nonatomic,strong) UIView *withdrawView;
-@property (nonatomic,strong) UIImageView *xiaoluImage;
-@property (nonatomic,strong) UIImageView *wexinImage;
+//@property (nonatomic,strong) UIImageView *xiaoluImage;
+//@property (nonatomic,strong) UIImageView *wexinImage;
 @property (nonatomic,strong) UIButton *xiaoluButton;
 @property (nonatomic,strong) UIButton *wexinButton;
-@property (nonatomic,strong) UILabel *xiaoluLabel;
-@property (nonatomic,strong) UILabel *weixinLabel;
+//@property (nonatomic,strong) UILabel *xiaoluLabel;
+//@property (nonatomic,strong) UILabel *weixinLabel;
+
+
+
 
 /*
     提现金额选择
@@ -165,24 +168,24 @@
     self.withdrawView = withdrawView;
 
     
-    UIImageView *xiaoluImage = [[UIImageView alloc] init];
-    [self.withdrawView addSubview:xiaoluImage];
-    self.xiaoluImage = xiaoluImage;
-//    self.xiaoluImage.image = [UIImage imageNamed:@"Circle_Normal"];
-    xiaoluImage.image = [UIImage imageNamed:@"wallet_xiaolu"];
+//    UIImageView *xiaoluImage = [[UIImageView alloc] init];
+//    [self.withdrawView addSubview:xiaoluImage];
+//    self.xiaoluImage = xiaoluImage;
+////    self.xiaoluImage.image = [UIImage imageNamed:@"Circle_Normal"];
+//    xiaoluImage.image = [UIImage imageNamed:@"wallet_xiaolu"];
     
     
-    UIImageView *wexinImage = [[UIImageView alloc] init];
-    [self.withdrawView addSubview:wexinImage];
-    self.wexinImage = wexinImage;
-//    self.wexinImage.image = [UIImage imageNamed:@"Circle_Normal"];
-    wexinImage.image = [UIImage imageNamed:@"wallet_weixin"];
+//    UIImageView *wexinImage = [[UIImageView alloc] init];
+//    [self.withdrawView addSubview:wexinImage];
+//    self.wexinImage = wexinImage;
+////    self.wexinImage.image = [UIImage imageNamed:@"Circle_Normal"];
+//    wexinImage.image = [UIImage imageNamed:@"wallet_weixin"];
 
     UIButton *xiaoluButton = [[UIButton alloc] init];
     [self.withdrawView addSubview:xiaoluButton];
     self.xiaoluButton = xiaoluButton;
-    [xiaoluButton setBackgroundImage:[UIImage imageNamed:@"circle_wallet_Normal"] forState:UIControlStateNormal];
-    [xiaoluButton setBackgroundImage:[UIImage imageNamed:@"circle_wallet_Selected"] forState:UIControlStateSelected];
+    [xiaoluButton setBackgroundImage:[UIImage imageNamed:@"xiaolu_nomal"] forState:UIControlStateNormal];
+    [xiaoluButton setBackgroundImage:[UIImage imageNamed:@"xiaolu_selecter"] forState:UIControlStateSelected];
 //    xiaoluButton.selected = YES;
     [xiaoluButton addTarget:self action:@selector(withdrawToWallet:) forControlEvents:UIControlEventTouchUpInside];
     xiaoluButton.tag = 200;
@@ -190,26 +193,26 @@
     UIButton *wexinButton = [[UIButton alloc] init];
     [self.withdrawView addSubview:wexinButton];
     self.wexinButton = wexinButton;
-    [wexinButton setBackgroundImage:[UIImage imageNamed:@"circle_wallet_Normal"] forState:UIControlStateNormal];
-    [wexinButton setBackgroundImage:[UIImage imageNamed:@"circle_wallet_Selected"] forState:UIControlStateSelected];
+    [wexinButton setBackgroundImage:[UIImage imageNamed:@"weixin_nomal"] forState:UIControlStateNormal];
+    [wexinButton setBackgroundImage:[UIImage imageNamed:@"weixin_selecter"] forState:UIControlStateSelected];
     [wexinButton addTarget:self action:@selector(withdrawToWallet:) forControlEvents:UIControlEventTouchUpInside];
     wexinButton.tag = 201;
     
 //    [_buttonArray addObject:xiaoluButton];
 //    [_buttonArray addObject:wexinButton];
     
-    UILabel *xiaoluLabel = [[UILabel alloc] init];
-    [self.withdrawView addSubview:xiaoluLabel];
-    self.xiaoluLabel = xiaoluLabel;
-    self.xiaoluLabel.text = @"提现至小鹿钱包";
-    self.xiaoluLabel.font = [UIFont systemFontOfSize:14.];
-    
-    UILabel *weixinLabel = [[UILabel alloc] init];
-    [self.withdrawView addSubview:weixinLabel];
-    self.weixinLabel = weixinLabel;
-    self.weixinLabel.text = @"提现至微信红包";
-    self.weixinLabel.font = [UIFont systemFontOfSize:14.];
-
+//    UILabel *xiaoluLabel = [[UILabel alloc] init];
+//    [self.xiaoluButton addSubview:xiaoluLabel];
+//    self.xiaoluLabel = xiaoluLabel;
+//    self.xiaoluLabel.text = @"提现至小鹿钱包";
+//    self.xiaoluLabel.font = [UIFont systemFontOfSize:14.];
+//    
+//    UILabel *weixinLabel = [[UILabel alloc] init];
+//    [self.withdrawView addSubview:weixinLabel];
+//    self.weixinLabel = weixinLabel;
+//    self.weixinLabel.text = @"提现至微信红包";
+//    self.weixinLabel.font = [UIFont systemFontOfSize:14.];
+//
     /*
         提现金额
      */
@@ -667,22 +670,20 @@
         make.height.mas_equalTo(@120);
     }];
     
-    [self.xiaoluImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(43/2);
-        make.width.mas_equalTo(@(43/2));
-        make.height.mas_equalTo(@16);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
+    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_offset(@60);
+        make.top.equalTo(self.withdrawView);
+        make.left.equalTo(self.withdrawView);
     }];
     
-    
-    
-    [self.xiaoluLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        //        make.centerX.equalTo(self.xiaoluImage.mas_centerX);
-        make.top.equalTo(self.withdrawView.mas_top).offset(45/2);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.xiaoluImage.mas_right).offset(23/2);
+    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_offset(@60);
+        make.top.equalTo(self.firstLine);
+        make.left.equalTo(self.withdrawView);
     }];
+
     
     [self.firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.withdrawView.mas_top).offset(60);
@@ -697,32 +698,9 @@
         make.left.equalTo(self.withdrawView.mas_left).offset(0);
         make.height.mas_offset(0.5);
     }];
+
     
-    [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.top.equalTo(self.withdrawView.mas_top).offset(21);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
     
-    [self.wexinImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawView.mas_top).offset(80);
-        make.width.mas_equalTo(@(45/2));
-        make.height.mas_equalTo(@20);
-        make.left.equalTo(self.withdrawView.mas_left).offset(11);
-    }];
-    
-    [self.weixinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.xiaoluLabel.mas_bottom).offset(40);
-        make.height.mas_equalTo(@21);
-        make.width.mas_equalTo(@198);
-        make.left.equalTo(self.wexinImage.mas_right).offset(23/2);
-    }];
-    
-    [self.wexinButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_equalTo(@17);
-        make.bottom.equalTo(self.withdrawView.mas_bottom).offset(-22);
-        make.right.equalTo(self.withdrawView.mas_right).offset(-12);
-    }];
     /**************/
     [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.withdrawView.mas_bottom).offset(0);
@@ -741,18 +719,19 @@
     
     [self.oneHunderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.moneyLabel.mas_bottom).offset(13);
-        make.left.equalTo(self.withdrawMonryView.mas_left).offset(102/2);
-        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
-        make.width.equalTo(self.twoHUnderBtn);
-        make.height.mas_equalTo(@(77/2));
+        make.left.equalTo(self.withdrawMonryView.mas_left).offset(40);
+//        make.right.equalTo(self.twoHUnderBtn.mas_left).offset(-102/2);
+//        make.width.equalTo(self.twoHUnderBtn);
+        make.width.mas_offset(@103);
+        make.height.mas_equalTo(@35);
     }];
     
     [self.twoHUnderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.oneHunderBtn);
-        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
-        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-102/2);
-        make.width.equalTo(self.oneHunderBtn);
-        make.height.mas_equalTo(@(77/2));
+//        make.left.equalTo(self.oneHunderBtn.mas_right).offset(102/2);
+        make.right.equalTo(self.withdrawMonryView.mas_right).offset(-40);
+        make.width.mas_offset(@103);
+        make.height.mas_equalTo(@35);
     }];
     
     /***************/
