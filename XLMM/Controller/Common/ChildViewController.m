@@ -404,10 +404,12 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-  if (_dataArray.count == 0) {
-        return;
-    }
+
     if (isOrder) {
+        if (_orderDataArray.count == 0) {
+            return;
+        }
+        
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
@@ -422,6 +424,9 @@ static NSString * ksimpleCell = @"simpleCell";
             }
         }
     } else {
+        if (_dataArray.count == 0) {
+            return;
+        }
         
         PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
         
