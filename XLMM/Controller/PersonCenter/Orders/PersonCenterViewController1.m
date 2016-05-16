@@ -17,7 +17,7 @@
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
 #import "SVProgressHUD.h"
-
+#import "AFNetworking.h"
 
 
 
@@ -68,7 +68,7 @@
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -76,23 +76,37 @@
 }
 
 - (void)downlaodData{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitpay_List_URL]];
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+    [SVProgressHUD showWithStatus:@"加载中..."];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitpay_List_URL]];
+//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+//        
+//        
+//    });
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kWaitpay_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+
+        if (!responseObject) return;
         
-        
-    });
+        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
     
 }
 
-- (void)fetchedWaipayData:(NSData *)data{
-    [SVProgressHUD dismiss];
-    if (data == nil) {
+- (void)fetchedWaipayData:(NSDictionary *)data{
+        if (data == nil) {
         return;
     }
     
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"json = %@", json);
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSDictionary *json = data;
+    // NSLog(@"json = %@", json);
     
     
     self.dataArray = [json objectForKey:@"results"];

@@ -21,7 +21,7 @@
 #import "NSString+URL.h"
 #import "MJPullGifHeader.h"
 #import "SVProgressHUD.h"
-
+#import "AFNetworking.h"
 
 
 
@@ -116,7 +116,7 @@
     
     self.quanbuCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
-    [SVProgressHUD showWithStatus:@"加载中..."];
+
     [self downloadData];
     
 //    
@@ -146,9 +146,21 @@
 
 - (void)downloadData{
     
-    NSLog(@"下载数据");
-    
-    [self downLoadWithURLString:kQuanbuDingdan_URL andSelector:@selector(fetchedDingdanData:)];
+    NSLog(@"下载数据 %@", kQuanbuDingdan_URL);
+    [SVProgressHUD showWithStatus:@"加载中..."];
+//    [self downLoadWithURLString:kQuanbuDingdan_URL andSelector:@selector(fetchedDingdanData:)];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kQuanbuDingdan_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        
+        if (!responseObject) return;
+        
+        [self performSelectorOnMainThread:@selector(fetchedDingdanData:) withObject:responseObject waitUntilDone:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+  
     
 }
 
@@ -172,14 +184,17 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (void)fetchedDingdanData:(NSData *)responsedata{
+- (void)fetchedDingdanData:(NSDictionary *)responsedata{
 //    if ([self.quanbuCollectionView.mj_header isRefreshing]) {
 //        [self.quanbuCollectionView.mj_header endRefreshing];
 //
 //    }
-    [SVProgressHUD dismiss];
-    NSError *error = nil;
-    diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    if(responsedata == nil)
+        return;
+
+//    NSError *error = nil;
+//    diciontary = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
+    diciontary = responsedata;
 //    NSLog(@"array = %@", diciontary);
     NSArray *array = [diciontary objectForKey:@"results"];
     if (array.count == 0) {
@@ -188,7 +203,6 @@
         return;
     }
     for (NSDictionary *dic in array) {
-        NSLog(@"dic = %@" , dic);
         DingdanModel *model = [DingdanModel new];
         model.dingdanID = [dic objectForKey:@"id"];
         model.dingdanURL = [dic objectForKey:@"url"];
