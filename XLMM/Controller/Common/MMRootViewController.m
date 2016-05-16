@@ -243,20 +243,15 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)updataAfterLogin:(NSNotification *)notification{
   // 微信登录
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    [self loginUpdateIsXiaoluMaMa];
+
+
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
   //  NSLog(@"手机登录");
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    [self loginUpdateIsXiaoluMaMa];
+
 }
 
 - (BOOL)isXiaolumama{
@@ -265,25 +260,61 @@ static NSString *kbrandCell = @"brandCell";
     return isXLMM;
 }
 
-- (BOOL)loginUpdateIsXiaoluMaMa {
+- (void)loginUpdateIsXiaoluMaMa {
+    NSLog(@"loginUpdateIsXiaoluMaMa ");
+    
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        return NO;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:string parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSDictionary *dic = responseObject;
+        if (!responseObject){
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+            return;
+        }
+        
+        NSLog(@"loginUpdateIsXiaoluMaMa %d", [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]);
+
+        if([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+            [self createRightItem];
+            [users setBool:YES forKey:@"isXLMM"];
+
+        }
+        else{
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSLog(@"get user profile failed.");
+        self.navigationItem.rightBarButtonItem = nil;
+        [users setBool:NO forKey:@"isXLMM"];
+    }];
+
+    
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        return NO;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"loginUpdateIsXiaoluMaMa dic = %@", dic);
+//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
 - (void)createRightItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-    [rightBtn addSubview:rightImageView];
-    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    NSLog(@"createRightItem %@ %@", self.navigationItem.rightBarButtonItem , rightItem);
+    if(self.navigationItem.rightBarButtonItem == nil){
+        NSLog(@"createRightItem ");
+        
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+        rightImageView.frame = CGRectMake(18, 11, 26, 26);
+        [rightBtn addSubview:rightImageView];
+        rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
 }
 
 
@@ -390,8 +421,15 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 主界面初始化
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"viewWillAppear");
+    NSLog(@"MMRoot viewWillAppear");
     [super viewWillAppear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    
     UIView *cartView = [_view viewWithTag:123];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 64;
@@ -407,19 +445,26 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    NSLog(@"viewDidAppear");
+    NSLog(@"MMRoot viewDidAppear");
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
     self.backScrollview.delegate = self;
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self autologin];
+    } else {
+        NSLog(@"no login");
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"viewWillDisappear");
+    NSLog(@"MMRoot viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
 }
@@ -433,7 +478,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)viewDidLoad
 {
-    NSLog(@"viewDidLoad");
+    NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
     
     self.timeCount = 0;
@@ -494,11 +539,7 @@ static NSString *kbrandCell = @"brandCell";
     self.backScrollview.mj_header = header;
 
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
+
     
 
 //    
@@ -515,6 +556,12 @@ static NSString *kbrandCell = @"brandCell";
 //    self.goodsView.backgroundColor = [UIColor redColor];
 //    self.aboveView.backgroundColor = [UIColor yellowColor];
     
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    //进入前台时调用此函数
+    NSLog(@"Rootview enter foreground");
 }
 
 - (void)createRequestURL {
@@ -640,7 +687,13 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
     [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         //通过加载图片得到其高度
-        float h = image.size.height * (WIDTH /image.size.width);
+        float h;
+        if((image == nil) || (image.size.width == 0)){
+            h = 150;
+        }
+        else{
+            h = image.size.height * (WIDTH /image.size.width);
+        }
         NSLog(@"poster height %f %f", image.size.height, h);
         self.bannerHeight.constant = h;
         self.aboveHeight.constant = h+120;
@@ -791,8 +844,10 @@ static NSString *kbrandCell = @"brandCell";
     [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     [currentArr removeAllObjects];
+    
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     [collection reloadData];
+
     [self goodsRequest];
 }
 
@@ -855,7 +910,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)goodsRequest{
     NSString *currentUrl = self.urlArr[self.currentIndex];
-    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,self.currentIndex);
+    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
@@ -872,18 +927,28 @@ static NSString *kbrandCell = @"brandCell";
         NSLog(@"goodsResult NEXT=null");
     }else {
         [self.nextdic setObject:[dic objectForKey:@"next"] forKey:self.dickey[self.currentIndex]];
-        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], self.currentIndex);
+        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
     }
     
     NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
     NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
-    [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
+    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    if(self.currentIndex != 2){
+        if(deadline != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
+        }
+    }
+    else{
+        if(starttime != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: starttime];
+        }
+    }
     
     NSArray *results = [dic objectForKey:@"results"];
-    if (results.count == 0) {
+    if ((results == nil) || (results.count == 0)) {
         return;
     }
-    NSLog(@"result count=%ld", results.count );
+    NSLog(@"result count=%ld", (unsigned long)results.count );
     
     //判断在数据源字典中是否有对应的数组
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
@@ -901,9 +966,17 @@ static NSString *kbrandCell = @"brandCell";
     
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     
-    [collection insertItemsAtIndexPaths:numArray];
-    [numArray removeAllObjects];
-    numArray = nil;
+    if(numArray != nil){
+        @try{
+            [collection insertItemsAtIndexPaths:numArray];
+            [numArray removeAllObjects];
+            numArray = nil;
+        }
+        @catch(NSException *except)
+        {
+            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        }
+    }
 
     [collection reloadData];
     
@@ -916,6 +989,7 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
     if((nil == url) || ([url isEqualToString:@""])){
         UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
         [collection.mj_footer endRefreshingWithNoMoreData];
         return;
     }
@@ -926,6 +1000,8 @@ static NSString *kbrandCell = @"brandCell";
         if (!responseObject)return ;
         [self goodsResult:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
     }];
 }
 
@@ -1148,7 +1224,7 @@ static NSString *kbrandCell = @"brandCell";
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
-    if(currentArr.count == 0){
+    if((currentArr != nil) && (currentArr.count == 0)){
         [self goodsRequest];
     }
     
@@ -1167,6 +1243,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
     }
     else if(self.currentIndex == 1){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
@@ -1177,6 +1255,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
     } if(self.currentIndex == 2){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -1186,6 +1266,8 @@ static NSString *kbrandCell = @"brandCell";
         
         btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
         [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场开始";
     }
 }
 
@@ -1226,8 +1308,10 @@ static NSString *kbrandCell = @"brandCell";
             //NSLog(@"%@",obj);
             if(index == collectionView.tag - TAG_COLLECTION_BRAND){
                 NSArray *goods = [obj copy];
-                BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-                [cell fillDataWithModel:model];
+                if(goods.count > indexPath.row){
+                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                    [cell fillDataWithModel:model];
+                }
                 return cell;
 
             }
@@ -1253,16 +1337,16 @@ static NSString *kbrandCell = @"brandCell";
     }
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        return CGSizeMake(10, 10);
-
-    }
-    else{
-        return CGSizeMake(SCREENWIDTH, 30);
-    }
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+//    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+//       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+//        return CGSizeMake(10, 10);
+//
+//    }
+//    else{
+//        return CGSizeMake(SCREENWIDTH, 30);
+//    }
+//}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
@@ -1280,6 +1364,10 @@ static NSString *kbrandCell = @"brandCell";
 
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    
+    if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
+        return;
+    
     PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
     if (model.productModel == nil) {
         MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:NO];
@@ -1389,6 +1477,8 @@ static NSString *kbrandCell = @"brandCell";
     return array;
 }
 
+#pragma mark 自动登录
+
 - (void)weixinzidongdenglu{
     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
   //  NSLog(@"用户信息 = %@", dic);
@@ -1480,29 +1570,38 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)autologin{
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
-    if ([loginMethon isEqualToString:kWeiXinLogin]) {
-      //  NSLog(@"微信登录");
-        
-        [self weixinzidongdenglu];
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-    } else if ([loginMethon isEqualToString:kPhoneLogin]){
-      
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-        
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
+//    if ([loginMethon isEqualToString:kWeiXinLogin]) {
+//      //  NSLog(@"微信登录");
+//        
+//        [self weixinzidongdenglu];
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//    } else if ([loginMethon isEqualToString:kPhoneLogin]){
+//      
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//        
+//    }
+    
+    NSLog(@"auto login");
+    if ([self isXiaolumama]) {
+        NSLog(@"isXiaolumama");
+        [self createRightItem];
+    } else{
+        NSLog(@"not xiaolumama");
+        self.navigationItem.rightBarButtonItem = nil;
     }
    
 }
@@ -1646,6 +1745,8 @@ static NSString *kbrandCell = @"brandCell";
         view.frame = rect;
         
         label.text = @"0";
+        
+        self.navigationItem.rightBarButtonItem = nil;
         return;
     }
     
@@ -1807,10 +1908,10 @@ static NSString *kbrandCell = @"brandCell";
         && scrollView.dragging){
         if (scrollView.contentOffset.y <= 0) {
             //下拉
-            NSLog(@"backScrollview 下拉");
+            //NSLog(@"backScrollview 下拉");
         }if (scrollView.contentOffset.y > 0) {
             //上滑
-            NSLog(@"backScrollview 上滑");
+            //NSLog(@"backScrollview 上滑");
             if(scrollView.contentOffset.y + 64 - allPostHeight > 5.0f){
                 NSLog(@"backScrollview enter category");
                 self.backScrollview.scrollEnabled = NO;
@@ -1832,15 +1933,21 @@ static NSString *kbrandCell = @"brandCell";
         int index = 1;
         if(scrollView.contentOffset.x <= (1e-6)){
             index = 0;
+            self.labelIndicate.text = @"距本场结束";
         }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
             index = 1;
-        }else if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            self.labelIndicate.text = @"距本场结束";
+        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
             index = 2;
+            self.labelIndicate.text = @"距本场开始";
         }
-        NSLog(@"index %d",  index);
+        //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
         if(self.currentIndex != index){
             self.currentIndex = index;
-            [self goodsRequest];
+            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+            if((currentArr != nil) && (currentArr.count == 0)){
+                [self goodsRequest];
+            }
         }
         else{
             self.currentIndex = index;
@@ -1855,15 +1962,25 @@ static NSString *kbrandCell = @"brandCell";
         || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
         && scrollView.dragging){
         if( scrollView.contentOffset.y <= 0) {
-            //NSLog(@"today scroll down");
+//            NSLog(@"today scroll down");
             self.backScrollview.scrollEnabled = YES;
             [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
                                       animated:YES];
             
             [self disableAllGoodsCollectionScroll];
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 45;
+
+            }];
+
+            
         }
         else if( scrollView.contentOffset.y > 0) {
-            //NSLog(@"today scroll up");
+//            NSLog(@"today scroll up");
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 0;
+                
+            }];
         }
     }
 }

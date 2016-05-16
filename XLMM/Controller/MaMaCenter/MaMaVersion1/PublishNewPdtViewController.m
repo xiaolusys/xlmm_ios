@@ -167,6 +167,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //未登录处理
 //        [self showDefaultView];
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取信息失败"];
     }];
 }
 

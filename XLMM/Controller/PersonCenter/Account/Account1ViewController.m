@@ -147,6 +147,8 @@ static NSString *identifier = @"AccountCell";
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:   %@", error);
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或重试"];
     }];
 }
 

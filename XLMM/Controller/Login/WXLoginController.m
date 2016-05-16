@@ -258,7 +258,7 @@
 }
 
 
-- (IBAction)backClicked:(id)sender {
+- (void)backClicked:(UIButton *)sender {
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
