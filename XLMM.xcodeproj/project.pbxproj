@@ -630,8 +630,6 @@
 		1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6151CC6059100410EC0 /* yestday1.png */; };
 		1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D61D1CC6064400410EC0 /* MMRootViewController.m */; };
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
-		1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */; };
-		1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */; };
 		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
 		1F2B0C0D1CE9B0B400B11740 /* weixin_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C091CE9B0B400B11740 /* weixin_nomal@2x.png */; };
 		1F2B0C0E1CE9B0B400B11740 /* weixin_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C0A1CE9B0B400B11740 /* weixin_selecter@2x.png */; };
@@ -1714,8 +1712,6 @@
 		1F14D61C1CC6064400410EC0 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
 		1F14D61D1CC6064400410EC0 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
 		1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
-		1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Normal_new@2x.png"; sourceTree = "<group>"; };
-		1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Selected_new@2x.png"; sourceTree = "<group>"; };
 		1F2B0C091CE9B0B400B11740 /* weixin_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_nomal@2x.png"; sourceTree = "<group>"; };
 		1F2B0C0A1CE9B0B400B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
 		1F2B0C0B1CE9B0B400B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
@@ -3539,8 +3535,6 @@
 		183074C31C97D49A00B7665E /* NewImages */ = {
 			isa = PBXGroup;
 			children = (
-				1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */,
-				1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */,
 				3A8D5E101CE47C83008730EF /* confirm.png */,
 				3A8D5E111CE47C83008730EF /* confirm2.png */,
 				183074C41C97D49A00B7665E /*  lianxikkefu_icon.png */,
@@ -4188,7 +4182,6 @@
 				1F1351401CE5BF9E00D6138D /* chose_withdraw_two_selected@2x.png in Resources */,
 				1830760B1C97D49A00B7665E /* Icon-29.png in Resources */,
 				1830722A1C97BE3700B7665E /* EmptyAddressView.xib in Resources */,
-				1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */,
 				183076201C97D49A00B7665E /* newyouhuiquanbukeyongbg.png in Resources */,
 				183071E61C97BE3700B7665E /* PreviousViewController.xib in Resources */,
 				1F4DE5A61CE4712E00114BDA /* left_line_nomal@2x.png in Resources */,
@@ -4451,7 +4444,6 @@
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
 				1830743F1C97D17900B7665E /* iOS-social-releasenote.html in Resources */,
-				1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */,
 				325B79A31C97E6F10022F930 /* XiangQingView.xib in Resources */,
 				183072591C97BE3700B7665E /* SettingViewController.xib in Resources */,
 				183076551C97D49A00B7665E /* 圈圈加载0001.png in Resources */,
