@@ -630,13 +630,7 @@
 		1F14D61B1CC6059100410EC0 /* yestday1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D6151CC6059100410EC0 /* yestday1.png */; };
 		1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D61D1CC6064400410EC0 /* MMRootViewController.m */; };
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
-		1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */; };
-		1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */; };
 		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
-		1F2B0C0D1CE9B0B400B11740 /* weixin_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C091CE9B0B400B11740 /* weixin_nomal@2x.png */; };
-		1F2B0C0E1CE9B0B400B11740 /* weixin_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C0A1CE9B0B400B11740 /* weixin_selecter@2x.png */; };
-		1F2B0C0F1CE9B0B400B11740 /* xiaolu_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C0B1CE9B0B400B11740 /* xiaolu_nomal@2x.png */; };
-		1F2B0C101CE9B0B400B11740 /* xiaolu_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2B0C0C1CE9B0B400B11740 /* xiaolu_selecter@2x.png */; };
 		1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */; };
 		1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FC1CE31A4400F78C0D /* MASConstraint.m */; };
 		1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FE1CE31A4400F78C0D /* MASConstraintMaker.m */; };
@@ -664,6 +658,9 @@
 		1F4DE5AB1CE4712E00114BDA /* oneHunder_Withdraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */; };
 		1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7395991CC0C945000F9D94 /* HomeViewController.m */; };
 		1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F73959A1CC0C945000F9D94 /* HomeViewController.xib */; };
+		1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */; };
+		1F80FCE31CE9E68900E1BF86 /* back_image_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */; };
+		1F80FCE41CE9E68900E1BF86 /* back_image_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */; };
 		1F88D5781CB67DCC0050A2E2 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */; };
 		1F88D5791CB67DCC0050A2E2 /* iPhone4S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */; };
 		1F88D57A1CB67DCC0050A2E2 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */; };
@@ -1714,12 +1711,6 @@
 		1F14D61C1CC6064400410EC0 /* MMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRootViewController.h; sourceTree = "<group>"; };
 		1F14D61D1CC6064400410EC0 /* MMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRootViewController.m; sourceTree = "<group>"; };
 		1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMRootViewController.xib; sourceTree = "<group>"; };
-		1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Normal_new@2x.png"; sourceTree = "<group>"; };
-		1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_wallet_Selected_new@2x.png"; sourceTree = "<group>"; };
-		1F2B0C091CE9B0B400B11740 /* weixin_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_nomal@2x.png"; sourceTree = "<group>"; };
-		1F2B0C0A1CE9B0B400B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
-		1F2B0C0B1CE9B0B400B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
-		1F2B0C0C1CE9B0B400B11740 /* xiaolu_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_selecter@2x.png"; sourceTree = "<group>"; };
 		1F4160F81CE31A4400F78C0D /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		1F4160FA1CE31A4400F78C0D /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -1763,6 +1754,9 @@
 		1F7395981CC0C945000F9D94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		1F7395991CC0C945000F9D94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		1F73959A1CC0C945000F9D94 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_ground@2x.png"; sourceTree = "<group>"; };
+		1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_selecter@2x.png"; sourceTree = "<group>"; };
+		1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_nomal@2x.png"; sourceTree = "<group>"; };
 		1F88D5741CB67DCC0050A2E2 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
 		1F88D5751CB67DCC0050A2E2 /* iPhone4S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone4S@2x.png"; sourceTree = "<group>"; };
 		1F88D5761CB67DCC0050A2E2 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
@@ -3539,8 +3533,6 @@
 		183074C31C97D49A00B7665E /* NewImages */ = {
 			isa = PBXGroup;
 			children = (
-				1F2B0BE91CE95EB800B11740 /* circle_wallet_Normal_new@2x.png */,
-				1F2B0BEA1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png */,
 				3A8D5E101CE47C83008730EF /* confirm.png */,
 				3A8D5E111CE47C83008730EF /* confirm2.png */,
 				183074C41C97D49A00B7665E /*  lianxikkefu_icon.png */,
@@ -3703,10 +3695,9 @@
 		183075641C97D49A00B7665E /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				1F2B0C091CE9B0B400B11740 /* weixin_nomal@2x.png */,
-				1F2B0C0A1CE9B0B400B11740 /* weixin_selecter@2x.png */,
-				1F2B0C0B1CE9B0B400B11740 /* xiaolu_nomal@2x.png */,
-				1F2B0C0C1CE9B0B400B11740 /* xiaolu_selecter@2x.png */,
+				1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */,
+				1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */,
+				1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */,
 				1F1351431CE5DC5F00D6138D /* success_Withdraw@2x.png */,
 				1F4DE59E1CE4712E00114BDA /* dispose_Image@2x.png */,
 				1F4DE59F1CE4712E00114BDA /* left_line_nomal@2x.png */,
@@ -4188,7 +4179,6 @@
 				1F1351401CE5BF9E00D6138D /* chose_withdraw_two_selected@2x.png in Resources */,
 				1830760B1C97D49A00B7665E /* Icon-29.png in Resources */,
 				1830722A1C97BE3700B7665E /* EmptyAddressView.xib in Resources */,
-				1F2B0BEB1CE95EB800B11740 /* circle_wallet_Normal_new@2x.png in Resources */,
 				183076201C97D49A00B7665E /* newyouhuiquanbukeyongbg.png in Resources */,
 				183071E61C97BE3700B7665E /* PreviousViewController.xib in Resources */,
 				1F4DE5A61CE4712E00114BDA /* left_line_nomal@2x.png in Resources */,
@@ -4315,7 +4305,6 @@
 				183076511C97D49A00B7665E /* yishiyong.png in Resources */,
 				183075D01C97D49A00B7665E /* mamaShare.png in Resources */,
 				1830760F1C97D49A00B7665E /* Icon-40@2x.png in Resources */,
-				1F2B0C0F1CE9B0B400B11740 /* xiaolu_nomal@2x.png in Resources */,
 				183074421C97D17900B7665E /* ios-social-sdk-like.html in Resources */,
 				183076701C97D49A00B7665E /* 圈圈加载0028.png in Resources */,
 				183074441C97D17900B7665E /* ios-social-sdk-login-quick.html in Resources */,
@@ -4426,6 +4415,7 @@
 				325B7A2F1C97E74B0022F930 /* MaMaShareSubsidiesViewCell.xib in Resources */,
 				183075A21C97D49A00B7665E /* tag-shixiao.png in Resources */,
 				1830764D1C97D49A00B7665E /* xiala.png in Resources */,
+				1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */,
 				1830757A1C97D49A00B7665E /* icon-fanhuidingbu.png in Resources */,
 				183075D91C97D49A00B7665E /* wodejingxuanback.png in Resources */,
 				1830724F1C97BE3700B7665E /* ShenQingTuikuanController.xib in Resources */,
@@ -4433,7 +4423,6 @@
 				183074431C97D17900B7665E /* ios-social-sdk-login-detail.html in Resources */,
 				1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */,
 				183072081C97BE3700B7665E /* ActivityErweimaViewController.xib in Resources */,
-				1F2B0C101CE9B0B400B11740 /* xiaolu_selecter@2x.png in Resources */,
 				321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */,
 				183076651C97D49A00B7665E /* 圈圈加载0017.png in Resources */,
 				183071E01C97BE3700B7665E /* MMDetailsViewController.xib in Resources */,
@@ -4451,7 +4440,6 @@
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
 				1830743F1C97D17900B7665E /* iOS-social-releasenote.html in Resources */,
-				1F2B0BEC1CE95EB800B11740 /* circle_wallet_Selected_new@2x.png in Resources */,
 				325B79A31C97E6F10022F930 /* XiangQingView.xib in Resources */,
 				183072591C97BE3700B7665E /* SettingViewController.xib in Resources */,
 				183076551C97D49A00B7665E /* 圈圈加载0001.png in Resources */,
@@ -4525,7 +4513,6 @@
 				1F4DE5A71CE4712E00114BDA /* success_Image@2x.png in Resources */,
 				183075841C97D49A00B7665E /* icon-mimaxiugai.png in Resources */,
 				183076521C97D49A00B7665E /* youhuiquankongicon.png in Resources */,
-				1F2B0C0E1CE9B0B400B11740 /* weixin_selecter@2x.png in Resources */,
 				1830743B1C97D17900B7665E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				183076641C97D49A00B7665E /* 圈圈加载0016.png in Resources */,
 				325B79E71C97E7160022F930 /* YHQHeadView.xib in Resources */,
@@ -4533,7 +4520,6 @@
 				183076771C97D49A00B7665E /* 圈圈加载0035.png in Resources */,
 				183075C71C97D49A00B7665E /* mamashouyi.png in Resources */,
 				183075961C97D49A00B7665E /* info-bg.png in Resources */,
-				1F2B0C0D1CE9B0B400B11740 /* weixin_nomal@2x.png in Resources */,
 				323473A21CA52DE900BDE172 /* zhexianyou.png in Resources */,
 				183075DA1C97D49A00B7665E /* wodejingxuandanpinfenxiang.png in Resources */,
 				183076141C97D49A00B7665E /* ios8_retina_HD5.5.png in Resources */,
@@ -4547,6 +4533,7 @@
 				1830743E1C97D17900B7665E /* iOS-social-analytics-releasenote.html in Resources */,
 				183075F81C97D49A00B7665E /* gouwucheemptyimage.png in Resources */,
 				183076461C97D49A00B7665E /* wash02.png in Resources */,
+				1F80FCE41CE9E68900E1BF86 /* back_image_nomal@2x.png in Resources */,
 				183075761C97D49A00B7665E /* icon-dizhiguanli.png in Resources */,
 				183074301C97D17800B7665E /* UMSCommentInputController.xib in Resources */,
 				183075CB1C97D49A00B7665E /* mamafens.png in Resources */,
@@ -4619,6 +4606,7 @@
 				3A8D5E121CE47C83008730EF /* confirm.png in Resources */,
 				183071D01C97BE3700B7665E /* CartViewController.xib in Resources */,
 				183071E81C97BE3700B7665E /* TodayViewController.xib in Resources */,
+				1F80FCE31CE9E68900E1BF86 /* back_image_selecter@2x.png in Resources */,
 				1F14D6191CC6059100410EC0 /* tomorrow1.png in Resources */,
 				183075E41C97D49A00B7665E /* back_image.png in Resources */,
 				183074481C97D17900B7665E /* ios-social-sdk-socialbar.html in Resources */,
