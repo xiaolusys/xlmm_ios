@@ -25,6 +25,7 @@ XLMM/
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
+*.swp
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
