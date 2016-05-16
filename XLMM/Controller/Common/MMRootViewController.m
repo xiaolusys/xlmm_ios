@@ -843,6 +843,9 @@ static NSString *kbrandCell = @"brandCell";
     [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     [currentArr removeAllObjects];
+    
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection reloadData];
 
     [self goodsRequest];
 }
@@ -906,7 +909,7 @@ static NSString *kbrandCell = @"brandCell";
 
 - (void)goodsRequest{
     NSString *currentUrl = self.urlArr[self.currentIndex];
-    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,self.currentIndex);
+    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
@@ -923,7 +926,7 @@ static NSString *kbrandCell = @"brandCell";
         NSLog(@"goodsResult NEXT=null");
     }else {
         [self.nextdic setObject:[dic objectForKey:@"next"] forKey:self.dickey[self.currentIndex]];
-        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], self.currentIndex);
+        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
     }
     
     NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
@@ -944,7 +947,7 @@ static NSString *kbrandCell = @"brandCell";
     if ((results == nil) || (results.count == 0)) {
         return;
     }
-    NSLog(@"result count=%ld", results.count );
+    NSLog(@"result count=%ld", (unsigned long)results.count );
     
     //判断在数据源字典中是否有对应的数组
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
@@ -963,9 +966,15 @@ static NSString *kbrandCell = @"brandCell";
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     
     if(numArray != nil){
-        [collection insertItemsAtIndexPaths:numArray];
-        [numArray removeAllObjects];
-        numArray = nil;
+        @try{
+            [collection insertItemsAtIndexPaths:numArray];
+            [numArray removeAllObjects];
+            numArray = nil;
+        }
+        @catch(NSException *except)
+        {
+            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        }
     }
 
     [collection reloadData];
@@ -1332,7 +1341,7 @@ static NSString *kbrandCell = @"brandCell";
 //
 //    }
 //    else{
-//        return CGSizeMake(SCREENWIDTH, 10);
+//        return CGSizeMake(SCREENWIDTH, 30);
 //    }
 //}
 
