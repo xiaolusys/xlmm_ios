@@ -29,7 +29,7 @@
 #import "MobClick.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMAdvertiseView.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "HuodongCollectionViewCell.h"
 #import "WXLoginController.h"
 #import "MobClick.h"
@@ -640,7 +640,7 @@ static NSString *khuodongCell = @"HuodongCell";
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
-        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        WebViewController *huodongVC = [[WebViewController alloc] init];
         
         huodongVC.diction = huodongJson;
         
@@ -650,7 +650,7 @@ static NSString *khuodongCell = @"HuodongCell";
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            WebViewController *huodongVC = [[WebViewController alloc] init];
             
             huodongVC.diction = huodongJson;
             
@@ -1419,7 +1419,7 @@ static NSString *khuodongCell = @"HuodongCell";
             
             if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                 
-                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                WebViewController *huodongVC = [[WebViewController alloc] init];
                 
                 huodongVC.diction = huodongJson;
                 
@@ -1481,7 +1481,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 
                 if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                     
-                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    WebViewController *huodongVC = [[WebViewController alloc] init];
                     
                     huodongVC.diction = huodongJson;
                     

@@ -35,7 +35,7 @@
 #import "MMAdvertiseView.h"
 #import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
@@ -1122,7 +1122,7 @@ static NSString *kbrandCell = @"brandCell";
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        WebViewController *huodongVC = [[WebViewController alloc] init];
         huodongVC.diction = dic;
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
@@ -1130,7 +1130,7 @@ static NSString *kbrandCell = @"brandCell";
             LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            WebViewController *huodongVC = [[WebViewController alloc] init];
             huodongVC.diction = dic;
             [self.navigationController pushViewController:huodongVC animated:YES];
         }

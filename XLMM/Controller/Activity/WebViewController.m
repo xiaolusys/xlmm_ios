@@ -6,7 +6,7 @@
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "UMSocial.h"
@@ -32,7 +32,7 @@
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
 
-@interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+@interface WebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 
 @property (nonatomic, strong) UIWebView *shareWebView;
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
@@ -59,7 +59,7 @@
 @property (nonatomic, strong)NSDictionary *nativeShare;
 @end
 
-@implementation HuodongViewController{
+@implementation WebViewController{
     UIImage *shareImage;
     NSString *content;
     NSString *shareTitle;
