@@ -106,7 +106,7 @@ extern NSString *Root_URL;
 #define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
 #define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
 
-//  http://m.xiaolumeimei.com/mall/#/faq
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 #endif
 
