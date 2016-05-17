@@ -10,4 +10,7 @@
 
 @interface JMAuthcodeViewController : UIViewController
 
+@property (strong,nonatomic) NSDictionary *config;
+
+
 @end

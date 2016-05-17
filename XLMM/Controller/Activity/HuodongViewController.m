@@ -27,7 +27,7 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
-#import "JMLoginViewVontroller.h"
+#import "JMLoginViewController.h"
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
@@ -396,7 +396,7 @@
     
     if ([pageUrl isEqualToString:@"http://m.xiaolumeimei.com/sale/promotion/activity/"]) {
         
-        JMLoginViewVontroller *logVC = [[JMLoginViewVontroller alloc] init];
+        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
         
         [self.navigationController pushViewController:logVC animated:YES];
         

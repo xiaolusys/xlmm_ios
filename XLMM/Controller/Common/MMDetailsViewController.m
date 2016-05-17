@@ -8,7 +8,7 @@
 
 #import "MMDetailsViewController.h"
 #import "MMDetailsModel.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
 #import "AFNetworking.h"
@@ -476,7 +476,7 @@
 //        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
 //        if (data == nil || [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == NO) {
 //            
-//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+//            JMLogInViewController *loginVC = [[JMLogInViewController alloc] initWithNibName:@"JMLogInViewController" bundle:nil];
 //            [self.navigationController pushViewController:loginVC animated:YES];
 //            return;
 //            
@@ -554,7 +554,7 @@
 - (void)cartClicked:(UIButton *)btn{
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
@@ -929,7 +929,7 @@
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
    // NSLog(@"islogin = %d", islogin);
     if (islogin == NO) {
-        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
@@ -1001,7 +1001,7 @@
                 NSString *detailString = [detail objectForKey:@"detail"];
                 if ([detailString isEqualToString:@"Authentication credentials were not provided."]) {
                     NSLog(@"login");
-                    LogInViewController *login = [[LogInViewController alloc] init];
+                    JMLogInViewController *login = [[JMLogInViewController alloc] init];
                     [self.navigationController pushViewController:login animated:YES];
                     
                     return ;
@@ -1176,7 +1176,7 @@
     
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }

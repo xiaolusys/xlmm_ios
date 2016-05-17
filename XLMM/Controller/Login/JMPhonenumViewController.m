@@ -15,27 +15,23 @@
 #import "AFNetworking.h"
 #import "MiPushSDK.h"
 #import "VerifyPhoneViewController.h"
-
+#import "JMLineView.h"
 
 
 #define rememberPwdKey @"rememberPwd"
 
 @interface JMPhonenumViewController ()<UITextFieldDelegate>
 
-@property (nonatomic,strong) UIView *headView;
+@property (nonatomic,strong) JMLineView *lineView;
 
 @property (nonatomic,strong) UIView *bottomView;
-
 
 @property (nonatomic,strong) UITextField *phoneNumTextF;
 
 @property (nonatomic,strong) UITextField *passwordTextF;
 
-@property (nonatomic,strong) UIView *centerLineView;
-
 //是否可以查看密码的按钮
 @property (nonatomic,strong) UIButton *isSeePwdBtn;
-
 
 @property (nonatomic,strong) UIButton *rememberPwdBtn;
 
@@ -59,7 +55,16 @@
 
 - (void)viewDidLoad {
     
-    [self createNavigationBarWithTitle:@"手机号登录" selecotr:@selector(btnClicked:)];
+    [super viewDidLoad];
+    JMLineView *lineView = [[JMLineView alloc] init];
+    lineView.backgroundColor = [UIColor whiteColor];
+    lineView.frame  = self.view.frame;
+    self.lineView = lineView;
+    [self.view addSubview:lineView];
+    [lineView setNeedsDisplay];
+    
+    
+    [self createNavigationBarWithTitle:@"手机号登录" selecotr:@selector(btnClickedLogin:)];
     
     [self prepareUI];
     [self prepareInitUI];
@@ -74,74 +79,69 @@
         self.passwordTextF.text = [defaults objectForKey:kPassWord];
     }
     
-    [self textChange];
+//    [self textChange];
+
     
 }
 
 
 
 - (void)prepareUI {
-    
-    /**
-     底部视图控件
-     */
-    UIView *headView  = [[UIView alloc] init];
-    [self.view addSubview:headView];
-    self.headView = headView;
-    
-    
+  
     UIView *bottomView = [UIView new];
-    [self.view addSubview:bottomView];
+    [self.lineView addSubview:bottomView];
     self.bottomView = bottomView;
-    
-    /**
-     分割线 控件
-     
-     - returns:
-     */
-    UIView *centerLineView  = [[UIView alloc] init];
-    [self.headView addSubview:centerLineView];
-    self.centerLineView = centerLineView;
-    
-    
-    //    UIView *forgetPwdBottomView = [UIView new];
-    //    [self.bottomView addSubview:forgetPwdBottomView];
-    //    self.forgetPwdBottomView = forgetPwdBottomView;
+    bottomView.backgroundColor = [UIColor lineGrayColor];
     
     /**
      文本框控件
      */
     UITextField *phoneNumTextF  = [[UITextField alloc] init];
-    [self.headView addSubview:phoneNumTextF];
+    [self.lineView addSubview:phoneNumTextF];
     self.phoneNumTextF = phoneNumTextF;
     self.phoneNumTextF.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextF.leftViewMode = UITextFieldViewModeAlways;
+    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeAlways;
     self.phoneNumTextF.font = [UIFont systemFontOfSize:14.];
-    self.phoneNumTextF.placeholder = @"手机号";
+    self.phoneNumTextF.placeholder = @"请输入手机号";
     self.phoneNumTextF.delegate = self;
     
     
     UITextField *passwordTextF = [UITextField new];
-    [self.headView addSubview:passwordTextF];
+    [self.lineView addSubview:passwordTextF];
     self.passwordTextF = passwordTextF;
     self.passwordTextF.keyboardType = UIKeyboardTypeNumberPad;
     self.passwordTextF.leftViewMode = UITextFieldViewModeAlways;
+    self.passwordTextF.clearButtonMode = UITextFieldViewModeAlways;
     self.passwordTextF.font = [UIFont systemFontOfSize:14.];
-    self.passwordTextF.placeholder = @"手机号";
+    self.passwordTextF.placeholder = @"请输入登录密码";
     self.passwordTextF.delegate = self;
+    self.passwordTextF.secureTextEntry = YES;
     
     
     /**
      按钮控件
      */
-    UIButton *isSeePwdBtn  = [[UIButton alloc] init];
-    [self.headView addSubview:isSeePwdBtn];
+    UIButton *isSeePwdBtn  = [UIButton new];
+    [self.lineView addSubview:isSeePwdBtn];
     self.isSeePwdBtn = isSeePwdBtn;
+    [isSeePwdBtn setImage:[UIImage imageNamed:@"hide_passwd_icon"] forState:UIControlStateNormal];
     [isSeePwdBtn addTarget:self action:@selector(seePasswordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     UIButton *rememberPwdBtn = [UIButton new];
     [self.bottomView addSubview:rememberPwdBtn];
     self.rememberPwdBtn = rememberPwdBtn;
+    [rememberPwdBtn setAdjustsImageWhenHighlighted:NO];
+    [rememberPwdBtn setImage:[UIImage imageNamed:@"success_Image_nomal"] forState:UIControlStateNormal];
+    [rememberPwdBtn setImage:[UIImage imageNamed:@"success_Image"] forState:UIControlStateSelected];
+    [rememberPwdBtn setTitle:@"记住密码" forState:UIControlStateNormal];
+    [rememberPwdBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    rememberPwdBtn.titleLabel.font = [UIFont systemFontOfSize:13.];
+    rememberPwdBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);//调整图片文字间距
+    [rememberPwdBtn addTarget:self action:@selector(remenberClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     UIButton *forgetPwdBtn  = [[UIButton alloc] init];
     [self.bottomView addSubview:forgetPwdBtn];
@@ -153,8 +153,10 @@
     [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange];
     [forgetPwdBtn setAttributedTitle:title forState:UIControlStateNormal];
     [forgetPwdBtn.titleLabel setFont:[UIFont systemFontOfSize:13.]];
-    [forgetPwdBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    forgetPwdBtn.titleLabel.textColor = [UIColor colorWithRed:86/255. green:195/255. blue:241/255. alpha:1.];
     [forgetPwdBtn addTarget:self action:@selector(forgetPasswordClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     UIButton *loginBtn = [UIButton new];
     [self.bottomView addSubview:loginBtn];
@@ -165,6 +167,16 @@
     
 }
 
+#pragma mark --- 记住密码按钮的点击
+- (void)remenberClick:(UIButton *)sender {
+    
+    if (self.rememberPwdBtn.selected) {
+        self.rememberPwdBtn.selected = NO;
+    }else {
+        self.rememberPwdBtn.selected = YES;
+    }
+    
+}
 
 #pragma mark ----- 保存记住密码按钮的数据到用户偏好设置
 - (void)saveRememberPwdBtn {
@@ -280,8 +292,27 @@
 
 
 
-- (void)btnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+
+
+
+#pragma mark ----- 是否显示密码明文或者暗文
+- (void)seePasswordButtonClicked:(UIButton *)sender {
+    
+//    if (self.passwordTextF.secureTextEntry) {
+//        self.isSeePwdBtn.selected = NO;
+//    } else {
+//        self.isSeePwdBtn.selected = YES;
+//    }
+//    self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
+    UIImage *image = nil;
+    if (self.passwordTextF.secureTextEntry) {
+        image = [UIImage imageNamed:@"display_passwd_icon.png"];
+    } else {
+        image = [UIImage imageNamed:@"hide_passwd_icon.png"];
+    }
+    [self.isSeePwdBtn setImage:image forState:UIControlStateNormal];
+    self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
+
 }
 
 #pragma mark ----- 监听文本输入框变化
@@ -291,28 +322,17 @@
     //没有值，禁用登录按钮
 }
 
-#pragma mark ----- 是否显示密码明文或者暗文
-- (void)seePasswordButtonClicked:(UIButton *)sender {
-    UIImage *image = nil;
-    if (self.passwordTextF.secureTextEntry) {
-        image = [UIImage imageNamed:@"display_passwd_icon.png"];
-    } else {
-        image = [UIImage imageNamed:@"hide_passwd_icon.png"];
-    }
-    [self.isSeePwdBtn setImage:image forState:UIControlStateNormal];
-    self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
-}
-
 #pragma mark -----UITextFieldDelegate
-
+//是否允许本字段结束编辑，允许-->文本字段会失去firse responder
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    
     return YES;
 }
-
+//输入框获得焦点，执行这个方法
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [textField becomeFirstResponder];
 }
-
+//点击键盘的返回键  执行这个方法  -- 用来隐藏键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
@@ -323,6 +343,27 @@
     [self.passwordTextF resignFirstResponder];
     
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
+//    return (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
+//    if ((self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0)) {
+//        self.loginBtn.enabled = YES;
+//    }else {
+//        self.loginBtn.enabled = NO;
+//    }
+    self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
+    
+    return YES;
+    
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    
+    self.loginBtn.enabled = NO;
+    
+    return YES;
+}
+
 
 -(void) alertMessage:(NSString*)msg
 {
@@ -349,49 +390,38 @@
 - (void)prepareInitUI {
     
     kWeakSelf
-    
-    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view).offset(64);
-        make.left.right.equalTo(weakSelf.view);
-        make.height.mas_equalTo(121);
-    }];
-    
+
     [self.phoneNumTextF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.headView);
-        make.left.equalTo(weakSelf.headView).offset(10);
-        make.right.equalTo(weakSelf.headView).offset(-10);
+        make.top.equalTo(weakSelf.lineView).offset(64);
+        make.left.equalTo(weakSelf.lineView).offset(15);
+        make.right.equalTo(weakSelf.lineView).offset(-15);
         make.height.mas_equalTo(60);
-    }];
-    
-    [self.centerLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.phoneNumTextF.mas_bottom);
-        make.left.right.equalTo(weakSelf.headView);
-        make.height.mas_equalTo(1);
     }];
     
     [self.passwordTextF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.centerLineView);
-        make.left.equalTo(weakSelf.headView).offset(10);
-        make.right.equalTo(weakSelf.isSeePwdBtn).offset(-10);
+        make.top.equalTo(weakSelf.phoneNumTextF.mas_bottom);
+        make.left.equalTo(weakSelf.lineView).offset(15);
+        make.right.equalTo(weakSelf.isSeePwdBtn.mas_left).offset(-15);
         make.height.mas_equalTo(60);
     }];
-    //密码是否可见的按钮  大小先固定为40 * 40
+    //密码是否可见的按钮
     [self.isSeePwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.centerLineView.mas_bottom).offset(10);
-        make.right.equalTo(weakSelf.headView).offset(-10);
-        make.width.height.mas_equalTo(@40);
+        make.top.equalTo(weakSelf.phoneNumTextF.mas_bottom).offset(10);
+        make.right.equalTo(weakSelf.lineView).offset(-10);
+        make.width.mas_equalTo(@40);
+        make.height.mas_equalTo(@40);
     }];
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.headView.mas_bottom);
-        make.left.right.bottom.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.passwordTextF.mas_bottom);
+        make.left.right.bottom.equalTo(weakSelf.lineView);
     }];
     
     [self.rememberPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.bottomView).offset(10);
         make.left.equalTo(weakSelf.bottomView).offset(10);
-        make.height.mas_equalTo(@30);
-        make.width.mas_equalTo(@80);
+        make.height.mas_equalTo(@25);
+        make.width.mas_equalTo(@100);
     }];
     
     [self.forgetPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -400,26 +430,21 @@
         make.height.mas_equalTo(@30);
         make.width.mas_equalTo(@80);
     }];
-    
-    //    [self.forgetPwdBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.top.equalTo(weakSelf.forgetPwdBtn).offset(1);
-    //        make.right.equalTo(weakSelf.bottomView).offset(-10);
-    //        make.height.mas_equalTo(@30);
-    //        make.width.mas_equalTo(@80);
-    //    }];
-    
+
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.rememberPwdBtn.mas_bottom).offset(30);
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.left.equalTo(weakSelf.view).offset(15);
-        make.right.equalTo(weakSelf.view).offset(-15);
-        make.height.mas_equalTo(@40);
+        make.top.equalTo(weakSelf.bottomView).offset(60);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
+        make.height.mas_equalTo(@43);
     }];
     
     
     
 }
 
+- (void)btnClickedLogin:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end
 

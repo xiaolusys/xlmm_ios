@@ -1,12 +1,12 @@
 //
-//  JMLoginViewVontroller.m
+//  JMLoginViewController.m
 //  XLMM
 //
 //  Created by zhang on 16/5/14.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "JMLoginViewVontroller.h"
+#import "JMLogInViewController.h"
 #import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
@@ -23,7 +23,7 @@
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 
-@interface JMLoginViewVontroller ()
+@interface JMLogInViewController ()
 
 @property (nonatomic,strong) UIView *headView;
 
@@ -42,7 +42,7 @@
 
 @end
 
-@implementation JMLoginViewVontroller {
+@implementation JMLogInViewController {
     NSMutableString *randomstring;
     NSDictionary *dic;
     NSString *phoneNumber;
@@ -82,45 +82,54 @@
     UIView *headView = [[UIView alloc] init];
     [self.view addSubview:headView];
     self.headView = headView;
+    //显示一张背景图 -- 也可以使用一个uiimageView
+//    self.headView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@""]];
+    self.headView.backgroundColor = [UIColor redColor];
+    
     
     UIView *bottomView = [[UIView alloc] init];
-    [self.view addSubview:bottomView];
+    [self.headView addSubview:bottomView];
     self.bottomView = bottomView;
+    self.bottomView.backgroundColor = [UIColor orangeColor];
     
     //========微信登录按钮
     
     UIButton *wechatBtn = [[UIButton alloc] init];
-    [self.view addSubview:wechatBtn];
+    [self.bottomView addSubview:wechatBtn];
     self.wechatBtn = wechatBtn;
     //    [wechatBtn addTarget:self action:@selector() forControlEvents:UIControlEventTouchUpInside];
-    
+    wechatBtn.backgroundColor = [UIColor greenColor];
     
     // ===== 手机号登录按钮
     UIButton *phoneNumBtn = [[UIButton alloc] init];
-    [self.view addSubview:phoneNumBtn];
+    [self.bottomView addSubview:phoneNumBtn];
     self.phoneNumBtn = phoneNumBtn;
     [phoneNumBtn addTarget:self action:@selector(jumpToPhoneLoginVC:) forControlEvents:UIControlEventTouchUpInside];
-    
+    phoneNumBtn.backgroundColor = [UIColor greenColor];
+
     
     
     // ==== 验证码登录按钮
     UIButton *captchaBtn = [[UIButton alloc] init];
-    [self.view addSubview:captchaBtn];
+    [self.bottomView addSubview:captchaBtn];
     self.captchaBtn = captchaBtn;
     [captchaBtn addTarget:self action:@selector(jumpToAuthcodeLoginVC:) forControlEvents:UIControlEventTouchUpInside];
-    
+    captchaBtn.backgroundColor = [UIColor greenColor];
+
     
     // ==== 注册登录按钮
     UIButton *registerBtn = [[UIButton alloc] init];
-    [self.view addSubview:registerBtn];
+    [self.bottomView addSubview:registerBtn];
     self.registerBtn = registerBtn;
     [registerBtn addTarget:self action:@selector(jumpToRegisterVC:) forControlEvents:UIControlEventTouchUpInside];
-    
+    registerBtn.backgroundColor = [UIColor greenColor];
+
     
     UIView *lineView = [[UIView alloc] init];
-    [self.view addSubview:lineView];
+    [self.bottomView addSubview:lineView];
     self.lineView = lineView;
-    
+    lineView.backgroundColor = [UIColor redColor];
+
     
     
     
@@ -226,6 +235,8 @@
     
     JMAuthcodeViewController *authL = [[JMAuthcodeViewController alloc] init];
     
+    authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
+
     [self.navigationController pushViewController:authL animated:YES];
     
 }
@@ -318,45 +329,49 @@
 - (void)initAutolayout {
     
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.width.mas_offset(SCREENWIDTH);
-        make.height.mas_offset(SCREENWIDTH/5*6);
+        make.top.left.equalTo(self.view);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(SCREENHEIGHT);
     }];
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_offset(self.headView.mas_bottom);
-        make.width.mas_offset(SCREENWIDTH);
-        make.bottom.mas_offset(self.view.mas_bottom);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.bottom.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.height.mas_equalTo(200);
     }];
     
     [self.wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(30);
-        make.left.equalTo(self.view.mas_left).offset(15);
-        make.right.equalTo(self.view.mas_right).offset(15);
+        make.top.equalTo(self.bottomView).offset(30);
+        make.centerX.equalTo(self.bottomView.mas_centerX);
+        make.height.mas_equalTo(@43);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
     }];
     
     
     [self.phoneNumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_left).offset(15);
+        make.top.equalTo(self.wechatBtn.mas_bottom).offset(15);
         make.left.equalTo(self.wechatBtn.mas_left);
-        make.right.equalTo(self.wechatBtn.mas_centerX).offset(-25);
+        make.right.equalTo(self.wechatBtn.mas_centerX).offset(-25/2);
+        make.height.mas_equalTo(@43);
     }];
     
     [self.captchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.phoneNumBtn.mas_top);
-        make.right.equalTo(self.view.mas_right).offset(-15);
-        make.left.equalTo(self.wechatBtn.mas_centerX).offset(25);
+        make.top.equalTo(self.phoneNumBtn);
+        make.right.equalTo(self.wechatBtn.mas_right);
+        make.left.equalTo(self.wechatBtn.mas_centerX).offset(25/2);
+        make.height.mas_equalTo(@43);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.phoneNumBtn.mas_bottom).offset(25);
-        make.width.mas_offset(SCREENWIDTH);
-        make.height.mas_offset(@(1/2));
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@(1/2));
     }];
     
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lineView.mas_bottom).offset(15);
-        make.width.mas_offset(SCREENWIDTH);
+        make.top.equalTo(self.lineView.mas_bottom);
+        make.width.mas_equalTo(SCREENWIDTH);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
     
