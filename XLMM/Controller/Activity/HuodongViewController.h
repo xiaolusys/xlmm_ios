@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonWebViewViewController.h"
 
-@interface HuodongViewController : UIViewController
+@interface HuodongViewController : CommonWebViewViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @property (nonatomic, strong) NSDictionary *diction;
 
 @property (nonatomic, strong)NSString *eventLink;
 
-@property (nonatomic, strong)NSString *titleName;
 
 @end

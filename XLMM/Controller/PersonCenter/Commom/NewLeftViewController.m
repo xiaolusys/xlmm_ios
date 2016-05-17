@@ -451,9 +451,7 @@
 
 - (IBAction)commonProblemBtnAction:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] init];
-        common.titleName = @"常见问题";
-        common.loadLink = COMMONPROBLEM_URL;
+        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:common];
