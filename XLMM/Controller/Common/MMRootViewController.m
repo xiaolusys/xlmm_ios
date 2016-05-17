@@ -140,6 +140,10 @@
 @property (nonatomic, strong)NSMutableDictionary *nextdic;
 @property (nonatomic, strong)NSMutableArray *endTime;
 
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *trackViewUrl1;
+@property (nonatomic, copy) NSString *trackName;
+
 @end
 
 
@@ -539,7 +543,7 @@ static NSString *kbrandCell = @"brandCell";
     self.backScrollview.mj_header = header;
 
     
-
+    [self autoUpdateVersion];
     
 
 //    
@@ -1731,7 +1735,6 @@ static NSString *kbrandCell = @"brandCell";
 
     //[self.view addSubview:view];
 }
-#pragma mark 设置购物车数量
 
 
 - (void)setLabelNumber{
@@ -2049,5 +2052,58 @@ static NSString *kbrandCell = @"brandCell";
 
 - (IBAction)todayBtnClick:(id)sender {
     [self categoryBtnClick:sender];
+}
+
+#pragma mark 版本 自动升级
+- (void)autoUpdateVersion{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self fetchedUpdateData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+}
+
+- (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if ([reluts count] == 0) return;
+    NSDictionary *infoDic = reluts[0];
+    
+    
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    double doubleCurrentVersion = [app_Version doubleValue];
+    
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
+    }
 }
 @end
