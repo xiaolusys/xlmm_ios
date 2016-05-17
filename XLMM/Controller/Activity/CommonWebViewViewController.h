@@ -13,4 +13,5 @@
 @property (nonatomic, strong)NSString *loadLink;
 @property (nonatomic, strong)NSString *titleName;
 
+- (instancetype)initWithUrl:(NSString *)url title:(NSString *)titleName;
 @end

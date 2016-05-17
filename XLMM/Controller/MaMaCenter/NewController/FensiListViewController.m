@@ -149,9 +149,7 @@
 }
 
 - (void)AboutFansClick {
-    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] init];
-    common.titleName = @"关于粉丝";
-    common.loadLink = ABOUTFANS_URL;
+    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:ABOUTFANS_URL title:@"关于粉丝"];
     [self.navigationController pushViewController:common animated:YES];
 }
 
