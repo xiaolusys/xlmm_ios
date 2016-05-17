@@ -19,6 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *loginIngoLabel;
 
+@property (nonatomic, strong)NSString *returnUrl;
+
 - (IBAction)loginClicked:(UIButton *)sender;
 - (IBAction)registerClicked:(UIButton *)sender;
 - (IBAction)verifyMessageClicked:(id)sender;

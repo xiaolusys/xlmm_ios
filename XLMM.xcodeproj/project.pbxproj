@@ -797,6 +797,7 @@
 		3A0B6C6C1CEB21D00052894D /* NSURL+QueryDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C671CEB21D00052894D /* NSURL+QueryDictionary.m */; };
 		3A0B6C6D1CEB21D00052894D /* PontoBaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C691CEB21D00052894D /* PontoBaseHandler.m */; };
 		3A0B6C6E1CEB21D00052894D /* PontoDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C6B1CEB21D00052894D /* PontoDispatcher.m */; };
+		3A0B6C711CEB26F10052894D /* JimeiPontoUiPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C701CEB26F10052894D /* JimeiPontoUiPlugin.m */; };
 		3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */; };
 		3A1E05911CE1C3FB001018AC /* LGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E057D1CE1C3FB001018AC /* LGButton.m */; };
 		3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05801CE1C3FB001018AC /* LGLabel.m */; };
@@ -1960,6 +1961,8 @@
 		3A0B6C691CEB21D00052894D /* PontoBaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PontoBaseHandler.m; sourceTree = "<group>"; };
 		3A0B6C6A1CEB21D00052894D /* PontoDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PontoDispatcher.h; sourceTree = "<group>"; };
 		3A0B6C6B1CEB21D00052894D /* PontoDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PontoDispatcher.m; sourceTree = "<group>"; };
+		3A0B6C6F1CEB26F10052894D /* JimeiPontoUiPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JimeiPontoUiPlugin.h; sourceTree = "<group>"; };
+		3A0B6C701CEB26F10052894D /* JimeiPontoUiPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JimeiPontoUiPlugin.m; sourceTree = "<group>"; };
 		3A1E051E1CE1B208001018AC /* DebugSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSettingViewController.h; sourceTree = "<group>"; };
 		3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugSettingViewController.m; sourceTree = "<group>"; };
 		3A1E057C1CE1C3FB001018AC /* LGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGButton.h; sourceTree = "<group>"; };
@@ -4109,6 +4112,8 @@
 				3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */,
 				3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */,
 				3ABCA54E1CD8F468007D5145 /* ImageUtils.h */,
+				3A0B6C6F1CEB26F10052894D /* JimeiPontoUiPlugin.h */,
+				3A0B6C701CEB26F10052894D /* JimeiPontoUiPlugin.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4931,6 +4936,7 @@
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
 				3A0B6C6E1CEB21D00052894D /* PontoDispatcher.m in Sources */,
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
+				3A0B6C711CEB26F10052894D /* JimeiPontoUiPlugin.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
 				18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */,
