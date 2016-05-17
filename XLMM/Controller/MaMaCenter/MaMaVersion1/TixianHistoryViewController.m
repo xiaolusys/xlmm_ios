@@ -81,29 +81,41 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 - (void)downloadData{
-    NSInteger page = 2;
+    NSInteger page = 1;
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,page];
     NSLog(@"string = %@", self.nextString);
-    [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+//    [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
     
     
     [SVProgressHUD showWithStatus:@"疯狂加载中....."];
 
-    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:self.nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [SVProgressHUD dismiss];
+        if (!responseObject) return;
+        
+        [self fetchedHistoryData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+    }];
+
     
     
 }
 
-- (void)fetchedHistoryData:(NSData *)data{
+- (void)fetchedHistoryData:(NSDictionary *)data{
     if (data== nil) {
         return;
     }
-    NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error!= nil) {
-        NSLog(@"error = %@", error.description);
-        
-    }
+//    NSError *error = nil;
+//    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//    
+//    if (error!= nil) {
+//        NSLog(@"error = %@", error.description);
+//        
+//    }
+    
+    NSDictionary *dicJson = data;
     
 
  //   NSLog(@"json = %@", dicJson);
@@ -118,7 +130,18 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     if ([self.nextString class] == [NSNull class]) {
         [self.tableView reloadData];
     } else {
-        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+//        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+        
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:self.nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (!responseObject) return;
+            
+            [self fetchedHistoryData:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+        }];
+
     }
     
 
@@ -129,16 +152,16 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     
 }
 
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-
-    });
-}
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//
+//    });
+//}
 
 - (void)createTableView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -172,7 +195,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TixianTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentify];
     
-    [SVProgressHUD dismiss];
+
 
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

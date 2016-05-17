@@ -1308,8 +1308,10 @@ static NSString *kbrandCell = @"brandCell";
             //NSLog(@"%@",obj);
             if(index == collectionView.tag - TAG_COLLECTION_BRAND){
                 NSArray *goods = [obj copy];
-                BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-                [cell fillDataWithModel:model];
+                if(goods.count > indexPath.row){
+                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                    [cell fillDataWithModel:model];
+                }
                 return cell;
 
             }

@@ -86,7 +86,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         
         if (!responseObject) return;
         
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+        [self fetchedRefundData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -120,7 +120,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 
-- (void)fetchedWaipayData:(NSDictionary *)data{
+- (void)fetchedRefundData:(NSDictionary *)data{
 
     NSLog(@"11");
     
