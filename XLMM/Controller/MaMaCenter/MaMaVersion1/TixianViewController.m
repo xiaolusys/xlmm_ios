@@ -424,7 +424,6 @@
         }];
     }else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        ////http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=100
         NSInteger numMoney = 0;
         if (_oneHunderBtn.selected == YES) {
             numMoney = 100;
@@ -433,11 +432,7 @@
         }
         
         NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
-        
-        
-        
         //        NSDictionary *paramters = @{@"choice":@"cashout_amount"};
-        
         [manager POST:stringurl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
             
@@ -518,25 +513,7 @@
         make.width.mas_equalTo(@300);
         make.height.mas_equalTo(@18);
     }];
-    
-    /***
-     提现选择钱包
-     
-     *******/
-    //    [self.xiaoluBackImage mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.top.equalTo(self.blanceBottomView.mas_bottom);
-    //        make.left.equalTo(self.view);
-    //        make.width.mas_equalTo(SCREENWIDTH);
-    //        make.height.mas_equalTo(@60);
-    //    }];
-    //
-    //    [self.weixinBackImage mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.top.equalTo(self.firstLine.mas_bottom);
-    //        make.left.equalTo(self.view);
-    //        make.width.mas_equalTo(SCREENWIDTH);
-    //        make.height.mas_equalTo(@60);
-    //    }];
-    
+
     [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.blanceBottomView.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
