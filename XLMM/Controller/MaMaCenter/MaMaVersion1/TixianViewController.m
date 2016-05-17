@@ -60,6 +60,7 @@
 
 @property (nonatomic,assign) BOOL isSelecterPay;
 
+
 @end
 
 @implementation TixianViewController{
@@ -75,6 +76,7 @@
     NSInteger _active;
     
 }
+
 - (NSMutableArray *)buttonArray {
     if (_buttonArray == nil) {
         _buttonArray = [NSMutableArray array];
@@ -257,7 +259,6 @@
 #pragma mark ---   选择提现金额按钮点击事件
 - (void)withdrawMoneyClick:(UIButton *)button {
     if (button.tag == 100) {
-        type  = @"";
         ishongbao1Opened = !ishongbao1Opened;
         if (ishongbao1Opened) {
             type = @"c1";
@@ -271,11 +272,10 @@
                 _oneHunderBtn.selected = YES;
             }
         }else {
-            type = nil;
+//            type = nil;
             _oneHunderBtn.selected = YES;
         }
     }else if (button.tag == 101) {
-        type = @"";
         ishongbao2Opened = !ishongbao2Opened;
         if (ishongbao2Opened) {
             type = @"c2";
@@ -289,7 +289,7 @@
                 _twoHUnderBtn.selected = YES;
             }
         }else {
-            type = nil;
+//            type = nil;
             _twoHUnderBtn.selected = YES;
         }
     }
@@ -354,6 +354,8 @@
     [self createWithdraw];
     [self createAutolayouts];
     [self createRightButonItem];
+    
+    type = @"";
 }
 #pragma mark ---- 导航栏右侧体现历史
 - (void) createRightButonItem{
@@ -396,9 +398,18 @@
         
         NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
         
-        NSDictionary *paramters = @{@"choice":type};
+        NSDictionary *paramters = [[NSDictionary alloc] init];
+        if (type != nil) {
+            paramters = @{@"choice":type};
+        }else {
+            return ;
+        }
         
         [manager POST:stringurl parameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            if (responseObject == nil) {
+                return ;
+            }
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
             
             if (code == 0) {
@@ -434,6 +445,9 @@
         NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
         //        NSDictionary *paramters = @{@"choice":@"cashout_amount"};
         [manager POST:stringurl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (responseObject == nil) {
+                return ;
+            }
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
             
             if (code == 0) {
