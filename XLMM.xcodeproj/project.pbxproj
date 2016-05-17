@@ -794,6 +794,9 @@
 		32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */; };
 		32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */; };
 		32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F3D9751B6CCF83008530BA /* CoreLocation.framework */; };
+		3A0B6C6C1CEB21D00052894D /* NSURL+QueryDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C671CEB21D00052894D /* NSURL+QueryDictionary.m */; };
+		3A0B6C6D1CEB21D00052894D /* PontoBaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C691CEB21D00052894D /* PontoBaseHandler.m */; };
+		3A0B6C6E1CEB21D00052894D /* PontoDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B6C6B1CEB21D00052894D /* PontoDispatcher.m */; };
 		3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */; };
 		3A1E05911CE1C3FB001018AC /* LGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E057D1CE1C3FB001018AC /* LGButton.m */; };
 		3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E05801CE1C3FB001018AC /* LGLabel.m */; };
@@ -1951,6 +1954,12 @@
 		32F3D9711B6CCBDC008530BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F3D9731B6CCBEE008530BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32F3D9751B6CCF83008530BA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3A0B6C661CEB21D00052894D /* NSURL+QueryDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryDictionary.h"; sourceTree = "<group>"; };
+		3A0B6C671CEB21D00052894D /* NSURL+QueryDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryDictionary.m"; sourceTree = "<group>"; };
+		3A0B6C681CEB21D00052894D /* PontoBaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PontoBaseHandler.h; sourceTree = "<group>"; };
+		3A0B6C691CEB21D00052894D /* PontoBaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PontoBaseHandler.m; sourceTree = "<group>"; };
+		3A0B6C6A1CEB21D00052894D /* PontoDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PontoDispatcher.h; sourceTree = "<group>"; };
+		3A0B6C6B1CEB21D00052894D /* PontoDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PontoDispatcher.m; sourceTree = "<group>"; };
 		3A1E051E1CE1B208001018AC /* DebugSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSettingViewController.h; sourceTree = "<group>"; };
 		3A1E051F1CE1B208001018AC /* DebugSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugSettingViewController.m; sourceTree = "<group>"; };
 		3A1E057C1CE1C3FB001018AC /* LGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGButton.h; sourceTree = "<group>"; };
@@ -2745,6 +2754,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				3A0B6C651CEB21D00052894D /* PontoLib */,
 				1F4160F71CE31A4400F78C0D /* Masonry */,
 				3A1E057A1CE1C3FB001018AC /* LGViews */,
 				184FCFBA1CA6699C00F8FC94 /* Source */,
@@ -4015,6 +4025,19 @@
 			name = framework;
 			sourceTree = "<group>";
 		};
+		3A0B6C651CEB21D00052894D /* PontoLib */ = {
+			isa = PBXGroup;
+			children = (
+				3A0B6C661CEB21D00052894D /* NSURL+QueryDictionary.h */,
+				3A0B6C671CEB21D00052894D /* NSURL+QueryDictionary.m */,
+				3A0B6C681CEB21D00052894D /* PontoBaseHandler.h */,
+				3A0B6C691CEB21D00052894D /* PontoBaseHandler.m */,
+				3A0B6C6A1CEB21D00052894D /* PontoDispatcher.h */,
+				3A0B6C6B1CEB21D00052894D /* PontoDispatcher.m */,
+			);
+			path = PontoLib;
+			sourceTree = "<group>";
+		};
 		3A1E057A1CE1C3FB001018AC /* LGViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -4873,6 +4896,7 @@
 				1F4161121CE31A4400F78C0D /* MASLayoutConstraint.m in Sources */,
 				1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */,
 				183071F61C97BE3700B7665E /* VerifyPhoneViewController.m in Sources */,
+				3A0B6C6D1CEB21D00052894D /* PontoBaseHandler.m in Sources */,
 				1830722B1C97BE3700B7665E /* ChangeNicknameViewController.m in Sources */,
 				1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */,
 				183072111C97BE3700B7665E /* MamaActivityViewController.m in Sources */,
@@ -4905,6 +4929,7 @@
 				3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */,
 				183072381C97BE3700B7665E /* YouHuiQuanViewController.m in Sources */,
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
+				3A0B6C6E1CEB21D00052894D /* PontoDispatcher.m in Sources */,
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -4922,6 +4947,7 @@
 				183073EA1C97D17800B7665E /* MJRefreshAutoFooter.m in Sources */,
 				183070E41C97B83900B7665E /* FanceModel.m in Sources */,
 				183070D81C97B83900B7665E /* LiJiBuyModel.m in Sources */,
+				3A0B6C6C1CEB21D00052894D /* NSURL+QueryDictionary.m in Sources */,
 				183072521C97BE3700B7665E /* WuliuCompanyController.m in Sources */,
 				183070DA1C97B83900B7665E /* NewCartsModel.m in Sources */,
 				325B799E1C97E6F10022F930 /* PeopleCollectionCell.m in Sources */,

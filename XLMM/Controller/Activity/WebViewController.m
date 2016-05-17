@@ -57,6 +57,8 @@
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
+
+@property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 @end
 
 @implementation WebViewController{
@@ -140,6 +142,9 @@
     [self.webView loadRequest:request];
     
     [self updateUserAgent];
+    
+    //2016-5-17 use new universe ponto lib, js register not need any more
+    self.pontoDispatcher = [[PontoDispatcher alloc] initWithHandlerClassesPrefix:@"JimeiPonto" andWebView:self.webView];
     
     [WebViewJavascriptBridge enableLogging];
     
