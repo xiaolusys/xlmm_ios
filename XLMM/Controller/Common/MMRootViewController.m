@@ -631,7 +631,7 @@ static NSString *kbrandCell = @"brandCell";
         //添加上拉加载
         homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
-            NSLog(@"MJFresh nextstr %@",nextStr);
+            NSLog(@"MJFresh nextstr= %@ currentindex=%ld",nextStr, (long)self.currentIndex);
             if([nextStr class] == [NSNull class]) {
                 [homeCollectionView.mj_footer endRefreshingWithNoMoreData];
                 return;
@@ -997,15 +997,24 @@ static NSString *kbrandCell = @"brandCell";
         [collection.mj_footer endRefreshingWithNoMoreData];
         return;
     }
+    
+    self.collectionViewScrollview.scrollEnabled = NO;
+
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
+        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
         if (!responseObject)return ;
         [self goodsResult:responseObject];
+        self.collectionViewScrollview.scrollEnabled = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
+        self.collectionViewScrollview.scrollEnabled = YES;
     }];
 }
 
