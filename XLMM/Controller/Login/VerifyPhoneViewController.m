@@ -12,7 +12,7 @@
 #import "UIColor+RGBColor.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-
+#import "SVProgressHUD.h"
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6
@@ -35,6 +35,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -57,6 +58,7 @@
     if ([self.config[@"isMessageLogin"] boolValue]) {
         [self.nextButton setTitle:@"提交" forState:UIControlStateNormal];
     }
+    
     [self disableNextButton];
     [self disableCodeButton];
     
@@ -185,44 +187,60 @@
 
 #pragma mark --Button Actions
 
+
+
+
 - (IBAction)obtainButtonClicked:(id)sender {
     NSLog(@"获取验证码");
-    [self startCountingDown];
-    
     NSString *phoneNumber = self.phoneNumberTextField.text;
+    NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
 
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSDictionary *parameters = nil;
-    
-    
-    NSString *stringurl = TSendCode_URL;;
-    
-    if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
-        //手机注册
-        parameters = @{@"mobile": phoneNumber, @"action":@"register"};
-    }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
-        //修改密码
-        parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
-    }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
-        //短信登录
-        parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
-    }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
-        //忘记密码
-        parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
+    if (num == 1 && phoneNumber.length == 11) {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        NSDictionary *parameters = nil;
+        
+        NSString *stringurl = TSendCode_URL;;
+        
+        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
+            //手机注册
+            parameters = @{@"mobile": phoneNumber, @"action":@"register"};
+        }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
+            //修改密码
+            parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
+        }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
+            //短信登录
+            parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
+        }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
+            //忘记密码
+            parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
+        }
+        
+        NSLog(@"url = %@", stringurl);
+        NSLog(@"paramters = %@", parameters);
+        
+        [manager POST:stringurl parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  
+                  NSInteger nums = [[responseObject objectForKey:@"rcode"] integerValue];
+                  
+                  if (nums == 0) {
+                      [self startCountingDown];
+                  }else {
+                      [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
+                  }
+                  
+                  
+              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [SVProgressHUD showErrorWithStatus:@"登录失败"];
+                  NSLog(@"Error: %@", error);
+              }];
+    }else {
+        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
     }
     
-    NSLog(@"url = %@", stringurl);
-    NSLog(@"paramters = %@", parameters);
-    
-    [manager POST:stringurl parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [self alertMessage:[responseObject objectForKey:@"msg"]];
-        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-    }];
 }
+
 
 -(void) startCountingDown
 {
@@ -386,11 +404,13 @@
     NSString *phoneNumber = self.phoneNumberTextField.text;
     
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
-        [self alertMessage:[dic objectForKey:@"msg"]];
+//        [self alertMessage:[dic objectForKey:@"msg"]];
+        [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"msg"]];
         return;
     }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
-        [self alertMessage:[dic objectForKey:@"msg"]];
+//        [self alertMessage:[dic objectForKey:@"msg"]];
+        [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"msg"]];
         //设置用户名在newLeft中使用
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user setObject:phoneNumber forKey:kUserName];

@@ -16,7 +16,7 @@
 #import "MiPushSDK.h"
 #import "VerifyPhoneViewController.h"
 #import "JMLineView.h"
-
+#import "MMRootViewController.h"
 
 #define rememberPwdKey @"rememberPwd"
 
@@ -199,10 +199,9 @@
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
     if (userName.length == 0 || password.length == 0) {
-        [self alertMessage:@"用户名或者密码为空呢"];
+        [SVProgressHUD showInfoWithStatus:@"请输入正确的信息！"];
         return;
     }
-    [SVProgressHUD showWithStatus:@"登录中....."];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"username":userName,
@@ -214,9 +213,11 @@
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
 //            [self alertMessage:[responseObject objectForKey:@"msg"]];
 //            [SVProgressHUD dismiss];
-            [SVProgressHUD showErrorWithStatus:@"输入有误！"];
+            [SVProgressHUD showInfoWithStatus:@"输入有误！"];
             return ;
         }
+        
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         // 手机登录成功 ，保存用户信息以及登录途径
         [defaults setBool:YES forKey:kIsLogin];
@@ -228,11 +229,19 @@
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
         
+        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+
+        
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         
         [self setDevice];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+       
+        NSInteger count = self.navigationController.viewControllers.count;
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 3)] animated:YES];
+        
+        
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
