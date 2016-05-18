@@ -146,41 +146,9 @@
     [self updateUserAgent];
     
     //2016-5-17 use new universe ponto lib, js register not need any more
-    self.pontoDispatcher = [[PontoDispatcher alloc] initWithHandlerClassesPrefix:@"JimeiPonto" andWebView:self.webView];
+    //self.pontoDispatcher = [[PontoDispatcher alloc] initWithHandlerClassesPrefix:@"JimeiPonto" andWebView:self.webView];
     
-    [WebViewJavascriptBridge enableLogging];
-    
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
-    
-    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jumpToJsLocation:data]; 
-    }];
-    
-    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSString *share_to = data[@"share_to"];
-        //传的参数为空调用原生的分享
-        if (share_to.length == 0) {
-            self.nativeShare = data;
-            [self rightBarButtonAction];
-            return;
-        }
-        [self shareForPlatform:data];
-    }];
-    
-//    //js调oc方法
-    [self.bridge registerHandler:@"callNativeLoginActivity" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        NSString *pageUrl = data[@"pageUrl"];
-        
-        [self jsLetiOSLoginWithData:data callBack:responseCallback];
-        
-        
-    }];
-    
-    
-    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
-       NSString *device = [self getMobileSNCode];
-        responseCallback(device);
-    }];
+    [self registerJsBridge];
 
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
@@ -700,5 +668,42 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - 注册js bridge供h5页面调用
+- (void)registerJsBridge{
+    [WebViewJavascriptBridge enableLogging];
+    
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    
+    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self jumpToJsLocation:data];
+    }];
+    
+    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSString *share_to = data[@"share_to"];
+        //传的参数为空调用原生的分享
+        if (share_to.length == 0) {
+            self.nativeShare = data;
+            [self rightBarButtonAction];
+            return;
+        }
+        [self shareForPlatform:data];
+    }];
+    
+    //    //js调oc方法
+    [self.bridge registerHandler:@"callNativeLoginActivity" handler:^(id data, WVJBResponseCallback responseCallback) {
+        //        NSString *pageUrl = data[@"pageUrl"];
+        
+        [self jsLetiOSLoginWithData:data callBack:responseCallback];
+        
+        
+    }];
+    
+    
+    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSString *device = [self getMobileSNCode];
+        responseCallback(device);
+    }];
+}
 
 @end
