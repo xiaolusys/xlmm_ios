@@ -1049,7 +1049,7 @@
     
     ani.path=aPath;
     ani.rotationMode = @"auto";
-    ani.duration=0.9;
+    ani.duration=0.8;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [view.layer addAnimation:ani forKey:@"position"];
@@ -1059,57 +1059,92 @@
          //view.frame = CGRectMake(30, height-80, 16, 16);
      } completion:^(BOOL finished) {
         [view removeFromSuperview];
-         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-         if (data != nil) {
-             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-          //   NSLog(@"%@", dic);
-             if ([dic objectForKey:@"result"] != nil) {
-                 last_created = [dic objectForKey:@"last_created"];
-                 goodsCount = [[dic objectForKey:@"result"] integerValue];
-            //     NSLog(@"%ld", (long)goodsCount);
-                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                 countLabel.text = strNum;
+         
+         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+         [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             if (!responseObject) {
+                 NSLog(@"kCart_Number_URL response nil");
+                 [self createTimeCartView];
+             }else {
+                 NSDictionary *dic = responseObject;
+                 //   NSLog(@"%@", dic);
+                 if ([dic objectForKey:@"result"] != nil) {
+                     last_created = [dic objectForKey:@"last_created"];
+                     goodsCount = [[dic objectForKey:@"result"] integerValue];
+                     //     NSLog(@"%ld", (long)goodsCount);
+                     NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                     countLabel.text = strNum;
+                 }
+
+                 [self createTimeCartView];
              }
-         }
-         [self createTimeCartView];
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"kCart_Number_URL response error");
+             [self createTimeCartView];
+         }];
+
+         
+//         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+//         if (data != nil) {
+//             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//          //   NSLog(@"%@", dic);
+//             if ([dic objectForKey:@"result"] != nil) {
+//                 last_created = [dic objectForKey:@"last_created"];
+//                 goodsCount = [[dic objectForKey:@"result"] integerValue];
+//            //     NSLog(@"%ld", (long)goodsCount);
+//                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+//                 countLabel.text = strNum;
+//             }
+//         }
+//         [self createTimeCartView];
     }];
 }
 
 - (void)createTimeCartView{
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-      //  NSLog(@"%@", dic);
-        if ([dic objectForKey:@"result"] != nil) {
-            
-            last_created = [dic objectForKey:@"last_created"];
-            goodsCount = [[dic objectForKey:@"result"] integerValue];
-           //nnnf
-            
-            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-            countLabel.text = strNum;
-            if (goodsCount >0) {
-                //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
-                [UIView animateWithDuration:0.1 animations:^{
-                    cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
-                    //        CGRect frame = self.addCartButton.frame;
-                    //        frame.origin.x = 118;
-                    //        frame.size.width = SCREENWIDTH - 126;
-                } completion:^(BOOL finished) {
-              //
-                 //   NSLog(@"显示剩余时间");
-                    [self createTimeLabel];
-                    countLabel.hidden = NO;
-                    
-                    
-                }];
-                [UIView animateWithDuration:0.5 animations:^{
-                    self.leftWidth.constant = 118;
-                    
-                }];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            NSLog(@"kCart_Number_URL response nil");
+        }else {
+            NSDictionary *dic = responseObject;
+            //  NSLog(@"%@", dic);
+            if ([dic objectForKey:@"result"] != nil) {
+                
+                last_created = [dic objectForKey:@"last_created"];
+                goodsCount = [[dic objectForKey:@"result"] integerValue];
+                //nnnf
+                
+                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                countLabel.text = strNum;
+                if (goodsCount >0) {
+                    //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
+                    [UIView animateWithDuration:0.1 animations:^{
+                        cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
+                        //        CGRect frame = self.addCartButton.frame;
+                        //        frame.origin.x = 118;
+                        //        frame.size.width = SCREENWIDTH - 126;
+                    } completion:^(BOOL finished) {
+                        //   NSLog(@"显示剩余时间");
+                        [self createTimeLabel];
+                        countLabel.hidden = NO;
+                        
+                        
+                    }];
+                    [UIView animateWithDuration:0.5 animations:^{
+                        self.leftWidth.constant = 118;
+                        
+                    }];
+                }
             }
+
         }
-    }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"kCart_Number_URL response error");
+    }];
+
 }
 
 - (void)createTimeLabel{

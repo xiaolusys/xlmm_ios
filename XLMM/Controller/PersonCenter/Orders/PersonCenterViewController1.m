@@ -90,7 +90,7 @@
 
         if (!responseObject) return;
         
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+        [self fetchedWaipayData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -220,9 +220,8 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-      __unused NSString *string = [details objectForKey:@"status_display"];
-        
-            cell.statusLabel.text = @"待支付";
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
        
         
         
@@ -240,11 +239,6 @@
         label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
        
-        cell.statusLabel.text = @"待支付";
-
-        
-
-  
         return cell;
        
     }
@@ -284,9 +278,9 @@
         label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
 
-        cell.statusLabel.text = @"待支付";
-      //  NSString *string = [diction objectForKey:@"status_display"];
 
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
         
      
         return cell;

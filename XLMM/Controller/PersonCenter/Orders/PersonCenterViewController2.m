@@ -76,7 +76,7 @@
         
         if (!responseObject) return;
         
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
+        [self fetchedWaipayData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -144,14 +144,9 @@
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
-        NSString *string = [details objectForKey:@"status_display"];
-        if ([string isEqualToString:@"已付款"]) {
-             cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([string isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        }
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
+
 //       for (int i = 0; i < self.dataArray.count; i++) {
 //            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
 //            NSLog(@"btn ->%@", btn);
@@ -203,11 +198,8 @@
 //        }
        
          NSString *string = [diction objectForKey:@"status_display"];
-        if ([string isEqualToString:@"已付款"]) {
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        }
+        cell.statusLabel.text = string;
+
 //        if ([string isEqualToString:@"已付款"]) {
 //            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
 //
