@@ -75,7 +75,17 @@
         [alterView show];
         return;
     }
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDingdanData:)];
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if (!responseObject) return;
+        
+        [self fetchedDingdanData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -155,7 +165,7 @@
         
         if (!responseObject) return;
         
-        [self performSelectorOnMainThread:@selector(fetchedDingdanData:) withObject:responseObject waitUntilDone:YES];
+        [self fetchedDingdanData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -223,16 +233,16 @@
     
 }
 
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
-    });
-}
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//        
+//    });
+//}
 
 
 #pragma mark -----CollectionViewDelegate-----
@@ -277,26 +287,8 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-        NSString *string = [details objectForKey:@"status_display"];
-        
-        if ([string isEqualToString:@"待付款"]) {
-            cell.statusLabel.text = @"待支付";
-        } else if ([string isEqualToString:@"已付款"]){
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([string isEqualToString:@"交易关闭"]){
-            cell.statusLabel.text = @"交易关闭";
-        } else if ([string isEqualToString:@"交易成功"]){
-            cell.statusLabel.text = @"已完成";
-        } else if ([string isEqualToString:@"订单创建"]){
-            cell.statusLabel.text = @"订单创建";
-    
-        } else if ([string isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        } else if ([string isEqualToString:@"退款关闭"]){
-            cell.statusLabel.text = @"退款关闭";
-        }
+        cell.statusLabel.text = model.dingdanZhuangtai;
+
         
         
 //        for (int i = 0; i < dataArray.count; i++) {
@@ -381,24 +373,9 @@
             imageView.hidden = NO;
             
         }
-        if ([model.dingdanZhuangtai isEqualToString:@"待付款"]) {
-            cell.statusLabel.text = @"待支付";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
-            cell.statusLabel.text = @"交易关闭";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
-            cell.statusLabel.text = @"已完成";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"订单创建"]){
-            cell.statusLabel.text = @"订单创建";
-            
-        } else if ([model.dingdanZhuangtai isEqualToString:@"退款关闭"]){
-            cell.statusLabel.text = @"退款关闭";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        }
+
+        cell.statusLabel.text = model.dingdanZhuangtai;
+
         
 //        
 //        for (int i = 0; i < dataArray.count; i++) {

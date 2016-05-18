@@ -20,7 +20,8 @@
 #import "NSString+URL.h"
 #import "WuliuViewController.h"
 #import "AFNetworking.h"
-
+#import "SVProgressHUD.h"
+#import "XlmmMall.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -117,32 +118,38 @@
 - (void)downloadData{
     
     NSLog(@"下载数据");
-    [self downLoadWithURLString:self.urlString andSelector:@selector(fetchedDingdanData:)];
+//    [self downLoadWithURLString:self.urlString andSelector:@selector(fetchedDingdanData:)];
+    [SVProgressHUD showWithStatus:@"加载中..."];
+
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        
+        if (!responseObject) return;
+        
+        [self fetchedDingdanData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
     
 }
 
-- (void)fetchedDingdanData:(NSData *)responsedata{
+- (void)fetchedDingdanData:(NSDictionary *)responsedata{
     if (responsedata == nil) {
      //   NSLog(@"下载失败");
         return;
     }
     
-    NSError *error = nil;
-    
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
-    
-    if (error != nil) {
-       // NSLog(@"解析失败");
-        return;
-    }
+    NSDictionary *dicJson = responsedata;
   //  NSLog(@"JSON = %@", dicJson);
     
     [activityView removeFromSuperview];
     //订单状态
-    NSString *statusname = [dicJson objectForKey:@"status_display"];
-    status = [dicJson objectForKey:@"status_display"];
+    NSInteger tradeStatus = [[dicJson objectForKey:@"status"] integerValue];
+
     //判断在详情页是否显示取消订单和重新购买按钮。。。。。
-    if ([statusname isEqualToString:@"待付款"]) {
+    if (tradeStatus == ORDER_STATUS_WAITPAY) {
      //   NSLog(@"待支付状态订单订单");
         self.quxiaoBtn.hidden = NO;
         self.buyBtn.hidden = NO;
@@ -167,26 +174,25 @@
     self.headdingdanzhuangtai.text = statusDisplay;
    
     
-    if (![statusDisplay isEqualToString:@"待付款"]) {
+    if (tradeStatus != ORDER_STATUS_WAITPAY) {
         NSLog(@"订单不是待付款状态");
         self.bottomViewHeight.constant = -60;
         
         self.bottomView.hidden = YES;
     }
     
-    if ([statusDisplay isEqualToString:@"待付款"]) {
+    if (tradeStatus == ORDER_STATUS_WAITPAY) {
         self.zhuangtaiLabel.text = @"订单创建成功";
         NSString *timeString = [dicJson objectForKey:@"created"];// 创建时间。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 
-    } else if ([statusDisplay isEqualToString:@"已付款"]){
+    } else if (tradeStatus == ORDER_STATUS_PAYED){
         self.zhuangtaiLabel.text = @"您已提交了订单，请等待系统确认";
-        self.headdingdanzhuangtai.text = @"待发货";
         NSString *timeString = [dicJson objectForKey:@"pay_time"];//付款时间。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
-    } else if (([statusDisplay isEqualToString:@"已发货"])){
+    } else if (tradeStatus == ORDER_STATUS_SENDED){
         NSString *timeString = [dicJson objectForKey:@"consign_time"];//发货时间。。。。
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
@@ -205,24 +211,21 @@
 //        self.timeLabel.text = newStr;
 //        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
 //        self.rightImageView.hidden = NO;
-    
-    } else if (([statusDisplay isEqualToString:@"交易成功"])){
+
+    } else if (tradeStatus == ORDER_STATUS_TRADE_SUCCESS){
         self.zhuangtaiLabel.text = @"已签收";
-        self.headdingdanzhuangtai.text = @"交易成功";
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 
-    } else if (([statusDisplay isEqualToString:@"交易关闭"])){
-        self.zhuangtaiLabel.text = @"交易关闭";
-        self.headdingdanzhuangtai.text = @"交易关闭";
+    } else if (tradeStatus == ORDER_STATUS_TRADE_CLOSE){
+        self.zhuangtaiLabel.text = statusDisplay;
         NSString *timeString = [dicJson objectForKey:@"created"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
 
-    } else if([statusDisplay isEqualToString:@"确认签收"]){
-        self.zhuangtaiLabel.text = @"已签收";
-        self.headdingdanzhuangtai.text = @"交易成功";
+    } else if(tradeStatus == ORDER_STATUS_CONFIRM_RECEIVE){
+        self.zhuangtaiLabel.text = statusDisplay;
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
@@ -393,7 +396,7 @@
         owner.numberLabel.text = [NSString stringWithFormat:@"x%@", model.numberString];
         owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
        
-        if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已付款"]) {
+        if ([[orderStatus objectAtIndex:i] integerValue] == ORDER_STATUS_PAYED) {
             if ([[refund_statusArray objectAtIndex:i] integerValue] == 0) {
                 UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
                 [button addTarget:self action:@selector(tuikuan:) forControlEvents:UIControlEventTouchUpInside];
@@ -419,7 +422,7 @@
             
            
         
-        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"已发货"]){
+        } else if ([[orderStatus objectAtIndex:i] integerValue] == ORDER_STATUS_SENDED){
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
@@ -432,8 +435,8 @@
             button.layer.cornerRadius = 12.5;
             [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
             [owner.myView addSubview:button];
-        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"交易成功"]&&
-                   [[refund_statusArray objectAtIndex:i] integerValue] == 0){
+        } else if ([[orderStatus objectAtIndex:i] integerValue] == ORDER_STATUS_TRADE_SUCCESS &&
+                   [[refund_statusArray objectAtIndex:i] integerValue] == REFUND_STATUS_NO_REFUND){
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
@@ -455,8 +458,8 @@
                 rect.origin.x -= 40;
                 button.frame = rect;
             }
-        } else if ([[orderStatusDisplay objectAtIndex:i] isEqualToString:@"确认签收"] &&
-                   [[refund_statusArray objectAtIndex:i] integerValue] == 0){
+        } else if ([[orderStatus objectAtIndex:i] integerValue] == ORDER_STATUS_CONFIRM_RECEIVE &&
+                   [[refund_statusArray objectAtIndex:i] integerValue] == REFUND_STATUS_NO_REFUND){
             
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
@@ -488,7 +491,7 @@
             
             // 判断退款订单状态  显示给客服看。。。。。
             label.text = string;
-            if ([string isEqualToString:@"没有退款"] ) {
+            if ([string integerValue] == REFUND_STATUS_NO_REFUND ) {
                 label.text = @"";
             }
            
