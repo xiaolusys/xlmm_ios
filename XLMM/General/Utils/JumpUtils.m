@@ -19,6 +19,7 @@
 #import "ChildViewController.h"
 #import "TuihuoViewController.h"
 #import "ProductSelectionListViewController.h"
+#import "CartViewController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -81,7 +82,13 @@
         [vc.navigationController pushViewController:mamachoiceVC animated:YES];
         
     }
-    else {
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+        //跳转到shopping cart
+        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+        [vc.navigationController pushViewController:cartVC animated:YES];
+    }
+
+    else if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
         NSString *parameter = [components lastObject];
