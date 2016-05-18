@@ -1620,26 +1620,26 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 
-- (void)islogin{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
-    NSURL *url = [NSURL URLWithString:string];
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
-    if (error == nil) {
-        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        if (error == nil) {
-          //  NSLog(@"dic = %@", dic);
-        } else{
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-        
-    } else{
-        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:loginVC animated:YES];
-    }
-    
-}
+//- (void)islogin{
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
+//    NSURL *url = [NSURL URLWithString:string];
+//    NSError *error = nil;
+//    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+//    if (error == nil) {
+//        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//        if (error == nil) {
+//          //  NSLog(@"dic = %@", dic);
+//        } else{
+//            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//            [self.navigationController pushViewController:loginVC animated:YES];
+//        }
+//        
+//    } else{
+//        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:loginVC animated:YES];
+//    }
+//    
+//}
 
 #pragma mark  设置导航栏样式
 - (void)createInfo{
