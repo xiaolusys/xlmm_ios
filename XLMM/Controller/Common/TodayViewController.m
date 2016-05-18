@@ -647,7 +647,7 @@ static NSString *khuodongCell = @"HuodongCell";
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            JMJMLogInViewController *loginVC = [[JMJMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             WebViewController *huodongVC = [[WebViewController alloc] init];
@@ -1460,7 +1460,7 @@ static NSString *khuodongCell = @"HuodongCell";
         }
     } else{
         if (login_required) {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            JMJMLogInViewController *loginVC = [[JMJMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             [self ishavemobel];

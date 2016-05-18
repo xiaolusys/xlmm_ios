@@ -28,7 +28,7 @@
 #import "UUID.h"
 #import "SSKeychain.h"
 <<<<<<< HEAD:XLMM/Controller/Activity/HuodongViewController.m
-#import "JMLoginViewController.h"
+#import "JMJMLogInViewController.h"
 =======
 #import "JumpUtils.h"
 >>>>>>> origin/develop:XLMM/Controller/Activity/WebViewController.m
@@ -405,7 +405,7 @@
     
     if ([pageUrl isEqualToString:@"http://m.xiaolumeimei.com/sale/promotion/activity/"]) {
         
-        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+        JMJMLogInViewController *logVC = [[JMJMLogInViewController alloc] init];
         
         [self.navigationController pushViewController:logVC animated:YES];
         

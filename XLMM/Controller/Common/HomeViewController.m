@@ -12,14 +12,14 @@
 #import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
-#import "JMLogInViewController.h"
+#import "JMJMLogInViewController.h"
 #import "UIImage+ColorImage.h"
 #import "CartViewController.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
-#import "JMLogInViewController.h"
+#import "JMJMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
@@ -475,7 +475,7 @@
 - (void)gotoCarts:(id)sender{
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        JMJMLogInViewController *enterVC = [[JMJMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }

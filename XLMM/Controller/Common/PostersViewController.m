@@ -19,7 +19,7 @@
 
 #import "MJRefresh.h"
 #import "WXApi.h"
-#import "JMLogInViewController.h"
+#import "JMJMLogInViewController.h"
 
 #import "UIViewController+NavigationBar.h"
 
@@ -183,7 +183,7 @@ static NSString * ksimpleCell = @"simpleCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
     } else {
-        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+        JMJMLogInViewController *loginVC = [[JMJMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         
         

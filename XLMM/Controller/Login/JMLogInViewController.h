@@ -1,5 +1,5 @@
 //
-//  JMLoginViewController.h
+//  JMJMLogInViewController.h
 //  XLMM
 //
 //  Created by zhang on 16/5/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JMLogInViewController : UIViewController
+@interface JMJMLogInViewController : UIViewController
 
 @end

@@ -1,12 +1,12 @@
 //
-//  JMLoginViewController.m
+//  JMJMLogInViewController.m
 //  XLMM
 //
 //  Created by zhang on 16/5/14.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "JMLogInViewController.h"
+#import "JMJMLogInViewController.h"
 #import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
@@ -24,7 +24,7 @@
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
 
-@interface JMLogInViewController ()
+@interface JMJMLogInViewController ()
 
 @property (nonatomic,strong) UIImageView *headView;
 
@@ -45,7 +45,7 @@
 
 @end
 
-@implementation JMLogInViewController {
+@implementation JMJMLogInViewController {
     NSMutableString *randomstring;
     NSDictionary *dic;
     NSString *phoneNumber;
