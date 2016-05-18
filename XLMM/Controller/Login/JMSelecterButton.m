@@ -92,6 +92,13 @@
     
 }
 
+- (void)setSureBackgroundColor:(UIColor *)color CornerRadius:(NSInteger)corner {
+    [self.layer setBackgroundColor:color.CGColor];
+    [self.layer setMasksToBounds:YES];
+    [self.layer setCornerRadius:corner];
+    
+}
+
 
 @end
 
