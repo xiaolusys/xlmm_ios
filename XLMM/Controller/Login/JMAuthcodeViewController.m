@@ -16,6 +16,8 @@
 #import "JMSelecterButton.h"
 #import "UIColor+RGBColor.h"
 #import "AFNetworking.h"
+#import "SVProgressHUD.h"
+
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6
@@ -24,7 +26,7 @@
 
 
 @interface JMAuthcodeViewController ()<UITextFieldDelegate> {
-//    NSUInteger secondsCountDown;
+    //    NSUInteger secondsCountDown;
 }
 
 @property (nonatomic,strong) JMLineView *lineView;
@@ -33,11 +35,9 @@
 
 @property (nonatomic,strong) UIView *bottomView;
 
-
 @property (nonatomic,strong) UITextField *phoneNumTextF;
 
 @property (nonatomic,strong) UITextField *authcodeTextF;
-
 
 //是否可以查看密码的按钮
 @property (nonatomic,strong) UIButton *getAuthcodeBtn;
@@ -48,12 +48,6 @@
 
 @implementation JMAuthcodeViewController
 
-//- (JMSelecterButton *)selButton {
-//    if (_selButton == nil) {
-//        _selButton = [[JMSelecterButton alloc] init];
-//    }
-//    return _selButton;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,23 +60,20 @@
     [self.view addSubview:lineView];
     [lineView setNeedsDisplay];
     
-    [self createNavigationBarWithTitle:@"手机号登录" selecotr:@selector(btnClickedLogin:)];
+    [self createNavigationBarWithTitle:@"短信验证登录" selecotr:@selector(btnClickedLogin:)];
     [self prepareUI];
     [self prepareInitUI];
-    
-    
-    
-    
+
 }
 
 #pragma mark ------ 初始化UI
 - (void)prepareUI {
-
+    
     
     UIView *bottomView = [UIView new];
     [self.lineView addSubview:bottomView];
     self.bottomView = bottomView;
-
+    
     /**
      文本框控件
      */
@@ -91,10 +82,11 @@
     self.phoneNumTextF = phoneNumTextF;
     self.phoneNumTextF.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeAlways;
+    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.phoneNumTextF.font = [UIFont systemFontOfSize:14.];
     self.phoneNumTextF.placeholder = @"请输入注册手机号";
     self.phoneNumTextF.delegate = self;
+//    [self.phoneNumTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
     
     
     UITextField *authcodeTextF = [UITextField new];
@@ -102,18 +94,19 @@
     self.authcodeTextF = authcodeTextF;
     self.authcodeTextF.keyboardType = UIKeyboardTypeNumberPad;
     self.authcodeTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.authcodeTextF.clearButtonMode = UITextFieldViewModeAlways;
+    self.authcodeTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.authcodeTextF.font = [UIFont systemFontOfSize:14.];
     self.authcodeTextF.placeholder = @"请输入短信验证码";
     self.authcodeTextF.delegate = self;
-    
+//    [self.authcodeTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
     /**
      按钮控件
      */
     self.selButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.lineView addSubview:self.selButton];
-    [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13.];
+    [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
     self.selButton.selected = NO;
+    self.selButton.enabled = NO;
     [_selButton addTarget:self action:@selector(getAuthcodeClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -128,8 +121,20 @@
     
 }
 
+//-(void)textChange{
+//    
+//    self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.authcodeTextF.text.length != 0);
+//    //没有值，禁用登录按钮
+//}
 #pragma mark ---- UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
     
     if ([string isEqualToString:@"\n"] || [string isEqualToString:@" "]) {
         return NO;
@@ -142,11 +147,11 @@
     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     //正则表达式
-//    NSString *phoneRegex = @"^((13[0-9])|(15[0-9])|(18[0-9]))\\d{8}$";
-//  
-//    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-//    
-//    BOOL B = [phoneTest evaluateWithObject:_phoneNumTextF.text];
+    //    NSString *phoneRegex = @"^((13[0-9])|(15[0-9])|(18[0-9]))\\d{8}$";
+    //
+    //    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    //
+    //    BOOL B = [phoneTest evaluateWithObject:_phoneNumTextF.text];
     
     
     
@@ -180,6 +185,7 @@
         
         if ([toBeString length] > PHONE_NUM_LIMIT) {
             textField.text = [toBeString substringToIndex:PHONE_NUM_LIMIT];
+            self.selButton.selected = YES;
             return NO;
         }else {}
     }else {
@@ -236,15 +242,17 @@
     }
     
     [manager POST:stringurl parameters:parameters
+     
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
-              [self alertMessage:[responseObject objectForKey:@"msg"]];
+//              [self alertMessage:[responseObject objectForKey:@"msg"]];
               
-        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
+          }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+          }];
     
 }
-
+#pragma mrak ----- 创建一个定时器
 - (void)startTime {
     __block int secondsCountDown = COUNTING_LIMIT;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -258,7 +266,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.userInteractionEnabled = YES;
+                _selButton.enabled = YES;
                 _selButton.selected = YES;
             });
         }else{
@@ -271,7 +279,7 @@
                 [UIView setAnimationDuration:1];
                 [_selButton setTitle:[NSString stringWithFormat:@"%@秒",strTime] forState:UIControlStateNormal];
                 [UIView commitAnimations];
-                _selButton.userInteractionEnabled = NO;
+                _selButton.enabled = NO;
                 _selButton.selected = NO;
             });
             secondsCountDown--;
@@ -287,6 +295,9 @@
     NSString *vcode = self.authcodeTextF.text;
     
     NSDictionary *parameters = nil;
+    
+    [SVProgressHUD showWithStatus:@"登录中....."];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
@@ -305,7 +316,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"-------%@", error);
     }];
-
+    
     
     
 }
@@ -318,7 +329,7 @@
         return;
     }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
-        [self alertMessage:[dic objectForKey:@"msg"]];
+//        [self alertMessage:[dic objectForKey:@"msg"]];
         //设置用户名在newLeft中使用
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user setObject:phoneNumber forKey:kUserName];
@@ -327,28 +338,28 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
-//        [self displaySetPasswordPage];
+        //        [self displaySetPasswordPage];
     }
 }
 #pragma mark ---- 控件显示
 - (void)prepareInitUI {
     
     kWeakSelf
-
+    
     [self.phoneNumTextF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView).offset(64);
         make.left.equalTo(weakSelf.lineView).offset(15);
         make.right.equalTo(weakSelf.lineView).offset(-15);
         make.height.mas_equalTo(60);
     }];
-
+    
     [self.authcodeTextF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.phoneNumTextF.mas_bottom);
         make.left.equalTo(weakSelf.lineView).offset(15);
         make.right.equalTo(weakSelf.selButton.mas_left).offset(-15);
         make.height.mas_equalTo(60);
     }];
-
+    
     [self.selButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.phoneNumTextF.mas_bottom).offset(14);
         make.right.equalTo(weakSelf.lineView).offset(-10);
@@ -389,6 +400,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
     self.navigationController.navigationBarHidden = YES;
 }
 @end

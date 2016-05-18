@@ -19,8 +19,8 @@
     
     if (self == [super initWithFrame:frame]) {
         
-    
-       
+        
+        
         
     }
     return self;
@@ -32,7 +32,7 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-
+    
     if (selected) {
         [self.layer setBorderColor:[UIColor buttonEmptyBorderColor].CGColor];
         [self setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
@@ -54,7 +54,7 @@
 
 //- (void)setTitle:(NSString *)title forState:(UIControlState)state {
 //    [super setTitle:title forState:state];
-//    
+//
 //    [self sizeToFit];
 //}
 
@@ -64,28 +64,28 @@
     [self sizeToFit];
 }
 
-- (void)setSelecterBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font {
+- (void)setSelecterBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font CornerRadius:(NSInteger)corner {
     
     
     [self.layer setBorderColor:color.CGColor];
     [self setTitleColor:tcolor forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:font];
     [self.layer setMasksToBounds:YES];
-    [self.layer setCornerRadius:5.];
+    [self.layer setCornerRadius:corner];
     [self.layer setBorderWidth:1.0];
     [self setTitle:title forState:UIControlStateNormal];
     
-
+    
     
 }
 
-- (void)setNomalBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font {
+- (void)setNomalBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font CornerRadius:(NSInteger)corner {
     
     [self.layer setBorderColor:color.CGColor];
     [self setTitleColor:tcolor forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:font];
     [self.layer setMasksToBounds:YES];
-    [self.layer setCornerRadius:5.];
+    [self.layer setCornerRadius:corner];
     [self.layer setBorderWidth:1.0];
     [self setTitle:title forState:UIControlStateNormal];
     

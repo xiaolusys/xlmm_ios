@@ -79,15 +79,19 @@
         self.passwordTextF.text = [defaults objectForKey:kPassWord];
     }
     
-//    [self textChange];
-
+    [self textChange];
+    
+    //设置记住密码按钮默认值
+    NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
+    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:@"rememberPwd"];
+    
     
 }
 
 
 
 - (void)prepareUI {
-  
+    
     UIView *bottomView = [UIView new];
     [self.lineView addSubview:bottomView];
     self.bottomView = bottomView;
@@ -101,7 +105,7 @@
     self.phoneNumTextF = phoneNumTextF;
     self.phoneNumTextF.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeAlways;
+    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.phoneNumTextF.font = [UIFont systemFontOfSize:14.];
     self.phoneNumTextF.placeholder = @"请输入手机号";
     self.phoneNumTextF.delegate = self;
@@ -110,9 +114,9 @@
     UITextField *passwordTextF = [UITextField new];
     [self.lineView addSubview:passwordTextF];
     self.passwordTextF = passwordTextF;
-    self.passwordTextF.keyboardType = UIKeyboardTypeNumberPad;
+    self.passwordTextF.keyboardType = UIKeyboardTypeDefault;
     self.passwordTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.passwordTextF.clearButtonMode = UITextFieldViewModeAlways;
+    self.passwordTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.passwordTextF.font = [UIFont systemFontOfSize:14.];
     self.passwordTextF.placeholder = @"请输入登录密码";
     self.passwordTextF.delegate = self;
@@ -133,8 +137,8 @@
     [self.bottomView addSubview:rememberPwdBtn];
     self.rememberPwdBtn = rememberPwdBtn;
     [rememberPwdBtn setAdjustsImageWhenHighlighted:NO];
-    [rememberPwdBtn setImage:[UIImage imageNamed:@"success_Image_nomal"] forState:UIControlStateNormal];
-    [rememberPwdBtn setImage:[UIImage imageNamed:@"success_Image"] forState:UIControlStateSelected];
+    [rememberPwdBtn setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+    [rememberPwdBtn setImage:[UIImage imageNamed:@"remember_password"] forState:UIControlStateSelected];
     [rememberPwdBtn setTitle:@"记住密码" forState:UIControlStateNormal];
     [rememberPwdBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     rememberPwdBtn.titleLabel.font = [UIFont systemFontOfSize:13.];
@@ -176,6 +180,9 @@
         self.rememberPwdBtn.selected = YES;
     }
     
+    NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
+    [defaultsPwd setBool:self.rememberPwdBtn.selected forKey:@"rememberPwd"];
+    [defaultsPwd synchronize];
 }
 
 #pragma mark ----- 保存记住密码按钮的数据到用户偏好设置
@@ -195,8 +202,7 @@
         [self alertMessage:@"用户名或者密码为空呢"];
         return;
     }
-    
-    [SVProgressHUD showErrorWithStatus:@"登录中....."];
+    [SVProgressHUD showWithStatus:@"登录中....."];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"username":userName,
@@ -209,7 +215,6 @@
             [self alertMessage:[responseObject objectForKey:@"msg"]];
             return ;
         }
-        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         // 手机登录成功 ，保存用户信息以及登录途径
         [defaults setBool:YES forKey:kIsLogin];
@@ -218,26 +223,18 @@
         NSDictionary *userInfo = @{kUserName:self.phoneNumTextF.text,
                                    kPassWord:self.passwordTextF.text};
         [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
-        
-        //        [defaults setObject:kUserName forKey:userName];
-        //        if (self.rememberPwdBtn.selected == YES) {
-        //            [defaults setObject:kPassWord forKey:password];
-        //        }
-        
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
         
         // 发送手机号码登录成功的通知
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         
         [self setDevice];
-        [self.navigationController popViewControllerAnimated:NO];
-        
-        
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
         
         
     }];
@@ -297,13 +294,6 @@
 
 #pragma mark ----- 是否显示密码明文或者暗文
 - (void)seePasswordButtonClicked:(UIButton *)sender {
-    
-//    if (self.passwordTextF.secureTextEntry) {
-//        self.isSeePwdBtn.selected = NO;
-//    } else {
-//        self.isSeePwdBtn.selected = YES;
-//    }
-//    self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
     UIImage *image = nil;
     if (self.passwordTextF.secureTextEntry) {
         image = [UIImage imageNamed:@"display_passwd_icon.png"];
@@ -312,14 +302,13 @@
     }
     [self.isSeePwdBtn setImage:image forState:UIControlStateNormal];
     self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
-
 }
 
 #pragma mark ----- 监听文本输入框变化
 -(void)textChange{
     
     self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
-    //没有值，禁用登录按钮
+
 }
 
 #pragma mark -----UITextFieldDelegate
@@ -343,17 +332,10 @@
     [self.passwordTextF resignFirstResponder];
     
 }
-
+//
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
-//    return (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
-//    if ((self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0)) {
-//        self.loginBtn.enabled = YES;
-//    }else {
-//        self.loginBtn.enabled = NO;
-//    }
     self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
-    
     return YES;
     
 }
@@ -373,10 +355,6 @@
 
 
 #pragma mark --- 视图显示或者消失时一些属性的状态
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -390,7 +368,7 @@
 - (void)prepareInitUI {
     
     kWeakSelf
-
+    
     [self.phoneNumTextF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView).offset(64);
         make.left.equalTo(weakSelf.lineView).offset(15);
@@ -430,7 +408,7 @@
         make.height.mas_equalTo(@30);
         make.width.mas_equalTo(@80);
     }];
-
+    
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.bottomView).offset(60);
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
@@ -445,6 +423,16 @@
 - (void)btnClickedLogin:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 
 @end
 

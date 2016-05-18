@@ -11,10 +11,10 @@
 @interface JMSelecterButton : UIButton
 
 
-- (void)setSelecterBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font;
+- (void)setSelecterBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font CornerRadius:(NSInteger)corner;
 
 
-- (void)setNomalBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font;
+- (void)setNomalBorderColor:(UIColor *)color TitleColor:(UIColor *)tcolor Title:(NSString *)title TitleFont:(NSInteger)font CornerRadius:(NSInteger)corner;
 
 
 @end
