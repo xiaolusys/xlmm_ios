@@ -259,6 +259,8 @@
               
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
+              
+              
           }];
     
 }
@@ -325,6 +327,9 @@
         [self verifyAfter:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"-------%@", error);
+        
+        [SVProgressHUD showErrorWithStatus:@"登录失败！"];
+        
     }];
     
     
@@ -335,7 +340,10 @@
     NSString *phoneNumber = self.phoneNumTextF.text;
     
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
+        
+        [SVProgressHUD dismiss];
         [self alertMessage:[dic objectForKey:@"msg"]];
+        
         return;
     }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
