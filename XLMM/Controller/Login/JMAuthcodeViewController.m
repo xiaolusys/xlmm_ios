@@ -210,58 +210,59 @@
     return YES;
 }
 
+
+
+
+
 #pragma mark ---- 点击获取验证码按钮
 - (void)getAuthcodeClick:(UIButton *)sender {
-    
-    
-    [self startTime];
-    
-    
     NSString *phoneNumber = self.phoneNumTextF.text;
+
+    NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
+    if (num == 1 && phoneNumber.length == 11) { 
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        NSDictionary *parameters = nil;
+        NSString *stringurl = TSendCode_URL;;
+        
+        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
+            //手机注册
+            parameters = @{@"mobile": phoneNumber, @"action":@"register"};
+        }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
+            //修改密码
+            parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
+        }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
+            //短信登录
+            parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
+        }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
+            //忘记密码
+            parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
+        }
+        
+        [manager POST:stringurl parameters:parameters
+         
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  
+                  NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
+                  
+                  if (rcodeStr == 0) {
+                      
+                      [self startTime];
+                      
+                  }else {
+                      [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
+                  }
+                  
+              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+                  [SVProgressHUD showErrorWithStatus:@"获取失败！"];
+                  
+              }];
     
-    //正则表达式
-//    NSString *phoneRegex = @"^((13[0-9])|(15[0-9])|(18[0-9]))\\d{8}$";
-//    
-//    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-//    
-//    BOOL B = [phoneTest evaluateWithObject:_phoneNumTextF.text];
-//    if (!B) {
-//        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
-//    }else {
-//        
-//    }
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    NSDictionary *parameters = nil;
-    NSString *stringurl = TSendCode_URL;;
-    
-    if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
-        //手机注册
-        parameters = @{@"mobile": phoneNumber, @"action":@"register"};
-    }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
-        //修改密码
-        parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
-    }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
-        //短信登录
-        parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
-    }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
-        //忘记密码
-        parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
+    }else {
+        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
     }
     
-    [manager POST:stringurl parameters:parameters
-     
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-//              [self alertMessage:[responseObject objectForKey:@"msg"]];
-              
-          }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              
-              
-          }];
     
 }
 #pragma mrak ----- 创建一个定时器
@@ -341,8 +342,8 @@
     
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
         
-        [SVProgressHUD dismiss];
-        [self alertMessage:[dic objectForKey:@"msg"]];
+//        [SVProgressHUD dismiss];
+//        [self alertMessage:[dic objectForKey:@"msg"]];
         
         return;
     }
@@ -354,7 +355,10 @@
         [user setBool:YES forKey:kIsLogin];
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        NSInteger count = self.navigationController.viewControllers.count;
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 3)] animated:YES];
+        
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
         //        [self displaySetPasswordPage];
     }

@@ -20,6 +20,7 @@
 #import "AFNetworking.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
+#import "SVProgressHUD.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -152,6 +153,9 @@
 
 #pragma mark --- 监听微信登录的通知
 - (void)update:(NSNotificationCenter *)notification {
+    
+    [SVProgressHUD showWithStatus:@"正在登录......"];
+
     dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"userInfo"];
     
     NSArray *randomArray = [self randomArray];
@@ -193,16 +197,22 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
         NSDictionary *result = responseObject;
         if (result.count == 0) return;
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
             [self alertMessage:[result objectForKey:@"msg"]];
             return;
         }
+        
+        [self loginSuccessful];
+        
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:@"login"];
         [userdefaults synchronize];
-        [self loginSuccessful];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -221,6 +231,9 @@
 }
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
+    
+    self.wechatBtn.enabled = NO;
+    
     if ([WXApi isWXAppInstalled]) {
         
     } else{
@@ -282,8 +295,12 @@
 }
 
 
+
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
+    
+    [SVProgressHUD dismiss];
+    
     [MobClick profileSignInWithPUID:@"playerID"];
     
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
@@ -292,7 +309,9 @@
     
     [self setDevice];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSInteger count = self.navigationController.viewControllers.count;
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
     
 }
 
