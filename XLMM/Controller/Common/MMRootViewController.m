@@ -12,14 +12,14 @@
 #import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "UIImage+ColorImage.h"
 #import "CartViewController.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
@@ -1127,7 +1127,7 @@ static NSString *kbrandCell = @"brandCell";
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             WebViewController *huodongVC = [[WebViewController alloc] init];
@@ -1630,12 +1630,12 @@ static NSString *kbrandCell = @"brandCell";
         if (error == nil) {
           //  NSLog(@"dic = %@", dic);
         } else{
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
         
     } else{
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
     
@@ -1691,7 +1691,7 @@ static NSString *kbrandCell = @"brandCell";
             [alertView show];
         }
     } else {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
 }
@@ -1855,7 +1855,7 @@ static NSString *kbrandCell = @"brandCell";
 - (void)gotoCarts:(id)sender{
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
-        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }

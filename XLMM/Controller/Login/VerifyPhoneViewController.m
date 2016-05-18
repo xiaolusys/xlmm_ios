@@ -397,7 +397,9 @@
         [user setBool:YES forKey:kIsLogin];
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        
         [self.navigationController popToRootViewControllerAnimated:YES];
+        
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
         [self displaySetPasswordPage];
     }

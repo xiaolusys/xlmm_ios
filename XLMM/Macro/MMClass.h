@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
@@ -28,6 +28,13 @@
 #else
 #define NSLog(...) {}
 #endif
+
+
+/**
+ *  循环引用
+ */
+#define kWeakSelf __weak typeof (self) weakSelf = self;
+
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height

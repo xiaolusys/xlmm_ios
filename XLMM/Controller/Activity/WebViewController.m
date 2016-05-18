@@ -27,7 +27,11 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
+<<<<<<< HEAD:XLMM/Controller/Activity/HuodongViewController.m
+#import "JMLoginViewController.h"
+=======
 #import "JumpUtils.h"
+>>>>>>> origin/develop:XLMM/Controller/Activity/WebViewController.m
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
@@ -165,6 +169,16 @@
         [self shareForPlatform:data];
     }];
     
+//    //js调oc方法
+    [self.bridge registerHandler:@"callNativeLoginActivity" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        NSString *pageUrl = data[@"pageUrl"];
+        
+        [self jsLetiOSLoginWithData:data callBack:responseCallback];
+        
+        
+    }];
+    
+    
     [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
        NSString *device = [self getMobileSNCode];
         responseCallback(device);
@@ -176,6 +190,8 @@
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
 }
+
+
 
 - (NSString *)getMobileSNCode {
     if (![SSKeychain passwordForService:kService account:kAccount]) {
@@ -208,7 +224,7 @@
         
     }];
 }
-
+#pragma mark ---- 分享视图，包括分享按钮的点击
 //分享视图增加
 - (void)addShareView:(NSDictionary *)dicShare {
     [SVProgressHUD dismiss];
@@ -381,6 +397,25 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#pragma mark ---- 跳转到APP登录界面
+- (void)jsLetiOSLoginWithData:(id)data callBack:(WVJBResponseCallback)block {
+    
+    NSString *pageUrl = data[@"pageUrl"];
+    
+    if ([pageUrl isEqualToString:@"http://m.xiaolumeimei.com/sale/promotion/activity/"]) {
+        
+        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+        
+        [self.navigationController pushViewController:logVC animated:YES];
+        
+    }
+    
+    
+    
+}
+
+#pragma mark ----- 分享调用
 
 - (void)shareForPlatform:(NSDictionary *)data{
     

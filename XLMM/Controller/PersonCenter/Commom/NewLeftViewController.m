@@ -20,7 +20,7 @@
 
 #import "AddressViewController.h"
 #import "SettingViewController.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "Account1ViewController.h"
 #import "PersonOrderViewController.h"
 #import "UIColor+RGBColor.h"
@@ -467,7 +467,7 @@
 }
 
 - (void) displayLoginView{
-    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
     // zhifuVC.menuDelegate = ;
     if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
         [self.pushVCDelegate rootVCPushOtherVC:loginVC];
