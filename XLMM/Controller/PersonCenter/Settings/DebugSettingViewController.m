@@ -142,7 +142,7 @@
     
 
     
-    self.tvip= [[UITextView alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 20, self.view.frame.size.width, 30)];
+    self.tvip= [[UITextView alloc] initWithFrame:CGRectMake(0.f+10, _radioButtons1.frame.size.height + 20, self.view.frame.size.width-20, 30)];
     self.tvip.text = @"输入ip地址端口号，如192.168.1.11:9000";
     self.tvip.delegate = self;
     self.tvip.scrollEnabled = NO;
@@ -174,7 +174,7 @@
     [self.tvip setInputAccessoryView:topView];
     [_scrollView addSubview:self.tvip];
 
-    self.tvpwd= [[UITextView alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 60, self.view.frame.size.width, 30)];
+    self.tvpwd= [[UITextView alloc] initWithFrame:CGRectMake(0.f+10, _radioButtons1.frame.size.height + 60, self.view.frame.size.width - 20, 30)];
     self.tvpwd.text = @"输入密码";
     self.tvpwd.delegate = self;
     self.tvpwd.tag = 101;
@@ -182,7 +182,7 @@
 
     [_scrollView addSubview:self.tvpwd];
     
-    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 100, self.view.frame.size.width, 30)];
+    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(0.f+80, _radioButtons1.frame.size.height + 100, 160, 30)];
     [self.btn  setTitle:@"提交" forState:UIControlStateNormal];//设置button的title
     self.btn.backgroundColor = [UIColor orangeColor];//button的背景颜色
     [self.btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
