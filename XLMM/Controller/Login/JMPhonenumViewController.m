@@ -212,7 +212,9 @@
     [manager POST:TPasswordLogin_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
-            [self alertMessage:[responseObject objectForKey:@"msg"]];
+//            [self alertMessage:[responseObject objectForKey:@"msg"]];
+//            [SVProgressHUD dismiss];
+            [SVProgressHUD showErrorWithStatus:@"输入有误！"];
             return ;
         }
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

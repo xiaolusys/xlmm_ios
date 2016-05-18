@@ -27,7 +27,7 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
-#import "JMLoginViewController.h"
+#import "JMLogInViewController.h"
 #import "JumpUtils.h"
 
 

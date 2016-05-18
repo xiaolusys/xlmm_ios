@@ -38,7 +38,7 @@
         UIViewController* topViewController = appdelegate.window.rootViewController.navigationController.topViewController;
         NSLog(@"%@",topViewController);
         
-        JMLogInViewController *loginVC = [[JMLogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         loginVC.returnUrl = url;
         [topViewController.navigationController pushViewController:loginVC animated:YES];
         
@@ -48,3 +48,19 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

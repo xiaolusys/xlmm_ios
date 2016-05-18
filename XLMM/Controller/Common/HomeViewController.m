@@ -19,7 +19,6 @@
 #import "MMCollectionController.h"
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
-#import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
