@@ -8,7 +8,7 @@
 
 #import "JimeiPontoUiPlugin.h"
 #import "AppDelegate.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 
 @implementation JimeiPontoUiPlugin
 
@@ -38,7 +38,7 @@
         UIViewController* topViewController = appdelegate.window.rootViewController.navigationController.topViewController;
         NSLog(@"%@",topViewController);
         
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
         loginVC.returnUrl = url;
         [topViewController.navigationController pushViewController:loginVC animated:YES];
         
