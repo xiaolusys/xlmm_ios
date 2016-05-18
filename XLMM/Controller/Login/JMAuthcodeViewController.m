@@ -214,22 +214,22 @@
 - (void)getAuthcodeClick:(UIButton *)sender {
     
     
-    
+    [self startTime];
     
     
     NSString *phoneNumber = self.phoneNumTextF.text;
     
     //正则表达式
-    NSString *phoneRegex = @"^((13[0-9])|(15[0-9])|(18[0-9]))\\d{8}$";
-    
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-    
-    BOOL B = [phoneTest evaluateWithObject:_phoneNumTextF.text];
-    if (!B) {
-        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
-    }else {
-        [self startTime];
-    }
+//    NSString *phoneRegex = @"^((13[0-9])|(15[0-9])|(18[0-9]))\\d{8}$";
+//    
+//    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+//    
+//    BOOL B = [phoneTest evaluateWithObject:_phoneNumTextF.text];
+//    if (!B) {
+//        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
+//    }else {
+//        
+//    }
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
