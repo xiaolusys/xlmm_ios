@@ -25,7 +25,6 @@
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
-
 @interface JMLogInViewController ()
 
 @property (nonatomic,strong) UIImageView *headView;
@@ -287,55 +286,32 @@
 //跳转到手机号登陆
 - (void)jumpToPhoneLoginVC:(UIButton *)btn {
     JMPhonenumViewController *phoneL = [[JMPhonenumViewController alloc] init];
-    
-    
-    
     [self.navigationController pushViewController:phoneL animated:YES];
-    
-    
 }
 //跳转到验证码登录
 - (void)jumpToAuthcodeLoginVC:(UIButton *)btn {
-    
     JMAuthcodeViewController *authL = [[JMAuthcodeViewController alloc] init];
-    
     authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
-    
     [self.navigationController pushViewController:authL animated:YES];
-    
 }
 //跳转到注册界面
 - (void)jumpToRegisterVC:(UIButton *)btn {
-    
     VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    
     verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES, @"isMessageLogin":@NO};
-    
     [self.navigationController pushViewController:verifyVC animated:YES];
-    
 }
-
-
 
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
-    
     [SVProgressHUD dismiss];
-    
     [MobClick profileSignInWithPUID:@"playerID"];
-    
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
-    
     [self setDevice];
-    
-//    [self.navigationController popToRootViewControllerAnimated:YES];
     NSInteger count = self.navigationController.viewControllers.count;
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    
 }
-
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
@@ -360,12 +336,7 @@
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
-              
-              
           }];
-    
-    
-    
 }
 
 - (void)btnClick:(UIButton *)btn {
