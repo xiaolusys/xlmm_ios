@@ -169,18 +169,7 @@
     backView.hidden = NO;
     backView.alpha = 0.6;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
-    [infoView addGestureRecognizer:tap];
-    
-    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.model.item_id];
-//    NSLog(@"url = %@", urlstring);
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//    NSLog(@"json = %@", json);
-//    NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
-    
-//    NSLog(@"wear_by = %ld", (long)wear_by);
-    
+    [infoView addGestureRecognizer:tap];    
     
     UILabel *addressLabel = [infoView viewWithTag:500];
     UIButton *kefuButton = [infoView viewWithTag:800];
