@@ -27,11 +27,9 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
-<<<<<<< HEAD:XLMM/Controller/Activity/HuodongViewController.m
 #import "JMLoginViewController.h"
-=======
 #import "JumpUtils.h"
->>>>>>> origin/develop:XLMM/Controller/Activity/WebViewController.m
+
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
