@@ -35,7 +35,7 @@
 #import "MMAdvertiseView.h"
 #import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
@@ -139,6 +139,10 @@
 @property (nonatomic, assign)NSInteger currentIndex;
 @property (nonatomic, strong)NSMutableDictionary *nextdic;
 @property (nonatomic, strong)NSMutableArray *endTime;
+
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *trackViewUrl1;
+@property (nonatomic, copy) NSString *trackName;
 
 @end
 
@@ -324,91 +328,91 @@ static NSString *kbrandCell = @"brandCell";
     [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
 
-- (void)pushAndBannerJump:(NSString *)target_url {
-    if (target_url == nil)return;
-    
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
-        NSLog(@"跳到今日上新");
-        //[self buttonClicked:100];
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
-        NSLog(@"跳到昨日推荐");
-        //[self buttonClicked:101];
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
-        NSLog(@"跳到潮童专区");
-        //[self buttonClicked:102];
-        
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
-        NSLog(@"跳到时尚女装");
-        //[self buttonClicked:103];
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-        NSLog(@"跳转到用户未过期优惠券列表");
-        
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
-        [self.navigationController pushViewController:youhuiVC animated:YES];
-        
-    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-        //  跳转到小鹿妈妈界面。。。
-        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-        [self.navigationController pushViewController:ma animated:YES];
-        
-        
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
-        
-        NSLog(@"跳转到小鹿妈妈每日上新");
-        
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-        [self.navigationController pushViewController:publish animated:YES];
-        
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
-        //跳转到退款退货列表
-        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
-        [self.navigationController pushViewController:tuihuoVC animated:YES];
-        
-    }else {
-        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        
-        NSString *parameter = [components lastObject];
-        NSArray *params = [parameter componentsSeparatedByString:@"="];
-        NSString *firstparam = [params firstObject];
-        if ([firstparam isEqualToString:@"model_id"]) {
-            NSLog(@"跳到集合页面");
-            NSLog(@"model_id = %@", [params lastObject]);
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-            
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
-            
-            
-        } else if ([firstparam isEqualToString:@"product_id"]){
-            NSLog(@"跳到商品详情");
-            NSLog(@"product_id = %@", [params lastObject]);
-            
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-            [self.navigationController pushViewController:details animated:YES];
-            
-            
-        } else if ([firstparam isEqualToString:@"trade_id"]){
-            NSLog(@"跳到订单详情");
-            NSLog(@"trade_id = %@", [params lastObject]);
-            
-            
-            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-            //http://m.xiaolu.so/rest/v1/trades/86412/details
-            
-            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
-            NSLog(@"url = %@", xiangqingVC.urlString);
-            [self.navigationController pushViewController:xiangqingVC animated:YES];
-        } else {
-            //  跳转到H5 界面 。。。。。
-        }
-    }
-
-}
+//- (void)pushAndBannerJump:(NSString *)target_url {
+//    if (target_url == nil)return;
+//    
+//    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
+//        NSLog(@"跳到今日上新");
+//        //[self buttonClicked:100];
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
+//        NSLog(@"跳到昨日推荐");
+//        //[self buttonClicked:101];
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
+//        NSLog(@"跳到潮童专区");
+//        //[self buttonClicked:102];
+//        
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
+//        NSLog(@"跳到时尚女装");
+//        //[self buttonClicked:103];
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
+//        NSLog(@"跳转到用户未过期优惠券列表");
+//        
+//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        youhuiVC.isSelectedYHQ = NO;
+//        [self.navigationController pushViewController:youhuiVC animated:YES];
+//        
+//    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+//        //  跳转到小鹿妈妈界面。。。
+//        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+//        [self.navigationController pushViewController:ma animated:YES];
+//        
+//        
+//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
+//        
+//        NSLog(@"跳转到小鹿妈妈每日上新");
+//        
+//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+//        [self.navigationController pushViewController:publish animated:YES];
+//        
+//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+//        //跳转到退款退货列表
+//        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+//        [self.navigationController pushViewController:tuihuoVC animated:YES];
+//        
+//    }else {
+//        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+//        
+//        NSString *parameter = [components lastObject];
+//        NSArray *params = [parameter componentsSeparatedByString:@"="];
+//        NSString *firstparam = [params firstObject];
+//        if ([firstparam isEqualToString:@"model_id"]) {
+//            NSLog(@"跳到集合页面");
+//            NSLog(@"model_id = %@", [params lastObject]);
+//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            
+//            [self.navigationController pushViewController:collectionVC animated:YES];
+//            
+//            
+//            
+//        } else if ([firstparam isEqualToString:@"product_id"]){
+//            NSLog(@"跳到商品详情");
+//            NSLog(@"product_id = %@", [params lastObject]);
+//            
+//            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            [self.navigationController pushViewController:details animated:YES];
+//            
+//            
+//        } else if ([firstparam isEqualToString:@"trade_id"]){
+//            NSLog(@"跳到订单详情");
+//            NSLog(@"trade_id = %@", [params lastObject]);
+//            
+//            
+//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//            //http://m.xiaolu.so/rest/v1/trades/86412/details
+//            
+//            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+//            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+//            NSLog(@"url = %@", xiangqingVC.urlString);
+//            [self.navigationController pushViewController:xiangqingVC animated:YES];
+//        } else {
+//            //  跳转到H5 界面 。。。。。
+//        }
+//    }
+//
+//}
 
 - (void)showNotification:(NSNotification *)notification{
     NSLog(@"弹出提示框");
@@ -539,7 +543,7 @@ static NSString *kbrandCell = @"brandCell";
     self.backScrollview.mj_header = header;
 
     
-
+    [self autoUpdateVersion];
     
 
 //    
@@ -627,7 +631,7 @@ static NSString *kbrandCell = @"brandCell";
         //添加上拉加载
         homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
-            NSLog(@"MJFresh nextstr %@",nextStr);
+            NSLog(@"MJFresh nextstr= %@ currentindex=%ld",nextStr, (long)self.currentIndex);
             if([nextStr class] == [NSNull class]) {
                 [homeCollectionView.mj_footer endRefreshingWithNoMoreData];
                 return;
@@ -993,15 +997,24 @@ static NSString *kbrandCell = @"brandCell";
         [collection.mj_footer endRefreshingWithNoMoreData];
         return;
     }
+    
+    self.collectionViewScrollview.scrollEnabled = NO;
+
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
+        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
         if (!responseObject)return ;
         [self goodsResult:responseObject];
+        self.collectionViewScrollview.scrollEnabled = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
+        self.collectionViewScrollview.scrollEnabled = YES;
     }];
 }
 
@@ -1109,7 +1122,7 @@ static NSString *kbrandCell = @"brandCell";
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        WebViewController *huodongVC = [[WebViewController alloc] init];
         huodongVC.diction = dic;
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
@@ -1117,7 +1130,7 @@ static NSString *kbrandCell = @"brandCell";
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            WebViewController *huodongVC = [[WebViewController alloc] init];
             huodongVC.diction = dic;
             [self.navigationController pushViewController:huodongVC animated:YES];
         }
@@ -1308,8 +1321,10 @@ static NSString *kbrandCell = @"brandCell";
             //NSLog(@"%@",obj);
             if(index == collectionView.tag - TAG_COLLECTION_BRAND){
                 NSArray *goods = [obj copy];
-                BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-                [cell fillDataWithModel:model];
+                if(goods.count > indexPath.row){
+                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                    [cell fillDataWithModel:model];
+                }
                 return cell;
 
             }
@@ -1729,7 +1744,6 @@ static NSString *kbrandCell = @"brandCell";
 
     //[self.view addSubview:view];
 }
-#pragma mark 设置购物车数量
 
 
 - (void)setLabelNumber{
@@ -2047,5 +2061,58 @@ static NSString *kbrandCell = @"brandCell";
 
 - (IBAction)todayBtnClick:(id)sender {
     [self categoryBtnClick:sender];
+}
+
+#pragma mark 版本 自动升级
+- (void)autoUpdateVersion{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self fetchedUpdateData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+}
+
+- (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if ([reluts count] == 0) return;
+    NSDictionary *infoDic = reluts[0];
+    
+    
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    double doubleCurrentVersion = [app_Version doubleValue];
+    
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
+    }
 }
 @end

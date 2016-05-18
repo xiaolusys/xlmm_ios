@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonWebViewViewController.h"
+#import "PontoDispatcher.h"
 
-@interface HuodongViewController : UIViewController
+@interface WebViewController : CommonWebViewViewController <PontoDispatcherCallbackDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @property (nonatomic, strong) NSDictionary *diction;
 
 @property (nonatomic, strong)NSString *eventLink;
 
-@property (nonatomic, strong)NSString *titleName;
 
 @end

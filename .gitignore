@@ -17,6 +17,7 @@ DerivedData
 xcuserdata
 *.DS_Store
 
+
 ## Other
 *.xccheckout
 *.moved-aside
