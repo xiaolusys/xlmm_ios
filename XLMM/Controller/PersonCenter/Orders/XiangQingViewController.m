@@ -219,7 +219,7 @@
         self.timeLabel.text = newStr;
 
     } else if (tradeStatus == ORDER_STATUS_TRADE_CLOSE){
-        self.zhuangtaiLabel.text = statusDisplay;
+        self.zhuangtaiLabel.text = @"订单创建成功";
         NSString *timeString = [dicJson objectForKey:@"created"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
@@ -229,8 +229,12 @@
         NSString *timeString = [dicJson objectForKey:@"consign_time"];
         NSString *newStr = [self formatterTimeString:timeString];
         self.timeLabel.text = newStr;
-    } else {
+    } else if(tradeStatus == ORDER_STATUS_REFUND_CLOSE){
         // do other things
+        self.zhuangtaiLabel.text = @"订单创建成功";
+        NSString *timeString = [dicJson objectForKey:@"created"];
+        NSString *newStr = [self formatterTimeString:timeString];
+        self.timeLabel.text = newStr;
     }
     
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
