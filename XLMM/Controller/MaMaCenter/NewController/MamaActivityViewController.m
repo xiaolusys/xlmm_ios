@@ -16,7 +16,7 @@
 
 #import "MMDetailsViewController.h"
 #import "MMDetailsModel.h"
-#import "JMJMLogInViewController.h"
+#import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
 #import "AFNetworking.h"

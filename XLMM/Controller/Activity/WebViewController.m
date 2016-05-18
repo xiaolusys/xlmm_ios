@@ -27,11 +27,9 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
-<<<<<<< HEAD:XLMM/Controller/Activity/HuodongViewController.m
-#import "JMJMLogInViewController.h"
-=======
+#import "JMLogInViewController.h"
 #import "JumpUtils.h"
->>>>>>> origin/develop:XLMM/Controller/Activity/WebViewController.m
+
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
@@ -405,7 +403,7 @@
     
     if ([pageUrl isEqualToString:@"http://m.xiaolumeimei.com/sale/promotion/activity/"]) {
         
-        JMJMLogInViewController *logVC = [[JMJMLogInViewController alloc] init];
+        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
         
         [self.navigationController pushViewController:logVC animated:YES];
         

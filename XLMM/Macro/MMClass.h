@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "JMJMLogInViewController.h"
+#import "JMLogInViewController.h"
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
