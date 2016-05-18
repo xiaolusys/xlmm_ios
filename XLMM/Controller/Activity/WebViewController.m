@@ -369,13 +369,12 @@
     
     NSString *pageUrl = data[@"pageUrl"];
     
-    if ([pageUrl isEqualToString:@"http://m.xiaolumeimei.com/sale/promotion/activity/"]) {
-        
-        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-        
-        [self.navigationController pushViewController:logVC animated:YES];
-        
-    }
+    
+    JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+    logVC.returnUrl = pageUrl;
+    
+    [self.navigationController pushViewController:logVC animated:YES];
+
     
     
     
