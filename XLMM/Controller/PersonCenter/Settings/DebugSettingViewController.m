@@ -12,6 +12,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MiPushSDK.h"
+#import "SVProgressHUD.h"
 
 //动画时间
 #define kAnimationDuration 0.2
@@ -272,8 +273,10 @@
     }
     
     pwd = self.tvpwd.text;
-    if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""])
+    if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""]){
+        [SVProgressHUD showErrorWithStatus:@"ip or password is empty"];
         return;
+    }
     
     [serverip stringByAppendingString:@"/rest/v1/users/open_debug_for_app"];
     NSDictionary *newDic = @{@"debug_secret":pwd};
@@ -292,15 +295,18 @@
 
             Root_URL = serverip;
             
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"switch to server %@", serverip]];
+            
             [self.navigationController popToRootViewControllerAnimated:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         }
         else{
             NSLog(@"debug check failed");
+            [SVProgressHUD showErrorWithStatus:@"debug check failed"];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [SVProgressHUD showErrorWithStatus:@"debug check failed"];
     }];
 
     
