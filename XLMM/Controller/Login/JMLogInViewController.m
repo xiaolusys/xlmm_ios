@@ -21,6 +21,7 @@
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
 #import "SVProgressHUD.h"
+#import "UIColor+RGBColor.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -31,7 +32,11 @@
 
 @property (nonatomic,strong) UIView *bottomView;
 
-@property (nonatomic,strong) UIButton *wechatBtn;
+@property (nonatomic,strong) JMSelecterButton *wechatBtn;
+
+@property (nonatomic,strong) UIImageView *wexImage;
+
+@property (nonatomic,strong) UILabel *wexTitleLabel;
 
 @property (nonatomic,strong) JMSelecterButton *phoneNumBtn;
 
@@ -78,6 +83,8 @@
 }
 
 - (void)initUI {
+    
+    
     UIImageView *headView = [[UIImageView alloc] init];
     [self.view addSubview:headView];
     self.headView = headView;
@@ -98,26 +105,40 @@
     [cancleBtn addTarget:self action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [cancleBtn setAdjustsImageWhenHighlighted:NO];
     //========微信登录按钮
-    UIButton *wechatBtn = [[UIButton alloc] init];
+    JMSelecterButton *wechatBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:wechatBtn];
     self.wechatBtn = wechatBtn;
     [wechatBtn setAdjustsImageWhenHighlighted:NO];
     [wechatBtn addTarget:self action:@selector(wechatBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [wechatBtn setImage:[UIImage imageNamed:@"weichat_login"] forState:UIControlStateNormal];
+    [wechatBtn setSureBackgroundColor:[UIColor wechatBackColor] CornerRadius:20.];
+    
+    
+    // === 添加到微信按钮上的控件
+    UIImageView *wexImage = [[UIImageView alloc] init];
+    [self.wechatBtn addSubview:wexImage];
+    self.wexImage = wexImage;
+    wexImage.image = [UIImage imageNamed:@"wexImage_wither"];
+    
+    UILabel *wexTitleLabel = [UILabel new];
+    [self.wechatBtn addSubview:wexTitleLabel];
+    self.wexTitleLabel = wexTitleLabel;
+    wexTitleLabel.text = @"微信登录";
+    wexTitleLabel.font = [UIFont systemFontOfSize:16.];
+    wexTitleLabel.textColor = [UIColor whiteColor];
+    
     // ===== 手机号登录按钮
     JMSelecterButton *phoneNumBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:phoneNumBtn];
     self.phoneNumBtn = phoneNumBtn;
     [phoneNumBtn addTarget:self action:@selector(jumpToPhoneLoginVC:) forControlEvents:UIControlEventTouchUpInside];
-    [phoneNumBtn setSelecterBorderColor:[UIColor buttonEmptyBorderColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"手机登录" TitleFont:13. CornerRadius:20.];
-    
+    [phoneNumBtn setSelecterBorderColor:[UIColor buttonEmptyBorderColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"手机登录" TitleFont:15. CornerRadius:20.];
     
     // ==== 验证码登录按钮
     JMSelecterButton *captchaBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:captchaBtn];
     self.captchaBtn = captchaBtn;
     [captchaBtn addTarget:self action:@selector(jumpToAuthcodeLoginVC:) forControlEvents:UIControlEventTouchUpInside];
-    [captchaBtn setSelecterBorderColor:[UIColor buttonEmptyBorderColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"短信登录" TitleFont:13. CornerRadius:20.];
+    [captchaBtn setSelecterBorderColor:[UIColor buttonEmptyBorderColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"短信登录" TitleFont:15. CornerRadius:20.];
     
     
     // ==== 注册登录按钮
@@ -379,58 +400,74 @@
 
 - (void)initAutolayout {
     
+    kWeakSelf
+    
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(self.view);
+        make.top.left.equalTo(weakSelf.view);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(SCREENHEIGHT - 200);
     }];
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headView.mas_bottom);
+        make.top.equalTo(weakSelf.headView.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.left.equalTo(self.view);
+        make.left.equalTo(weakSelf.view);
         make.height.mas_equalTo(200);
     }];
     
     [self.wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headView.mas_bottom).offset(30);
-        make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.height.mas_equalTo(@43);
+        make.top.equalTo(weakSelf.headView.mas_bottom).offset(30);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+        make.height.mas_equalTo(@40);
         make.width.mas_equalTo(SCREENWIDTH - 30);
     }];
     
     
     [self.phoneNumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.wechatBtn.mas_bottom).offset(15);
-        make.left.equalTo(self.wechatBtn.mas_left);
-        make.right.equalTo(self.wechatBtn.mas_centerX).offset(-25/2);
-        make.height.mas_equalTo(@43);
+        make.top.equalTo(weakSelf.wechatBtn.mas_bottom).offset(15);
+        make.left.equalTo(weakSelf.wechatBtn.mas_left);
+        make.right.equalTo(weakSelf.wechatBtn.mas_centerX).offset(-25/2);
+        make.height.mas_equalTo(@40);
     }];
     
     [self.captchaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.phoneNumBtn);
-        make.right.equalTo(self.wechatBtn.mas_right);
-        make.left.equalTo(self.wechatBtn.mas_centerX).offset(25/2);
-        make.height.mas_equalTo(@43);
+        make.top.equalTo(weakSelf.phoneNumBtn);
+        make.right.equalTo(weakSelf.wechatBtn.mas_right);
+        make.left.equalTo(weakSelf.wechatBtn.mas_centerX).offset(25/2);
+        make.height.mas_equalTo(@40);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.phoneNumBtn.mas_bottom).offset(25);
+        make.top.equalTo(weakSelf.phoneNumBtn.mas_bottom).offset(25);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@1);
     }];
     
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lineView.mas_bottom);
+        make.top.equalTo(weakSelf.lineView.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.bottom.equalTo(weakSelf.view.mas_bottom);
     }];
     
     [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(27);
-        make.left.equalTo(self.view).offset(10);
+        make.top.equalTo(weakSelf.view).offset(27);
+        make.left.equalTo(weakSelf.view).offset(10);
         make.width.height.mas_equalTo(@28);
     }];
+    
+    [self.wexImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.wechatBtn).offset(10);
+        make.right.equalTo(weakSelf.wexTitleLabel.mas_left);
+//        make.right.equalTo(weakSelf.bottomView.mas_centerX);
+        make.width.height.mas_equalTo(@20);
+    }];
+    
+    [self.wexTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.bottomView.mas_centerX).offset(-22);
+        make.centerY.equalTo(weakSelf.wexImage.mas_centerY);
+        make.right.equalTo(weakSelf.wechatBtn);
+    }];
+    
 }
 
 

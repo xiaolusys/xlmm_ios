@@ -38,4 +38,5 @@
 + (UIColor *)countLabelColor;
 + (UIColor *)buttonTitleColor;
 + (UIColor *)randomColor;
++ (UIColor *)wechatBackColor;
 @end
