@@ -71,19 +71,19 @@
 //            [self.quanbuCollectionView.mj_header endRefreshing];
 //            
 //        }
-      
-        [alterView show];
+      [self.quanbuCollectionView.mj_footer endRefreshingWithNoMoreData];
+//        [alterView show];
         return;
     }
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        [self.quanbuCollectionView.mj_footer endRefreshing];
         if (!responseObject) return;
         
         [self fetchedDingdanData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+        [self.quanbuCollectionView.mj_footer endRefreshing];
         NSLog(@"%@获取数据失败",urlString);
     }];
 }
@@ -140,7 +140,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
           
             [self loadMore];
-            [self.quanbuCollectionView.mj_footer endRefreshing];
+            
         });
     }];
     footer.hidden = YES;
@@ -270,11 +270,12 @@
     
    // QuanbuCollectionCell *cell = (QuanbuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     DingdanModel *model = [dataArray objectAtIndex:indexPath.row];
-    
+    NSLog(@"model.ordersArray.count  %lu", (unsigned long)model.ordersArray.count );
     if (model.ordersArray.count == 1) {
         SingleOrderViewCell *cell = (SingleOrderViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"SingleOrderCell" forIndexPath:indexPath];
         
         NSDictionary *details = [model.ordersArray objectAtIndex:0];
+        NSLog(@"detaiol %@", details);
         
         [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -468,13 +469,13 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%@", indexPath);
+    NSLog(@"allorders didSelectItemAtIndexPath %@", indexPath);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     //http://m.xiaolu.so/rest/v1/trades/86412/details
     
-       xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
     xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, xiangqingVC.dingdanModel.dingdanID];
-//    NSLog(@"url = %@", xiangqingVC.urlString);
+    NSLog(@"url = %@", xiangqingVC.urlString);
 
     
     [self.navigationController pushViewController:xiangqingVC animated:YES];
