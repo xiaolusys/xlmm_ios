@@ -821,6 +821,7 @@
 		3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CF7191CE224D000F0463D /* MMClass.m */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
+		3A69686A1CEDC0A500358EEC /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6968691CEDC0A500358EEC /* LogisticsModel.m */; };
 		3A7BCCF41CD9E1E6000212B0 /* BrandCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */; };
 		3A7BCCF61CD9E2E0000212B0 /* BrandCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */; };
 		3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF81CDA1FD1000212B0 /* BrandModel.m */; };
@@ -2012,6 +2013,8 @@
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
 		3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpUtils.m; sourceTree = "<group>"; };
 		3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlmmMall.h; sourceTree = "<group>"; };
+		3A6968681CEDC0A500358EEC /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogisticsModel.h; path = Order/LogisticsModel.h; sourceTree = "<group>"; };
+		3A6968691CEDC0A500358EEC /* LogisticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogisticsModel.m; path = Order/LogisticsModel.m; sourceTree = "<group>"; };
 		3A7BCCF21CD9E1E6000212B0 /* BrandCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandCollectionCell.h; sourceTree = "<group>"; };
 		3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandCollectionCell.m; sourceTree = "<group>"; };
 		3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrandCollectionCell.xib; sourceTree = "<group>"; };
@@ -2263,6 +2266,7 @@
 		183070921C97B83900B7665E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3A6968641CEDBFBB00358EEC /* Order */,
 				1F14D60B1CC6044C00410EC0 /* NewHome */,
 				183070931C97B83900B7665E /* AppleVersion1 */,
 				183070BA1C97B83900B7665E /* MaMaModel */,
@@ -4187,6 +4191,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		3A6968641CEDBFBB00358EEC /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				3A6968681CEDC0A500358EEC /* LogisticsModel.h */,
+				3A6968691CEDC0A500358EEC /* LogisticsModel.m */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4819,6 +4832,7 @@
 				183072821C97C00900B7665E /* NSArray+Log.m in Sources */,
 				325B79CE1C97E7160022F930 /* Head1View.m in Sources */,
 				183072091C97BE3700B7665E /* ActivityViewController2.m in Sources */,
+				3A69686A1CEDC0A500358EEC /* LogisticsModel.m in Sources */,
 				3A7BCCFC1CDA259D000212B0 /* BrandGoodsModel.m in Sources */,
 				325B79D01C97E7160022F930 /* Head2View.m in Sources */,
 				183072181C97BE3700B7665E /* MaMaShopViewController.m in Sources */,
