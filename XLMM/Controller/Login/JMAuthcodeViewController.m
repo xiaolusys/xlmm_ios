@@ -279,7 +279,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.enabled = YES;
+                _selButton.enabled = NO;
                 _selButton.selected = YES;
             });
         }else{

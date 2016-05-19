@@ -79,7 +79,7 @@
         self.passwordTextF.text = [defaults objectForKey:kPassWord];
     }
     
-    [self textChange];
+//    [self textChange];
     
     //设置记住密码按钮默认值
     NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
@@ -110,7 +110,6 @@
     self.phoneNumTextF.placeholder = @"请输入手机号";
     self.phoneNumTextF.delegate = self;
     
-    
     UITextField *passwordTextF = [UITextField new];
     [self.lineView addSubview:passwordTextF];
     self.passwordTextF = passwordTextF;
@@ -121,7 +120,7 @@
     self.passwordTextF.placeholder = @"请输入登录密码";
     self.passwordTextF.delegate = self;
     self.passwordTextF.secureTextEntry = YES;
-    
+
     
     /**
      按钮控件
@@ -213,7 +212,7 @@
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
 //            [self alertMessage:[responseObject objectForKey:@"msg"]];
 //            [SVProgressHUD dismiss];
-            [SVProgressHUD showInfoWithStatus:@"输入有误！"];
+            [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"msg"]];
             return ;
         }
         
@@ -315,12 +314,6 @@
     self.passwordTextF.secureTextEntry = !self.passwordTextF.secureTextEntry;
 }
 
-#pragma mark ----- 监听文本输入框变化
--(void)textChange{
-    
-    self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
-
-}
 
 #pragma mark -----UITextFieldDelegate
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder
