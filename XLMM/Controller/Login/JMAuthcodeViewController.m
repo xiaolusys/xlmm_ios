@@ -225,18 +225,26 @@
         NSDictionary *parameters = nil;
         NSString *stringurl = TSendCode_URL;;
         
-        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
-            //手机注册
-            parameters = @{@"mobile": phoneNumber, @"action":@"register"};
-        }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
-            //修改密码
-            parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
-        }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
-            //短信登录
+        
+//        parameters = self.config;
+        
+//        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
+//            //手机注册
+//            parameters = @{@"mobile": phoneNumber, @"action":@"register"};
+//        }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
+//            //修改密码
+//            parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
+//        }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
+//            //短信登录
+//            parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
+//        }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
+//            //忘记密码
+//            parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
+//        }
+//authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
+        
+        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == YES) {
             parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
-        }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
-            //忘记密码
-            parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
         }
         
         [manager POST:stringurl parameters:parameters
@@ -279,7 +287,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.enabled = YES;
+                _selButton.enabled = NO;
                 _selButton.selected = YES;
             });
         }else{
@@ -314,13 +322,15 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
-    }else if ([self.config[@"isRegister"] boolValue]){
-        parameters = @{@"mobile":phoneNumber, @"action":@"register", @"verify_code":vcode,  @"devtype":LOGINDEVTYPE};
-    }else if ([self.config[@"isVerifyPsd"] boolValue]){
-        parameters = @{@"mobile":phoneNumber, @"action":@"find_pwd", @"verify_code":vcode};
-    }else if ([self.config[@"isUpdateMobile"] boolValue]) {
-        parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
     }
+    
+//    else if ([self.config[@"isRegister"] boolValue]){
+//        parameters = @{@"mobile":phoneNumber, @"action":@"register", @"verify_code":vcode,  @"devtype":LOGINDEVTYPE};
+//    }else if ([self.config[@"isVerifyPsd"] boolValue]){
+//        parameters = @{@"mobile":phoneNumber, @"action":@"find_pwd", @"verify_code":vcode};
+//    }else if ([self.config[@"isUpdateMobile"] boolValue]) {
+//        parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
+//    }
     
     
     [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -356,8 +366,9 @@
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         
-        NSInteger count = self.navigationController.viewControllers.count;
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 3)] animated:YES];
+        NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
         //        [self displaySetPasswordPage];

@@ -17,7 +17,7 @@
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
 #import "UIViewController+NavigationBar.h"
-
+#import "JMBaseWebView.h"
 
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -334,16 +334,14 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    //   http://m.xiaolu.so/rest/v1/products/15809
-    
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
+    MMDetailsViewController *vc = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
     
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-  
-    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+//    JMBaseWebView *vc = [[JMBaseWebView alloc] init];
+//    vc.urlStr = model.web_url;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -353,14 +351,18 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
