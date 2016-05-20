@@ -37,7 +37,7 @@
 - (void) getWuliuInfoFromServer{
     //self.tradeId = @"xd15081955d45da07263e";
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_tid?tid=%@", Root_URL, self.tradeId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", urlString);
     
     

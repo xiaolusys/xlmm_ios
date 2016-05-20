@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIView *wuliuInfoChainView;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuCompanyName;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuMiandanId;
-@property (copy, nonatomic) NSString *tradeId;
+@property (copy, nonatomic) NSString *packetId;
+@property (copy, nonatomic) NSString *companyCode;
 @end
