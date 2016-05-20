@@ -17,6 +17,21 @@
 
 @implementation JMBaseWebView
 
+- (instancetype)initWithUrl:(NSString *)url Title:(NSString *)titleName {
+    if (self == [super init]) {
+        
+        _titleName = titleName;
+        
+        if ((url != nil) && (url.length > 0)) {
+            _urlStr = url;
+        }else {
+            _urlStr = @"";
+        }
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -31,6 +46,9 @@
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
     [self.view addSubview:statusBarView];
+    
+    if (self.urlStr.length == 0 || [self.urlStr class] == [NSNull null]) return;
+
     
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     

@@ -336,11 +336,11 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
-//    MMDetailsViewController *vc = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
+    MMDetailsViewController *vc = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
     
     
-    JMBaseWebView *vc = [[JMBaseWebView alloc] init];
-    vc.urlStr = model.web_url;
+//    JMBaseWebView *vc = [[JMBaseWebView alloc] init];
+//    vc.urlStr = model.web_url;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

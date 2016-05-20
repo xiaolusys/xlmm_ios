@@ -2389,7 +2389,6 @@
 		183070FA1C97BE3700B7665E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1F6EFCAD1CEDD49000004BCC /* webVIew */,
 				183070FB1C97BE3700B7665E /* ChildViewController.h */,
 				183070FC1C97BE3700B7665E /* ChildViewController.m */,
 				183070FD1C97BE3700B7665E /* ChildViewController.xib */,
@@ -3834,6 +3833,7 @@
 		18AC6C731CA247C600316E65 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				1F6EFCAD1CEDD49000004BCC /* webVIew */,
 				18315F741CA3E023003A9AFD /* WebViewController.h */,
 				18315F751CA3E023003A9AFD /* WebViewController.m */,
 				18315F761CA3E023003A9AFD /* WebViewController.xib */,
@@ -3975,6 +3975,7 @@
 				1F6EFCAF1CEDD4BA00004BCC /* JMBaseWebView.m */,
 			);
 			name = webVIew;
+			path = ../Common;
 			sourceTree = "<group>";
 		};
 		1F88D5901CB8E3460050A2E2 /* NewSetting */ = {

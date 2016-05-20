@@ -12,4 +12,9 @@
 
 @property (nonatomic,copy) NSString *urlStr;
 
+@property (nonatomic,copy) NSString *titleName;
+
+- (instancetype)initWithUrl:(NSString *)url Title:(NSString *)titleName;
+
+
 @end

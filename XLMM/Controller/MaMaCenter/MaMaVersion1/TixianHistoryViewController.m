@@ -13,6 +13,8 @@
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
 #import "SVProgressHUD.h"
+#import "MJRefresh.h"
+
 
 static NSString *CellIdentify = @"TixianCellIdentify";
 
@@ -22,6 +24,12 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSString *nextString;
 
+//是否刷新
+@property (nonatomic,assign) BOOL isRefreshing;
+@property (nonatomic,assign) BOOL isLoadMore;
+
+//记录当前页
+@property (nonatomic,assign) NSInteger currentPage;
 
 @end
 
@@ -65,36 +73,35 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     
     [self downloadData];
     
-    /*
-     使用通知传递数据
-     */
     
-//    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:model.created,@"createdTime",model.status,@"status", nil];
+    [self createRefreshView];
     
-//    NSNotification *notification = [NSNotification notificationWithName:@"withdrawTZ" object:nil userInfo:dic];
-//    
-//    [[NSNotificationCenter defaultCenter] postNotification:notification];
-//    
-//    
+    self.currentPage = 1;
+    self.isRefreshing = NO;
+    self.isLoadMore = NO;
     
-    
+    [self.tableView.mj_header beginRefreshing];
+
 }
 
 - (void)downloadData{
-    NSInteger page = 1;
-    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,page];
+    
+    
+    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
     NSLog(@"string = %@", self.nextString);
-//    [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
+//    [SVProgressHUD showWithStatus:@"疯狂加载中....."];
     
-    
-    [SVProgressHUD showWithStatus:@"疯狂加载中....."];
-
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:self.nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [SVProgressHUD dismiss];
         if (!responseObject) return;
         
         [self fetchedHistoryData:responseObject];
+        
+        [self.tableView reloadData];
+        
+        [self endRefreshing];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [SVProgressHUD dismiss];
     }];
@@ -107,61 +114,76 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     if (data== nil) {
         return;
     }
-//    NSError *error = nil;
-//    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//    
-//    if (error!= nil) {
-//        NSLog(@"error = %@", error.description);
-//        
-//    }
     
     NSDictionary *dicJson = data;
-    
 
- //   NSLog(@"json = %@", dicJson);
-    
     NSArray *results = [dicJson objectForKey:@"results"];
     for (NSDictionary *dic in results) {
         TixianModel *model = [TixianModel modelWithDiction:dic];
         [self.dataArray addObject:model];
     }
-    
-    self.nextString = [dicJson objectForKey:@"next"];
-    if ([self.nextString class] == [NSNull class]) {
-        [self.tableView reloadData];
-    } else {
-//        [self downLoadWithURLString:self.nextString andSelector:@selector(fetchedHistoryData:)];
-        
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage GET:self.nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-            if (!responseObject) return;
-            
-            [self fetchedHistoryData:responseObject];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        }];
-
-    }
-    
-
-    
-  
-    
 //    [self.tableView reloadData];
     
 }
 
-//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//        if (data == nil) {
-//            return ;
-//        }
-//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-//
-//    });
-//}
+
+/**
+ *  刷新视图
+ */
+
+- (void)createRefreshView {
+    kWeakSelf
+    
+    /**
+     *  下拉刷新
+     */
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        if (weakSelf.isRefreshing) {
+            return ;
+        }
+        weakSelf.isRefreshing = YES;
+        weakSelf.currentPage = 1;
+        
+        [self.dataArray removeAllObjects];
+        
+        [self downloadData];
+        
+        
+    }];
+    
+    /**
+     *  上拉加载
+     */
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        if (weakSelf.isLoadMore) {
+            return ;
+        }
+        weakSelf.isLoadMore = YES;
+        weakSelf.currentPage += 1;
+        
+        [self downloadData];
+        
+    }];
+    
+    
+}
+
+- (void)endRefreshing {
+    if (self.isRefreshing) {
+        self.isRefreshing = NO;//标记刷新结束
+        //正在刷新 就结束刷新
+//        [self.tableView headerEndRefreshingWithResult:JHRefreshResultNone];
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (self.isLoadMore) {
+        self.isLoadMore = NO;
+//        [self.tableView footerEndRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
 
 - (void)createTableView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -193,12 +215,18 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
     TixianTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentify];
     
-
+    if (!cell) {
+        cell = [[TixianTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentify];
+    }
 
     
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
     

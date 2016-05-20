@@ -17,6 +17,7 @@
 #import "VerifyPhoneViewController.h"
 #import "JMLineView.h"
 #import "MMRootViewController.h"
+#import "JMLogInViewController.h"
 
 #define rememberPwdKey @"rememberPwd"
 
@@ -236,11 +237,12 @@
         
         [self setDevice];
        
-        NSInteger count = self.navigationController.viewControllers.count;
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 3)] animated:YES];
+        NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
         
+        [self.navigationController popViewControllerAnimated:YES];
         
-        
+
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
