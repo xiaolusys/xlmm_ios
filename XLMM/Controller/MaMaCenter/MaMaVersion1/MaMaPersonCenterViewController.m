@@ -1115,7 +1115,7 @@
     
     WebViewController *activity = [[WebViewController alloc] init];
     activity.eventLink = self.myInvitation;
-    activity.titleName = @"我的邀请";
+    activity.titleN = @"titleN";
     [self.navigationController pushViewController:activity animated:YES];
 }
 

@@ -1118,13 +1118,14 @@ static NSString *kbrandCell = @"brandCell";
     [self activityClick:self.activityArr[0]];
 }
 
+#pragma mark ---- 点击活动事件处理
 - (void)activityClick:(NSDictionary *)dic {
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         WebViewController *huodongVC = [[WebViewController alloc] init];
         huodongVC.diction = dic;
-        
+        huodongVC.active = @"active";
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
@@ -1133,6 +1134,7 @@ static NSString *kbrandCell = @"brandCell";
         } else{
             WebViewController *huodongVC = [[WebViewController alloc] init];
             huodongVC.diction = dic;
+            huodongVC.active = @"active";
             [self.navigationController pushViewController:huodongVC animated:YES];
         }
     }

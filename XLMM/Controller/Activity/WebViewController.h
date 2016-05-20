@@ -15,8 +15,18 @@
 
 @property (nonatomic, strong) NSDictionary *diction;
 
-@property (nonatomic, strong)NSString *eventLink;
+/**
+ *  我的邀请
+ */
+@property (nonatomic, copy)NSString *eventLink;
 
-@property (nonatomic ,strong) NSString *urlStr;
+@property (nonatomic,copy) NSString *titleN;
+
+/**
+ *  商品详情url
+ */
+@property (nonatomic ,copy) NSString *urlStr;
+
+@property (nonatomic,copy) NSString *active;
 
 @end
