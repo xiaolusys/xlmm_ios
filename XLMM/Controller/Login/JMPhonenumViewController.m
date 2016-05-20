@@ -237,10 +237,8 @@
         
         [self setDevice];
        
-        NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [self backApointInterface];
         
 
         
@@ -438,7 +436,16 @@
     [SVProgressHUD dismiss];
     self.navigationController.navigationBarHidden = YES;
 }
-
+- (void)backApointInterface {
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 @end
 

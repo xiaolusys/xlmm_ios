@@ -366,9 +366,7 @@
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         
-        NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self backApointInterface];
         
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
         //        [self displaySetPasswordPage];
@@ -436,6 +434,17 @@
     [SVProgressHUD dismiss];
     self.navigationController.navigationBarHidden = YES;
 }
+- (void)backApointInterface {
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 @end
 
 
