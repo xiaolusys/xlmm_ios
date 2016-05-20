@@ -119,13 +119,13 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     NSString *loadStr = nil;
-    if (self.diction.count == 0) {
+    if ([_titleN isEqualToString:@"titleN"]) {
         [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
         loadStr = self.eventLink;
         button1.hidden = YES;
         button1.userInteractionEnabled = NO;
         imageView1.hidden = YES;
-    }else {
+    }else if ([_active isEqualToString:@"active"]){
         [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
         //取出活动id
         self.activityId = [self.diction objectForKey:@"id"];
@@ -133,7 +133,12 @@
         button1.hidden = NO;
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
+    }else {
+        loadStr = _urlStr;
+        
     }
+    
+    
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     

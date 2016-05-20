@@ -14,6 +14,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super init];
     if (self) {
+        _web_url = [dic objectForKey:@"web_url"];
         _ID = [dic objectForKey:@"id"];
         _name = [dic objectForKey:@"name"];
         _Url = [dic objectForKey:@"url"];
