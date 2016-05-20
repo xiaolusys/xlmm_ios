@@ -58,7 +58,7 @@
 
 
 - (void)viewDidLoad {
-    
+        
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick:)];
     
@@ -259,7 +259,6 @@
     } else{
         UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alterView show];
-        
         return;
     }
     
@@ -279,7 +278,6 @@
 #pragma mark ---- 选择使用手机号登录 或者 验证码 或者 注册新的账号
 
 - (void)cancleBtnClick {
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -309,8 +307,9 @@
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
     [self setDevice];
-    NSInteger count = self.navigationController.viewControllers.count;
+    NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{

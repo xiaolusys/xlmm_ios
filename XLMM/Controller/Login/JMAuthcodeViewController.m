@@ -287,7 +287,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.enabled = YES;
+                _selButton.enabled = NO;
                 _selButton.selected = YES;
             });
         }else{
@@ -366,8 +366,9 @@
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         
-        NSInteger count = self.navigationController.viewControllers.count;
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 3)] animated:YES];
+        NSInteger count = [[self.navigationController viewControllers] indexOfObject:self];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         
     }else if ([self.config[@"isVerifyPsd"] boolValue] || [self.config[@"isUpdateMobile"] boolValue]) {
         //        [self displaySetPasswordPage];

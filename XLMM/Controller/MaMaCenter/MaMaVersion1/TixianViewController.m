@@ -393,86 +393,64 @@
 #pragma mark --- 确认提现按钮点击
 - (void)sureBtnClick:(UIButton *)btn {
     
-    if (_wexinButton.selected == YES) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
-        
-        NSDictionary *paramters = [[NSDictionary alloc] init];
+    NSString *stringurl;
+    
+    NSDictionary *paramters = [[NSDictionary alloc] init];
+    
+    if (_wexinButton.selected) {
+        stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
         if (type != nil) {
             paramters = @{@"choice":type};
         }else {
             return ;
         }
-        
-        [manager POST:stringurl parameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            if (responseObject == nil) {
-                return ;
-            }
-            NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
-            
-            if (code == 0) {
-                TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
-                vc.tixianjine = tixianjine;
-                vc.activeValueNum = _activeValue;
-                
-                vc.surplusMoney = _cantixianjine;
-                
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if (code == 1){
-                [self alterMessage:@"参数错误"];
-                
-            } else if (code == 2){
-                [self alterMessage:@"不足提现金额"];
-            } else if (code == 3){
-                [self alterMessage:@"有待审核记录不予再次提现"];
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            
-        }];
     }else {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSInteger numMoney = 0;
         if (_oneHunderBtn.selected == YES) {
             numMoney = 100;
         }else {
             numMoney = 200;
         }
-        
-        NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
-        //        NSDictionary *paramters = @{@"choice":@"cashout_amount"};
-        [manager POST:stringurl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (responseObject == nil) {
-                return ;
-            }
-            NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
-            
-            if (code == 0) {
-                TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
-                vc.tixianjine = tixianjine;
-                
-                vc.surplusMoney = _cantixianjine;
-                vc.activeValueNum = _activeValue;
-                
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if (code == 1){
-                [self alterMessage:@"参数错误"];
-                
-            } else if (code == 2){
-                [self alterMessage:@"不足提现金额"];
-            } else if (code == 3){
-                [self alterMessage:@"有待审核记录不予再次提现"];
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            
-        }];
+        stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
     }
     
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager POST:stringurl parameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if (responseObject == nil) {
+            return ;
+        }
+        NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+        TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
+
+        switch (code) {
+            case 0:
+                vc.tixianjine = tixianjine;
+                vc.activeValueNum = _activeValue;
+                vc.surplusMoney = _cantixianjine;
+                [self.navigationController pushViewController:vc animated:YES];
+                break;
+            case 1:
+                [self alterMessage:@"参数错误"];
+                break;
+            case 2:
+                [self alterMessage:@"不足提现金额"];
+                break;
+            case 3:
+                [self alterMessage:@"有待审核记录不予再次提现"];
+                break;
+                
+            default:
+                break;
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+
 }
 
 
@@ -524,8 +502,8 @@
     [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.blanceLabel.mas_centerY);
         make.left.equalTo(self.blanceLabel.mas_right).offset(5);
-        make.width.mas_equalTo(@300);
-        make.height.mas_equalTo(@18);
+//        make.width.mas_equalTo(@300);
+//        make.height.mas_equalTo(@18);
     }];
 
     [self.xiaoluButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -636,8 +614,8 @@
     [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bottomView.mas_top).offset(10);
         make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@19);
+//        make.width.mas_equalTo(SCREENWIDTH);
+//        make.height.mas_equalTo(@19);
     }];
     
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {

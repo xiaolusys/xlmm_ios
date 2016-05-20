@@ -22,7 +22,7 @@ NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
 
 
-//http://m.xiaolumeimei.com/rest/v1/users/budget_cash_out
+//http://m.xiaolumeimei.com/rest/v1/pmt/cashout?page=1
 
 //取消提现的接口
      //http://m.xiaolumeimei.com/rest/v1/pmt/cashout/cancal_cashout

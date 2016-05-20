@@ -10,6 +10,7 @@
 
 @interface CollectionModel : NSObject
 
+@property (nonatomic ,copy) NSString *web_url;
 @property (nonatomic, copy)NSString *agentPrice;
 @property (nonatomic, strong)NSDictionary * category;
 @property (nonatomic, copy)NSString *ID;
