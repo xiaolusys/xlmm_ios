@@ -28,7 +28,7 @@
 @property (nonatomic, copy)NSString *logistics_company_name;
 @property (nonatomic, copy)NSString *process_time;
 @property (nonatomic, copy)NSString *package_group_key;
-@property (nonatomic, copy)NSString *price;
+@property (nonatomic, copy)NSString *payment;
 @property (nonatomic, copy)NSString *num;
 @property (nonatomic, copy)NSString *logistics_company_code;
 

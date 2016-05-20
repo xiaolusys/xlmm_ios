@@ -10,6 +10,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "UIColor+RGBColor.h"
+#import "SVProgressHUD.h"
 
 @interface WuliuViewController ()
 
@@ -36,6 +37,11 @@
 
 - (void) getWuliuInfoFromServer{
     //self.tradeId = @"xd15081955d45da07263e";
+    if((self.packetId == nil) || ([self.packetId isEqualToString:@""])
+       || (self.companyCode == nil || ([self.companyCode isEqualToString:@""]))){
+        [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
+        return;
+    }
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", urlString);

@@ -103,7 +103,7 @@
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[result objectForKey:@"thumbnail"]]];
     
     [self.headerImageView setUserInteractionEnabled:YES];
-    [self.headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickHeadImage:)]];
+//    [self.headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickHeadImage:)]];
     
 }
 
@@ -274,19 +274,6 @@
     NSLog(@"clickHeadImage");
     //NSLog(@"%hhd",[gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]);
     
-    UIView *viewClicked=[gestureRecognizer view];
-    if (viewClicked==self.headerImageView) {
-        NSLog(@"headerImageView");
-        clickHeadImgCount++;
-        //跳到debug vc
-        if(clickHeadImgCount == 8){
-            clickHeadImgCount = 0;
-            
-            DebugSettingViewController *debugVC = [[DebugSettingViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-            
-            [self.navigationController pushViewController:debugVC animated:YES];
-        }
-    }
     
 }
 
