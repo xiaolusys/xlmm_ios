@@ -130,11 +130,14 @@
         //取出活动id
         self.activityId = [self.diction objectForKey:@"id"];
         loadStr = [self.diction objectForKey:@"act_link"];
+        
         button1.hidden = NO;
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
-    }
+    } 
     
+    
+    loadStr = _urlStr;
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     
     self.webView.scalesPageToFit = YES;

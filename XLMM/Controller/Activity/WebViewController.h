@@ -17,5 +17,6 @@
 
 @property (nonatomic, strong)NSString *eventLink;
 
+@property (nonatomic ,strong) NSString *urlStr;
 
 @end
