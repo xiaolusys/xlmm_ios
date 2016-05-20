@@ -112,6 +112,7 @@
     self.circleView.layer.cornerRadius = 5;
     if (self.model.good_status == 0) {
         self.createdLabel.text = @"申请退款";
+        self.topToRefundHeight.constant = 0;
     }else{
           self.createdLabel.text = @"申请退货";
     }

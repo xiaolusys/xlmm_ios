@@ -199,6 +199,7 @@
     
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
     
+    [self removeAllSubviews:self.myXiangQingView];
     if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
         //需要查物流信息，查询到信息后处理
         AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
@@ -212,7 +213,7 @@
     else{
         //不用查物流信息，直接显示时间和商品即可
         self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
-        [self createProcessView:CGRectMake(0, 0, 320, 76) status:nil time:nil];
+        [self createProcessView:CGRectMake(0, 0, 320, 76) status:nil time:nil company:nil packetId:nil];
         NSUInteger  h=76;
         for(int i=0; i < dataArray.count; i++){
             [self createXiangQing:CGRectMake(0, h, 320, 90) number:i];
@@ -291,10 +292,13 @@
         LogisticsModel *model = [LogisticsModel new];
         model.title = [dic objectForKey:@"title"];
         model.pic_path = [dic objectForKey:@"pic_path"];
+        model.num = [dic objectForKey:@"num"];
+        model.payment = [dic objectForKey:@"payment"];
         model.assign_status_display = [dic objectForKey:@"assign_status_display"];
         model.ware_by_display = [dic objectForKey:@"ware_by_display"];
         model.out_sid = [dic objectForKey:@"out_sid"];
         model.logistics_company_name = [dic objectForKey:@"logistics_company_name"];
+        model.logistics_company_code = [dic objectForKey:@"logistics_company_code"];
         model.process_time = [dic objectForKey:@"process_time"] ;
         model.package_group_key = [dic objectForKey:@"package_group_key"];
         [logisticsInfoArray addObject:model];
@@ -308,7 +312,9 @@
 
 }
 
-- (void)createProcessView:(CGRect )rect status:(NSString *)packetStatus time:(NSString *)time{
+- (void)createProcessView:(CGRect )rect status:(NSString *)packetStatus time:(NSString *)time company:(NSString *)company
+              packetId:(NSString *)packetId{
+    NSLog(@"createProcessView packetStatus=%@ time=%@ company=%@ packetId=%@",packetStatus, time, company, packetId);
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor backgroundlightGrayColor];
 //    view.layer.cornerRadius = 4;
@@ -323,15 +329,21 @@
     ballView.layer.cornerRadius = 6;
     [view addSubview:ballView];
     
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 16, 150, 15)];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 10, 150, 15)];
     timeLabel.textColor = [UIColor blackColor];
     timeLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:timeLabel];
 
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 39, 84, 17)];
+    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 32, 250, 17)];
     statusLabel.textColor = [UIColor blackColor];
-    statusLabel.font = [UIFont systemFontOfSize:14];
+    statusLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:statusLabel];
+    
+    UILabel *packetLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 54, 250, 17)];
+    packetLabel.textColor = [UIColor blackColor];
+    packetLabel.font = [UIFont systemFontOfSize:12];
+    packetLabel.text = @"以下商品由同一个包裹发出";
+    [view addSubview:packetLabel];
     [self.myXiangQingView addSubview:view];
 
     
@@ -347,30 +359,30 @@
             statusLabel.text = self.dingdanModel.status_display;
             if(self.dingdanModel.pay_time != nil){
                 NSString *newStr = [self formatterTimeString:self.dingdanModel.pay_time ];
-                timeLabel.text = newStr;
+                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
             }
         }
         else{
             statusLabel.text = packetStatus;
-            timeLabel.text = time;
+            timeLabel.text =  [NSString stringWithFormat:@"%@:%@", @"时间", time];
         }
         
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(300, 30, 15, 15)];
-        [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
-        [view addSubview:img];
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-        [view addGestureRecognizer:tapGesture];
+//        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(300, 30, 15, 15)];
+//        [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
+//        [view addSubview:img];
+//        
+//        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+//        [view addGestureRecognizer:tapGesture];
     } else if ([self.dingdanModel.status integerValue] == ORDER_STATUS_SENDED){
         if(packetStatus == nil || time == nil){
-            statusLabel.text = self.dingdanModel.status_display;
+            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@", self.dingdanModel.status_display, company, packetId];
             if(self.dingdanModel.consign_time != nil){
                 NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
                 timeLabel.text = newStr;
             }
         }
         else{
-            statusLabel.text = packetStatus;
+            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  packetStatus, company, packetId];
             timeLabel.text = time;
         }
         
@@ -417,7 +429,7 @@
 
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     if (dic.count == 0){
-        NSLog(@"");
+        NSLog(@"setWuLiuMsg dic count=0");
         return;
     }
 
@@ -425,15 +437,18 @@
     
     NSString *groupKey = @"";
     NSInteger h = 0;
-    self.goodsViewHeight.constant = packetNum * 76 + logisticsInfoArray.count * 90 + 15 *(logisticsInfoArray.count - 1);
+    self.goodsViewHeight.constant = packetNum * 76 + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
     for(int i =0; i < logisticsInfoArray.count; i++){
         currentIndex = i;
+        NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
         if((((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
-            [self createProcessView:CGRectMake(0, h, 320, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time];
+            [self createProcessView:CGRectMake(0, h, 320, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time
+                company:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).logistics_company_name
+                        packetId:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).out_sid];
             h += 76;
         }
-        groupKey = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:0]).package_group_key;
+        groupKey = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
         [self createXiangQing:CGRectMake(0, h, 320, 90) number:i];
         h += 90;
@@ -624,6 +639,13 @@
         
 
     [frontView removeFromSuperview];
+}
+
+- (void)removeAllSubviews:(UIView *)v{
+    while (v.subviews.count) {
+        UIView* child = v.subviews.lastObject;
+        [child removeFromSuperview];
+    }
 }
 
 #pragma mark -- 退货--
