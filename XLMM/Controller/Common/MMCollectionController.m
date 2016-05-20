@@ -130,7 +130,7 @@
      [self.dataArray addObject:model];
     }
     
-    if(self.dataArray.count ==0) return;
+    if((self.dataArray == nil) || (self.dataArray.count ==0)) return;
     CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
     offSheltTime = tempModel.offShelfTime;
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -155,10 +155,14 @@
 
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
-     CollectionModel *model = [self.dataArray objectAtIndex:0];
+    if((self.dataArray == nil) || (self.dataArray.count == 0))
+        return;
+    CollectionModel *model = [self.dataArray objectAtIndex:0];
     NSString *saleTime = model.saleTime;
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     formatter.dateFormat = @"YYYY-MM-dd";
+    if((saleTime == nil) || ([saleTime isEqualToString:@""]))
+       return;
     
     NSDate *toDate = [formatter dateFromString:saleTime];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -180,7 +184,7 @@
     
 
     NSDate *todate;
-    if ([offSheltTime class] == [NSNull class]) {
+    if ((offSheltTime == nil) || ([offSheltTime isEqualToString:@""])) {
        // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];

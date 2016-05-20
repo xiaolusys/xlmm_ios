@@ -416,7 +416,7 @@
         NSLog(@"下载失败");
         return;
     }
-    if (addressArray.count == 0) {
+    if ((addressArray == nil) || (addressArray.count == 0)) {
         self.peopleLabel.text = @"";
         self.addressLabel.text = @"";
         self.addressZeroLabel.hidden = NO;

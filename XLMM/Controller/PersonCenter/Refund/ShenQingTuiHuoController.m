@@ -15,7 +15,7 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "QiniuSDK.h"
-
+#import "SVProgressHUD.h"
 
 
 
@@ -740,6 +740,10 @@
         }
         
         NSMutableString *linkstr = [[NSMutableString alloc] init];
+        if(self.imagesArray.count > 3){
+            [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
+            return;
+        }
         for (int i = 0; i < self.imagesArray.count; i++) {
             [linkstr appendString:self.linksArray[i]];
             [linkstr appendString:@","];
