@@ -1386,30 +1386,41 @@ static NSString *kbrandCell = @"brandCell";
         return;
     
     PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-    if (model.productModel == nil) {
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.eventLink = model.web_url;
-        webView.diction = model.productModel;
-        //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-        [self.navigationController pushViewController:webView animated:YES];
-    }else {
-        
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.eventLink = model.web_url;
-            webView.diction = model.productModel;
-            //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-            [self.navigationController pushViewController:webView animated:YES];
-            
-        } else {
-           
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.eventLink = model.web_url;
-            webView.diction = model.productModel;
-//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-            [self.navigationController pushViewController:webView animated:YES];
-        }
-    }
+    
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.eventLink = model.web_url;
+    webView.diction = model.productModel;
+    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+    [self.navigationController pushViewController:webView animated:YES];
+    
+    
+    
+//    
+//    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+//    if (model.productModel == nil) {
+//        WebViewController *webView = [[WebViewController alloc] init];
+//        webView.eventLink = model.web_url;
+//        webView.diction = model.productModel;
+//        //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+//        [self.navigationController pushViewController:webView animated:YES];
+//    }else {
+//        
+//        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+//            WebViewController *webView = [[WebViewController alloc] init];
+//            webView.eventLink = model.web_url;
+//            webView.diction = model.productModel;
+//            //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+//            [self.navigationController pushViewController:webView animated:YES];
+//            
+//        } else {
+//           
+//            WebViewController *webView = [[WebViewController alloc] init];
+//            webView.eventLink = model.web_url;
+//            webView.diction = model.productModel;
+////            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+//            [self.navigationController pushViewController:webView animated:YES];
+//        }
+//    }
     
 }
 

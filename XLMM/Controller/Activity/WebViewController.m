@@ -36,6 +36,13 @@
 
 @interface WebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 
+//分享参数
+@property (nonatomic, strong)NSString *titleStr;
+@property (nonatomic, strong)NSString *des;
+@property (nonatomic, strong)UIImage *shareImage;
+@property (nonatomic, strong)NSString *url;
+@property (nonatomic, strong)NSData *imageD;
+
 @property (nonatomic, strong) UIWebView *shareWebView;
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
 
@@ -45,10 +52,7 @@
 @property (nonatomic, strong) YoumengShare *youmengShare;
 
 @property (nonatomic,assign)BOOL isPic;
-@property (nonatomic, strong)NSString *titleStr;
-@property (nonatomic, strong)NSString *url;
 @property (nonatomic, strong)UIImage *imageData;
-@property (nonatomic, strong)NSData *imageD;
 @property (nonatomic, strong)NSString *kuaizhaoLink;
 @property (nonatomic, assign)BOOL isWeixin;
 @property (nonatomic, assign)BOOL isWeixinFriends;
@@ -61,10 +65,19 @@
 @property (nonatomic, strong)NSDictionary *nativeShare;
 
 @property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
+/**
+ *  分享数据字典
+ */
+@property (nonatomic,strong) NSDictionary *shareDic;
+/**
+ *  商品ID
+ */
+@property (nonatomic,copy) NSString *itemID;
+
 @end
 
 @implementation WebViewController{
-    UIImage *shareImage;
+//    UIImage *shareImage;
     NSString *content;
     NSString *shareTitle;
     UIImage *newshareImage;
@@ -73,7 +86,7 @@
     NSString *shareType;
     
     NSString *shareUrllink;
-    
+    BOOL isWXFriends;
 }
 
 - (YoumengShare *)youmengShare {
@@ -134,8 +147,11 @@
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
     }else {
+        
         [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
-        self.activityId = [self.diction objectForKey:@"id"];
+        
+//        self.activityId = [self.diction objectForKey:@"id"];
+        self.itemID = [self.diction objectForKey:@"id"];
         loadStr = _eventLink;
         
         
@@ -161,8 +177,9 @@
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 
-    shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
+    _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
+
 }
 
 
@@ -178,65 +195,81 @@
 }
 
 - (void)rightBarButtonAction {
-//    NSLog(@"===========data======%@", self.nativeShare);
-    NSNumber *activityID = nil;
-    if (self.nativeShare == nil) {
-        activityID = self.activityId;
+
+    if ([_active isEqualToString:@"active"]) {
+        NSNumber *activityID = nil;
+        if (self.nativeShare == nil) {
+            activityID = self.activityId;
+
+        }else {
+            activityID = self.nativeShare[@"active_id"];
+        }
+        [SVProgressHUD showWithStatus:@"请稍后..."];
+
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
+        NSLog(@"string = %@", string);
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (!responseObject) return;
+            [self addShareView:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
     }else {
-        activityID = self.nativeShare[@"active_id"];
+        
+        [self createSharData];
+        
     }
     
-    [SVProgressHUD showWithStatus:@"请稍后..."];
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
-    NSLog(@"string = %@", string);
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        [self addShareView:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
 }
+#pragma mark ---- 创建分享数据
+- (void)createSharData {
+    if (_shareDic == nil) {
+        //网络请求
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,_itemID];
+        
+        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+        [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            _shareDic = responseObject;
+            
+            [self addShareView:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            //            NSLog(@"error-------%@", error);
+        }];
+        
+    }
+}
+
+
 #pragma mark ---- 分享视图，包括分享按钮的点击
 //分享视图增加
 - (void)addShareView:(NSDictionary *)dicShare {
     [SVProgressHUD dismiss];
-    NSString *type = dicShare[@"share_type"];
-    if ([type isEqualToString:@"link"]) {
-        self.isPic = NO;
+    
+    NSString *imageUrlString = @"";
+    
+    if ([_active isEqualToString:@"active"]) {
+        NSString *type = dicShare[@"share_type"];
+        if ([type isEqualToString:@"link"]) {
+            self.isPic = NO;
+        }else {
+            self.isPic = YES;
+        }
+        //共有 分享文字
+        self.titleStr = [dicShare objectForKey:@"title"];
+        content = [dicShare objectForKey:@"active_dec"];
+        self.url = dicShare[@"share_link"];
+        self.kuaizhaoLink = dicShare[@"share_link"];
+        imageUrlString = dicShare[@"share_icon"];
     }else {
-        self.isPic = YES;
+        self.titleStr = [_shareDic objectForKey:@"title"];
+        self.des = [_shareDic objectForKey:@"desc"];
+        self.url = [_shareDic objectForKey:@"share_link"];
+        imageUrlString = [_shareDic objectForKey:@"share_img"];
     }
-    self.titleStr = [dicShare objectForKey:@"title"];
-    content = [dicShare objectForKey:@"active_dec"];
-    
-    self.url = dicShare[@"share_link"];
-    
-    self.kuaizhaoLink = dicShare[@"share_link"];
-    
-    NSString *imageUrlString = dicShare[@"share_icon"];
-//    NSData *imageData = nil;
-//    do {
-//        NSLog(@"image = %@", [imageUrlString URLEncodedString]);
-//        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-//        if (imageData != nil) {
-//            break;
-//        }
-//        if (imageUrlString.length == 0 || [NSNull class] == [imageUrlString class]) {
-//            break;
-//        }
-//        
-//    } while (YES);
-//    UIImage *image = [UIImage imageWithData:imageData];
-//    image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-//    NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-//    UIImage *newImage = [UIImage imageWithData:imagedata];
-//    self.imageD = imageData;
-//    self.imageData = newImage;
-//    shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+
     self.imageData = [UIImage imagewithURLString:imageUrlString];
-    
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
@@ -244,7 +277,7 @@
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     self.youmengShare.snapshotBtn.hidden = YES;
     self.youmengShare.friendsSnaoshotBtn.hidden = YES;
-    
+
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.2 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
@@ -252,17 +285,39 @@
     
     // 分享页面事件处理
     [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.youmengShare.weixinShareBtn addTarget:self action:@selector(weixinShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.friendsShareBtn addTarget:self action:@selector(friendsShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.qqshareBtn addTarget:self action:@selector(qqshareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
-//    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+- (void)snapshotBtnClick:(UIButton *)btn {
+    [SVProgressHUD showWithStatus:@"正在生成快照..."];
+    isWXFriends = NO;
+    [self createKuaiZhaoImage];
+}
+
+- (void)friendsSnaoshotBtnClick:(UIButton *)btn{
+    [SVProgressHUD showWithStatus:@"正在生成快照..."];
+    isWXFriends = YES;
+    [self createKuaiZhaoImage];
+}
+- (void)createKuaiZhaoImage{
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/products/%@/snapshot.html", Root_URL, _itemID];
+    //   NSLog(@"imageUrlString = %@", str);
+    
+    
+    NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [self.webView loadRequest:request];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
+}
+
 
 - (void)cancleShareBtnClick:(UIButton *)btn{
     [UIView animateWithDuration:0.3 animations:^{
@@ -276,7 +331,8 @@
     if (self.isPic) {
         //图片
         self.isWeixin = YES;
-        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+//        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+        [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
         [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
@@ -297,8 +353,8 @@
     if (self.isPic) {
         //图片
         self.isWeixinFriends = YES;
-        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
-        
+//        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+        [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
         [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
@@ -310,7 +366,6 @@
             //        [self hiddenNavigationView];
             
         }];
-        
         [self cancleShareBtnClick:nil];
     }
 }
@@ -458,7 +513,7 @@
         
         newshareImage = [UIImage imagewithURLString:imageurl];
         content = [responseObject objectForKey:@"active_dec"];
-        shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+        _shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
         NSString *sharelink = [responseObject objectForKey:@"share_link"];
         
         if ([platform isEqualToString:@"qq"]) {
@@ -466,14 +521,14 @@
             
             [UMSocialData defaultData].extConfig.qqData.url = sharelink;
             [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             }];
             
             
         }else if ([platform isEqualToString:@"sinawb"]){
             NSLog(@"wb");
             NSString *sinaContent = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
-            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:UIImagePNGRepresentation(shareImage)];
+            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:UIImagePNGRepresentation(_shareImage)];
             
         } else if ([platform isEqualToString:@"web"]){
             NSLog(@"copy");
@@ -499,7 +554,7 @@
             [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
             [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image: shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:content image: _shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             }];
         } else if ([platform isEqualToString:@"wxapp"]){
             if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
@@ -507,7 +562,7 @@
                 [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
                 [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
                 
-                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                     
                 }];
                 
@@ -524,7 +579,7 @@
                 [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
                 [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
                 
-                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                     
                 }];
             } else{

@@ -501,6 +501,34 @@
 //        self.titleStr = [shareDic objectForKey:@"title"];
 //        self.des = [shareDic objectForKey:@"desc"];
 //        self.url = [shareDic objectForKey:@"share_link"];
+        
+        /**
+         *  {
+         "active_at" = "2015-12-19";
+         created = "2015-12-19T13:30:19";
+         desc = "
+         \n\U5546\U54c1\U5165\U53e3\Uff1a\U3000http://m.xiaolumeimei.com/pages/shangpinxq.html?id=12955&mm_linkid=44";
+         id = 2;
+         "share_img" = "https://mmbiz.qlogo.cn/mmbiz/ZYmW1WlFwHyRiawU1eHrcIrl43QWOrIAuib4Tdp8qnFRRHMPkgln5kluuSeMQWHvz5Cyd1ic8A1sMI81lH2yWJaLA/0?wx_fmt=png%3FimageMogr2%2Fthumbnail%2F108%2Fquality%2F80%2Fformat%2Fjpg%2Fcrop%2F108x108%2F";
+         "share_link" = "http://m.xiaolumeimei.com/m/44?next=/pages/shangpinxq.html%3Fid%3D12955%26mm_linkid%3D44";
+         status = 1;
+         title = "\U79d2\U6740 \U5927\U5634\U7334\U7eaf\U68c9\U6bdb\U5708\U8fde\U5e3d\U5f00\U886b\U5916\U5957/\U7070\U8272";
+         url = "http://m.xiaolumeimei.com/rest/v1/share/2";
+         }
+         
+         {
+         "active_dec" = "\U56e4\U793c\U597d\U65f6\U673a\Uff0c\U5c16\U8d27\U63d0\U524d\U8d2d\Uff0c\U5907\U597d\U516d\U4e00\U793c\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U6211\U7231\U4f60\Uff5e";
+         id = 9;
+         "qrcode_link" = "http://m.xiaolumeimei.com/sale/promotion/ercode/?mama_id=44";
+         "share_icon" = "http://7xrst8.com1.z0.glb.clouddn.com/fx.png";
+         "share_link" = "http://m.xiaolumeimei.com/sale/promotion/join/9/";
+         "share_type" = link;
+         title = "\U516d\U4e00\U63d0\U524d\U8d2d\Uff01\U6b22\U4e50\U5927Fun\U9001\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U7231\U4f60~";
+         }
+         
+         *
+         *  @return
+         */
     }
 }
 - (void)createKuaiZhaoImage{
