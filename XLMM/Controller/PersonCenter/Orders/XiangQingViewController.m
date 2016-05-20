@@ -52,11 +52,11 @@
     NSMutableArray *refund_status_displayArray;// 退款状态描述
     NSMutableArray *orderStatusDisplay;
     NSMutableArray *orderStatus;
-    NSString *tradeId; //unique trade id for user
     NSTimer *theTimer;
     NSString *createdString;
     NSMutableArray *logisticsInfoArray;
     NSInteger packetNum;
+    NSInteger currentIndex;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -74,6 +74,7 @@
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(btnClicked:)];
     //初始化数组。。。。
     
+    currentIndex = 0;
     refund_status_displayArray = [[NSMutableArray alloc] initWithCapacity:0];
     refund_statusArray = [[NSMutableArray alloc] initWithCapacity:0];
     orderStatus = [[NSMutableArray alloc] initWithCapacity:0];
@@ -112,10 +113,18 @@
 }
 
 - (void)actiondo:(id)sender{
-    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    UITapGestureRecognizer *tap = sender;
+    UIView *tapView = (UIView*)tap.view;
     
-    wuliuView.tradeId = tradeId;
-    [self.navigationController pushViewController:wuliuView animated:YES];
+    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
+        
+    
+        wuliuView.packetId = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
+        wuliuView.companyCode = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
+        [self.navigationController pushViewController:wuliuView animated:YES];
+    }
+    
 }
 
 - (void)downloadData{
@@ -189,7 +198,6 @@
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
     
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
-    tradeId = [dicJson objectForKey:@"tid"]; //交易ID，客户可见
     
     if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
         //需要查物流信息，查询到信息后处理
@@ -304,6 +312,7 @@
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor backgroundlightGrayColor];
 //    view.layer.cornerRadius = 4;
+    view.tag = 100 + currentIndex;
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 1, 76)];
     lineView.backgroundColor = [UIColor orangeThemeColor];
@@ -418,6 +427,7 @@
     NSInteger h = 0;
     self.goodsViewHeight.constant = packetNum * 76 + logisticsInfoArray.count * 90 + 15 *(logisticsInfoArray.count - 1);
     for(int i =0; i < logisticsInfoArray.count; i++){
+        currentIndex = i;
         if((((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
             [self createProcessView:CGRectMake(0, h, 320, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time];
