@@ -134,7 +134,10 @@
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
     }else {
+        [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
+        self.activityId = [self.diction objectForKey:@"id"];
         loadStr = _eventLink;
+        
         
     }
     
