@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
 #import "FillWuliuController.h"
-
+#import "XlmmMall.h"
 #import "MMClass.h"
 
 
@@ -81,11 +81,11 @@
     [self.view addSubview:backView];
     
     //没有订单号显示填写退货地址
-    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
-        self.topToRefundHeight.constant = 0;
-    }
+//    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
+//        self.topToRefundHeight.constant = 0;
+//    }
     
-    NSLog(@"%@", self.model.return_address);
+    NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.model.status, self.model.good_status, self.model.return_address);
     
 }
 
@@ -112,9 +112,11 @@
     self.circleView.layer.cornerRadius = 5;
     if (self.model.good_status == 0) {
         self.createdLabel.text = @"申请退款";
-        self.topToRefundHeight.constant = 0;
     }else{
-          self.createdLabel.text = @"申请退货";
+        self.createdLabel.text = @"申请退货";
+        if(self.model.status == REFUND_STATUS_SELLER_AGREED){
+            self.topToRefundHeight.constant = 0;
+        }
     }
   
     self.statusLabel.text = self.model.status_display;
