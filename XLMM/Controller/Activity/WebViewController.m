@@ -119,7 +119,7 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     NSString *loadStr = nil;
-    if ([_titleN isEqualToString:@"titleN"]) {
+    if ([_active isEqualToString:@"myInvite"]) {
         [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
         loadStr = self.eventLink;
         button1.hidden = YES;
@@ -134,7 +134,7 @@
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
     }else {
-        loadStr = _urlStr;
+        loadStr = _eventLink;
         
     }
     
@@ -662,16 +662,6 @@
     [JumpUtils jumpToLocation:target_url viewController:self];
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge{
