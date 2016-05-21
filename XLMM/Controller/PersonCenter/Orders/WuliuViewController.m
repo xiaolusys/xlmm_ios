@@ -131,7 +131,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     return ms;
 }
 
--(void)displayLastWuliuInfoWithTime:(NSString*)timeText andInfo:(NSString*)infoText{
+-(void)displayLastWuliuInfoWithTime:(UICollectionViewCell *)cell time:(NSString*)timeText andInfo:(NSString*)infoText{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"WuliuInfoView" owner:nil options:nil];
     UIView *view = views[0];
     UIView *circleView = [view viewWithTag:100];
@@ -147,8 +147,8 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     circleView.layer.cornerRadius = 4.5;
     circleView.backgroundColor = color;
     
-    view.frame = CGRectMake(0, 17, SCREENWIDTH, 80);
-    [self.wuliuInfoChainView addSubview:view];
+    view.frame = CGRectMake(0, 0, SCREENWIDTH, 80);
+    [cell addSubview:view];
 }
 
 
@@ -207,7 +207,12 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     timeText = [self spaceFormatTimeString:timeText];
     
     NSString *infoText = [wuliuInfo objectForKey:@"content"];
-    [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
+    if(0 == indexPath.row){
+        [self displayLastWuliuInfoWithTime:cell time:timeText andInfo:infoText];
+    }
+    else{
+        [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
+    }
     
 //    [cell fillCellWithData:[self.infoArray objectAtIndex:indexPath.row]];
     
