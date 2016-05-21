@@ -213,10 +213,10 @@
     else{
         //不用查物流信息，直接显示时间和商品即可
         self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
-        [self createProcessView:CGRectMake(0, 0, 320, 76) status:nil time:nil company:nil packetId:nil];
+        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:nil time:nil company:nil packetId:nil];
         NSUInteger  h=76;
         for(int i=0; i < dataArray.count; i++){
-            [self createXiangQing:CGRectMake(0, h, 320, 90) number:i];
+            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
             h += 90;
         }
     }
@@ -443,14 +443,14 @@
         NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
         if((((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
-            [self createProcessView:CGRectMake(0, h, 320, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time
+            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time
                 company:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).logistics_company_name
                         packetId:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).out_sid];
             h += 76;
         }
         groupKey = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
-        [self createXiangQing:CGRectMake(0, h, 320, 90) number:i];
+        [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
         h += 90;
     }
 }
