@@ -386,7 +386,7 @@
             timeLabel.text = time;
         }
         
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(300, 30, 15, 15)];
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
         [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
         [view addSubview:img];
         

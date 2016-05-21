@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -540,16 +540,16 @@
                             <exclude reference="Y84-m6-3VU"/>
                         </mask>
                         <mask key="constraints">
+                            <exclude reference="1Zc-I2-MYH"/>
+                            <exclude reference="Qvp-Eq-5Uv"/>
+                            <exclude reference="lam-cm-QXO"/>
+                            <exclude reference="wal-u5-PrE"/>
                             <exclude reference="0Li-X6-gw0"/>
                             <exclude reference="4Jf-k6-wAv"/>
                             <exclude reference="bt9-gb-6a8"/>
                             <exclude reference="8Ta-m8-b2a"/>
                             <exclude reference="YHJ-Yj-WOF"/>
                             <exclude reference="gWm-1H-HxH"/>
-                            <exclude reference="1Zc-I2-MYH"/>
-                            <exclude reference="Qvp-Eq-5Uv"/>
-                            <exclude reference="lam-cm-QXO"/>
-                            <exclude reference="wal-u5-PrE"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -559,16 +559,16 @@
                             <include reference="Y84-m6-3VU"/>
                         </mask>
                         <mask key="constraints">
+                            <include reference="1Zc-I2-MYH"/>
+                            <include reference="Qvp-Eq-5Uv"/>
+                            <include reference="lam-cm-QXO"/>
+                            <include reference="wal-u5-PrE"/>
                             <include reference="0Li-X6-gw0"/>
                             <include reference="4Jf-k6-wAv"/>
                             <include reference="bt9-gb-6a8"/>
                             <include reference="8Ta-m8-b2a"/>
                             <include reference="YHJ-Yj-WOF"/>
                             <include reference="gWm-1H-HxH"/>
-                            <include reference="1Zc-I2-MYH"/>
-                            <include reference="Qvp-Eq-5Uv"/>
-                            <include reference="lam-cm-QXO"/>
-                            <include reference="wal-u5-PrE"/>
                         </mask>
                     </variation>
                 </scrollView>
