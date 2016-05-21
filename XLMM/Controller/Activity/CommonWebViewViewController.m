@@ -41,7 +41,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self updateUserAgent];
+
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
     
@@ -53,7 +54,7 @@
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
-    [self updateUserAgent];
+    //[self updateUserAgent];
     
     
     
@@ -64,6 +65,8 @@
 }
 
 - (void)updateUserAgent{
+    
+    NSLog(@"CommonWebViewViewController ---------- %s",__func__);
     //get the original user-agent of webview
     NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);

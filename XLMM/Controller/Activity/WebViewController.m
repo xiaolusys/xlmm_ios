@@ -113,7 +113,8 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     //与js交互代码。。
-    
+    [self updateUserAgent];
+    [self registerJsBridge];
     }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -167,7 +168,8 @@
         loadStr = _eventLink;
         
     }
-
+   
+    
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;
@@ -175,8 +177,7 @@
     NSLog(@"webview url %@", request);
     [self.webView loadRequest:request];
 
-    [self updateUserAgent];
-    [self registerJsBridge];
+    
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 
@@ -665,6 +666,9 @@
 
 - (void)updateUserAgent{
     //get the original user-agent of webview
+    NSLog(@"webViewController =====  %s",__func__);
+    
+    
     NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);
     if(oldAgent == nil) return;
@@ -719,7 +723,7 @@
     /**
      *   分享
      */
-    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+    [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSString *share_to = data[@"share_to"];
         //传的参数为空调用原生的分享
         if (share_to.length == 0) {
