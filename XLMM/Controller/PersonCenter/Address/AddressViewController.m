@@ -224,6 +224,9 @@
   
     NSLog(@"%ld", (long)indexPath.row);
     
+    if((dataArray == nil) || (dataArray.count == 0))
+        return;
+    
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];
     
     if (self.isSelected == YES) {

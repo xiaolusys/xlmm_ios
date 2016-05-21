@@ -19,7 +19,7 @@
     UIColor *color = [UIColor colorWithR:217 G:140 B:13 alpha:1];
     return color;
 }
-
+//--- 橙色
 + (UIColor *)buttonEnabledBackgroundColor{
     return [UIColor colorWithR:245 G:177 B:35 alpha:1];
 }
@@ -51,6 +51,10 @@
 
 + (UIColor *)textDarkGrayColor{
    return [UIColor colorWithR:98 G:98 B:98 alpha:1];
+}
+//绿色
++ (UIColor *)wechatBackColor {
+    return [UIColor colorWithR:68 G:173 B:53 alpha:1];
 }
 
 + (UIColor *)randomColor{

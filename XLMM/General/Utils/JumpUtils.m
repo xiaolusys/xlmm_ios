@@ -17,7 +17,9 @@
 #import "HomeViewController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
-
+#import "TuihuoViewController.h"
+#import "ProductSelectionListViewController.h"
+#import "CartViewController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -68,7 +70,25 @@
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
-    }else {
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+        //跳转到退款退货列表
+        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        [vc.navigationController pushViewController:tuihuoVC animated:YES];
+        
+    }
+    else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_choice"]) {
+        //跳转到选品上架
+        ProductSelectionListViewController *mamachoiceVC = [[ProductSelectionListViewController alloc] init];
+        [vc.navigationController pushViewController:mamachoiceVC animated:YES];
+        
+    }
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+        //跳转到shopping cart
+        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+        [vc.navigationController pushViewController:cartVC animated:YES];
+    }
+
+    else if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
         NSString *parameter = [components lastObject];
@@ -100,8 +120,8 @@
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
             xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
-        } else {
-            NSLog(@"跳到H5首页");
+        } else if ([firstparam isEqualToString:@"is_native"]){
+            NSLog(@"跳到H5首页 url= %@", [params lastObject]);
         }
     }
     

@@ -17,7 +17,7 @@
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
 #import "UIViewController+NavigationBar.h"
-
+#import "JMBaseWebView.h"
 
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -130,7 +130,7 @@
      [self.dataArray addObject:model];
     }
     
-    if(self.dataArray.count ==0) return;
+    if((self.dataArray == nil) || (self.dataArray.count ==0)) return;
     CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
     offSheltTime = tempModel.offShelfTime;
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
@@ -155,10 +155,14 @@
 
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
-     CollectionModel *model = [self.dataArray objectAtIndex:0];
+    if((self.dataArray == nil) || (self.dataArray.count == 0))
+        return;
+    CollectionModel *model = [self.dataArray objectAtIndex:0];
     NSString *saleTime = model.saleTime;
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     formatter.dateFormat = @"YYYY-MM-dd";
+    if((saleTime == nil) || ([saleTime isEqualToString:@""]))
+       return;
     
     NSDate *toDate = [formatter dateFromString:saleTime];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -180,7 +184,7 @@
     
 
     NSDate *todate;
-    if ([offSheltTime class] == [NSNull class]) {
+    if ((offSheltTime == nil) || ([offSheltTime isEqualToString:@""])) {
        // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
@@ -334,16 +338,14 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    //   http://m.xiaolu.so/rest/v1/products/15809
-    
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
+    MMDetailsViewController *vc = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
     
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-  
-    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+//    JMBaseWebView *vc = [[JMBaseWebView alloc] init];
+//    vc.urlStr = model.web_url;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -353,14 +355,18 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "UMSocial.h"
@@ -27,11 +27,14 @@
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
+#import "JMLogInViewController.h"
+#import "JumpUtils.h"
+
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
 
-@interface HuodongViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+@interface WebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
 
 @property (nonatomic, strong) UIWebView *shareWebView;
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
@@ -56,9 +59,11 @@
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
+
+@property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 @end
 
-@implementation HuodongViewController{
+@implementation WebViewController{
     UIImage *shareImage;
     NSString *content;
     NSString *shareTitle;
@@ -114,13 +119,13 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     NSString *loadStr = nil;
-    if (self.diction.count == 0) {
+    if ([_titleN isEqualToString:@"titleN"]) {
         [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
         loadStr = self.eventLink;
         button1.hidden = YES;
         button1.userInteractionEnabled = NO;
         imageView1.hidden = YES;
-    }else {
+    }else if ([_active isEqualToString:@"active"]){
         [self createNavigationBarWithTitle:[self.diction objectForKey:@"title"] selecotr:@selector(backClicked:)];
         //取出活动id
         self.activityId = [self.diction objectForKey:@"id"];
@@ -128,7 +133,12 @@
         button1.hidden = NO;
         button1.userInteractionEnabled = YES;
         imageView1.hidden = NO;
+    }else {
+        loadStr = _urlStr;
+        
     }
+    
+    
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     
@@ -140,29 +150,10 @@
     
     [self updateUserAgent];
     
-    [WebViewJavascriptBridge enableLogging];
+    //2016-5-17 use new universe ponto lib, js register not need any more
+    //self.pontoDispatcher = [[PontoDispatcher alloc] initWithHandlerClassesPrefix:@"JimeiPonto" andWebView:self.webView];
     
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
-    
-    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jumpToJsLocation:data]; 
-    }];
-    
-    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSString *share_to = data[@"share_to"];
-        //传的参数为空调用原生的分享
-        if (share_to.length == 0) {
-            self.nativeShare = data;
-            [self rightBarButtonAction];
-            return;
-        }
-        [self shareForPlatform:data];
-    }];
-    
-    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
-       NSString *device = [self getMobileSNCode];
-        responseCallback(device);
-    }];
+    [self registerJsBridge];
 
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
@@ -170,6 +161,8 @@
     shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     content = @"小鹿美美";
 }
+
+
 
 - (NSString *)getMobileSNCode {
     if (![SSKeychain passwordForService:kService account:kAccount]) {
@@ -202,7 +195,7 @@
         
     }];
 }
-
+#pragma mark ---- 分享视图，包括分享按钮的点击
 //分享视图增加
 - (void)addShareView:(NSDictionary *)dicShare {
     [SVProgressHUD dismiss];
@@ -375,6 +368,24 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#pragma mark ---- 跳转到APP登录界面
+- (void)jsLetiOSLoginWithData:(id)data callBack:(WVJBResponseCallback)block {
+    
+    NSString *pageUrl = data[@"pageUrl"];
+    
+    
+    JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+    logVC.returnUrl = pageUrl;
+    
+    [self.navigationController pushViewController:logVC animated:YES];
+
+    
+    
+    
+}
+
+#pragma mark ----- 分享调用
 
 - (void)shareForPlatform:(NSDictionary *)data{
     
@@ -646,95 +657,9 @@
         return;
     }
     
-    //跳转到每日上新－－－－
+    //跳转到－－－－
     NSLog(@"target_url = %@", target_url);
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
-        NSLog(@"跳到今日上新");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
-        NSLog(@"跳到昨日推荐");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"previous"}];
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
-        NSLog(@"跳到潮童专区");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"child"}];
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
-        NSLog(@"跳到时尚女装");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"woman"}];
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-        NSLog(@"跳转到用户未过期优惠券列表");
-        
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
-        [self.navigationController pushViewController:youhuiVC animated:YES];
-        
-        
-        
-    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-        
-        //  跳转到小鹿妈妈界面。。。
-        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-        [self.navigationController pushViewController:ma animated:YES];
-        
-        
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
-        
-        NSLog(@"跳转到小鹿妈妈每日上新");
-        
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-        [self.navigationController pushViewController:publish animated:YES];
-        
-    }else {
-        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        
-        NSString *parameter = [components lastObject];
-        NSArray *params = [parameter componentsSeparatedByString:@"="];
-        NSString *firstparam = [params firstObject];
-        if ([firstparam isEqualToString:@"model_id"]) {
-            NSLog(@"跳到集合页面");
-            NSLog(@"model_id = %@", [params lastObject]);
-            
-            
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-            
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
-            
-            
-        } else if ([firstparam isEqualToString:@"product_id"]){
-            NSLog(@"跳到商品详情");
-            NSLog(@"product_id = %@", [params lastObject]);
-            
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-            [self.navigationController pushViewController:details animated:YES];
-            
-            
-        } else if ([firstparam isEqualToString:@"trade_id"]){
-            NSLog(@"跳到订单详情");
-            NSLog(@"trade_id = %@", [params lastObject]);
-            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-            //http://m.xiaolu.so/rest/v1/trades/86412/details
-            
-            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
-            NSLog(@"url = %@", xiangqingVC.urlString);
-            
-            
-            [self.navigationController pushViewController:xiangqingVC animated:YES];
-            
-            
-        } else {
-            NSLog(@"跳到H5首页");
-        }
-    }
-    
-    
-    
+    [JumpUtils jumpToLocation:target_url viewController:self];
     
 }
 
@@ -747,5 +672,42 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - 注册js bridge供h5页面调用
+- (void)registerJsBridge{
+    [WebViewJavascriptBridge enableLogging];
+    
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    
+    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self jumpToJsLocation:data];
+    }];
+    
+    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSString *share_to = data[@"share_to"];
+        //传的参数为空调用原生的分享
+        if (share_to.length == 0) {
+            self.nativeShare = data;
+            [self rightBarButtonAction];
+            return;
+        }
+        [self shareForPlatform:data];
+    }];
+    
+    //    //js调oc方法
+    [self.bridge registerHandler:@"callNativeLoginActivity" handler:^(id data, WVJBResponseCallback responseCallback) {
+        //        NSString *pageUrl = data[@"pageUrl"];
+        
+        [self jsLetiOSLoginWithData:data callBack:responseCallback];
+        
+        
+    }];
+    
+    
+    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSString *device = [self getMobileSNCode];
+        responseCallback(device);
+    }];
+}
 
 @end

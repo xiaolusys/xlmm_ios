@@ -16,6 +16,18 @@
 
 @implementation CommonWebViewViewController
 
+- (instancetype)initWithUrl:(NSString *)url title:(NSString *)titleName{
+    self = [super  init];
+    self.titleName = titleName;
+    if((url != nil) && (url.length > 0)){
+        self.loadLink = url;
+    }
+    else{
+        self.loadLink = @"";
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;

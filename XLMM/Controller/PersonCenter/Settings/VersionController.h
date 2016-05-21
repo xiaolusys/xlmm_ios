@@ -12,6 +12,6 @@
 
 @property (nonatomic, copy) NSString *versionString;
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *imgDeer;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @end

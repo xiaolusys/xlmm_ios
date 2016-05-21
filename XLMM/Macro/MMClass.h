@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
@@ -28,6 +28,13 @@
 #else
 #define NSLog(...) {}
 #endif
+
+
+/**
+ *  循环引用
+ */
+#define kWeakSelf __weak typeof (self) weakSelf = self;
+
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -106,7 +113,7 @@ extern NSString *Root_URL;
 #define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
 #define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
 
-//  http://m.xiaolumeimei.com/mall/#/faq
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 #endif
 

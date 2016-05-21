@@ -71,11 +71,21 @@
 //            [self.quanbuCollectionView.mj_header endRefreshing];
 //            
 //        }
-      
-        [alterView show];
+      [self.quanbuCollectionView.mj_footer endRefreshingWithNoMoreData];
+//        [alterView show];
         return;
     }
-    [self downLoadWithURLString:urlString andSelector:@selector(fetchedDingdanData:)];
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.quanbuCollectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedDingdanData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.quanbuCollectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -130,7 +140,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
           
             [self loadMore];
-            [self.quanbuCollectionView.mj_footer endRefreshing];
+            
         });
     }];
     footer.hidden = YES;
@@ -155,7 +165,7 @@
         
         if (!responseObject) return;
         
-        [self performSelectorOnMainThread:@selector(fetchedDingdanData:) withObject:responseObject waitUntilDone:YES];
+        [self fetchedDingdanData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -223,16 +233,16 @@
     
 }
 
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
-    });
-}
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//        
+//    });
+//}
 
 
 #pragma mark -----CollectionViewDelegate-----
@@ -260,11 +270,12 @@
     
    // QuanbuCollectionCell *cell = (QuanbuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
     DingdanModel *model = [dataArray objectAtIndex:indexPath.row];
-    
+    NSLog(@"model.ordersArray.count  %lu", (unsigned long)model.ordersArray.count );
     if (model.ordersArray.count == 1) {
         SingleOrderViewCell *cell = (SingleOrderViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"SingleOrderCell" forIndexPath:indexPath];
         
         NSDictionary *details = [model.ordersArray objectAtIndex:0];
+        NSLog(@"detaiol %@", details);
         
         [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -277,26 +288,8 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-        NSString *string = [details objectForKey:@"status_display"];
-        
-        if ([string isEqualToString:@"待付款"]) {
-            cell.statusLabel.text = @"待支付";
-        } else if ([string isEqualToString:@"已付款"]){
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([string isEqualToString:@"交易关闭"]){
-            cell.statusLabel.text = @"交易关闭";
-        } else if ([string isEqualToString:@"交易成功"]){
-            cell.statusLabel.text = @"已完成";
-        } else if ([string isEqualToString:@"订单创建"]){
-            cell.statusLabel.text = @"订单创建";
-    
-        } else if ([string isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        } else if ([string isEqualToString:@"退款关闭"]){
-            cell.statusLabel.text = @"退款关闭";
-        }
+        cell.statusLabel.text = model.dingdanZhuangtai;
+
         
         
 //        for (int i = 0; i < dataArray.count; i++) {
@@ -381,24 +374,9 @@
             imageView.hidden = NO;
             
         }
-        if ([model.dingdanZhuangtai isEqualToString:@"待付款"]) {
-            cell.statusLabel.text = @"待支付";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易关闭"]){
-            cell.statusLabel.text = @"交易关闭";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
-            cell.statusLabel.text = @"已完成";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"订单创建"]){
-            cell.statusLabel.text = @"订单创建";
-            
-        } else if ([model.dingdanZhuangtai isEqualToString:@"退款关闭"]){
-            cell.statusLabel.text = @"退款关闭";
-        } else if ([model.dingdanZhuangtai isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        }
+
+        cell.statusLabel.text = model.dingdanZhuangtai;
+
         
 //        
 //        for (int i = 0; i < dataArray.count; i++) {
@@ -491,13 +469,13 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%@", indexPath);
+    NSLog(@"allorders didSelectItemAtIndexPath %@", indexPath);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     //http://m.xiaolu.so/rest/v1/trades/86412/details
     
-       xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
     xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, xiangqingVC.dingdanModel.dingdanID];
-//    NSLog(@"url = %@", xiangqingVC.urlString);
+    NSLog(@"url = %@", xiangqingVC.urlString);
 
     
     [self.navigationController pushViewController:xiangqingVC animated:YES];

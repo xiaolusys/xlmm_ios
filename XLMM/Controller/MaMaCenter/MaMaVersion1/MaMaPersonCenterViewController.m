@@ -34,7 +34,7 @@
 
 #import "DotLineView.h"
 #import "SelectedActivitiesViewController.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "MyInvitationViewController.h"
 
 
@@ -1113,9 +1113,9 @@
 //    invitation.requestURL = self.myInvitation;
 //    [self.navigationController pushViewController:invitation animated:YES];
     
-    HuodongViewController *activity = [[HuodongViewController alloc] init];
+    WebViewController *activity = [[WebViewController alloc] init];
     activity.eventLink = self.myInvitation;
-    activity.titleName = @"我的邀请";
+    activity.titleN = @"titleN";
     [self.navigationController pushViewController:activity animated:YES];
 }
 
@@ -1159,7 +1159,7 @@
         [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
         return;
     }
-    HuodongViewController *activity = [[HuodongViewController alloc] init];
+    WebViewController *activity = [[WebViewController alloc] init];
     activity.eventLink = self.eventLink;
     
     activity.titleName = @"精品活动";

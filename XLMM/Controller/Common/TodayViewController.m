@@ -29,7 +29,7 @@
 #import "MobClick.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMAdvertiseView.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "HuodongCollectionViewCell.h"
 #import "WXLoginController.h"
 #import "MobClick.h"
@@ -640,17 +640,17 @@ static NSString *khuodongCell = @"HuodongCell";
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
-        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        WebViewController *huodongVC = [[WebViewController alloc] init];
         
         huodongVC.diction = huodongJson;
         
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            WebViewController *huodongVC = [[WebViewController alloc] init];
             
             huodongVC.diction = huodongJson;
             
@@ -1419,7 +1419,7 @@ static NSString *khuodongCell = @"HuodongCell";
             
             if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                 
-                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                WebViewController *huodongVC = [[WebViewController alloc] init];
                 
                 huodongVC.diction = huodongJson;
                 
@@ -1460,7 +1460,7 @@ static NSString *khuodongCell = @"HuodongCell";
         }
     } else{
         if (login_required) {
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             [self ishavemobel];
@@ -1481,7 +1481,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 
                 if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                     
-                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    WebViewController *huodongVC = [[WebViewController alloc] init];
                     
                     huodongVC.diction = huodongJson;
                     
