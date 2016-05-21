@@ -18,5 +18,9 @@
 @property (nonatomic, copy)NSString *eventLink;
 
 @property (nonatomic,copy) NSString *active;
+/**
+ *  商品详情 ID
+ */
+@property (nonatomic,copy) NSString *goodsID;
 
 @end

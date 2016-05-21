@@ -1400,7 +1400,7 @@ static NSString *kbrandCell = @"brandCell";
     if (model.productModel == nil) {
         WebViewController *webView = [[WebViewController alloc] init];
         webView.eventLink = model.web_url;
-        webView.diction = model.productModel;
+        webView.goodsID = model.ID;
         //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
         [self.navigationController pushViewController:webView animated:YES];
     }else {
@@ -1408,7 +1408,7 @@ static NSString *kbrandCell = @"brandCell";
         if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
-            webView.diction = model.productModel;
+            webView.goodsID = model.ID;
             //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
             
@@ -1416,7 +1416,7 @@ static NSString *kbrandCell = @"brandCell";
            
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
-            webView.diction = model.productModel;
+            webView.goodsID = model.ID;
 //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
         }
