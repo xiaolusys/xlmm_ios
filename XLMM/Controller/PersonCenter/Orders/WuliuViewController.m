@@ -132,14 +132,26 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 -(void)displayLastWuliuInfoWithTime:(UICollectionViewCell *)cell time:(NSString*)timeText andInfo:(NSString*)infoText{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"WuliuInfoView" owner:nil options:nil];
-    UIView *view = views[0];
-    UIView *circleView = [view viewWithTag:100];
-    UILabel *timeLabel = [view viewWithTag:200];
-    UILabel *infoLabel = [view viewWithTag:300];
+    cell.backgroundColor = [UIColor whiteColor];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0, SCREENWIDTH, 80)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(18, 0, 1, 80)];
+    [view addSubview:lineView];
+    UIView *circleView = [[UIView alloc] initWithFrame:CGRectMake(14, 0, 9, 9)];
+    [view addSubview:circleView];
+    
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 0, 200, 17)];
+    [view addSubview:timeLabel];
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 20, 260, 35)];
+    [view addSubview:infoLabel];
     
     timeLabel.text = timeText;
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    
     infoLabel.text = infoText;
+    infoLabel.font = [UIFont systemFontOfSize:14];
+    infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    infoLabel.numberOfLines = 2;
+    
     UIColor *color = [UIColor orangeThemeColor];
     timeLabel.textColor = color;
     infoLabel.textColor = color;
@@ -147,20 +159,32 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     circleView.layer.cornerRadius = 4.5;
     circleView.backgroundColor = color;
     
-    view.frame = CGRectMake(0, 0, SCREENWIDTH, 80);
+    lineView.backgroundColor = color;
     [cell addSubview:view];
 }
 
 
 -(void)displayWuliuInfoWithOrder:(UICollectionViewCell *)cell andTime:(NSString*)timeText andInfo:(NSString*)infoText{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"WuliuInfoView" owner:nil options:nil];
-    UIView *view = views[0];
-    UIView *circleView = [view viewWithTag:100];
-    UILabel *timeLabel = [view viewWithTag:200];
-    UILabel *infoLabel = [view viewWithTag:300];
+
+    cell.backgroundColor = [UIColor whiteColor];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0, SCREENWIDTH, 80)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(18, 0, 1, 80)];
+    [view addSubview:lineView];
+    UIView *circleView = [[UIView alloc] initWithFrame:CGRectMake(14, 0, 9, 9)];
+    [view addSubview:circleView];
+
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 0, 200, 17)];
+    [view addSubview:timeLabel];
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 20, 260, 35)];
+    [view addSubview:infoLabel];
     
     timeLabel.text = timeText;
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    
     infoLabel.text = infoText;
+    infoLabel.font = [UIFont systemFontOfSize:14];
+    infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    infoLabel.numberOfLines = 2;
     
     UIColor *normalColor = [UIColor textDarkGrayColor];
     timeLabel.textColor = normalColor;
@@ -169,7 +193,8 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     circleView.layer.cornerRadius = 4.5;
     circleView.backgroundColor = normalColor;
     
-    view.frame = CGRectMake(0, 0, SCREENWIDTH, 80);
+    lineView.backgroundColor = normalColor;
+
     [cell addSubview:view];
     
     
