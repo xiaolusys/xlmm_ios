@@ -1232,53 +1232,18 @@
 #pragma mark -- weixin share
 
 - (IBAction)shareClicked:(id)sender {
-    //修改分享图片，标题， 链接 ，
-    
-    //  kLinkURL = @"http://xiaolu.so/m/18807/";
-    //NSString *kLinkTagName = @"xiaolumeimei";
-    
-    
+
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
     
-//    dispatch_queue_t queue1 = dispatch_queue_create("com.xlmm.gcd.Queue1", NULL);
-//    dispatch_async(queue1, ^{
-//        [self createShareData];
-//        NSString *imageUrlString = [json objectForKey:@"pic_path"];
-//        NSData *imageData = nil;
-//        do {
-//            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-//            if (imageData != nil) {
-//                break;
-//            }
-//            
-//        } while (YES);
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-//        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-//        UIImage *newImage = [UIImage imageWithData:imagedata];
-//        
-//        
-//        self.imageD = imageData;
-//        
-//        self.shareImage = newImage;
-//    });
-
-    
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
     [self.shareBackView addSubview:self.youmengShare];
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
-    
-    //添加手势
-//    self.shareBackView.userInteractionEnabled = NO;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleShareBtnClick:)];
-//    
-//    [self.shareBackView addGestureRecognizer:tap];
 
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.2 animations:^{

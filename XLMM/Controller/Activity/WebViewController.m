@@ -223,11 +223,17 @@
     }
     
 }
+
+- (void)setDiction:(NSDictionary *)diction {
+    
+    _diction = diction;
+}
+
 #pragma mark ---- 创建分享数据
 - (void)createSharData {
     if (_shareDic == nil) {
         //网络请求
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,_itemID];
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,[_diction objectForKey:@"id"]];
         
         AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
         [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -256,17 +262,18 @@
         }else {
             self.isPic = YES;
         }
-        //共有 分享文字
+
         self.titleStr = [dicShare objectForKey:@"title"];
         content = [dicShare objectForKey:@"active_dec"];
         self.url = dicShare[@"share_link"];
         self.kuaizhaoLink = dicShare[@"share_link"];
         imageUrlString = dicShare[@"share_icon"];
+        
     }else {
-        self.titleStr = [_shareDic objectForKey:@"title"];
-        self.des = [_shareDic objectForKey:@"desc"];
-        self.url = [_shareDic objectForKey:@"share_link"];
-        imageUrlString = [_shareDic objectForKey:@"share_img"];
+        self.titleStr = [dicShare objectForKey:@"title"];
+        self.des = [dicShare objectForKey:@"desc"];
+        self.url = [dicShare objectForKey:@"share_link"];
+        imageUrlString = [dicShare objectForKey:@"share_img"];
     }
 
     self.imageData = [UIImage imagewithURLString:imageUrlString];
@@ -331,17 +338,16 @@
     if (self.isPic) {
         //图片
         self.isWeixin = YES;
-//        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+
         [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
         [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
         [UMSocialData defaultData].extConfig.wechatSessionData.url = self.url;
-//        [UMSocialData defaultData].extConfig.wechatSessionData.url = @"https://www.baidu.com";
         [UMSocialData defaultData].extConfig.wxMessageType = 0;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            //        [self hiddenNavigationView];
+                    [self hiddenNavigationView];
         }];
         
         [self cancleShareBtnClick:nil];
@@ -353,7 +359,7 @@
     if (self.isPic) {
         //图片
         self.isWeixinFriends = YES;
-//        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
         [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
@@ -363,14 +369,12 @@
         
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:content image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            //        [self hiddenNavigationView];
+                [self hiddenNavigationView];
             
         }];
         [self cancleShareBtnClick:nil];
     }
 }
-
-
 
 - (void)qqshareBtnClick:(UIButton *)btn {
     [UMSocialData defaultData].extConfig.qqData.url = self.url;
@@ -456,60 +460,14 @@
     }
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
-//    NSLog(@"string----%@", string);
-    
-//    NSString *param = @"";
-//    NSArray *array = [param componentsSeparatedByString:@"&"];
-//    NSString *platform = data[@"share_to"];
-//    NSString *url = [array[1] componentsSeparatedByString:@"="][1];
-//    NSString *url1;
-   
+
     shareType = data[@"share_to"];
-    //shareType = @"web";
-    
-//    @try {
-//        url1 = [NSString stringWithFormat:@"%@=%@&%@", url, [array[1] componentsSeparatedByString:@"="][2], array[2]];
-//        sharelink = [NSString stringWithFormat:@"%@/%@", Root_URL, url1];
-//        NSLog(@"link = %@", sharelink);
-//    }
-//    @catch (NSException *exception) {
-//     //   NSLog(@"exception = %@", exception);
-//        sharelink = nil;
-//    }
-//    @finally {
-//        
-//    }
-    
-//    NSLog(@"link = %@", sharelink);
-//    shareUrllink = sharelink;
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         shareTitle = [responseObject objectForKey:@"title"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"link_qrcode"]];
-        
-        
-//        NSString *imageUrlString = dicShare[@"share_icon"];
-//        NSData *imageData = nil;
-//        do {
-//            NSLog(@"image = %@", [imageUrlString URLEncodedString]);
-//            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-//            if (imageData != nil) {
-//                break;
-//            }
-//            if (imageUrlString.length == 0 || [NSNull class] == [imageUrlString class]) {
-//                break;
-//            }
-//            
-//        } while (YES);
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-//        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-//        UIImage *newImage = [UIImage imageWithData:imagedata];
-//        self.imageD = imageData;
-//        self.imageData = newImage;
-        
         
         newshareImage = [UIImage imagewithURLString:imageurl];
         content = [responseObject objectForKey:@"active_dec"];
@@ -620,7 +578,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)hiddenNavigationView{
+    self.navigationController.navigationBarHidden = YES;
+}
 
 #pragma mark -- UIWebView代理
 
