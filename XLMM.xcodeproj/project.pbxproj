@@ -820,6 +820,7 @@
 		3A1E059C1CE1C8CC001018AC /* Circle_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */; };
 		3A2F32E31CF0332F00EAF4EB /* LogisticsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F32E21CF0332F00EAF4EB /* LogisticsCollectionViewCell.m */; };
 		3A2F32E51CF0354300EAF4EB /* LogisticsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2F32E41CF0354300EAF4EB /* LogisticsCollectionViewCell.xib */; };
+		3A2F32E91CF04E8700EAF4EB /* WuliuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2F32E81CF04E8700EAF4EB /* WuliuViewController.xib */; };
 		3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CF7191CE224D000F0463D /* MMClass.m */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
@@ -2014,6 +2015,7 @@
 		3A2F32E11CF0332F00EAF4EB /* LogisticsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsCollectionViewCell.h; sourceTree = "<group>"; };
 		3A2F32E21CF0332F00EAF4EB /* LogisticsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsCollectionViewCell.m; sourceTree = "<group>"; };
 		3A2F32E41CF0354300EAF4EB /* LogisticsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogisticsCollectionViewCell.xib; sourceTree = "<group>"; };
+		3A2F32E81CF04E8700EAF4EB /* WuliuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuViewController.xib; sourceTree = "<group>"; };
 		3A3CF7191CE224D000F0463D /* MMClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMClass.m; sourceTree = "<group>"; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
@@ -2644,6 +2646,7 @@
 				183071A21C97BE3700B7665E /* WuliuInfoView.xib */,
 				183071A31C97BE3700B7665E /* WuliuViewController.h */,
 				183071A41C97BE3700B7665E /* WuliuViewController.m */,
+				3A2F32E81CF04E8700EAF4EB /* WuliuViewController.xib */,
 				183071A61C97BE3700B7665E /* XiangQingViewController.h */,
 				183071A71C97BE3700B7665E /* XiangQingViewController.m */,
 				183071A81C97BE3700B7665E /* XiangQingViewController.xib */,
@@ -4587,6 +4590,7 @@
 				3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */,
 				183075C61C97D49A00B7665E /* mamafensi.png in Resources */,
 				1830760E1C97D49A00B7665E /* Icon-40.png in Resources */,
+				3A2F32E91CF04E8700EAF4EB /* WuliuViewController.xib in Resources */,
 				183076021C97D49A00B7665E /* hongbaobeforeclicked.png in Resources */,
 				1830743F1C97D17900B7665E /* iOS-social-releasenote.html in Resources */,
 				325B79A31C97E6F10022F930 /* XiangQingView.xib in Resources */,
