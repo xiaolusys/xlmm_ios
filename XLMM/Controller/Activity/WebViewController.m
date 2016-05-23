@@ -33,8 +33,14 @@
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
+#define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
+
+//static BOOL isLogin;
 
 @interface WebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+
+@property (nonatomic, strong)WebViewJavascriptBridge* bridge;
+@property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 
 //分享参数
 @property (nonatomic, strong)NSString *titleStr;
@@ -56,11 +62,10 @@
 
 @property (nonatomic, strong)NSNumber *activityId;
 
-@property (nonatomic, strong)WebViewJavascriptBridge* bridge;
+
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
 
-@property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 /**
  *  分享数据字典
  */
@@ -89,7 +94,7 @@
 @property (nonatomic,assign) BOOL isWXFriends;
 
 
-@property (nonatomic,assign) BOOL isLogin;
+//@property (nonatomic,assign) BOOL isLogin;
 
 @end
 
@@ -115,7 +120,7 @@
     //与js交互代码。。
     [self updateUserAgent];
     [self registerJsBridge];
-    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -128,7 +133,7 @@
 - (void)tiaozhuan:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
     NSString *ID = [userInfo objectForKey:@"productID"];
-   
+    
     MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
     
     [self.navigationController pushViewController:detailsVC animated:YES];
@@ -137,53 +142,52 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
+    statusBarView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:statusBarView];
     // Do any additional setup after loading the view from its nib.
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-    self.isLogin = login;
+    //    isLogin = login;
     
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
     imageView1.frame = CGRectMake(25, 13, 20, 20);
     [button1 addSubview:imageView1];
-    [button1 addTarget:self action:@selector(rightBarButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [button1 addTarget:self action:@selector(rightBarButtonAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     NSString *loadStr = nil;
     if ([_active isEqualToString:@"myInvite"]) {
-//        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
+        //        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
         loadStr = self.eventLink;
-
+        
     }else if ([_active isEqualToString:@"active"]){
-//        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
+        //        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
         //取出活动id
         self.activityId = [self.diction objectForKey:@"id"];
         loadStr = [self.diction objectForKey:@"act_link"];
-
+        
     }else {
         
-//        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
+        //        [self createNavigationBarWithTitle:[self.diction objectForKey:@"name"] selecotr:@selector(backClicked:)];
         
         self.itemID = self.goodsID;
         loadStr = _eventLink;
         
     }
-   
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
     self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;
     self.webView.tag = 102;
-    NSLog(@"webview url %@", request);
     [self.webView loadRequest:request];
-
     
     self.shareWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.erweimaShareWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-
+    
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
-
+    
 }
 
 - (NSString *)getMobileSNCode {
@@ -195,19 +199,19 @@
     return devicenumber;
 }
 
-- (void)rightBarButtonAction:(UIButton *)sender {
-
+- (void)rightBarButtonAction {
+    
     _shareDic = nil;
     if ([_active isEqualToString:@"active"]) {
         NSNumber *activityID = nil;
         if (self.nativeShare == nil) {
             activityID = self.activityId;
-
+            
         }else {
             activityID = self.nativeShare[@"active_id"];
         }
         [SVProgressHUD showWithStatus:@"请稍后..."];
-
+        
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
         NSLog(@"string = %@", string);
         
@@ -260,7 +264,7 @@
 //分享视图增加
 - (void)addShareView:(NSDictionary *)dicShare {
     [SVProgressHUD dismiss];
-
+    
     if ([_active isEqualToString:@"active"]) {
         NSString *type = dicShare[@"share_type"];
         if ([type isEqualToString:@"link"]) {
@@ -269,28 +273,19 @@
             self.isPic = YES;
         }
         self.titleStr = [dicShare objectForKey:@"title"]; //标题
-        self.url = [dicShare objectForKey:@"share_link"];
-        
         self.imageUrlString = [dicShare objectForKey:@"share_icon"]; //图片
         self.content = [dicShare objectForKey:@"active_dec"]; // 文字详情
         self.kuaizhaoLink = [dicShare objectForKey:@"share_link"];
-        
+        //qrcode_link -- 二维码参数
         
     }else {
-        
-        
-        self.titleStr = [dicShare objectForKey:@"title"];  //分享的标题
-        self.content = [dicShare objectForKey:@"desc"]; //分享的文字详情
         self.url = dicShare[@"share_link"];
+        self.titleStr = [dicShare objectForKey:@"title"];  //分享的标题
         self.imageUrlString = dicShare[@"share_img"];   //图片
-        self.urlResource = dicShare[@"desc"]; //分享的链接等
+        self.content = dicShare[@"desc"]; //商品入口 后面跟链接
         self.kuaizhaoLink = [dicShare objectForKey:@"share_link"]; // 生成的快照
-        
-        
-        
     }
-
-    self.imageData = [UIImage imagewithURLString:_imageUrlString];
+    self.imageData = [UIImage imagewithURLString:self.imageUrlString];
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
@@ -298,7 +293,7 @@
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
     self.youmengShare.snapshotBtn.hidden = YES;
     self.youmengShare.friendsSnaoshotBtn.hidden = YES;
-
+    
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.2 animations:^{
         self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240);
@@ -308,7 +303,7 @@
         self.youmengShare.snapshotBtn.hidden = NO;
         self.youmengShare.friendsSnaoshotBtn.hidden = NO;
     }
-
+    
     // 分享页面事件处理
     [self.youmengShare.cancleShareBtn addTarget:self action:@selector(cancleShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weixinShareBtn addTarget:self action:@selector(weixinShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -339,7 +334,7 @@
     if (self.isPic) {
         //图片
         self.isWeixin = YES;
-
+        
         [self cancleShareBtnClick:nil];
     }else {
         [UMSocialData defaultData].extConfig.wechatSessionData.title = self.titleStr;
@@ -347,7 +342,7 @@
         [UMSocialData defaultData].extConfig.wxMessageType = 0;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                [self hiddenNavigationView];
+            [self hiddenNavigationView];
         }];
         
         [self cancleShareBtnClick:nil];
@@ -362,7 +357,7 @@
         //图片
         self.isWeixinFriends = YES;
         [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
-//        [self createKuaiZhaoImage];
+        //        [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
         [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.url;
@@ -371,7 +366,7 @@
         
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:self.imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                [self hiddenNavigationView];
+            [self hiddenNavigationView];
             
         }];
         [self cancleShareBtnClick:nil];
@@ -426,7 +421,7 @@
     {
         [SVProgressHUD showSuccessWithStatus:@"已复制"];
     }
-//    [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
+    //    [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
     
     [self cancleShareBtnClick:nil];
 }
@@ -447,10 +442,10 @@
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    [self.shareWebView loadRequest:request];
-    self.shareWebView.delegate = self;
-    self.shareWebView.scalesPageToFit = YES;
-    self.shareWebView.tag = 888;
+    [self.webView loadRequest:request];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
+    self.view.tag = 888;
     
 }
 
@@ -459,7 +454,7 @@
     self.shareWebView =nil;
     webViewImage = nil;
     self.webView = nil;
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -469,16 +464,16 @@
     
     NSNumber *activeid = data[@"active_id"];
     NSString *platform = data[@"share_to"];
-//    NSString *platform = @"web";
+    //    NSString *platform = @"web";
     
     if ([activeid integerValue] == 0) {
         activeid = self.activityId;
     }
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
-
+    
     shareType = data[@"share_to"];
-
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -600,7 +595,7 @@
     if (webView.isLoading) {
         return;
     }
-   
+    
     
     webViewImage = [UIImage imagewithWebView:self.shareWebView];
     webViewImage = [UIImage imagewithWebView:self.shareWebView];
@@ -624,28 +619,25 @@
         [self cancleShareBtnClick:nil];
     }
     
-
     
-    
-    
-//    if ([shareType isEqualToString:@"pyq"] || (self.isPic && self.isWeixinFriends)) {
-//        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-//        }];
-//        self.isWeixinFriends = NO;
-//    } else if ([shareType isEqualToString:@"wxapp"] || (self.isPic && self.isWeixin)) {
-//        [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:webViewImage socialUIDelegate:self];
-//        //        [UMSocialData defaultData].extConfig.wxMessageType = 0;
-//        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-//        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-//        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-//        
-//        self.isWeixin = NO;
-//    } else if ([shareType isEqualToString:@"web"] || self.isCopy){
-//        // 保存本地二维码
-//        UIImageWriteToSavedPhotosAlbum(webViewImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-//        self.isCopy = NO;
-//    }
+    //    if ([shareType isEqualToString:@"pyq"] || (self.isPic && self.isWeixinFriends)) {
+    //        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    //        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+    //        }];
+    //        self.isWeixinFriends = NO;
+    //    } else if ([shareType isEqualToString:@"wxapp"] || (self.isPic && self.isWeixin)) {
+    //        [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:webViewImage socialUIDelegate:self];
+    //        //        [UMSocialData defaultData].extConfig.wxMessageType = 0;
+    //        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+    //        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+    //        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    //
+    //        self.isWeixin = NO;
+    //    } else if ([shareType isEqualToString:@"web"] || self.isCopy){
+    //        // 保存本地二维码
+    //        UIImageWriteToSavedPhotosAlbum(webViewImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    //        self.isCopy = NO;
+    //    }
     
 }
 
@@ -657,7 +649,6 @@
         webViewImage = nil;
         
     }else{
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
@@ -675,7 +666,7 @@
     
     //add my info to the new agent
     if(oldAgent != nil) {
-
+        
         NSRange range = [oldAgent rangeOfString:@"xlmm;"];
         if(range.length > 0)
         {
@@ -692,17 +683,17 @@
 }
 
 #pragma mark 解析targeturl 跳转到不同的界面
-//- (void)jumpToJsLocation:(NSDictionary *)dic{
-//
-//    NSString *target_url = [dic objectForKey:@"target_url"];
-//    
-//    if (target_url == nil) {
-//        return;
-//    }
-//
-//    [JumpUtils jumpToLocation:target_url viewController:self];
-//    
-//}
+- (void)jumpToJsLocation:(NSDictionary *)dic{
+    
+    NSString *target_url = [dic objectForKey:@"target_url"];
+    
+    if (target_url == nil) {
+        return;
+    }
+    
+    [JumpUtils jumpToLocation:target_url viewController:self];
+    
+}
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
@@ -710,44 +701,57 @@
         return ;
     }
     [WebViewJavascriptBridge enableLogging];
-//    [self hiddenNavigationView];
+    //    [self hiddenNavigationView];
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
     /**
      *
      */
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        [self jumpToJsLocation:data];
         
         [self jsLetiOSWithData:data callBack:responseCallback];
+        
     }];
     /**
      *   分享
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSString *share_to = data[@"share_to"];
-        //传的参数为空调用原生的分享
-        if (share_to.length == 0) {
-            self.nativeShare = data;
-            [self rightBarButtonAction:nil];
-            return;
-        }
-//        [self shareForPlatform:data];
-    }];
-    /**
-     *   进入购物车  -- 判断是否登录
-     */
-    [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
+        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
         
-        if (self.isLogin == NO) {
+        if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
+            //传的参数为空调用原生的分享
+            if (share_to.length == 0) {
+                self.nativeShare = data;
+                [self rightBarButtonAction];
+                return;
+            }else {
+                [self rightBarButtonAction];
+            }
+        }
+    }];
+    
+    /**
+     *   进入购物车  -- 判断是否登录
+     */
+    [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
+        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        
+        if (login == NO) {
+            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:enterVC animated:YES];
             
-//            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_eventLink]]];
+            return;
+            
+            
+        }else {
+            
             [self jsLetiOSWithData:data callBack:responseCallback];
         }
-
+        
     }];
     
     
@@ -765,11 +769,13 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     }];
-
+    
 }
 
 - (void)jsLetiOSWithData:(id )data callBack:(WVJBResponseCallback)block {
-
+    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    
     NSString *target_url = [data objectForKey:@"target_url"];
     
     if (target_url == nil) {
@@ -777,8 +783,8 @@
     }
     
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
-
-        if (self.isLogin == NO) {
+        
+        if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:enterVC animated:YES];
             return;
@@ -788,7 +794,7 @@
         }
         
     }
-
+    
 }
 
 @end
