@@ -1401,6 +1401,7 @@ static NSString *kbrandCell = @"brandCell";
         WebViewController *webView = [[WebViewController alloc] init];
         webView.eventLink = model.web_url;
         webView.goodsID = model.ID;
+        webView.diction = model.productModel;
         //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
         [self.navigationController pushViewController:webView animated:YES];
     }else {
@@ -1409,6 +1410,7 @@ static NSString *kbrandCell = @"brandCell";
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
             webView.goodsID = model.ID;
+            webView.diction = model.productModel;
             //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
             
@@ -1417,6 +1419,7 @@ static NSString *kbrandCell = @"brandCell";
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
             webView.goodsID = model.ID;
+            webView.diction = model.productModel;
 //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
         }
