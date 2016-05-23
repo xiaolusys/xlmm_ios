@@ -43,17 +43,17 @@
 @property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 
 //分享参数
-@property (nonatomic, strong)NSString *titleStr;
-@property (nonatomic, strong)NSString *des;
+@property (nonatomic, copy)NSString *titleStr;
+@property (nonatomic, copy)NSString *des;
 @property (nonatomic, strong)UIImage *shareImage;
-@property (nonatomic, strong)NSString *url;
+@property (nonatomic, copy)NSString *url;
 @property (nonatomic, strong) UIWebView *shareWebView;
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
 //遮罩层
 @property (nonatomic, strong) UIView *shareBackView;
 //分享页面
 @property (nonatomic, strong) YoumengShare *youmengShare;
-@property (nonatomic,assign)BOOL isPic;
+@property (nonatomic, assign)BOOL isPic;
 @property (nonatomic, strong)UIImage *imageData;
 @property (nonatomic, copy)NSString *kuaizhaoLink;
 @property (nonatomic, assign)BOOL isWeixin;
@@ -69,11 +69,11 @@
 /**
  *  分享数据字典
  */
-@property (nonatomic,strong) NSDictionary *shareDic;
+@property (nonatomic, strong) NSDictionary *shareDic;
 /**
  *  商品ID
  */
-@property (nonatomic,copy) NSString *itemID;
+@property (nonatomic, copy) NSString *itemID;
 /**
  *  加载快照
  */
@@ -85,17 +85,17 @@
 /**
  *  分享显示的图片
  */
-@property (nonatomic,copy) NSString *imageUrlString;
+@property (nonatomic, copy) NSString *imageUrlString;
 /**
  *  分享的资源（链接等）
  */
-@property (nonatomic,copy) NSString *urlResource;
+@property (nonatomic, copy) NSString *urlResource;
 
-@property (nonatomic,assign) BOOL isWXFriends;
+@property (nonatomic, assign) BOOL isWXFriends;
 
 
 //@property (nonatomic,assign) BOOL isLogin;
-@property (nonatomic,strong) UIImage *webViewImage;
+@property (nonatomic, strong) UIImage *webViewImage;
 @end
 
 @implementation WebViewController{
@@ -103,12 +103,6 @@
     UIImage *newshareImage;
     NSString *shareType;
     NSString *shareUrllink;
-}
-- (UIImage *)webViewImage {
-    if (_webViewImage == nil) {
-        _webViewImage = [UIImage new];
-    }
-    return _webViewImage;
 }
 - (YoumengShare *)youmengShare {
     if (!_youmengShare) {
@@ -169,11 +163,10 @@
     self.webView.delegate = self;
     self.webView.tag = 101;
     [self.webView loadRequest:request];
-    self.shareWebView.delegate = self;
-    self.shareWebView.scalesPageToFit = YES;
-    self.shareWebView.tag = 666;
+    
+    
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    [self.webView addSubview:self.shareWebView];
+//    [self.view addSubview:self.shareWebView];
     self.shareWebView.hidden = YES;
 
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
@@ -363,7 +356,7 @@
         //图片
         self.isWeixinFriends = YES;
 //        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
-        [self createKuaiZhaoImage:self.kuaizhaoLink];
+        [self createKuaiZhaoImage];
         //        [self createKuaiZhaoImage];
         [self cancleShareBtnClick:nil];
     }else {
@@ -446,7 +439,8 @@
     self.shareWebView.hidden = NO;
     [SVProgressHUD showWithStatus:@"正在生成快照..."];
     self.isWXFriends = NO;
-    [self createKuaiZhaoImage:self.kuaizhaoLink];
+    [self createKuaiZhaoImage];
+    
 }
 /**
  *  朋友圈快照
@@ -455,29 +449,37 @@
     self.shareWebView.hidden = NO;
     [SVProgressHUD showWithStatus:@"正在生成快照..."];
     self.isWXFriends = YES;
-    [self createKuaiZhaoImage:self.kuaizhaoLink];
+    [self createKuaiZhaoImage];
+    
 }
 //<UIWebView: 0x1581992a0; frame = (0 0; 375 667); tag = 102; layer = <CALayer: 0x158154070>>
-- (void)createKuaiZhaoImage:(NSString *)str {
-    NSURL *url = [NSURL URLWithString:str];
+- (void)createKuaiZhaoImage {
+    _webViewImage = nil;
+    NSURL *url = [NSURL URLWithString:self.kuaizhaoLink];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.shareWebView loadRequest:request];
+    self.shareWebView.delegate = self;
+    self.shareWebView.scalesPageToFit = YES;
+    self.shareWebView.tag = 102;
     
     _webViewImage = [UIImage imagewithWebView:self.shareWebView];
 }
 
 
 #pragma mark -- UIWebView代理
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (webView.tag != 666) {
+    if (webView.tag != 102) {
         return;
     }
     if (webView.isLoading) {
         return;
     }
 
+    
+    
     [SVProgressHUD dismiss];
+    
+    
     if (!self.isWXFriends) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:_webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -587,6 +589,12 @@
         }
     }
 }
+- (void)dealloc {
+    self.shareWebView = nil;
+    self.webViewImage = nil;
+    self.webView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -611,7 +619,7 @@
     if (error == nil) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你的专属二维码已保存，可用微信群发200好友哦" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        webViewImage = nil;
+        _webViewImage = nil;
         
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
