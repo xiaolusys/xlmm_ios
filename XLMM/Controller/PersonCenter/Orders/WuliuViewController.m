@@ -226,6 +226,9 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     LogisticsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    if(cell != nil){
+        [self removeAllSubviews:cell];
+    }
     
     NSDictionary *wuliuInfo =  [self.infoArray objectAtIndex:indexPath.row];
     NSString *timeText = [wuliuInfo objectForKey:@"time"];
@@ -242,6 +245,13 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 //    [cell fillCellWithData:[self.infoArray objectAtIndex:indexPath.row]];
     
     return cell;
+}
+
+- (void)removeAllSubviews:(UIView *)v{
+    while (v.subviews.count) {
+        UIView* child = v.subviews.lastObject;
+        [child removeFromSuperview];
+    }
 }
 
 @end
