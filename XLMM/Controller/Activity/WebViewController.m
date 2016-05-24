@@ -121,10 +121,7 @@
     [self registerJsBridge];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
+
 
 - (void)tiaozhuan:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
@@ -297,8 +294,10 @@
     [self.youmengShare.qqspaceShareBtn addTarget:self action:@selector(qqspaceShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.weiboShareBtn addTarget:self action:@selector(weiboShareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.youmengShare.linkCopyBtn addTarget:self action:@selector(linkCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.youmengShare.snapshotBtn addTarget:self action:@selector(snapshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.youmengShare.friendsSnaoshotBtn addTarget:self action:@selector(friendsSnaoshotBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.youmengShare.snapshotBtn.hidden = YES;
+    self.youmengShare.friendsSnaoshotBtn.hidden = YES;
 }
 //提示分享失败
 - (void)createPrompt {
@@ -435,50 +434,52 @@
 /**
  *  微信快照
  */
-- (void)snapshotBtnClick:(UIButton *)btn {
-    self.shareWebView.hidden = NO;
-    [SVProgressHUD showWithStatus:@"正在生成快照..."];
-    self.isWXFriends = NO;
-    [self createKuaiZhaoImage];
-    
-}
-/**
- *  朋友圈快照
- */
-- (void)friendsSnaoshotBtnClick:(UIButton *)btn{
-    self.shareWebView.hidden = NO;
-    [SVProgressHUD showWithStatus:@"正在生成快照..."];
-    self.isWXFriends = YES;
-    [self createKuaiZhaoImage];
-    
-}
+//- (void)snapshotBtnClick:(UIButton *)btn {
+//    self.shareWebView.hidden = NO;
+//    [SVProgressHUD showWithStatus:@"正在生成快照..."];
+//    self.isWXFriends = NO;
+//    [self createKuaiZhaoImage];
+//    
+//}
+///**
+// *  朋友圈快照
+// */
+//- (void)friendsSnaoshotBtnClick:(UIButton *)btn{
+//    self.shareWebView.hidden = NO;
+//    [SVProgressHUD showWithStatus:@"正在生成快照..."];
+//    self.isWXFriends = YES;
+//    [self createKuaiZhaoImage];
+//    
+//}
 //<UIWebView: 0x1581992a0; frame = (0 0; 375 667); tag = 102; layer = <CALayer: 0x158154070>>
 - (void)createKuaiZhaoImage {
     _webViewImage = nil;
-    NSURL *url = [NSURL URLWithString:self.kuaizhaoLink];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [self.shareWebView loadRequest:request];
     self.shareWebView.delegate = self;
     self.shareWebView.scalesPageToFit = YES;
     self.shareWebView.tag = 102;
+    NSURL *url = [NSURL URLWithString:self.kuaizhaoLink];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.shareWebView loadRequest:request];
     
-    _webViewImage = [UIImage imagewithWebView:self.shareWebView];
+//    _webViewImage = [UIImage imagewithWebView:self.shareWebView];
+
 }
 
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+
     if (webView.tag != 102) {
         return;
     }
     if (webView.isLoading) {
         return;
     }
+    
+    _webViewImage = [UIImage imagewithWebView:self.shareWebView];
 
-    
-    
     [SVProgressHUD dismiss];
-    
     
     if (!self.isWXFriends) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
@@ -533,13 +534,11 @@
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
-
             [self rightBarButtonAction];
         }
     }];
@@ -595,11 +594,21 @@
     self.webView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    self.shareWebView = nil;
+    self.webViewImage = nil;
+    self.webView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
