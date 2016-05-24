@@ -45,7 +45,7 @@
         _childClothing = isChild;
         [self downLoadWithURLString:string andSelector:@selector(fetchedCollectionData:)];
 
-    }
+    }//   http://m.xiaolumeimei.com/rest/v1/products/modellist/12958.json
     return self;
 }
 

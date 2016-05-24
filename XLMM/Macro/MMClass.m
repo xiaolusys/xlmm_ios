@@ -8,7 +8,7 @@
 
 #import "MMClass.h"
 
-#if 0
+#if 1
 //#define Root_URL @"http://192.168.1.57:8000"
 //#define Root_URL @"http://192.168.1.31:9000"
 //#define Root_URL @"http://192.168.1.13:8000"
@@ -34,6 +34,6 @@ NSString *Root_URL = @"http://m.xiaolumeimei.com";
 //妈妈主页接口 http://m.xiaolumeimei.com/rest/v2/mama/fortune
 
 
-//   http://m.xiaolumeimei.com/rest/v1/portal
+//   http://m.xiaolumeimei.com/rest/v1/activitys/12975/get_share_params
 
 #endif
