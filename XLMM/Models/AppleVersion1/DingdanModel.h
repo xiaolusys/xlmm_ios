@@ -19,6 +19,10 @@
 @property (nonatomic, copy)NSString *dingdanZhuangtai;
 @property (nonatomic, copy)NSString *dingdanJine;
 @property (nonatomic, copy)NSString *status_display;
+@property (nonatomic, copy)NSString *status;
+@property (nonatomic, copy)NSString *created;
+@property (nonatomic, copy)NSString *pay_time;
+@property (nonatomic, copy)NSString *consign_time;
 @property (nonatomic, copy) NSArray *ordersArray;
 
 

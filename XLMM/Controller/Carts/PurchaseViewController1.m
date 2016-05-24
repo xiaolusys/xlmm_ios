@@ -106,10 +106,10 @@
     //添加键盘的监听事件
     
     //注册通知,监听键盘弹出事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    
-    //注册通知,监听键盘消失事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+//    
+//    //注册通知,监听键盘消失事件
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
     
     if ([WXApi isWXAppInstalled]) {
       //  NSLog(@"安装了微信");
@@ -123,8 +123,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
 
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     
 }
 
@@ -186,7 +186,9 @@
         self.couponLabel.hidden = YES;
     }
     
-    [self initMsgTextField];
+//    [self initMsgTextField];
+    //can not editable
+    self.tfMsg.userInteractionEnabled = NO;
     
     [self downloadAddressData];
 
@@ -416,7 +418,7 @@
         NSLog(@"下载失败");
         return;
     }
-    if (addressArray.count == 0) {
+    if ((addressArray == nil) || (addressArray.count == 0)) {
         self.peopleLabel.text = @"";
         self.addressLabel.text = @"";
         self.addressZeroLabel.hidden = NO;
@@ -628,10 +630,10 @@
     
     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
     
-    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
-    {
-        dict = [NSString stringWithFormat:@"%@&buyer_message=%@", dict, [self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-    }
+//    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
+//    {
+//        dict = [NSString stringWithFormat:@"%@&buyer_message=%@", dict, [self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+//    }
 
     
 

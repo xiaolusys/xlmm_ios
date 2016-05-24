@@ -970,7 +970,7 @@ static NSString *kbrandCell = @"brandCell";
     
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     
-    if(numArray != nil){
+    if((numArray != nil) && (numArray.count > 0)){
         @try{
             [collection insertItemsAtIndexPaths:numArray];
             [numArray removeAllObjects];
