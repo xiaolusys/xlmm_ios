@@ -49,7 +49,7 @@
 @end
 
 @implementation AppDelegate{
-   
+    
 }
 
 - (NSString *)stringFromStatus:(NetworkStatus)status{
@@ -58,10 +58,10 @@
         case NotReachable:
             string = @"无网络连接，请检查您的网络";
             break;
-            case ReachableViaWiFi:
+        case ReachableViaWiFi:
             string = @"wifi";
             break;
-            case ReachableViaWWAN:
+        case ReachableViaWWAN:
             string = @"wwan";
             break;
             
@@ -79,7 +79,7 @@
         [self.sttime invalidate];
         self.sttime = nil;
         
-         [self.startV removeFromSuperview];
+        [self.startV removeFromSuperview];
         
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
@@ -99,8 +99,8 @@
     self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self.startV];
-     self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
-
+    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+    
     NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -111,7 +111,7 @@
         
     }];
     
-  
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSInteger count = [userDefaults integerForKey:@"StartCount"];
@@ -123,14 +123,14 @@
     [userDefaults setInteger:count forKey:@"StartCount"];
     [userDefaults synchronize];
     if (count == 22) {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"去评价" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
-//        [alertView show];
-
+        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"去评价" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
+        //        [alertView show];
+        
     }
     
     self.isFirst = YES;
-   [MiPushSDK registerMiPush:self type:0 connect:YES];
-
+    [MiPushSDK registerMiPush:self type:0 connect:YES];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
@@ -138,10 +138,10 @@
     __unused NSString *plistPath1 = [paths objectAtIndex:0];
     NSLog(@"%@", plistPath1);
     
-   
+    
     NSLog(@"%d", self.isLaunchedByNotification);
     
-//    [MobClick setLogEnabled:YES];
+    //    [MobClick setLogEnabled:YES];
     //version标识
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
@@ -150,17 +150,17 @@
     
     
     
-//    Class cls = NSClassFromString(@"UMANUtil");
-//    SEL deviceIDSelector = @selector(openUDIDString);
-//    NSString *deviceID = nil;
-//    if(cls && [cls respondsToSelector:deviceIDSelector]){
-//        deviceID = [cls performSelector:deviceIDSelector];
-//    }
-//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error:nil];
-//    
-//    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    //    Class cls = NSClassFromString(@"UMANUtil");
+    //    SEL deviceIDSelector = @selector(openUDIDString);
+    //    NSString *deviceID = nil;
+    //    if(cls && [cls respondsToSelector:deviceIDSelector]){
+    //        deviceID = [cls performSelector:deviceIDSelector];
+    //    }
+    //    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+    //                                                       options:NSJSONWritingPrettyPrinted
+    //                                                         error:nil];
+    //
+    //    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
     
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
@@ -179,19 +179,19 @@
     
     //创建导航控制器，添加根视图控制器
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-//    MMRootViewController *root = [[MMRootViewController alloc] init];
-//    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    //    MMRootViewController *root = [[MMRootViewController alloc] init];
+    //    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
-//    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
-//    // 设置代理
-//
+    //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
+    //    // 设置代理
+    //
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-//    leftMenu.push
-
+    //    leftMenu.push
+    
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-   // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
+    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
@@ -204,9 +204,9 @@
     
     self.window.rootViewController = menuVC;
     
-
+    
     [self.window makeKeyAndVisible];
-
+    
     
     if (launchOptions != nil) {
         NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -215,8 +215,8 @@
             self.isLaunchedByNotification = YES;
         }
     }
-   
-    
+    // -- 添加UserAgent
+    [self createUserAgent];
     return YES;
 }
 
@@ -251,9 +251,9 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     } else {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-         [userDefaults setInteger:0 forKey:@"StartCount"];
+        [userDefaults setInteger:0 forKey:@"StartCount"];
         [userDefaults synchronize];
-
+        
     }
     
     
@@ -262,7 +262,7 @@
 
 - (void)updateLoginState{
     //get /customer/user_profile to check has logined
-
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     // http://m.xiaolu.so/rest/v1/users/profile
@@ -281,20 +281,20 @@
             [defaults setBool:NO forKey:kIsLogin];
             NSLog(@"maybe cookie timeout,need login");
         }
-
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
         NSLog(@"maybe cookie timeout,need login");
     }];
-
-
+    
+    
 }
 
 - (void)getServerIP{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    
     NSString *serverip = [defaults objectForKey:@"serverip"];
     if((serverip != nil) && (![serverip isEqualToString:@""])){
         Root_URL = serverip;
@@ -324,7 +324,7 @@
     self.deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
     [MiPushSDK bindDeviceToken:pToken];
-
+    
     
 }
 
@@ -335,7 +335,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     
-//    NSLog(@"UserInfo = %@", userInfo);
+    //    NSLog(@"UserInfo = %@", userInfo);
     [MiPushSDK handleReceiveRemoteNotification :userInfo];
     // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
     NSString *messageId = [userInfo objectForKey:@"_id_"];
@@ -351,22 +351,22 @@
 - (void)miPushRequestSuccWithSelector:(NSString *)selector data:(NSDictionary *)data
 {
     // 请求成功
-
+    
     if ([selector isEqualToString:@"registerMiPush:type:connect:"]) {
-   
-
+        
+        
     } else if ([selector isEqualToString:@"bindDeviceToken:"]){
-       NSLog(@"data = %@", data);
+        NSLog(@"data = %@", data);
         
         
         self.miRegid = [data objectForKey:@"regid"];
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
         
-
+        
+        
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-
+        
         NSLog(@"%@ %@", self.deviceUUID, self.deviceToken);
         NSDictionary *parameters = @{@"platform":@"ios",
                                      @"regid":self.miRegid,
@@ -396,12 +396,12 @@
               }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   NSLog(@"Error: %@-------", error);
               }];
-//
+        //
         
     }
     
-
-
+    
+    
 }
 
 
@@ -415,9 +415,9 @@
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
     NSLog(@"---------------data = %@", data);
-//
-//    // 长连接收到的消息。消息格式跟APNs格式一样
-//    // 返回数据
+    //
+    //    // 长连接收到的消息。消息格式跟APNs格式一样
+    //    // 返回数据
     NSString *target_url = nil;
     target_url = [data objectForKey:@"target_url"];
     
@@ -433,9 +433,9 @@
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
         }
-
+        
     }
-
+    
 }
 
 
@@ -455,62 +455,62 @@
      lang    微信客户端当前语言
      country 微信用户当前国家信息
      */
-//    SendAuthResp *aresp = (SendAuthResp *)resp;
-//    if (aresp.errCode== 0) {
-//        NSString *code = aresp.code;
-//        
-//        self.wxCode = code;
-//        
-//        
-//        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//        [userDefaults setValue:code forKey:@"wxCode"];
-//        [userDefaults synchronize];
-//        
-//        
-//        NSDictionary *dic = @{@"code":code};
-//        NSLog(@"dic11111 = %@", dic);
-//        
-//    }
-//    //获取token和openid；
-//     [self getAccess_token];
+    //    SendAuthResp *aresp = (SendAuthResp *)resp;
+    //    if (aresp.errCode== 0) {
+    //        NSString *code = aresp.code;
+    //
+    //        self.wxCode = code;
+    //
+    //
+    //        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //        [userDefaults setValue:code forKey:@"wxCode"];
+    //        [userDefaults synchronize];
+    //
+    //
+    //        NSDictionary *dic = @{@"code":code};
+    //        NSLog(@"dic11111 = %@", dic);
+    //
+    //    }
+    //    //获取token和openid；
+    //     [self getAccess_token];
     
-  //  NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
-
-//    if([resp isKindOfClass:[SendMessageToWXResp class]])
-//    {
-////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
-////        NSString *strMsg;
-////        if (resp.errCode == 0) {
-////            strMsg = @"分享成功";
-////        } else {
-////            strMsg = @"分享失败";
-////        }
-////        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-////        [alert show];
-//        
-//    } else if([resp isKindOfClass:[PayResp class]]){
-//
-//
-//    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
-//        [SVProgressHUD showInfoWithStatus:@"登录中....."];
-//        SendAuthResp *aresp = (SendAuthResp *)resp;
-//        if (aresp.errCode== 0) {
-//            NSString *code = aresp.code;
-//            self.wxCode = code;
-//            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//            [userDefaults setValue:code forKey:@"wxCode"];
-//            [userDefaults synchronize];
-////            NSDictionary *dic = @{@"code":code};
-////            NSLog(@"dic11111 = %@", dic);
-//            
-//        }else {
-//            NSLog(@"取消登录");
-//            NSLog(@"88888888888");
-//            return;
-//        }
-//        //获取token和openid；
-//        [self getAccess_token];
-//    } //启动微信支付的response
+    //  NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+    
+    //    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    //    {
+    ////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
+    ////        NSString *strMsg;
+    ////        if (resp.errCode == 0) {
+    ////            strMsg = @"分享成功";
+    ////        } else {
+    ////            strMsg = @"分享失败";
+    ////        }
+    ////        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    ////        [alert show];
+    //
+    //    } else if([resp isKindOfClass:[PayResp class]]){
+    //
+    //
+    //    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+    //        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+    //        SendAuthResp *aresp = (SendAuthResp *)resp;
+    //        if (aresp.errCode== 0) {
+    //            NSString *code = aresp.code;
+    //            self.wxCode = code;
+    //            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //            [userDefaults setValue:code forKey:@"wxCode"];
+    //            [userDefaults synchronize];
+    ////            NSDictionary *dic = @{@"code":code};
+    ////            NSLog(@"dic11111 = %@", dic);
+    //
+    //        }else {
+    //            NSLog(@"取消登录");
+    //            NSLog(@"88888888888");
+    //            return;
+    //        }
+    //        //获取token和openid；
+    //        [self getAccess_token];
+    //    } //启动微信支付的response
     
     if ([resp isKindOfClass:[SendAuthResp class]]) {
         //[SVProgressHUD showInfoWithStatus:@"登录中....."];
@@ -601,8 +601,8 @@
                  }
                  */
                 self.userInfo = dic;
-//                NSLog(@"tokeninfo = %@", self.tokenInfo);
-//                NSLog(@"userInfo = %@", self.userInfo);
+                //                NSLog(@"tokeninfo = %@", self.tokenInfo);
+                //                NSLog(@"userInfo = %@", self.userInfo);
                 
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
                 [userdefault setObject:self.userInfo forKey:@"userInfo"];
@@ -613,15 +613,15 @@
                                              };
                 [userdefault setObject:wxUserInfo forKey:kWeiXinUserInfo];
                 [userdefault synchronize];
-              
-//                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                
+                //                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
                 //  发送微信登录成功的通知
                 
                 NSUserDefaults *userdefault0 = [NSUserDefaults standardUserDefaults];
                 NSString *author = [userdefault0 objectForKey:kWeiXinauthorize];
                 
                 if ([author isEqualToString:@"wxlogin"]) {
-             
+                    
                     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
                     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
                     [notificationCenter postNotification: broadcastMessage];
@@ -638,8 +638,8 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-   // [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-
+    // [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -651,7 +651,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
     
@@ -669,14 +669,14 @@
         
         if ([self.pushInfo objectForKey:@"target_url"] == nil) {
             
-           
+            
         } else {
             dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
-               [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[self.pushInfo objectForKey:@"target_url"]}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[self.pushInfo objectForKey:@"target_url"]}];
             });
         }
     }
-  
+    
     
     Reachability *reach = [Reachability reachabilityForInternetConnection];
     NetworkStatus status = [reach currentReachabilityStatus];
@@ -693,8 +693,8 @@
 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-   return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
-  //  return [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+    //  return [UMSocialSnsService handleOpenURL:url];
 }
 
 
@@ -708,57 +708,70 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-
     
-   [Pingpp handleOpenURL:url
+    
+    [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
                    NSLog(@"支付成功");
                    //  发送支付成功的 通知
-                     NSLog(@"url = %@", url);
+                   NSLog(@"url = %@", url);
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
                    
                } else {
                    // 支付失败或取消
                    // 发送支付不成功的 通知
-                 
+                   
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
-               
+                   
                    
                    
                    
                }
            }];
-//    return [UMSocialSnsService handleOpenURL:url];
+    //    return [UMSocialSnsService handleOpenURL:url];
     return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
     
     
     
-
-}
     
+}
+
+#pragma mark ---- User_Agent
+- (void)createUserAgent {
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    
+    //add my info to the new agent
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
+    
+    //regist the new agent
+    NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
+}
+
 #pragma mark -
 #pragma mark RESideMenu Delegate
 
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 {
-  //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
 {
-   // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
 {
-   // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
 {
-   // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 @end
