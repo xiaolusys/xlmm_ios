@@ -633,6 +633,7 @@
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
 		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
+		1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */; };
 		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
 		1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */; };
 		1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FC1CE31A4400F78C0D /* MASConstraint.m */; };
@@ -1734,6 +1735,8 @@
 		1F1D79501CE730A60042701C /* JMRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterViewController.m; sourceTree = "<group>"; };
 		1F1D79521CE7310F0042701C /* JMPhonenumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhonenumViewController.h; sourceTree = "<group>"; };
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
+		1F2AE9491CF5D5BB002EC974 /* JMEditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressController.h; sourceTree = "<group>"; };
+		1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressController.m; sourceTree = "<group>"; };
 		1F2B0BFF1CE9A24A00B11740 /* weixin_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_nomal@2x.png"; sourceTree = "<group>"; };
 		1F2B0C001CE9A24A00B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
 		1F2B0C011CE9A24A00B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
@@ -2634,6 +2637,7 @@
 		183071981C97BE3700B7665E /* Orders */ = {
 			isa = PBXGroup;
 			children = (
+				1F2AE9481CF5D548002EC974 /* Orders_Edit Address */,
 				183071991C97BE3700B7665E /* PersonCenterViewController1.h */,
 				1830719A1C97BE3700B7665E /* PersonCenterViewController1.m */,
 				1830719B1C97BE3700B7665E /* PersonCenterViewController1.xib */,
@@ -3908,6 +3912,15 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		1F2AE9481CF5D548002EC974 /* Orders_Edit Address */ = {
+			isa = PBXGroup;
+			children = (
+				1F2AE9491CF5D5BB002EC974 /* JMEditAddressController.h */,
+				1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */,
+			);
+			name = "Orders_Edit Address";
+			sourceTree = "<group>";
+		};
 		1F2B0BED1CE96A2E00B11740 /* choisestixian */ = {
 			isa = PBXGroup;
 			children = (
@@ -4956,6 +4969,7 @@
 				325B79E21C97E7160022F930 /* TuihuoCollectionCell.m in Sources */,
 				183070D21C97B83900B7665E /* CartModel.m in Sources */,
 				183070E11C97B83900B7665E /* TuihuoModel.m in Sources */,
+				1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */,
 				183072491C97BE3700B7665E /* RefundDetailsViewController.m in Sources */,
 				183072541C97BE3700B7665E /* BoundingNewPhoneController.m in Sources */,
 				183074071C97D17800B7665E /* QNHttpManager.m in Sources */,
