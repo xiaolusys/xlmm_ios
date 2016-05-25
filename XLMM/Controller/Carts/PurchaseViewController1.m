@@ -65,6 +65,8 @@
 
 }
 
+@property (nonatomic,strong) BuyCartsView *cartOwner;
+
 @property (nonatomic, strong)NSMutableArray *MutCatrsArray;     //购物车数组
 @property (weak, nonatomic) IBOutlet UIImageView *zhifubaoImageView;//选中图片
 @property (weak, nonatomic) IBOutlet UIImageView *wxImageView;      //未选中图片
@@ -80,6 +82,9 @@
 @property (nonatomic, strong)NSDictionary *xlWallet;
 @property (nonatomic, strong)NSDictionary *couponInfo;
 
+/**
+ *  判断优惠券是否可用
+ */
 @property (nonatomic, assign)BOOL isCanCoupon;
 
 
@@ -389,7 +394,7 @@
         cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;
         cartOwner.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
-        
+        self.cartOwner = cartOwner;
         
         [self.detailsView addSubview:cartOwner.view];
         
@@ -482,7 +487,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+#pragma mark ------ 选择优惠券回调过来的代理方法
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
     //优惠券一定可以使用
     yhqModel = model;
@@ -497,17 +502,16 @@
         [self calculationLabelValue];
     } else {
         self.isUserCoupon = YES;
-        
-        self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
+        self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
         self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
         self.couponLabel.hidden = NO;
         yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
-        
+
         //使用优惠券后
         if (yhqModel && yhqModel.coupon_value) {
             CGFloat couponV = [yhqModel.coupon_value floatValue];
             NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
-            NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];
+            NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];   //最终需要支付的金额
             
             CGFloat aftertotalPayment = 0.00;
             CGFloat afterdiscountfee = 0.00;
@@ -516,10 +520,16 @@
                 aftertotalPayment = totalPayment - couponV;
                 afterdiscountfee = discountfee + couponV;
                 self.isEnoughCoupon = NO;
+                /**
+                 *  在这里判断是否可用    判断商品总价格  totalFeeLabel
+                 */
+                [SVProgressHUD showInfoWithStatus:model.use_fee_des];
+                self.couponLabel.text = @"";
             }else {
                 aftertotalPayment = 0.00;
                 afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
                 self.isEnoughCoupon = YES;
+                
             }
             
             [self calculationLabelValue];
@@ -764,7 +774,10 @@
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
+                /**
+                 *  在这里判断满多少可以使用  -- 这里是点击提交订单按钮判断
+                 */
+//                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
                 [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
             });
             return;
@@ -809,7 +822,7 @@
  }
 
 - (void)returnCart {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)returnOrderList {
