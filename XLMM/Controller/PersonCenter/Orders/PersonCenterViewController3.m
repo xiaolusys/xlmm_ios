@@ -137,11 +137,9 @@
     
     
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-          
-            [self loadMore];
-            
-        });
+        
+        [self loadMore];
+
     }];
     footer.hidden = YES;
     
@@ -275,7 +273,7 @@
         SingleOrderViewCell *cell = (SingleOrderViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"SingleOrderCell" forIndexPath:indexPath];
         
         NSDictionary *details = [model.ordersArray objectAtIndex:0];
-        NSLog(@"detaiol %@", details);
+//        NSLog(@"detail %@", details);
         
         [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;

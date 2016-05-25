@@ -10,14 +10,16 @@
 #import "MMClass.h"
 #import "XiangQingViewController.h"
 #import "UIViewController+NavigationBar.h"
-#define kSimpleCellIdentifier @"simpleCell"
-#import "NSString+URL.h"
 
+#import "NSString+URL.h"
+#import "MJRefresh.h"
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 
+
+#define kSimpleCellIdentifier @"simpleCell"
 
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
 
@@ -25,7 +27,9 @@
 
 @end
 
-@implementation PersonCenterViewController2
+@implementation PersonCenterViewController2{
+        NSDictionary *diciontary;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -52,7 +56,40 @@
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        [self loadMore];
+        
+    }];
+    footer.hidden = YES;
+    
+    self.collectionView.mj_footer = footer;
 
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+        
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+        
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.collectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedWaisendData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.collectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -60,14 +97,7 @@
 }
 
 - (void)downlaodData{
-    //http://192.168.1.79:8000/rest/v1/trades
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-////        NSLog(@"wait send = %@", kWaitsend_List_URL);
-//       
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
-//        
-//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-//    });
+
     [SVProgressHUD showWithStatus:@"加载中..."];
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
@@ -76,7 +106,7 @@
         
         if (!responseObject) return;
         
-        [self fetchedWaipayData:responseObject ];
+        [self fetchedWaisendData:responseObject ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
@@ -84,25 +114,21 @@
 
 }
 
-- (void)fetchedWaipayData:(NSDictionary *)data{
+- (void)fetchedWaisendData:(NSDictionary *)data{
     if (data == nil) {
         NSLog(@"下载失败");
         return;
     }
-    NSError *error = nil;
-//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSDictionary *json = data;
-    if (error != nil) {
-        NSLog(@"解析出错");
-        return;
-    }
 
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
+    diciontary = data;
+
+
+    if ([[diciontary objectForKey:@"count"] integerValue] == 0) {
         [self displayDefaultView];
         return;
     }
     
-    self.dataArray = [json objectForKey:@"results"];
+    self.dataArray = [diciontary objectForKey:@"results"];
     [self.collectionView reloadData];
 }
 
