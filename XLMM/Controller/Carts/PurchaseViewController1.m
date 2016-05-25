@@ -520,11 +520,23 @@
                 aftertotalPayment = totalPayment - couponV;
                 afterdiscountfee = discountfee + couponV;
                 self.isEnoughCoupon = NO;
+                NSString *str = model.use_fee_des;
+                CGFloat canPay = [[str substringWithRange:NSMakeRange(1, str.length - 3)] floatValue];
+                
                 /**
                  *  在这里判断是否可用    判断商品总价格  totalFeeLabel
+                    maxPay  商品总金额 == 商品总金额减去APP支付立减  +  APP支付立减的金额
                  */
-                [SVProgressHUD showInfoWithStatus:model.use_fee_des];
-                self.couponLabel.text = @"";
+                CGFloat maxPay = totalPayment + discountfee;
+                if (maxPay >= canPay) {
+                    aftertotalPayment = 0.00;
+                    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+                    self.isEnoughCoupon = YES;
+                }else {
+                    [SVProgressHUD showInfoWithStatus:model.use_fee_des];
+                    self.couponLabel.text = @"";
+                }
+                
             }else {
                 aftertotalPayment = 0.00;
                 afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
