@@ -39,4 +39,5 @@
 + (UIColor *)buttonTitleColor;
 + (UIColor *)randomColor;
 + (UIColor *)wechatBackColor;
++ (UIColor *)timeLabelColor;
 @end
