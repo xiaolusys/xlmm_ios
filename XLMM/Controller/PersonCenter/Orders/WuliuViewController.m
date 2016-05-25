@@ -45,7 +45,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 - (void) getWuliuInfoFromServer{
-    //self.tradeId = @"xd15081955d45da07263e";
+    //    self.packetId = @"3101040539131";
     if((self.packetId == nil) || ([self.packetId isEqualToString:@""])
        || (self.companyCode == nil || ([self.companyCode isEqualToString:@""]))){
         [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
