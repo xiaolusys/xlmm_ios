@@ -15,6 +15,7 @@
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
 #import "SVProgressHUD.h"
+#import "JMMaMaOrderListCell.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -94,8 +95,7 @@
     [headerV addSubview:lineView];
     
     self.tableView.tableHeaderView = headerV;
-
-    [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
+    self.tableView.estimatedRowHeight = 80;
     
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -196,19 +196,29 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"MaMaOrder";
+    JMMaMaOrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[JMMaMaOrderListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+   
+    
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = orderArr[indexPath.row];
-    MaMaOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaMaOrder"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (!cell) {
-        cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
-    }
+
     [cell fillDataOfCell:orderM];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+//    [self.tableView reloadData];
+    
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30); 

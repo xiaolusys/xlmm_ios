@@ -123,4 +123,8 @@
     return [UIColor colorWithR:74 G:74 B:74 alpha:1];
 }
 
++ (UIColor *)timeLabelColor {
+    return [UIColor colorWithR:160 G:160 B:160 alpha:1];
+}
+
 @end
