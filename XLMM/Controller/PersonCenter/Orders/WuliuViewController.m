@@ -45,7 +45,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 - (void) getWuliuInfoFromServer{
-    //    self.packetId = @"3101040539131";
+//    self.packetId = @"3101040539131";
     if((self.packetId == nil) || ([self.packetId isEqualToString:@""])
        || (self.companyCode == nil || ([self.companyCode isEqualToString:@""]))){
         [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
@@ -65,13 +65,19 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [SVProgressHUD dismiss];
-        if(responseObject == nil) return;
+        if(responseObject == nil) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+            return;
+        }
         NSDictionary *info = responseObject;
         [self fetchedWuliuData:info];
         [self.wuliuInfoChainView reloadData ];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"wuliu info get failed.");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
     }];
 
     
@@ -95,7 +101,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     self.infoArray = [dicJson objectForKey:@"data"];
     NSInteger length = self.infoArray.count;
     if (length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
     }
         
