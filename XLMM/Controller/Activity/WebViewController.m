@@ -37,7 +37,7 @@
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate, UMSocialUIDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 @property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
@@ -113,12 +113,11 @@
     return _youmengShare;
 }
 
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    
 }
 
 
@@ -135,18 +134,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
     UIWebView *baseWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20)];
     self.baseWebView = baseWebView;
     [self.view addSubview:self.baseWebView];
     self.baseWebView.backgroundColor = [UIColor whiteColor];
+    self.baseWebView.tag = 111;
     self.baseWebView.delegate = self;
-//    self.webView.scalesPageToFit = YES;
-    self.baseWebView.tag = 101;
-    //与js交互代码。。
-    [self updateUserAgent];
-    [self registerJsBridge];
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
+    self.baseWebView.scalesPageToFit = YES;
+    self.baseWebView.userInteractionEnabled = YES;
+    
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -166,22 +164,19 @@
         self.itemID = self.goodsID;
         loadStr = _eventLink;
     }
-    
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
-    
+    NSURL *url = [NSURL URLWithString:loadStr];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [self.baseWebView loadRequest:request];
-
+    
+    
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    [self.view addSubview:self.shareWebView];
     self.shareWebView.hidden = YES;
-    
-    
+    [self.view addSubview:self.shareWebView];
+    [self.view bringSubviewToFront:self.baseWebView];
     
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
-    
-    
+
 }
 
 - (NSString *)getMobileSNCode {
@@ -443,11 +438,11 @@
     
     [self cancleShareBtnClick:nil];
 }
-/**
- *  微信快照
- */
+///**
+// *  微信快照
+// */
 //- (void)snapshotBtnClick:(UIButton *)btn {
-//    self.shareWebView.hidden = NO;
+////    self.shareWebView.hidden = NO;
 //    [SVProgressHUD showWithStatus:@"正在生成快照..."];
 //    self.isWXFriends = NO;
 //    [self createKuaiZhaoImage];
@@ -457,13 +452,14 @@
 // *  朋友圈快照
 // */
 //- (void)friendsSnaoshotBtnClick:(UIButton *)btn{
-//    self.shareWebView.hidden = NO;
+////    self.shareWebView.hidden = NO;
 //    [SVProgressHUD showWithStatus:@"正在生成快照..."];
 //    self.isWXFriends = YES;
 //    [self createKuaiZhaoImage];
 //    
 //}
 - (void)createKuaiZhaoImage {
+    [self.view bringSubviewToFront:self.shareWebView];
     _webViewImage = nil;
     NSURL *url = [NSURL URLWithString:self.kuaizhaoLink];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -478,10 +474,14 @@
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+    NSLog(@"完成加载");
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 
     if (webView.tag != 102) {
+        
         [SVProgressHUD dismiss];
+        [self updateUserAgent];
+        [self registerJsBridge];
         return;
     }
     if (webView.isLoading) {
@@ -527,10 +527,10 @@
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-}
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+//
+//}
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
