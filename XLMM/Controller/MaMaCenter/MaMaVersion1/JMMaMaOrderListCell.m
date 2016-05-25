@@ -74,10 +74,7 @@
     UIImageView *isAPP = [[UIImageView alloc] init];
     [self.contentView addSubview:isAPP];
     self.isAPP = isAPP;
-    //    self.isAPP.hidden = NO;
-    //    self.isAPP.tag = 100;
-    
-    
+
     UILabel *userName = [[UILabel alloc] init];
     [self.contentView addSubview:userName];
     self.userName = userName;
@@ -139,31 +136,6 @@
         }];
     }
     
-    
-    
-    //    [self.actualPay mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.centerY.equalTo(weakSelf.isAPP.mas_centerY);
-    ////        self.isAPP.hidden =  (YES)?10:-23;
-    ////        if (self.isAPP.hidden == !self.isAPP.hidden) {
-    ////            NSInteger num = self.isAPP.hidden;
-    ////            num = /* DISABLES CODE */ (1) ? 10 : -25;
-    ////            make.left.equalTo(weakSelf.isAPP.mas_right).offset(num);
-    ////        }
-    //
-    ////        self.isAppImage = YES;
-    //        if (self.isAppImage == NO) {
-    //            make.left.equalTo(weakSelf.isAPP.mas_right).offset(10);
-    //        }else {
-    //            make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
-    //        }
-    //
-    //        if (!self.isAPP.hidden) {
-    //            make.left.equalTo(weakSelf.isAPP.mas_right).offset(10);
-    //        }else {
-    //            make.left.equalTo(weakSelf.isAPP.mas_left);
-    //        }
-    //    }];
-    
     [self.incomeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.actualPay.mas_right).offset(5);
         make.centerY.equalTo(weakSelf.actualPay.mas_centerY);
@@ -208,27 +180,14 @@
     self.userName.text = orderM.contributor_nick;
     
     if (orderM.carry_type_name.length == 0) {
-        //        [self.isAPP mas_makeConstraints:^(MASConstraintMaker *make) {
-        //            make.left.equalTo(self.iconImageView.mas_right);
-        //            make.width.height.mas_equalTo(@0);
-        //        }];
-        
-        //        self.isAPP.frame = CGRectMake(0, 0, 0, 0);
-        //
+
         self.isAppImage = NO;
-        //        self.isAPP = nil;
-        //        imageView.hidden = YES;
+
     }else {
-        //        [self.isAPP mas_makeConstraints:^(MASConstraintMaker *make) {
-        //            make.left.equalTo(self.iconImageView.mas_right).offset(10);
-        //            make.width.mas_equalTo(@25);
-        //            make.height.mas_equalTo(@13);
-        //        }];
+
         self.isAppImage = YES;
         self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
-        //
-        //        self.isAPP.frame = CGRectMake(0, 0, 25, 13);
-        //        imageView.hidden = NO;
+
     }
     
     

@@ -42,6 +42,8 @@
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 @property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 
+@property (nonatomic ,strong) UIWebView *baseWebView;
+
 //分享参数
 @property (nonatomic, copy)NSString *titleStr;
 @property (nonatomic, copy)NSString *des;
@@ -115,10 +117,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-
-    //与js交互代码。。
-    [self updateUserAgent];
-    [self registerJsBridge];
+    
+    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
 }
 
 
@@ -135,6 +135,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIWebView *baseWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20)];
+    self.baseWebView = baseWebView;
+    [self.view addSubview:self.baseWebView];
+    self.baseWebView.backgroundColor = [UIColor whiteColor];
+    self.baseWebView.delegate = self;
+//    self.webView.scalesPageToFit = YES;
+    self.baseWebView.tag = 101;
+    //与js交互代码。。
+    [self updateUserAgent];
+    [self registerJsBridge];
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
@@ -155,19 +166,21 @@
         self.itemID = self.goodsID;
         loadStr = _eventLink;
     }
+    
+    
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:loadStr]];
-    self.webView.scalesPageToFit = YES;
-    self.webView.delegate = self;
-    self.webView.tag = 101;
-    [self.webView loadRequest:request];
     
-    
+    [self.baseWebView loadRequest:request];
+
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
 //    [self.view addSubview:self.shareWebView];
     self.shareWebView.hidden = YES;
-
+    
+    
+    
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
+    
     
 }
 
@@ -181,9 +194,7 @@
 }
 
 - (void)rightBarButtonAction {
-   
-    
-    
+
     _shareDic = nil;
     if ([_active isEqualToString:@"active"]) {
         NSNumber *activityID = nil;
@@ -202,6 +213,7 @@
         [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (!responseObject) return;
             [self addShareView:responseObject];
+          
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
         }];
@@ -451,16 +463,14 @@
 //    [self createKuaiZhaoImage];
 //    
 //}
-//<UIWebView: 0x1581992a0; frame = (0 0; 375 667); tag = 102; layer = <CALayer: 0x158154070>>
 - (void)createKuaiZhaoImage {
     _webViewImage = nil;
-    self.shareWebView.delegate = self;
-    self.shareWebView.scalesPageToFit = YES;
-    self.shareWebView.tag = 102;
     NSURL *url = [NSURL URLWithString:self.kuaizhaoLink];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.shareWebView loadRequest:request];
-    
+    self.shareWebView.delegate = self;
+    self.shareWebView.scalesPageToFit = YES;
+    self.shareWebView.tag = 102;
 //    _webViewImage = [UIImage imagewithWebView:self.shareWebView];
 
 }
@@ -468,9 +478,10 @@
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+//    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 
     if (webView.tag != 102) {
+        [SVProgressHUD dismiss];
         return;
     }
     if (webView.isLoading) {
@@ -499,7 +510,7 @@
 }
 
 - (void)updateUserAgent{
-    NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString *oldAgent = [self.baseWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     if(oldAgent == nil) return;
     
     if(oldAgent != nil) {
@@ -516,7 +527,10 @@
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
 }
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
+}
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
@@ -524,7 +538,7 @@
         return ;
     }
     [WebViewJavascriptBridge enableLogging];
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView];
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
     
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self jsLetiOSWithData:data callBack:responseCallback];
@@ -591,7 +605,7 @@
 - (void)dealloc {
     self.shareWebView = nil;
     self.webViewImage = nil;
-    self.webView = nil;
+//    self.webView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
@@ -605,7 +619,7 @@
     self.navigationController.navigationBarHidden = YES;
     self.shareWebView = nil;
     self.webViewImage = nil;
-    self.webView = nil;
+//    self.webView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
