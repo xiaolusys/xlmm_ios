@@ -161,7 +161,9 @@
     
     
     self.nameLabel.text = self.dingdanModel.nameString;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.priceString floatValue]];
+    if(number != 0){
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
+    }
     self.sizeNameLabel.text = self.dingdanModel.sizeString;
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
     
