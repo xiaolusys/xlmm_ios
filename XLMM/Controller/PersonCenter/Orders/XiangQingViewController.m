@@ -259,7 +259,8 @@
         model.urlString = [dic objectForKey:@"pic_path"];
         model.sizeString = [dic objectForKey:@"sku_name"];
         model.numberString = [dic objectForKey:@"num"];
-        model.priceString = [dic objectForKey:@"payment"];
+        model.total_fee = [dic objectForKey:@"total_fee"];
+        model.payment = [dic objectForKey:@"payment"];
         model.nameString = [dic objectForKey:@"title"];
         model.orderID = [dic objectForKey:@"id"];
         model.killTitle = [[dic objectForKey:@"kill_title"] boolValue];
@@ -445,6 +446,14 @@
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     if (dic.count == 0){
         NSLog(@"setWuLiuMsg dic count=0");
+        //无查物流信息，直接显示时间和商品即可
+        self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
+        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:orderStatus[0] logisticsModel:nil];
+        NSUInteger  h=76;
+        for(int i=0; i < dataArray.count; i++){
+            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
+            h += 90;
+        }
         return;
     }
 
@@ -538,7 +547,7 @@
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
         owner.numberLabel.text = [NSString stringWithFormat:@"x%@", model.numberString];
-        owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
+        owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.payment floatValue]];
        
         if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_PAYED) {
             if ([[refund_statusArray objectAtIndex:index] integerValue] == 0) {
@@ -702,11 +711,11 @@
     NSInteger i = button.tag - 200;
     tuihuoModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    tuikuanVC.refundPrice = refundPrice;
+    tuikuanVC.refundPrice = [tuihuoModel.payment floatValue];
     tuikuanVC.dingdanModel = tuihuoModel;
     
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.priceString);
+    NSLog(@"tuihuomodel payment= %@", tuikuanVC.dingdanModel.payment);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.sizeString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.nameString);
@@ -731,7 +740,7 @@
     
     tuiHuoVC.dingdanModel = tuihuoModel;
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.priceString);
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.payment);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.numberString);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.sizeString);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.nameString);
