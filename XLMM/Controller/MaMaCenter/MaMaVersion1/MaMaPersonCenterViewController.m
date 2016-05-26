@@ -17,7 +17,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaCarryLogViewController.h"
 #import "TuijianErweimaViewController.h"
-#import "MamaActivityViewController.h"
 #import "ActivityViewController2.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -1142,11 +1141,6 @@
     [self.navigationController pushViewController:share animated:YES];
 }
 
-
-- (IBAction)huodongzhongxin:(id)sender {
-    MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
-    [self.navigationController pushViewController:activityVC animated:YES];
-}
 
 - (IBAction)fansList:(id)sender {
     FensiListViewController *fensiVC = [[FensiListViewController alloc] init];

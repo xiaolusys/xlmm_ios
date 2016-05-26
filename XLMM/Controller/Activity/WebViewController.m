@@ -40,7 +40,6 @@
 @interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
-@property (nonatomic, strong) PontoDispatcher *pontoDispatcher;
 
 @property (nonatomic ,strong) UIWebView *baseWebView;
 

@@ -18,7 +18,7 @@
 #import "MMLoadingAnimation.h"
 #import "UIViewController+NavigationBar.h"
 #import "JMBaseWebView.h"
-
+#import "WebViewController.h"
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -37,15 +37,12 @@
     
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild{
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil brandArray:(NSMutableArray *)brandDataArr {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, modelID];
-        self.urlString = string;
-        _childClothing = isChild;
-        [self downLoadWithURLString:string andSelector:@selector(fetchedCollectionData:)];
 
-    }//   http://m.xiaolumeimei.com/rest/v1/products/modellist/12958.json
+        [self fetchedCollectionData:brandDataArr];
+
+
     return self;
 }
 
@@ -115,30 +112,15 @@
     [self.view addSubview:self.collectionView];
 }
 
-- (void)fetchedCollectionData:(NSData *)data{
+- (void)fetchedCollectionData:(NSMutableArray *)data{
     if (data == nil) {
         return;
     }
-    NSError *error = nil;
-    NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-   // NSLog(@"collections = %@", collections);
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-    }
-    for (NSDictionary *dic in collections) {
-    CollectionModel *model = [[CollectionModel alloc] initWithDiction:dic];
-     [self.dataArray addObject:model];
-    }
-    
-    if((self.dataArray == nil) || (self.dataArray.count ==0)) return;
-    CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
-    offSheltTime = tempModel.offShelfTime;
-    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    [self timerFireMethod:theTimer];
+
+
+     [self.dataArray copy:data];
     
     [self.collectionView reloadData];
-    
-    //[self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
     
     
     
@@ -340,12 +322,13 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
-    MMDetailsViewController *vc = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-    
-    
-//    JMBaseWebView *vc = [[JMBaseWebView alloc] init];
-//    vc.urlStr = model.web_url;
-    [self.navigationController pushViewController:vc animated:YES];
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.eventLink = model.web_url;
+    webView.goodsID = model.ID;
+    webView.diction = model.productModel;
+
+    [self.navigationController pushViewController:webView animated:YES];
+
 }
 
 
