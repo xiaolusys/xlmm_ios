@@ -61,7 +61,6 @@
 - (IBAction)xuanpinliebiao:(id)sender;
 - (IBAction)shareSubsidiesAction:(id)sender;
 
-- (IBAction)huodongzhongxin:(id)sender;
 
 - (IBAction)fansList:(id)sender;
 

@@ -8,8 +8,6 @@
 
 #import "MMRootViewController.h"
 #import "RESideMenu.h"
-#import "TodayViewController.h"
-#import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
 #import "JMLogInViewController.h"
@@ -1385,43 +1383,40 @@ static NSString *kbrandCell = @"brandCell";
     if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
         return;
     
-//    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil brandArray:self.brandDataArr ];
+        [self.navigationController pushViewController:collectionVC animated:YES];
     
-//    WebViewController *webView = [[WebViewController alloc] init];
-//    webView.eventLink = model.web_url;
-//    webView.diction = model.productModel;
-    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-//    [self.navigationController pushViewController:webView animated:YES];
-    
-    
-    
-//    
-    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-    if (model.productModel == nil) {
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.eventLink = model.web_url;
-        webView.goodsID = model.ID;
-        webView.diction = model.productModel;
-        //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-        [self.navigationController pushViewController:webView animated:YES];
-    }else {
-        
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+    }
+    else{
+        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
             webView.goodsID = model.ID;
             webView.diction = model.productModel;
             //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
+        }else {
             
-        } else {
-           
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.eventLink = model.web_url;
-            webView.goodsID = model.ID;
-            webView.diction = model.productModel;
-//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-            [self.navigationController pushViewController:webView animated:YES];
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+                //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+                
+            } else {
+               
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+            }
         }
     }
     

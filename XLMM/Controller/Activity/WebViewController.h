@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonWebViewViewController.h"
-#import "PontoDispatcher.h"
 
 @interface WebViewController : CommonWebViewViewController //<PontoDispatcherCallbackDelegate>
 //@property (weak, nonatomic) IBOutlet UIWebView *webView;

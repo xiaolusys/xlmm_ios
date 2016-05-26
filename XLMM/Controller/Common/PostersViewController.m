@@ -481,8 +481,8 @@ static NSString * ksimpleCell = @"simpleCell";
                 [self.navigationController pushViewController:detailsVC animated:YES];
                 
             } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
+//                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
+//                [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }
     } else {
@@ -495,8 +495,8 @@ static NSString * ksimpleCell = @"simpleCell";
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
                 [self.navigationController pushViewController:detailsVC animated:YES];
             } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
+//                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
+//                [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }
     }
