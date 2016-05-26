@@ -166,7 +166,7 @@
     }
     
     NSDictionary *dicJson = responsedata;
-  //  NSLog(@"JSON = %@", dicJson);
+//    NSLog(@"fetchedDingdanData JSON = %@", dicJson);
     [self transferOrderModel:dicJson];
     
     [activityView removeFromSuperview];
@@ -212,7 +212,7 @@
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
     
     [self removeAllSubviews:self.myXiangQingView];
-    if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
+//    if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
         //需要查物流信息，查询到信息后处理
         AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
         NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
@@ -221,17 +221,17 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"packageskuitem failed.");
         }];
-    }
-    else{
-        //不用查物流信息，直接显示时间和商品即可
-        self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
-        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:nil time:nil company:nil packetId:nil];
-        NSUInteger  h=76;
-        for(int i=0; i < dataArray.count; i++){
-            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
-            h += 90;
-        }
-    }
+//    }
+//    else{
+//        //不用查物流信息，直接显示时间和商品即可
+//        self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
+//        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:orderStatus[0] logisticsModel:nil];
+//        NSUInteger  h=76;
+//        for(int i=0; i < dataArray.count; i++){
+//            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
+//            h += 90;
+//        }
+//    }
 
     self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
@@ -259,7 +259,7 @@
     self.dingdanModel.dingdanbianhao = [dicJson objectForKey:@"tid"];
     self.dingdanModel.imageURLString = [dicJson objectForKey:@"order_pic"];
     self.dingdanModel.dingdanTime = [dicJson objectForKey:@"created"];
-    self.dingdanModel.dingdanZhuangtai = [dicJson objectForKey:@"status_display"];
+    self.dingdanModel.status_display = [dicJson objectForKey:@"status_display"];
     self.dingdanModel.status = [dicJson objectForKey:@"status"];
     self.dingdanModel.dingdanJine = [dicJson objectForKey:@"payment"];
     self.dingdanModel.created = [dicJson objectForKey:@"created"];// 创建时间。。。
@@ -271,7 +271,8 @@
         model.urlString = [dic objectForKey:@"pic_path"];
         model.sizeString = [dic objectForKey:@"sku_name"];
         model.numberString = [dic objectForKey:@"num"];
-        model.priceString = [dic objectForKey:@"payment"];
+        model.total_fee = [dic objectForKey:@"total_fee"];
+        model.payment = [dic objectForKey:@"payment"];
         model.nameString = [dic objectForKey:@"title"];
         model.orderID = [dic objectForKey:@"id"];
         model.killTitle = [[dic objectForKey:@"kill_title"] boolValue];
@@ -324,9 +325,11 @@
 
 }
 
-- (void)createProcessView:(CGRect )rect status:(NSString *)packetStatus time:(NSString *)time company:(NSString *)company
-              packetId:(NSString *)packetId{
-    NSLog(@"createProcessView packetStatus=%@ time=%@ company=%@ packetId=%@",packetStatus, time, company, packetId);
+- (void)createProcessView:(CGRect )rect status:(NSString *)goodsStatus logisticsModel:(LogisticsModel *)logisticsModel{
+    if((goodsStatus != nil) && (logisticsModel != nil)){
+        NSLog(@"createProcessView orderStatus=%@ time=%@ company=%@ packetId=%@", goodsStatus, logisticsModel.process_time, logisticsModel.logistics_company_name, logisticsModel.out_sid);
+    }
+    
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor backgroundlightGrayColor];
 //    view.layer.cornerRadius = 4;
@@ -341,7 +344,7 @@
     ballView.layer.cornerRadius = 6;
     [view addSubview:ballView];
     
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 10, 150, 15)];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 10, 200, 15)];
     timeLabel.textColor = [UIColor blackColor];
     timeLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:timeLabel];
@@ -359,43 +362,48 @@
     [self.myXiangQingView addSubview:view];
 
     
-    if ([self.dingdanModel.status integerValue] == ORDER_STATUS_WAITPAY) {
+    if ([goodsStatus integerValue] == ORDER_STATUS_WAITPAY) {
         statusLabel.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
             timeLabel.text = newStr;
         }
         
-    } else if ([self.dingdanModel.status integerValue] == ORDER_STATUS_PAYED){
-        if(packetStatus == nil || time == nil){
-            statusLabel.text = self.dingdanModel.status_display;
+    } else if ([goodsStatus integerValue] == ORDER_STATUS_PAYED){
+        if(logisticsModel == nil || logisticsModel.assign_status_display == nil || logisticsModel.process_time == nil){
+            statusLabel.text = self.dingdanModel.status_display ;
             if(self.dingdanModel.pay_time != nil){
                 NSString *newStr = [self formatterTimeString:self.dingdanModel.pay_time ];
                 timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
             }
         }
         else{
-            statusLabel.text = packetStatus;
-            timeLabel.text =  [NSString stringWithFormat:@"%@:%@", @"时间", time];
+            statusLabel.text = logisticsModel.assign_status_display;
+            timeLabel.text =  [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
         }
         
-//        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(300, 30, 15, 15)];
-//        [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
-//        [view addSubview:img];
-//        
-//        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-//        [view addGestureRecognizer:tapGesture];
-    } else if ([self.dingdanModel.status integerValue] == ORDER_STATUS_SENDED){
-        if(packetStatus == nil || time == nil){
-            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@", self.dingdanModel.status_display, company, packetId];
+        //某个商品已经是已发货了，那么也显示可以查询物流信息
+        if(goodsStatus !=nil && [goodsStatus integerValue] == ORDER_STATUS_SENDED){
+            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
+            
+            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
+            [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
+            [view addSubview:img];
+            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+            [view addGestureRecognizer:tapGesture];
+        }
+    } else if ([goodsStatus integerValue] == ORDER_STATUS_SENDED){
+        if(logisticsModel == nil || logisticsModel.assign_status_display == nil || logisticsModel.process_time == nil){
+            statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
             if(self.dingdanModel.consign_time != nil){
                 NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
-                timeLabel.text = newStr;
+                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
             }
         }
         else{
-            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  packetStatus, company, packetId];
-            timeLabel.text = time;
+            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
+            timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
         }
         
         UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
@@ -405,26 +413,34 @@
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
         [view addGestureRecognizer:tapGesture];
         
-    } else if ([self.dingdanModel.status integerValue] == ORDER_STATUS_TRADE_SUCCESS){
-        statusLabel.text = @"已签收";
+    } else if ([goodsStatus integerValue] == ORDER_STATUS_TRADE_SUCCESS){
+
+        statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
         if(self.dingdanModel.consign_time != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
-            timeLabel.text = newStr;
+            if(newStr != nil){
+                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+            }
         }
+
         
-    } else if ([self.dingdanModel.status integerValue] == ORDER_STATUS_TRADE_CLOSE){
+    } else if ([goodsStatus integerValue] == ORDER_STATUS_TRADE_CLOSE){
         statusLabel.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
             timeLabel.text = newStr;
         }
-    } else if([self.dingdanModel.status integerValue] == ORDER_STATUS_CONFIRM_RECEIVE){
-        statusLabel.text = self.dingdanModel.status_display;
+    } else if([goodsStatus integerValue] == ORDER_STATUS_CONFIRM_RECEIVE){
+
+        statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
         if(self.dingdanModel.consign_time != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
-            timeLabel.text = newStr;
+            if(newStr != nil){
+                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+            }
         }
-    } else if([self.dingdanModel.status integerValue] == ORDER_STATUS_REFUND_CLOSE){
+
+    } else if([goodsStatus integerValue] == ORDER_STATUS_REFUND_CLOSE){
         // do other things
         statusLabel.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
@@ -442,6 +458,14 @@
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     if (dic.count == 0){
         NSLog(@"setWuLiuMsg dic count=0");
+        //无查物流信息，直接显示时间和商品即可
+        self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
+        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:orderStatus[0] logisticsModel:nil];
+        NSUInteger  h=76;
+        for(int i=0; i < dataArray.count; i++){
+            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
+            h += 90;
+        }
         return;
     }
 
@@ -455,9 +479,7 @@
         NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
         if((((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
-            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, 76) status:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).assign_status_display time:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).process_time
-                company:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).logistics_company_name
-                        packetId:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).out_sid];
+            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, 76) status:[orderStatus objectAtIndex:i] logisticsModel:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i])];
             h += 76;
         }
         groupKey = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
@@ -537,7 +559,7 @@
         owner.nameLabel.text = model.nameString;
         owner.sizeLabel.text = model.sizeString;
         owner.numberLabel.text = [NSString stringWithFormat:@"x%@", model.numberString];
-        owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.priceString floatValue]];
+        owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [model.payment floatValue]];
        
         if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_PAYED) {
             if ([[refund_statusArray objectAtIndex:index] integerValue] == 0) {
@@ -701,11 +723,11 @@
     NSInteger i = button.tag - 200;
     tuihuoModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    tuikuanVC.refundPrice = refundPrice;
+    tuikuanVC.refundPrice = [tuihuoModel.payment floatValue];
     tuikuanVC.dingdanModel = tuihuoModel;
     
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.priceString);
+    NSLog(@"tuihuomodel payment= %@", tuikuanVC.dingdanModel.payment);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.sizeString);
     NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.nameString);
@@ -730,7 +752,7 @@
     
     tuiHuoVC.dingdanModel = tuihuoModel;
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.priceString);
+    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.payment);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.numberString);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.sizeString);
     NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.nameString);

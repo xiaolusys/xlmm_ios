@@ -124,12 +124,14 @@
     
     
     self.nameLabel.text = self.dingdanModel.nameString;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.priceString floatValue]];
+    if(number != 0){
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
+    }
     self.sizeNameLabel.text = self.dingdanModel.sizeString;
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
     
-    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", [self.dingdanModel.priceString floatValue]];
-    refundPrice = [self.dingdanModel.priceString floatValue];
+    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", [self.dingdanModel.payment floatValue]];
+    refundPrice = [self.dingdanModel.payment floatValue];
     self.refundNumLabel.text = [NSString stringWithFormat:@"%i", maxNumber];
     
     self.selectedReason.layer.cornerRadius = 4;

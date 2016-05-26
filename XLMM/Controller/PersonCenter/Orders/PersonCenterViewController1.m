@@ -11,21 +11,22 @@
 #import "XiangQingViewController.h"
 #import "UIViewController+NavigationBar.h"
 
-#define kSimpleCellIdentifier @"simpleCell"
 
+#import "MJRefresh.h"
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 
-
+#define kSimpleCellIdentifier @"simpleCell"
 
 @interface PersonCenterViewController1 (){
     NSTimer *theTimer;
     NSString *shengyushijian;
     UILabel *shengyuTimeLabel[10];
     NSString *createdString;
+    NSDictionary *diciontary;
     
 }
 
@@ -69,6 +70,38 @@
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
     
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        [self loadMore];
+        
+    }];
+    footer.hidden = YES;
+    
+    self.collectionView.mj_footer = footer;
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.collectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedWaipayData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.collectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -77,12 +110,7 @@
 
 - (void)downlaodData{
     [SVProgressHUD showWithStatus:@"加载中..."];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitpay_List_URL]];
-//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-//        
-//        
-//    });
+
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:kWaitpay_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -104,12 +132,11 @@
         return;
     }
     
-//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSDictionary *json = data;
+    diciontary = data;
     // NSLog(@"json = %@", json);
     
     
-    self.dataArray = [json objectForKey:@"results"];
+    self.dataArray = [diciontary objectForKey:@"results"];
     //NSLog(@"dataArray = %@", self.dataArray);
   
     
@@ -120,7 +147,7 @@
     
     
     
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
+    if ([[diciontary objectForKey:@"count"] integerValue] == 0) {
        // NSLog(@"无待支付列表");
         
         [self displayDefaultView];
