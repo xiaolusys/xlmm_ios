@@ -149,7 +149,7 @@
         
         if (!responseObject) return;
         
-        _editAddDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        _editAddDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         [self fetchedDingdanData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
