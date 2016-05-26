@@ -808,7 +808,7 @@ static NSString *kbrandCell = @"brandCell";
         
         //展示品牌商品
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
         flowLayout.minimumInteritemSpacing = 5;
         flowLayout.minimumLineSpacing = 5;
         flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
@@ -1380,8 +1380,7 @@ static NSString *kbrandCell = @"brandCell";
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
     
-    if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
-        return;
+
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
@@ -1390,6 +1389,9 @@ static NSString *kbrandCell = @"brandCell";
     
     }
     else{
+        if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
+            return;
+        
         PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
         if (model.productModel == nil) {
             WebViewController *webView = [[WebViewController alloc] init];
