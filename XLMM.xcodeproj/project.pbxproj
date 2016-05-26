@@ -52,7 +52,6 @@
 		183071D81C97BE3700B7665E /* ChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183070FD1C97BE3700B7665E /* ChildViewController.xib */; };
 		183071D91C97BE3700B7665E /* ChiMaBiaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183070FF1C97BE3700B7665E /* ChiMaBiaoViewController.m */; };
 		183071DA1C97BE3700B7665E /* ChiMaBiaoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071001C97BE3700B7665E /* ChiMaBiaoViewController.xib */; };
-		183071DC1C97BE3700B7665E /* MamaActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071021C97BE3700B7665E /* MamaActivityViewController.xib */; };
 		183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071041C97BE3700B7665E /* MMCollectionController.m */; };
 		183071DE1C97BE3700B7665E /* MMCollectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071051C97BE3700B7665E /* MMCollectionController.xib */; };
 		183071DF1C97BE3700B7665E /* MMDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071071C97BE3700B7665E /* MMDetailsViewController.m */; };
@@ -61,7 +60,6 @@
 		183071E41C97BE3700B7665E /* PostersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830710F1C97BE3700B7665E /* PostersViewController.xib */; };
 		183071E91C97BE3700B7665E /* XidiShuomingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071171C97BE3700B7665E /* XidiShuomingViewController.m */; };
 		183071EA1C97BE3700B7665E /* XidiShuomingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071181C97BE3700B7665E /* XidiShuomingViewController.xib */; };
-		183071EB1C97BE3700B7665E /* HuojiangListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830711A1C97BE3700B7665E /* HuojiangListViewController.xib */; };
 		183071EE1C97BE3700B7665E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830711F1C97BE3700B7665E /* RegisterViewController.m */; };
 		183071EF1C97BE3700B7665E /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071201C97BE3700B7665E /* RegisterViewController.xib */; };
 		183071F01C97BE3700B7665E /* SetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071221C97BE3700B7665E /* SetPasswordController.m */; };
@@ -931,7 +929,6 @@
 		183070FE1C97BE3700B7665E /* ChiMaBiaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChiMaBiaoViewController.h; sourceTree = "<group>"; };
 		183070FF1C97BE3700B7665E /* ChiMaBiaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChiMaBiaoViewController.m; sourceTree = "<group>"; };
 		183071001C97BE3700B7665E /* ChiMaBiaoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChiMaBiaoViewController.xib; sourceTree = "<group>"; };
-		183071021C97BE3700B7665E /* MamaActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MamaActivityViewController.xib; sourceTree = "<group>"; };
 		183071031C97BE3700B7665E /* MMCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCollectionController.h; sourceTree = "<group>"; };
 		183071041C97BE3700B7665E /* MMCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCollectionController.m; sourceTree = "<group>"; };
 		183071051C97BE3700B7665E /* MMCollectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCollectionController.xib; sourceTree = "<group>"; };
@@ -945,7 +942,6 @@
 		183071161C97BE3700B7665E /* XidiShuomingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XidiShuomingViewController.h; sourceTree = "<group>"; };
 		183071171C97BE3700B7665E /* XidiShuomingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XidiShuomingViewController.m; sourceTree = "<group>"; };
 		183071181C97BE3700B7665E /* XidiShuomingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XidiShuomingViewController.xib; sourceTree = "<group>"; };
-		1830711A1C97BE3700B7665E /* HuojiangListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HuojiangListViewController.xib; sourceTree = "<group>"; };
 		1830711E1C97BE3700B7665E /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		1830711F1C97BE3700B7665E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		183071201C97BE3700B7665E /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -2421,7 +2417,6 @@
 				183070FE1C97BE3700B7665E /* ChiMaBiaoViewController.h */,
 				183070FF1C97BE3700B7665E /* ChiMaBiaoViewController.m */,
 				183071001C97BE3700B7665E /* ChiMaBiaoViewController.xib */,
-				183071021C97BE3700B7665E /* MamaActivityViewController.xib */,
 				183071031C97BE3700B7665E /* MMCollectionController.h */,
 				183071041C97BE3700B7665E /* MMCollectionController.m */,
 				183071051C97BE3700B7665E /* MMCollectionController.xib */,
@@ -2452,7 +2447,6 @@
 				1F1351461CE7193600D6138D /* JMLogInViewController.m */,
 				1F41B2B31CEAE07900E63E6F /* LineView */,
 				1F41B2B21CEAE05400E63E6F /* Login_phone */,
-				1830711A1C97BE3700B7665E /* HuojiangListViewController.xib */,
 				1830711E1C97BE3700B7665E /* RegisterViewController.h */,
 				1830711F1C97BE3700B7665E /* RegisterViewController.m */,
 				183071201C97BE3700B7665E /* RegisterViewController.xib */,
@@ -4447,7 +4441,6 @@
 				183076101C97D49A00B7665E /* Icon-60@2x.png in Resources */,
 				1F0D904D1CEBF71900C2334D /* weichat_login@2x.png in Resources */,
 				183071DA1C97BE3700B7665E /* ChiMaBiaoViewController.xib in Resources */,
-				183071DC1C97BE3700B7665E /* MamaActivityViewController.xib in Resources */,
 				183072401C97BE3700B7665E /* WuliuInfoView.xib in Resources */,
 				183075F91C97D49A00B7665E /* gouwucheicon2.png in Resources */,
 				183075A61C97D49A00B7665E /* youhuiquan-kv.png in Resources */,
@@ -4711,7 +4704,6 @@
 				183075A81C97D49A00B7665E /* loading动画0010.png in Resources */,
 				183071D21C97BE3700B7665E /* FooterView.xib in Resources */,
 				325B7A091C97E73A0022F930 /* CarryLogTableViewCell.xib in Resources */,
-				183071EB1C97BE3700B7665E /* HuojiangListViewController.xib in Resources */,
 				1830757D1C97D49A00B7665E /* icon-gouwuche.png in Resources */,
 				1830766A1C97D49A00B7665E /* 圈圈加载0022.png in Resources */,
 				18AC6C801CA2AF1000316E65 /* heart.png in Resources */,
