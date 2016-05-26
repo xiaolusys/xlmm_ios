@@ -98,6 +98,8 @@
 
 //@property (nonatomic,assign) BOOL isLogin;
 @property (nonatomic, strong) UIImage *webViewImage;
+
+
 @end
 
 @implementation WebViewController{
@@ -113,29 +115,14 @@
     return _youmengShare;
 }
 
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    NSString *titleName = self.titleName;
     
+    [self createNavigationBarWithTitle:titleName selecotr:@selector(backClicked:)];
     
-}
-
-
-
-- (void)tiaozhuan:(NSNotification *)notification{
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *ID = [userInfo objectForKey:@"productID"];
-    
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
-    
-    [self.navigationController pushViewController:detailsVC animated:YES];
-    
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
-    UIWebView *baseWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20)];
+    UIWebView *baseWebView = [[UIWebView alloc] init];
     self.baseWebView = baseWebView;
     [self.view addSubview:self.baseWebView];
     self.baseWebView.backgroundColor = [UIColor whiteColor];
@@ -147,6 +134,53 @@
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
+    statusBarView.hidden = YES;
+    
+    NSString *loadStr = nil;
+    if ([_active isEqualToString:@"myInvite"]) {
+        baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        loadStr = self.eventLink;
+    }else if ([_active isEqualToString:@"active"]){
+        baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        self.activityId = [self.diction objectForKey:@"id"];
+        loadStr = [self.diction objectForKey:@"act_link"];
+    }else {
+        self.navigationController.navigationBarHidden = YES;
+        statusBarView.hidden = NO;
+        baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
+        self.itemID = self.goodsID;
+        loadStr = _eventLink;
+    }
+    NSURL *url = [NSURL URLWithString:loadStr];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    [self.baseWebView loadRequest:request];
+    
+}
+
+
+- (void)tiaozhuan:(NSNotification *)notification{
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *ID = [userInfo objectForKey:@"productID"];
+    
+    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
+    
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+}
+- (void)setEventLink:(NSString *)eventLink {
+    _eventLink = eventLink;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+
+    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    
+//    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClicked:)];
+    
+//    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
+//    statusBarView.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:statusBarView];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
     imageView1.frame = CGRectMake(25, 13, 20, 20);
@@ -154,19 +188,11 @@
     [button1 addTarget:self action:@selector(rightBarButtonAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
-    NSString *loadStr = nil;
-    if ([_active isEqualToString:@"myInvite"]) {
-        loadStr = self.eventLink;
-    }else if ([_active isEqualToString:@"active"]){
-        self.activityId = [self.diction objectForKey:@"id"];
-        loadStr = [self.diction objectForKey:@"act_link"];
-    }else {
-        self.itemID = self.goodsID;
-        loadStr = _eventLink;
-    }
-    NSURL *url = [NSURL URLWithString:loadStr];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [self.baseWebView loadRequest:request];
+    button1.hidden = YES;
+    
+    
+
+    
     
     
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
@@ -191,7 +217,7 @@
 - (void)rightBarButtonAction {
 
     _shareDic = nil;
-    if ([_active isEqualToString:@"active"]) {
+    if ([_active isEqualToString:@"active"] || [_active isEqualToString:@"myInvite"]) {
         NSNumber *activityID = nil;
         if (self.nativeShare == nil) {
             activityID = self.activityId;
@@ -255,7 +281,7 @@
 - (void)addShareView:(NSDictionary *)dicShare {
     [SVProgressHUD dismiss];
     
-    if ([_active isEqualToString:@"active"]) {
+    if ([_active isEqualToString:@"active"] || [_active isEqualToString:@"myInvite"]) {
         NSString *type = dicShare[@"share_type"];
         if ([type isEqualToString:@"link"]) {
             self.isPic = NO;
@@ -475,11 +501,10 @@
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"完成加载");
+    [SVProgressHUD dismiss];
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 
     if (webView.tag != 102) {
-        
-        [SVProgressHUD dismiss];
         [self updateUserAgent];
         [self registerJsBridge];
         return;
@@ -580,7 +605,32 @@
     [self.bridge registerHandler:@"callNativeBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
+    
+    /**
+     *  小鹿妈妈 --- 我的邀请
+     */
+    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        
+        [self shareForPlatform:data];
+        
+    }];
+    
+    /**
+     *  详情界面加载
+     */
+    [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
+
+        BOOL isLoading = data[@"isLoading"];
+//        isLoading = !isLoading;
+        if (!isLoading) {
+            [SVProgressHUD dismiss];
+        }
+    }];
+    
 }
+
+
+
 
 - (void)jsLetiOSWithData:(id )data callBack:(WVJBResponseCallback)block {
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
@@ -621,7 +671,7 @@
     self.webViewImage = nil;
 //    self.webView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    [SVProgressHUD dismiss];
 }
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
@@ -650,6 +700,136 @@
     }
     
 }
+#pragma mark ---- 旧版本的分享
+- (void)shareForPlatform:(NSDictionary *)data{
+
+    NSNumber *activeid = data[@"active_id"];
+    NSString *platform = data[@"share_to"];
+    //    NSString *platform = @"web";
+    
+    if ([activeid integerValue] == 0) {
+        //        self.activityId = activeid;
+        activeid = @([_itemID integerValue]);
+    }
+    
+    
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
+
+    shareType = data[@"share_to"];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+        shareTitle = [responseObject objectForKey:@"share_desc"];
+        NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
+
+        newshareImage = [UIImage imagewithURLString:imageurl];
+        _content = [responseObject objectForKey:@"share_desc"];
+        _shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+        NSString *sharelink = [responseObject objectForKey:@"share_link"];
+
+        if ([platform isEqualToString:@""]) {
+            self.activityId = [responseObject objectForKey:@"id"];
+            [self rightBarButtonAction];
+            
+        }else if ([platform isEqualToString:@"wx"]) {
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
+            [UMSocialData defaultData].extConfig.wechatSessionData.title = sharelink;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+
+        }else if ([platform isEqualToString:@"qq"]) {
+            NSLog(@"qq");
+
+            [UMSocialData defaultData].extConfig.qqData.url = sharelink;
+            [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+
+
+        }else if ([platform isEqualToString:@"sinawb"]){
+            NSLog(@"wb");
+            NSString *sina_content = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
+            [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_shareImage)];
+
+        } else if ([platform isEqualToString:@"web"]){
+            NSLog(@"copy");
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            NSString *str = sharelink;
+            if (str == nil) {
+                [SVProgressHUD showSuccessWithStatus:@"复制失败"];
+                return ;
+            }
+            [pab setString:str];
+            if (pab == nil) {
+                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
+            }else
+            {
+                [SVProgressHUD showSuccessWithStatus:@"已复制"];
+            }
+
+            [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+            //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
+            [self createKuaiZhaoImage];
+        } else if ([platform isEqualToString:@"qqspa"]){
+            NSLog(@"zone");
+
+            [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
+            [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
+
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_content image: _shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            }];
+        } else if ([platform isEqualToString:@"wxapp"]){
+            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                NSLog(@"wx");
+                [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
+                [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
+
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+
+                }];
+
+            } else {
+                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                //                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+                [self createKuaiZhaoImage];
+            }
+
+        }  else if ([platform isEqualToString:@"pyq"]){
+
+            NSLog(@"friends");
+
+            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
+                [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
+                [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
+
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+
+                }];
+            } else{
+
+                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                //                  isWXFriends = NO;
+                //                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
+                [self createKuaiZhaoImage];
+            }
+
+        } else{
+
+            NSLog(@"others");
+        }
+        
+    }
+     
+     
+     
+     
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+}
+
 #pragma mark ----- 分享调用 -- 调用原生的分享这里就不需要了
 //- (void)shareForPlatform:(NSDictionary *)data{
 //    

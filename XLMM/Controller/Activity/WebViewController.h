@@ -25,7 +25,7 @@
  */
 @property (nonatomic,copy) NSString *goodsID;
 
-
+//@property (nonatomic,copy) NSString *titleName;
 //@property (nonatomic, strong)NSString *loadLink;
 //@property (nonatomic, strong)NSString *titleName;
 

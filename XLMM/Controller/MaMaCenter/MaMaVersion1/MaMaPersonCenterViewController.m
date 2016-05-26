@@ -300,7 +300,7 @@
     self.eventLink = [fortune objectForKey:@"mama_event_link"];
     
     //我的邀请链接
-    self.myInvitation = [fortune objectForKey:@"share_code"];
+//    self.myInvitation = [fortune objectForKey:@"share_code"];
 }
 
 - (void)huoyueduDetails{
@@ -1116,6 +1116,7 @@
     WebViewController *activity = [[WebViewController alloc] init];
     activity.eventLink = self.myInvitation;
     activity.active = @"myInvite";
+    activity.titleName = @"我的邀请";
     [self.navigationController pushViewController:activity animated:YES];
 }
 
@@ -1161,7 +1162,7 @@
     }
     WebViewController *activity = [[WebViewController alloc] init];
     activity.eventLink = self.eventLink;
-    
+    activity.active = @"myInvite";
     activity.titleName = @"精品活动";
     [self.navigationController pushViewController:activity animated:YES];
     

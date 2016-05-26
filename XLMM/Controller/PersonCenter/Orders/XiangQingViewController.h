@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
 /**
- *  物流地址信息
+ *  增加点击修改地址事件
  */
 @property (weak, nonatomic) IBOutlet UIImageView *addressInfoImage;
 

@@ -25,6 +25,8 @@
 #import "DingdanModel.h"
 #import "UIColor+RGBColor.h"
 #import "LogisticsModel.h"
+#import "JMEditAddressController.h"
+#import "JMEditAddressModel.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -33,6 +35,7 @@
     float refundPrice;
 }
 
+@property (nonatomic,strong) NSMutableDictionary *editAddDict;
 
 @end
 
@@ -58,7 +61,12 @@
     NSInteger packetNum;
     NSInteger currentIndex;
 }
-
+- (NSMutableDictionary *)editAddDict {
+    if (_editAddDict == nil) {
+        _editAddDict = [NSMutableDictionary dictionary];
+    }
+    return _editAddDict;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -135,10 +143,13 @@
     [SVProgressHUD showWithStatus:@"加载中..."];
 
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    //http://staging.xiaolumeimei.com/rest/v1/trades/333472/details
     [manage GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [SVProgressHUD dismiss];
         
         if (!responseObject) return;
+        
+        _editAddDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         [self fetchedDingdanData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -747,9 +758,9 @@
     });
 }
 
-#pragma mark ---- 修改地址信息
+#pragma mark ---- 修改地址信息 增加点击事件
 - (void)createAddressInfoImage {
-
+    self.addressInfoImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInfoClick:)];
     //点击的次数
     tap.numberOfTapsRequired = 1; // 单击
@@ -760,7 +771,12 @@
 }
 - (void)addressInfoClick:(UITapGestureRecognizer *)tap {
     
+//    JMEditAddressModel *editModel = [[JMEditAddressModel alloc] init];
+//    editModel.receiver_name = _editAddDict[@"receiver_name"];
+//    
+    JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
     
+    [self.navigationController pushViewController:editVC animated:YES];
     
 }
 
