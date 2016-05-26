@@ -105,7 +105,8 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 
-    
+    //跳转进入修改地址信息界面
+    [self createAddressInfoImage];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -746,20 +747,23 @@
     });
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark ---- 修改地址信息
+- (void)createAddressInfoImage {
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInfoClick:)];
+    //点击的次数
+    tap.numberOfTapsRequired = 1; // 单击
+    //给self.view添加一个手势监测；
+    
+    [self.addressInfoImage addGestureRecognizer:tap];
+    
+}
+- (void)addressInfoClick:(UITapGestureRecognizer *)tap {
+    
+    
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)quxiaodingdan:(id)sender {
     NSLog(@"取消订单");
