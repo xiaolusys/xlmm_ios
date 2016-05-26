@@ -11,7 +11,7 @@
 
 @interface JMEditAddressController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,strong) UITableView *tableViews;
+@property (nonatomic,strong) UITableView *tableView;
 
 @property (nonatomic,strong) NSMutableArray *dataSource;
 
@@ -31,9 +31,9 @@
 
 - (void)createTableView {
     
-    UITableView *tableViews = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    self.tableViews = tableViews;
-    [self.view addSubview:self.tableViews];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView = tableView;
+    [self.view addSubview:self.tableView];
     
     
     

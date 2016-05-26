@@ -26,6 +26,8 @@
 #import "SVProgressHUD.h"
 #import "PersonOrderViewController.h"
 #import "AFNetworking.h"
+#import "MJExtension.h"
+#import "GoodsInfoModel.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
@@ -87,8 +89,12 @@
  */
 @property (nonatomic, assign)BOOL isCanCoupon;
 
-
+/**
+ *  优惠券是否满足条件
+ */
 @property (nonatomic, assign)BOOL isEnoughCoupon;
+
+
 @property (nonatomic, assign)BOOL isEnoughRight;
 @property (nonatomic, assign)BOOL isEnoughBudget;
 
@@ -97,56 +103,25 @@
 @property (nonatomic, assign)BOOL isInstallWX;
 @property (nonatomic, assign)BOOL isAgreeTerms;
 
+/**
+ *  获取商品购买商品ID
+ */
+@property (nonatomic ,strong) NSMutableString *paramstring;
+/**
+ *  优惠券信息
+ */
+@property (nonatomic,copy) NSString *couponMessage;
+
+
 @end
 
 
 @implementation PurchaseViewController1
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    
-    //添加键盘的监听事件
-    
-    //注册通知,监听键盘弹出事件
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-//    
-//    //注册通知,监听键盘消失事件
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
-    
-    if ([WXApi isWXAppInstalled]) {
-      //  NSLog(@"安装了微信");
-        self.isInstallWX = YES;
-    }
-    else{
-        self.isInstallWX = NO;
-    }
-}
 
-- (void)viewWillDisappear:(BOOL)animated{
 
-    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-    
-}
 
-- (void)popview{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
-- (void)paySuccessful{
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alterView show];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-
-}
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -200,8 +175,7 @@
     
     
 }
-
-//首次进来请求数据
+#pragma mark ------ 创建一个请求
 - (void)downloadCartsData{
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
     if (self.cartsArray.count == 0) {
@@ -211,9 +185,12 @@
     for (NewCartsModel *model in self.cartsArray) {
         NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
         [paramstring appendString:str];
+        
+        
     }
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
+    self.paramstring = paramstring;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
 //    NSLog(@"------cartsURLString = %@", urlString);
     
@@ -229,7 +206,7 @@
     });
 }
 
-//首次数据请求
+#pragma mark ---- 首次数据请求
 - (void)fetchedCartsData2:(NSData *)responseData{
     NSError *error = nil;
     if (responseData == nil) {
@@ -493,69 +470,49 @@
     yhqModel = model;
     
     couponValue = [yhqModel.coupon_value floatValue];
-    
-    if (model == nil) {
-        self.couponLabel.hidden = YES;
-        yhqModelID = @"";
-        //未使用优惠券
-        self.isUserCoupon = NO;
-        [self calculationLabelValue];
-    } else {
-        self.isUserCoupon = YES;
-        self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
-        self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
-        self.couponLabel.hidden = NO;
-        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
 
-        //使用优惠券后
-        if (yhqModel && yhqModel.coupon_value) {
-            CGFloat couponV = [yhqModel.coupon_value floatValue];
-            NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
-            NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];   //最终需要支付的金额
-            
-            CGFloat aftertotalPayment = 0.00;
-            CGFloat afterdiscountfee = 0.00;
-            
-            if ([totalNS compare:couponNS] == NSOrderedDescending) {
-                aftertotalPayment = totalPayment - couponV;
-                afterdiscountfee = discountfee + couponV;
-                self.isEnoughCoupon = NO;
-                NSString *str = model.use_fee_des;
-                CGFloat canPay = [[str substringWithRange:NSMakeRange(1, str.length - 3)] floatValue];
-                
-                /**
-                 *  在这里判断是否可用    判断商品总价格  totalFeeLabel
-                    maxPay  商品总金额 == 商品总金额减去APP支付立减  +  APP支付立减的金额
-                 */
-                CGFloat maxPay = totalPayment + discountfee;
-                if (maxPay >= canPay) {
-                    aftertotalPayment = 0.00;
-                    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
-                    self.isEnoughCoupon = YES;
-                }else {
-                    [SVProgressHUD showInfoWithStatus:model.use_fee_des];
-                    self.couponLabel.text = @"";
-                }
-                
-            }else {
-                aftertotalPayment = 0.00;
-                afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
-                self.isEnoughCoupon = YES;
-                
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+    
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //            NSDictionary *dict = [[NSDictionary alloc] init];
+        //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
+        self.couponMessage = goodsModel.coupon_message;
+        if (self.couponMessage.length == 0) {
+            //goodsModel.coupon_message 为空的时候表示优惠券可以使用
+//            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
+            if (model == nil) {
+                self.couponLabel.hidden = YES;
+                yhqModelID = @"";
+                //未使用优惠券
+                self.isUserCoupon = NO;
+                [self calculationLabelValue];
+            } else {
+                self.isUserCoupon = YES;
+                self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
+                self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+                self.couponLabel.hidden = NO;
+                yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+                [self calculationLabelValue];
             }
             
-            [self calculationLabelValue];
-//            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
-//            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
-//            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+        }else {
             
-            //更新小鹿钱包提示信息。。。。。
-            // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
-            // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
-            
+            //优惠券不满足条件  提示警告信息
+            [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
+            self.couponLabel.text = @"";
         }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
 
-    }
+    
 }
 
 - (IBAction)zhifubaoClicked:(id)sender {
@@ -591,7 +548,7 @@
 //    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
 //    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
     //NSOrderedAscending = -1L, NSOrderedSame, NSOrderedDescending
-    
+     
     if (!self.isInstallWX) {
         [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
         return;
@@ -884,7 +841,7 @@
     self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
     self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",model.provinceName, model.cityName, model.countyName, model.streetName];
 }
-
+#pragma mark ----- 计算最终需要付款的金额展示
 - (void)calculationLabelValue {
     discount = couponValue + rightAmount;
     if (discount - amontPayment > 0.000001) {
@@ -995,7 +952,6 @@
     [UIView commitAnimations];
     
 }
-
 //键盘消失时
 -(void)keyboardDidHidden
 {
@@ -1011,5 +967,100 @@
     [self.tfMsg resignFirstResponder];
 
 }
-
+#pragma mark ---- 视图生命周期处理事件
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    
+    //添加键盘的监听事件
+    
+    //注册通知,监听键盘弹出事件
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    //
+    //    //注册通知,监听键盘消失事件
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+    
+    if ([WXApi isWXAppInstalled]) {
+        //  NSLog(@"安装了微信");
+        self.isInstallWX = YES;
+    }
+    else{
+        self.isInstallWX = NO;
+    }
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    
+}
+#pragma mark --- 支付成功的弹出框
+- (void)paySuccessful{
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alterView show];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)popview{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
+/**
+ *  ====== 上一个版本判断优惠券的方式  这个版本判断优惠券的方式为发送一个数据 在服务端判断
+ 
+ //            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
+ //            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
+ //            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+ 
+ //更新小鹿钱包提示信息。。。。。
+ // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
+ // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
+ 
+ 
+ 
+ //使用优惠券后
+ if (yhqModel && yhqModel.coupon_value) {
+ CGFloat couponV = [yhqModel.coupon_value floatValue];
+ NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
+ NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];   //最终需要支付的金额
+ 
+ CGFloat aftertotalPayment = 0.00;
+ CGFloat afterdiscountfee = 0.00;
+ 
+ if ([totalNS compare:couponNS] == NSOrderedDescending) {
+ aftertotalPayment = totalPayment - couponV;
+ afterdiscountfee = discountfee + couponV;
+ self.isEnoughCoupon = NO;
+ NSString *str = model.use_fee_des;
+ CGFloat canPay = [[str substringWithRange:NSMakeRange(1, str.length - 3)] floatValue];
+ 
+
+ *  在这里判断是否可用    判断商品总价格  totalFeeLabel
+ maxPay  商品总金额 == 商品总金额减去APP支付立减  +  APP支付立减的金额
+
+CGFloat maxPay = totalPayment + discountfee;
+if (maxPay >= canPay) {
+    aftertotalPayment = 0.00;
+    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+    self.isEnoughCoupon = YES;
+}else {
+    [SVProgressHUD showInfoWithStatus:model.use_fee_des];
+    self.couponLabel.text = @"";
+}
+
+}else {
+    aftertotalPayment = 0.00;
+    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+    self.isEnoughCoupon = YES;
+    
+}
+
+
+ */
