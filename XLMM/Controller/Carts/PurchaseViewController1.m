@@ -492,15 +492,21 @@
             if (self.couponMessage.length == 0) {
                 //goodsModel.coupon_message 为空的时候表示优惠券可以使用
                 //            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
-                
+                self.isUserCoupon = YES;
+                self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
+                self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+                self.couponLabel.hidden = NO;
+                yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+                [self calculationLabelValue];
                 
             }else {
                 
                 //优惠券不满足条件  提示警告信息
                 [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
                 self.couponLabel.text = @"";
+                couponValue = 0;
+                
             }
-            
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -511,12 +517,7 @@
         
         
         
-        self.isUserCoupon = YES;
-        self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
-        self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
-        self.couponLabel.hidden = NO;
-        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
-        [self calculationLabelValue];
+        
     }
     
     
