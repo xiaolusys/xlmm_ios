@@ -10,7 +10,7 @@
 
 
 
-@interface JMEditAddressController : UITableViewController
+@interface JMEditAddressController : UIViewController
 
 
 @end

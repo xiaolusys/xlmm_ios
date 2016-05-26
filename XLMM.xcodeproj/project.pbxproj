@@ -634,6 +634,20 @@
 		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
 		1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */; };
+		1F2AE9631CF69380002EC974 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2AE94D1CF69380002EC974 /* Info.plist */; };
+		1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9501CF69380002EC974 /* MJExtensionConst.m */; };
+		1F2AE9651CF69380002EC974 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9521CF69380002EC974 /* MJFoundation.m */; };
+		1F2AE9661CF69380002EC974 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9541CF69380002EC974 /* MJProperty.m */; };
+		1F2AE9671CF69380002EC974 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9561CF69380002EC974 /* MJPropertyKey.m */; };
+		1F2AE9681CF69380002EC974 /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9581CF69380002EC974 /* MJPropertyType.m */; };
+		1F2AE9691CF69380002EC974 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE95A1CF69380002EC974 /* NSObject+MJClass.m */; };
+		1F2AE96A1CF69380002EC974 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE95C1CF69380002EC974 /* NSObject+MJCoding.m */; };
+		1F2AE96B1CF69380002EC974 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE95E1CF69380002EC974 /* NSObject+MJKeyValue.m */; };
+		1F2AE96C1CF69380002EC974 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9601CF69380002EC974 /* NSObject+MJProperty.m */; };
+		1F2AE96D1CF69380002EC974 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9621CF69380002EC974 /* NSString+MJExtension.m */; };
+		1F2AE9741CF6947D002EC974 /* GoodsInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9731CF6947D002EC974 /* GoodsInfoModel.m */; };
+		1F2AE9771CF6957E002EC974 /* CartListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9761CF6957E002EC974 /* CartListModel.m */; };
+		1F2AE97A1CF69749002EC974 /* PayExtrasModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9791CF69749002EC974 /* PayExtrasModel.m */; };
 		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
 		1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */; };
 		1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FC1CE31A4400F78C0D /* MASConstraint.m */; };
@@ -1737,6 +1751,34 @@
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
 		1F2AE9491CF5D5BB002EC974 /* JMEditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressController.h; sourceTree = "<group>"; };
 		1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressController.m; sourceTree = "<group>"; };
+		1F2AE94D1CF69380002EC974 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F2AE94E1CF69380002EC974 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		1F2AE94F1CF69380002EC974 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
+		1F2AE9501CF69380002EC974 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
+		1F2AE9511CF69380002EC974 /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		1F2AE9521CF69380002EC974 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		1F2AE9531CF69380002EC974 /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
+		1F2AE9541CF69380002EC974 /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
+		1F2AE9551CF69380002EC974 /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
+		1F2AE9561CF69380002EC974 /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
+		1F2AE9571CF69380002EC974 /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
+		1F2AE9581CF69380002EC974 /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
+		1F2AE9591CF69380002EC974 /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
+		1F2AE95A1CF69380002EC974 /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
+		1F2AE95B1CF69380002EC974 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		1F2AE95C1CF69380002EC974 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		1F2AE95D1CF69380002EC974 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		1F2AE95E1CF69380002EC974 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		1F2AE95F1CF69380002EC974 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
+		1F2AE9601CF69380002EC974 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
+		1F2AE9611CF69380002EC974 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
+		1F2AE9621CF69380002EC974 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		1F2AE9721CF6947D002EC974 /* GoodsInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsInfoModel.h; sourceTree = "<group>"; };
+		1F2AE9731CF6947D002EC974 /* GoodsInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsInfoModel.m; sourceTree = "<group>"; };
+		1F2AE9751CF6957E002EC974 /* CartListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListModel.h; sourceTree = "<group>"; };
+		1F2AE9761CF6957E002EC974 /* CartListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListModel.m; sourceTree = "<group>"; };
+		1F2AE9781CF69749002EC974 /* PayExtrasModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayExtrasModel.h; sourceTree = "<group>"; };
+		1F2AE9791CF69749002EC974 /* PayExtrasModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayExtrasModel.m; sourceTree = "<group>"; };
 		1F2B0BFF1CE9A24A00B11740 /* weixin_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_nomal@2x.png"; sourceTree = "<group>"; };
 		1F2B0C001CE9A24A00B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
 		1F2B0C011CE9A24A00B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
@@ -2389,6 +2431,9 @@
 		183070EE1C97BE3700B7665E /* Carts */ = {
 			isa = PBXGroup;
 			children = (
+				1F2AE9701CF693FC002EC974 /* Model */,
+				1F2AE9711CF69409002EC974 /* VIew */,
+				1F2AE96E1CF693E3002EC974 /* Carts_Controller */,
 				183070EF1C97BE3700B7665E /* CartViewController.h */,
 				183070F01C97BE3700B7665E /* CartViewController.m */,
 				183070F11C97BE3700B7665E /* CartViewController.xib */,
@@ -2397,9 +2442,6 @@
 				183070F41C97BE3700B7665E /* LiJiGMViewController1.h */,
 				183070F51C97BE3700B7665E /* LiJiGMViewController1.m */,
 				183070F61C97BE3700B7665E /* LiJiGMViewController1.xib */,
-				183070F71C97BE3700B7665E /* PurchaseViewController1.h */,
-				183070F81C97BE3700B7665E /* PurchaseViewController1.m */,
-				183070F91C97BE3700B7665E /* PurchaseViewController1.xib */,
 			);
 			path = Carts;
 			sourceTree = "<group>";
@@ -2798,6 +2840,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				1F2AE94C1CF69380002EC974 /* MJExtension */,
 				3A0B6C651CEB21D00052894D /* PontoLib */,
 				1F4160F71CE31A4400F78C0D /* Masonry */,
 				3A1E057A1CE1C3FB001018AC /* LGViews */,
@@ -3921,6 +3964,65 @@
 			name = "Orders_Edit Address";
 			sourceTree = "<group>";
 		};
+		1F2AE94C1CF69380002EC974 /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				1F2AE94D1CF69380002EC974 /* Info.plist */,
+				1F2AE94E1CF69380002EC974 /* MJExtension.h */,
+				1F2AE94F1CF69380002EC974 /* MJExtensionConst.h */,
+				1F2AE9501CF69380002EC974 /* MJExtensionConst.m */,
+				1F2AE9511CF69380002EC974 /* MJFoundation.h */,
+				1F2AE9521CF69380002EC974 /* MJFoundation.m */,
+				1F2AE9531CF69380002EC974 /* MJProperty.h */,
+				1F2AE9541CF69380002EC974 /* MJProperty.m */,
+				1F2AE9551CF69380002EC974 /* MJPropertyKey.h */,
+				1F2AE9561CF69380002EC974 /* MJPropertyKey.m */,
+				1F2AE9571CF69380002EC974 /* MJPropertyType.h */,
+				1F2AE9581CF69380002EC974 /* MJPropertyType.m */,
+				1F2AE9591CF69380002EC974 /* NSObject+MJClass.h */,
+				1F2AE95A1CF69380002EC974 /* NSObject+MJClass.m */,
+				1F2AE95B1CF69380002EC974 /* NSObject+MJCoding.h */,
+				1F2AE95C1CF69380002EC974 /* NSObject+MJCoding.m */,
+				1F2AE95D1CF69380002EC974 /* NSObject+MJKeyValue.h */,
+				1F2AE95E1CF69380002EC974 /* NSObject+MJKeyValue.m */,
+				1F2AE95F1CF69380002EC974 /* NSObject+MJProperty.h */,
+				1F2AE9601CF69380002EC974 /* NSObject+MJProperty.m */,
+				1F2AE9611CF69380002EC974 /* NSString+MJExtension.h */,
+				1F2AE9621CF69380002EC974 /* NSString+MJExtension.m */,
+			);
+			path = MJExtension;
+			sourceTree = "<group>";
+		};
+		1F2AE96E1CF693E3002EC974 /* Carts_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183070F71C97BE3700B7665E /* PurchaseViewController1.h */,
+				183070F81C97BE3700B7665E /* PurchaseViewController1.m */,
+				183070F91C97BE3700B7665E /* PurchaseViewController1.xib */,
+			);
+			name = Carts_Controller;
+			sourceTree = "<group>";
+		};
+		1F2AE9701CF693FC002EC974 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F2AE9721CF6947D002EC974 /* GoodsInfoModel.h */,
+				1F2AE9731CF6947D002EC974 /* GoodsInfoModel.m */,
+				1F2AE9751CF6957E002EC974 /* CartListModel.h */,
+				1F2AE9761CF6957E002EC974 /* CartListModel.m */,
+				1F2AE9781CF69749002EC974 /* PayExtrasModel.h */,
+				1F2AE9791CF69749002EC974 /* PayExtrasModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1F2AE9711CF69409002EC974 /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = VIew;
+			sourceTree = "<group>";
+		};
 		1F2B0BED1CE96A2E00B11740 /* choisestixian */ = {
 			isa = PBXGroup;
 			children = (
@@ -4563,6 +4665,7 @@
 				1830724A1C97BE3700B7665E /* RefundDetailsViewController.xib in Resources */,
 				183072471C97BE3700B7665E /* PostImageView.xib in Resources */,
 				183072301C97BE3700B7665E /* JifenViewController.xib in Resources */,
+				1F2AE9631CF69380002EC974 /* Info.plist in Resources */,
 				183075BC1C97D49A00B7665E /* smallrun.gif in Resources */,
 				325B7A0E1C97E73A0022F930 /* MaMaOrderTableViewCell.xib in Resources */,
 				183076671C97D49A00B7665E /* 圈圈加载0019.png in Resources */,
@@ -4840,6 +4943,7 @@
 				183073CB1C97D17800B7665E /* AFHTTPRequestOperation.m in Sources */,
 				325B7A141C97E73A0022F930 /* PicHeaderCollectionReusableView.m in Sources */,
 				183073EE1C97D17800B7665E /* MJRefreshHeader.m in Sources */,
+				1F2AE9681CF69380002EC974 /* MJPropertyType.m in Sources */,
 				183072561C97BE3700B7665E /* ModifyPhoneController.m in Sources */,
 				183073D21C97D17800B7665E /* AFURLResponseSerialization.m in Sources */,
 				183073DC1C97D17800B7665E /* QNDnspodFree.m in Sources */,
@@ -4897,12 +5001,14 @@
 				183074061C97D17800B7665E /* QNDns.m in Sources */,
 				325B799B1C97E6F10022F930 /* MMCartsView.m in Sources */,
 				1F4161141CE31A4400F78C0D /* MASViewConstraint.m in Sources */,
+				1F2AE9691CF69380002EC974 /* NSObject+MJClass.m in Sources */,
 				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
 				1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */,
 				183072281C97BE3700B7665E /* AddressViewController.m in Sources */,
 				183070D01C97B83900B7665E /* AddressModel.m in Sources */,
 				183070EA1C97B83900B7665E /* SharePicModel.m in Sources */,
 				183074231C97D17800B7665E /* UIImage+MultiFormat.m in Sources */,
+				1F2AE9651CF69380002EC974 /* MJFoundation.m in Sources */,
 				325B7A101C97E73A0022F930 /* PicCollectionViewCell.m in Sources */,
 				1830741D1C97D17800B7665E /* SDWebImageDownloader.m in Sources */,
 				183074091C97D17800B7665E /* QNSessionManager.m in Sources */,
@@ -4916,6 +5022,7 @@
 				183070EC1C97B83900B7665E /* AccountModel.m in Sources */,
 				1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */,
 				183073F01C97D17800B7665E /* MJRefreshAutoNormalFooter.m in Sources */,
+				1F2AE96A1CF69380002EC974 /* NSObject+MJCoding.m in Sources */,
 				183070DF1C97B83900B7665E /* PromoteModel.m in Sources */,
 				183071FC1C97BE3700B7665E /* MaMaOrderListViewController.m in Sources */,
 				183073D81C97D17800B7665E /* QNDomain.m in Sources */,
@@ -4962,6 +5069,7 @@
 				183073FC1C97D17800B7665E /* UIView+MJExtension.m in Sources */,
 				183071F01C97BE3700B7665E /* SetPasswordController.m in Sources */,
 				1830741B1C97D17800B7665E /* SDWebImageCompat.m in Sources */,
+				1F2AE9771CF6957E002EC974 /* CartListModel.m in Sources */,
 				183071DF1C97BE3700B7665E /* MMDetailsViewController.m in Sources */,
 				183072841C97C00900B7665E /* NSString+Encrypto.m in Sources */,
 				18EE10DC1C9C132B00E52313 /* NewLeftViewController.m in Sources */,
@@ -4993,6 +5101,7 @@
 				183073D91C97D17800B7665E /* QNNetworkInfo.m in Sources */,
 				183070D61C97B83900B7665E /* DingDanXiangQingModel.m in Sources */,
 				183074081C97D17800B7665E /* QNResponseInfo.m in Sources */,
+				1F2AE9741CF6947D002EC974 /* GoodsInfoModel.m in Sources */,
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,
 				183073F91C97D17800B7665E /* MJRefreshConst.m in Sources */,
 				1830742A1C97D17800B7665E /* SVProgressHUD.m in Sources */,
@@ -5030,20 +5139,25 @@
 				183074001C97D17800B7665E /* QNCrc32.m in Sources */,
 				1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */,
 				321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */,
+				1F2AE96C1CF69380002EC974 /* NSObject+MJProperty.m in Sources */,
 				1F4DE59D1CE4646200114BDA /* JMBillDetailController.m in Sources */,
 				183073ED1C97D17800B7665E /* MJRefreshFooter.m in Sources */,
 				183073EF1C97D17800B7665E /* MJRefreshAutoGifFooter.m in Sources */,
 				321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */,
 				183074201C97D17800B7665E /* SDWebImagePrefetcher.m in Sources */,
+				1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */,
 				325B79DD1C97E7160022F930 /* PosterCollectionCell2.m in Sources */,
 				325B79DB1C97E7160022F930 /* PersonTableCell.m in Sources */,
 				325B79D91C97E7160022F930 /* MoreOrdersViewCell.m in Sources */,
 				183072191C97BE3700B7665E /* ProductSelectionListViewController.m in Sources */,
 				1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */,
 				1F4161121CE31A4400F78C0D /* MASLayoutConstraint.m in Sources */,
+				1F2AE9671CF69380002EC974 /* MJPropertyKey.m in Sources */,
 				1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */,
+				1F2AE96B1CF69380002EC974 /* NSObject+MJKeyValue.m in Sources */,
 				183071F61C97BE3700B7665E /* VerifyPhoneViewController.m in Sources */,
 				3A0B6C6D1CEB21D00052894D /* PontoBaseHandler.m in Sources */,
+				1F2AE9661CF69380002EC974 /* MJProperty.m in Sources */,
 				1830722B1C97BE3700B7665E /* ChangeNicknameViewController.m in Sources */,
 				1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */,
 				183072111C97BE3700B7665E /* MamaActivityViewController.m in Sources */,
@@ -5054,6 +5168,7 @@
 				325B79D61C97E7160022F930 /* JifenReusableView.m in Sources */,
 				1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */,
 				183073F11C97D17800B7665E /* MJRefreshAutoStateFooter.m in Sources */,
+				1F2AE96D1CF69380002EC974 /* NSString+MJExtension.m in Sources */,
 				325B7A2E1C97E74B0022F930 /* MaMaShareSubsidiesViewCell.m in Sources */,
 				325B7A301C97E74B0022F930 /* MamaShareView.m in Sources */,
 				183071FA1C97BE3700B7665E /* MaClassifyCarryLogViewController.m in Sources */,
@@ -5080,6 +5195,7 @@
 				183072381C97BE3700B7665E /* YouHuiQuanViewController.m in Sources */,
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
 				3A0B6C6E1CEB21D00052894D /* PontoDispatcher.m in Sources */,
+				1F2AE97A1CF69749002EC974 /* PayExtrasModel.m in Sources */,
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
 				3A0B6C711CEB26F10052894D /* JimeiPontoUiPlugin.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,

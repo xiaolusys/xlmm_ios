@@ -16,7 +16,7 @@
 //#define Root_URL @"http://dev.xiaolumeimei.com"
 NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 #else
-
+//          http://staging.xiaolumeimei.com/rest/v1/carts/carts_payinfo
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
