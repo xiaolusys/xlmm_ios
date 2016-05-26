@@ -70,6 +70,7 @@
                     <include reference="i0k-Sh-vib"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="285" y="367"/>
         </view>
     </objects>
 </document>

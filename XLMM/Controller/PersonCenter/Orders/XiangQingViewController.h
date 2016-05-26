@@ -20,6 +20,10 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
+/**
+ *  增加点击修改地址事件
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *addressInfoImage;
 
 @property (weak, nonatomic) IBOutlet UIView *myXiangQingView;
 

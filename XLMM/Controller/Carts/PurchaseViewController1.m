@@ -470,48 +470,56 @@
     yhqModel = model;
     
     couponValue = [yhqModel.coupon_value floatValue];
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
-    
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //            NSDictionary *dict = [[NSDictionary alloc] init];
-        //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+    if (model == nil) {
+        self.couponLabel.hidden = YES;
+        yhqModelID = @"";
+        //未使用优惠券
+        self.isUserCoupon = NO;
+        [self calculationLabelValue];
         
-        GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
-        self.couponMessage = goodsModel.coupon_message;
-        if (self.couponMessage.length == 0) {
-            //goodsModel.coupon_message 为空的时候表示优惠券可以使用
-//            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
-            if (model == nil) {
-                self.couponLabel.hidden = YES;
-                yhqModelID = @"";
-                //未使用优惠券
-                self.isUserCoupon = NO;
-                [self calculationLabelValue];
-            } else {
-                self.isUserCoupon = YES;
-                self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
-                self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
-                self.couponLabel.hidden = NO;
-                yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
-                [self calculationLabelValue];
+    } else {
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+        
+        [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            //            NSDictionary *dict = [[NSDictionary alloc] init];
+            //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            
+            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
+            self.couponMessage = goodsModel.coupon_message;
+            if (self.couponMessage.length == 0) {
+                //goodsModel.coupon_message 为空的时候表示优惠券可以使用
+                //            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
+                
+                
+            }else {
+                
+                //优惠券不满足条件  提示警告信息
+                [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
+                self.couponLabel.text = @"";
             }
             
-        }else {
             
-            //优惠券不满足条件  提示警告信息
-            [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
-            self.couponLabel.text = @"";
-        }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            
+        }];
         
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
-    }];
 
+        
+        
+        
+        self.isUserCoupon = YES;
+        self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
+        self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+        self.couponLabel.hidden = NO;
+        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+        [self calculationLabelValue];
+    }
+    
+    
     
 }
 

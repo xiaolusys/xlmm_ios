@@ -25,6 +25,8 @@
 #import "DingdanModel.h"
 #import "UIColor+RGBColor.h"
 #import "LogisticsModel.h"
+#import "JMEditAddressController.h"
+#import "JMEditAddressModel.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -33,6 +35,7 @@
     float refundPrice;
 }
 
+@property (nonatomic,strong) NSMutableDictionary *editAddDict;
 
 @end
 
@@ -58,7 +61,12 @@
     NSInteger packetNum;
     NSInteger currentIndex;
 }
-
+- (NSMutableDictionary *)editAddDict {
+    if (_editAddDict == nil) {
+        _editAddDict = [NSMutableDictionary dictionary];
+    }
+    return _editAddDict;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -105,7 +113,8 @@
     self.buyBtn.layer.borderWidth = 1;
     self.buyBtn.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 
-    
+    //跳转进入修改地址信息界面
+    [self createAddressInfoImage];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -134,10 +143,13 @@
     [SVProgressHUD showWithStatus:@"加载中..."];
 
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    //http://staging.xiaolumeimei.com/rest/v1/trades/333472/details
     [manage GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [SVProgressHUD dismiss];
         
         if (!responseObject) return;
+        
+        _editAddDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         [self fetchedDingdanData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -768,20 +780,28 @@
     });
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark ---- 修改地址信息 增加点击事件
+- (void)createAddressInfoImage {
+    self.addressInfoImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInfoClick:)];
+    //点击的次数
+    tap.numberOfTapsRequired = 1; // 单击
+    //给self.view添加一个手势监测；
+    
+    [self.addressInfoImage addGestureRecognizer:tap];
+    
+}
+- (void)addressInfoClick:(UITapGestureRecognizer *)tap {
+    
+//    JMEditAddressModel *editModel = [[JMEditAddressModel alloc] init];
+//    editModel.receiver_name = _editAddDict[@"receiver_name"];
+//    
+    JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
+    
+    [self.navigationController pushViewController:editVC animated:YES];
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)quxiaodingdan:(id)sender {
     NSLog(@"取消订单");

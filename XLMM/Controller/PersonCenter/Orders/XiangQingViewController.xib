@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XiangQingViewController">
             <connections>
+                <outlet property="addressInfoImage" destination="x9f-4k-epo" id="i8W-2I-GWh"/>
                 <outlet property="addressLabel" destination="Bku-uc-mKg" id="r2R-rM-qPm"/>
                 <outlet property="bianhaoLabel" destination="Eyg-WK-tnr" id="VOD-Ac-ku7"/>
                 <outlet property="bottomView" destination="5aH-SQ-54L" id="Ugo-IA-64M"/>
@@ -371,7 +372,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9f-4k-epo">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9f-4k-epo" customClass="UIImageView">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海杨浦区内环以外中环以内东方古创意园平凉路988号3号楼3241" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bku-uc-mKg">
@@ -780,7 +781,7 @@
                     <include reference="XXD-7F-u92"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="395" y="-297"/>
+            <point key="canvasLocation" x="79" y="-577"/>
         </view>
     </objects>
     <resources>

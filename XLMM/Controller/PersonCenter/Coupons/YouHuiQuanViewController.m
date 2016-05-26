@@ -454,6 +454,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (IBAction)buyongClicked:(id)sender {
     NSLog(@"quxiao ");
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         NSLog(@"取消优惠券");
         [self.delegate updateYouhuiquanWithmodel:nil];
