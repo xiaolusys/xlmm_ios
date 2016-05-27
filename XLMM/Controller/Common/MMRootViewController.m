@@ -101,6 +101,7 @@
     BOOL login_required;
     UIView *backView;
     NSDictionary *huodongJson;
+    float allActivityHeight;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -453,6 +454,11 @@ static NSString *kbrandCell = @"brandCell";
     
     self.backScrollview.delegate = self;
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
+    
+    if(!_isFirst){
+        [self refreshView];
+    }
+    _isFirst = NO;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
@@ -1025,9 +1031,15 @@ static NSString *kbrandCell = @"brandCell";
         [self.activityDataArr addObject:activityM];
     }
     
+    allActivityHeight = 0;
     //创建活动展示图
     for (int i = 0; i < self.activityDataArr.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+i * ACTIVITYHEIGHT, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.autoresizesSubviews = YES;
+//        imageView.autoresizingMask =
+//        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         imageView.tag = TAG_ACTIVITY_BASE + i;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(activityTapAction:)];
         imageView.userInteractionEnabled = YES;
@@ -1035,10 +1047,29 @@ static NSString *kbrandCell = @"brandCell";
         [self.activityView addSubview:imageView];
     
         ActivityModel *acM = self.activityDataArr[i];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //通过加载图片得到其高度
+            float h;
+            if((image == nil) || (image.size.width == 0)){
+                h = ACTIVITYHEIGHT;
+            }
+            else{
+                h = image.size.height * (WIDTH /image.size.width);
+            }
+            NSLog(@"activity height %f %f", image.size.height, h);
+            imageView.frame = CGRectMake(10, 10+allActivityHeight, SCREENWIDTH - 10, h);
+             allActivityHeight += h + 10;
+             
+             NSLog(@"allActivityHeight %f", allActivityHeight);
+
+             self.activityHeight.constant = allActivityHeight;
+        }];
+
+
     }
     
-    self.activityHeight.constant = (20 +ACTIVITYHEIGHT) * self.activityDataArr.count;
+
     
     huodongJson = [activityArr firstObject];
     if ([huodongJson isKindOfClass:[NSDictionary class]]) {
