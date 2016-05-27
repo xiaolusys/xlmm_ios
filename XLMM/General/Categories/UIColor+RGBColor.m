@@ -23,6 +23,7 @@
 + (UIColor *)buttonEnabledBackgroundColor{
     return [UIColor colorWithR:245 G:177 B:35 alpha:1];
 }
+// --- 灰色
 + (UIColor *)buttonDisabledBackgroundColor{
     return [UIColor colorWithR:227 G:227 B:227 alpha:1];
 }
@@ -47,6 +48,10 @@
 
 + (UIColor *)imageViewBorderColor{
    return [UIColor colorWithR:216 G:216 B:216 alpha:1];
+}
+// -- 灰色
++ (UIColor *)titleDarkGrayColor{
+    return [UIColor colorWithR:190 G:190 B:190 alpha:1];
 }
 
 + (UIColor *)textDarkGrayColor{

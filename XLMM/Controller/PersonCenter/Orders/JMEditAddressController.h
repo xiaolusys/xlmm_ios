@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMEditAddressModel;
+@protocol JMEditAddressControllerDelegate <NSObject>
 
+- (void)updateEditerWithmodel:(JMEditAddressModel *)model;
+
+@end
 
 @interface JMEditAddressController : UIViewController
 
+@property (nonatomic,strong) NSMutableDictionary *editDict;
 
+@property (nonatomic, weak) id <JMEditAddressControllerDelegate> delegate;
 
 @end

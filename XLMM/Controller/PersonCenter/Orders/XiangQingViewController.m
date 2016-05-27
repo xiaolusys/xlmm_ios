@@ -27,10 +27,12 @@
 #import "LogisticsModel.h"
 #import "JMEditAddressController.h"
 #import "JMEditAddressModel.h"
+#import "MJExtension.h"
+
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate>{
+@interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate>{
     
     float refundPrice;
 }
@@ -150,7 +152,16 @@
         if (!responseObject) return;
         
 //        _editAddDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        _editAddDict = [NSMutableDictionary dictionaryWithDictionary:responseObject];
+
+        JMEditAddressModel *editModel = [[JMEditAddressModel alloc] init];
+        editModel.receiver_name = responseObject[@"receiver_name"];
+        editModel.receiver_mobile = responseObject[@"receiver_mobile"];
+        editModel.receiver_address = responseObject[@"receiver_address"];
+        editModel.receiver_state = responseObject[@"receiver_state"];
+        editModel.receiver_city = responseObject[@"receiver_city"];
+        editModel.receiver_district = responseObject[@"receiver_district"];
+        
+        _editAddDict = editModel.mj_keyValues;
         
         [self fetchedDingdanData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -202,6 +213,7 @@
     NSString *statusDisplay = [dicJson objectForKey:@"status_display"];
     self.headdingdanzhuangtai.text = statusDisplay;
     self.nameLabel.text = [dicJson objectForKey:@"receiver_name"];
+    self.phoneLabel.text = [dicJson objectForKey:@"receiver_mobile"];
     NSString *addressStr = [NSString stringWithFormat:@"%@-%@-%@-%@",
                             [dicJson objectForKey:@"receiver_state"],
                             [dicJson objectForKey:@"receiver_city"],
@@ -798,8 +810,21 @@
 //    editModel.receiver_name = _editAddDict[@"receiver_name"];
 //    
     JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
-    
+    editVC.delegate = self;
+    editVC.editDict = _editAddDict;
+
     [self.navigationController pushViewController:editVC animated:YES];
+    
+}
+#pragma mark ---- 修改信息代理回调
+- (void)updateEditerWithmodel:(JMEditAddressModel *)model {
+    
+    self.nameLabel.text = model.receiver_name;
+    self.phoneLabel.text = model.receiver_mobile;
+    NSString *addStr = [NSString stringWithFormat:@"%@%@%@%@",model.receiver_state,model.receiver_city,model.receiver_district,model.receiver_address];
+    self.addressLabel.text = addStr;
+    
+    
     
 }
 
@@ -905,4 +930,23 @@
         }];
     });
 }
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
