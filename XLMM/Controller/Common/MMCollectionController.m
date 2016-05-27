@@ -22,7 +22,7 @@
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong)NSMutableArray *dataArray;
+
 @property (nonatomic, strong)UICollectionView *collectionView;
 
 @property (nonatomic, assign)NSInteger count;
@@ -36,18 +36,22 @@
     
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil brandArray:(NSMutableArray *)brandDataArr {
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     NSLog(@"MMCollectionController initWithNibName1");
-    [self fetchedCollectionData:brandDataArr];
 
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+}
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -66,7 +70,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"品牌商品";
     //self.view.backgroundColor = [UIColor redColor];
-    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+//    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
 
     [self createCollectionView];
     [self createInfo];
@@ -96,30 +100,29 @@
 
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 8, 5);
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.showsVerticalScrollIndicator = NO;
-    [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
-    [self.view addSubview:[[UIView alloc] init]];
-    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
-    [self.view addSubview:self.collectionView];
+    flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+    flowLayout.minimumInteritemSpacing = 5;
+    flowLayout.minimumLineSpacing = 5;
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
+//    self.collectionView.backgroundColor = [UIColor whiteColor];
+    collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
+
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.showsVerticalScrollIndicator = FALSE;
+    [collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
+//    [self.view addSubview:[[UIView alloc] init]];
+
+    [self.view addSubview:collectionView];
+    self.collectionView  = collectionView;
     
-        [self.collectionView reloadData];
+    NSLog(@"Brand COUNT is %lu", (unsigned long)self.dataArray.count);
+    [self.collectionView reloadData];
+
+    
+
 }
 
-- (void)fetchedCollectionData:(NSMutableArray *)data{
-    if (data == nil) {
-        NSLog(@"Brand is nil");
-        return;
-    }
-    NSLog(@"Brand COUNT is %lu", (unsigned long)data.count);
-
-     [self.dataArray copy:data];
-    
-}
 
 - (void)reload{
     
@@ -209,18 +212,20 @@
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    NSLog(@"MMCollectionController numberOfSectionsInCollectionView");
     return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    NSLog(@"MMCollectionController numberOfItemsInSection");
     return self.dataArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
  
-    
-return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+//    NSLog(@"MMCollectionController sizeForItemAtIndexPath");
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     
 }
 
@@ -236,7 +241,7 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     NSMutableString *newString = [NSMutableString stringWithString:string];
    
 
-    NSLog(@"cellForItemAtIndexPath newString = %@", newString);
+    NSLog(@"MMCollectionController cellForItemAtIndexPath newString = %@", newString);
     cell.imageView.alpha = 0.0f;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
 
