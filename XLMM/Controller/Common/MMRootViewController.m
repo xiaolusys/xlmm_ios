@@ -1172,10 +1172,11 @@ static NSString *kbrandCell = @"brandCell";
         goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
         
         [goods addObject:goodsModel];
-        [self.brandDataArr addObject:goods];
+        
         
         
     }
+    [self.brandDataArr addObject:goods];
     
     UICollectionView *collection = self.brandArr[index];
     [collection reloadData];
@@ -1366,7 +1367,7 @@ static NSString *kbrandCell = @"brandCell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        NSLog(@"brand collection sizeForItemAtIndexPath");
+//        NSLog(@"brand collection sizeForItemAtIndexPath");
         return CGSizeMake(110, 145);
     }
     else{
@@ -1384,7 +1385,23 @@ static NSString *kbrandCell = @"brandCell";
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil brandArray:self.brandDataArr ];
+        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
+        
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
+                
+            }
+            index++;
+        }
+        
+        
+        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
+        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
         [self.navigationController pushViewController:collectionVC animated:YES];
     
     }

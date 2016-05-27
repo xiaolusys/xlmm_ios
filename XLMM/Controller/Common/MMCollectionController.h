@@ -13,11 +13,12 @@
     
 }
 
+@property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 
 @property (nonatomic, copy) NSString * urlString;
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil brandArray:(NSMutableArray *)brandDataArr ;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil ;
 
 
 @end
