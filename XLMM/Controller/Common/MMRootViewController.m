@@ -8,8 +8,6 @@
 
 #import "MMRootViewController.h"
 #import "RESideMenu.h"
-#import "TodayViewController.h"
-#import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
 #import "JMLogInViewController.h"
@@ -103,6 +101,7 @@
     BOOL login_required;
     UIView *backView;
     NSDictionary *huodongJson;
+    float allActivityHeight;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -430,7 +429,7 @@ static NSString *kbrandCell = @"brandCell";
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:)
+                                             selector:@selector(rootViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
     
@@ -456,6 +455,13 @@ static NSString *kbrandCell = @"brandCell";
     self.backScrollview.delegate = self;
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
     
+    if(!_isFirst){
+        if([self checkNeedRefresh]){
+            [self refreshView];
+        }
+    }
+    _isFirst = NO;
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
     } else {
@@ -468,6 +474,11 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"MMRoot viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
     
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
@@ -562,10 +573,13 @@ static NSString *kbrandCell = @"brandCell";
     
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)notification
+- (void)rootViewWillEnterForeground:(NSNotification *)notification
 {
     //进入前台时调用此函数
     NSLog(@"Rootview enter foreground");
+    if([self checkNeedRefresh]){
+        [self refreshView];
+    }
 }
 
 - (void)createRequestURL {
@@ -810,7 +824,7 @@ static NSString *kbrandCell = @"brandCell";
         
         //展示品牌商品
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
         flowLayout.minimumInteritemSpacing = 5;
         flowLayout.minimumLineSpacing = 5;
         flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
@@ -839,6 +853,43 @@ static NSString *kbrandCell = @"brandCell";
     }
 }
 
+- (BOOL)checkNeedRefresh{
+    //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
+
+    if(self.endTime.count==0 ||
+       [self.endTime[1] isEqualToString:@""])
+        return TRUE;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    // NSDateComponents *comps =
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    
+    
+    NSDate *todate;
+    
+    NSMutableString *string = [NSMutableString stringWithString:self.endTime[1]];
+    NSRange range = [self.endTime[1] rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+    dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+    todate = [dateformatter dateFromString:string];
+    
+    NSDate *date = [NSDate date];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ([d hour] < 0 || [d minute] < 0) {
+        NSLog(@"need refresh");
+        return TRUE;
+    }
+    
+    NSLog(@"not need refresh");
+    return FALSE;
+}
+
 - (void )refreshView{
     [self removeAllSubviews:self.bannerView];
     [self removeAllSubviews:self.activityView];
@@ -852,6 +903,7 @@ static NSString *kbrandCell = @"brandCell";
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     [collection reloadData];
 
+    [self createRequestURL];
     [self goodsRequest];
 }
 
@@ -1027,9 +1079,15 @@ static NSString *kbrandCell = @"brandCell";
         [self.activityDataArr addObject:activityM];
     }
     
+    allActivityHeight = 0;
     //创建活动展示图
     for (int i = 0; i < self.activityDataArr.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+i * ACTIVITYHEIGHT, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.autoresizesSubviews = YES;
+//        imageView.autoresizingMask =
+//        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         imageView.tag = TAG_ACTIVITY_BASE + i;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(activityTapAction:)];
         imageView.userInteractionEnabled = YES;
@@ -1037,10 +1095,29 @@ static NSString *kbrandCell = @"brandCell";
         [self.activityView addSubview:imageView];
     
         ActivityModel *acM = self.activityDataArr[i];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //通过加载图片得到其高度
+            float h;
+            if((image == nil) || (image.size.width == 0)){
+                h = ACTIVITYHEIGHT;
+            }
+            else{
+                h = image.size.height * (WIDTH /image.size.width);
+            }
+            NSLog(@"activity height %f %f", image.size.height, h);
+            imageView.frame = CGRectMake(10, 10+allActivityHeight, SCREENWIDTH - 10, h);
+             allActivityHeight += h + 10;
+             
+             NSLog(@"allActivityHeight %f", allActivityHeight);
+
+             self.activityHeight.constant = allActivityHeight;
+        }];
+
+
     }
     
-    self.activityHeight.constant = (20 +ACTIVITYHEIGHT) * self.activityDataArr.count;
+
     
     huodongJson = [activityArr firstObject];
     if ([huodongJson isKindOfClass:[NSDictionary class]]) {
@@ -1174,10 +1251,11 @@ static NSString *kbrandCell = @"brandCell";
         goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
         
         [goods addObject:goodsModel];
-        [self.brandDataArr addObject:goods];
+        
         
         
     }
+    [self.brandDataArr addObject:goods];
     
     UICollectionView *collection = self.brandArr[index];
     [collection reloadData];
@@ -1368,7 +1446,7 @@ static NSString *kbrandCell = @"brandCell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        NSLog(@"brand collection sizeForItemAtIndexPath");
+//        NSLog(@"brand collection sizeForItemAtIndexPath");
         return CGSizeMake(110, 145);
     }
     else{
@@ -1382,46 +1460,61 @@ static NSString *kbrandCell = @"brandCell";
     NSString *key = self.dickey[self.currentIndex];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
     
-    if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
-        return;
+
     
-//    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-    
-//    WebViewController *webView = [[WebViewController alloc] init];
-//    webView.eventLink = model.web_url;
-//    webView.diction = model.productModel;
-    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-//    [self.navigationController pushViewController:webView animated:YES];
-    
-    
-    
-//    
-    PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-    if (model.productModel == nil) {
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.eventLink = model.web_url;
-        webView.goodsID = model.ID;
-        webView.diction = model.productModel;
-        //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-        [self.navigationController pushViewController:webView animated:YES];
-    }else {
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
         
-        if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
+                
+            }
+            index++;
+        }
+        
+        
+        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
+        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
+        [self.navigationController pushViewController:collectionVC animated:YES];
+    
+    }
+    else{
+        if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
+            return;
+        
+        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
             WebViewController *webView = [[WebViewController alloc] init];
             webView.eventLink = model.web_url;
             webView.goodsID = model.ID;
             webView.diction = model.productModel;
             //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
             [self.navigationController pushViewController:webView animated:YES];
+        }else {
             
-        } else {
-           
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.eventLink = model.web_url;
-            webView.goodsID = model.ID;
-            webView.diction = model.productModel;
-//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-            [self.navigationController pushViewController:webView animated:YES];
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+                //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+                
+            } else {
+               
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+            }
         }
     }
     

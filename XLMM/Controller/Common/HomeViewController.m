@@ -8,8 +8,6 @@
 
 #import "HomeViewController.h"
 #import "RESideMenu.h"
-#import "TodayViewController.h"
-#import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
 #import "JMLogInViewController.h"

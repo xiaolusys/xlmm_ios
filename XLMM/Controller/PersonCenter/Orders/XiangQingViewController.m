@@ -598,6 +598,32 @@
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
             NSString *string = [refund_status_displayArray objectAtIndex:index];
             label.text = string;
+            if ([string integerValue] == REFUND_STATUS_NO_REFUND ) {
+                label.text = @"";
+            }
+            else if ([string integerValue] == REFUND_STATUS_BUYER_APPLY ) {
+                label.text = @"已经申请退款";
+            }
+            else if ([string integerValue] == REFUND_STATUS_SELLER_AGREED ) {
+                label.text = @"卖家同意退款";
+            }
+            else if ([string integerValue] == REFUND_STATUS_BUYER_RETURNED_GOODS ) {
+                label.text = @"已经退货";
+            }
+            else if ([string integerValue] == REFUND_STATUS_SELLER_REJECTED ) {
+                label.text = @"卖家拒绝退款";
+            }
+            else if ([string integerValue] == REFUND_STATUS_WAIT_RETURN_FEE ) {
+                label.text = @"退款中";
+            }
+            else if ([string integerValue] == REFUND_STATUS_REFUND_CLOSE ) {
+                label.text = @"退款关闭";
+            }
+            else if ([string integerValue] == REFUND_STATUS_REFUND_SUCCESS ) {
+                label.text = @"退款成功";
+            }
+           
+
             label.numberOfLines = 0;
             label.font = [UIFont systemFontOfSize:12];
             label.textAlignment = NSTextAlignmentLeft;

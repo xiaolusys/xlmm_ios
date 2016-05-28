@@ -98,9 +98,9 @@
             //跳到集合页面
             NSLog(@"model_id = %@", [params lastObject]);
             
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-            
-            [vc.navigationController pushViewController:collectionVC animated:YES];
+//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            
+//            [vc.navigationController pushViewController:collectionVC animated:YES];
             
             
             
@@ -108,8 +108,8 @@
             //跳到商品详情
             NSLog(@"product_id = %@", [params lastObject]);
             
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-            [vc.navigationController pushViewController:details animated:YES];
+//            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            [vc.navigationController pushViewController:details animated:YES];
             
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
