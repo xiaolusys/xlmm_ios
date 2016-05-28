@@ -57,6 +57,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSLog(@"Youhuiquanviewcontroller viewDidLoad");
     
     self.canUsedArray = [[NSMutableArray alloc] initWithCapacity:0];
     self.expiredArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -100,6 +101,9 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     model1.valid = [dic objectForKey:@"valid"];
     model1.use_fee = [dic objectForKey:@"use_fee"];
     model1.coupon_type_display = [dic objectForKey:@"coupon_type_display"];
+    model1.use_fee_des = [dic objectForKey:@"use_fee_des"];
+    model1.pros_desc = [dic objectForKey:@"pros_desc"];
+
     model1.isSelected = NO;
     
     return model1;
@@ -151,8 +155,9 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
         NSArray *array = [dictionary objectForKey:@"results"];
         
         for (NSDictionary *dic in array) {
+
             // 可用优惠券
-             if ([[dic objectForKey:@"status"] integerValue] == 0 && [[dic objectForKey:@"poll_status"] integerValue] == 1) {
+             if ([[dic objectForKey:@"status"] integerValue] == 0) {
                  YHQModel *model1 = [self fillModelWithData:dic];
                  
                  [self.canUsedArray addObject:model1];
@@ -449,6 +454,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (IBAction)buyongClicked:(id)sender {
     NSLog(@"quxiao ");
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         NSLog(@"取消优惠券");
         [self.delegate updateYouhuiquanWithmodel:nil];

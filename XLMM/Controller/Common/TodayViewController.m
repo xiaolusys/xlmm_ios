@@ -29,7 +29,7 @@
 #import "MobClick.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMAdvertiseView.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "HuodongCollectionViewCell.h"
 #import "WXLoginController.h"
 #import "MobClick.h"
@@ -98,6 +98,7 @@ static NSString *khuodongCell = @"HuodongCell";
 @property (nonatomic, strong) NSMutableArray *activityArray;
 
 @property (nonatomic, strong)NSTimer *timer;
+
 
 @end
 
@@ -505,9 +506,10 @@ static NSString *khuodongCell = @"HuodongCell";
 
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5 );
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
     self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 20 - 33) collectionViewLayout:flowLayout];
+    self.myCollectionView.bounces = NO;
     
     self.myCollectionView.backgroundColor = [UIColor whiteColor];
     self.myCollectionView.delegate = self;
@@ -567,7 +569,7 @@ static NSString *khuodongCell = @"HuodongCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
 
-        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imagePostersCompression]];
+        UIImage *image0 = [UIImage imagewithURLString:[childModel.imageURL  imagePostersCompression]];
         
         NSLog(@"url = %@", [childModel.imageURL URLEncodedString]);
         
@@ -593,7 +595,7 @@ static NSString *khuodongCell = @"HuodongCell";
         ladyModel.firstName = [[ladyDic objectForKey:@"subject"] objectAtIndex:0];
         ladyModel.secondName = [[ladyDic objectForKey:@"subject"] objectAtIndex:1];
         
-        UIImage *image1 = [UIImage imagewithURLString:[[ladyModel.imageURL URLEncodedString] imagePostersCompression]];
+        UIImage *image1 = [UIImage imagewithURLString:[ladyModel.imageURL imagePostersCompression]];
         NSLog(@"url = %@", [ladyModel.imageURL URLEncodedString]);
         NSLog(@"image = %@", image1);
         if (image1 == nil) {
@@ -638,17 +640,17 @@ static NSString *khuodongCell = @"HuodongCell";
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
-        HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+        WebViewController *huodongVC = [[WebViewController alloc] init];
         
         huodongVC.diction = huodongJson;
         
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
-            HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+            WebViewController *huodongVC = [[WebViewController alloc] init];
             
             huodongVC.diction = huodongJson;
             
@@ -941,10 +943,7 @@ static NSString *khuodongCell = @"HuodongCell";
         }
         
     }
-
     return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6 + 60);
-  
-    
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
@@ -1082,7 +1081,7 @@ static NSString *khuodongCell = @"HuodongCell";
             //http://m.xiaolu.so/rest/v1/trades/86412/details
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
             NSLog(@"url = %@", xiangqingVC.urlString);
             
             
@@ -1169,11 +1168,6 @@ static NSString *khuodongCell = @"HuodongCell";
                 return cell1;
 
             }
-            
-            
-
-
-            
            
         }
         
@@ -1425,7 +1419,7 @@ static NSString *khuodongCell = @"HuodongCell";
             
             if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                 
-                HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                WebViewController *huodongVC = [[WebViewController alloc] init];
                 
                 huodongVC.diction = huodongJson;
                 
@@ -1466,7 +1460,7 @@ static NSString *khuodongCell = @"HuodongCell";
         }
     } else{
         if (login_required) {
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             [self ishavemobel];
@@ -1487,7 +1481,7 @@ static NSString *khuodongCell = @"HuodongCell";
                 
                 if ([[huodongJson objectForKey:@"act_type"] isEqualToString:@"webview"]) {
                     
-                    HuodongViewController *huodongVC = [[HuodongViewController alloc] init];
+                    WebViewController *huodongVC = [[WebViewController alloc] init];
                     
                     huodongVC.diction = huodongJson;
                     

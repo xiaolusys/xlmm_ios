@@ -19,7 +19,7 @@
 
 #import "MJRefresh.h"
 #import "WXApi.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 
 #import "UIViewController+NavigationBar.h"
 
@@ -183,7 +183,7 @@ static NSString * ksimpleCell = @"simpleCell";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         
     } else {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         
         
@@ -390,6 +390,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)fatchedChildListData:(NSData *)responseData{
+
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2];
     
     NSError *error;
@@ -480,8 +481,8 @@ static NSString * ksimpleCell = @"simpleCell";
                 [self.navigationController pushViewController:detailsVC animated:YES];
                 
             } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
+//                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
+//                [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }
     } else {
@@ -494,8 +495,8 @@ static NSString * ksimpleCell = @"simpleCell";
                 MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
                 [self.navigationController pushViewController:detailsVC animated:YES];
             } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
+//                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
+//                [self.navigationController pushViewController:collectionVC animated:YES];
             }
         }
     }

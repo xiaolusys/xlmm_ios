@@ -401,10 +401,21 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CarryLogTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSString *key = self.allkey[indexPath.section];
-    NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
-    NSMutableArray *order = dic[key];
-    CarryLogModel *carryLogM = order[indexPath.row];
+    CarryLogModel *carryLogM = nil;
+    
+    if((self.allkey != nil) && (self.allkey.count > 0) && (self.tableViewDataArr != nil) && self.tableViewDataArr.count > 0){
+    
+        NSString *key = self.allkey[indexPath.section];
+        NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
+        NSMutableArray *order = nil;
+        if((dic != nil) && (dic.count > 0)){
+            order = dic[key];
+            if((order != nil) && (order.count > 0)){
+                carryLogM = order[indexPath.row];
+            }
+        }
+    }
+    
     if (!cell) {
         cell = [[CarryLogTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
@@ -414,15 +425,29 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
+    if((nibView == nil) || (nibView.count == 0)){
+        return nil;
+    }
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30);
-    //计算金额
-    NSString *key = self.allkey[section];
-    NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
-    NSMutableArray *orderArr = dic[key];
-    CarryLogModel *carryM = [orderArr firstObject];
     
-    [headerV yearLabelAndTotalMoneyLabelText:carryM.date_field total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
+    CarryLogModel *carryM = nil;
+    if((self.allkey != nil) && (self.allkey.count > 0) && (self.tableViewDataArr != nil) && self.tableViewDataArr.count > 0){
+        //计算金额
+        NSString *key = self.allkey[section];
+        NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
+        NSMutableArray *orderArr = nil;
+        if((dic != nil) && (dic.count > 0)){
+            orderArr = dic[key];
+            if((orderArr != nil) && (orderArr.count > 0)){
+                carryM = [orderArr firstObject];
+            }
+        }
+        
+    }
+    if(carryM != nil){
+        [headerV yearLabelAndTotalMoneyLabelText:carryM.date_field total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
+    }
     return headerV;
 }
 

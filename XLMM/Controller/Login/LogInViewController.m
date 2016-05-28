@@ -26,7 +26,9 @@
 
 @interface LogInViewController ()
 
+
 @end
+
 
 
 @implementation LogInViewController{
@@ -156,26 +158,6 @@
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
     
-//    dict = [NSString stringWithFormat:@"headimgurl=%@&nickname=%@&openid=%@&unionid=%@&devtype=%@", [dic objectForKey:@"headimgurl"], [dic objectForKey:@"nickname"],[dic objectForKey:@"openid"],[dic objectForKey:@"unionid"], LOGINDEVTYPE];
-    
-    NSLog(@"params = %@", newDic);
-//    NSData *data = [dict dataUsingEncoding:NSUTF8StringEncoding];
-//    [postRequest setHTTPBody:data];
-//    [postRequest setHTTPMethod:@"POST"];
-//    [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-//   
-//    NSData *data2 = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:nil error:nil];
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
-//
-//    if ([[dictionary objectForKey:@"rcode"] integerValue] != 0 || dictionary.count == 0 || [dictionary class] == [NSNull null]) {
-//        [self alertMessage:[dictionary objectForKey:@"msg"]];
-//        return;
-//    }
-
-//    NSLog(@"msg = %@", [dictionary objectForKey:@"msg"]);
-//    NSLog(@"dictionary = %@", dictionary);
-    
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *result = responseObject;
@@ -204,24 +186,7 @@
     [self setDevice];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
-//    if (isBangding) {
-//        NSLog(@"跳转首页");
-//        if (isSettingPsd == YES) {
-//            [self.navigationController popViewControllerAnimated:YES];
-//            
-//        } else {
-//            
-//            NSLog(@"请绑定手机");
-//            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil phoneNumber:phoneNumber];
-//            wxloginVC.userInfo = dic;
-//            [self.navigationController pushViewController:wxloginVC animated:YES];
-//        }
-//    } else {
-//        NSLog(@"请绑定手机");
-//        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-//        wxloginVC.userInfo = dic;
-//        [self.navigationController pushViewController:wxloginVC animated:YES];
-//    }
+
 }
 
 
@@ -299,6 +264,7 @@
 
     [manager POST:TPasswordLogin_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [SVProgressHUD dismiss];
               
               if ([[responseObject objectForKey:@"rcode"] integerValue] != 0){
                   [self alertMessage:[responseObject objectForKey:@"msg"]];
@@ -308,6 +274,7 @@
               NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
               // 手机登录成功 ，保存用户信息以及登录途径
               [defaults setBool:YES forKey:kIsLogin];
+              [defaults setObject:Root_URL forKey:@"serverip"];
               
               NSDictionary *userInfo = @{kUserName:self.userIDTextField.text,
                                          kPassWord:self.passwordTextField.text};
@@ -324,6 +291,8 @@
               
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
+              //[SVProgressHUD dismiss];
+              [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
           }];
 }
 
@@ -379,6 +348,9 @@
     
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
+
+
+
 
 - (IBAction)verifyMessageClicked:(id)sender {
     

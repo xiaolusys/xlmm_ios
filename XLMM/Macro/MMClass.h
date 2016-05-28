@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ChildViewController.h"
@@ -28,6 +28,13 @@
 #else
 #define NSLog(...) {}
 #endif
+
+
+/**
+ *  循环引用
+ */
+#define kWeakSelf __weak typeof (self) weakSelf = self;
+
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -59,19 +66,11 @@
 //#define Share_Root_Url @"http://m.xiaolumeimei.com"
 //c32f391fw
 
-#if 0
-//#define Root_URL @"http://192.168.1.57:8000"
-#define Root_URL @"http://192.168.1.31:9000"
-//#define Root_URL @"http://192.168.1.13:8000"
-//#define Root_URL @"http://192.168.1.11:9000"
-//#define Root_URL @"http://dev.xiaolumeimei.com"
-//#define Root_URL @"http://staging.xiaolumeimei.com"
-#else
 
 
-#define Root_URL @"http://m.xiaolumeimei.com"
 
-#endif
+extern NSString *Root_URL;
+
 
 @protocol MenuVCPushSideDelegate <NSObject>
 
@@ -91,8 +90,8 @@
 #define kLOGIN_URL [NSString stringWithFormat:@"%@/rest/v1/register/customer_login",Root_URL]
 #define kModel_List_URL [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json",Root_URL]
 #define kCart_URL [NSString stringWithFormat:@"%@/rest/v1/carts.json",Root_URL]
-#define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price",Root_URL]
-#define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price",Root_URL]
+#define kCHILD_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/childlist?order_by=price&page_size=10",Root_URL]
+#define kLADY_LIST_ORDER_URL [NSString stringWithFormat:@"%@/rest/v1/products/ladylist?order_by=price&page_size=10",Root_URL]
 #define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_history.json",Root_URL]
 #define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json",Root_URL]
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address.json",Root_URL]
@@ -111,7 +110,10 @@
 
 //加载的webView链接
 #define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
-#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/fag", Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
+#define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
+
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 #endif
 

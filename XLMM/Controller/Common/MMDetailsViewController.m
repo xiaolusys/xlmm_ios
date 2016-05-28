@@ -8,7 +8,7 @@
 
 #import "MMDetailsViewController.h"
 #import "MMDetailsModel.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
 #import "AFNetworking.h"
@@ -364,12 +364,12 @@
                 self.imageTrailing.constant = (origineDistance)/2;
             }
        } else{
-           UIImage *image = [UIImage imagewithURLString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]];
-           if (image != nil) {
-               self.bottomImageView.image = image;
+           UIImage *image_temp = [UIImage imagewithURLString:[[dic objectForKey:@"pic_path"] ImageNoCompression]];
+           if (image_temp != nil) {
+               self.bottomImageView.image = image_temp;
                self.scrollerView.scrollEnabled = YES;
-               self.bottomImageViewHeight.constant = SCREENWIDTH *image.size.height /image.size.width;
-               headImageOrigineHeight = SCREENWIDTH *image.size.height /image.size.width;
+               self.bottomImageViewHeight.constant = SCREENWIDTH *image_temp.size.height /image_temp.size.width;
+               headImageOrigineHeight = SCREENWIDTH *image.size.height /image_temp.size.width;
 #pragma mark --判断是否拉伸图片
                origineDistance = headImageOrigineHeight - contentTopHeight;
                if (origineDistance < 0 ) {
@@ -476,7 +476,7 @@
 //        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
 //        if (data == nil || [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == NO) {
 //            
-//            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+//            JMLogInViewController *loginVC = [[JMLogInViewController alloc] initWithNibName:@"JMLogInViewController" bundle:nil];
 //            [self.navigationController pushViewController:loginVC animated:YES];
 //            return;
 //            
@@ -501,6 +501,34 @@
 //        self.titleStr = [shareDic objectForKey:@"title"];
 //        self.des = [shareDic objectForKey:@"desc"];
 //        self.url = [shareDic objectForKey:@"share_link"];
+        
+        /**
+         *  {
+         "active_at" = "2015-12-19";
+         created = "2015-12-19T13:30:19";
+         desc = "
+         \n\U5546\U54c1\U5165\U53e3\Uff1a\U3000http://m.xiaolumeimei.com/pages/shangpinxq.html?id=12955&mm_linkid=44";
+         id = 2;
+         "share_img" = "https://mmbiz.qlogo.cn/mmbiz/ZYmW1WlFwHyRiawU1eHrcIrl43QWOrIAuib4Tdp8qnFRRHMPkgln5kluuSeMQWHvz5Cyd1ic8A1sMI81lH2yWJaLA/0?wx_fmt=png%3FimageMogr2%2Fthumbnail%2F108%2Fquality%2F80%2Fformat%2Fjpg%2Fcrop%2F108x108%2F";
+         "share_link" = "http://m.xiaolumeimei.com/m/44?next=/pages/shangpinxq.html%3Fid%3D12955%26mm_linkid%3D44";
+         status = 1;
+         title = "\U79d2\U6740 \U5927\U5634\U7334\U7eaf\U68c9\U6bdb\U5708\U8fde\U5e3d\U5f00\U886b\U5916\U5957/\U7070\U8272";
+         url = "http://m.xiaolumeimei.com/rest/v1/share/2";
+         }
+         
+         {
+         "active_dec" = "\U56e4\U793c\U597d\U65f6\U673a\Uff0c\U5c16\U8d27\U63d0\U524d\U8d2d\Uff0c\U5907\U597d\U516d\U4e00\U793c\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U6211\U7231\U4f60\Uff5e";
+         id = 9;
+         "qrcode_link" = "http://m.xiaolumeimei.com/sale/promotion/ercode/?mama_id=44";
+         "share_icon" = "http://7xrst8.com1.z0.glb.clouddn.com/fx.png";
+         "share_link" = "http://m.xiaolumeimei.com/sale/promotion/join/9/";
+         "share_type" = link;
+         title = "\U516d\U4e00\U63d0\U524d\U8d2d\Uff01\U6b22\U4e50\U5927Fun\U9001\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U7231\U4f60~";
+         }
+         
+         *
+         *  @return
+         */
     }
 }
 - (void)createKuaiZhaoImage{
@@ -554,7 +582,7 @@
 - (void)cartClicked:(UIButton *)btn{
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
@@ -929,7 +957,7 @@
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
    // NSLog(@"islogin = %d", islogin);
     if (islogin == NO) {
-        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
@@ -1001,7 +1029,7 @@
                 NSString *detailString = [detail objectForKey:@"detail"];
                 if ([detailString isEqualToString:@"Authentication credentials were not provided."]) {
                     NSLog(@"login");
-                    LogInViewController *login = [[LogInViewController alloc] init];
+                    JMLogInViewController *login = [[JMLogInViewController alloc] init];
                     [self.navigationController pushViewController:login animated:YES];
                     
                     return ;
@@ -1010,7 +1038,7 @@
               view.backgroundColor = [UIColor darkGrayColor];
               view.layer.cornerRadius = 4;
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
-              label.text = @"商品库存不足";
+              label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
               label.textColor = [UIColor imageViewBorderColor];
               label.font = [UIFont systemFontOfSize:14];
@@ -1049,7 +1077,7 @@
     
     ani.path=aPath;
     ani.rotationMode = @"auto";
-    ani.duration=0.9;
+    ani.duration=0.8;
     //设置为渐出
     ani.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [view.layer addAnimation:ani forKey:@"position"];
@@ -1059,57 +1087,92 @@
          //view.frame = CGRectMake(30, height-80, 16, 16);
      } completion:^(BOOL finished) {
         [view removeFromSuperview];
-         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-         if (data != nil) {
-             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-          //   NSLog(@"%@", dic);
-             if ([dic objectForKey:@"result"] != nil) {
-                 last_created = [dic objectForKey:@"last_created"];
-                 goodsCount = [[dic objectForKey:@"result"] integerValue];
-            //     NSLog(@"%ld", (long)goodsCount);
-                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-                 countLabel.text = strNum;
+         
+         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+         [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             if (!responseObject) {
+                 NSLog(@"kCart_Number_URL response nil");
+                 [self createTimeCartView];
+             }else {
+                 NSDictionary *dic = responseObject;
+                 //   NSLog(@"%@", dic);
+                 if ([dic objectForKey:@"result"] != nil) {
+                     last_created = [dic objectForKey:@"last_created"];
+                     goodsCount = [[dic objectForKey:@"result"] integerValue];
+                     //     NSLog(@"%ld", (long)goodsCount);
+                     NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                     countLabel.text = strNum;
+                 }
+
+                 [self createTimeCartView];
              }
-         }
-         [self createTimeCartView];
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"kCart_Number_URL response error");
+             [self createTimeCartView];
+         }];
+
+         
+//         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+//         if (data != nil) {
+//             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//          //   NSLog(@"%@", dic);
+//             if ([dic objectForKey:@"result"] != nil) {
+//                 last_created = [dic objectForKey:@"last_created"];
+//                 goodsCount = [[dic objectForKey:@"result"] integerValue];
+//            //     NSLog(@"%ld", (long)goodsCount);
+//                 NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+//                 countLabel.text = strNum;
+//             }
+//         }
+//         [self createTimeCartView];
     }];
 }
 
 - (void)createTimeCartView{
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    if (data != nil) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-      //  NSLog(@"%@", dic);
-        if ([dic objectForKey:@"result"] != nil) {
-            
-            last_created = [dic objectForKey:@"last_created"];
-            goodsCount = [[dic objectForKey:@"result"] integerValue];
-           //nnnf
-            
-            NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
-            countLabel.text = strNum;
-            if (goodsCount >0) {
-                //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
-                [UIView animateWithDuration:0.1 animations:^{
-                    cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
-                    //        CGRect frame = self.addCartButton.frame;
-                    //        frame.origin.x = 118;
-                    //        frame.size.width = SCREENWIDTH - 126;
-                } completion:^(BOOL finished) {
-              //
-                 //   NSLog(@"显示剩余时间");
-                    [self createTimeLabel];
-                    countLabel.hidden = NO;
-                    
-                    
-                }];
-                [UIView animateWithDuration:0.5 animations:^{
-                    self.leftWidth.constant = 118;
-                    
-                }];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            NSLog(@"kCart_Number_URL response nil");
+        }else {
+            NSDictionary *dic = responseObject;
+            //  NSLog(@"%@", dic);
+            if ([dic objectForKey:@"result"] != nil) {
+                
+                last_created = [dic objectForKey:@"last_created"];
+                goodsCount = [[dic objectForKey:@"result"] integerValue];
+                //nnnf
+                
+                NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
+                countLabel.text = strNum;
+                if (goodsCount >0) {
+                    //CGRectMake(4, SCREENHEIGHT - 40, 36, 36)
+                    [UIView animateWithDuration:0.1 animations:^{
+                        cartsButton.frame = CGRectMake(15, SCREENHEIGHT - 48, 88, 40);
+                        //        CGRect frame = self.addCartButton.frame;
+                        //        frame.origin.x = 118;
+                        //        frame.size.width = SCREENWIDTH - 126;
+                    } completion:^(BOOL finished) {
+                        //   NSLog(@"显示剩余时间");
+                        [self createTimeLabel];
+                        countLabel.hidden = NO;
+                        
+                        
+                    }];
+                    [UIView animateWithDuration:0.5 animations:^{
+                        self.leftWidth.constant = 118;
+                        
+                    }];
+                }
             }
+
         }
-    }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"kCart_Number_URL response error");
+    }];
+
 }
 
 - (void)createTimeLabel{
@@ -1169,53 +1232,18 @@
 #pragma mark -- weixin share
 
 - (IBAction)shareClicked:(id)sender {
-    //修改分享图片，标题， 链接 ，
-    
-    //  kLinkURL = @"http://xiaolu.so/m/18807/";
-    //NSString *kLinkTagName = @"xiaolumeimei";
-    
-    
+
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
-    
-//    dispatch_queue_t queue1 = dispatch_queue_create("com.xlmm.gcd.Queue1", NULL);
-//    dispatch_async(queue1, ^{
-//        [self createShareData];
-//        NSString *imageUrlString = [json objectForKey:@"pic_path"];
-//        NSData *imageData = nil;
-//        do {
-//            imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
-//            if (imageData != nil) {
-//                break;
-//            }
-//            
-//        } while (YES);
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        image = [[UIImage alloc] scaleToSize:image size:CGSizeMake(300, 400)];
-//        NSData *imagedata = UIImageJPEGRepresentation(image, 0.8);
-//        UIImage *newImage = [UIImage imageWithData:imagedata];
-//        
-//        
-//        self.imageD = imageData;
-//        
-//        self.shareImage = newImage;
-//    });
-
     
     self.shareBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareBackView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [[UIApplication sharedApplication].keyWindow addSubview:self.shareBackView];
     [self.shareBackView addSubview:self.youmengShare];
     self.youmengShare.frame = CGRectMake(0, SCREENHEIGHT + 240, SCREENWIDTH, 240);
-    
-    //添加手势
-//    self.shareBackView.userInteractionEnabled = NO;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleShareBtnClick:)];
-//    
-//    [self.shareBackView addGestureRecognizer:tap];
 
     // 点击分享后弹出自定义的分享界面
     [UIView animateWithDuration:0.2 animations:^{
@@ -1338,7 +1366,9 @@
 - (void)linkCopyBtnClick:(UIButton *)btn {
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
     NSString *str = self.url;
-    [pab setString:str];
+    if(str != nil){
+        [pab setString:str];
+    }
     if (pab == nil) {
         [SVProgressHUD showErrorWithStatus:@"请重新复制"];
     }else
@@ -1364,6 +1394,7 @@
 #pragma mark -- UIWebView代理
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+
     if (webView.tag != 102)return;
     if (webView.isLoading) {
         return;

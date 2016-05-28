@@ -11,21 +11,22 @@
 #import "XiangQingViewController.h"
 #import "UIViewController+NavigationBar.h"
 
-#define kSimpleCellIdentifier @"simpleCell"
 
+#import "MJRefresh.h"
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "NSString+URL.h"
 #import "SVProgressHUD.h"
+#import "AFNetworking.h"
 
-
-
+#define kSimpleCellIdentifier @"simpleCell"
 
 @interface PersonCenterViewController1 (){
     NSTimer *theTimer;
     NSString *shengyushijian;
     UILabel *shengyuTimeLabel[10];
     NSString *createdString;
+    NSDictionary *diciontary;
     
 }
 
@@ -68,7 +69,39 @@
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        [self loadMore];
+        
+    }];
+    footer.hidden = YES;
+    
+    self.collectionView.mj_footer = footer;
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.collectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedWaipayData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.collectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -76,26 +109,34 @@
 }
 
 - (void)downlaodData{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitpay_List_URL]];
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
+    [SVProgressHUD showWithStatus:@"加载中..."];
+
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kWaitpay_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+
+        if (!responseObject) return;
         
-        
-    });
+        [self fetchedWaipayData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
     
 }
 
-- (void)fetchedWaipayData:(NSData *)data{
-    [SVProgressHUD dismiss];
-    if (data == nil) {
+- (void)fetchedWaipayData:(NSDictionary *)data{
+        if (data == nil) {
         return;
     }
     
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-   // NSLog(@"json = %@", json);
+    diciontary = data;
+    // NSLog(@"json = %@", json);
     
     
-    self.dataArray = [json objectForKey:@"results"];
+    self.dataArray = [diciontary objectForKey:@"results"];
     //NSLog(@"dataArray = %@", self.dataArray);
   
     
@@ -106,7 +147,7 @@
     
     
     
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
+    if ([[diciontary objectForKey:@"count"] integerValue] == 0) {
        // NSLog(@"无待支付列表");
         
         [self displayDefaultView];
@@ -206,9 +247,8 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-      __unused NSString *string = [details objectForKey:@"status_display"];
-        
-            cell.statusLabel.text = @"待支付";
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
        
         
         
@@ -226,11 +266,6 @@
         label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
        
-        cell.statusLabel.text = @"待支付";
-
-        
-
-  
         return cell;
        
     }
@@ -270,9 +305,9 @@
         label.textColor = [UIColor textDarkGrayColor];
         [cell.contentView addSubview:label];
 
-        cell.statusLabel.text = @"待支付";
-      //  NSString *string = [diction objectForKey:@"status_display"];
 
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
         
      
         return cell;
@@ -293,7 +328,7 @@
    // NSLog(@"id = %@", ID);
     
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@/details", Root_URL, ID];
   //  NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;

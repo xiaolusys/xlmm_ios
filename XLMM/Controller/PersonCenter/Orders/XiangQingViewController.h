@@ -20,12 +20,16 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *myViewHeight;
+/**
+ *  增加点击修改地址事件
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *addressInfoImage;
+
 @property (weak, nonatomic) IBOutlet UIView *myXiangQingView;
-@property (weak, nonatomic) IBOutlet UIView *WuliuView;
-@property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;
@@ -36,7 +40,7 @@
 - (IBAction)quxiaodingdan:(id)sender;
 - (IBAction)goumai:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
-@property (weak, nonatomic) IBOutlet UIView *yuanqiuView;
+
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong)DingdanModel *dingdanModel;
 @property (nonatomic, copy) NSString *createString;
@@ -44,6 +48,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
-@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *goodsViewHeight;
 @end

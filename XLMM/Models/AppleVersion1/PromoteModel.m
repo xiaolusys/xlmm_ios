@@ -14,6 +14,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super init];
     if (self) {
+        _web_url = [dic objectForKey:@"web_url"];
         _ID = [dic objectForKey:@"id"];
         _name = [dic objectForKey:@"name"];
         _Url = [dic objectForKey:@"url"];
@@ -22,6 +23,7 @@
         _outerID = [dic objectForKey:@"outer_id"];
         _isSaleopen = [dic objectForKey:@"is_saleopen"];
         _isSaleout = [dic objectForKey:@"is_saleout"];
+        _isNewgood = [dic objectForKey:@"is_newgood"];
         _category = [dic objectForKey:@"category"];
         _remainNum = [dic objectForKey:@"remain_num"];
         _saleTime = [dic objectForKey:@"sale_time"];

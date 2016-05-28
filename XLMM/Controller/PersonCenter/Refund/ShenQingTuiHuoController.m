@@ -15,7 +15,7 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "QiniuSDK.h"
-
+#import "SVProgressHUD.h"
 
 
 
@@ -161,7 +161,9 @@
     
     
     self.nameLabel.text = self.dingdanModel.nameString;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.priceString floatValue]];
+    if(number != 0){
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
+    }
     self.sizeNameLabel.text = self.dingdanModel.sizeString;
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
     
@@ -734,12 +736,16 @@
     if (alertView.tag != 88) return;
     if (buttonIndex == 1){
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-        NSString *descStr;
+        NSString *descStr = self.inputTextView.text;
         if ([self.inputTextView.text isEqualToString:@""]) {
             descStr = @"七天无理由退货";
         }
         
         NSMutableString *linkstr = [[NSMutableString alloc] init];
+        if(self.imagesArray.count > 3){
+            [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
+            return;
+        }
         for (int i = 0; i < self.imagesArray.count; i++) {
             [linkstr appendString:self.linksArray[i]];
             [linkstr appendString:@","];
@@ -764,11 +770,19 @@
         [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dic = responseObject;
             if (dic.count == 0) return;
-            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
+            NSLog(@"refund return, %@", responseObject);
+            
+            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+                NSLog(@"refund return ok");
+
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }
+            NSLog(@"refund return ok end");
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"refund return failed %@", error);
         }];
     }
 

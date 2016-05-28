@@ -10,14 +10,16 @@
 #import "MMClass.h"
 #import "XiangQingViewController.h"
 #import "UIViewController+NavigationBar.h"
-#define kSimpleCellIdentifier @"simpleCell"
-#import "NSString+URL.h"
 
+#import "NSString+URL.h"
+#import "MJRefresh.h"
 #import "SingleOrderViewCell.h"
 #import "MoreOrdersViewCell.h"
 #import "SVProgressHUD.h"
+#import "AFNetworking.h"
 
 
+#define kSimpleCellIdentifier @"simpleCell"
 
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
 
@@ -25,20 +27,21 @@
 
 @end
 
-@implementation PersonCenterViewController2
+@implementation PersonCenterViewController2{
+        NSDictionary *diciontary;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = NO;
     
-    [SVProgressHUD showWithStatus:@"加载中..."];
+
     [self downlaodData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
 }
 
 //待收货订单。。。。。。
@@ -53,7 +56,40 @@
     
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        [self loadMore];
+        
+    }];
+    footer.hidden = YES;
+    
+    self.collectionView.mj_footer = footer;
 
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+        
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+        
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.collectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedWaisendData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.collectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)btnClicked:(UIButton *)button{
@@ -61,35 +97,38 @@
 }
 
 - (void)downlaodData{
-    //http://192.168.1.79:8000/rest/v1/trades
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSLog(@"wait send = %@", kWaitsend_List_URL);
-       
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kWaitsend_List_URL]];
+
+    [SVProgressHUD showWithStatus:@"加载中..."];
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kWaitsend_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
         
-        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-    });
+        if (!responseObject) return;
+        
+        [self fetchedWaisendData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+
 }
 
-- (void)fetchedWaipayData:(NSData *)data{
-    [SVProgressHUD dismiss];
+- (void)fetchedWaisendData:(NSDictionary *)data{
     if (data == nil) {
         NSLog(@"下载失败");
         return;
     }
-    NSError *error = nil;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error != nil) {
-        NSLog(@"解析出错");
-        return;
-    }
 
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
+    diciontary = data;
+
+
+    if ([[diciontary objectForKey:@"count"] integerValue] == 0) {
         [self displayDefaultView];
         return;
     }
     
-    self.dataArray = [json objectForKey:@"results"];
+    self.dataArray = [diciontary objectForKey:@"results"];
     [self.collectionView reloadData];
 }
 
@@ -131,14 +170,9 @@
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
-        NSString *string = [details objectForKey:@"status_display"];
-        if ([string isEqualToString:@"已付款"]) {
-             cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        } else if ([string isEqualToString:@"确认签收"]){
-            cell.statusLabel.text = @"已签收";
-        }
+        NSString *string = [diction objectForKey:@"status_display"];
+        cell.statusLabel.text = string;
+
 //       for (int i = 0; i < self.dataArray.count; i++) {
 //            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
 //            NSLog(@"btn ->%@", btn);
@@ -190,11 +224,8 @@
 //        }
        
          NSString *string = [diction objectForKey:@"status_display"];
-        if ([string isEqualToString:@"已付款"]) {
-            cell.statusLabel.text = @"商品准备中";
-        } else if ([string isEqualToString:@"已发货"]){
-            cell.statusLabel.text = @"配送中";
-        }
+        cell.statusLabel.text = string;
+
 //        if ([string isEqualToString:@"已付款"]) {
 //            UIButton *button = [self buttonWithTitle:@"申请退款" andTag:indexPath.row + 100];
 //
@@ -243,7 +274,7 @@
 //    NSLog(@"id = %@", ID);
     
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
 //    NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     [self.navigationController pushViewController:xiangqingVC animated:YES];

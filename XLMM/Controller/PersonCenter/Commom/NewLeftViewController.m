@@ -20,7 +20,7 @@
 
 #import "AddressViewController.h"
 #import "SettingViewController.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "Account1ViewController.h"
 #import "PersonOrderViewController.h"
 #import "UIColor+RGBColor.h"
@@ -451,9 +451,7 @@
 
 - (IBAction)commonProblemBtnAction:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] init];
-        common.titleName = @"常见问题";
-        common.loadLink = COMMONPROBLEM_URL;
+        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:common];
@@ -469,7 +467,7 @@
 }
 
 - (void) displayLoginView{
-    LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
     // zhifuVC.menuDelegate = ;
     if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
         [self.pushVCDelegate rootVCPushOtherVC:loginVC];

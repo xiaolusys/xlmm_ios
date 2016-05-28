@@ -13,7 +13,7 @@
 - (instancetype)initWithDiction:(NSDictionary *)dic{
     self = [super init];
     if (self) {
-        
+        _web_url = [dic objectForKey:@"web_url"];
         _agentPrice = [dic objectForKey:@"product_lowest_price"];
         _category = [dic objectForKey:@"category"];
         _ID = [dic objectForKey:@"id"];

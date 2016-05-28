@@ -15,6 +15,9 @@ DerivedData
 *.perspectivev3
 !default.perspectivev3
 xcuserdata
+*.DS_Store
+
+
 ## Other
 *.xccheckout
 *.moved-aside
@@ -23,6 +26,7 @@ xcuserdata
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
+*.swp
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However

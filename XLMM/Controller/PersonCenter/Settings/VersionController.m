@@ -10,9 +10,11 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIColor+RGBColor.h"
+#import "DebugSettingViewController.h"
 
-
-@interface VersionController ()
+@interface VersionController (){
+        NSInteger clickHeadImgCount;
+}
 
 @end
 
@@ -38,7 +40,9 @@
     
     [self createInfo];
     
-    
+    clickHeadImgCount = 0;
+    [self.imgDeer setUserInteractionEnabled:YES];
+    [self.imgDeer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickHeadImage:)]];
 }
 
 - (void)createInfo{
@@ -64,5 +68,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)clickHeadImage:(UITapGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"clickHeadImage");
+    //NSLog(@"%hhd",[gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]);
+    
+    UIView *viewClicked=[gestureRecognizer view];
+    if (viewClicked==self.imgDeer) {
+        NSLog(@"headerImageView");
+        clickHeadImgCount++;
+        //跳到debug vc
+        if(clickHeadImgCount == 8){
+            clickHeadImgCount = 0;
+            
+            DebugSettingViewController *debugVC = [[DebugSettingViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
+            
+            [self.navigationController pushViewController:debugVC animated:YES];
+        }
+    }
+    
+}
 
 @end

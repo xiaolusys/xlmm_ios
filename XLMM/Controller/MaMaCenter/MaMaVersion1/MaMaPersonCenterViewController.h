@@ -50,7 +50,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *todayNum;
 
 
-- (IBAction)backClicked:(id)sender;
+- (void)backClicked:(id)sender;
 - (IBAction)sendProduct:(id)sender;
 
 - (IBAction)MamaOrderClicked:(id)sender;
@@ -61,7 +61,6 @@
 - (IBAction)xuanpinliebiao:(id)sender;
 - (IBAction)shareSubsidiesAction:(id)sender;
 
-- (IBAction)huodongzhongxin:(id)sender;
 
 - (IBAction)fansList:(id)sender;
 

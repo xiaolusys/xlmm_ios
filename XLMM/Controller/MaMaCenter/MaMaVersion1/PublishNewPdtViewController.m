@@ -110,7 +110,6 @@
 }
 
 - (void)showDefaultView{
-    
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
     countdowmView = [[CountdownView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
@@ -168,6 +167,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //未登录处理
 //        [self showDefaultView];
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取信息失败"];
     }];
 }
 

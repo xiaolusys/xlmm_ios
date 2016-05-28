@@ -8,18 +8,16 @@
 
 #import "MMRootViewController.h"
 #import "RESideMenu.h"
-#import "TodayViewController.h"
-#import "PreviousViewController.h"
 #import "ChildViewController.h"
 #import "MMClass.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "UIImage+ColorImage.h"
 #import "CartViewController.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 #import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
-#import "LogInViewController.h"
+#import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
@@ -32,15 +30,54 @@
 #import "ActivityView.h"
 #import "NSString+URL.h"
 #import "TuihuoViewController.h"
-
+#import "MMAdvertiseView.h"
+#import "SVProgressHUD.h"
+#import "MMAdvertiseView.h"
+#import "WebViewController.h"
+#import "ActivityModel.h"
+#import "UIImageView+WebCache.h"
+#import "PromoteModel.h"
+#import "PeopleCollectionCell.h"
+#import "MJPullGifHeader.h"
+#import "MJRefresh.h"
+#import "HomeViewController.h"
+#import "JumpUtils.h"
+#import "ImageUtils.h"
+#import "BrandCollectionCell.h"
+#import "BrandGoodsModel.h"
+#import "XlmmMall.h"
+#import "MMDetailsViewController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
+#define ABOVEHIGHT 300
+#define ACTIVITYHEIGHT 120
+#define BRAND_HEIGHT 200
 
-
-
+#define YESTDAY @"yestday"
+#define TODAY @"today"
+#define TOMORROW @"tomorrow"
 
 #define WIDTH [[UIScreen mainScreen] bounds].size.width
 #define HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+
+#define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
+
+#define TAG_ACTIVITY_BASE 120
+#define TAG_ROOT_VIEW_BASE 1000
+#define TAG_BACK_SCROLLVIEW  (TAG_ROOT_VIEW_BASE)
+#define TAG_GOODS_YESTODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+1)
+#define TAG_GOODS_TODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+2)
+#define TAG_GOODS_TOMORROW_SCROLLVIEW (TAG_ROOT_VIEW_BASE+3)
+#define TAG_COLLECTION_SCROLLVIEW (TAG_ROOT_VIEW_BASE+4)
+#define TAG_BTN_YESTODAY (TAG_ROOT_VIEW_BASE+5)
+#define TAG_BTN_TODAY (TAG_ROOT_VIEW_BASE+6)
+#define TAG_BTN_TOMORROW (TAG_ROOT_VIEW_BASE+7)
+#define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
+#define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
+#define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
+//因为可能有多个品牌,那么先预留10个
+#define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
 
 @interface MMRootViewController ()<MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
@@ -53,12 +90,18 @@
     UILabel *label;
     CGRect frame;
     NSInteger _currentIndex;
+    NSInteger _currentPage;
     UIBarButtonItem *rightItem;
     UIView *dotView;
     UILabel *countLabel;
     NSNumber *last_created;
     NSTimer *theTimer;
+    NSTimer *saleTimer;
     
+    BOOL login_required;
+    UIView *backView;
+    NSDictionary *huodongJson;
+    float allActivityHeight;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -67,198 +110,308 @@
 
 @property (nonatomic, strong)NSString *imageUrl;
 
+//新页面属性
+//@property (nonatomic, strong)UIScrollView *backScrollview;
+//@property (nonatomic, strong)UIView *aboveView;
+//@property (nonatomic, strong)UIView *bannerView;
+//@property (nonatomic, strong)UIView *childAndWomanView;
+//@property (nonatomic, strong)UIView *goodsView;
+
+@property (nonatomic, strong)UICollectionView *homeCollectionView;
+
+@property (nonatomic, strong) NSMutableArray *posterImages;
+@property (nonatomic, strong) NSMutableArray *posterDataArray;
+
+@property (nonatomic, strong)NSArray *activityArr;
+@property (nonatomic, strong)NSMutableArray *activityDataArr;
+
+@property (nonatomic, strong)NSMutableArray *brandArr;
+@property (nonatomic, strong)NSMutableArray *brandDataArr;
+//商品
+@property (nonatomic, strong)NSMutableArray *collectionArr;
+@property (nonatomic, strong)NSMutableArray *collectionDataArr;
+@property (nonatomic, strong)NSMutableDictionary *categoryDic;
+@property (nonatomic, strong)NSMutableArray *urlArr;
+@property (nonatomic, strong)NSArray *dickey;
+//@property (nonatomic, strong)NSMutableArray *btnArr;
+
+@property (nonatomic, assign)NSInteger currentIndex;
+@property (nonatomic, strong)NSMutableDictionary *nextdic;
+@property (nonatomic, strong)NSMutableArray *endTime;
+
+@property (nonatomic, copy) NSString *latestVersion;
+@property (nonatomic, copy) NSString *trackViewUrl1;
+@property (nonatomic, copy) NSString *trackName;
+
 @end
+
+
+static NSString *ksimpleCell = @"simpleCell";
+static NSString *kbrandCell = @"brandCell";
 
 @implementation MMRootViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    UIView *cartView = [_view viewWithTag:123];
-    CGRect rect = cartView.frame;
-    rect.origin.y = SCREENHEIGHT - 156;
-    cartView.frame = rect;
-//    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
-    [self setLabelNumber];
-  
+//- (UIScrollView *)backScrollview {
+//    if (!_backScrollview) {
+//        self.backScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT)];
+//    }
+//    return _backScrollview;
+//}
+//
+//- (UIView *)aboveView {
+//    if (!_aboveView) {
+//        self.aboveView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, ABOVEHIGHT)];
+//    }
+//    return _aboveView;
+//}
+//
+//- (UIView *)goodsView {
+//    if (!_goodsView) {
+//        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
+//    }
+//    return _goodsView;
+//}
+//
+
+- (NSMutableArray *)activityDataArr {
+    if (!_activityDataArr) {
+        self.activityDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _activityDataArr;
+}
+
+- (NSMutableArray *)brandArr {
+    if (!_brandArr) {
+        self.brandArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _brandArr;
+}
+
+- (NSMutableArray *)brandDataArr {
+    if (!_brandDataArr) {
+        self.brandDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _brandDataArr;
+}
+
+- (NSMutableArray *)collectionArr {
+    if (!_collectionArr) {
+        self.collectionArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _collectionArr;
+}
+
+- (NSMutableArray *)collectionDataArr {
+    if (!_collectionDataArr) {
+        self.collectionDataArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _collectionDataArr;
+}
+
+- (NSMutableDictionary *)categoryDic {
+    if (!_categoryDic) {
+        self.categoryDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        for (int i = 0; i < 3; i++) {
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+            [self.categoryDic setObject:arr forKey:self.dickey[i]];
+        }
+    }
+    return _categoryDic;
+}
+
+- (NSMutableDictionary *)nextdic {
+    if (!_nextdic) {
+        self.nextdic = [NSMutableDictionary dictionaryWithCapacity:0];
+        for (int i = 0; i < 3; i++) {
+            NSString *arr = [NSString stringWithFormat:@""];
+            [self.nextdic setObject:arr forKey:self.dickey[i]];
+        }
+    }
+    return _nextdic;
+}
+
+- (NSMutableArray *)urlArr {
+    if (!_urlArr) {
+        self.urlArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _urlArr;
+}
+
+- (NSMutableArray *)endTime {
+    if (!_endTime) {
+        self.endTime = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _endTime;
 }
 
 - (void)updataAfterLogin:(NSNotification *)notification{
-  //  NSLog(@"微信登录");\
-    
-    
-//    MMLoginStatus *login = [MMLoginStatus shareLoginStatus];
-//    if (login.isxlmm) {
-//        [self createRightItem];
-//    } else {
-//          self.navigationItem.rightBarButtonItem = nil;
-//    }
+  // 微信登录
+    [self loginUpdateIsXiaoluMaMa];
 
-  
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
   //  NSLog(@"手机登录");
-    if ([self loginUpdateIsXiaoluMaMa]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
+    [self loginUpdateIsXiaoluMaMa];
+
 }
 
 - (BOOL)isXiaolumama{
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject)return ;
-//        return YES;
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        return NO;
-//    }];
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-//    if (data == nil) {
-//        return NO;
-//    }
-//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//    NSLog(@"dic = %@", dic);
-//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-//    return YES;
-    
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
     BOOL isXLMM = [users boolForKey:@"isXLMM"];
     return isXLMM;
 }
 
-- (BOOL)loginUpdateIsXiaoluMaMa {
+- (void)loginUpdateIsXiaoluMaMa {
+    NSLog(@"loginUpdateIsXiaoluMaMa ");
+    
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        return NO;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:string parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSDictionary *dic = responseObject;
+        if (!responseObject){
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+            return;
+        }
+        
+        NSLog(@"loginUpdateIsXiaoluMaMa %d", [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]);
+
+        if([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+            [self createRightItem];
+            [users setBool:YES forKey:@"isXLMM"];
+
+        }
+        else{
+            self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:@"isXLMM"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+        NSLog(@"get user profile failed.");
+        self.navigationItem.rightBarButtonItem = nil;
+        [users setBool:NO forKey:@"isXLMM"];
+    }];
+
+    
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+//    if (data == nil) {
+//        return NO;
+//    }
+//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSLog(@"loginUpdateIsXiaoluMaMa dic = %@", dic);
+//    return [[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
 }
 
 - (void)createRightItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
-    rightImageView.frame = CGRectMake(18, 11, 26, 26);
-    [rightBtn addSubview:rightImageView];
-    rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    NSLog(@"createRightItem %@ %@", self.navigationItem.rightBarButtonItem , rightItem);
+    if(self.navigationItem.rightBarButtonItem == nil){
+        NSLog(@"createRightItem ");
+        
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category.png"]];
+        rightImageView.frame = CGRectMake(18, 11, 26, 26);
+        [rightBtn addSubview:rightImageView];
+        rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
 }
 
 
 #pragma mark 解析targeturl 跳转到不同的界面
 - (void)presentView:(NSNotification *)notification{
-    NSLog(@"跳转新的界面");
-    
-    NSLog(@"userInfo = %@", notification.userInfo);
-    NSString *target_url = [notification.userInfo objectForKey:@"target_url"];
-    
-    if (target_url == nil) {
-        return;
-    }
-    
-    NSLog(@"target_url = %@", target_url);
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
-        NSLog(@"跳到今日上新");
-        [self buttonClicked:100];
-      
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
-        NSLog(@"跳到昨日推荐");
-        [self buttonClicked:101];
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
-        NSLog(@"跳到潮童专区");
-        [self buttonClicked:102];
-      
-        
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
-        NSLog(@"跳到时尚女装");
-        [self buttonClicked:103];
-    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
-        NSLog(@"跳转到用户未过期优惠券列表");
-        
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
-        [self.navigationController pushViewController:youhuiVC animated:YES];
-        
-    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
-        //  跳转到小鹿妈妈界面。。。
-        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-        [self.navigationController pushViewController:ma animated:YES];
-        
-        
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
-        
-        NSLog(@"跳转到小鹿妈妈每日上新");
-        
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-        [self.navigationController pushViewController:publish animated:YES];
-        
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
-        //跳转到退款退货列表
-        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
-        [self.navigationController pushViewController:tuihuoVC animated:YES];
-        
-    }else {
-        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        
-        NSString *parameter = [components lastObject];
-        NSArray *params = [parameter componentsSeparatedByString:@"="];
-        NSString *firstparam = [params firstObject];
-        if ([firstparam isEqualToString:@"model_id"]) {
-            NSLog(@"跳到集合页面");
-            NSLog(@"model_id = %@", [params lastObject]);
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-            
-            [self.navigationController pushViewController:collectionVC animated:YES];
-            
-            
-            
-        } else if ([firstparam isEqualToString:@"product_id"]){
-            NSLog(@"跳到商品详情");
-            NSLog(@"product_id = %@", [params lastObject]);
-            
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-            [self.navigationController pushViewController:details animated:YES];
-       
-            
-        } else if ([firstparam isEqualToString:@"trade_id"]){
-            NSLog(@"跳到订单详情");
-            NSLog(@"trade_id = %@", [params lastObject]);
-            
-            
-            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-            //http://m.xiaolu.so/rest/v1/trades/86412/details
-            
-           // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
-            NSLog(@"url = %@", xiangqingVC.urlString);
-            
-            
-            [self.navigationController pushViewController:xiangqingVC animated:YES];
-            
-            
-        } else {
-            
-            //  跳转到H5 界面 。。。。。
-            
-            
-            NSLog(@"跳到H5首页");
-            
-        }
-    }
+    //跳转到新的页面
+    [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
+
+//- (void)pushAndBannerJump:(NSString *)target_url {
+//    if (target_url == nil)return;
+//    
+//    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
+//        NSLog(@"跳到今日上新");
+//        //[self buttonClicked:100];
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
+//        NSLog(@"跳到昨日推荐");
+//        //[self buttonClicked:101];
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
+//        NSLog(@"跳到潮童专区");
+//        //[self buttonClicked:102];
+//        
+//        
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
+//        NSLog(@"跳到时尚女装");
+//        //[self buttonClicked:103];
+//    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
+//        NSLog(@"跳转到用户未过期优惠券列表");
+//        
+//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        youhuiVC.isSelectedYHQ = NO;
+//        [self.navigationController pushViewController:youhuiVC animated:YES];
+//        
+//    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+//        //  跳转到小鹿妈妈界面。。。
+//        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+//        [self.navigationController pushViewController:ma animated:YES];
+//        
+//        
+//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
+//        
+//        NSLog(@"跳转到小鹿妈妈每日上新");
+//        
+//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+//        [self.navigationController pushViewController:publish animated:YES];
+//        
+//    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+//        //跳转到退款退货列表
+//        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+//        [self.navigationController pushViewController:tuihuoVC animated:YES];
+//        
+//    }else {
+//        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+//        
+//        NSString *parameter = [components lastObject];
+//        NSArray *params = [parameter componentsSeparatedByString:@"="];
+//        NSString *firstparam = [params firstObject];
+//        if ([firstparam isEqualToString:@"model_id"]) {
+//            NSLog(@"跳到集合页面");
+//            NSLog(@"model_id = %@", [params lastObject]);
+//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            
+//            [self.navigationController pushViewController:collectionVC animated:YES];
+//            
+//            
+//            
+//        } else if ([firstparam isEqualToString:@"product_id"]){
+//            NSLog(@"跳到商品详情");
+//            NSLog(@"product_id = %@", [params lastObject]);
+//            
+//            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
+//            [self.navigationController pushViewController:details animated:YES];
+//            
+//            
+//        } else if ([firstparam isEqualToString:@"trade_id"]){
+//            NSLog(@"跳到订单详情");
+//            NSLog(@"trade_id = %@", [params lastObject]);
+//            
+//            
+//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//            //http://m.xiaolu.so/rest/v1/trades/86412/details
+//            
+//            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+//            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+//            NSLog(@"url = %@", xiangqingVC.urlString);
+//            [self.navigationController pushViewController:xiangqingVC animated:YES];
+//        } else {
+//            //  跳转到H5 界面 。。。。。
+//        }
+//    }
+//
+//}
 
 - (void)showNotification:(NSNotification *)notification{
     NSLog(@"弹出提示框");
@@ -268,58 +421,85 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark 主界面初始化
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"MMRoot viewWillAppear");
+    [super viewWillAppear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rootViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    
+    UIView *cartView = [_view viewWithTag:123];
+    CGRect rect = cartView.frame;
+    rect.origin.y = SCREENHEIGHT - 64;
+    cartView.frame = rect;
+    //    cartView.frame = CGRectMake(15, SCREENHEIGHT - 156 , 44, 44);
+    [self setLabelNumber];
+    
+    if ([saleTimer isValid]) {
+        [saleTimer invalidate];
+    }
+    saleTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(saleTimerCallback:) userInfo:nil repeats:YES];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated{
+    NSLog(@"MMRoot viewDidAppear");
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-  
-    if (_isFirst) {
-
-    }else{
-        
-//        UIView *cartView = [_view viewWithTag:123];
-//        cartView.frame = CGRectMake(2, SCREENHEIGHT - 166, 44, 44);
+    
+    self.backScrollview.delegate = self;
+    self.categoryViewHeight.constant = SCREENHEIGHT + 64;
+    
+    if(!_isFirst){
+        if([self checkNeedRefresh]){
+            [self refreshView];
+        }
     }
-
+    _isFirst = NO;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self autologin];
+    } else {
+        NSLog(@"no login");
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"MMRoot viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
+    NSLog(@"viewDidDisappear");
     [super viewDidDisappear:animated];
     frame = self.view.frame;
 }
 
-#pragma mark 注册观察者
+
 - (void)viewDidLoad
 {
+    NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
     
-//    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
-//    }
-    
     self.timeCount = 0;
-    //启动活动页
-//    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    [window addSubview:self.startV];
-    
-//    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject) return;
-//        if (responseObject[@"picture"] == nil)return;
-//        [self startDeal:responseObject];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
-    
+    [self.endTime addObject:@""];
+    [self.endTime addObject:@""];
+    [self.endTime addObject:@""];
     
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
@@ -335,26 +515,1030 @@
 //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
+
     _isFirst = YES;
+    _view = self.view;
     
-    _view = [[UIView alloc] initWithFrame:CGRectMake(0, 64+34.9, WIDTH, HEIGHT - 20 - 5 - 28 - 2)];
-    [self.view addSubview:_view];
     _pageCurrentIndex = 0;
+    self.currentIndex = 1;
     
-    
+    //设置导航栏样式
     [self createInfo];
     
-    [self creatPageData];
+//    [self creatPageData];
     
     //[self islogin];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
+    NSLog(@"backScrollview %f", self.backScrollview.contentOffset.x);
+    self.backScrollview.delegate = self;
+    self.backScrollview.tag = TAG_BACK_SCROLLVIEW;
+    
+    self.posterImages = [[NSMutableArray alloc] init];
+    self.posterDataArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    //海报和活动展示
+    [self showPromotion];
+
+    
+    //商品请求链接
+    [self createRequestURL];
+    //推荐商品展示
+    [self createCollectionView];
+    //设置商品scrollview的偏转
+    self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
+    [self changeBtnImg];
+    
+    [self createCartsView];
+    
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.backScrollview.mj_header = header;
+
+    
+    [self autoUpdateVersion];
+    
+
 //    
 //    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
+    
+    //创建新的页面
+//    self.backScrollview.contentSize = CGSizeMake(0, 1000);
+//    [self.view addSubview:self.backScrollview];
+//    
+////    [self createBanner];
+//    
+//    [self.backScrollview addSubview:self.aboveView];
+//    [self.backScrollview addSubview:self.goodsView];
+//    self.goodsView.backgroundColor = [UIColor redColor];
+//    self.aboveView.backgroundColor = [UIColor yellowColor];
+    
 }
+
+- (void)rootViewWillEnterForeground:(NSNotification *)notification
+{
+    //进入前台时调用此函数
+    NSLog(@"Rootview enter foreground");
+    if([self checkNeedRefresh]){
+        [self refreshView];
+    }
+}
+
+- (void)createRequestURL {
+    NSArray *urlBefroe = @[@"/rest/v2/products/yesterday?page=1&page_size=10",
+        @"/rest/v2/products?page=1&page_size=10",
+        @"/rest/v2/products/tomorrow?page=1&page_size=10"];
+    for (int i = 0; i < 3; i++) {
+        NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
+        [self.urlArr addObject:url];
+    }
+    
+    self.dickey = @[YESTDAY, TODAY, TOMORROW];
+}
+
+- (void)showPromotion{
+    //网络请求海报
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.backScrollview.mj_header endRefreshing];
+        if (!responseObject) return;
+        [self fetchedPromotionData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //未登录处理
+        //        [self showDefaultView];
+        NSLog(@"get poster failed.");
+        [self.backScrollview.mj_header endRefreshing];
+    }];
+    
+    //活动
+    /*NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
+    [manage GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.activityArr = responseObject;
+        if (self.activityArr.count == 0) return;
+        [self activityDeal:self.activityArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];*/
+}
+
+- (void)createCollectionView {
+    //设置collectionViewScrollview属性
+    self.collectionViewScrollview.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
+    self.collectionViewScrollview.pagingEnabled = YES;
+    self.collectionViewScrollview.tag = TAG_COLLECTION_SCROLLVIEW;
+    self.collectionViewScrollview.delegate = self;
+    
+    //创建3个collection
+    for (int i = 0; i < 3; i++) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
+        flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumLineSpacing = 5;
+        
+        
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-70) collectionViewLayout:flowLayout];
+        
+        homeCollectionView.backgroundColor = [UIColor whiteColor];
+        homeCollectionView.tag = TAG_GOODS_YESTODAY_SCROLLVIEW + i;
+        homeCollectionView.scrollEnabled = NO;
+        
+        //添加上拉加载
+        homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
+            NSLog(@"MJFresh nextstr= %@ currentindex=%ld",nextStr, (long)self.currentIndex);
+            if([nextStr class] == [NSNull class]) {
+                [homeCollectionView.mj_footer endRefreshingWithNoMoreData];
+                return;
+            }
+            [self loadMore];
+        }];
+
+        
+        [self.collectionViewScrollview addSubview:homeCollectionView];
+        
+        homeCollectionView.delegate = self;
+        homeCollectionView.dataSource = self;
+        homeCollectionView.showsVerticalScrollIndicator = FALSE;
+        
+//        [homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
+        [homeCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        
+        [self.collectionArr addObject:homeCollectionView];
+    }
+    
+    //今日商品
+    [self goodsRequest];
+}
+
+- (void)fetchedPromotionData:(NSDictionary *)jsonDic{
+    if (jsonDic.count == 0) return;
+    
+    NSArray *childArray = [jsonDic objectForKey:@"posters"];
+    
+    
+    [self.posterImages removeAllObjects];
+    [self.posterDataArray removeAllObjects];
+    
+    if (childArray.count == 0)return;
+    for (NSDictionary *childDic in childArray) {
+        PosterModel *childModel = [PosterModel new];
+        
+        childModel.target_link = [childDic objectForKey:@"app_link"];
+        childModel.imageURL = [childDic objectForKey:@"pic_link"];
+        childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
+        childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
+        
+        
+        
+        NSLog(@"posterImages url = %@", [childModel.imageURL URLEncodedString]);
+//        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
+//        if (image0 == nil) {
+//            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
+//        }
+                                                                                                                                                                                      
+        [self.posterImages addObject:childModel.imageURL];
+        [self.posterDataArray addObject:childModel];
+        
+    }
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, 150)];
+    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
+    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //通过加载图片得到其高度
+        float h;
+        if((image == nil) || (image.size.width == 0)){
+            h = 150;
+        }
+        else{
+            h = image.size.height * (WIDTH /image.size.width);
+        }
+        NSLog(@"poster height %f %f", image.size.height, h);
+        self.bannerHeight.constant = h;
+        self.aboveHeight.constant = h+120;
+        [imgView removeFromSuperview];
+        MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, h) andImages:self.posterImages];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
+        [adView.scrollView addGestureRecognizer:tap];
+        
+        [self.bannerView addSubview:adView];
+    }];
+    [self.bannerView addSubview:imgView];
+    [imgView removeFromSuperview];
+    
+//    MMAdvertiseView *adView = [[MMAdvertiseView alloc] initWithFrame:self.bannerView.bounds andImages:self.posterImages];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapgesture:)];
+//    [adView.scrollView addGestureRecognizer:tap];
+//
+//    [self.bannerView addSubview:adView];
+    
+    [self initCategoryLvl1Img:jsonDic];
+    
+    //活动
+    [self initActivity:jsonDic];
+    //品牌
+    [self initBrand:jsonDic];
+}
+
+- (void)initCategoryLvl1Img:(NSDictionary *)jsonDic{
+    NSArray *categorys = [jsonDic objectForKey:@"categorys"];
+    
+    if (categorys.count < 2)return;
+
+    self.childImgView.contentMode=UIViewContentModeScaleAspectFit;
+    self.womenImgView.contentMode=UIViewContentModeScaleAspectFit;
+    [ImageUtils loadImage:self.childImgView url:[categorys[0] objectForKey:@"cat_img"]];
+    [ImageUtils loadImage:self.womenImgView url:[categorys[1] objectForKey:@"cat_img"]];
+    
+    [self.womenImgView setUserInteractionEnabled:YES];
+    [self.childImgView setUserInteractionEnabled:YES];
+    [self.womenImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
+    [self.childImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategoryLvl1:)]];
+    
+}
+
+- (void)initActivity:(NSDictionary *)jsonDic{
+    NSArray *activitys = [jsonDic objectForKey:@"activitys"];
+    NSLog(@"initActivity count=%lu",(unsigned long)activitys.count );
+    
+    self.activityArr = activitys;
+    [self.activityDataArr removeAllObjects];
+    
+    if (activitys.count ==0){
+        self.activityHeight.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    }
+
+    //[self.view layoutIfNeeded];
+    
+    
+    [self activityDeal:self.activityArr];
+
+}
+
+- (void)initBrand:(NSDictionary *)jsonDic{
+    NSArray *brands = [jsonDic objectForKey:@"promotion_brands"];
+    NSLog(@"initBrand count=%lu",(unsigned long)brands.count );
+    
+    if (brands.count ==0){
+        self.brandViewHeight.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    }
+    self.brandViewHeight.constant = BRAND_HEIGHT * brands.count;
+
+    [self.view layoutIfNeeded];
+    
+    NSInteger index = 0;
+    for(NSDictionary *brand in brands){
+        NSLog(@"x=%f y=%f url=%@",self.brandView.frame.origin.x,
+              self.brandView.frame.origin.y,
+              [brand objectForKey:@"brand_pic"]);
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 + BRAND_HEIGHT * index, WIDTH, 1)];
+        lineView.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+        [self.brandView addSubview:lineView];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10 + BRAND_HEIGHT * index, 80, 20)];
+        
+        [ImageUtils loadImage:imageView url:[brand objectForKey:@"brand_pic"]];
+
+        [self.brandView addSubview:imageView];
+        
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 + BRAND_HEIGHT * index, 50, 20)];
+        textView.text = [brand objectForKey:@"brand_desc"];
+        textView.font
+        = [UIFont fontWithName:@"Arial" size:10.0];
+        textView.textColor = [UIColor blackColor];
+        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [self.brandView addSubview:textView];
+        
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15 + BRAND_HEIGHT * index, 10, 10)];
+        UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
+        arrowView.image = image;
+        [self.brandView addSubview:arrowView];
+        
+        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 40 + BRAND_HEIGHT * index, WIDTH, 1)];
+        lineView1.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+        [self.brandView addSubview:lineView1];
+        
+        //展示品牌商品
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
+        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumLineSpacing = 5;
+        flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
+        
+        UICollectionView *brandCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 45 + BRAND_HEIGHT * index, SCREENWIDTH - 15, 145) collectionViewLayout:flowLayout];
+        
+        brandCollectionView.backgroundColor = [UIColor whiteColor];
+        brandCollectionView.tag = TAG_COLLECTION_BRAND + index;
+        brandCollectionView.scrollEnabled = YES;
+        brandCollectionView.showsHorizontalScrollIndicator = FALSE;
+        
+        brandCollectionView.delegate = self;
+        brandCollectionView.dataSource = self;
+        
+        [brandCollectionView registerClass:[BrandCollectionCell class] forCellWithReuseIdentifier:kbrandCell];
+        [self.brandView addSubview:brandCollectionView];
+        [self.brandArr addObject:brandCollectionView];
+        
+        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, BRAND_HEIGHT - 1 + BRAND_HEIGHT * index, WIDTH, 1)];
+        lineView2.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+        [self.brandView addSubview:lineView2];
+        
+        [self getBrandGoods:[brand objectForKey:@"id"] index:index];
+        
+        index++;
+    }
+}
+
+- (BOOL)checkNeedRefresh{
+    //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
+
+    if(self.endTime.count==0 ||
+       [self.endTime[1] isEqualToString:@""])
+        return TRUE;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    // NSDateComponents *comps =
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    
+    
+    NSDate *todate;
+    
+    NSMutableString *string = [NSMutableString stringWithString:self.endTime[1]];
+    NSRange range = [self.endTime[1] rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+    dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+    todate = [dateformatter dateFromString:string];
+    
+    NSDate *date = [NSDate date];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ([d hour] < 0 || [d minute] < 0) {
+        NSLog(@"need refresh");
+        return TRUE;
+    }
+    
+    NSLog(@"not need refresh");
+    return FALSE;
+}
+
+- (void )refreshView{
+    [self removeAllSubviews:self.bannerView];
+    [self removeAllSubviews:self.activityView];
+    [self removeAllSubviews:self.brandView];
+    [self showPromotion];
+    
+    [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+    [currentArr removeAllObjects];
+    
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection reloadData];
+
+    [self createRequestURL];
+    [self goodsRequest];
+}
+
+- (void)removeAllSubviews:(UIView *)v{
+    while (v.subviews.count) {
+        UIView* child = v.subviews.lastObject;
+        [child removeFromSuperview];
+    }
+}
+#pragma mark --定时器callback
+
+- (void)saleTimerCallback:(NSTimer*)theTimer
+{
+    if(self.endTime.count==0 ||
+       [self.endTime[self.currentIndex] isEqualToString:@""])
+        return;
+
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    // NSDateComponents *comps =
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    
+    
+    NSDate *todate;
+
+    NSMutableString *string = [NSMutableString stringWithString:self.endTime[self.currentIndex]];
+    NSRange range = [self.endTime[self.currentIndex] rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+    dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+    todate = [dateformatter dateFromString:string];
+
+    NSDate *date = [NSDate date];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ([d hour] < 0 || [d minute] < 0) {
+        self.labelTime.text = @"00:00:00";
+        //   NSLog(@"已下架");
+    } else{
+        NSString *string;
+        if ((long)[d day] == 0) {
+            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+        }
+        else{
+            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)[d day]*24+(long)[d hour], (long)[d minute], (long)[d second]];
+            
+        }
+        
+        self.labelTime.text = string;
+
+    }
+    
+    
+}
+
+#pragma mark --商品列表
+
+- (void)goodsRequest{
+    NSString *currentUrl = self.urlArr[self.currentIndex];
+    NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+
+        [self goodsResult:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
+- (void)goodsResult:(NSDictionary *)dic {
+    if ([[dic objectForKey:@"next"] class] == [NSNull class]) {
+        [self.nextdic setObject:@"" forKey:self.dickey[self.currentIndex]];
+        NSLog(@"goodsResult NEXT=null");
+    }else {
+        [self.nextdic setObject:[dic objectForKey:@"next"] forKey:self.dickey[self.currentIndex]];
+        NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
+    }
+    
+    NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
+    NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
+    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    if(self.currentIndex != 2){
+        if(deadline != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
+        }
+    }
+    else{
+        if(starttime != nil){
+            [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: starttime];
+        }
+    }
+    
+    NSArray *results = [dic objectForKey:@"results"];
+    if ((results == nil) || (results.count == 0)) {
+        return;
+    }
+    NSLog(@"result count=%ld", (unsigned long)results.count );
+    
+    //判断在数据源字典中是否有对应的数组
+    NSMutableArray *numArray = [[NSMutableArray alloc] init];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+    for (NSDictionary *goods in results) {
+        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:goods];
+        
+        
+        NSIndexPath *index ;
+        
+        index = [NSIndexPath indexPathForRow:currentArr.count inSection:0];
+        [currentArr addObject:model];
+        [numArray addObject:index];
+    }
+    
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    
+    if((numArray != nil) && (numArray.count > 0)){
+        @try{
+            [collection insertItemsAtIndexPaths:numArray];
+            [numArray removeAllObjects];
+            numArray = nil;
+        }
+        @catch(NSException *except)
+        {
+            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        }
+    }
+
+    [collection reloadData];
+    
+}
+
+- (void)loadMore {
+    //NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
+    NSString *url = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
+    
+    NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
+    if((nil == url) || ([url isEqualToString:@""])){
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
+        [collection.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
+    
+    self.collectionViewScrollview.scrollEnabled = NO;
+
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
+        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
+        if (!responseObject)return ;
+        [self goodsResult:responseObject];
+        self.collectionViewScrollview.scrollEnabled = YES;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        [collection.mj_footer endRefreshing];
+        self.collectionViewScrollview.scrollEnabled = YES;
+    }];
+}
+
+
+#pragma mark --活动和活动弹窗处理
+- (void)activityDeal:(NSArray *)activityArr {
+    for (NSDictionary *actityDic in activityArr) {
+        ActivityModel *activityM = [[ActivityModel alloc] init];
+        [activityM setValuesForKeysWithDictionary:actityDic];
+        [self.activityDataArr addObject:activityM];
+    }
+    
+    allActivityHeight = 0;
+    //创建活动展示图
+    for (int i = 0; i < self.activityDataArr.count; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.autoresizesSubviews = YES;
+//        imageView.autoresizingMask =
+//        UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        imageView.tag = TAG_ACTIVITY_BASE + i;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(activityTapAction:)];
+        imageView.userInteractionEnabled = YES;
+        [imageView addGestureRecognizer:tap];
+        [self.activityView addSubview:imageView];
+    
+        ActivityModel *acM = self.activityDataArr[i];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //通过加载图片得到其高度
+            float h;
+            if((image == nil) || (image.size.width == 0)){
+                h = ACTIVITYHEIGHT;
+            }
+            else{
+                h = image.size.height * (WIDTH /image.size.width);
+            }
+            NSLog(@"activity height %f %f", image.size.height, h);
+            imageView.frame = CGRectMake(10, 10+allActivityHeight, SCREENWIDTH - 10, h);
+             allActivityHeight += h + 10;
+             
+             NSLog(@"allActivityHeight %f", allActivityHeight);
+
+             self.activityHeight.constant = allActivityHeight;
+        }];
+
+
+    }
+    
+
+    
+    huodongJson = [activityArr firstObject];
+    if ([huodongJson isKindOfClass:[NSDictionary class]]) {
+        login_required = [[huodongJson objectForKey:@"login_required"] boolValue];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *activityID = [huodongJson objectForKey:@"id"];
+        NSNumber *userNumber = [defaults objectForKey:@"activityid"];
+        
+        if ([userNumber integerValue] == [activityID integerValue]) return;
+        //活动弹框
+        if (!([[huodongJson objectForKey:@"mask_link"] class] == [NSNull class])
+            && (![[huodongJson objectForKey:@"mask_link"]  isEqual: @""])) {
+            NSString *imageUrl = [huodongJson objectForKey:@"mask_link"];
+            
+            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    [defaults setObject:activityID forKey:@"activityid"];
+                    [self createActivityView:image];
+                });
+            });
+        }
+    }
+}
+
+//活动展示点击
+- (void)activityTapAction:(UITapGestureRecognizer *)tap {
+    NSLog(@"点击了 activityTapAction。。。。。");
+    //判断点击的活动
+    UIImageView *imageV = (UIImageView *)tap.view;
+    NSInteger imageTag = imageV.tag - TAG_ACTIVITY_BASE;
+    
+    [self activityClick:self.activityArr[imageTag]];
+}
+
+
+- (void)createActivityView:(UIImage *)image {
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    [backView removeFromSuperview];
+    
+    //活动弹窗
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    backView.backgroundColor = [UIColor whiteColor];
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:backView];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH - imageWidth) * 0.5 , (SCREENHEIGHT - imageHeight) * 0.5, imageWidth, imageHeight)];
+    imageView.image = image;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongrukou)];
+    [imageView addGestureRecognizer:tap];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.masksToBounds = YES;
+    imageView.userInteractionEnabled = YES;
+    
+    [backView addSubview:imageView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat imageMaxX = CGRectGetMaxX(imageView.frame);
+    CGFloat imageMinY = CGRectGetMinY(imageView.frame);
+    button.frame = CGRectMake(imageMaxX - 40, imageMinY, 40, 40);
+    [button setImage:[UIImage imageNamed:@"icon-guanbi.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(guanbiClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [backView addSubview:button];
+}
+
+- (void)guanbiClicked:(UIButton *)button{
+    [backView removeFromSuperview];
+}
+
+- (void)huodongrukou{
+    [backView removeFromSuperview];
+    [self activityClick:self.activityArr[0]];
+}
+
+#pragma mark ---- 点击活动事件处理
+- (void)activityClick:(NSDictionary *)dic {
+    login_required = [[dic objectForKey:@"login_required"] boolValue];
+    NSLog(@"Activity login required %d", login_required);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        WebViewController *huodongVC = [[WebViewController alloc] init];
+        huodongVC.diction = dic;
+        huodongVC.active = @"active";
+        [self.navigationController pushViewController:huodongVC animated:YES];
+    } else{
+        if (login_required) {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            WebViewController *huodongVC = [[WebViewController alloc] init];
+            huodongVC.diction = dic;
+            huodongVC.active = @"active";
+            [self.navigationController pushViewController:huodongVC animated:YES];
+        }
+    }
+}
+
+#pragma mark --品牌信息处理
+-(void)getBrandGoods:(NSString*)brandId index:(NSInteger)index{
+    NSLog(@"getBrandGoods %@", brandId);
+    //网络请求
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
+    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        [self fetchedBrandData:responseObject index:index];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //未登录处理
+        //        [self showDefaultView];
+        NSLog(@"get brand goods failed.");
+    }];
+}
+
+- (void)fetchedBrandData:(NSDictionary *)jsonDic index:(NSInteger)index{
+    if (jsonDic.count == 0) return;
+    
+    NSArray *goodsArray = [jsonDic objectForKey:@"results"];
+    NSMutableArray *goods = [[NSMutableArray alloc] init];
+    
+    if (goodsArray.count == 0)return;
+    for (NSDictionary *product in goodsArray) {
+        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
+        
+        goodsModel.brandID = [product objectForKey:@"id"];
+        goodsModel.product_id = [product objectForKey:@"product_id"];
+        goodsModel.product_name = [product objectForKey:@"product_name"] ;
+        goodsModel.product_img = [product objectForKey:@"product_img"];
+        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
+        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
+        
+        [goods addObject:goodsModel];
+        
+        
+        
+    }
+    [self.brandDataArr addObject:goods];
+    
+    UICollectionView *collection = self.brandArr[index];
+    [collection reloadData];
+    
+    
+}
+
+#pragma mark --点击
+//poster click
+- (void)tapgesture:(UITapGestureRecognizer *)gesture{
+    MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
+    PosterModel *model = self.posterDataArray[view.currentImageIndex];
+    NSString *target_url = model.target_link;
+    //[self pushAndBannerJump:target_url];
+    [JumpUtils jumpToLocation:target_url viewController:self];
+}
+
+//women child click
+-(void)clickCategoryLvl1:(UITapGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"clickCategoryLvl1 click");
+    //NSLog(@"%hhd",[gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]);
+    
+    UIView *viewClicked=[gestureRecognizer view];
+    if (viewClicked==self.womenImgView) {
+        NSLog(@"womenImgView");
+        //跳到时尚女装
+        ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        womanVC.urlString = kLADY_LIST_URL;
+        womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        womanVC.childClothing = NO;
+        
+        [self.navigationController pushViewController:womanVC animated:YES];
+    }else if(viewClicked==self.childImgView) {
+        
+        NSLog(@"childImgView");
+        //跳到潮童专区
+        ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.childClothing = YES;
+        
+        [self.navigationController pushViewController:childVC animated:YES];
+    }
+    
+}
+
+//今昨明按钮点击
+- (void)categoryBtnClick:(UIButton *)btn {
+    NSInteger tag = btn.tag - (TAG_BTN_YESTODAY);
+    self.currentIndex = tag;
+    
+    //循环遍历改变背景
+    [self changeBtnImg];
+    
+    
+    //改变scrollview的偏移
+    NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
+    self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
+    
+    //如果没有数据重新请求，有的话不作操作
+    NSString *key = self.dickey[tag];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    if((currentArr != nil) && (currentArr.count == 0)){
+        [self goodsRequest];
+    }
+    
+}
+
+-(void)changeBtnImg{
+    UIButton *btn;
+    
+    if(self.currentIndex == 0){
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        //[uiv setImage:[UIImage imageNamed:@"yestday1.png"]];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
+    }
+    else if(self.currentIndex == 1){
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场结束";
+    } if(self.currentIndex == 2){
+        btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TODAY];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        btn = [self.categoryView viewWithTag:TAG_BTN_TOMORROW];
+        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        
+        self.labelIndicate.text = @"距本场开始";
+    }
+}
+
+#pragma mark --collection的代理
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+            && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        NSLog(@"brand collection");
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                return obj.count;
+            }
+            index++;
+        }
+        return 0;
+    }
+    else{
+        NSLog(@"arr collection");
+        NSString *key = self.dickey[self.currentIndex];
+        NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+        return currentArr.count;
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        //NSLog(@"brand collection cellForItemAtIndexPath");
+        BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
+        
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                if(goods.count > indexPath.row){
+                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                    [cell fillDataWithModel:model];
+                }
+                return cell;
+
+            }
+            index++;
+        }
+        return cell;
+    }
+    else{
+        //NSLog(@"arr collection cellForItemAtIndexPath");
+        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+        //wulei 20160421 防止超过1屏后出现重复和错乱
+        //for (UIView *view in cell.contentView.subviews) {
+        //    [view removeFromSuperview];
+        //}
+        
+        NSString *key = self.dickey[self.currentIndex];
+        NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+        if(currentArr.count > indexPath.row){
+            PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+            [cell fillData:model];
+        }
+        return cell;
+    }
+}
+
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+//    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+//       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+//        return CGSizeMake(10, 10);
+//
+//    }
+//    else{
+//        return CGSizeMake(SCREENWIDTH, 30);
+//    }
+//}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+//        NSLog(@"brand collection sizeForItemAtIndexPath");
+        return CGSizeMake(110, 145);
+    }
+    else{
+        return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH-15) * 0.5 * 8/6 + 60);
+    }
+}
+
+//选择了某个cell
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    NSString *key = self.dickey[self.currentIndex];
+    NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
+    
+
+    
+    if((collectionView.tag >= TAG_COLLECTION_BRAND)
+       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
+        
+        int index = 0;
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
+                
+            }
+            index++;
+        }
+        
+        
+        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
+        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
+        [self.navigationController pushViewController:collectionVC animated:YES];
+    
+    }
+    else{
+        if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
+            return;
+        
+        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+        if (model.productModel == nil) {
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.eventLink = model.web_url;
+            webView.goodsID = model.ID;
+            webView.diction = model.productModel;
+            //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+            [self.navigationController pushViewController:webView animated:YES];
+        }else {
+            
+            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+                //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+                
+            } else {
+               
+                WebViewController *webView = [[WebViewController alloc] init];
+                webView.eventLink = model.web_url;
+                webView.goodsID = model.ID;
+                webView.diction = model.productModel;
+    //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
+                [self.navigationController pushViewController:webView animated:YES];
+            }
+        }
+    }
+    
+}
+
+//- (void)updateViewConstraints {
+//    [super updateViewConstraints];
+//    
+//    self.categoryViewHeight.constant = 1000;
+//}
+
+//- (void)createBanner {
+//    UIView *bannerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 180)];
+//    bannerView.backgroundColor = [UIColor redColor];
+//    [self.aboveView addSubview:bannerView];
+//    
+//    UIView *childAndWomanView = [[UIView alloc] initWithFrame:CGRectMake(0, 180, SCREENWIDTH, 120)];
+//    childAndWomanView.backgroundColor = [UIColor greenColor];
+//    [self.aboveView addSubview:childAndWomanView];
+//    //创建童装和女装
+//    
+//    //创建分类
+//    
+//}
 
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];
@@ -395,14 +1579,18 @@
 - (void)jumpHome:(NSNotification *)notification {
     NSDictionary *info = notification.userInfo;
     NSString *jumpType = info[@"param"];
-    if ([jumpType isEqualToString:@"previous"]) {
-        [self buttonClicked:101];
+    
+    NSLog(@"-rootview jumphome--跳转－－－－%@", jumpType);
+    if ([jumpType isEqualToString:@"today"]) {
+        //[self buttonClicked:101];
+    }else if ([jumpType isEqualToString:@"previous"]) {
+            
     }else if ([jumpType isEqualToString:@"child"]) {
-        [self buttonClicked:102];
+        
     }else if ([jumpType isEqualToString:@"woman"]) {
-        [self buttonClicked:103];
+        //[self buttonClicked:103];
     }
-    NSLog(@"---跳转－－－－%@", jumpType);
+
 }
 
 - (NSArray *)randomArray{
@@ -424,6 +1612,8 @@
    // NSLog(@"array = %@", array);
     return array;
 }
+
+#pragma mark 自动登录
 
 - (void)weixinzidongdenglu{
     NSDictionary * dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
@@ -516,54 +1706,63 @@
 
 - (void)autologin{
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
-    if ([loginMethon isEqualToString:kWeiXinLogin]) {
-      //  NSLog(@"微信登录");
-        
-        [self weixinzidongdenglu];
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-    } else if ([loginMethon isEqualToString:kPhoneLogin]){
-      
-       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
-      //  NSLog(@"userinfo = %@", userinfo);
-        if ([self isXiaolumama]) {
-            [self createRightItem];
-        } else{
-            self.navigationItem.rightBarButtonItem = nil;
-        }
-        
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *loginMethon = [defaults objectForKey:kLoginMethod];
+//    if ([loginMethon isEqualToString:kWeiXinLogin]) {
+//      //  NSLog(@"微信登录");
+//        
+//        [self weixinzidongdenglu];
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//    } else if ([loginMethon isEqualToString:kPhoneLogin]){
+//      
+//       __unused NSDictionary *userinfo = [defaults objectForKey:kPhoneNumberUserInfo];
+//      //  NSLog(@"userinfo = %@", userinfo);
+//        if ([self isXiaolumama]) {
+//            [self createRightItem];
+//        } else{
+//            self.navigationItem.rightBarButtonItem = nil;
+//        }
+//        
+//    }
+    
+    NSLog(@"auto login");
+    if ([self isXiaolumama]) {
+        NSLog(@"isXiaolumama");
+        [self createRightItem];
+    } else{
+        NSLog(@"not xiaolumama");
+        self.navigationItem.rightBarButtonItem = nil;
     }
    
 }
 
 
-- (void)islogin{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
-    NSURL *url = [NSURL URLWithString:string];
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
-    if (error == nil) {
-        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        if (error == nil) {
-          //  NSLog(@"dic = %@", dic);
-        } else{
-            LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-        
-    } else{
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
-        [self.navigationController pushViewController:loginVC animated:YES];
-    }
-    
-}
+//- (void)islogin{
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/islogin", Root_URL];
+//    NSURL *url = [NSURL URLWithString:string];
+//    NSError *error = nil;
+//    NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+//    if (error == nil) {
+//        __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//        if (error == nil) {
+//          //  NSLog(@"dic = %@", dic);
+//        } else{
+//            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//            [self.navigationController pushViewController:loginVC animated:YES];
+//        }
+//        
+//    } else{
+//        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:loginVC animated:YES];
+//    }
+//    
+//}
 
 #pragma mark  设置导航栏样式
 - (void)createInfo{
@@ -605,7 +1804,7 @@
         if (data == nil) {
             return;
         }
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]; 
        // NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
             MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
@@ -615,50 +1814,18 @@
             [alertView show];
         }
     } else {
-        LogInViewController *loginVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
 }
 
 
-#pragma mark 生成pageController数据。。。
-- (void)creatPageData{
-    _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    _pageVC.view.frame = _view.bounds;
-    _pageVC.view.userInteractionEnabled = YES;
-    _pageVC.dataSource = self;
-    _pageVC.delegate = self;
-    TodayViewController *todayVC = [[TodayViewController alloc] initWithNibName:@"TodayViewController" bundle:nil];
-    todayVC.delegate = self;
-    PreviousViewController *preVC = [[PreviousViewController alloc] initWithNibName:@"PreviousViewController" bundle:nil];
-    preVC.delegate = self;
-    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    childVC.urlString = kCHILD_LIST_URL;
-    childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-    childVC.childClothing = YES;
-    childVC.delegate = self;
-    ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    womanVC.urlString = kLADY_LIST_URL;
-    womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
-    womanVC.childClothing = NO;
-    womanVC.delegate = self;
-    _pageContentVC = @[todayVC, preVC, childVC, womanVC];
-    [_pageVC setViewControllers:@[todayVC] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
-    [self addChildViewController:_pageVC];
-    [_view addSubview:_pageVC.view];
-    [self createCartsView];
-    [_pageVC didMoveToParentViewController:self];
-    for (UIView *v in  _pageVC.view.subviews) {
-        if ([v isKindOfClass:[UIScrollView class]]) {
-            ((UIScrollView *)v).delegate = self;
-        }
-    }
-}
+
 
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 156, 108, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
@@ -697,15 +1864,14 @@
     dotView.userInteractionEnabled = NO;
     label.userInteractionEnabled = NO;
     countLabel.hidden = YES;
-    
-    
-    
+
+    //[self.view addSubview:view];
 }
-#pragma mark 设置购物车数量
 
 
 - (void)setLabelNumber{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"login"] == NO) {
+        NSLog(@"Cart,not login,return");
         dotView.hidden = YES;
         countLabel.hidden = YES;
         UIView *view = [_view viewWithTag:123];
@@ -714,6 +1880,8 @@
         view.frame = rect;
         
         label.text = @"0";
+        
+        self.navigationItem.rightBarButtonItem = nil;
         return;
     }
     
@@ -810,7 +1978,7 @@
 - (void)gotoCarts:(id)sender{
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
-        LogInViewController *enterVC = [[LogInViewController alloc] initWithNibName:@"LogInViewController" bundle:nil];
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
@@ -836,11 +2004,133 @@
 */
 
 #pragma mark UIscrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    //NSLog(@"scrollViewWillBeginDragging");
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
+{
+    return YES;
+    //返回NO   关闭此功能
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    //if (scrollView.tag == kInnerScrollViewTag) {
+    //    [scrollView resignFirstResponder];
+    ///}
+    NSLog(@"***scrollViewDidScrollToTop");
+}
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_currentIndex == 0) {
-        scrollView.bounces = NO;
-    } else{
-        scrollView.bounces = YES;
+
+    CGFloat brandMaxY = CGRectGetMaxY(self.brandView.frame);
+    CGPoint currentContentOffset = self.backScrollview.contentOffset;
+    float allPostHeight = self.aboveView.frame.size.height+
+    self.brandView.frame.size.height+self.activityView.frame.size.height;
+    
+//    brandMaxY = brandMaxY - 1;
+//    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+    //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
+    if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
+    
+    //NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+//self.brandView.frame.size.height,self.activityView.frame.size.height);
+    
+    //在最外层back scrollview上进行滑动
+    if (scrollView.tag == TAG_BACK_SCROLLVIEW
+        && scrollView.dragging){
+        if (scrollView.contentOffset.y <= 0) {
+            //下拉
+            //NSLog(@"backScrollview 下拉");
+        }if (scrollView.contentOffset.y > 0) {
+            //上滑
+            //NSLog(@"backScrollview 上滑");
+            if(scrollView.contentOffset.y + 64 - allPostHeight > 5.0f){
+                NSLog(@"backScrollview enter category");
+                self.backScrollview.scrollEnabled = NO;
+                [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,allPostHeight-64)
+                                             animated:YES];
+                
+                [self enableAllGoodsCollectionScroll];
+            }
+            else{
+                self.backScrollview.scrollEnabled = YES;
+                [self disableAllGoodsCollectionScroll];
+            }
+        }
+    }
+    
+    //在中间层水平滑动
+    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
+        && scrollView.dragging){
+        int index = 1;
+        if(scrollView.contentOffset.x <= (1e-6)){
+            index = 0;
+            self.labelIndicate.text = @"距本场结束";
+        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
+            index = 1;
+            self.labelIndicate.text = @"距本场结束";
+        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            index = 2;
+            self.labelIndicate.text = @"距本场开始";
+        }
+        //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
+        if(self.currentIndex != index){
+            self.currentIndex = index;
+            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+            if((currentArr != nil) && (currentArr.count == 0)){
+                [self goodsRequest];
+            }
+        }
+        else{
+            self.currentIndex = index;
+        }
+        
+        [self changeBtnImg];
+    }
+    
+    //在最内层的collection上进行滑动
+    if (((scrollView.tag == TAG_GOODS_YESTODAY_SCROLLVIEW)
+        || (scrollView.tag == TAG_GOODS_TODAY_SCROLLVIEW)
+        || (scrollView.tag == TAG_GOODS_TOMORROW_SCROLLVIEW))
+        && scrollView.dragging){
+        if( scrollView.contentOffset.y <= 0) {
+//            NSLog(@"today scroll down");
+            self.backScrollview.scrollEnabled = YES;
+            [self.backScrollview setContentOffset:CGPointMake(currentContentOffset.x,currentContentOffset.y + scrollView.contentOffset.y)
+                                      animated:YES];
+            
+            [self disableAllGoodsCollectionScroll];
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 45;
+
+            }];
+
+            
+        }
+        else if( scrollView.contentOffset.y > 0) {
+//            NSLog(@"today scroll up");
+            [UIView animateWithDuration:1 animations:^{
+                self.lefttimeViewHeight.constant = 0;
+                
+            }];
+        }
+    }
+}
+
+-(void)enableAllGoodsCollectionScroll{
+    for(int i=0; i<3; i++){
+        UICollectionView* cv=[self.collectionArr objectAtIndex:i];
+        cv.scrollEnabled = YES;
+    }
+}
+
+-(void)disableAllGoodsCollectionScroll{
+    for(int i=0; i<3; i++){
+        UICollectionView* cv=[self.collectionArr objectAtIndex:i];
+        cv.scrollEnabled = NO;
     }
 }
 
@@ -852,112 +2142,6 @@
 }
 
 
-#pragma mark --PageViewControllerDelegate--
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
-    _currentIndex = [_pageContentVC indexOfObject:viewController];
-    if (_currentIndex < _pageContentVC.count - 1) {
-        _pageCurrentIndex = _currentIndex + 1;
-        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
-    } else{
-    }
-    return nil;
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
-    _currentIndex = [_pageContentVC indexOfObject:viewController];
-    if (_currentIndex > 0) {
-        _pageCurrentIndex = _currentIndex - 1;
-        return [_pageContentVC objectAtIndex:_pageCurrentIndex];
-    } else{
-    }
-    return nil;
-}
-
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    _currentIndex  = [_pageContentVC indexOfObject:pageViewController.viewControllers[0]];
-    if (completed)
-    {
-        NSInteger btnTag = _currentIndex + 100;
-        for (int i = 100; i<104; i++) {
-            if (btnTag == i) {
-                UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-              [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            }
-            else{
-                UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-            }
-        }
-        
-       // [self sliderLabelPositonWithIndex:currentIndex withDuration:.35];
-    }else
-    {
-        if (finished)
-        {
-            
-            NSInteger btnTag = _currentIndex + 100;
-            for (int i = 100; i<104; i++) {
-                if (btnTag == i) {
-                    UIButton *button = (UIButton *)[self.btnView viewWithTag:i];
-                  [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-                    
-                }
-                else{
-                    UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-                    [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-                    
-                }
-            }
-        }
-    }
-    
-}
-
-#pragma mark 点击按钮进入不同的专区列表。。
-- (void)buttonClicked:(NSInteger)btnTag{
-    _currentIndex = btnTag - 100+1;
-    for (int i = 100; i<104; i++) {
-        if (btnTag == i) {
-            UIButton *button = (UIButton *)[self.btnView viewWithTag:btnTag];
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 100;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
-
-- (IBAction)btnClicked:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSInteger btnTag = button.tag;
-    _currentIndex = btnTag - 100+1;
-   
-    for (int i = 100; i<104; i++) {
-        if (btnTag == i) {
-            [button setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-            
-        }else{
-            UIButton *button  = (UIButton *)[self.btnView viewWithTag:i];
-            [button setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
-        }
-    }
-    NSInteger index = btnTag - 100;
-    BOOL state = 0;
-    if (_pageCurrentIndex < index) {
-        state = 1;
-    }
-    _pageCurrentIndex = index;
-    [_pageVC setViewControllers:@[[_pageContentVC objectAtIndex:index]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
 
 #pragma mark --mmNavigationDelegate--
 
@@ -990,4 +2174,68 @@
 }
 
 
+- (IBAction)yestdayBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
+
+- (IBAction)tomottowBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
+
+- (IBAction)todayBtnClick:(id)sender {
+    [self categoryBtnClick:sender];
+}
+
+#pragma mark 版本 自动升级
+- (void)autoUpdateVersion{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self fetchedUpdateData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+}
+
+- (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
+    NSArray *reluts = [appInfoDic objectForKey:@"results"];
+    if ([reluts count] == 0) return;
+    NSDictionary *infoDic = reluts[0];
+    
+    
+    self.latestVersion = [infoDic objectForKey:@"version"];
+    self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
+    self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    double doubleCurrentVersion = [app_Version doubleValue];
+    
+    double doubleUpdateVersion = [self.latestVersion doubleValue];
+    
+    
+    
+    if (doubleCurrentVersion < doubleUpdateVersion) {
+        
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+                                           message:@"有新版本，是否升级！"
+                                          delegate: self
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles: @"升级", nil];
+        alert.tag = 1001;
+        [alert show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        }
+    }
+}
 @end
