@@ -673,6 +673,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [SVProgressHUD dismiss];
 }
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [SVProgressHUD dismiss];
+}
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
