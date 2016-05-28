@@ -627,24 +627,14 @@
 
 
 - (void)jsLetiOSWithData:(id )data callBack:(WVJBResponseCallback)block {
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     NSString *target_url = [data objectForKey:@"target_url"];
     
     if (target_url == nil) {
         return;
     }
     
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
-        
-        if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
-            return;
-        }else {
-            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-            [self.navigationController pushViewController:cartVC animated:YES];
-        }
-    }
+    [JumpUtils jumpToLocation:target_url viewController:self];
+    
 }
 - (void)dealloc {
     self.shareWebView = nil;
@@ -673,17 +663,7 @@
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
-#pragma mark 解析targeturl 跳转到不同的界面
-- (void)jumpToJsLocation:(NSDictionary *)dic{
-    
-    NSString *target_url = [dic objectForKey:@"target_url"];
-    
-    if (target_url == nil) {
-        return;
-    }
-    [JumpUtils jumpToLocation:target_url viewController:self];
-    
-}
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     
     if (error == nil) {

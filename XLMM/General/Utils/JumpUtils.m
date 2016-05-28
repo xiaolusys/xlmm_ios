@@ -20,6 +20,7 @@
 #import "TuihuoViewController.h"
 #import "ProductSelectionListViewController.h"
 #import "CartViewController.h"
+#import "WebViewController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -84,8 +85,18 @@
     }
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
         //跳转到shopping cart
-        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-        [vc.navigationController pushViewController:cartVC animated:YES];
+        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        
+        if (login == NO) {
+            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+            [vc.navigationController pushViewController:enterVC animated:YES];
+            return;
+        }else {
+            
+            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+            [vc.navigationController pushViewController:cartVC animated:YES];
+        }
+
     }
 
     else if([target_url rangeOfString:@"?"].length > 0){
@@ -102,14 +113,14 @@
 //            
 //            [vc.navigationController pushViewController:collectionVC animated:YES];
             
-            
-            
         } else if ([firstparam isEqualToString:@"product_id"]){
             //跳到商品详情
             NSLog(@"product_id = %@", [params lastObject]);
             
-//            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-//            [vc.navigationController pushViewController:details animated:YES];
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.eventLink = [params lastObject];
+
+            [vc.navigationController pushViewController:webView animated:YES];
             
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
