@@ -10,8 +10,6 @@
 
 @interface JMProvince : NSObject
 
-@property(nonatomic,copy)NSString *name;
-@property(nonatomic,strong)NSArray *cities;
 
 -(instancetype)initWithDict:(NSDictionary *)dict;
 +(instancetype)provinceWithDict:(NSDictionary *)dict;

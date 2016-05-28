@@ -419,20 +419,14 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ze9-Qs-H5q">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="165" y="10" width="42" height="21"/>
-                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="小鹿美美 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BqH-2s-62X">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="36" y="12" width="100.5" height="17"/>
-                                            </variation>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -465,15 +459,15 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="wvW-ez-Jj9"/>
-                                            <exclude reference="63R-Jc-YUH"/>
-                                            <exclude reference="XpA-gq-v7K"/>
-                                            <exclude reference="fO3-5C-EgX"/>
-                                            <exclude reference="grf-JC-O7Z"/>
                                             <exclude reference="BXV-XD-LV2"/>
                                             <exclude reference="xi8-f1-1dc"/>
+                                            <exclude reference="fO3-5C-EgX"/>
+                                            <exclude reference="grf-JC-O7Z"/>
                                             <exclude reference="Igg-s4-Gft"/>
                                             <exclude reference="vFW-Tu-iQX"/>
                                             <exclude reference="ySC-RS-X4l"/>
+                                            <exclude reference="63R-Jc-YUH"/>
+                                            <exclude reference="XpA-gq-v7K"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -485,15 +479,15 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="wvW-ez-Jj9"/>
-                                            <include reference="63R-Jc-YUH"/>
-                                            <include reference="XpA-gq-v7K"/>
-                                            <include reference="fO3-5C-EgX"/>
-                                            <include reference="grf-JC-O7Z"/>
                                             <include reference="BXV-XD-LV2"/>
                                             <include reference="xi8-f1-1dc"/>
+                                            <include reference="fO3-5C-EgX"/>
+                                            <include reference="grf-JC-O7Z"/>
                                             <include reference="Igg-s4-Gft"/>
                                             <include reference="vFW-Tu-iQX"/>
                                             <include reference="ySC-RS-X4l"/>
+                                            <include reference="63R-Jc-YUH"/>
+                                            <include reference="XpA-gq-v7K"/>
                                         </mask>
                                     </variation>
                                 </view>

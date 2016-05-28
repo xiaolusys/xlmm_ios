@@ -649,6 +649,10 @@
 		1F2AE9771CF6957E002EC974 /* CartListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9761CF6957E002EC974 /* CartListModel.m */; };
 		1F2AE97A1CF69749002EC974 /* PayExtrasModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9791CF69749002EC974 /* PayExtrasModel.m */; };
 		1F2B0BFE1CE9733900B11740 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071461C97BE3700B7665E /* TixianViewController.m */; };
+		1F3621D21CF92433004359B0 /* UIView+RGSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3621D11CF92433004359B0 /* UIView+RGSize.m */; };
+		1F3621D41CF924D7004359B0 /* Address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F3621D31CF924D7004359B0 /* Address.plist */; };
+		1F3621D71CF966D7004359B0 /* JMOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3621D61CF966D7004359B0 /* JMOrderDetailModel.m */; };
+		1F3621DA1CF968B8004359B0 /* JMOrderGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3621D91CF968B8004359B0 /* JMOrderGoodsModel.m */; };
 		1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */; };
 		1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FC1CE31A4400F78C0D /* MASConstraint.m */; };
 		1F4161111CE31A4400F78C0D /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4160FE1CE31A4400F78C0D /* MASConstraintMaker.m */; };
@@ -1788,6 +1792,13 @@
 		1F2B0C001CE9A24A00B11740 /* weixin_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin_selecter@2x.png"; sourceTree = "<group>"; };
 		1F2B0C011CE9A24A00B11740 /* xiaolu_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_nomal@2x.png"; sourceTree = "<group>"; };
 		1F2B0C021CE9A24A00B11740 /* xiaolu_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_selecter@2x.png"; sourceTree = "<group>"; };
+		1F3621D01CF92433004359B0 /* UIView+RGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RGSize.h"; sourceTree = "<group>"; };
+		1F3621D11CF92433004359B0 /* UIView+RGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RGSize.m"; sourceTree = "<group>"; };
+		1F3621D31CF924D7004359B0 /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Address.plist; sourceTree = "<group>"; };
+		1F3621D51CF966D7004359B0 /* JMOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailModel.h; sourceTree = "<group>"; };
+		1F3621D61CF966D7004359B0 /* JMOrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailModel.m; sourceTree = "<group>"; };
+		1F3621D81CF968B8004359B0 /* JMOrderGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderGoodsModel.h; sourceTree = "<group>"; };
+		1F3621D91CF968B8004359B0 /* JMOrderGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderGoodsModel.m; sourceTree = "<group>"; };
 		1F4160F81CE31A4400F78C0D /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		1F4160F91CE31A4400F78C0D /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		1F4160FA1CE31A4400F78C0D /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -2778,6 +2789,8 @@
 		1830725F1C97C00900B7665E /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1F3621D01CF92433004359B0 /* UIView+RGSize.h */,
+				1F3621D11CF92433004359B0 /* UIView+RGSize.m */,
 				183076AC1C97E31A00B7665E /* NSArray+Reverse.h */,
 				183076AD1C97E31A00B7665E /* NSArray+Reverse.m */,
 				183072601C97C00900B7665E /* NSArray+Log.h */,
@@ -4118,6 +4131,7 @@
 		1F59A1E91CF7FC7C00104BB2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F3621D31CF924D7004359B0 /* Address.plist */,
 				1F59A1F01CF85B6B00104BB2 /* area.plist */,
 				183071A61C97BE3700B7665E /* XiangQingViewController.h */,
 				183071A71C97BE3700B7665E /* XiangQingViewController.m */,
@@ -4141,6 +4155,10 @@
 		1F700AA81CF6E351007B3FC0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1F3621D51CF966D7004359B0 /* JMOrderDetailModel.h */,
+				1F3621D61CF966D7004359B0 /* JMOrderDetailModel.m */,
+				1F3621D81CF968B8004359B0 /* JMOrderGoodsModel.h */,
+				1F3621D91CF968B8004359B0 /* JMOrderGoodsModel.m */,
 				1F700AA91CF6E38A007B3FC0 /* JMEditAddressModel.h */,
 				1F700AAA1CF6E38A007B3FC0 /* JMEditAddressModel.m */,
 				1F700AB11CF7D7E6007B3FC0 /* JMProvince.h */,
@@ -4901,6 +4919,7 @@
 				183074351C97D17800B7665E /* UMSnsAccountViewController.xib in Resources */,
 				183072531C97BE3700B7665E /* WuliuCompanyController.xib in Resources */,
 				183075751C97D49A00B7665E /* icon-daizhifu.png in Resources */,
+				1F3621D41CF924D7004359B0 /* Address.plist in Resources */,
 				183075AE1C97D49A00B7665E /* loading动画0016.png in Resources */,
 				183076131C97D49A00B7665E /* ios7.png in Resources */,
 				183075E71C97D49A00B7665E /* category.png in Resources */,
@@ -5190,6 +5209,7 @@
 				183073D01C97D17800B7665E /* AFURLConnectionOperation.m in Sources */,
 				1830725A1C97BE3700B7665E /* ThirdAccountViewController.m in Sources */,
 				183074111C97D17800B7665E /* QNUploadManager.m in Sources */,
+				1F3621D71CF966D7004359B0 /* JMOrderDetailModel.m in Sources */,
 				183072011C97BE3700B7665E /* TixianHistoryViewController.m in Sources */,
 				183073DF1C97D17800B7665E /* QNResolver.m in Sources */,
 				183074001C97D17800B7665E /* QNCrc32.m in Sources */,
@@ -5200,6 +5220,7 @@
 				183073ED1C97D17800B7665E /* MJRefreshFooter.m in Sources */,
 				183073EF1C97D17800B7665E /* MJRefreshAutoGifFooter.m in Sources */,
 				321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */,
+				1F3621DA1CF968B8004359B0 /* JMOrderGoodsModel.m in Sources */,
 				183074201C97D17800B7665E /* SDWebImagePrefetcher.m in Sources */,
 				1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */,
 				325B79DD1C97E7160022F930 /* PosterCollectionCell2.m in Sources */,
@@ -5247,6 +5268,7 @@
 				325B79951C97E6F10022F930 /* BuyCartsView.m in Sources */,
 				1830725C1C97BE3700B7665E /* VersionController.m in Sources */,
 				1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */,
+				1F3621D21CF92433004359B0 /* UIView+RGSize.m in Sources */,
 				3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */,
 				183072381C97BE3700B7665E /* YouHuiQuanViewController.m in Sources */,
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,

@@ -1081,7 +1081,7 @@ static NSString *khuodongCell = @"HuodongCell";
             //http://m.xiaolu.so/rest/v1/trades/86412/details
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
             NSLog(@"url = %@", xiangqingVC.urlString);
             
             

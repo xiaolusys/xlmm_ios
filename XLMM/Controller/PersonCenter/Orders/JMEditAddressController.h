@@ -11,7 +11,7 @@
 @class JMEditAddressModel;
 @protocol JMEditAddressControllerDelegate <NSObject>
 
-- (void)updateEditerWithmodel:(JMEditAddressModel *)model;
+- (void)updateEditerWithmodel:(NSDictionary *)model;
 
 @end
 

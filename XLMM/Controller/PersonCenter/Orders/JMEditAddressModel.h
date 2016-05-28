@@ -35,5 +35,38 @@
  *  详细地址
  */
 @property (nonatomic,copy) NSString *receiver_address;
+/**
+ *  修改商品详情ID
+ */
+@property (nonatomic,copy) NSString *referal_trade_id;
+/**
+ *
+ */
+@property (nonatomic,copy) NSString *receiver_phone;
+/**
+ *
+ */
+@property (nonatomic,copy) NSString *userAddressDefault;
+
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

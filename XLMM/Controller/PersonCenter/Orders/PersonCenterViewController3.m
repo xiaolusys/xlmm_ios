@@ -472,7 +472,7 @@
     //http://m.xiaolu.so/rest/v1/trades/86412/details
     
     xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-    xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, xiangqingVC.dingdanModel.dingdanID];
+    xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, xiangqingVC.dingdanModel.dingdanID];
     NSLog(@"url = %@", xiangqingVC.urlString);
 
     
