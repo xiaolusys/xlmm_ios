@@ -29,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;

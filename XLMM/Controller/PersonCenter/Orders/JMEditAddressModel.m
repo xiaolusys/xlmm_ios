@@ -10,4 +10,11 @@
 
 @implementation JMEditAddressModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    
+    return @{@"referal_trade_id":@"id",
+             @"userAddressDefault":@"default"};
+}
+
+
 @end

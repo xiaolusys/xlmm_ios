@@ -328,7 +328,7 @@
    // NSLog(@"id = %@", ID);
     
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@/details", Root_URL, ID];
   //  NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;

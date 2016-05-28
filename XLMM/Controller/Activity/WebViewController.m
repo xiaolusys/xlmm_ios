@@ -117,6 +117,33 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    if ([_active isEqualToString:@"myInvite"]) {
+        self.navigationController.navigationBarHidden = NO;
+    }else if ([_active isEqualToString:@"active"]){
+        self.navigationController.navigationBarHidden = NO;
+    }else {
+        self.navigationController.navigationBarHidden = YES;
+    }
+}
+
+- (void)tiaozhuan:(NSNotification *)notification{
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *ID = [userInfo objectForKey:@"productID"];
+    
+    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
+    
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+}
+- (void)setEventLink:(NSString *)eventLink {
+    _eventLink = eventLink;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    
     NSString *titleName = self.titleName;
     
     [self createNavigationBarWithTitle:titleName selecotr:@selector(backClicked:)];
@@ -144,7 +171,6 @@
         self.activityId = [self.diction objectForKey:@"id"];
         loadStr = [self.diction objectForKey:@"act_link"];
     }else {
-        self.navigationController.navigationBarHidden = YES;
         statusBarView.hidden = NO;
         baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
         self.itemID = self.goodsID;
@@ -153,33 +179,7 @@
     NSURL *url = [NSURL URLWithString:loadStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [self.baseWebView loadRequest:request];
-    
-}
 
-
-- (void)tiaozhuan:(NSNotification *)notification{
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *ID = [userInfo objectForKey:@"productID"];
-    
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
-    
-    [self.navigationController pushViewController:detailsVC animated:YES];
-    
-}
-- (void)setEventLink:(NSString *)eventLink {
-    _eventLink = eventLink;
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-
-    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
-    
-//    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClicked:)];
-    
-//    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
-//    statusBarView.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:statusBarView];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
     imageView1.frame = CGRectMake(25, 13, 20, 20);
@@ -188,12 +188,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     button1.hidden = YES;
-    
-    
 
-    
-    
-    
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareWebView.hidden = YES;
     [self.view addSubview:self.shareWebView];
@@ -654,7 +649,7 @@
 - (void)dealloc {
     self.shareWebView = nil;
     self.webViewImage = nil;
-//    self.webView = nil;
+    self.baseWebView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
@@ -668,8 +663,11 @@
     self.navigationController.navigationBarHidden = YES;
     self.shareWebView = nil;
     self.webViewImage = nil;
-//    self.webView = nil;
+    self.baseWebView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [SVProgressHUD dismiss];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [SVProgressHUD dismiss];
 }
 - (void)hiddenNavigationView{

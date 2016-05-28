@@ -118,7 +118,7 @@
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"]){
             NSLog(@"跳到H5首页 url= %@", [params lastObject]);
