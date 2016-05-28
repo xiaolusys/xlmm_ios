@@ -429,7 +429,7 @@ static NSString *kbrandCell = @"brandCell";
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:)
+                                             selector:@selector(rootViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
     
@@ -456,7 +456,9 @@ static NSString *kbrandCell = @"brandCell";
     self.categoryViewHeight.constant = SCREENHEIGHT + 64;
     
     if(!_isFirst){
-        [self refreshView];
+        if([self checkNeedRefresh]){
+            [self refreshView];
+        }
     }
     _isFirst = NO;
     
@@ -472,6 +474,11 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"MMRoot viewWillDisappear");
     _isFirst = NO;
     [super viewWillDisappear:animated];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
     
     self.navigationController.navigationBarHidden = YES;
      frame = self.view.frame;
@@ -566,10 +573,13 @@ static NSString *kbrandCell = @"brandCell";
     
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)notification
+- (void)rootViewWillEnterForeground:(NSNotification *)notification
 {
     //进入前台时调用此函数
     NSLog(@"Rootview enter foreground");
+    if([self checkNeedRefresh]){
+        [self refreshView];
+    }
 }
 
 - (void)createRequestURL {
@@ -843,6 +853,43 @@ static NSString *kbrandCell = @"brandCell";
     }
 }
 
+- (BOOL)checkNeedRefresh{
+    //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
+
+    if(self.endTime.count==0 ||
+       [self.endTime[1] isEqualToString:@""])
+        return TRUE;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    // NSDateComponents *comps =
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    
+    
+    NSDate *todate;
+    
+    NSMutableString *string = [NSMutableString stringWithString:self.endTime[1]];
+    NSRange range = [self.endTime[1] rangeOfString:@"T"];
+    [string replaceCharactersInRange:range withString:@" "];
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+    dateformatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+    todate = [dateformatter dateFromString:string];
+    
+    NSDate *date = [NSDate date];
+    NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
+    if ([d hour] < 0 || [d minute] < 0) {
+        NSLog(@"need refresh");
+        return TRUE;
+    }
+    
+    NSLog(@"not need refresh");
+    return FALSE;
+}
+
 - (void )refreshView{
     [self removeAllSubviews:self.bannerView];
     [self removeAllSubviews:self.activityView];
@@ -856,6 +903,7 @@ static NSString *kbrandCell = @"brandCell";
     UICollectionView *collection = self.collectionArr[self.currentIndex];
     [collection reloadData];
 
+    [self createRequestURL];
     [self goodsRequest];
 }
 
