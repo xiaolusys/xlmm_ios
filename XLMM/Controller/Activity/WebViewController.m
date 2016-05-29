@@ -30,6 +30,9 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "CartViewController.h"
+#import "JMShareViewController.h"
+#import "JMShareView.h"
+#import "JMPopView.h"
 
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
@@ -37,7 +40,7 @@
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
@@ -98,6 +101,7 @@
 //@property (nonatomic,assign) BOOL isLogin;
 @property (nonatomic, strong) UIImage *webViewImage;
 
+@property (nonatomic,strong) JMShareViewController *shareView;
 
 @end
 
@@ -114,6 +118,13 @@
     return _youmengShare;
 }
 
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -123,7 +134,7 @@
     }else if ([_active isEqualToString:@"active"]){
         self.navigationController.navigationBarHidden = NO;
     }else {
-        self.navigationController.navigationBarHidden = YES;
+        self.navigationController.navigationBarHidden = NO;
     }
 }
 
@@ -186,8 +197,18 @@
     [button1 addSubview:imageView1];
     [button1 addTarget:self action:@selector(rightBarButtonAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
-    self.navigationItem.rightBarButtonItem = rightItem;
+//    self.navigationItem.rightBarButtonItem = rightItem;
     button1.hidden = YES;
+    
+    UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
+    UIImageView *imageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareIconImage2.png"]];
+    imageView1.frame = CGRectMake(25, 13, 20, 20);
+    [button2 addSubview:imageView2];
+    [button2 addTarget:self action:@selector(rightBarButtonActions) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem1 = [[UIBarButtonItem alloc] initWithCustomView:button2];
+//    self.navigationItem.rightBarButtonItem = rightItem1;
+    
+    self.navigationItem.rightBarButtonItems = @[rightItem,rightItem1];
 
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareWebView.hidden = YES;
@@ -198,6 +219,27 @@
     _content = @"小鹿美美";
 
 }
+#pragma mark ----- 测试用按钮
+- (void)rightBarButtonActions {
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    
+    //弹出视图
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 230, SCREENWIDTH, 230)];
+    menu.contentView = self.shareView.view;
+    
+    
+    
+}
+#pragma mark --- 测试用点击share的时候调用
+- (void)coverDidClickCover:(JMShareView *)cover {
+    //隐藏pop菜单
+    [JMPopView hide];
+    
+    
+    
+}
+
 
 - (NSString *)getMobileSNCode {
     if (![SSKeychain passwordForService:kService account:kAccount]) {
