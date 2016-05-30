@@ -24,6 +24,9 @@
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
+    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    
     if (target_url == nil) {
         NSLog(@"target_url null");
         return;
@@ -81,11 +84,23 @@
         ProductSelectionListViewController *mamachoiceVC = [[ProductSelectionListViewController alloc] init];
         [vc.navigationController pushViewController:mamachoiceVC animated:YES];
         
+    }else {
+        
     }
+    
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
         //跳转到shopping cart
-        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-        [vc.navigationController pushViewController:cartVC animated:YES];
+        if (login == NO) {
+            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+            
+            [vc.navigationController pushViewController:enterVC animated:YES];
+            return;
+        }else {
+            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+            [vc.navigationController pushViewController:cartVC animated:YES];
+        }
+//        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//        [vc.navigationController pushViewController:cartVC animated:YES];
     }
 
     else if([target_url rangeOfString:@"?"].length > 0){
@@ -127,4 +142,17 @@
     
 }
 @end
-
+/**
+ *  if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+ if (login == NO) {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ 
+ [vc.navigationController pushViewController:enterVC animated:YES];
+ return;
+ }else {
+ CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+ 
+ [vc.navigationController pushViewController:cartVC animated:YES];
+ }
+ }else
+ */

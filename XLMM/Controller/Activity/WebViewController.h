@@ -9,25 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CommonWebViewViewController.h"
 
-@interface WebViewController : CommonWebViewViewController //<PontoDispatcherCallbackDelegate>
-//@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@interface WebViewController : CommonWebViewViewController
+
+@property (nonatomic,strong) NSMutableDictionary *webDiction;
 
 
-
-@property (nonatomic, strong) NSDictionary *diction;
-
-@property (nonatomic, copy)NSString *eventLink;
-
-@property (nonatomic,copy) NSString *active;
-/**
- *  商品详情 ID
- */
-@property (nonatomic,copy) NSString *goodsID;
-
-//@property (nonatomic,copy) NSString *titleName;
-//@property (nonatomic, strong)NSString *loadLink;
-//@property (nonatomic, strong)NSString *titleName;
-
-//- (instancetype)initWithUrl:(NSString *)url title:(NSString *)titleName;
 
 @end

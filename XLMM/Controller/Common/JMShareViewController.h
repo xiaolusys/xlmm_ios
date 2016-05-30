@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMShareModel;
 @interface JMShareViewController : UIViewController
+
+//@property (nonatomic,strong) JMShareModel *model;
+
+@property (nonatomic,copy) NSString *activeID;
+
+//@property (nonatomic,strong) NSMutableDictionary *otherDict;
+
+@property (nonatomic,copy) NSString *urlStr;
 
 @end

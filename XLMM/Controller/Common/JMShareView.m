@@ -24,8 +24,8 @@
         self.backgroundColor = [UIColor blackColor];
         self.alpha = 0.5;
     }else{
-        self.alpha = 0.2;
-        self.backgroundColor = [UIColor blackColor];
+        self.alpha = 1;
+        self.backgroundColor = [UIColor clearColor];
     }
 }
 
@@ -34,12 +34,21 @@
 {
     JMShareView *cover = [[JMShareView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     cover.backgroundColor = [UIColor blackColor];
-    cover.alpha = 0.2;
+    cover.alpha = 0.4;
     
     [JMKeyWindow addSubview:cover];
     
     return cover;
     
+}
+
++ (void)hide {
+    
+    for (UIView *share in JMKeyWindow.subviews) {
+        if ([share isKindOfClass:self]) {
+            [share removeFromSuperview];
+        }
+    }
 }
 
 // 点击蒙板的时候做事情

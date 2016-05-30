@@ -22,7 +22,7 @@
 
 @interface JMShareView : UIView
 
-
++ (void)hide;
 
 + (instancetype)show;
 

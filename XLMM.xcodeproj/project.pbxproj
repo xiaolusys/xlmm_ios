@@ -11,6 +11,7 @@
 		0B16024F1CFB3A6600B154D7 /* JMShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B16024E1CFB3A6600B154D7 /* JMShareView.m */; };
 		0B1602521CFB3CEB00B154D7 /* JMPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1602511CFB3CEB00B154D7 /* JMPopView.m */; };
 		0B1602551CFB511E00B154D7 /* JMShareButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1602541CFB511E00B154D7 /* JMShareButtonView.m */; };
+		0B256DDA1CFBDC22000EB0B0 /* JMShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B256DD91CFBDC22000EB0B0 /* JMShareModel.m */; };
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
 		181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB131CA136C3001307C0 /* VisitorModel.m */; };
@@ -866,6 +867,8 @@
 		0B1602511CFB3CEB00B154D7 /* JMPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopView.m; sourceTree = "<group>"; };
 		0B1602531CFB511E00B154D7 /* JMShareButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareButtonView.h; sourceTree = "<group>"; };
 		0B1602541CFB511E00B154D7 /* JMShareButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareButtonView.m; sourceTree = "<group>"; };
+		0B256DD81CFBDC22000EB0B0 /* JMShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareModel.h; sourceTree = "<group>"; };
+		0B256DD91CFBDC22000EB0B0 /* JMShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareModel.m; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayVisitorViewController.h; sourceTree = "<group>"; };
 		181ABB101CA12813001307C0 /* TodayVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayVisitorViewController.m; sourceTree = "<group>"; };
@@ -2158,6 +2161,8 @@
 		0B1602491CFB385700B154D7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0B256DD81CFBDC22000EB0B0 /* JMShareModel.h */,
+				0B256DD91CFBDC22000EB0B0 /* JMShareModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -5231,6 +5236,7 @@
 				1830725C1C97BE3700B7665E /* VersionController.m in Sources */,
 				1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */,
 				1F3621D21CF92433004359B0 /* UIView+RGSize.m in Sources */,
+				0B256DDA1CFBDC22000EB0B0 /* JMShareModel.m in Sources */,
 				3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */,
 				183072381C97BE3700B7665E /* YouHuiQuanViewController.m in Sources */,
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
