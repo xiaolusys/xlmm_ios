@@ -57,7 +57,9 @@
 @end
 
 static NSString *cellIdentifier = @"productSelection";
-@implementation ProductSelectionListViewController
+@implementation ProductSelectionListViewController {
+    NSString *_urlStr;
+}
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         self.dataArr = [NSMutableArray arrayWithCapacity:0];
@@ -73,8 +75,9 @@ static NSString *cellIdentifier = @"productSelection";
     
     [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
     // http://m.xiaolumeimei.com/rest/v1/products/my_choice_pro?page_size=20&category=0
-    
-    [self loadData];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
+
+    [self loadData:url];
     
     self.numberLabel.text = self.numbersOfSelected;
     
@@ -107,7 +110,7 @@ static NSString *cellIdentifier = @"productSelection";
     }];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadNew];
+        [self loadNew:_urlStr];
     }];
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
@@ -118,8 +121,8 @@ static NSString *cellIdentifier = @"productSelection";
     
 }
 #pragma mark --- 加载数据
-- (void)loadData {
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
+- (void)loadData:(NSString *)url {
+//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
     
     NSLog(@"url = %@", url);
     
@@ -148,14 +151,18 @@ static NSString *cellIdentifier = @"productSelection";
     NSLog(@"%ld", self.dataArr.count);
     [self.tableView reloadData];
 }
-- (void)loadNew {
+- (void)loadNew:(NSString *)url {
     [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
     if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
         [self.tableView.mj_header endRefreshing];
         
+        
         return ;
     }
-    [self loadData];
+    
+//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
+    
+    [self loadData:url];
 }
 
 - (void)loadMore{
@@ -402,57 +409,73 @@ static NSString *cellIdentifier = @"productSelection";
 }
 
 
-
+/**
+ *  全部
+ */
 - (void)downloadAlllist{
     [SVProgressHUD showWithStatus:@"加载中..."];
   //  NSLog(@"all");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    _urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
+    NSLog(@"string = %@", _urlStr);
+    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
     
+    [self loadNew:_urlStr];
 }
+/**
+ *  童装
+ */
 - (void)downloadChildliat{
     [SVProgressHUD showWithStatus:@"加载中..."];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"child");
     category = 1;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    _urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
+    NSLog(@"string = %@", _urlStr);
+    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
     
-    
+    [self loadNew:_urlStr];
 }
+/**
+ *  女装
+ */
 - (void)downloadLadylist{
     [SVProgressHUD showWithStatus:@"加载中..."];
    // NSLog(@"lady");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
-    
+    _urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
+    NSLog(@"string = %@", _urlStr);
+    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
+    [self loadNew:_urlStr];
 }
-
+/**
+ *  佣金排序
+ */
 - (void)downloadOrderlist1{
     [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
   //  NSLog(@"yongjin");
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
+    _urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
    // NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
+    [self loadNew:_urlStr];
 }
+/**
+ *  售卖排序
+ */
 - (void)downloadOrderlist2{
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
    // NSLog(@"xiaoliang");
-     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
+     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
 //    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
+    [self loadNew:_urlStr];
 }
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
