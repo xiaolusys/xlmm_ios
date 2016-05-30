@@ -586,6 +586,7 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)createRequestURL {
+    [self.urlArr removeAllObjects];
     NSArray *urlBefroe = @[@"/rest/v2/products/yesterday?page=1&page_size=10",
         @"/rest/v2/products?page=1&page_size=10",
         @"/rest/v2/products/tomorrow?page=1&page_size=10"];
