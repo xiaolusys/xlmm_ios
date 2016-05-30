@@ -12,6 +12,7 @@
 		0B1602521CFB3CEB00B154D7 /* JMPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1602511CFB3CEB00B154D7 /* JMPopView.m */; };
 		0B1602551CFB511E00B154D7 /* JMShareButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1602541CFB511E00B154D7 /* JMShareButtonView.m */; };
 		0B256DDA1CFBDC22000EB0B0 /* JMShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B256DD91CFBDC22000EB0B0 /* JMShareModel.m */; };
+		0B256DDE1CFC69EA000EB0B0 /* JMFirstOpen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B256DDD1CFC69EA000EB0B0 /* JMFirstOpen.m */; };
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
 		181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB131CA136C3001307C0 /* VisitorModel.m */; };
@@ -869,6 +870,8 @@
 		0B1602541CFB511E00B154D7 /* JMShareButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareButtonView.m; sourceTree = "<group>"; };
 		0B256DD81CFBDC22000EB0B0 /* JMShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareModel.h; sourceTree = "<group>"; };
 		0B256DD91CFBDC22000EB0B0 /* JMShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareModel.m; sourceTree = "<group>"; };
+		0B256DDC1CFC69EA000EB0B0 /* JMFirstOpen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFirstOpen.h; sourceTree = "<group>"; };
+		0B256DDD1CFC69EA000EB0B0 /* JMFirstOpen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFirstOpen.m; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayVisitorViewController.h; sourceTree = "<group>"; };
 		181ABB101CA12813001307C0 /* TodayVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayVisitorViewController.m; sourceTree = "<group>"; };
@@ -2167,9 +2170,19 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		0B256DDB1CFC69A0000EB0B0 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				0B256DDC1CFC69EA000EB0B0 /* JMFirstOpen.h */,
+				0B256DDD1CFC69EA000EB0B0 /* JMFirstOpen.m */,
+			);
+			name = Global;
+			sourceTree = "<group>";
+		};
 		18306F6A1C97AA1600B7665E /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				0B256DDB1CFC69A0000EB0B0 /* Global */,
 				18306F6B1C97AA1600B7665E /* AppDelegate.h */,
 				18306F6C1C97AA1600B7665E /* AppDelegate.m */,
 			);
@@ -5144,6 +5157,7 @@
 				325B7A0B1C97E73A0022F930 /* MaMaChartTableViewCell.m in Sources */,
 				183073D91C97D17800B7665E /* QNNetworkInfo.m in Sources */,
 				183070D61C97B83900B7665E /* DingDanXiangQingModel.m in Sources */,
+				0B256DDE1CFC69EA000EB0B0 /* JMFirstOpen.m in Sources */,
 				183074081C97D17800B7665E /* QNResponseInfo.m in Sources */,
 				1F2AE9741CF6947D002EC974 /* GoodsInfoModel.m in Sources */,
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,

@@ -22,6 +22,7 @@
 
 #define login @"login"
 #import "NSString+URL.h"
+#import "JMFirstOpen.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
 @interface AppDelegate ()<UIAlertViewDelegate, MiPushSDKDelegate>
@@ -127,6 +128,10 @@
         //        [alertView show];
         
     }
+    /**
+     *  检测是否是第一次打开  -- 并且记录打开的次数
+     */
+    [JMFirstOpen recoderAppLoadNum];
     
     self.isFirst = YES;
     [MiPushSDK registerMiPush:self type:0 connect:YES];

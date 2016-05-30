@@ -1139,7 +1139,7 @@
     
     [self.navigationController pushViewController:activity animated:YES];
 }
-
+#pragma mark ---- 我的精选
 - (IBAction)jingxuanliebiao:(id)sender {
     
     ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
@@ -1148,7 +1148,7 @@
 //    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
 //    [self.navigationController pushViewController:shop animated:YES];
 }
-
+#pragma mark --- 选品上架
 - (IBAction)xuanpinliebiao:(id)sender {
     ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
     [self.navigationController pushViewController:product animated:YES];

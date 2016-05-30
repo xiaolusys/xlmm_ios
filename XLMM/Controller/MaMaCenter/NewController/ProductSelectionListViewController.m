@@ -64,19 +64,7 @@ static NSString *cellIdentifier = @"productSelection";
     }
     return _dataArr;
 }
-#pragma mark --- 加载数据
-- (void)loadData {
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
-    
-    NSLog(@"url = %@", url);
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject)return;
-        [self dealData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -99,10 +87,7 @@ static NSString *cellIdentifier = @"productSelection";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-//    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    
     [self createNavigationBarWithTitle:@"选品上架" selecotr:@selector(backClickAction)];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, HeadViewHeight, SCREENWIDTH, SCREENHEIGHT - HeadViewHeight) style:UITableViewStylePlain];
@@ -121,7 +106,9 @@ static NSString *cellIdentifier = @"productSelection";
         [self loadMore];
     }];
     
-//    [self createRefreshView];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadNew];
+    }];
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
@@ -130,18 +117,19 @@ static NSString *cellIdentifier = @"productSelection";
     [self createrightItem];
     
 }
-#pragma mark --- 下拉刷新
-- (void)createRefreshView {
-    /**
-     *  下拉刷新
-     */
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        if (self.isRefreshing) {
-            return ;
-        }
-        [self loadData];
-    }];
+#pragma mark --- 加载数据
+- (void)loadData {
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
     
+    NSLog(@"url = %@", url);
+    
+    
+    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self dealData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
 }
 
@@ -159,6 +147,15 @@ static NSString *cellIdentifier = @"productSelection";
 
     NSLog(@"%ld", self.dataArr.count);
     [self.tableView reloadData];
+}
+- (void)loadNew {
+    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
+    if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
+        [self.tableView.mj_header endRefreshing];
+        
+        return ;
+    }
+    [self loadData];
 }
 
 - (void)loadMore{
@@ -401,6 +398,7 @@ static NSString *cellIdentifier = @"productSelection";
     //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView reloadData];
     [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
+    
 }
 
 
@@ -426,6 +424,7 @@ static NSString *cellIdentifier = @"productSelection";
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
     
+    
 }
 - (void)downloadLadylist{
     [SVProgressHUD showWithStatus:@"加载中..."];
@@ -436,6 +435,7 @@ static NSString *cellIdentifier = @"productSelection";
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
     NSLog(@"string = %@", string);
     [self downLoadWithURLString:string andSelector:@selector(fetchedDatalist:)];
+    
 }
 
 - (void)downloadOrderlist1{

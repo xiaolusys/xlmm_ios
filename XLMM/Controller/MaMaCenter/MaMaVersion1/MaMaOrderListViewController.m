@@ -106,20 +106,17 @@
         [self loadMore];
     }];
     
-    //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    
-    [SVProgressHUD showWithStatus:@"正在加载..."];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
-        if (!responseObject)return;
-        [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:   %@", error);
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadNew];
     }];
+    
+    [self loadDate];
+    
+    
+    
 }
+
+
 
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
@@ -173,7 +170,23 @@
     }
     return keyArr;
 }
+#pragma mark -- 请求数据
+- (void)loadDate {
+    //网络请求
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
+    
+//    [SVProgressHUD showWithStatus:@"正在加载..."];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:   %@", error);
+    }];
 
+}
 //加载更多
 - (void)loadMore {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -183,6 +196,15 @@
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
+}
+- (void)loadNew {
+    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
+    if (self.nextPage == nil || [self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_header endRefreshing];
+        
+        return ;
+    }
+    [self loadDate];
 }
 
 #pragma mark ---UItableView的代理
