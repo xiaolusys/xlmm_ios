@@ -48,7 +48,10 @@
 
 
 @property (nonatomic, copy) NSString *numbersOfSelected;
-
+/**
+ *  是否刷新
+ */
+@property (nonatomic,assign) BOOL isRefreshing;
 
 
 @end
@@ -61,15 +64,8 @@ static NSString *cellIdentifier = @"productSelection";
     }
     return _dataArr;
 }
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    
-    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-    
+#pragma mark --- 加载数据
+- (void)loadData {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
     
     NSLog(@"url = %@", url);
@@ -79,6 +75,18 @@ static NSString *cellIdentifier = @"productSelection";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+    
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    
+    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+    // http://m.xiaolumeimei.com/rest/v1/products/my_choice_pro?page_size=20&category=0
+    
+    [self loadData];
     
     self.numberLabel.text = self.numbersOfSelected;
     
@@ -113,13 +121,27 @@ static NSString *cellIdentifier = @"productSelection";
         [self loadMore];
     }];
     
-    
+//    [self createRefreshView];
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
     [self createHeadView];
    
     [self createrightItem];
+    
+}
+#pragma mark --- 下拉刷新
+- (void)createRefreshView {
+    /**
+     *  下拉刷新
+     */
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if (self.isRefreshing) {
+            return ;
+        }
+        [self loadData];
+    }];
+    
     
 }
 
