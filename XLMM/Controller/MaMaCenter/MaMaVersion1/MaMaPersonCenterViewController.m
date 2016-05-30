@@ -60,11 +60,15 @@
     
     NSString *share_mmcode;
     
-    
+//    NSMutableDictionary *_diction;
     
 //    NSNumber *_money;
 //    NSNumber *_clickTotalMoney;
 }
+/**
+ *  字典中存储在webView中使用的值
+ */
+@property (nonatomic,strong) NSMutableDictionary *diction;
 
 @property (nonatomic, strong)FSLineChart *lineChart;
 
@@ -122,6 +126,12 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+}
+- (NSMutableDictionary *)diction {
+    if (!_diction) {
+        _diction = [NSMutableDictionary dictionary];
+    }
+    return _diction;
 }
 
 - (void)viewDidLoad {
@@ -1113,9 +1123,20 @@
 //    [self.navigationController pushViewController:invitation animated:YES];
     
     WebViewController *activity = [[WebViewController alloc] init];
-    activity.eventLink = self.myInvitation;
-    activity.active = @"myInvite";
-    activity.titleName = @"我的邀请";
+//    _diction = [NSMutableDictionary dictionary];
+//    _diction = nil;
+    NSString *active = @"myInvite";
+    NSString *titleName = @"我的邀请";
+    [self.diction setValue:self.myInvitation forKey:@"web_url"];
+    [self.diction setValue:active forKey:@"type_title"];
+    [self.diction setValue:titleName forKey:@"name_title"];
+    
+    activity.webDiction = _diction;
+//    activity.eventLink = self.myInvitation;
+//    activity.active = @"myInvite";
+//    activity.titleName = @"我的邀请";
+    
+    
     [self.navigationController pushViewController:activity animated:YES];
 }
 
@@ -1155,9 +1176,21 @@
         return;
     }
     WebViewController *activity = [[WebViewController alloc] init];
-    activity.eventLink = self.eventLink;
-    activity.active = @"myInvite";
-    activity.titleName = @"精品活动";
+    
+//    _diction = nil;
+    
+    NSString *active = @"myInvite";
+    NSString *titleName = @"精品活动";
+    
+    [self.diction setValue:self.eventLink forKey:@"web_url"];
+    [self.diction setValue:active forKey:@"type_title"];
+    [self.diction setValue:titleName forKey:@"name_title"];
+    
+    activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    
+//    activity.eventLink = self.eventLink;
+//    activity.active = @"myInvite";
+//    activity.titleName = @"精品活动";
     [self.navigationController pushViewController:activity animated:YES];
     
 }
