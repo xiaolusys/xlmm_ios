@@ -236,11 +236,14 @@
 - (void)createKeysArray{
     NSString *userUrlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
     // NSLog(@"url = %@", userUrlString);
+    NSString *userID = @"";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:userUrlString]];
-    NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    //  NSLog(@"dic = %@", diction);
-    NSDictionary *userInfo = [[diction objectForKey:@"results"] objectAtIndex:0];
-    NSString *userID = [userInfo objectForKey:@"id"];
+    if(data != nil){
+        NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        //  NSLog(@"dic = %@", diction);
+        NSDictionary *userInfo = [[diction objectForKey:@"results"] objectAtIndex:0];
+        userID = [userInfo objectForKey:@"id"];
+    }
     for (int i = 0; i < 3; i++) {
        NSString *key = [self keysWithTime:([[NSDate date] timeIntervalSince1970] + 100 * i) AndUserID:userID];
         [self.keysArray addObject:key];
