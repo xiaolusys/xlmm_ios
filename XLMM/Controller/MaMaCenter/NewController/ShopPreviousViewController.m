@@ -55,7 +55,7 @@
     
    
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, -20, SCREENWIDTH, SCREENHEIGHT)];
-    
+    self.webView.backgroundColor = [UIColor whiteColor];
    
     
     self.webView.scalesPageToFit = YES;

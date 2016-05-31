@@ -350,6 +350,7 @@
         NSLog(@"createProcessView orderStatus=%@ time=%@ company=%@ packetId=%@", goodsStatus, logisticsModel.process_time, logisticsModel.logistics_company_name, logisticsModel.out_sid);
     }
     
+#warning 在这里处理选择物流的信息 --View
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor backgroundlightGrayColor];
     //    view.layer.cornerRadius = 4;

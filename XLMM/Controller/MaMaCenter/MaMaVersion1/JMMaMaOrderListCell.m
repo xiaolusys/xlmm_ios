@@ -182,7 +182,7 @@
     if (orderM.carry_type_name.length == 0) {
 
         self.isAppImage = NO;
-
+        self.isAPP.image = nil;
     }else {
 
         self.isAppImage = YES;

@@ -8,13 +8,17 @@
 
 #import "UIImage+ImageWithUrl.h"
 #import "NSString+URL.h"
+#import "UIImageView+WebCache.h"
+
+@interface UIImage ()
 
 
+@end
 @implementation UIImage (ImageWithUrl)
 
 
 +(UIImage *)imagewithURLString:(NSString *)urlString{
-    UIImage *image = nil;
+    UIImage *image = [[UIImage alloc] init];
     NSError *imageError = nil;
     
 //    NSArray *array = [urlString componentsSeparatedByString:@"?"];
@@ -24,7 +28,14 @@
     if(urlString == nil){
         return nil;
     }else {
-        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+        NSURL *url = [NSURL URLWithString:urlString];
+        __block UIImage *image = nil;
+        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+            
+            image = [UIImage imageWithData:data];
+        }];
+        
+//        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
     }
     
     if(imageError != nil){
@@ -33,8 +44,8 @@
     // NSLog(@"data = %@", data);
     NSLog(@"%ld", (unsigned long)data.length);
     
-    image = [UIImage imageWithData:data];
-    
+//    image = [UIImage imageWithData:data];
+
     return image;
 }
 @end
