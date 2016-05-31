@@ -171,6 +171,9 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    if(self.dataArray == nil || self.dataArray.count ==0)
+        return cell;
+    
     TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
 
     [cell fillModel:model];
