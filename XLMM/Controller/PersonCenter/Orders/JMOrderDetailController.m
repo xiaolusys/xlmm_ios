@@ -20,7 +20,6 @@
 
 @interface JMOrderDetailController ()<JMOrderPayViewDelegate>
 
-@property (nonatomic,strong) UIView *orderNumTime;
 /**
  *  订单编号View
  */
@@ -70,9 +69,6 @@
 }
 
 - (void)createUI {
-    UIView *orderNumTime = [UIView new];
-    [self.view addSubview:orderNumTime];
-    self.orderNumTime = orderNumTime;
     
     /**
      *  顶部视图
@@ -80,26 +76,33 @@
     JMOrderNumTimeView *orderNumTimeView = [[JMOrderNumTimeView alloc] init];
     [self.view addSubview:orderNumTimeView];
     self.orderNumTimeView = orderNumTimeView;
-    self.orderNumTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+    self.orderNumTimeView.frame = CGRectMake(0, 64, SCREENWIDTH, 124);
     
     
     // ===== 物流信息的view  这里 直接给view一个位置就可以了
     JMLogisticsAddressView *logisticsView = [[JMLogisticsAddressView alloc] init];
-    logisticsView.frame = CGRectMake(0, 60, SCREENWIDTH, 90);
+    logisticsView.frame = CGRectMake(0, 124, SCREENWIDTH, 214);
     logisticsView.contentView = self.logisticsAddressVC.view;
     
     
     JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
+    goodsShowView.frame = CGRectMake(0, 214, SCREENWIDTH, 320);
+    [self.view addSubview:goodsShowView];
     goodsShowView.contentView = self.goodsShowVC.view;
-    
+    goodsShowView.backgroundColor = [UIColor greenColor];
     
     JMPayView *payView = [[JMPayView alloc] init];
+    payView.frame = CGRectMake(0, SCREENHEIGHT - 220, SCREENWIDTH, 160);
     [self.view addSubview:payView];
+    payView.backgroundColor = [UIColor grayColor];
+    self.payView = payView;
     
     JMOrderPayView *orderPayView = [[JMOrderPayView alloc] init];
     [self.view addSubview:orderPayView];
     self.orderPayView = orderPayView;
     self.orderPayView.delegate = self;
+    self.orderPayView.frame = CGRectMake(0, SCREENHEIGHT - 60, SCREENWIDTH, 60);
+    self.orderPayView.backgroundColor = [UIColor greenColor];
 }
 
 
@@ -113,12 +116,13 @@
     self.orderNumTimeView.model = models;
    
     JMPayModel *payModel = [[JMPayModel alloc] init];
-    payModel.payment = @"";
-    payModel.coupon = @"";
-    payModel.appPay = @"";
-    payModel.freight = @"";
-    payModel.lastPayment = @"";
-    
+    payModel.payment = @"测试数据";
+    payModel.coupon = @"测试数据";
+    payModel.appPay = @"测试数据";
+    payModel.freight = @"测试数据";
+    payModel.lastPayment = @"测试数据";
+    payModel = [JMPayModel modelWithModel:payModel];
+    self.payView.model = payModel;
     
 }
 

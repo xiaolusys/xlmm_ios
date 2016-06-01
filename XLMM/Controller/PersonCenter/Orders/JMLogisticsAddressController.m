@@ -49,6 +49,7 @@
     [super viewDidLoad];
     
     [self createUI];
+    [self prepareUI];
     
 }
 

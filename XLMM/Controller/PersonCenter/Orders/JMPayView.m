@@ -34,7 +34,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         
-        
+        [self createUI];
         
     }
     return self;
@@ -43,41 +43,60 @@
 - (void)createUI {
     UIView *lineView = [[UIView alloc] init];
     [self addSubview:lineView];
+    lineView.backgroundColor = [UIColor redColor];
     
     UILabel *goodsMoney = [[UILabel alloc] init];
     [self addSubview:goodsMoney];
+    goodsMoney.backgroundColor = [UIColor redColor];
+    goodsMoney.text = @"商品金额";
     
     UILabel *coupon = [[UILabel alloc] init];
     [self addSubview:coupon];
+    coupon.backgroundColor = [UIColor redColor];
+    coupon.text = @"优惠券折扣";
     
     UILabel *appPay = [[UILabel alloc] init];
     [self addSubview:appPay];
+    appPay.backgroundColor = [UIColor redColor];
+    appPay.text = @"App支付优惠";
     
     UILabel *freight = [[UILabel alloc] init];
     [self addSubview:freight];
+    freight.backgroundColor = [UIColor redColor];
+    freight.text = @"运费";
     
     UILabel *payment = [[UILabel alloc] init];
     [self addSubview:payment];
+    payment.backgroundColor = [UIColor redColor];
+    payment.text = @"应付金额";
     
     UILabel *goodsMoneyLabel = [[UILabel alloc] init];
     [self addSubview:goodsMoneyLabel];
     self.goodsMoneyLabel = goodsMoneyLabel;
+    self.goodsMoneyLabel.backgroundColor = [UIColor orangeColor];
+    
     
     UILabel *couponLabel = [[UILabel alloc] init];
     [self addSubview:couponLabel];
     self.couponLabel = couponLabel;
+    self.couponLabel.backgroundColor = [UIColor orangeColor];
     
     UILabel *appPayLabel = [[UILabel alloc] init];
     [self addSubview:appPayLabel];
     self.appPayLabel = appPayLabel;
+    self.appPayLabel.backgroundColor = [UIColor orangeColor];
     
     UILabel *freightLabel = [[UILabel alloc] init];
     [self addSubview:freightLabel];
     self.freightLabel = freightLabel;
+    self.freightLabel.backgroundColor = [UIColor orangeColor];
     
     UILabel *paymentLabel = [[UILabel alloc] init];
     [self addSubview:paymentLabel];
     self.paymentLabel = paymentLabel;
+    self.paymentLabel.backgroundColor = [UIColor orangeColor];
+    
+
     
     kWeakSelf
     [goodsMoney mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -119,22 +138,22 @@
     
     [self.couponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.goodsMoneyLabel);
-        make.centerY.equalTo(goodsMoney.mas_centerY);
+        make.centerY.equalTo(coupon.mas_centerY);
     }];
     
     [self.appPayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.goodsMoneyLabel);
-        make.centerY.equalTo(goodsMoney.mas_centerY);
+        make.centerY.equalTo(appPay.mas_centerY);
     }];
     
     [self.freightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.goodsMoneyLabel);
-        make.centerY.equalTo(goodsMoney.mas_centerY);
+        make.centerY.equalTo(freight.mas_centerY);
     }];
     
     [self.paymentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.goodsMoneyLabel);
-        make.centerY.equalTo(goodsMoney.mas_centerY);
+        make.centerY.equalTo(payment.mas_centerY);
     }];
     
     
