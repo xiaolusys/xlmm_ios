@@ -36,3 +36,6 @@ NSString *Root_URL = @"http://m.xiaolumeimei.com";
 //   http://m.xiaolumeimei.com/rest/v1/activitys/12975/get_share_params
 
 #endif
+
+
+//  http://staging.xiaolumeimei.com/rest/v1/address/change_company_code

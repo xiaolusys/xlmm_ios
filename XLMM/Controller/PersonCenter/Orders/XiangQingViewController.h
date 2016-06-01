@@ -48,7 +48,41 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
-
+/**
+ *  显示选择什么物流的label
+ */
+@property (weak, nonatomic) IBOutlet UILabel *logisticslabel;
+/**
+ *  显示创建订单时间
+ */
+@property (weak, nonatomic) IBOutlet UILabel *orderTimerLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goodsViewHeight;
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
