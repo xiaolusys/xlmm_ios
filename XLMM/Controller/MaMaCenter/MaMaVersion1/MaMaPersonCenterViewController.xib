@@ -163,10 +163,12 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户余额(元)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0I-Lv-C9x">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小鹿妈妈账户余额(元)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0I-Lv-C9x">
                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="120" id="PRF-k3-0MD"/>
+                                        <constraint firstAttribute="width" constant="120" id="PRF-k3-0MD">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="200"/>
+                                        </constraint>
                                         <constraint firstAttribute="height" constant="30" id="f59-pd-IBy">
                                             <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                                         </constraint>

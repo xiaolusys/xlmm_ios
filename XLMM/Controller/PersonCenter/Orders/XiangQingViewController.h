@@ -56,6 +56,10 @@
  *  显示创建订单时间
  */
 @property (weak, nonatomic) IBOutlet UILabel *orderTimerLabel;
+/**
+ *  显示可以点击选择物流的View
+ */
+@property (weak, nonatomic) IBOutlet UIView *orderLogistcsTap;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goodsViewHeight;
 @end
