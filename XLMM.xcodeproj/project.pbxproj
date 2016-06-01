@@ -690,7 +690,6 @@
 		1F59A1EF1CF8509300104BB2 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F59A1EE1CF8509300104BB2 /* area.plist */; };
 		1F700AAB1CF6E38A007B3FC0 /* JMEditAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F700AAA1CF6E38A007B3FC0 /* JMEditAddressModel.m */; };
 		1F700AB01CF7D58E007B3FC0 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F700AAF1CF7D58E007B3FC0 /* provinces.plist */; };
-		1F700AB31CF7D7E6007B3FC0 /* JMProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F700AB21CF7D7E6007B3FC0 /* JMProvince.m */; };
 		1F73959B1CC0C945000F9D94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7395991CC0C945000F9D94 /* HomeViewController.m */; };
 		1F73959C1CC0C945000F9D94 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F73959A1CC0C945000F9D94 /* HomeViewController.xib */; };
 		1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */; };
@@ -1866,8 +1865,6 @@
 		1F700AA91CF6E38A007B3FC0 /* JMEditAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressModel.h; sourceTree = "<group>"; };
 		1F700AAA1CF6E38A007B3FC0 /* JMEditAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressModel.m; sourceTree = "<group>"; };
 		1F700AAF1CF7D58E007B3FC0 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
-		1F700AB11CF7D7E6007B3FC0 /* JMProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMProvince.h; sourceTree = "<group>"; };
-		1F700AB21CF7D7E6007B3FC0 /* JMProvince.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMProvince.m; sourceTree = "<group>"; };
 		1F7395981CC0C945000F9D94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		1F7395991CC0C945000F9D94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		1F73959A1CC0C945000F9D94 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -4248,8 +4245,6 @@
 				1F3621D91CF968B8004359B0 /* JMOrderGoodsModel.m */,
 				1F700AA91CF6E38A007B3FC0 /* JMEditAddressModel.h */,
 				1F700AAA1CF6E38A007B3FC0 /* JMEditAddressModel.m */,
-				1F700AB11CF7D7E6007B3FC0 /* JMProvince.h */,
-				1F700AB21CF7D7E6007B3FC0 /* JMProvince.m */,
 				0BF1F26B1CFD71AD0054FE61 /* JMOrderNumTimeModel.h */,
 				0BF1F26C1CFD71AD0054FE61 /* JMOrderNumTimeModel.m */,
 				0BF1F2771CFD7D750054FE61 /* JMLogisticsAddressModel.h */,
@@ -5151,7 +5146,6 @@
 				1F4161141CE31A4400F78C0D /* MASViewConstraint.m in Sources */,
 				1F2AE9691CF69380002EC974 /* NSObject+MJClass.m in Sources */,
 				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
-				1F700AB31CF7D7E6007B3FC0 /* JMProvince.m in Sources */,
 				1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */,
 				183072281C97BE3700B7665E /* AddressViewController.m in Sources */,
 				183070D01C97B83900B7665E /* AddressModel.m in Sources */,
