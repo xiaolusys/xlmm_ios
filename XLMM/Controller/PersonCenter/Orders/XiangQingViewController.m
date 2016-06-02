@@ -33,6 +33,7 @@
 #import "JMShareView.h"
 #import "JMPopView.h"
 #import "JMPopLogistcsController.h"
+#import "Masonry.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -53,6 +54,14 @@
 @property (nonatomic,strong) NSMutableDictionary *editAddDict;
 
 @property (nonatomic,strong) JMPopLogistcsController *showViewVC;
+/**
+ *  包裹信息
+ */
+@property (nonatomic,strong) UILabel *packMessageL;
+/**
+ *  包裹状态
+ */
+@property (nonatomic,strong) UILabel *packStatusL;
 
 @end
 
@@ -156,17 +165,7 @@
 }
 
 - (void)actiondo:(id)sender{
-    UITapGestureRecognizer *tap = sender;
-    UIView *tapView = (UIView*)tap.view;
-    
-    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
-    if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
-        
-        
-        wuliuView.packetId = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
-        wuliuView.companyCode = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
-        [self.navigationController pushViewController:wuliuView animated:YES];
-    }
+
     
 }
 
@@ -255,21 +254,24 @@
     self.addressLabel.text = addressStr;
     self.bianhaoLabel.text = [dicJson objectForKey:@"tid"];//
     
-    _goodsID = dicJson[@"id"];
+    _goodsID = dic[@"id"];
     
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
     
-#pragma mark ==== 物流信息
+#pragma mark ==== 物流信息--包裹信息
     [self removeAllSubviews:self.myXiangQingView];
     //    if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
     //需要查物流信息，查询到信息后
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
     [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         [self setWuLiuMsg:responseObject];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"packageskuitem failed.");
     }];
+    
     //    }
     //    else{
     //        //不用查物流信息，直接显示时间和商品即可
@@ -281,6 +283,7 @@
     //            h += 90;
     //        }
     //    }
+    
     
     self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
@@ -374,141 +377,235 @@
     }
     
 }
-
+#pragma mark ----- 商品包裹信息
 - (void)createProcessView:(CGRect )rect status:(NSString *)goodsStatus logisticsModel:(LogisticsModel *)logisticsModel{
     if((goodsStatus != nil) && (logisticsModel != nil)){
         NSLog(@"createProcessView orderStatus=%@ time=%@ company=%@ packetId=%@", goodsStatus, logisticsModel.process_time, logisticsModel.logistics_company_name, logisticsModel.out_sid);
     }
     
     UIView *view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor backgroundlightGrayColor];
+    view.backgroundColor = [UIColor whiteColor];
     //    view.layer.cornerRadius = 4;
     view.tag = 100 + currentIndex;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-//    [view addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(packTapClick:)];
+    [view addGestureRecognizer:tap];
+    NSString *stateT = logisticsModel.assign_status_display;
+    if (stateT) {
+        view.userInteractionEnabled = NO;
+    }else {
+        view.userInteractionEnabled = YES;
+    }
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 1, 76)];//40 -- 76
-    lineView.backgroundColor = [UIColor  orangeThemeColor];
-    [view addSubview:lineView];
+    UILabel *lineL = [UILabel new];
+    [view addSubview:lineL];
+    lineL.backgroundColor = [UIColor lineGrayColor];
     
-    UIView *ballView = [[UIView alloc] initWithFrame:CGRectMake(16, 18, 10, 10)];
-    ballView.backgroundColor = [UIColor orangeThemeColor];
-    ballView.layer.cornerRadius = 6;
-    [view addSubview:ballView];
+    UILabel *packageLabel = [UILabel new];
+    packageLabel.font = [UIFont systemFontOfSize:12.];
+    [view addSubview:packageLabel];
+    packageLabel.textColor = [UIColor lightGrayColor];
+    self.packMessageL = packageLabel;
     
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 10, 200, 15)];
-    timeLabel.textColor = [UIColor blackColor];
-    timeLabel.font = [UIFont systemFontOfSize:13.];
-    [view addSubview:timeLabel];
+    UILabel *packStateLabel = [UILabel new];
+    packStateLabel.font = [UIFont systemFontOfSize:12.];
+    [view addSubview:packStateLabel];
+    packStateLabel.textColor = [UIColor orangeThemeColor];
+    self.packStatusL = packStateLabel;
     
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake( 34, 32, 250, 17)];
-    statusLabel.textColor = [UIColor blackColor];
-    statusLabel.font = [UIFont systemFontOfSize:12];
-    statusLabel.textAlignment = NSTextAlignmentRight;
-    [view addSubview:statusLabel];
-
-//    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-//    image.frame = CGRectMake(SCREENWIDTH - 50, 10, 50, 30);
-    UILabel *packetLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 54, 250, 17)];
-    packetLabel.textColor = [UIColor blackColor];
-    packetLabel.font = [UIFont systemFontOfSize:12];
-    packetLabel.text = @"以下商品由同一个包裹发出";
-    [view addSubview:packetLabel];
+    UIImageView *rightImage = [UIImageView new];
+    [view addSubview:rightImage];
+    rightImage.image = [UIImage imageNamed:@"rightArrow"];
+    
+    UILabel *bottomL = [UILabel new];
+    [view addSubview:bottomL];
+    bottomL.backgroundColor = [UIColor lineGrayColor];
+    
+    [lineL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(view);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@20);
+    }];
+    
+    [packageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineL.mas_bottom).offset(10);
+        make.left.equalTo(lineL).offset(10);
+        make.height.equalTo(@15);
+    }];
+    
+    [packStateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(packageLabel.mas_centerY);
+        make.right.equalTo(rightImage.mas_left).offset(-10);
+    }];
+    
+    [rightImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(packageLabel.mas_centerY);
+        make.right.equalTo(view).offset(-10);
+        make.width.mas_equalTo(@13);
+        make.height.mas_equalTo(@25);
+    }];
+    
+    [bottomL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.equalTo(view);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@1);
+    }];
+    
+//    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 1, 76)];//40 -- 76
+//    lineView.backgroundColor = [UIColor  orangeThemeColor];
+//    [view addSubview:lineView];
+//    
+//    UIView *ballView = [[UIView alloc] initWithFrame:CGRectMake(16, 18, 10, 10)];
+//    ballView.backgroundColor = [UIColor orangeThemeColor];
+//    ballView.layer.cornerRadius = 6;
+//    [view addSubview:ballView];
+    
+//    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 10, 200, 15)];
+//    timeLabel.textColor = [UIColor blackColor];
+//    timeLabel.font = [UIFont systemFontOfSize:13.];
+//    [view addSubview:timeLabel];
+//    
+//    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake( 34, 32, 250, 17)];
+//    statusLabel.textColor = [UIColor blackColor];
+//    statusLabel.font = [UIFont systemFontOfSize:12];
+//    statusLabel.textAlignment = NSTextAlignmentRight;
+//    [view addSubview:statusLabel];
+//
+////    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+////    image.frame = CGRectMake(SCREENWIDTH - 50, 10, 50, 30);
+//    UILabel *packetLabel = [[UILabel alloc] initWithFrame:CGRectMake(34, 54, 250, 17)];
+//    packetLabel.textColor = [UIColor blackColor];
+//    packetLabel.font = [UIFont systemFontOfSize:12];
+//    packetLabel.text = @"以下商品由同一个包裹发出";
+//    [view addSubview:packetLabel];
     
     [self.myXiangQingView addSubview:view];
+    NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+    NSString *str = logisticsModel.ware_by_display;
+    NSString *newStr = [str substringToIndex:1];
+    NSInteger count = [newStr integerValue] - 1;
+    NSString *packStr = @"";
+    if (count < 0) {
+        self.packMessageL.text = @"包裹一";
+    }else {
+        packStr = [NSString stringWithFormat:@"包裹%@",arr[count]];
+    }
     
-    
+//    goodsStatus 订单状态
     if ([goodsStatus integerValue] == ORDER_STATUS_WAITPAY) {
-        statusLabel.text = @"订单创建成功";
+        self.packStatusL.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
-            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
-            timeLabel.text = newStr;
+//            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
+//            timeLabel.text = newStr;
+            self.packMessageL.text = packStr;
         }
         
     } else if ([goodsStatus integerValue] == ORDER_STATUS_PAYED){
         if(logisticsModel == nil || logisticsModel.assign_status_display == nil || logisticsModel.process_time == nil){
-            statusLabel.text = self.dingdanModel.status_display ;
+            self.packStatusL.text = self.dingdanModel.status_display ; // 付款状态
             if(self.dingdanModel.pay_time != nil){
-                NSString *newStr = [self formatterTimeString:self.dingdanModel.pay_time ];
-                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+//                NSString *newStr = [self formatterTimeString:self.dingdanModel.pay_time ];
+//                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+                self.packMessageL.text = packStr;
             }
         }
         else{
-            statusLabel.text = logisticsModel.assign_status_display;
-            timeLabel.text =  [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
+            self.packStatusL.text = logisticsModel.assign_status_display;
+//            timeLabel.text =  [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
+            self.packMessageL.text = packStr;
         }
         
         //某个商品已经是已发货了，那么也显示可以查询物流信息
         if(goodsStatus !=nil && [goodsStatus integerValue] == ORDER_STATUS_SENDED){
-            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
-            
-            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
-            [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
-            [view addSubview:img];
-            
-            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-            [view addGestureRecognizer:tapGesture];
+            self.packStatusL.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
+            view.userInteractionEnabled = YES;
+//            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
+//            [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
+//            [view addSubview:img];
+//            
+//            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+//            [view addGestureRecognizer:tapGesture];
         }
     } else if ([goodsStatus integerValue] == ORDER_STATUS_SENDED){
         if(logisticsModel == nil || logisticsModel.assign_status_display == nil || logisticsModel.process_time == nil){
-            statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
+            self.packStatusL.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
             if(self.dingdanModel.consign_time != nil){
-                NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
-                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+//                NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
+//                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+                self.packMessageL.text = packStr;
             }
         }
         else{
-            statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
-            timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
+            self.packStatusL.text = [NSString stringWithFormat:@"%@ %@ %@",  logisticsModel.assign_status_display, logisticsModel.logistics_company_name, logisticsModel.out_sid];
+//            timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", logisticsModel.process_time];
+            self.packMessageL.text = packStr;
         }
-        
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
-        [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
-        [view addSubview:img];
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
-        [view addGestureRecognizer:tapGesture];
+        view.userInteractionEnabled = YES;
+//        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREENWIDTH - 30, 30, 15, 15)];
+//        [img setImage:[UIImage imageNamed:@"rightArrow.png"]];
+//        [view addSubview:img];
+//        
+//        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actiondo:)];
+//        [view addGestureRecognizer:tapGesture];
         
     } else if ([goodsStatus integerValue] == ORDER_STATUS_TRADE_SUCCESS){
         
-        statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
+        self.packStatusL.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
         if(self.dingdanModel.consign_time != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
             if(newStr != nil){
-                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+//                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+                self.packMessageL.text = packStr;
             }
         }
         
         
     } else if ([goodsStatus integerValue] == ORDER_STATUS_TRADE_CLOSE){
-        statusLabel.text = @"订单创建成功";
+        self.packStatusL.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
-            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
-            timeLabel.text = newStr;
+//            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
+//            timeLabel.text = newStr;
+            self.packMessageL.text = packStr;
         }
     } else if([goodsStatus integerValue] == ORDER_STATUS_CONFIRM_RECEIVE){
         
-        statusLabel.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
+        self.packStatusL.text = [NSString stringWithFormat:@"%@", self.dingdanModel.status_display ];
         if(self.dingdanModel.consign_time != nil){
             NSString *newStr = [self formatterTimeString:self.dingdanModel.consign_time];
             if(newStr != nil){
-                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+//                timeLabel.text = [NSString stringWithFormat:@"%@:%@", @"时间", newStr];
+                self.packMessageL.text = packStr;
             }
         }
         
-    } else if([goodsStatus integerValue] == ORDER_STATUS_REFUND_CLOSE){
+    }
+    else if([goodsStatus integerValue] == ORDER_STATUS_REFUND_CLOSE){
         // do other things
-        statusLabel.text = @"订单创建成功";
+        self.packStatusL.text = @"订单创建成功";
         if(self.dingdanModel.created != nil){
-            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
+//            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
 //            NSString *timeString = [time stringByReplacingOccurrencesOfString:@"T" withString:@" "];//发货时间。。。。
-            timeLabel.text = newStr;
+//            timeLabel.text = newStr;
+            self.packMessageL.text = packStr;
         }
     }
     
     
     
     
+}
+#pragma mark ----- 商品包裹信息
+- (void)packTapClick:(UITapGestureRecognizer *)tap {
+    UITapGestureRecognizer *tap1 = tap;
+    UIView *tapView = (UIView*)tap1.view;
+    
+    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
+        
+        
+        wuliuView.packetId = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
+        wuliuView.companyCode = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
+        [self.navigationController pushViewController:wuliuView animated:YES];
+    }
 }
 #pragma mark ----- 物流信息点击事件
 - (void)tapClick:(UITapGestureRecognizer *)tap {
@@ -536,12 +633,13 @@
 
 #pragma mark ----- 物流视图的显示
 - (void)setWuLiuMsg:(NSDictionary *)dic {
+
     if (dic.count == 0){
         NSLog(@"setWuLiuMsg dic count=0");
-        //无查物流信息，直接显示时间和商品即可
-        self.goodsViewHeight.constant = 76 + 90 * dataArray.count;
-        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 76) status:orderStatus[0] logisticsModel:nil];
-        NSUInteger  h=76;
+        //无查物流信息，直接显示时间和商品即可  76 -- > 35 + 20
+        self.goodsViewHeight.constant = 55 + 90 * dataArray.count;
+        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, 55) status:orderStatus[0] logisticsModel:nil];
+        NSUInteger  h=55;
         for(int i=0; i < dataArray.count; i++){
             [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
             h += 90;
@@ -553,14 +651,14 @@
     
     NSString *groupKey = @"";
     NSInteger h = 0;
-    self.goodsViewHeight.constant = packetNum * 76 + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
+    self.goodsViewHeight.constant = packetNum * 55 + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
     for(int i =0; i < logisticsInfoArray.count; i++){
         currentIndex = i;
         NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
         if((((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
-            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, 76) status:[orderStatus objectAtIndex:i] logisticsModel:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i])];
-            h += 76;
+            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, 55) status:[orderStatus objectAtIndex:i] logisticsModel:((LogisticsModel *)[logisticsInfoArray objectAtIndex:i])];
+            h += 55;
         }
         groupKey = ((LogisticsModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
@@ -592,15 +690,14 @@
     //用来得到具体的时差
     NSDateComponents *d = [calendar components:unitFlags fromDate:[NSDate date] toDate:todate options:0];
     NSString *string = nil;
-//    string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+    string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
     // NSLog(@"string = %@", string);
     
-//    self.remainTimeLabel.text = string;
-    if ([d minute] <0 || [d second] < 0) {
+    self.remainTimeLabel.text = string;
+    if ([d minute] == 0 || [d second] == 0) {
         self.remainTimeLabel.text = @"00:00";
         self.buyBtn.hidden = YES;
         self.quxiaoBtn.hidden = YES;
-        
         self.bottomView.hidden = YES;
     }
 }
@@ -916,11 +1013,11 @@
 - (void)updateEditerWithmodel:(NSDictionary *)dic {
     
     JMEditAddressModel *model = [JMEditAddressModel mj_objectWithKeyValues:dic];
-    
+    self.model = model;
     
     self.nameLabel.text = dic[@"receiver_name"];
     self.phoneLabel.text = model.receiver_mobile;
-    NSString *addStr = [NSString stringWithFormat:@"%@%@%@%@",model.receiver_state,model.receiver_city,model.receiver_district,model.receiver_address];
+    NSString *addStr = [NSString stringWithFormat:@"%@%@%@%@",self.model.receiver_state,self.model.receiver_city,self.model.receiver_district,self.model.receiver_address];
     self.addressLabel.text = addStr;
     
     

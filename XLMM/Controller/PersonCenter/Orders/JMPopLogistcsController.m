@@ -18,7 +18,7 @@
 #import "JMPopLogistcsModel.h"
 #import "MJExtension.h"
 
-@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource,JMPopLogistcsCellDelegate>
+@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) JMSelecterButton *canelButton;
 
@@ -27,6 +27,7 @@
 //@property (nonatomic,strong) NSMutableArray *dataSource;
 
 @property (nonatomic,strong) UIImageView *imageView;
+
 
 @end
 
@@ -57,7 +58,7 @@
 
 - (void)loadData {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/get_logistic_companys",Root_URL];
-    
+
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     
     [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -75,9 +76,13 @@
         NSMutableArray *dataSourceArr = [[NSMutableArray alloc] init];
         for (NSDictionary *dic in responseObject) {
 //            self.imageStr = @"circle_wallet_Normal";
+            JMPopLogistcsModel *model = [[JMPopLogistcsModel alloc] init];
+//            JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
 
-            JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
-            
+            model.isSelecter = 0;
+            model.name = dic[@"name"];
+            model.logistcsID = dic[@"id"];
+            model.code = dic[@"code"];
             [dataSourceArr addObject:model];
         }
 
@@ -132,40 +137,24 @@
     if (!cell) {
         cell = [[JMPopLogistcsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
+    
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
     [cell configWithModel:model];
-    cell.delegate = self;
-    
-    if (indexPath.row == 0) {
-        cell.accessoryView = self.imageView;
-//        self.imageView.image = [UIImage imageNamed:@"selected_icon"];
-    }
-    
-//    cell.textLabel.text = self.dataSource[indexPath.row];
-//    cell.imageView.image = [UIImage imageNamed:@"circle_wallet_Normal"];//selected_icon   circle_wallet_Normal
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
-    
-    
+
     return cell;
 }
 - (void)setGoodsID:(NSString *)goodsID {
     _goodsID = goodsID;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    JMPopLogistcsCell *cell = [[JMPopLogistcsCell alloc] init];
-//    JMPopLogistcsModel *model = self.dataSource[indexPath.row];
-    
-    if (indexPath.row == 0) {
-        self.imageView.image = [UIImage imageNamed:@"selected_icon"];
 
-    }
-    
-    
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_company_code",Root_URL,self.goodsID];//?referal_trade_id=%@
+    NSLog(@"%ld=======================%ld",indexPath.section,indexPath.row);
+    JMPopLogistcsModel *model = self.dataSource[indexPath.row];
+
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_company_code?logistic_company_code=%@",Root_URL,self.goodsID,model.code];//?referal_trade_id=%@
 
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    
-    
     
     [manage POST:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -176,16 +165,11 @@
         
     }];
     
-    
-//    [self cancelBtnClick];
-    
+    [self cancelBtnClick];
     
     
     
     
-}
-- (void)composeWith:(UIImageView *)imageView {
-    self.imageView = imageView;
     
 }
 

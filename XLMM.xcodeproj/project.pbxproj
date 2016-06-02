@@ -20,6 +20,7 @@
 		0B43FFAA1CFED4EB00AE7DDD /* JMPopLogistcsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFA91CFED4EB00AE7DDD /* JMPopLogistcsController.m */; };
 		0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */; };
 		0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */; };
+		0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */; };
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
 		181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB131CA136C3001307C0 /* VisitorModel.m */; };
@@ -890,6 +891,8 @@
 		0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsCell.m; sourceTree = "<group>"; };
 		0B43FFB21CFEEB9100AE7DDD /* JMPopLogistcsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPopLogistcsModel.h; sourceTree = "<group>"; };
 		0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsModel.m; sourceTree = "<group>"; };
+		0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
+		0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayVisitorViewController.h; sourceTree = "<group>"; };
 		181ABB101CA12813001307C0 /* TodayVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayVisitorViewController.m; sourceTree = "<group>"; };
@@ -4269,6 +4272,8 @@
 				1F3621D91CF968B8004359B0 /* JMOrderGoodsModel.m */,
 				1F700AA91CF6E38A007B3FC0 /* JMEditAddressModel.h */,
 				1F700AAA1CF6E38A007B3FC0 /* JMEditAddressModel.m */,
+				0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */,
+				0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -5314,6 +5319,7 @@
 				1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */,
 				325B79DD1C97E7160022F930 /* PosterCollectionCell2.m in Sources */,
 				325B79DB1C97E7160022F930 /* PersonTableCell.m in Sources */,
+				0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */,
 				325B79D91C97E7160022F930 /* MoreOrdersViewCell.m in Sources */,
 				183072191C97BE3700B7665E /* ProductSelectionListViewController.m in Sources */,
 				1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */,

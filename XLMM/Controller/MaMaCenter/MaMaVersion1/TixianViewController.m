@@ -120,7 +120,7 @@
     [self.myBlanceView addSubview:blanceLabel];
     self.blanceLabel = blanceLabel;
     self.blanceLabel.font = [UIFont systemFontOfSize:14.];
-    self.blanceLabel.text = @"我的余额：";
+    self.blanceLabel.text = @"小鹿妈妈账户余额：";
     
     UILabel *blanceMoneyLabel = [[UILabel alloc] init];
     [self.myBlanceView addSubview:blanceMoneyLabel];
@@ -495,7 +495,6 @@
     [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.myBlanceView).offset(20);
         make.left.equalTo(self.myBlanceView.mas_left).offset(11);
-        make.width.mas_equalTo(@70);
         make.height.mas_equalTo(@20);
     }];
     

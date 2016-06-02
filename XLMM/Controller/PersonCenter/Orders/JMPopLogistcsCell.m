@@ -15,6 +15,7 @@
 @property (nonatomic,strong) UILabel *nameLabel;
 
 
+
 @end
 
 @implementation JMPopLogistcsCell
@@ -29,38 +30,36 @@
 }
 
 - (void)createUI {
-    
+
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
-    UIImageView *selecImage = [UIImageView new];
-    [self.contentView addSubview:selecImage];
-    self.selecImage = selecImage;
+//    UIImageView *selecImage = [UIImageView new];
+//    [self.contentView addSubview:selecImage];
+//    self.selecImage = selecImage;
     kWeakSelf
+    
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView).offset(10);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
     
-    [self.selecImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.contentView).offset(-10);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
-    }];
+//    [self.selecImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakSelf.contentView).offset(-10);
+//        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+//    }];
+//    
+//    
+    
 
 }
+
 
 - (void)configWithModel:(JMPopLogistcsModel *)model {
     
     self.nameLabel.text = model.name;
-    self.selecImage.image = [UIImage imageNamed:@"circle_wallet_Normal"];//@"circle_wallet_Normal"
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(composeWith:)]) {
-        
-        [_delegate composeWith:self.selecImage];
-    }
-    
-    
+
 }
 
 
