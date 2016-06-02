@@ -28,14 +28,14 @@
     if(urlString == nil){
         return nil;
     }else {
-        NSURL *url = [NSURL URLWithString:urlString];
-        __block UIImage *image = nil;
-        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-            
-            image = [UIImage imageWithData:data];
-        }];
+//        NSURL *url = [NSURL URLWithString:urlString];
+//        __block UIImage *image = nil;
+//        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//            
+//            image = [UIImage imageWithData:data];
+//        }];
         
-//        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
     }
     
     if(imageError != nil){
@@ -44,7 +44,7 @@
     // NSLog(@"data = %@", data);
     NSLog(@"%ld", (unsigned long)data.length);
     
-//    image = [UIImage imageWithData:data];
+    image = [UIImage imageWithData:data];
 
     return image;
 }

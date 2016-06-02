@@ -24,6 +24,7 @@
 #import "SVProgressHUD.h"
 #import "JMPopView.h"
 #import "AFNetworking.h"
+#import "NSString+URL.h"
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 
@@ -59,8 +60,7 @@
 
 //    self.view.frame = CGRectMake(0, 0, SCREENWIDTH, 230);
     [self createShareButtom];
-    [self loadData];
-//    [self createData];
+    [self createData];
     
 }
 
@@ -101,58 +101,57 @@
     
 }
 
-- (void)setUrlStr:(NSString *)urlStr {
-    _urlStr = urlStr;
-}
-- (void)setActiveID:(NSString *)activeID {
-    _activeID = activeID;
+//- (void)setUrlStr:(NSString *)urlStr {
+//    _urlStr = urlStr;
+//}
+//- (void)setActiveID:(NSString *)activeID {
+//    _activeID = activeID;
+//}
+
+- (void)setModel:(JMShareModel *)model {
+    _model = model;
 }
 
-//- (void)setModel:(JMShareModel *)model {
-//    _model = model;
-//}
-//
 //- (void)setOtherDict:(NSMutableDictionary *)otherDict {
 //    _otherDict = otherDict;
 //}
-- (void)loadData {
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        
-        [self createData:responseObject];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+//- (void)loadData {
+//    
+//    NSLog(@"Shareview _urlStr=%@ _activeID=%@", _urlStr, _activeID);
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        
+//        [self createData:responseObject];
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//
+//}
 
-}
 
-
-- (void)createData:(NSDictionary *)dic {
+- (void)createData {
 //    NSDictionary *dic = _model.mj_keyValues;
+//    NSLog(@"Share para=%@",dic);
+    if(_model == nil) return;
     
-    if ([_activeID isEqualToString:@"myInvite"] || [_activeID isEqualToString:@"active"]) {
-        NSString *type = dic[@"share_type"];
-        if ([type isEqualToString:@"link"]) {
-            _isPic = NO;
-        }else {
-            _isPic = YES;
-        }
-        _imageUrlString = [dic objectForKey:@"share_icon"]; //图片
-        _content = [dic objectForKey:@"active_dec"]; // 文字详情
+    if ([_model.share_type isEqualToString:@"link"]) {
+        _isPic = NO;
     }else {
-        _content = [dic objectForKey:@"desc"]; //分享的文字详情
-        _imageUrlString = dic[@"share_img"];   //图片
-        _urlResource = dic[@"desc"]; //分享的链接等
+        _isPic = YES;
     }
-    _titleStr = [dic objectForKey:@"title"]; //标题
-    _url = [dic objectForKey:@"share_link"];
-    _kuaizhaoLink = [dic objectForKey:@"share_link"];
     
-    _imageData = [UIImage imagewithURLString:_imageUrlString];
-    _kuaiZhaoImage = [UIImage imagewithURLString:_kuaizhaoLink];
+    _titleStr = _model.title;
+    _content = _model.desc;
+    _imageUrlString = _model.share_img;
+    _url = _model.share_link;
+    _kuaizhaoLink = _url;
+    
+    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
+    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
+    
+    NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
@@ -266,7 +265,7 @@
 
 //提示分享失败
 - (void)createPrompt {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"网络不好，分享失败" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"分享数据获取不全，可能网络不稳定，请重新分享" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
 

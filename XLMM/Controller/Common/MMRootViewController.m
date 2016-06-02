@@ -1210,8 +1210,11 @@ static NSString *kbrandCell = @"brandCell";
         NSString *active = @"active";
         _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
         [_diction setValue:active forKey:@"type_title"];
+        [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
         [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
         huodongVC.webDiction = _diction;
+        huodongVC.isShowNavBar = true;
+        huodongVC.isShowRightShareBtn = true;
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
@@ -1223,11 +1226,13 @@ static NSString *kbrandCell = @"brandCell";
             _diction = nil;
             NSString *active = @"active";
             [dic setValue:active forKey:@"type_title"];
+            [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
             [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
             _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
 
             huodongVC.webDiction = _diction;
-
+            huodongVC.isShowNavBar = true;
+            huodongVC.isShowRightShareBtn = true;
             
             [self.navigationController pushViewController:huodongVC animated:YES];
         }
