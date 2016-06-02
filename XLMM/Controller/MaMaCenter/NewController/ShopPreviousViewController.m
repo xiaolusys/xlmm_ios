@@ -329,7 +329,7 @@
     
     NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
     if(urlString != nil){
-        self.shopShareImage = [UIImage imagewithURLString:urlString];
+        self.shopShareImage = [UIImage imagewithURLString:[urlString imageShareCompression]];
     }
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
         self.shopShareName = @"小鹿妈妈";
