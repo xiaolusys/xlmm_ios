@@ -116,17 +116,22 @@
         if ([firstparam isEqualToString:@"model_id"]) {
             //跳到集合页面
             NSLog(@"model_id = %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
             
-//            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-//            
-//            [vc.navigationController pushViewController:collectionVC animated:YES];
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            
+            [vc.navigationController pushViewController:webView animated:YES];
             
         } else if ([firstparam isEqualToString:@"product_id"]){
             //跳到商品详情
             NSLog(@"product_id = %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
             
             WebViewController *webView = [[WebViewController alloc] init];
-//            webView.eventLink = [params lastObject];
+            webView.webDiction = web_dic;
 
             [vc.navigationController pushViewController:webView animated:YES];
             
@@ -141,7 +146,29 @@
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"]){
             NSLog(@"跳到H5首页 url= %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            
+            [vc.navigationController pushViewController:webView animated:YES];
+        } else if([firstparam isEqualToString:@"activity_id"]){
+
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"active" forKey:@"type_title"];
+            
+            NSArray *id_params = [params[1] componentsSeparatedByString:@"&"];
+            NSString *id_param = [id_params firstObject];
+            [web_dic setValue:id_param forKey:@"activity_id"];
+            NSLog(@"跳到activity_id id=%@ url= %@", id_param, [params lastObject]);
+            
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            
+            [vc.navigationController pushViewController:webView animated:YES];
         }
+        
     }
     
 }

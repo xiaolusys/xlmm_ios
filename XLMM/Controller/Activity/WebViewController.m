@@ -79,7 +79,7 @@
 /**
  *  商品ID
  */
-@property (nonatomic, copy) NSString *itemID;
+//@property (nonatomic, copy) NSString *itemID;
 /**
  *  加载快照
  */
@@ -141,16 +141,6 @@
     }
 }
 
-- (void)tiaozhuan:(NSNotification *)notification{
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *ID = [userInfo objectForKey:@"productID"];
-    
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:ID isChild:NO];
-    
-    [self.navigationController pushViewController:detailsVC animated:YES];
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -181,12 +171,11 @@
         loadStr = _webDiction[@"web_url"];
     }else if ([active isEqualToString:@"active"]){
         baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
-        self.activityId = _webDiction[@"id"];//[self.diction objectForKey:@"id"];
-        loadStr = _webDiction[@"act_link"];//[self.diction objectForKey:@"act_link"];
+        self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
+        loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
     }else {
         statusBarView.hidden = NO;
         baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
-        self.itemID = _webDiction[@"ID"];
         loadStr = _webDiction[@"web_url"];
     }
     NSURL *url = [NSURL URLWithString:loadStr];
@@ -230,8 +219,8 @@
         self.shareView.urlStr = string;
         self.shareView.activeID = active;
     }else {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,_itemID];
-        self.shareView.urlStr = string;
+//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,_itemID];
+//        self.shareView.urlStr = string;
     }
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
@@ -288,6 +277,12 @@
 //        [self cancleShareBtnClick:nil];
     }
 
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    NSLog(@"webview didFailLoadWithError error=%@", error);
+    self.navigationController.navigationBarHidden = NO;
+    [SVProgressHUD dismiss];
 }
 
 - (void)updateUserAgent{
@@ -412,7 +407,7 @@
     NSNumber *activeid = data[@"active_id"];
     NSString *platform = data[@"share_to"];
     if ([activeid integerValue] == 0) {
-        activeid = @([_itemID integerValue]);
+//        activeid = @([_itemID integerValue]);
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     shareType = data[@"share_to"];
@@ -515,9 +510,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [SVProgressHUD dismiss];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [SVProgressHUD dismiss];
-}
+
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
