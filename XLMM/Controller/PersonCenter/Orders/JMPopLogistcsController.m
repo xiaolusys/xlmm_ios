@@ -18,13 +18,12 @@
 #import "JMPopLogistcsModel.h"
 #import "MJExtension.h"
 
-@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource,JMPopLogistcsCellDelegate>
 
 @property (nonatomic,strong) JMSelecterButton *canelButton;
 
 @property (nonatomic,strong) UITableView *tableView;
 
-//@property (nonatomic,strong) NSMutableArray *dataSource;
 
 @property (nonatomic,strong) UIImageView *imageView;
 
@@ -32,13 +31,6 @@
 @end
 
 @implementation JMPopLogistcsController
-
-//- (NSMutableArray *)dataSource {
-//    if (_dataSource) {
-//        _dataSource = [NSMutableArray array];
-//    }
-//    return _dataSource;
-//}
 
 
 - (void)viewDidLoad {
@@ -52,9 +44,6 @@
     
 }
 
-//- (void)setDataSource:(NSMutableArray *)dataSource {
-//    _dataSource = dataSource;
-//}
 
 - (void)loadData {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/get_logistic_companys",Root_URL];
@@ -62,36 +51,17 @@
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     
     [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        /**
-         *  {
-         code = "YUNDA_QR";
-         id = "-2";
-         name = "\U97f5\U8fbe\U70ed\U654f";
-         }
-         */
-        
-//        JMPopLogistcsModel *model = [[JMPopLogistcsModel alloc] init];
+
         self.dataSource = [NSMutableArray array];
         
         NSMutableArray *dataSourceArr = [[NSMutableArray alloc] init];
         for (NSDictionary *dic in responseObject) {
-//            self.imageStr = @"circle_wallet_Normal";
-            JMPopLogistcsModel *model = [[JMPopLogistcsModel alloc] init];
-//            JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
-
-            model.isSelecter = 0;
-            model.name = dic[@"name"];
-            model.logistcsID = dic[@"id"];
-            model.code = dic[@"code"];
+            JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
             [dataSourceArr addObject:model];
         }
 
-        
-        
         [self.dataSource addObjectsFromArray:dataSourceArr];
-        //        [self.dataSource addObjectsFromArray:dataSourceArr];
-        
-        //        self.dataSource = [NSMutableArray arrayWithArray:responseObject];
+
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, 180) style:UITableViewStylePlain];
         [self.view addSubview:tableView];
         self.tableView = tableView;
@@ -114,11 +84,7 @@
     [self.canelButton addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
     self.canelButton.frame = CGRectMake(10, 190, SCREENWIDTH - 20, 40);
     [self.view addSubview:self.canelButton];
-    
-    
-    
-    
-    
+ 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,7 +107,7 @@
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
     [cell configWithModel:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
-
+    cell.delegate = self;
     return cell;
 }
 - (void)setGoodsID:(NSString *)goodsID {
@@ -149,7 +115,6 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSLog(@"%ld=======================%ld",indexPath.section,indexPath.row);
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
 
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_company_code?logistic_company_code=%@",Root_URL,self.goodsID,model.code];//?referal_trade_id=%@
@@ -170,6 +135,12 @@
     
     
     
+    
+}
+
+- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title {
+    
+    self.logisticsStr = title;
     
 }
 

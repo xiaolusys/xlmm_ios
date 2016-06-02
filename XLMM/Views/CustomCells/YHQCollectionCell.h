@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *requireLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sourceTitleL;
 
 
 - (void)fillCellWithYHQModel:(YHQModel *)yhqModel;

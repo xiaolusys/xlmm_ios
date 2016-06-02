@@ -235,7 +235,8 @@
         self.bottomView.hidden = YES;
     }
     
-    self.logisticslabel.text = @"小鹿推荐";
+//    self.logisticslabel.text = @"小鹿推荐";
+    self.logisticslabel.text = self.showViewVC.logisticsStr;
     self.orderLogistcsTap.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
     [self.orderLogistcsTap addGestureRecognizer:tap];
@@ -485,7 +486,6 @@
     NSInteger count = [newStr integerValue] - 1;
     NSString *packStr = @"";
     if (count < 0) {
-        self.packMessageL.text = @"包裹一";
     }else {
         packStr = [NSString stringWithFormat:@"包裹%@",arr[count]];
     }
@@ -560,11 +560,13 @@
         
         
     } else if ([goodsStatus integerValue] == ORDER_STATUS_TRADE_CLOSE){
-        self.packStatusL.text = @"订单创建成功";
+        self.packStatusL.text = @"订单关闭";
         if(self.dingdanModel.created != nil){
 //            NSString *newStr = [self formatterTimeString:self.dingdanModel.created ];
 //            timeLabel.text = newStr;
-            self.packMessageL.text = packStr;
+//            self.packMessageL.text = packStr;
+            self.packMessageL.text = @"包裹一";
+
         }
     } else if([goodsStatus integerValue] == ORDER_STATUS_CONFIRM_RECEIVE){
         

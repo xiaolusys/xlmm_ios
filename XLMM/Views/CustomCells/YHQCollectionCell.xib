@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="myimageView" destination="b4Z-Kt-qT5" id="3c2-lc-zd7"/>
                 <outlet property="requireLabel" destination="CiJ-pO-JFQ" id="yDn-jy-YsC"/>
+                <outlet property="sourceTitleL" destination="y0n-H8-hRM" id="rw3-1a-FwX"/>
                 <outlet property="timeLabel" destination="pIB-Ak-sKU" id="QKq-qf-0Z4"/>
                 <outlet property="valueLabel" destination="HIX-mG-fHb" id="0aS-LO-ag3"/>
                 <outlet property="xianzhiLabel" destination="XqA-XK-mgT" id="gpo-XS-td7"/>
@@ -40,13 +41,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="满99元使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiJ-pO-JFQ">
-                                <rect key="frame" x="191" y="24" width="79" height="18"/>
+                                <rect key="frame" x="191" y="15" width="79" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqA-XK-mgT">
-                                <rect key="frame" x="191" y="46" width="28" height="17"/>
+                                <rect key="frame" x="191" y="38" width="28" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -57,15 +58,25 @@
                                 <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0n-H8-hRM">
+                                <rect key="frame" x="191" y="55" width="79" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="XqA-XK-mgT" firstAttribute="top" secondItem="CiJ-pO-JFQ" secondAttribute="bottom" constant="4" id="3cx-99-Fuz"/>
+                            <constraint firstItem="XqA-XK-mgT" firstAttribute="top" secondItem="CiJ-pO-JFQ" secondAttribute="bottom" constant="5" id="3cx-99-Fuz"/>
+                            <constraint firstItem="y0n-H8-hRM" firstAttribute="leading" secondItem="HIX-mG-fHb" secondAttribute="leading" id="BCh-kp-sYp"/>
+                            <constraint firstItem="y0n-H8-hRM" firstAttribute="leading" secondItem="XqA-XK-mgT" secondAttribute="leading" id="Bqc-zf-b10"/>
+                            <constraint firstItem="y0n-H8-hRM" firstAttribute="bottom" secondItem="XqA-XK-mgT" secondAttribute="bottom" constant="21" id="Dpm-K7-ZoS"/>
                             <constraint firstAttribute="bottom" secondItem="b4Z-Kt-qT5" secondAttribute="bottom" id="ETV-t6-kL1"/>
                             <constraint firstAttribute="trailing" secondItem="b4Z-Kt-qT5" secondAttribute="trailing" constant="8" id="HL5-Cd-UNN"/>
+                            <constraint firstItem="y0n-H8-hRM" firstAttribute="top" secondItem="XqA-XK-mgT" secondAttribute="top" constant="5" id="Jdn-QE-1WI"/>
                             <constraint firstItem="CiJ-pO-JFQ" firstAttribute="leading" secondItem="HIX-mG-fHb" secondAttribute="trailing" constant="14" id="NOK-mV-IYb"/>
                             <constraint firstItem="pIB-Ak-sKU" firstAttribute="centerY" secondItem="smf-tj-WdK" secondAttribute="centerY" id="Nfg-6w-e9s"/>
-                            <constraint firstItem="CiJ-pO-JFQ" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="24" id="nAv-UP-LXQ"/>
+                            <constraint firstItem="CiJ-pO-JFQ" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="15" id="nAv-UP-LXQ"/>
                             <constraint firstItem="HIX-mG-fHb" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="4" id="nFI-QA-Tlt"/>
                             <constraint firstItem="XqA-XK-mgT" firstAttribute="leading" secondItem="CiJ-pO-JFQ" secondAttribute="leading" id="nRN-28-Ack"/>
                             <constraint firstItem="b4Z-Kt-qT5" firstAttribute="top" secondItem="hF0-p5-hzY" secondAttribute="top" constant="8" id="rlh-8d-VAh"/>
@@ -75,6 +86,12 @@
                             <constraint firstItem="HIX-mG-fHb" firstAttribute="leading" secondItem="hF0-p5-hzY" secondAttribute="leading" constant="72" id="yrt-zF-OIR"/>
                             <constraint firstAttribute="bottom" secondItem="smf-tj-WdK" secondAttribute="bottom" constant="7" id="zIV-Wz-CwO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="BCh-kp-sYp"/>
+                                <exclude reference="Jdn-QE-1WI"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -94,7 +111,7 @@
                 <outlet property="valueLabel" destination="HIX-mG-fHb" id="jBB-d7-6Nn"/>
                 <outlet property="xianzhiLabel" destination="XqA-XK-mgT" id="1cN-0P-1sW"/>
             </connections>
-            <point key="canvasLocation" x="245.5" y="271"/>
+            <point key="canvasLocation" x="172.5" y="229"/>
         </collectionViewCell>
     </objects>
     <resources>

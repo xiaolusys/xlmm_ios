@@ -58,7 +58,7 @@
     NSLog(@"xianzhi %@", yhqModel.pros_desc);
     self.xianzhiLabel.text = yhqModel.pros_desc;
     self.requireLabel.text = yhqModel.use_fee_des;
-
+    self.sourceTitleL.text = yhqModel.title;
     self.valueLabel.text = [NSString stringWithFormat:@"¥%d", [couponValue intValue]];
     self.timeLabel.text = newString;
     

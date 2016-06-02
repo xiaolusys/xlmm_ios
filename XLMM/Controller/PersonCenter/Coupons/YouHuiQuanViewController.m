@@ -21,8 +21,14 @@
 
 
 @property (nonatomic, strong) NSMutableArray *canUsedArray;
+/**
+ *  失效的优惠券
+ */
 @property (nonatomic, strong) NSMutableArray *expiredArray;
 @property (nonatomic, strong) NSMutableArray *usedArray;
+/**
+ *  无效的用户优惠券
+ */
 @property (nonatomic, strong) NSMutableArray *disableUsedArray;
 
 

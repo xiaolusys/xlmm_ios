@@ -30,9 +30,14 @@
 }
 
 - (void)createUI {
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:btn];
+    btn.frame = self.contentView.frame;
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
 
     UILabel *nameLabel = [UILabel new];
-    [self.contentView addSubview:nameLabel];
+    [btn addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
 //    UIImageView *selecImage = [UIImageView new];
@@ -55,11 +60,21 @@
 
 }
 
+- (void)btnClick:(UIButton *)btn {
+    
+    if (!_delegate && [_delegate respondsToSelector:@selector(ClickLogistics:Title:)]) {
+        [self.delegate ClickLogistics:self Title:self.nameLabel.text];
+    }
+    
+}
+
 
 - (void)configWithModel:(JMPopLogistcsModel *)model {
     
     self.nameLabel.text = model.name;
-
+    
+    
+    
 }
 
 
