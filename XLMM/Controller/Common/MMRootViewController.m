@@ -1205,12 +1205,12 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         WebViewController *huodongVC = [[WebViewController alloc] init];
-//        huodongVC.diction = dic;
-//        huodongVC.active = @"active";
+
         _diction = nil;
         NSString *active = @"active";
         _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
         [_diction setValue:active forKey:@"type_title"];
+        [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
         huodongVC.webDiction = _diction;
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
@@ -1219,11 +1219,11 @@ static NSString *kbrandCell = @"brandCell";
             [self.navigationController pushViewController:loginVC animated:YES];
         } else{
             WebViewController *huodongVC = [[WebViewController alloc] init];
-//            huodongVC.diction = dic;
-//            huodongVC.active = @"active";
+
             _diction = nil;
             NSString *active = @"active";
             [dic setValue:active forKey:@"type_title"];
+            [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
             _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
 
             huodongVC.webDiction = _diction;
@@ -1509,37 +1509,11 @@ static NSString *kbrandCell = @"brandCell";
         _diction = [NSMutableDictionary dictionary];
         _diction = model.mj_keyValues;
         [_diction setValue:model.web_url forKey:@"web_url"];
-        [_diction setValue:model.ID forKey:@"ID"];
-        if (model.productModel == nil) {
-            WebViewController *webView = [[WebViewController alloc] init];
-//            webView.eventLink = model.web_url;
-//            webView.goodsID = model.ID;
-//            webView.diction = model.productModel;
-            webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
-            //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-            [self.navigationController pushViewController:webView animated:YES];
-        }else {
-            
-            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                WebViewController *webView = [[WebViewController alloc] init];
-//                webView.eventLink = model.web_url;
-//                webView.goodsID = model.ID;
-//                webView.diction = model.productModel;
-                webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
-                //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-                [self.navigationController pushViewController:webView animated:YES];
-                
-            } else {
-               
-                WebViewController *webView = [[WebViewController alloc] init];
-//                webView.eventLink = model.web_url;
-//                webView.goodsID = model.ID;
-//                webView.diction = model.productModel;
-                webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
-                //            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:NO];
-                [self.navigationController pushViewController:webView animated:YES];
-            }
-        }
+
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
+        [self.navigationController pushViewController:webView animated:YES];
+        
     }
     
 }

@@ -11,6 +11,7 @@
 
 @interface WebViewController : CommonWebViewViewController
 
+//一般来说webDiction是include 3个属性，type_title web_url activity_id
 @property (nonatomic,strong) NSMutableDictionary *webDiction;
 
 
