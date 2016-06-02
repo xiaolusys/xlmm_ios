@@ -94,7 +94,7 @@
 }
 
 + (UIColor *)lineGrayColor{
-    return [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    return [UIColor colorWithR:240 G:240 B:240 alpha:1];
 }
 
 + (UIColor *)cartViewBackGround{

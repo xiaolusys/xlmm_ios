@@ -17,8 +17,6 @@
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
 #import "UIViewController+NavigationBar.h"
-#import "JMBaseWebView.h"
-#import "WebViewController.h"
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 

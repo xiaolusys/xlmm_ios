@@ -319,7 +319,7 @@
    // NSLog(@"tag = %lu", (unsigned long)button.tag);
     
 }
-
+#pragma mark ---- 待支付订单跳转
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
   //  NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
@@ -327,8 +327,8 @@
     NSString *ID = [dic objectForKey:@"id"];
    // NSLog(@"id = %@", ID);
     
-    //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@/details", Root_URL, ID];
+    //      http://m.xiaolu.so/rest/v1/trades/86412/details    这个接口V2不行   
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
   //  NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;

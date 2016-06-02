@@ -226,7 +226,6 @@
         }else {
             activityID = self.nativeShare[@"active_id"];
         }
-        [SVProgressHUD showWithStatus:@"请稍后..."];
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
         self.shareView.urlStr = string;
         self.shareView.activeID = active;
