@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "JMPopLogistcsModel.h"
-@class JMPopLogistcsCell;
-@protocol JMPopLogistcsCellDelegate <NSObject>
-
-- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title;
-
-@end
+//@class JMPopLogistcsCell;
+//@protocol JMPopLogistcsCellDelegate <NSObject>
+//
+//- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title;
+//
+//@end
 
 @interface JMPopLogistcsCell : UITableViewCell
 
 - (void)configWithModel:(JMPopLogistcsModel *)model;
 
-@property (nonatomic,weak) id<JMPopLogistcsCellDelegate>delegate;
+//@property (nonatomic,weak) id<JMPopLogistcsCellDelegate>delegate;
 
 @end

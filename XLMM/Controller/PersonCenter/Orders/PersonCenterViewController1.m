@@ -327,8 +327,8 @@
     NSString *ID = [dic objectForKey:@"id"];
    // NSLog(@"id = %@", ID);
     
-    //      http://m.xiaolu.so/rest/v1/trades/86412/details    这个接口V2不行   
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, ID];
+    //      http://m.xiaolu.so/rest/v1/trades/86412/details    //@"%@/rest/v2/trades/%@"
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
   //  NSLog(@"urlString = %@", urlString);
     xiangqingVC.urlString = urlString;
     xiangqingVC.createString = createdString;

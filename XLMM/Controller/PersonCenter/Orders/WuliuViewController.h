@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WuliuViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface WuliuViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
 @property (weak, nonatomic) IBOutlet UICollectionView *wuliuInfoChainView;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuCompanyName;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuMiandanId;

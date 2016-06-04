@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMOrderGoodsModel;
 @interface LogisticsCollectionViewCell : UICollectionViewCell
+
+- (void)configData:(JMOrderGoodsModel *)model;
 
 @end

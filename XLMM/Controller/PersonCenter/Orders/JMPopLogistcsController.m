@@ -18,7 +18,7 @@
 #import "JMPopLogistcsModel.h"
 #import "MJExtension.h"
 
-@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource,JMPopLogistcsCellDelegate>
+@interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) JMSelecterButton *canelButton;
 
@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 
     [self createUI];
     [self loadData];
@@ -61,14 +62,7 @@
         }
 
         [self.dataSource addObjectsFromArray:dataSourceArr];
-
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, 180) style:UITableViewStylePlain];
-        [self.view addSubview:tableView];
-        self.tableView = tableView;
-        self.tableView.dataSource = self;
-        self.tableView.delegate = self;
-        self.tableView.scrollEnabled = NO;
-    
+        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -76,6 +70,13 @@
 }
 
 - (void)createUI {
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, 180) style:UITableViewStylePlain];
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.scrollEnabled = NO;
     
     JMSelecterButton *cancelButton = [[JMSelecterButton alloc] init];
     self.canelButton = cancelButton;
@@ -107,21 +108,29 @@
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
     [cell configWithModel:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
-    cell.delegate = self;
     return cell;
 }
 - (void)setGoodsID:(NSString *)goodsID {
     _goodsID = goodsID;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
 
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_company_code?logistic_company_code=%@",Root_URL,self.goodsID,model.code];//?referal_trade_id=%@
+//    self.logisticsStr = model.name;
+    if (_delegate && [_delegate respondsToSelector:@selector(ClickLogistics:Title:)]) {
+        [_delegate ClickLogistics:self Title:model.name];
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_company_code",Root_URL,self.goodsID];//?referal_trade_id=%@
 
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:self.logisticsStr forKey:@"referal_trade_id"];
+    [dic setObject:model.code forKey:@"logistic_company_code"];
+    
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     
-    [manage POST:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage POST:urlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"%@",responseObject);
         
@@ -138,17 +147,18 @@
     
 }
 
-- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title {
-    
-    self.logisticsStr = title;
-    
-}
+//- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title {
+//    
+//    self.logisticsStr = title;
+//    
+//}
 
 - (void)cancelBtnClick {
     
     [JMShareView hide];
     
     [JMPopView hide];
+    
     
     [SVProgressHUD dismiss];
 }

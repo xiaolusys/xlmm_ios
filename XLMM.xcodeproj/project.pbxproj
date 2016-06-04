@@ -20,6 +20,7 @@
 		0B43FFAA1CFED4EB00AE7DDD /* JMPopLogistcsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFA91CFED4EB00AE7DDD /* JMPopLogistcsController.m */; };
 		0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */; };
 		0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */; };
+		0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7696DD1D011F010079E0CA /* JMOrderPayView.m */; };
 		0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */; };
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
@@ -891,6 +892,8 @@
 		0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsCell.m; sourceTree = "<group>"; };
 		0B43FFB21CFEEB9100AE7DDD /* JMPopLogistcsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPopLogistcsModel.h; sourceTree = "<group>"; };
 		0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsModel.m; sourceTree = "<group>"; };
+		0B7696DC1D011F010079E0CA /* JMOrderPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayView.h; sourceTree = "<group>"; };
+		0B7696DD1D011F010079E0CA /* JMOrderPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayView.m; sourceTree = "<group>"; };
 		0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
 		0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -4148,6 +4151,8 @@
 		1F2AE9711CF69409002EC974 /* VIew */ = {
 			isa = PBXGroup;
 			children = (
+				0B7696DC1D011F010079E0CA /* JMOrderPayView.h */,
+				0B7696DD1D011F010079E0CA /* JMOrderPayView.m */,
 			);
 			name = VIew;
 			sourceTree = "<group>";
@@ -5224,6 +5229,7 @@
 				183074261C97D17800B7665E /* UIImageView+WebCache.m in Sources */,
 				183072881C97C00900B7665E /* UIImage+ColorImage.m in Sources */,
 				1F4161171CE31A4400F78C0D /* View+MASAdditions.m in Sources */,
+				0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */,
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
 				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,

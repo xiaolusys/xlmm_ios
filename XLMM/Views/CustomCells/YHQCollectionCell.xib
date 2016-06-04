@@ -107,11 +107,12 @@
             <connections>
                 <outlet property="myimageView" destination="b4Z-Kt-qT5" id="Tqa-vI-d1Z"/>
                 <outlet property="requireLabel" destination="CiJ-pO-JFQ" id="HfD-jG-1ZO"/>
+                <outlet property="sourceTitleL" destination="y0n-H8-hRM" id="2wq-xK-MSS"/>
                 <outlet property="timeLabel" destination="pIB-Ak-sKU" id="CJl-AR-D1f"/>
                 <outlet property="valueLabel" destination="HIX-mG-fHb" id="jBB-d7-6Nn"/>
                 <outlet property="xianzhiLabel" destination="XqA-XK-mgT" id="1cN-0P-1sW"/>
             </connections>
-            <point key="canvasLocation" x="172.5" y="229"/>
+            <point key="canvasLocation" x="51.5" y="109"/>
         </collectionViewCell>
     </objects>
     <resources>

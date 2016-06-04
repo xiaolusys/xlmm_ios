@@ -13,9 +13,14 @@
 #import "SVProgressHUD.h"
 #import "LogisticsCollectionViewCell.h"
 #import "AFNetworking.h"
+#import "JMOrderGoodsModel.h"
 
 @interface WuliuViewController ()
+
 @property (nonatomic, strong) NSArray *infoArray;
+
+//@property (nonatomic,strong) UICollectionView *wuliuInfoChainView;
+
 @end
 
 @implementation WuliuViewController
@@ -26,13 +31,25 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     [super viewDidLoad];
     
     [self createNavigationBarWithTitle:@"物流信息" selecotr:@selector(goback)];
-    self.wuliuInfoChainView.backgroundColor = [UIColor backgroundlightGrayColor];
-    self.wuliuInfoChainView.delegate = self;
-    self.wuliuInfoChainView.dataSource = self;
-    self.wuliuInfoChainView.showsVerticalScrollIndicator = FALSE;
-    [self.wuliuInfoChainView registerClass:[LogisticsCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
+//    self.wuliuInfoChainView.backgroundColor = [UIColor backgroundlightGrayColor];
+//    self.wuliuInfoChainView.delegate = self;
+//    self.wuliuInfoChainView.dataSource = self;
+//    self.wuliuInfoChainView.showsVerticalScrollIndicator = FALSE;
+//    [self.wuliuInfoChainView registerClass:[LogisticsCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self createCollectionView];
     [self getWuliuInfoFromServer];
+}
+
+- (void)createCollectionView {
+//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    layout.itemSize = CGSizeMake(SCREENWIDTH, 60);
+//    self.wuliuInfoChainView = [[UICollectionView alloc]initWithFrame:self.view.frame collectionViewLayout:layout];
+    self.wuliuInfoChainView.dataSource = self;
+    self.wuliuInfoChainView.delegate = self;
+    self.wuliuInfoChainView.showsVerticalScrollIndicator = FALSE;
+    self.wuliuInfoChainView.backgroundColor = [UIColor backgroundlightGrayColor];
+    [self.view addSubview:self.wuliuInfoChainView];
+    [self.wuliuInfoChainView registerClass:[LogisticsCollectionViewCell class] forCellWithReuseIdentifier:@"cellID"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +89,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
         }
         NSDictionary *info = responseObject;
         [self fetchedWuliuData:info];
-        [self.wuliuInfoChainView reloadData ];
+        [self.wuliuInfoChainView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"wuliu info get failed.");
@@ -232,6 +249,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     LogisticsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+
     if(cell != nil){
         [self removeAllSubviews:cell];
     }
@@ -247,11 +265,18 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     else{
         [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
     }
-    
+    JMOrderGoodsModel *goodsModel = self.infoArray[indexPath.row];
+    [cell configData:goodsModel];
 //    [cell fillCellWithData:[self.infoArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+
+    return CGSizeMake(SCREENWIDTH, 60);
+}
+
 
 - (void)removeAllSubviews:(UIView *)v{
     while (v.subviews.count) {
@@ -261,3 +286,25 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
