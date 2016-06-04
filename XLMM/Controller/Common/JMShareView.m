@@ -43,7 +43,6 @@
 }
 
 + (void)hide {
-    
     for (UIView *share in JMKeyWindow.subviews) {
         if ([share isKindOfClass:self]) {
             [share removeFromSuperview];

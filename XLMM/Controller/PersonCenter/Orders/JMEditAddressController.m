@@ -45,7 +45,7 @@
 
 @property (nonatomic,strong) UIPickerView *chooseAddressPick;
 
-
+@property (nonatomic,strong) NSMutableDictionary *addressDic;
 @end
 
 @implementation JMEditAddressController {
@@ -63,8 +63,14 @@
     
     NSString *referal_trade_id;
     NSString *logistic_company_code;
+    
 }
-
+- (NSMutableDictionary *)addressDic {
+    if (!_addressDic) {
+        _addressDic = [NSMutableDictionary dictionary];
+    }
+    return _addressDic;
+}
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [[NSMutableArray alloc] init];
@@ -84,9 +90,8 @@
     [self createPickView];
     [self initView];
     
-    referal_trade_id = _editDict[@"id"];
+    referal_trade_id = _editDict[@"user_adress"][@"id"];
     logistic_company_code = _editDict[@"logistic_company_code"];
-    
 }
 
 - (void)createTableView {
@@ -98,11 +103,6 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.scrollEnabled = NO;
-    
-    
-    
-    
-    
     
 }
 - (void)initView {
@@ -133,26 +133,38 @@
     NSDictionary *dic = [[NSDictionary alloc] init];
     JMEditAddressModel *model = [JMEditAddressModel new];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
-        model.receiver_state = proStr;
-        model.receiver_city = cityStr;
-        model.receiver_district = disStr;
-        model.receiver_name = nameStr;
-        model.receiver_mobile = phoneStr;
-        model.receiver_address = addStr;
+        
+
+        model.receiver_state = proStr ? proStr : _addressDic[@"receiver_state"];
+        model.receiver_city = cityStr ? cityStr : _addressDic[@"receiver_city"];
+        model.receiver_district = disStr ? disStr : _addressDic[@"receiver_district"];
+        model.receiver_name = nameStr ? nameStr : _addressDic[@"receiver_name"];
+        model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
+        model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
         
         
         dic = model.mj_keyValues;
         
         [self.delegate updateEditerWithmodel:dic];
+        
+        
+        
     }
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
+    [dict setObject:referal_trade_id forKey:@"id"];  // === > 地址信息ID
+    if (_editDict[@"logistic_company"] == nil) {
+        [dict setObject:[NSNull null] forKey:@"logistic_company_code"];
+    }else {
+        [dict setObject:_editDict[@"logistic_company"] forKey:@"logistic_company_code"];
+    }
+    [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
     
-    
-    [manage POST:urlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (!responseObject) return;
         
@@ -238,14 +250,15 @@
 #pragma mark ---- 创建文本框
 - (void)createUITextField {
     
-    JMEditAddressModel *editModel = [JMEditAddressModel mj_objectWithKeyValues:_editDict];
+    _addressDic = _editDict[@"user_adress"];
+    JMEditAddressModel *editModel = [JMEditAddressModel mj_objectWithKeyValues:_addressDic];
     
     UITextField *conSigneeTF = [[UITextField alloc] initWithFrame:CGRectMake(90, 35, SCREENWIDTH - 100, 20)];
     self.conSigneeTF = conSigneeTF;
     [self.view addSubview:self.conSigneeTF];
     self.conSigneeTF.tag = 100;
     self.conSigneeTF.delegate = self;
-    self.conSigneeTF.keyboardType = UIKeyboardTypeASCIICapable;
+    self.conSigneeTF.keyboardType = UIKeyboardTypeDefault;
     self.conSigneeTF.leftViewMode = UITextFieldViewModeAlways;
     self.conSigneeTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.conSigneeTF.font = [UIFont systemFontOfSize:13.];
@@ -257,7 +270,7 @@
     [self.view addSubview:self.phoneNumTF];
     self.phoneNumTF.tag = 101;
     self.phoneNumTF.delegate = self;
-    self.phoneNumTF.keyboardType = UIKeyboardTypeASCIICapable;
+    self.phoneNumTF.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTF.leftViewMode = UITextFieldViewModeAlways;
     self.phoneNumTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.phoneNumTF.font = [UIFont systemFontOfSize:13.];
@@ -269,7 +282,7 @@
     [self.view addSubview:self.detailAddressTF];
     self.detailAddressTF.tag = 102;
     self.detailAddressTF.delegate = self;
-    self.detailAddressTF.keyboardType = UIKeyboardTypeASCIICapable;
+    self.detailAddressTF.keyboardType = UIKeyboardTypeDefault;
     self.detailAddressTF.leftViewMode = UITextFieldViewModeAlways;
     self.detailAddressTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.detailAddressTF.font = [UIFont systemFontOfSize:13.];
@@ -331,7 +344,9 @@
 }
 #pragma mark ----- 点击选择地址的图片手势
 - (void)ImageViewClick:(UITapGestureRecognizer *)tap {
-    NSLog(@"我被点击了");
+    [self.conSigneeTF resignFirstResponder];
+    [self.phoneNumTF resignFirstResponder];
+    [self.detailAddressTF resignFirstResponder];
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.bottomView];
     self.maskView.alpha = 0;
@@ -378,33 +393,24 @@
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    NSLog(@"已经开始编辑");
+    [textField becomeFirstResponder];
 }
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-//
-//    if (textField.tag == 100) {
-//        nameStr = textField.text;
-//    }else if (textField.tag == 101) {
-//        phoneStr = textField.text;
-//    }else {
-//        addStr = textField.text;
-//    }
-//    
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    NSLog(@"删除了11111111");
-    //是否允许删除
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    //是否允许 return
-    NSLog(@"点击return了");
-    //在这里做
+    [textField resignFirstResponder];
     return YES;
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.conSigneeTF resignFirstResponder];
+    [self.phoneNumTF resignFirstResponder];
+    [self.detailAddressTF resignFirstResponder];
 }
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

@@ -122,12 +122,13 @@
     return _youmengShare;
 }
 
-- (JMShareViewController *)shareView {
-    if (!_shareView) {
-        _shareView = [[JMShareViewController alloc] init];
-    }
-    return _shareView;
-}
+//- (JMShareViewController *)shareView {
+//    if (!_shareView) {
+//        _shareView = [[JMShareViewController alloc] init];
+//        
+//    }
+//    return _shareView;
+//}
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
 }
@@ -160,7 +161,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
     
     NSString *titleName = self.titleName;
@@ -257,6 +258,8 @@
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    JMShareViewController *shareView = [[JMShareViewController alloc] init];
+    self.shareView = shareView;
     _shareDic = nil;
 
     self.shareView.model = self.share_model;

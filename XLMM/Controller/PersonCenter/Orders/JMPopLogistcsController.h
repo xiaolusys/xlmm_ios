@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMPopLogistcsController;
+@protocol JMPopLogistcsControllerDelegate <NSObject>
+
+- (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title;
+
+@end
+
 @interface JMPopLogistcsController : UIViewController
 
 @property (nonatomic,strong) NSMutableArray *dataSource;
 
 @property (nonatomic,copy) NSString *goodsID;
+
+@property (nonatomic,copy) NSString *logisticsStr;
+
+@property (nonatomic,weak) id<JMPopLogistcsControllerDelegate>delegate;
+
 
 @end

@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface JMPackAgeModel : NSObject
-
+/**
+ *  物流状态
+ */
 @property (nonatomic,copy) NSString *assign_status_display;
 
 @property (nonatomic,copy) NSString *logistics_company_code;
@@ -25,11 +27,17 @@
 @property (nonatomic,copy) NSString *payment;
 
 @property (nonatomic,copy) NSString *pic_path;
-
+/**
+ *  时间
+ */
 @property (nonatomic,copy) NSString *process_time;
-
+/**
+ *  商品标题
+ */
 @property (nonatomic,copy) NSString *title;
-
+/**
+ *  仓库编号
+ */
 @property (nonatomic,copy) NSString *ware_by_display;
 
 @end

@@ -50,7 +50,7 @@
     [_contentView removeFromSuperview];
     
     _contentView = contentView;
-    contentView.backgroundColor = [UIColor clearColor];
+    contentView.backgroundColor = [UIColor whiteColor];
    
     
     [self addSubview:contentView];
