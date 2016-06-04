@@ -1132,10 +1132,8 @@
     [self.diction setValue:titleName forKey:@"name_title"];
     
     activity.webDiction = _diction;
-//    activity.eventLink = self.myInvitation;
-//    activity.active = @"myInvite";
-//    activity.titleName = @"我的邀请";
-    
+    activity.isShowNavBar = true;
+    activity.isShowRightShareBtn = false;
     
     [self.navigationController pushViewController:activity animated:YES];
 }
@@ -1187,10 +1185,13 @@
     [self.diction setValue:titleName forKey:@"name_title"];
     
     activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-    
-//    activity.eventLink = self.eventLink;
-//    activity.active = @"myInvite";
-//    activity.titleName = @"精品活动";
+    activity.isShowNavBar = true;
+    activity.isShowRightShareBtn = true;
+    activity.share_model.share_link = self.eventLink;
+    activity.share_model.title = @"精品活动";
+    activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
+    activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
+    activity.share_model.share_type = @"link";
     [self.navigationController pushViewController:activity animated:YES];
     
 }

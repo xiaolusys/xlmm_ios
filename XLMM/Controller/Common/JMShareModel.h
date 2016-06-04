@@ -28,6 +28,8 @@
 
 @property (nonatomic,copy) NSString *url;
 
+@property (nonatomic,copy) NSString *share_type;
+
 + (instancetype)modelWithModel:(JMShareModel *)model;
 
 - (instancetype)initWithModel:(JMShareModel *)model;

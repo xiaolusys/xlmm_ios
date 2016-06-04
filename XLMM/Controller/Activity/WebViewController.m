@@ -105,6 +105,8 @@
 
 @property (nonatomic,strong) JMShareViewController *shareView;
 
+
+
 @end
 
 @implementation WebViewController{
@@ -130,12 +132,27 @@
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
 }
+- (JMShareModel*)share_model {
+    if (!_share_model) {
+        _share_model = [[JMShareModel alloc] init];
+    }
+    return _share_model;
+}
+
+- (BOOL)isShowNavBar {
+    _isShowNavBar = false;
+    return _isShowNavBar;
+}
+- (BOOL)isShowRightShareBtn {
+    _isShowRightShareBtn = false;
+    return _isShowRightShareBtn;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     NSString *active = _webDiction[@"type_title"];
 
-    if ([active isEqualToString:@"myInvite"] || [active isEqualToString:@"active"]) {
+    if ([active isEqualToString:@"myInvite"] || [active isEqualToString:@"active"] || _isShowNavBar) {
         self.navigationController.navigationBarHidden = NO;
     }else {
         self.navigationController.navigationBarHidden = YES;
@@ -174,6 +191,7 @@
         baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
+        [self loadData];
     }else {
         statusBarView.hidden = NO;
         baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
@@ -183,8 +201,10 @@
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [self.baseWebView loadRequest:request];
 
-    [self createTabBarButton];
-
+    if(_isShowRightShareBtn){
+        [self createTabBarButton];
+    }
+    
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareWebView.hidden = YES;
     [self.view addSubview:self.shareWebView];
@@ -194,6 +214,37 @@
     _content = @"小鹿美美";
 
 }
+
+- (void)loadData {
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
+    NSLog(@"Shareview _urlStr=%@ self.activityId=%@", string, self.activityId);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        
+        [self resolveActivityShareParam:responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+}
+
+
+- (void)resolveActivityShareParam:(NSDictionary *)dic {
+    //    NSDictionary *dic = _model.mj_keyValues;
+    NSLog(@"Share para=%@",dic);
+    
+    self.share_model.share_type = [dic objectForKey:@"share_type"];
+
+    self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
+    self.share_model.desc = [dic objectForKey:@"active_dec"]; // 文字详情
+
+    self.share_model.title = [dic objectForKey:@"title"]; //标题
+    self.share_model.share_link = [dic objectForKey:@"share_link"];
+
+}
+
 #pragma mark ----- 创建导航栏按钮
 - (void)createTabBarButton {
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -210,22 +261,9 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;
-    NSString *active = _webDiction[@"type_title"];
-    if ([active isEqualToString:@"myInvite"] || [active isEqualToString:@"active"]) {
-        NSNumber *activityID = nil;
-        if (self.nativeShare == nil) {
-            activityID = self.activityId;
-        }else {
-            activityID = self.nativeShare[@"active_id"];
-        }
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activityID];
-        self.shareView.urlStr = string;
-        self.shareView.activeID = active;
-    }else {
-//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@",Root_URL,_itemID];
-//        self.shareView.urlStr = string;
-    }
-    
+
+    self.shareView.model = self.share_model;
+
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
@@ -319,7 +357,7 @@
         [self jsLetiOSWithData:data callBack:responseCallback];
     }];
     /**
-     *   分享
+     *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
@@ -356,7 +394,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }];
     /**
-     *  小鹿妈妈 --- 我的邀请
+     *  老的分享接口，带活动id
      */
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self shareForPlatform:data];
@@ -419,12 +457,13 @@
     [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
-        newshareImage = [UIImage imagewithURLString:imageurl];
+        newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
         _content = [responseObject objectForKey:@"share_desc"];
-        _shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+        _shareImage = [UIImage imagewithURLString:[[responseObject objectForKey:@"share_icon"] imageShareCompression]];
         NSString *sharelink = [responseObject objectForKey:@"share_link"];
         if ([platform isEqualToString:@""]) {
             self.activityId = [responseObject objectForKey:@"id"];
+            [self resolveActivityShareParam:responseObject];
             [self rightBarButtonAction];
         }else if ([platform isEqualToString:@"wx"]) {
             [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;

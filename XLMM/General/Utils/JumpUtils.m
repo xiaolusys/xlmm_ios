@@ -150,7 +150,8 @@
             [web_dic setValue:[params lastObject] forKey:@"web_url"];
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
-            
+            webView.isShowNavBar =true;
+            webView.isShowRightShareBtn=true;
             [vc.navigationController pushViewController:webView animated:YES];
         } else if([firstparam isEqualToString:@"activity_id"]){
 
@@ -165,7 +166,8 @@
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
-            
+            webView.isShowNavBar =true;
+            webView.isShowRightShareBtn=true;
             [vc.navigationController pushViewController:webView animated:YES];
         }
         
