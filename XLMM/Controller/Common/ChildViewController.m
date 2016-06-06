@@ -431,6 +431,8 @@ static NSString * ksimpleCell = @"simpleCell";
     
     WebViewController *webView = [[WebViewController alloc] init];
     webView.webDiction = _childDic;
+    webView.isShowNavBar =false;
+    webView.isShowRightShareBtn=false;
     [self.navigationController pushViewController:webView animated:YES];
 }
 

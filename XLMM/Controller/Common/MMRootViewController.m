@@ -1517,6 +1517,8 @@ static NSString *kbrandCell = @"brandCell";
 
         WebViewController *webView = [[WebViewController alloc] init];
         webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
+        webView.isShowNavBar =false;
+        webView.isShowRightShareBtn=false;
         [self.navigationController pushViewController:webView animated:YES];
         
     }
