@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PerDingdanModel;
-
+//@class PerDingdanModel;
+@class JMOrderGoodsModel;
 @interface ShenQingTuiHuoController : UIViewController
 
-@property (nonatomic, strong) PerDingdanModel *dingdanModel;
+@property (nonatomic, strong) JMOrderGoodsModel *dingdanModel;
 
 @property (assign, nonatomic) float refundPrice;
 @property (copy, nonatomic) NSString *tid;

@@ -1,5 +1,5 @@
 //
-//  PerDingdanModel.h
+//  orderGoodsModel.h
 //  XLMM
 //
 //  Created by younishijie on 15/8/21.
@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PerDingdanModel.h"
 
 @interface PerDingdanModel : NSObject
 

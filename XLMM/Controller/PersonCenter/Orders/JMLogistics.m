@@ -2,7 +2,10 @@
 //  JMLogistics.m
 //  XLMM
 //
-//  Created by 崔人帅 on 16/6/1.
+//  Create/Users/ranniu/Desktop/xiaoluios/XLMM/Controller/PersonCenter/Orders/JMLogistics.h
+///Users/ranniu/Desktop/xiaoluios/XLMM/Controller/PersonCenter/Orders/JMLogistics.m
+///Users/ranniu/Desktop/xiaoluios/XLMM/Controller/PersonCenter/Orders/JMGroupLogistics.h
+///Users/ranniu/Desktop/xiaoluios/XLMM/Controller/PersonCenter/Orders/JMGroupLogistics.md by 崔人帅 on 16/6/1.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 

@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMOrderGoodsModel;
 @interface WuliuViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *wuliuInfoChainView;
+//@property (weak, nonatomic) IBOutlet UICollectionView *wuliuInfoChainView;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuCompanyName;
 @property (weak, nonatomic) IBOutlet UILabel *wuliuMiandanId;
 @property (copy, nonatomic) NSString *packetId;
 @property (copy, nonatomic) NSString *companyCode;
+
+@property (nonatomic,strong) NSDictionary *orderDic;
 @end

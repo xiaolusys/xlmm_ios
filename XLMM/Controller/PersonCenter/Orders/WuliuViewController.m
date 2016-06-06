@@ -14,18 +14,30 @@
 #import "LogisticsCollectionViewCell.h"
 #import "AFNetworking.h"
 #import "JMOrderGoodsModel.h"
+#import "MJExtension.h"
+
 
 @interface WuliuViewController ()
 
-@property (nonatomic, strong) NSArray *infoArray;
+@property (nonatomic, strong) NSMutableArray *infoArray;
 
-//@property (nonatomic,strong) UICollectionView *wuliuInfoChainView;
+@property (nonatomic,strong) UICollectionView *wuliuInfoChainView;
+@property (nonatomic,assign) BOOL islogisInfo;
+
+@property (nonatomic,strong) JMOrderGoodsModel *orderModel;
 
 @end
 
 @implementation WuliuViewController
 
 static NSString * const reuseIdentifier = @"LogisticsCell";
+
+- (NSMutableArray *)infoArray {
+    if (_infoArray == nil) {
+        _infoArray = [NSMutableArray array];
+    }
+    return _infoArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,15 +53,16 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 - (void)createCollectionView {
-//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-//    layout.itemSize = CGSizeMake(SCREENWIDTH, 60);
-//    self.wuliuInfoChainView = [[UICollectionView alloc]initWithFrame:self.view.frame collectionViewLayout:layout];
+    NSInteger count = self.infoArray.count;
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.itemSize = CGSizeMake(SCREENWIDTH, 60);
+    self.wuliuInfoChainView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 180, SCREENWIDTH, 60 * count) collectionViewLayout:layout];
     self.wuliuInfoChainView.dataSource = self;
     self.wuliuInfoChainView.delegate = self;
     self.wuliuInfoChainView.showsVerticalScrollIndicator = FALSE;
     self.wuliuInfoChainView.backgroundColor = [UIColor backgroundlightGrayColor];
     [self.view addSubview:self.wuliuInfoChainView];
-    [self.wuliuInfoChainView registerClass:[LogisticsCollectionViewCell class] forCellWithReuseIdentifier:@"cellID"];
+    [self.wuliuInfoChainView registerClass:[LogisticsCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,9 +76,12 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 
 - (void) getWuliuInfoFromServer{
 //    self.packetId = @"3101040539131";
-    if((self.packetId == nil) || ([self.packetId isEqualToString:@""])
-       || (self.companyCode == nil || ([self.companyCode isEqualToString:@""]))){
-        [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
+    BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
+    || (self.companyCode == nil || ([self.companyCode isEqualToString:@""])));
+    self.islogisInfo = islogisInfo;
+    if(self.islogisInfo){
+//        [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
+        [self createFalse];
         return;
     }
     
@@ -99,7 +115,17 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 
     
   }
-
+#pragma mark --- 添加静态视图
+- (void)createFalse {
+    [self.infoArray addObject:self.orderModel];
+    
+}
+- (void)setOrderDic:(NSDictionary *)orderDic {
+    _orderDic = orderDic;
+    JMOrderGoodsModel *orderModel = [JMOrderGoodsModel mj_objectWithKeyValues:_orderDic];
+    self.orderModel = orderModel;
+    
+}
 - (void)fetchedWuliuData:(NSDictionary *)responseData{
    // NSLog(@"%@",responseData);
     if (responseData == nil) {
@@ -253,17 +279,19 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
     if(cell != nil){
         [self removeAllSubviews:cell];
     }
-    
-    NSDictionary *wuliuInfo =  [self.infoArray objectAtIndex:indexPath.row];
-    NSString *timeText = [wuliuInfo objectForKey:@"time"];
-    timeText = [self spaceFormatTimeString:timeText];
-    
-    NSString *infoText = [wuliuInfo objectForKey:@"content"];
-    if(0 == indexPath.row){
-        [self displayLastWuliuInfoWithTime:cell time:timeText andInfo:infoText];
-    }
-    else{
-        [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
+    if (!self.islogisInfo) {
+        NSDictionary *wuliuInfo =  [self.infoArray objectAtIndex:indexPath.row];
+        NSString *timeText = [wuliuInfo objectForKey:@"time"];
+        timeText = [self spaceFormatTimeString:timeText];
+        
+        NSString *infoText = [wuliuInfo objectForKey:@"content"];
+        if(0 == indexPath.row){
+            [self displayLastWuliuInfoWithTime:cell time:timeText andInfo:infoText];
+        }
+        else{
+            [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
+        }
+
     }
     JMOrderGoodsModel *goodsModel = self.infoArray[indexPath.row];
     [cell configData:goodsModel];

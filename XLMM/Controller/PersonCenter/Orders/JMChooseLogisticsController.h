@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMChooseLogisticsController;
+@protocol JMChooseLogisticsControllerDelegate <NSObject>
+
+- (void)ClickChoiseLogis:(JMChooseLogisticsController *)click Title:(NSString *)title;
+
+@end
+
 @interface JMChooseLogisticsController : UIViewController
+
+@property (nonatomic,weak) id<JMChooseLogisticsControllerDelegate>delegate;
+
 
 @end

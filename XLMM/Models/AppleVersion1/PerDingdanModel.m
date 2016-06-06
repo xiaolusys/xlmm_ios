@@ -1,5 +1,5 @@
 //
-//  PerDingdanModel.m
+//  orderGoodsModel.m
 //  XLMM
 //
 //  Created by younishijie on 15/8/21.

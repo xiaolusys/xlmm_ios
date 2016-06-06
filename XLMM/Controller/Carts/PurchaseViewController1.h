@@ -68,6 +68,18 @@
  *  运费
  */
 @property (weak, nonatomic) IBOutlet UILabel *postFreeL;
+/**
+ *  选择物流公司
+ */
+@property (weak, nonatomic) IBOutlet UIButton *choiseButton;
+/**
+ *  物流公司展示
+ */
+@property (weak, nonatomic) IBOutlet UILabel *choiseLabel;
+
+
+
+
 
 
 @end

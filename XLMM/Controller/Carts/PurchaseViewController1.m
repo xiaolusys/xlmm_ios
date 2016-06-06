@@ -32,9 +32,11 @@
 #import "JMPopView.h"
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
+#import "JMChoiseLogisController.h"
+#import "JMPopLogistcsModel.h"
 
 //购物车支付界面
-@interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate>{
+@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate>{
     AddressModel *addressModel;//默认收货地址
     NSString *payMethod; //支付方式
     NSString *uuid;      //uuid
@@ -119,16 +121,39 @@
 
 @property (nonatomic,strong) UIView *maskView;
 
+@property (nonatomic,strong) JMChoiseLogisController *showViewVC;
+/**
+ *  物流信息Model
+ */
+@property (nonatomic,strong) JMPopLogistcsModel *logisticsModel;
+/**
+ *  物流信息的数据源
+ */
+@property (nonatomic,strong) NSMutableArray *dataSource;
 @end
 
 
 @implementation PurchaseViewController1 {
     NSString *_appYouhui;
+    NSString *_addressID;
+    NSString *_orderID;
+    
+    NSMutableDictionary *_logisticsDic;
 }
 
+- (NSMutableArray *)dataSource {
+    if (_dataSource == nil) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
 
-
-
+- (JMPopLogistcsModel *)logisticsModel {
+    if (_logisticsModel == nil) {
+        _logisticsModel = [[JMPopLogistcsModel alloc] init];
+    }
+    return _logisticsModel;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -181,6 +206,9 @@
     [self downloadAddressData];
 
     [self initView];
+    
+    [self.choiseButton addTarget:self action:@selector(choiseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 - (void)initView {
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -193,8 +221,9 @@
     self.payView.delegate = self;
     self.payView.width = SCREENWIDTH;
     
-    
-    
+
+    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
+    self.showViewVC = showViewVC;
 }
 #pragma mark ------ 创建一个请求
 - (void)downloadCartsData{
@@ -212,16 +241,11 @@
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     self.paramstring = paramstring;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-//    NSLog(@"------cartsURLString = %@", urlString);
-    
-   
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
     //下载购物车支付界面数据
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] ];
-        
         if (data == nil) {
-         //   NSLog(@"下载失败");
         }
         [self performSelectorOnMainThread:@selector(fetchedCartsData2:) withObject:data waitUntilDone:YES];
     });
@@ -231,15 +255,22 @@
 - (void)fetchedCartsData2:(NSData *)responseData{
     NSError *error = nil;
     if (responseData == nil) {
-        NSLog(@"无数据");
         return;
     }
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (error != nil) {
-        NSLog(@"解析失败");
     }
-//    NSLog(@"-----------------%@", dic);
+    /**
+     *  物流信息Model
+     */
+    NSArray *logist = dic[@"logistics_companys"];
+    NSMutableArray *dataSourceArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dicts in logist) {
+        JMPopLogistcsModel *logisticsModel = [JMPopLogistcsModel mj_objectWithKeyValues:dicts];
+        [dataSourceArr addObject:logisticsModel];
+    }
+    [self.dataSource addObjectsFromArray:dataSourceArr];
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     coupon_message = [dic objectForKey:@"coupon_message"];
@@ -250,6 +281,8 @@
     
     totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
+    //订单ID
+    _orderID = dic[@"cart_ids"];
     for (NSDictionary *dicExtras in pay_extras) {
         //优惠券
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 2) {
@@ -443,6 +476,9 @@
     addressModel.addressID = [dic objectForKey:@"id"];                //地址id
     self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", addressModel.buyerName, addressModel.phoneNumber];
     self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",addressModel.provinceName, addressModel.cityName, addressModel.countyName, addressModel.streetName];
+    //用户地址ID
+    _addressID = dic[@"id"];
+    
 }
 
 - (void)backButtonClicked:(UIButton *)button{
@@ -534,20 +570,30 @@
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            
         }];
-        
-
-        
-        
-        
-        
     }
-    
-    
-    
 }
-
+#pragma mark --- 选择物流按钮
+- (void)choiseButtonClick:(UIButton *)btn {
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMChoiseLogisController alloc] init];
+    }
+    self.showViewVC.dataSource = self.dataSource;
+    self.showViewVC.delegate = self;
+    menu.contentView = self.showViewVC.view;
+}
+- (void)coverDidClickCover:(JMShareView *)cover {
+    //隐藏pop菜单
+    [JMPopView hide];
+}
+- (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
+    self.choiseLabel.text = model.name;
+    _logisticsDic = [NSMutableDictionary dictionary];
+    _logisticsDic = model.mj_keyValues;
+}
 - (IBAction)zhifubaoClicked:(id)sender {
 
 }
@@ -576,8 +622,13 @@
 }
 #pragma mark  结算按钮点击事件
 - (IBAction)buyClicked:(id)sender {
-    // -- > 弹出框方法
-    [self createPayPopView];
+    if (self.isUseXLW) {  // 如果选中了小鹿钱包就直接支付  否则就弹出框
+        [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+        [self payMoney];
+    }else {
+        [self createPayPopView];
+    }
+
 }
 #pragma mark -- 支付
 - (void)payMoney {
@@ -710,7 +761,10 @@
 
 - (void)submitBuyGoods {
     
-   NSMutableDictionary *dic = [self stringChangeDictionary:dict];
+    NSMutableString *dicStr = [NSMutableString stringWithFormat:@"%@",dict];
+    [dicStr appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsDic[@"id"]],nil];
+    
+    NSMutableDictionary *dic = [self stringChangeDictionary:dicStr];
     
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
 
