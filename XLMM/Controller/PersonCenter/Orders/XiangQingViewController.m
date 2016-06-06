@@ -152,11 +152,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    
-    
-    
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -287,16 +283,13 @@
 
     }];
 
-    
     self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
     self.youhuiLabel.text = [NSString stringWithFormat:@"－¥%.02f", [[dicJson objectForKey:@"discount_fee"] floatValue]];
     self.yingfuLabel.text = [NSString stringWithFormat:@"¥%.02f", [[dicJson objectForKey:@"payment"] floatValue]];
     
     refundPrice = [[dicJson objectForKey:@"payment"] floatValue];
-    
 
-    
 }
 
 #pragma mark   订单详情各模块数据源
@@ -373,9 +366,6 @@
  }
  }
  self.packMessageL.text = packStr;
- 
- 
-
  *
  *  @return
  */
@@ -430,10 +420,10 @@
         make.left.equalTo(self.packInfoView);
         make.width.mas_equalTo(SCREENWIDTH);
         NSInteger statusCount = [self.orderDetailModel.status integerValue];
-        if (statusCount >= ORDER_STATUS_SENDED) {
+        if (statusCount >= ORDER_STATUS_SENDED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
             make.height.mas_equalTo(@35);
         }else {
-            make.height.mas_equalTo(@0);
+            make.height.mas_equalTo(@1);
         }
         
     }];
@@ -498,13 +488,12 @@
         /**
          *  交易成功
          */
-        
+        self.packStatusL.text = packModel.assign_status_display;
     }
     else if (statusCount == ORDER_STATUS_REFUND_CLOSE) {
         /**
          *  无退款状态
          */
-    
     }else if (statusCount == ORDER_STATUS_TRADE_CLOSE ) {
         /**
          *  订单关闭
@@ -519,7 +508,6 @@
     
     WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
     if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
-        
         
         wuliuView.packetId = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
         wuliuView.companyCode = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
@@ -545,22 +533,19 @@
     
 }
 - (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title {
-    
     self.logisticsLabel.text = title;
 }
-
 #pragma mark --- 点击隐藏弹出视图 changeLogisticsClick
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
     [JMPopView hide];
 }
 
-
 #pragma mark ----- 物流视图的显示
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     NSInteger statusCount = [self.orderDetailModel.status integerValue];
-    NSInteger num = 0;
-    if (statusCount >= ORDER_STATUS_SENDED) {
+    NSInteger num = 0; // num -- > 显示物流状态的视图
+    if (statusCount >= ORDER_STATUS_SENDED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
         num = 35;
     }else {
         num = 0;
@@ -568,8 +553,6 @@
     NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
     NSInteger nums = 20 + num;
     if (dic.count == 0){
-        
-        NSLog(@"setWuLiuMsg dic count=0");
         //无查物流信息，直接显示时间和商品即可  76 -- > 35 + 20
         self.goodsViewHeight.constant = nums + 90 * dataArray.count;
         [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, nums) status:orderStatus[0] JMPackAgeModel:nil];
@@ -580,9 +563,7 @@
         }
         return;
     }
-    
     [self  transferJMPackAgeModel:dic];
-    
     NSString *groupKey = @"";
     NSInteger h = 0;
     self.goodsViewHeight.constant = packetNum * nums + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
@@ -607,16 +588,15 @@
 //            }
 //        }
         self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[i]];
-        
-        
         groupKey = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
         [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
         h += 90;
     }
 }
-
-//设计倒计时方法。。。。
+/**
+ *  设置倒计时方法
+ */
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
@@ -650,9 +630,6 @@
         self.bottomView.hidden = YES;
     }
 }
-
-
-
 - (NSString *)formatterTimeString:(NSString *)timeString{
     if (timeString == nil) {
         return nil;
@@ -668,8 +645,6 @@
     
     return newString;
 }
-
-
 - (void)createXiangQing:(CGRect )rect number:(NSInteger)index{
     XiangQingView *owner = [XiangQingView new];
     JMOrderGoodsModel *orderGoods = [dataArray objectAtIndex:index];
@@ -838,7 +813,6 @@
 }
 
 #pragma mark -- 退货--
-
 - (void)qianshou:(UIButton *)button{
     NSLog(@"确认签收");
     
@@ -858,8 +832,6 @@
             [button setTitle:@"退货退款" forState:UIControlStateNormal];
             [button removeTarget:self action:@selector(qianshou:) forControlEvents:UIControlEventTouchUpInside];
             [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
         } else {
             alterView.message = @"签收失败";
         }
@@ -880,21 +852,11 @@
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
     tuikuanVC.refundPrice = [tuihuoModel.payment floatValue];
     tuikuanVC.dingdanModel = tuihuoModel;
-    
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel payment= %@", tuikuanVC.dingdanModel.payment);
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.sizeString);
-    NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.nameString);
     tuikuanVC.tid = tid;
     tuikuanVC.oid = [oidArray objectAtIndex:i];
     tuikuanVC.status = self.dingdanModel.status_display;
     
-    NSLog(@"tid = %@, \noid = %@ \nstatus = %@", tuikuanVC.tid, tuikuanVC.oid, tuikuanVC.status);
     [self.navigationController pushViewController:tuikuanVC animated:YES];
-    
-    
-    
     
 }
 - (void)tuikuan:(UIButton *)button{
@@ -906,24 +868,12 @@
     ShenQingTuikuanController *tuiHuoVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
     
     tuiHuoVC.dingdanModel = tuihuoModel;
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.urlString);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.payment);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.numberString);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.sizeString);
-    NSLog(@"tuihuomodel = %@", tuiHuoVC.dingdanModel.nameString);
+ 
     tuiHuoVC.tid = tid;
     tuiHuoVC.oid = [oidArray objectAtIndex:i];
     tuiHuoVC.status = self.dingdanModel.status_display;
-    
-    NSLog(@"tid = %@, \noid = %@ \nstatus = %@", tuiHuoVC.tid, tuiHuoVC.oid, tuiHuoVC.status);
-    
-    //
     [self.navigationController pushViewController:tuiHuoVC animated:YES];
-    
-    
-    
 }
-
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -931,7 +881,6 @@
             return ;
         }
         [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
     });
 }
 
@@ -950,20 +899,18 @@
     
     [self.navigationController pushViewController:editVC animated:YES];
 }
-
+/**
+ *  修改地址的代理回调方法
+ */
 - (void)updateEditerWithmodel:(NSDictionary *)dic {
     
     JMEditAddressModel *model = [JMEditAddressModel mj_objectWithKeyValues:dic];
     self.addressModel = model;
-    
-    
-    
+
     self.nameLabel.text = dic[@"receiver_name"];
     self.phoneLabel.text = model.receiver_mobile;
     NSString *addStr = [NSString stringWithFormat:@"%@-%@-%@-%@",self.addressModel.receiver_state,self.addressModel.receiver_city,self.addressModel.receiver_district,self.addressModel.receiver_address];
     self.addressLabel.text = addStr;
-    
-    
 }
 #pragma mark ---- 取消订单
 - (IBAction)quxiaodingdan:(id)sender {
@@ -971,7 +918,6 @@
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"小鹿美美" message:@"取消的产品可能会被人抢走哦~\n要取消吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alterView show];
 }
-
 #pragma mark --AlertViewDelegate--
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"%lD", (long)buttonIndex);
@@ -995,7 +941,6 @@
 
 - (void)poptoView{
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 #pragma mark -- 重新购买
 - (IBAction)goumai:(id)sender {
@@ -1036,18 +981,9 @@
             }];
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
     }];
-    
-    
 }
-
-
-
-
 #pragma mark --NSURLConnectionDataDelegate--
-
-
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     //  NSLog(@"111 : %@", response);
 }
@@ -1217,6 +1153,11 @@
  }
  
  
+ NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.urlString);
+ NSLog(@"tuihuomodel payment= %@", tuikuanVC.dingdanModel.payment);
+ NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.numberString);
+ NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.sizeString);
+ NSLog(@"tuihuomodel = %@", tuikuanVC.dingdanModel.nameString);
  
  
 

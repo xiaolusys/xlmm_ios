@@ -2578,7 +2578,7 @@
 			isa = PBXGroup;
 			children = (
 				18AC6C731CA247C600316E65 /* Activity */,
-				183070EE1C97BE3700B7665E /* Carts */,
+				183070EE1C97BE3700B7665E /* Carts(购物车) */,
 				183070FA1C97BE3700B7665E /* Common */,
 				183071191C97BE3700B7665E /* Login */,
 				183071301C97BE3700B7665E /* MaMaCenter */,
@@ -2587,10 +2587,10 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		183070EE1C97BE3700B7665E /* Carts */ = {
+		183070EE1C97BE3700B7665E /* Carts(购物车) */ = {
 			isa = PBXGroup;
 			children = (
-				1F2AE97B1CF6A21F002EC974 /* Carts_coupon */,
+				1F2AE97B1CF6A21F002EC974 /* Carts_coupon(购物车) */,
 				183070EF1C97BE3700B7665E /* CartViewController.h */,
 				183070F01C97BE3700B7665E /* CartViewController.m */,
 				183070F11C97BE3700B7665E /* CartViewController.xib */,
@@ -2600,6 +2600,7 @@
 				183070F51C97BE3700B7665E /* LiJiGMViewController1.m */,
 				183070F61C97BE3700B7665E /* LiJiGMViewController1.xib */,
 			);
+			name = "Carts(购物车)";
 			path = Carts;
 			sourceTree = "<group>";
 		};
@@ -2740,7 +2741,7 @@
 				183071791C97BE3700B7665E /* Address */,
 				183071811C97BE3700B7665E /* Commom */,
 				183071901C97BE3700B7665E /* Coupons */,
-				183071981C97BE3700B7665E /* Orders */,
+				183071981C97BE3700B7665E /* Orders(订单类) */,
 				183071A91C97BE3700B7665E /* Refund */,
 				183071BF1C97BE3700B7665E /* Settings */,
 			);
@@ -2815,7 +2816,7 @@
 			path = Coupons;
 			sourceTree = "<group>";
 		};
-		183071981C97BE3700B7665E /* Orders */ = {
+		183071981C97BE3700B7665E /* Orders(订单类) */ = {
 			isa = PBXGroup;
 			children = (
 				1F2AE9481CF5D548002EC974 /* Orders_Detail(订单详情) */,
@@ -2835,6 +2836,7 @@
 				183071A41C97BE3700B7665E /* WuliuViewController.m */,
 				3A2F32E81CF04E8700EAF4EB /* WuliuViewController.xib */,
 			);
+			name = "Orders(订单类)";
 			path = Orders;
 			sourceTree = "<group>";
 		};
@@ -4157,14 +4159,14 @@
 			name = VIew;
 			sourceTree = "<group>";
 		};
-		1F2AE97B1CF6A21F002EC974 /* Carts_coupon */ = {
+		1F2AE97B1CF6A21F002EC974 /* Carts_coupon(购物车) */ = {
 			isa = PBXGroup;
 			children = (
 				1F2AE9701CF693FC002EC974 /* Model */,
 				1F2AE9711CF69409002EC974 /* VIew */,
 				1F2AE96E1CF693E3002EC974 /* Carts_Controller */,
 			);
-			name = Carts_coupon;
+			name = "Carts_coupon(购物车)";
 			sourceTree = "<group>";
 		};
 		1F2B0BED1CE96A2E00B11740 /* choisestixian */ = {
