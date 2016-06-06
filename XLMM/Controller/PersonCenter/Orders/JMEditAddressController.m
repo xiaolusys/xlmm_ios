@@ -133,28 +133,17 @@
     NSDictionary *dic = [[NSDictionary alloc] init];
     JMEditAddressModel *model = [JMEditAddressModel new];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
-        
-
         model.receiver_state = proStr ? proStr : _addressDic[@"receiver_state"];
         model.receiver_city = cityStr ? cityStr : _addressDic[@"receiver_city"];
         model.receiver_district = disStr ? disStr : _addressDic[@"receiver_district"];
         model.receiver_name = nameStr ? nameStr : _addressDic[@"receiver_name"];
         model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
         model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
-        
-        
         dic = model.mj_keyValues;
-        
         [self.delegate updateEditerWithmodel:dic];
-        
-        
-        
     }
-    
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
-    
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
     [dict setObject:referal_trade_id forKey:@"id"];  // === > 地址信息ID
     if (_editDict[@"logistic_company"] == nil) {
@@ -168,17 +157,9 @@
         
         if (!responseObject) return;
         
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
-        
-        
     }];
-    
-    
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 #pragma mark ----  获取pickView的数据
@@ -582,8 +563,6 @@
 //    
 //    
 //}
-#pragma mark ---- pickView 的展示与隐藏
-
 
 
 @end

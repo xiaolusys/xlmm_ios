@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *yingfuLabel;
 @property (weak, nonatomic) IBOutlet UIButton *quxiaoBtn;
 @property (weak, nonatomic) IBOutlet UIButton *buyBtn;
+
 - (IBAction)quxiaodingdan:(id)sender;
 - (IBAction)goumai:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
@@ -53,7 +54,9 @@
  *  显示创建订单时间
  */
 @property (weak, nonatomic) IBOutlet UILabel *orderTimerLabel;
-
+/**
+ *  计算商品详情展示视图的高度
+ */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goodsViewHeight;
 /**
  *  选择物流公司
