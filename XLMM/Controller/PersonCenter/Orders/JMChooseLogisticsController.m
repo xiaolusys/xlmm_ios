@@ -113,14 +113,13 @@
 }
 // 点击了哪一行
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    JMGroupLogistics *group = self.groups[indexPath.section];
+    JMLogistics *car = group.logistics[indexPath.row];
     
-    
-    
-//    /rest/v1/address/change_company_code
-//    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/change_company_code/%@/updata",Root_URL,@""];
-
-
-    
+    NSLog(@"%@",car.name);
+    if (_delegate && [_delegate respondsToSelector:@selector(ClickChoiseLogis:Title:)]) {
+        [_delegate ClickChoiseLogis:self Title:car.name];
+    }
 }
 
 - (void)btnClicked:(UIButton *)button{

@@ -129,6 +129,9 @@
 
     [self downloadData];
     
+    
+    
+    
 //    
 //    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
 //    header.lastUpdatedTimeLabel.hidden = YES;

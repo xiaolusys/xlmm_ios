@@ -22,6 +22,10 @@
 		0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */; };
 		0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7696DD1D011F010079E0CA /* JMOrderPayView.m */; };
 		0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */; };
+		0BE3130F1D0514EB00CD97D6 /* JMReturnedGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE3130E1D0514EB00CD97D6 /* JMReturnedGoodsController.m */; };
+		0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE313141D0515D400CD97D6 /* JMReGoodsAddView.m */; };
+		0BE313181D05268800CD97D6 /* JMUserAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE313171D05268800CD97D6 /* JMUserAddressModel.m */; };
+		0BE3131B1D05473200CD97D6 /* JMChoiseLogisController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE3131A1D05473200CD97D6 /* JMChoiseLogisController.m */; };
 		1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */; };
 		181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB101CA12813001307C0 /* TodayVisitorViewController.m */; };
 		181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 181ABB131CA136C3001307C0 /* VisitorModel.m */; };
@@ -882,10 +886,10 @@
 		0B43FF9A1CFE795500AE7DDD /* JMChooseLogisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseLogisticsController.h; sourceTree = "<group>"; };
 		0B43FF9B1CFE795500AE7DDD /* JMChooseLogisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseLogisticsController.m; sourceTree = "<group>"; };
 		0B43FF9F1CFE83BE00AE7DDD /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
-		0B43FFA11CFE878600AE7DDD /* JMLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLogistics.h; sourceTree = "<group>"; };
-		0B43FFA21CFE878600AE7DDD /* JMLogistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLogistics.m; sourceTree = "<group>"; };
-		0B43FFA51CFE883100AE7DDD /* JMGroupLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGroupLogistics.h; sourceTree = "<group>"; };
-		0B43FFA61CFE883100AE7DDD /* JMGroupLogistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGroupLogistics.m; sourceTree = "<group>"; };
+		0B43FFA11CFE878600AE7DDD /* JMLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMLogistics.h; path = ../Orders/JMLogistics.h; sourceTree = "<group>"; };
+		0B43FFA21CFE878600AE7DDD /* JMLogistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMLogistics.m; path = ../Orders/JMLogistics.m; sourceTree = "<group>"; };
+		0B43FFA51CFE883100AE7DDD /* JMGroupLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMGroupLogistics.h; path = ../Orders/JMGroupLogistics.h; sourceTree = "<group>"; };
+		0B43FFA61CFE883100AE7DDD /* JMGroupLogistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMGroupLogistics.m; path = ../Orders/JMGroupLogistics.m; sourceTree = "<group>"; };
 		0B43FFA81CFED4EB00AE7DDD /* JMPopLogistcsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPopLogistcsController.h; sourceTree = "<group>"; };
 		0B43FFA91CFED4EB00AE7DDD /* JMPopLogistcsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsController.m; sourceTree = "<group>"; };
 		0B43FFAF1CFEEB8200AE7DDD /* JMPopLogistcsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPopLogistcsCell.h; sourceTree = "<group>"; };
@@ -896,6 +900,14 @@
 		0B7696DD1D011F010079E0CA /* JMOrderPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayView.m; sourceTree = "<group>"; };
 		0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
 		0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
+		0BE3130D1D0514EB00CD97D6 /* JMReturnedGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnedGoodsController.h; sourceTree = "<group>"; };
+		0BE3130E1D0514EB00CD97D6 /* JMReturnedGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnedGoodsController.m; sourceTree = "<group>"; };
+		0BE313131D0515D400CD97D6 /* JMReGoodsAddView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReGoodsAddView.h; sourceTree = "<group>"; };
+		0BE313141D0515D400CD97D6 /* JMReGoodsAddView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReGoodsAddView.m; sourceTree = "<group>"; };
+		0BE313161D05268800CD97D6 /* JMUserAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUserAddressModel.h; sourceTree = "<group>"; };
+		0BE313171D05268800CD97D6 /* JMUserAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUserAddressModel.m; sourceTree = "<group>"; };
+		0BE313191D05473200CD97D6 /* JMChoiseLogisController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChoiseLogisController.h; sourceTree = "<group>"; };
+		0BE3131A1D05473200CD97D6 /* JMChoiseLogisController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChoiseLogisController.m; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181ABB0F1CA12813001307C0 /* TodayVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayVisitorViewController.h; sourceTree = "<group>"; };
 		181ABB101CA12813001307C0 /* TodayVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayVisitorViewController.m; sourceTree = "<group>"; };
@@ -2210,15 +2222,12 @@
 				0B43FF9B1CFE795500AE7DDD /* JMChooseLogisticsController.m */,
 			);
 			name = "chooseLogistics(选择物流)";
+			path = ../Orders;
 			sourceTree = "<group>";
 		};
 		0B43FFA41CFE880D00AE7DDD /* logistics(物流信息model) */ = {
 			isa = PBXGroup;
 			children = (
-				0B43FFA11CFE878600AE7DDD /* JMLogistics.h */,
-				0B43FFA21CFE878600AE7DDD /* JMLogistics.m */,
-				0B43FFA51CFE883100AE7DDD /* JMGroupLogistics.h */,
-				0B43FFA61CFE883100AE7DDD /* JMGroupLogistics.m */,
 			);
 			name = "logistics(物流信息model)";
 			sourceTree = "<group>";
@@ -2267,6 +2276,48 @@
 				1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */,
 			);
 			name = "order_editer(修改收货地址)";
+			sourceTree = "<group>";
+		};
+		0BE3130C1D05139B00CD97D6 /* returnedGoods(退货地址) */ = {
+			isa = PBXGroup;
+			children = (
+				0BE313121D0514F500CD97D6 /* Model */,
+				0BE313111D0514F300CD97D6 /* View */,
+				0BE313101D0514F000CD97D6 /* Controller */,
+			);
+			name = "returnedGoods(退货地址)";
+			sourceTree = "<group>";
+		};
+		0BE313101D0514F000CD97D6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0BE3130D1D0514EB00CD97D6 /* JMReturnedGoodsController.h */,
+				0BE3130E1D0514EB00CD97D6 /* JMReturnedGoodsController.m */,
+				0B43FF991CFE790C00AE7DDD /* chooseLogistics(选择物流) */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		0BE313111D0514F300CD97D6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0BE313131D0515D400CD97D6 /* JMReGoodsAddView.h */,
+				0BE313141D0515D400CD97D6 /* JMReGoodsAddView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0BE313121D0514F500CD97D6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0B43FFA11CFE878600AE7DDD /* JMLogistics.h */,
+				0B43FFA21CFE878600AE7DDD /* JMLogistics.m */,
+				0B43FFA51CFE883100AE7DDD /* JMGroupLogistics.h */,
+				0B43FFA61CFE883100AE7DDD /* JMGroupLogistics.m */,
+				0BE313161D05268800CD97D6 /* JMUserAddressModel.h */,
+				0BE313171D05268800CD97D6 /* JMUserAddressModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		0BF1F2681CFD61710054FE61 /* Grouding(选品上架) */ = {
@@ -2843,6 +2894,7 @@
 		183071A91C97BE3700B7665E /* Refund */ = {
 			isa = PBXGroup;
 			children = (
+				0BE3130C1D05139B00CD97D6 /* returnedGoods(退货地址) */,
 				183071AA1C97BE3700B7665E /* FillWuliuController.h */,
 				183071AB1C97BE3700B7665E /* FillWuliuController.m */,
 				183071AC1C97BE3700B7665E /* FillWuliuController.xib */,
@@ -4133,6 +4185,8 @@
 				183070F71C97BE3700B7665E /* PurchaseViewController1.h */,
 				183070F81C97BE3700B7665E /* PurchaseViewController1.m */,
 				183070F91C97BE3700B7665E /* PurchaseViewController1.xib */,
+				0BE313191D05473200CD97D6 /* JMChoiseLogisController.h */,
+				0BE3131A1D05473200CD97D6 /* JMChoiseLogisController.m */,
 			);
 			name = Carts_Controller;
 			sourceTree = "<group>";
@@ -4251,7 +4305,6 @@
 				183071A81C97BE3700B7665E /* XiangQingViewController.xib */,
 				0B43FFAB1CFEEB2700AE7DDD /* chooseLogistics(选择物流) */,
 				0BDF29311CFD328A00350E30 /* order_editer(修改收货地址) */,
-				0B43FF991CFE790C00AE7DDD /* chooseLogistics(选择物流) */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -5133,6 +5186,7 @@
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
 				183072831C97C00900B7665E /* NSString+DeleteT.m in Sources */,
 				1830728A1C97C00900B7665E /* UIImage+ImageWithUrl.m in Sources */,
+				0BE313181D05268800CD97D6 /* JMUserAddressModel.m in Sources */,
 				1F9238D71CF45B61000AD0EF /* JMMaMaOrderListCell.m in Sources */,
 				325B79E61C97E7160022F930 /* YHQHeadView.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
@@ -5168,6 +5222,7 @@
 				183071FF1C97BE3700B7665E /* MaMaViewController.m in Sources */,
 				325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */,
 				183070E21C97B83900B7665E /* YHQModel.m in Sources */,
+				0BE3130F1D0514EB00CD97D6 /* JMReturnedGoodsController.m in Sources */,
 				1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */,
 				183074061C97D17800B7665E /* QNDns.m in Sources */,
 				325B799B1C97E6F10022F930 /* MMCartsView.m in Sources */,
@@ -5304,6 +5359,7 @@
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
 				18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */,
+				0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */,
 				325B799D1C97E6F10022F930 /* MMLoadingAnimation.m in Sources */,
 				183074161C97D17800B7665E /* UIViewController+RESideMenu.m in Sources */,
 				183072131C97BE3700B7665E /* MaMaHuoyueduViewController.m in Sources */,
@@ -5385,6 +5441,7 @@
 				18315F771CA3E023003A9AFD /* WebViewController.m in Sources */,
 				0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */,
 				1F4161161CE31A4400F78C0D /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				0BE3131B1D05473200CD97D6 /* JMChoiseLogisController.m in Sources */,
 				183074191C97D17800B7665E /* NSData+ImageContentType.m in Sources */,
 				183074121C97D17800B7665E /* QNUploadOption.m in Sources */,
 				325B7A161C97E73A0022F930 /* TixianTableViewCell.m in Sources */,

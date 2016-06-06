@@ -10,7 +10,7 @@
 #import "DingdanModel.h"
 #import "MMClass.h"
 #import "XiangQingView.h"
-#import "PerDingdanModel.h"
+#import "JMOrderGoodsModel.h"
 #import "DingDanXiangQingModel.h"
 #import "UIImageView+WebCache.h"
 #import "Pingpp.h"
@@ -22,7 +22,6 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "XlmmMall.h"
-#import "DingdanModel.h"
 #import "UIColor+RGBColor.h"
 #import "JMEditAddressController.h"
 #import "JMEditAddressModel.h"
@@ -88,7 +87,7 @@
 /**
  *  物流包裹状态视图
  */
-@property (nonatomic,strong) UIView *baseView;
+@property (nonatomic,strong) UIButton *baseView;
 /**
  *  包裹信息模型
  */
@@ -101,7 +100,7 @@
     UIActivityIndicatorView *activityView; // 菊花
     UIView *frontView;
     NSString *status;
-    PerDingdanModel *tuihuoModel;//详情页子订单模型
+//    orderGoodsModel *tuihuoModel;//详情页子订单模型
     NSString *tid;               //internal trade id
     NSArray *oidArray;           //orders
     NSMutableArray *refund_statusArray;//退款状态
@@ -310,7 +309,7 @@
     NSDictionary *addressDic = self.orderDetailModel.user_adress;
     self.addressModel = [JMEditAddressModel mj_objectWithKeyValues:addressDic];
     /**
-     *  商品信息模型   ===== >  PerDingdanModel
+     *  商品信息模型   ===== >  orderGoodsModel
      */
     for (NSDictionary *dic in self.orderDetailModel.orders) {
         self.orderGoodsModel = [JMOrderGoodsModel mj_objectWithKeyValues:dic];
@@ -389,9 +388,10 @@
     view.tag = 100 + currentIndex;
     self.packInfoView = view;
 
-    UIView *baseView = [UIView new];
+    UIButton *baseView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.packInfoView addSubview:baseView];
     self.baseView = baseView;
+    [self.baseView addTarget:self action:@selector(baseViewBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *lineL = [UILabel new];
     [self.packInfoView addSubview:lineL];
@@ -420,7 +420,7 @@
         make.left.equalTo(self.packInfoView);
         make.width.mas_equalTo(SCREENWIDTH);
         NSInteger statusCount = [self.orderDetailModel.status integerValue];
-        if (statusCount >= ORDER_STATUS_SENDED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
+        if (statusCount >= ORDER_STATUS_PAYED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
             make.height.mas_equalTo(@35);
         }else {
             make.height.mas_equalTo(@1);
@@ -471,6 +471,7 @@
          */
         self.choiseLogisticsView.userInteractionEnabled = YES;
         self.addressInfoImage.userInteractionEnabled = YES;
+        self.packStatusL.text = packModel.assign_status_display;
     }
     else if (statusCount == ORDER_STATUS_SENDED) {
         /**
@@ -501,21 +502,38 @@
     }
     
 }
+
 #pragma mark ----- 商品包裹信息
-- (void)packTapClick:(UITapGestureRecognizer *)tap {
-    UITapGestureRecognizer *tap1 = tap;
-    UIView *tapView = (UIView*)tap1.view;
+//- (void)packTapClick:(UITapGestureRecognizer *)tap {
+//    UITapGestureRecognizer *tap1 = tap;
+//    UIView *tapView = (UIView*)tap1.view;
+//    
+//    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+//    if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
+//        
+//        wuliuView.packetId = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
+//        wuliuView.companyCode = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
+//        [self.navigationController pushViewController:wuliuView animated:YES];
+//    }
+//}
+/**
+ *  判断包裹状态  是否分包  
+ */
+- (void)baseViewBtn:(UIButton *)btn {
     
+    NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).out_sid;
+    NSString *logisticsCompanyCodeStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).logistics_company_code;
+
     WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
-    if((tapView.tag >= 100) && (logisticsInfoArray.count > tapView.tag - 100)){
-        
-        wuliuView.packetId = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).out_sid;
-        wuliuView.companyCode = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:tapView.tag - 100]).logistics_company_code;
+    if((btn.tag >= 100) && (logisticsInfoArray.count > btn.tag - 100)){
+        NSDictionary *dic = [[logisticsInfoArray objectAtIndex:btn.tag - 100] mj_keyValues];
+        wuliuView.packetId = outSidStr;
+        wuliuView.companyCode = logisticsCompanyCodeStr;
+        wuliuView.orderDic = dic;
         [self.navigationController pushViewController:wuliuView animated:YES];
+
     }
 }
-
-
 #pragma mark ----- 物流信息点击事件
 - (void)changeLogisticsClick:(UITapGestureRecognizer *)tap {
 //    self.showViewVC.goodsID = _goodsID;
@@ -545,7 +563,7 @@
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     NSInteger statusCount = [self.orderDetailModel.status integerValue];
     NSInteger num = 0; // num -- > 显示物流状态的视图
-    if (statusCount >= ORDER_STATUS_SENDED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
+    if (statusCount >= ORDER_STATUS_PAYED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
         num = 35;
     }else {
         num = 0;
@@ -588,6 +606,7 @@
 //            }
 //        }
         self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[i]];
+        self.baseView.tag = 100 + i;
         groupKey = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
         [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
@@ -818,9 +837,9 @@
     
     //   192.168.1.31:9000/rest/v1/order/id/confirm_sign ;
     //  同步post
-    PerDingdanModel *model = [dataArray objectAtIndex:button.tag - 200];
+    JMOrderGoodsModel *model = [dataArray objectAtIndex:button.tag - 200];
     
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderID];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
     NSLog(@"url string = %@", string);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -846,12 +865,12 @@
 #pragma mark
 - (void)tuihuotuikuan:(UIButton *)button{
     NSLog(@"退货退款");
-    
+    //  dingdanModel -- > 
     NSInteger i = button.tag - 200;
-    tuihuoModel = [dataArray objectAtIndex:i];
+    self.orderGoodsModel = [dataArray objectAtIndex:i];
     ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    tuikuanVC.refundPrice = [tuihuoModel.payment floatValue];
-    tuikuanVC.dingdanModel = tuihuoModel;
+    tuikuanVC.refundPrice = [self.orderGoodsModel.payment floatValue];
+    tuikuanVC.dingdanModel = self.orderGoodsModel;
     tuikuanVC.tid = tid;
     tuikuanVC.oid = [oidArray objectAtIndex:i];
     tuikuanVC.status = self.dingdanModel.status_display;
@@ -861,13 +880,14 @@
 }
 - (void)tuikuan:(UIButton *)button{
     NSLog(@"tag = %ld", (long)button.tag);
-    //进入退货界面；
+    //进入退货界面；tuihuoModel -- >   orderGoodsModel
     NSInteger i = button.tag - 200;
-    tuihuoModel = [dataArray objectAtIndex:i];
+//    NSDictionary *dic = [[dataArray objectAtIndex:i] mj_keyValues];
+    self.orderGoodsModel = [dataArray objectAtIndex:i];
     
     ShenQingTuikuanController *tuiHuoVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
     
-    tuiHuoVC.dingdanModel = tuihuoModel;
+    tuiHuoVC.dingdanModel = self.orderGoodsModel;
  
     tuiHuoVC.tid = tid;
     tuiHuoVC.oid = [oidArray objectAtIndex:i];
@@ -1033,7 +1053,7 @@
 
  *
  //    for (NSDictionary *dic in orderArray) {
- //        PerDingdanModel *model = [PerDingdanModel new];
+ //        orderGoodsModel *model = [orderGoodsModel new];
  //        model.urlString = [dic objectForKey:@"pic_path"];
  //        model.sizeString = [dic objectForKey:@"sku_name"];
  //        model.numberString = [dic objectForKey:@"num"];

@@ -8,7 +8,7 @@
 
 #import "ShenQingTuiHuoController.h"
 #import "UIViewController+NavigationBar.h"
-#import "PerDingdanModel.h"
+#import "JMOrderGoodsModel.h"
 #import "UIColor+RGBColor.h"
 #import "NSString+URL.h"
 #import "UIImageView+WebCache.h"
@@ -19,7 +19,7 @@
 
 
 
-
+//JMOrderGoodsModel
 
 @interface ShenQingTuiHuoController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -151,21 +151,21 @@
     
     //[self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
     
-    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.urlString URLEncodedString]]];
+    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
     self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
-    number = [self.dingdanModel.numberString intValue];
-    maxNumber = [self.dingdanModel.numberString intValue];
+    number = [self.dingdanModel.num intValue];
+    maxNumber = [self.dingdanModel.num intValue];
     
     
-    self.nameLabel.text = self.dingdanModel.nameString;
+    self.nameLabel.text = self.dingdanModel.title;
     if(number != 0){
         self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
     }
-    self.sizeNameLabel.text = self.dingdanModel.sizeString;
-    self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
+    self.sizeNameLabel.text = self.dingdanModel.sku_name;
+    self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.num];
     
     self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", self.refundPrice];
    // refundPrice = [self.dingdanModel.priceString floatValue];
