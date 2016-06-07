@@ -32,8 +32,12 @@
     [self createTableView];
 
 }
+- (void)setCount:(NSInteger)count {
+    _count = count;
+}
 - (void)createTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80) style:UITableViewStylePlain];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, self.count * 80) style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;

@@ -33,6 +33,7 @@
     JMPopView *menu = [[JMPopView alloc] initWithFrame:rect];
     menu.userInteractionEnabled = YES;
     [JMKeyWindow addSubview:menu];
+
     
     return menu;
 }
@@ -56,7 +57,6 @@
     _contentView = contentView;
     contentView.backgroundColor = [UIColor whiteColor];
    
-    
     [self addSubview:contentView];
     
     

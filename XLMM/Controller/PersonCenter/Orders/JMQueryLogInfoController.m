@@ -17,8 +17,12 @@
 #import "MJExtension.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
+#import "UIColor+RGBColor.h"
+#import "JMCleanView.h"
 
-@interface JMQueryLogInfoController ()
+@interface JMQueryLogInfoController ()<UIScrollViewDelegate>
+
+@property (nonatomic,strong) UIScrollView *masBackScrollView;
 
 @property (nonatomic,strong) UILabel *logNameLabel;
 
@@ -69,7 +73,8 @@
     [self createtopUI];
     [self getWuliuInfoFromServer];
     [self createGoodsListView];
-
+    
+    
     
 }
 - (void)setGoodsListDic:(NSDictionary *)goodsListDic {
@@ -100,7 +105,7 @@
     
 }
 /**
- *  数据请求
+ *  数据请求  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
  */
 - (void)loadData {
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
@@ -117,7 +122,7 @@
         }
         NSDictionary *info = responseObject;
         [self fetchedWuliuData:info];
-        [self createTimeListView];
+        
         //        [self.wuliuInfoChainView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
@@ -145,6 +150,9 @@
     
     self.infoArray = [dicJson objectForKey:@"data"];
     NSInteger length = self.infoArray.count;
+    
+    [self createTimeListView];
+    
     if (length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
@@ -155,11 +163,12 @@
  *  商品详情的展示列表
  */
 - (void)createGoodsListView {
-    
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, 200, SCREENWIDTH, _count * 80)];
+    self.goodsListVC.count = _count;
+    JMCleanView *menu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136, SCREENWIDTH, _count * 80)];
+    [self.masBackScrollView addSubview:menu];
     menu.contentView = self.goodsListVC.view;
+    menu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.goodsListVC.goodsModel = self.goodsModel;
-    
     self.logNameLabel.text = self.logName;
     self.logNumLabel.text = @"订单创建成功";
     
@@ -168,9 +177,16 @@
  *  物流信息展示列表
  */
 - (void)createTimeListView {
-    JMPopView *timeMenu = [JMPopView showInRect:CGRectMake(0, 200 + _count * 80, SCREENWIDTH, SCREENHEIGHT)];
+
+    NSInteger count = self.infoArray.count;
+    self.timeListVC.count = count;
+    JMCleanView *timeMenu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136 + _count * 80, SCREENWIDTH, count * 80)];
+    [self.masBackScrollView addSubview:timeMenu];
     timeMenu.contentView = self.timeListVC.view;
+    timeMenu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.timeListVC.timeListArr = self.infoArray;
+    
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * 80 + _count * 80 + 136);
 }
 
 /**
@@ -179,13 +195,14 @@
 - (void)createNomalView {
     
     UIView *timeView = [UIView new];
-    [self.view addSubview:timeView];
+    [self.masBackScrollView addSubview:timeView];
     timeView.backgroundColor = [UIColor lineGrayColor];
-    timeView.frame = CGRectMake(0, _count * 80 + 200, SCREENWIDTH, 80);
+    timeView.frame = CGRectMake(0, _count * 80 + 136, SCREENWIDTH, 80);
+    
+    
     
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-//    self.logTime = [self spaceFormatTimeString:self.logTime];
     timeLabel.text = _goodsListDic[@"process_time"];
     timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -230,7 +247,7 @@
         make.width.height.mas_equalTo(@20);
     }];
     
-    
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * 80 + 136 + 80);
     
 }
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{
@@ -244,8 +261,12 @@
  */
 - (void)createtopUI {
     kWeakSelf
+    
+    self.masBackScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:self.masBackScrollView];
+    
     UIView *topBackView = [UIView new];
-    [self.view addSubview:topBackView];
+    [self.masBackScrollView addSubview:topBackView];
     
     UILabel *logNameL = [UILabel new];
     [topBackView addSubview:logNameL];
@@ -253,11 +274,11 @@
     
     UILabel *lineView = [UILabel new];
     [topBackView addSubview:lineView];
-    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineView.backgroundColor = [UIColor buttonDisabledBackgroundColor];
     
     UILabel *lineViews = [UILabel new];
     [topBackView addSubview:lineViews];
-    lineViews.backgroundColor = [UIColor lightGrayColor];
+    lineViews.backgroundColor = [UIColor buttonDisabledBackgroundColor];
     
     UILabel *logNumL = [UILabel new];
     [topBackView addSubview:logNumL];
@@ -270,13 +291,14 @@
     UILabel *logNumLabel = [UILabel new];
     [topBackView addSubview:logNumLabel];
     self.logNumLabel = logNumLabel;
-    self.logNumLabel.textColor = [UIColor orangeColor];
+    self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    
     
     [topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view).offset(64);
-        make.left.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.masBackScrollView).offset(0);
+        make.left.equalTo(weakSelf.masBackScrollView);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@121);
+        make.height.mas_equalTo(@136);
     }];
     
     [logNameL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -296,25 +318,24 @@
     }];
     
     [self.logNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.view).offset(-10);
+        make.right.equalTo(topBackView).offset(-10);
         make.centerY.equalTo(logNameL.mas_centerY);
     }];
     
     [self.logNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.view).offset(-10);
+        make.right.equalTo(topBackView).offset(-10);
         make.centerY.equalTo(logNumL.mas_centerY);
     }];
     
     [lineViews mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(logNumL.mas_bottom).offset(20);
         make.left.right.equalTo(topBackView);
-        make.height.mas_equalTo(@1);
+        make.height.mas_equalTo(@16);
     }];
     
 }
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
-    [JMPopView hide];
 }
 
 @end

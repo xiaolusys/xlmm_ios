@@ -11,6 +11,8 @@
 @class JMOrderGoodsModel;
 @interface JMGoodsListController : UIViewController
 
+@property (nonatomic,assign) NSInteger count;
+
 @property (nonatomic,strong) JMOrderGoodsModel *goodsModel;
 
 @end

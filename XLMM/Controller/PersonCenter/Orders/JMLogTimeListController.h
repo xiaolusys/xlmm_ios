@@ -10,7 +10,7 @@
 
 @interface JMLogTimeListController : UIViewController
 
-@property (nonatomic,copy) NSString *urlStr;
+@property (nonatomic,assign) NSInteger count;
 
 @property (nonatomic,strong) NSMutableArray *timeListArr;
 
