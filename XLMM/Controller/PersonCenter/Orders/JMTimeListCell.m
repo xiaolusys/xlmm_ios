@@ -20,5 +20,12 @@
 
     // Configure the view for the selected state
 }
-
+/**
+ *  - (void)removeAllSubviews:(UIView *)v{
+ while (v.subviews.count) {
+ UIView* child = v.subviews.lastObject;
+ [child removeFromSuperview];
+ }
+ }
+ */
 @end
