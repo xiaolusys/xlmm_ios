@@ -22,4 +22,6 @@
 
 @property (nonatomic,strong) NSMutableArray *dataSource;
 
+@property (nonatomic,assign) NSInteger count;
+
 @end

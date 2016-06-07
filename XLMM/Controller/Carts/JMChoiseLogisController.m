@@ -32,9 +32,12 @@
     [self createUI];
     
 }
+- (void)setCount:(NSInteger)count {
+    _count = count;
+}
 - (void)createUI {
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, 180) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, _count * 60) style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.dataSource = self;
@@ -46,7 +49,7 @@
     [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:13. CornerRadius:15];
     self.canelButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [self.canelButton addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    self.canelButton.frame = CGRectMake(10, 190, SCREENWIDTH - 20, 40);
+    self.canelButton.frame = CGRectMake(10, _count * 60 + 10, SCREENWIDTH - 20, 40);
     [self.view addSubview:self.canelButton];
     
 }

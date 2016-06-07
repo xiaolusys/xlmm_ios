@@ -330,7 +330,9 @@
             
         }
     }
-
+    _logisticsDic = logist[0];
+    NSString *name = _logisticsDic[@"name"];
+    self.choiseLabel.text = name;
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
@@ -577,11 +579,13 @@
 - (void)choiseButtonClick:(UIButton *)btn {
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
-    if (self.showViewVC.view == nil) {
-        self.showViewVC = [[JMChoiseLogisController alloc] init];
-    }
     self.showViewVC.dataSource = self.dataSource;
+    NSInteger count = self.dataSource.count;
+    self.showViewVC.count = count;
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
+//    if (self.showViewVC.view == nil) {
+//        self.showViewVC = [[JMChoiseLogisController alloc] init];
+//    }
     self.showViewVC.delegate = self;
     menu.contentView = self.showViewVC.view;
 }
