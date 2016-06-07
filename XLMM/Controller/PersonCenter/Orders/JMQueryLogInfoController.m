@@ -170,7 +170,7 @@
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
-    self.logNumLabel.text = @"订单创建成功";
+    self.logNumLabel.text = @"";
     
 }
 /**
@@ -215,6 +215,7 @@
     NSString *titleStr = _goodsListDic[@"assign_status_display"];
     if (titleStr != nil) {
         titleLabel.text = titleStr;
+        self.logNumLabel.text = titleStr;
     }else {
         titleLabel.text = @"订单创建成功";
     }

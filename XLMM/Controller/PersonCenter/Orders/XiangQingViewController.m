@@ -708,7 +708,7 @@
             [owner.myView addSubview:button];
         } else {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
-            NSString *string = [refund_status_displayArray objectAtIndex:index];
+            NSString *string = [refund_statusArray objectAtIndex:index];
             label.text = string;
             if ([string integerValue] == REFUND_STATUS_NO_REFUND ) {
                 label.text = @"";
