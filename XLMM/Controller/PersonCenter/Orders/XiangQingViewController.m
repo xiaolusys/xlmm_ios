@@ -529,8 +529,8 @@
     NSString *logName = self.logisticsLabel.text;
     if((btn.tag >= 100) && (logisticsInfoArray.count > btn.tag - 100)){
         NSDictionary *dic = [[logisticsInfoArray objectAtIndex:btn.tag - 100] mj_keyValues];
-        queryVC.packetId = outSidStr;
-        queryVC.companyCode = logisticsCompanyCodeStr;
+        queryVC.packetId = outSidStr;//@"3101040539131"
+        queryVC.companyCode = logisticsCompanyCodeStr; //@"YUNDA_QR";
         queryVC.logName = logName;
         queryVC.goodsListDic = dic;
 

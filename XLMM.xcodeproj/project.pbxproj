@@ -27,6 +27,8 @@
 		0BBEFDC71D05D4D300D45078 /* JMGoodsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC61D05D4D300D45078 /* JMGoodsListCell.m */; };
 		0BBEFDCA1D05EC2C00D45078 /* JMQueryLogInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC91D05EC2C00D45078 /* JMQueryLogInfoModel.m */; };
 		0BBEFDCD1D05EC3F00D45078 /* JMTimeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDCC1D05EC3F00D45078 /* JMTimeInfoModel.m */; };
+		0BCD28D21D067F1C00EB4C59 /* JMTimeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCD28D11D067F1C00EB4C59 /* JMTimeListCell.m */; };
+		0BCD28D51D06993000EB4C59 /* JMCleanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCD28D41D06993000EB4C59 /* JMCleanView.m */; };
 		0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */; };
 		0BE3130F1D0514EB00CD97D6 /* JMReturnedGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE3130E1D0514EB00CD97D6 /* JMReturnedGoodsController.m */; };
 		0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE313141D0515D400CD97D6 /* JMReGoodsAddView.m */; };
@@ -916,6 +918,10 @@
 		0BBEFDC91D05EC2C00D45078 /* JMQueryLogInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMQueryLogInfoModel.m; sourceTree = "<group>"; };
 		0BBEFDCB1D05EC3F00D45078 /* JMTimeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTimeInfoModel.h; sourceTree = "<group>"; };
 		0BBEFDCC1D05EC3F00D45078 /* JMTimeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTimeInfoModel.m; sourceTree = "<group>"; };
+		0BCD28D01D067F1C00EB4C59 /* JMTimeListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTimeListCell.h; sourceTree = "<group>"; };
+		0BCD28D11D067F1C00EB4C59 /* JMTimeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTimeListCell.m; sourceTree = "<group>"; };
+		0BCD28D31D06993000EB4C59 /* JMCleanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCleanView.h; sourceTree = "<group>"; };
+		0BCD28D41D06993000EB4C59 /* JMCleanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCleanView.m; sourceTree = "<group>"; };
 		0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
 		0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
 		0BE3130D1D0514EB00CD97D6 /* JMReturnedGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnedGoodsController.h; sourceTree = "<group>"; };
@@ -2315,6 +2321,10 @@
 			children = (
 				0BBEFDC51D05D4D300D45078 /* JMGoodsListCell.h */,
 				0BBEFDC61D05D4D300D45078 /* JMGoodsListCell.m */,
+				0BCD28D01D067F1C00EB4C59 /* JMTimeListCell.h */,
+				0BCD28D11D067F1C00EB4C59 /* JMTimeListCell.m */,
+				0BCD28D31D06993000EB4C59 /* JMCleanView.h */,
+				0BCD28D41D06993000EB4C59 /* JMCleanView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -5444,6 +5454,7 @@
 				1F4DE59D1CE4646200114BDA /* JMBillDetailController.m in Sources */,
 				183073ED1C97D17800B7665E /* MJRefreshFooter.m in Sources */,
 				183073EF1C97D17800B7665E /* MJRefreshAutoGifFooter.m in Sources */,
+				0BCD28D51D06993000EB4C59 /* JMCleanView.m in Sources */,
 				321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */,
 				1F3621DA1CF968B8004359B0 /* JMOrderGoodsModel.m in Sources */,
 				183074201C97D17800B7665E /* SDWebImagePrefetcher.m in Sources */,
@@ -5536,6 +5547,7 @@
 				1830741F1C97D17800B7665E /* SDWebImageManager.m in Sources */,
 				183073DD1C97D17800B7665E /* QNHijackingDetectWrapper.m in Sources */,
 				1830724C1C97BE3700B7665E /* ShenQingTuiHuoController.m in Sources */,
+				0BCD28D21D067F1C00EB4C59 /* JMTimeListCell.m in Sources */,
 				184FCFC11CA67CF800F8FC94 /* UUID.m in Sources */,
 				1F4161131CE31A4400F78C0D /* MASViewAttribute.m in Sources */,
 				1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */,

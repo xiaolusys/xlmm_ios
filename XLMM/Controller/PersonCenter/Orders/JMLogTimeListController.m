@@ -12,12 +12,16 @@
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "UIColor+RGBColor.h"
+#import "JMTimeInfoModel.h"
+#import "MJExtension.h"
 
 @interface JMLogTimeListController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *tableView;
 
 @property (nonatomic,strong) NSMutableArray *dataSource;
+
+@property (nonatomic,strong) JMTimeInfoModel *timeModel;
 
 @end
 
@@ -28,6 +32,12 @@
     }
     return _dataSource;
 }
+//- (JMTimeInfoModel *)timeModel {
+//    if (_timeModel == nil) {
+//        _timeModel = [[JMTimeInfoModel alloc] init];
+//    }
+//    return _timeModel;
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -38,24 +48,27 @@
 }
 - (void)setTimeListArr:(NSMutableArray *)timeListArr {
     _timeListArr = timeListArr;
+    for (NSDictionary *dic in timeListArr) {
+        JMTimeInfoModel *timeModel = [JMTimeInfoModel mj_objectWithKeyValues:dic];
+        [self.dataSource addObject:timeModel];
+    }
 }
-
-- (void)setUrlStr:(NSString *)urlStr {
-    _urlStr = urlStr;
+- (void)setCount:(NSInteger)count {
+    _count = count;
 }
-
 - (void)createTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60) style:UITableViewStylePlain];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, self.count * 80) style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    //    self.tableView.tableFooterView = [UIView new];
+    self.tableView.tableFooterView = [UIView new];
     self.tableView.scrollEnabled = NO;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 80;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -67,21 +80,25 @@
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
 //    if (!self.islogisInfo) {
-        NSDictionary *wuliuInfo =  [self.timeListArr objectAtIndex:indexPath.row];
-        NSString *timeText = [wuliuInfo objectForKey:@"time"];
+    JMTimeInfoModel *timeModel = self.dataSource[indexPath.row];
+//        NSDictionary *wuliuInfo =  [self.dataSource objectAtIndex:indexPath.row];
+//        NSString *timeText = [wuliuInfo objectForKey:@"time"];
+    NSString *timeText = timeModel.time;
         timeText = [self spaceFormatTimeString:timeText];
         
-        NSString *infoText = [wuliuInfo objectForKey:@"content"];
-        if(0 == indexPath.row){
+//        NSString *infoText = [wuliuInfo objectForKey:@"content"];
+    NSString *infoText = timeModel.content;
+    if(0 == indexPath.row){
             [self displayLastWuliuInfoWithTime:cell time:timeText andInfo:infoText];
-        }
-        else{
+    }
+    else{
             [self displayWuliuInfoWithOrder:cell andTime:timeText andInfo:infoText];
-        }
-        
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
 //    }
     return cell;
 }
