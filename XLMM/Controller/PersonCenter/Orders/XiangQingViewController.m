@@ -691,7 +691,7 @@
     owner.nameLabel.text = orderGoods.title;
     owner.sizeLabel.text = orderGoods.sku_name;
     owner.numberLabel.text = [NSString stringWithFormat:@"x%@", orderGoods.num];
-    owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [orderGoods.payment floatValue]];
+    owner.priceLabel.text =[NSString stringWithFormat:@"¥%.2f", [orderGoods.payment floatValue]];
     
     if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_PAYED) {
         if ([[refund_statusArray objectAtIndex:index] integerValue] == 0) {
@@ -708,7 +708,7 @@
             [owner.myView addSubview:button];
         } else {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
-            NSString *string = [refund_status_displayArray objectAtIndex:index];
+            NSString *string = [refund_statusArray objectAtIndex:index];
             label.text = string;
             if ([string integerValue] == REFUND_STATUS_NO_REFUND ) {
                 label.text = @"";
