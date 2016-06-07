@@ -1225,7 +1225,7 @@ static NSString *kbrandCell = @"brandCell";
 
             _diction = nil;
             NSString *active = @"active";
-            [dic setValue:active forKey:@"type_title"];
+            [_diction setValue:active forKey:@"type_title"];
             [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
             [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
             _diction = [NSMutableDictionary dictionaryWithDictionary:dic];

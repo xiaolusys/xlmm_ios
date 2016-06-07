@@ -35,6 +35,7 @@
 #import "JMOrderGoodsModel.h"
 #import "JMPackAgeModel.h"
 #import "JMPopLogistcsModel.h"
+#import "JMQueryLogInfoController.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -523,16 +524,25 @@
     
     NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).out_sid;
     NSString *logisticsCompanyCodeStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).logistics_company_code;
-
-    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+    JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
+    NSString *logName = self.logisticsLabel.text;
     if((btn.tag >= 100) && (logisticsInfoArray.count > btn.tag - 100)){
         NSDictionary *dic = [[logisticsInfoArray objectAtIndex:btn.tag - 100] mj_keyValues];
-        wuliuView.packetId = outSidStr;
-        wuliuView.companyCode = logisticsCompanyCodeStr;
-        wuliuView.orderDic = dic;
-        [self.navigationController pushViewController:wuliuView animated:YES];
-
+        queryVC.packetId = outSidStr;
+        queryVC.companyCode = logisticsCompanyCodeStr;
+        queryVC.logName = logName;
+        queryVC.goodsListDic = dic;
+        queryVC.logTime = _orderDic[@"created"];
+        queryVC.titleStr = self.packModel.assign_status_display;
+    queryVC.goodsModel = self.orderGoodsModel;
+//        [self.navigationController pushViewController:queryVC animated:YES];
     }
+    [self.navigationController pushViewController:queryVC animated:YES];
+//    NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).out_sid;
+//    NSString *logisticsCompanyCodeStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).logistics_company_code;
+//
+//    WuliuViewController *wuliuView = [[WuliuViewController alloc] initWithNibName:@"WuliuViewController" bundle:nil];
+
 }
 #pragma mark ----- 物流信息点击事件
 - (void)changeLogisticsClick:(UITapGestureRecognizer *)tap {

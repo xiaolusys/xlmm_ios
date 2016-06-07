@@ -21,6 +21,12 @@
 		0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */; };
 		0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */; };
 		0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7696DD1D011F010079E0CA /* JMOrderPayView.m */; };
+		0BBEFDBB1D05CA0800D45078 /* JMQueryLogInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDBA1D05CA0800D45078 /* JMQueryLogInfoController.m */; };
+		0BBEFDC11D05D00100D45078 /* JMGoodsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC01D05D00100D45078 /* JMGoodsListController.m */; };
+		0BBEFDC41D05D0FB00D45078 /* JMLogTimeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC31D05D0FB00D45078 /* JMLogTimeListController.m */; };
+		0BBEFDC71D05D4D300D45078 /* JMGoodsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC61D05D4D300D45078 /* JMGoodsListCell.m */; };
+		0BBEFDCA1D05EC2C00D45078 /* JMQueryLogInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC91D05EC2C00D45078 /* JMQueryLogInfoModel.m */; };
+		0BBEFDCD1D05EC3F00D45078 /* JMTimeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDCC1D05EC3F00D45078 /* JMTimeInfoModel.m */; };
 		0BD53FCF1CFFEB040021C963 /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */; };
 		0BE3130F1D0514EB00CD97D6 /* JMReturnedGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE3130E1D0514EB00CD97D6 /* JMReturnedGoodsController.m */; };
 		0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE313141D0515D400CD97D6 /* JMReGoodsAddView.m */; };
@@ -898,6 +904,18 @@
 		0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsModel.m; sourceTree = "<group>"; };
 		0B7696DC1D011F010079E0CA /* JMOrderPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayView.h; sourceTree = "<group>"; };
 		0B7696DD1D011F010079E0CA /* JMOrderPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayView.m; sourceTree = "<group>"; };
+		0BBEFDB91D05CA0800D45078 /* JMQueryLogInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMQueryLogInfoController.h; sourceTree = "<group>"; };
+		0BBEFDBA1D05CA0800D45078 /* JMQueryLogInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMQueryLogInfoController.m; sourceTree = "<group>"; };
+		0BBEFDBF1D05D00100D45078 /* JMGoodsListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsListController.h; sourceTree = "<group>"; };
+		0BBEFDC01D05D00100D45078 /* JMGoodsListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsListController.m; sourceTree = "<group>"; };
+		0BBEFDC21D05D0FB00D45078 /* JMLogTimeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLogTimeListController.h; sourceTree = "<group>"; };
+		0BBEFDC31D05D0FB00D45078 /* JMLogTimeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLogTimeListController.m; sourceTree = "<group>"; };
+		0BBEFDC51D05D4D300D45078 /* JMGoodsListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsListCell.h; sourceTree = "<group>"; };
+		0BBEFDC61D05D4D300D45078 /* JMGoodsListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsListCell.m; sourceTree = "<group>"; };
+		0BBEFDC81D05EC2C00D45078 /* JMQueryLogInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMQueryLogInfoModel.h; sourceTree = "<group>"; };
+		0BBEFDC91D05EC2C00D45078 /* JMQueryLogInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMQueryLogInfoModel.m; sourceTree = "<group>"; };
+		0BBEFDCB1D05EC3F00D45078 /* JMTimeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTimeInfoModel.h; sourceTree = "<group>"; };
+		0BBEFDCC1D05EC3F00D45078 /* JMTimeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTimeInfoModel.m; sourceTree = "<group>"; };
 		0BD53FCD1CFFEB040021C963 /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
 		0BD53FCE1CFFEB040021C963 /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
 		0BE3130D1D0514EB00CD97D6 /* JMReturnedGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnedGoodsController.h; sourceTree = "<group>"; };
@@ -2265,6 +2283,49 @@
 			children = (
 				0B43FFB21CFEEB9100AE7DDD /* JMPopLogistcsModel.h */,
 				0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		0BBEFDB81D05C98C00D45078 /* querylogisticsInfo(查询物流信息) */ = {
+			isa = PBXGroup;
+			children = (
+				0BBEFDB91D05CA0800D45078 /* JMQueryLogInfoController.h */,
+				0BBEFDBA1D05CA0800D45078 /* JMQueryLogInfoController.m */,
+				0BBEFDBE1D05CA1A00D45078 /* Model */,
+				0BBEFDBD1D05CA1800D45078 /* View */,
+				0BBEFDBC1D05CA1600D45078 /* Controller */,
+			);
+			name = "querylogisticsInfo(查询物流信息)";
+			sourceTree = "<group>";
+		};
+		0BBEFDBC1D05CA1600D45078 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0BBEFDC21D05D0FB00D45078 /* JMLogTimeListController.h */,
+				0BBEFDC31D05D0FB00D45078 /* JMLogTimeListController.m */,
+				0BBEFDBF1D05D00100D45078 /* JMGoodsListController.h */,
+				0BBEFDC01D05D00100D45078 /* JMGoodsListController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		0BBEFDBD1D05CA1800D45078 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0BBEFDC51D05D4D300D45078 /* JMGoodsListCell.h */,
+				0BBEFDC61D05D4D300D45078 /* JMGoodsListCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0BBEFDBE1D05CA1A00D45078 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0BBEFDC81D05EC2C00D45078 /* JMQueryLogInfoModel.h */,
+				0BBEFDC91D05EC2C00D45078 /* JMQueryLogInfoModel.m */,
+				0BBEFDCB1D05EC3F00D45078 /* JMTimeInfoModel.h */,
+				0BBEFDCC1D05EC3F00D45078 /* JMTimeInfoModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -4304,6 +4365,7 @@
 				183071A71C97BE3700B7665E /* XiangQingViewController.m */,
 				183071A81C97BE3700B7665E /* XiangQingViewController.xib */,
 				0B43FFAB1CFEEB2700AE7DDD /* chooseLogistics(选择物流) */,
+				0BBEFDB81D05C98C00D45078 /* querylogisticsInfo(查询物流信息) */,
 				0BDF29311CFD328A00350E30 /* order_editer(修改收货地址) */,
 			);
 			name = Controller;
@@ -5198,6 +5260,7 @@
 				1830728B1C97C00900B7665E /* UIImage+UIImageExt.m in Sources */,
 				325B7A2C1C97E74B0022F930 /* HuoyuezhiTableViewCell.m in Sources */,
 				183073E01C97D17800B7665E /* QNDes.m in Sources */,
+				0BBEFDC11D05D00100D45078 /* JMGoodsListController.m in Sources */,
 				183074141C97D17800B7665E /* RECommonFunctions.m in Sources */,
 				183070D71C97B83900B7665E /* HistoryCartsModel.m in Sources */,
 				325B799A1C97E6F10022F930 /* MJPullGifHeader.m in Sources */,
@@ -5231,6 +5294,7 @@
 				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
 				1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */,
 				183072281C97BE3700B7665E /* AddressViewController.m in Sources */,
+				0BBEFDC71D05D4D300D45078 /* JMGoodsListCell.m in Sources */,
 				183070D01C97B83900B7665E /* AddressModel.m in Sources */,
 				183070EA1C97B83900B7665E /* SharePicModel.m in Sources */,
 				183074231C97D17800B7665E /* UIImage+MultiFormat.m in Sources */,
@@ -5239,6 +5303,7 @@
 				1830741D1C97D17800B7665E /* SDWebImageDownloader.m in Sources */,
 				0B43FF9C1CFE795500AE7DDD /* JMChooseLogisticsController.m in Sources */,
 				183074091C97D17800B7665E /* QNSessionManager.m in Sources */,
+				0BBEFDBB1D05CA0800D45078 /* JMQueryLogInfoController.m in Sources */,
 				1830740A1C97D17800B7665E /* QNStats.m in Sources */,
 				1830741E1C97D17800B7665E /* SDWebImageDownloaderOperation.m in Sources */,
 				183074221C97D17800B7665E /* UIImage+GIF.m in Sources */,
@@ -5260,6 +5325,7 @@
 				181ABB111CA12813001307C0 /* TodayVisitorViewController.m in Sources */,
 				325B79D21C97E7160022F930 /* HuodongCollectionViewCell.m in Sources */,
 				183070E81C97B83900B7665E /* MaMaSelectProduct.m in Sources */,
+				0BBEFDCA1D05EC2C00D45078 /* JMQueryLogInfoModel.m in Sources */,
 				321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */,
 				183070EB1C97B83900B7665E /* TixianModel.m in Sources */,
 				183074181C97D17800B7665E /* MKAnnotationView+WebCache.m in Sources */,
@@ -5292,6 +5358,7 @@
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,
 				0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */,
 				183071E91C97BE3700B7665E /* XidiShuomingViewController.m in Sources */,
+				0BBEFDCD1D05EC3F00D45078 /* JMTimeInfoModel.m in Sources */,
 				183071D71C97BE3700B7665E /* ChildViewController.m in Sources */,
 				325B79971C97E6F10022F930 /* CartTableCellTableViewCell1.m in Sources */,
 				183073FC1C97D17800B7665E /* UIView+MJExtension.m in Sources */,
@@ -5346,6 +5413,7 @@
 				325B79A01C97E6F10022F930 /* ReBuyTableViewCell.m in Sources */,
 				1830722F1C97BE3700B7665E /* JifenViewController.m in Sources */,
 				183073CC1C97D17800B7665E /* AFHTTPRequestOperationManager.m in Sources */,
+				0BBEFDC41D05D0FB00D45078 /* JMLogTimeListController.m in Sources */,
 				183073FA1C97D17800B7665E /* UIScrollView+MJExtension.m in Sources */,
 				1830721B1C97BE3700B7665E /* TuijianErweimaViewController.m in Sources */,
 				183071E31C97BE3700B7665E /* PostersViewController.m in Sources */,
