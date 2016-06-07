@@ -691,7 +691,7 @@
     owner.nameLabel.text = orderGoods.title;
     owner.sizeLabel.text = orderGoods.sku_name;
     owner.numberLabel.text = [NSString stringWithFormat:@"x%@", orderGoods.num];
-    owner.priceLabel.text =[NSString stringWithFormat:@"¥%.1f", [orderGoods.payment floatValue]];
+    owner.priceLabel.text =[NSString stringWithFormat:@"¥%.2f", [orderGoods.payment floatValue]];
     
     if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_PAYED) {
         if ([[refund_statusArray objectAtIndex:index] integerValue] == 0) {
