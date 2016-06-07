@@ -122,12 +122,9 @@
     return _youmengShare;
 }
 
-//- (JMShareViewController *)shareView {
-//    if (!_shareView) {
-//        _shareView = [[JMShareViewController alloc] init];
-//        
-//    }
-//    return _shareView;
+//- (WebViewJavascriptBridge *)bridge {
+//
+//    return _bridge;
 //}
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
@@ -170,10 +167,13 @@
     
     UIWebView *baseWebView = [[UIWebView alloc] init];
     self.baseWebView = baseWebView;
+    
+    [self registerJsBridge];
+    
     [self.view addSubview:self.baseWebView];
     self.baseWebView.backgroundColor = [UIColor whiteColor];
     self.baseWebView.tag = 111;
-    self.baseWebView.delegate = self;
+//    self.baseWebView.delegate = self;
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.userInteractionEnabled = YES;
     
@@ -199,7 +199,9 @@
     }
     NSURL *url = [NSURL URLWithString:loadStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
     [self.baseWebView loadRequest:request];
+
 
     if(_isShowRightShareBtn){
         [self createTabBarButton];
@@ -287,13 +289,13 @@
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSLog(@"完成加载");
+    NSLog(@"完成加载 %ld",(long)webView.tag);
     [SVProgressHUD dismiss];
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 
     if (webView.tag != 102) {
         [self updateUserAgent];
-        [self registerJsBridge];
+//        [self registerJsBridge];
         return;
     }
     if (webView.isLoading) {
@@ -348,10 +350,13 @@
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
     if (_bridge) {
+        NSLog(@"Already reg!");
         return ;
     }
+    NSLog(@"registerJsBridge!");
     [WebViewJavascriptBridge enableLogging];
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
+    [self.bridge setWebViewDelegate:self];
     
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self jsLetiOSWithData:data callBack:responseCallback];
