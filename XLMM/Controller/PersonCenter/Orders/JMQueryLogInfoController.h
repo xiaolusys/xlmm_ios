@@ -17,6 +17,5 @@
 @property (copy, nonatomic) NSString *logName;
 @property (copy, nonatomic) NSString *packetId;
 @property (copy, nonatomic) NSString *companyCode;
-@property (nonatomic,copy) NSString *logTime;
-@property (nonatomic,copy) NSString *titleStr;
+
 @end

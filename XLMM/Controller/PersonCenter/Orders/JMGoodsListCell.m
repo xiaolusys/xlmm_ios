@@ -78,7 +78,7 @@
     [self.goodsTitleL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
         make.top.equalTo(weakSelf.contentView).offset(15);
-        make.width.mas_equalTo(SCREENWIDTH - 120);
+        make.width.mas_equalTo(SCREENWIDTH - 140);
     }];
     
     [self.goodsMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,7 +104,8 @@
 }
 - (void)configData:(JMOrderGoodsModel *)model {
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pic_path] placeholderImage:[UIImage imageNamed:@"profiles"]];
+     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];
     
     self.goodsMoneyL.text = [NSString stringWithFormat:@"¥ %@",model.payment];
     self.goodsTitleL.text = model.title;
@@ -118,6 +119,27 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
