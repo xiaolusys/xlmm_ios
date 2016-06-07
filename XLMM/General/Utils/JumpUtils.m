@@ -121,7 +121,8 @@
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
-            
+            webView.isShowNavBar =false;
+            webView.isShowRightShareBtn=false;
             [vc.navigationController pushViewController:webView animated:YES];
             
         } else if ([firstparam isEqualToString:@"product_id"]){
@@ -132,7 +133,8 @@
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
-
+            webView.isShowNavBar =false;
+            webView.isShowRightShareBtn=false;
             [vc.navigationController pushViewController:webView animated:YES];
             
             
