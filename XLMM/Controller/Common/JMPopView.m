@@ -11,6 +11,11 @@
 
 #define JMKeyWindow [UIApplication sharedApplication].keyWindow
 
+//@interface JMPopView ()
+//
+//@property(nonatomic,strong) JMPopView *menu;
+//
+//@end
 
 @implementation JMPopView
 
@@ -27,7 +32,6 @@
 {
     JMPopView *menu = [[JMPopView alloc] initWithFrame:rect];
     menu.userInteractionEnabled = YES;
-    
     [JMKeyWindow addSubview:menu];
     
     return menu;
@@ -71,7 +75,7 @@
 //    CGFloat w = self.width - 2 * margin;
 //    CGFloat h = self.height - y - margin;
     
-//    _contentView.frame = [UIScreen mainScreen].bounds;
+    _contentView.frame = self.bounds;//[UIScreen mainScreen].bounds;
     
 }
 

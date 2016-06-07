@@ -343,6 +343,7 @@
     NSString *groupKey = @"";
     for (NSDictionary *dic in dicJson) {
         JMPackAgeModel *packModel = [JMPackAgeModel mj_objectWithKeyValues:dic];
+        self.packModel = packModel;
         [logisticsInfoArray addObject:packModel];
         if ((packModel.package_group_key != nil) && (![packModel.package_group_key isEqualToString:groupKey])) {
             packetNum ++;
@@ -532,8 +533,7 @@
         queryVC.companyCode = logisticsCompanyCodeStr;
         queryVC.logName = logName;
         queryVC.goodsListDic = dic;
-        queryVC.logTime = _orderDic[@"created"];
-        queryVC.titleStr = self.packModel.assign_status_display;
+
     queryVC.goodsModel = self.orderGoodsModel;
 //        [self.navigationController pushViewController:queryVC animated:YES];
     }

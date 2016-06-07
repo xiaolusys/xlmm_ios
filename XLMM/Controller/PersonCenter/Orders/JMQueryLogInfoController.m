@@ -32,7 +32,6 @@
  */
 @property (nonatomic,strong) JMLogTimeListController *timeListVC;
 
-//@property (nonatomic,strong) JMOrderGoodsModel *goodsModel;
 @property (nonatomic,assign) BOOL islogisInfo;
 
 @property (nonatomic,strong) NSMutableArray *infoArray;
@@ -73,12 +72,9 @@
 
     
 }
-//- (void)setGoodsListDic:(NSDictionary *)goodsListDic {
-//    _goodsListDic = goodsListDic;
-//    JMOrderGoodsModel *goodsModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsListDic];
-//    self.goodsModel = goodsModel;
-//    
-//}
+- (void)setGoodsListDic:(NSDictionary *)goodsListDic {
+    _goodsListDic = goodsListDic;
+}
 - (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
     _goodsModel = goodsModel;
     NSMutableArray *arr = [NSMutableArray array];
@@ -95,7 +91,18 @@
         [self createNomalView];
 
         return;
+    }else {
+        [self loadData];
+
     }
+    
+    
+    
+}
+/**
+ *  数据请求
+ */
+- (void)loadData {
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     
@@ -111,7 +118,7 @@
         NSDictionary *info = responseObject;
         [self fetchedWuliuData:info];
         [self createTimeListView];
-//        [self.wuliuInfoChainView reloadData];
+        //        [self.wuliuInfoChainView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"wuliu info get failed.");
@@ -119,11 +126,8 @@
         [alertView show];
     }];
     
-    
-    
-    
-}
 
+}
 - (void)fetchedWuliuData:(NSDictionary *)responseData{
     // NSLog(@"%@",responseData);
     if (responseData == nil) {
@@ -147,7 +151,9 @@
     }
     
 }
-
+/**
+ *  商品详情的展示列表
+ */
 - (void)createGoodsListView {
     
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, 200, SCREENWIDTH, _count * 80)];
@@ -158,12 +164,18 @@
     self.logNumLabel.text = @"订单创建成功";
     
 }
+/**
+ *  物流信息展示列表
+ */
 - (void)createTimeListView {
     JMPopView *timeMenu = [JMPopView showInRect:CGRectMake(0, 200 + _count * 80, SCREENWIDTH, SCREENHEIGHT)];
     timeMenu.contentView = self.timeListVC.view;
     self.timeListVC.timeListArr = self.infoArray;
 }
 
+/**
+ *  显示当没有物流信息 - > 展示的视图
+ */
 - (void)createNomalView {
     
     UIView *timeView = [UIView new];
@@ -173,9 +185,9 @@
     
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-    self.logTime = [self spaceFormatTimeString:self.logTime];
-    timeLabel.text = self.logTime;
-    timeLabel.textColor = [UIColor buttonDisabledBorderColor];
+//    self.logTime = [self spaceFormatTimeString:self.logTime];
+    timeLabel.text = _goodsListDic[@"process_time"];
+    timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeView).offset(10);
         make.left.equalTo(timeView).offset(40);
@@ -183,11 +195,29 @@
     
     UILabel *titleLabel = [UILabel new];
     [timeView addSubview:titleLabel];
-    titleLabel.text = self.titleStr;
+    NSString *titleStr = _goodsListDic[@"assign_status_display"];
+    if (titleStr != nil) {
+        titleLabel.text = titleStr;
+    }else {
+        titleLabel.text = @"订单创建成功";
+    }
+    titleLabel.numberOfLines = 0;
+    titleLabel.font = [UIFont systemFontOfSize:13.];
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(timeLabel).offset(20);
+        make.top.equalTo(timeLabel.mas_bottom).offset(15);
         make.left.equalTo(timeView).offset(40);
+    }];
+    
+    UILabel *lineL = [UILabel new];
+    [timeView addSubview:lineL];
+    lineL.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    
+    [lineL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeView);
+        make.left.equalTo(timeView).offset(20);
+        make.width.mas_equalTo(@1);
+        make.height.mas_equalTo(@80);
     }];
     
     //confirm -- 创建成功显示图片
@@ -200,16 +230,7 @@
         make.width.height.mas_equalTo(@20);
     }];
     
-    UILabel *lineL = [UILabel new];
-    [timeView addSubview:lineL];
-    lineL.backgroundColor = [UIColor orangeColor];
     
-    [lineL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(timeView);
-        make.left.equalTo(timeView).offset(20);
-        make.width.mas_equalTo(@1);
-        make.height.mas_equalTo(@80);
-    }];
     
 }
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{
@@ -218,7 +239,9 @@
     [ms replaceCharactersInRange:range withString:@" "];
     return ms;
 }
-
+/**
+ *  显示顶部视图 -- > 物流公司与快递单号
+ */
 - (void)createtopUI {
     kWeakSelf
     UIView *topBackView = [UIView new];
@@ -234,7 +257,7 @@
     
     UILabel *lineViews = [UILabel new];
     [topBackView addSubview:lineViews];
-    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineViews.backgroundColor = [UIColor lightGrayColor];
     
     UILabel *logNumL = [UILabel new];
     [topBackView addSubview:logNumL];
