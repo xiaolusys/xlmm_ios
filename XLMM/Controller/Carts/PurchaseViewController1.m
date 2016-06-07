@@ -583,11 +583,12 @@
     NSInteger count = self.dataSource.count;
     self.showViewVC.count = count;
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
-//    if (self.showViewVC.view == nil) {
-//        self.showViewVC = [[JMChoiseLogisController alloc] init];
-//    }
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMChoiseLogisController alloc] init];
+    }
     self.showViewVC.delegate = self;
     menu.contentView = self.showViewVC.view;
+    
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
@@ -627,8 +628,40 @@
 #pragma mark  结算按钮点击事件
 - (IBAction)buyClicked:(id)sender {
     if (self.isUseXLW) {  // 如果选中了小鹿钱包就直接支付  否则就弹出框
-        [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
-        [self payMoney];
+        /**  "pay_extras" =     (
+         {
+         name = "\U4f18\U60e0\U5238";
+         pid = 2;
+         type = 0;
+         "use_coupon_allowed" = 1;
+         value = 2;
+         },
+         {
+         name = "APP\U652f\U4ed8\U51cf2\U5143";
+         pid = 1;
+         type = 0;
+         value = 2;
+         },
+         {
+         channel = budget;
+         name = "\U4f59\U989d\U652f\U4ed8";
+         pid = 3;
+         type = 1;
+         "use_budget_allowed" = 1;
+         value = "285.15";
+         }
+         *  如果小鹿钱包的钱小于总价格 弹出支付视图
+         */
+        /**
+         *  余额不足
+         */
+        if (self.isEnoughBudget == NO) {
+            [self createPayPopView];
+        }else {
+            [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+            [self payMoney];
+        }
+        
     }else {
         [self createPayPopView];
     }
@@ -769,7 +802,20 @@
     [dicStr appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsDic[@"id"]],nil];
     
     NSMutableDictionary *dic = [self stringChangeDictionary:dicStr];
-    
+    /**
+     *  {
+     "addr_id" = 1;
+     "cart_ids" = 423169;
+     channel = wx;
+     "discount_fee" = "0.01";
+     "logistics_company_id" = "";
+     "pay_extras" = "pid:1:value:2";
+     payment = "0.00";
+     "post_fee" = "0.0";
+     "total_fee" = "0.0";
+     uuid = xd16060757568c3b1b421;
+     }
+     */
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
 
     PurchaseViewController1 * __weak weakSelf = self;
@@ -821,6 +867,7 @@
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            NSLog(@"%@",error);
                         }
                         [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
                     }
