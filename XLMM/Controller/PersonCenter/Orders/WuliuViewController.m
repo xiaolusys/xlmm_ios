@@ -75,7 +75,7 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
 }
 
 - (void) getWuliuInfoFromServer{
-//    self.packetId = @"3101040539131";
+//    self.packetId = @"3101040539131";  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
     BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
     || (self.companyCode == nil || ([self.companyCode isEqualToString:@""])));
     self.islogisInfo = islogisInfo;
@@ -147,29 +147,6 @@ static NSString * const reuseIdentifier = @"LogisticsCell";
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
     }
-        
-//        if (length > 0) {
-//                NSDictionary *lastWuliuInfo = [self.infoArray firstObject];
-//                NSString *timeText = [lastWuliuInfo objectForKey:@"time"];
-//                timeText = [self spaceFormatTimeString:timeText];
-//                
-//                NSString *infoText = [lastWuliuInfo objectForKey:@"content"];
-//                [self displayLastWuliuInfoWithTime: timeText andInfo:infoText];
-//        }
-//        NSInteger MAX = 4; // we only display at most 3 wuliu info.
-//        if (length < MAX) {
-//            MAX = length;
-//        }
-//        for (int i=1; i<MAX; ++i) {
-//            NSDictionary *wuliuInfo =  self.infoArray[i];
-//            NSString *timeText = [wuliuInfo objectForKey:@"time"];
-//            timeText = [self spaceFormatTimeString:timeText];
-//            
-//            NSString *infoText = [wuliuInfo objectForKey:@"content"];
-//            [self displayWuliuInfoWithOrder:i andTime:timeText andInfo:infoText];
-//        }
-   
-    
 
 }
 

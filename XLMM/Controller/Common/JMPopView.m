@@ -71,7 +71,7 @@
 //    CGFloat w = self.width - 2 * margin;
 //    CGFloat h = self.height - y - margin;
     
-    _contentView.frame = [UIScreen mainScreen].bounds;
+//    _contentView.frame = [UIScreen mainScreen].bounds;
     
 }
 
