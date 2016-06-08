@@ -62,7 +62,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     NSLog(@"Youhuiquanviewcontroller viewDidLoad");
     
     self.canUsedArray = [[NSMutableArray alloc] initWithCapacity:0];

@@ -77,7 +77,8 @@
     
     countSecond = 60;
     countdownSecond = countSecond;
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     
 
     [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClicked:)];

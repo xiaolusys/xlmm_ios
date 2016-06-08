@@ -156,6 +156,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     // Do any additional setup after loading the view from its nib.
     self.lastScrollView.tag = 104;
     self.lastScrollView.pagingEnabled = YES;

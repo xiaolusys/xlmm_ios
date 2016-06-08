@@ -196,7 +196,8 @@
     // Do any additional setup after loading the view from its nib.
     NSLog(@"viewDidLoad");
     self.timeCount = 0;
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     //弹出消息框提示用户有订阅通知消息。主要用于用户在使用应用时，弹出提示框
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotification:) name:@"Notification" object:nil];
     

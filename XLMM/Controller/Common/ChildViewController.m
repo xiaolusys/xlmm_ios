@@ -181,6 +181,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewDidLoad];
     
     NSLog(@"Child vc viewDidLoad");
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     
     // Do any additional setup after loading the view from its nib.

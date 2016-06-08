@@ -159,6 +159,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
     self.addressViewWidth.constant = SCREENWIDTH;

@@ -40,6 +40,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     self.passwordTF.borderStyle = UITextBorderStyleNone;
     self.confirmTextField.borderStyle = UITextBorderStyleNone;
     [self createNavigationBarWithTitle:@"密码设置" selecotr:@selector(backButtonClicked:)];

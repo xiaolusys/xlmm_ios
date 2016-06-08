@@ -30,7 +30,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"注册";
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     [self createNavigationBarWithTitle:@"注册" selecotr:@selector(btnClicked:)];
     self.infoLabel.hidden = YES;
     self.passwordLabel.hidden = YES;
