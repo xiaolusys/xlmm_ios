@@ -159,7 +159,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(btnClicked:)];
+    
     //初始化数组。。。。
     
     currentIndex = 0;

@@ -90,7 +90,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     self.dataArray = [[NSMutableArray alloc] init];
     self.historyCarts = [[NSMutableArray alloc] init];
     

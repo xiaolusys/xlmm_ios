@@ -42,7 +42,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
