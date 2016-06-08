@@ -829,10 +829,10 @@
         return;
     }
 
-
+    NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -881,7 +881,8 @@
         [SVProgressHUD dismiss];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"shoppingcart_create error %@", error);
+        [SVProgressHUD dismiss];
     }];
     
  }
