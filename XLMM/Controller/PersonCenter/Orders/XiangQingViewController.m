@@ -284,6 +284,7 @@
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
     [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if(!responseObject) return;
         [self setWuLiuMsg:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -393,12 +394,13 @@
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
     //    view.layer.cornerRadius = 4;
-    view.tag = 100 + currentIndex;
+    
     self.packInfoView = view;
 
     UIButton *baseView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.packInfoView addSubview:baseView];
     self.baseView = baseView;
+    self.baseView.tag = 100 + currentIndex;
     [self.baseView addTarget:self action:@selector(baseViewBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *lineL = [UILabel new];
