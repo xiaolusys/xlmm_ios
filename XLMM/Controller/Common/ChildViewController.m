@@ -428,6 +428,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     _childDic = model.mj_keyValues;
     [_childDic setValue:model.web_url forKey:@"web_url"];
+    [_childDic setValue:@"ProductDetail" forKey:@"type_title"];
     
     WebViewController *webView = [[WebViewController alloc] init];
     webView.webDiction = _childDic;
