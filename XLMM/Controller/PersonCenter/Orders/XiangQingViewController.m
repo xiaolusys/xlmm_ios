@@ -937,13 +937,9 @@
  *  修改地址的代理回调方法
  */
 - (void)updateEditerWithmodel:(NSDictionary *)dic {
-    
-    JMEditAddressModel *model = [JMEditAddressModel mj_objectWithKeyValues:dic];
-    self.addressModel = model;
-
     self.nameLabel.text = dic[@"receiver_name"];
-    self.phoneLabel.text = model.receiver_mobile;
-    NSString *addStr = [NSString stringWithFormat:@"%@-%@-%@-%@",self.addressModel.receiver_state,self.addressModel.receiver_city,self.addressModel.receiver_district,self.addressModel.receiver_address];
+    self.phoneLabel.text = dic[@"receiver_mobile"];
+    NSString *addStr = [NSString stringWithFormat:@"%@-%@-%@-%@",dic[@"receiver_state"],dic[@"receiver_city"],dic[@"receiver_district"],dic[@"receiver_address"]];
     self.addressLabel.text = addStr;
 }
 #pragma mark ---- 取消订单

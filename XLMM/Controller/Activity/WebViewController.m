@@ -155,7 +155,9 @@
         self.navigationController.navigationBarHidden = YES;
     }
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    [SVProgressHUD dismiss];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -385,6 +387,7 @@
     NSLog(@"registerJsBridge!");
     [WebViewJavascriptBridge enableLogging];
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
+
     [self.bridge setWebViewDelegate:self];
     
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
