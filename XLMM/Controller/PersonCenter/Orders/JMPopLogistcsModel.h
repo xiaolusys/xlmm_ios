@@ -16,7 +16,7 @@
 
 @property (nonatomic,copy) NSString *name;
 
-@property (nonatomic,assign) BOOL *isSelecter;
+//@property (nonatomic,assign) BOOL *isSelecter;
 
 @end
 
