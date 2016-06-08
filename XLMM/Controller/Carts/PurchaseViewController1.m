@@ -885,6 +885,7 @@
 
 - (void)returnCart {
 //    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)returnOrderList {
@@ -1030,6 +1031,8 @@
         
     }else if (index == 101) { //点击了微信支付
         [SVProgressHUD showWithStatus:@"正在支付中....."];
+        
+        
         if (!self.isInstallWX) {
             [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
             return;
@@ -1159,6 +1162,10 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
+
+
+    NSLog(@"111111======11111111111");
     
     //添加键盘的监听事件
     
@@ -1182,6 +1189,18 @@
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     
+}
+- (void)isApinPayGo {
+    [self.navigationController popViewControllerAnimated:YES];
+
+//    NSInteger count = 0;
+//    count = [[self.navigationController viewControllers] indexOfObject:self];
+//    if (count >= 2) {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }else {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
 }
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
