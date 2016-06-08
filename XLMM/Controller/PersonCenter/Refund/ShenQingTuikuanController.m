@@ -17,6 +17,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "MJExtension.h"
 
 
 @interface ShenQingTuikuanController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -113,6 +114,8 @@
                        ];
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
+    
+    NSDictionary *dic = [self.dingdanModel mj_keyValues];
     
     [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
     self.myImageView.layer.cornerRadius = 5;
