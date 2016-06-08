@@ -155,7 +155,9 @@
         self.navigationController.navigationBarHidden = YES;
     }
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    [SVProgressHUD dismiss];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
