@@ -35,6 +35,7 @@
 #import "JMPackAgeModel.h"
 #import "JMPopLogistcsModel.h"
 #import "JMQueryLogInfoController.h"
+#import "MJRefresh.h"
 
 
 #define kUrlScheme @"wx25fcb32689872499"
@@ -151,6 +152,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self downloadData];
 }
 
 - (void)viewDidLoad {
@@ -196,10 +198,12 @@
     
     [self logisticsChange];
 
-    [self downloadData];
-  
+//    [self downloadData];
     
+
 }
+
+
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -532,8 +536,9 @@
         queryVC.companyCode = logisticsCompanyCodeStr; //@"YUNDA_QR";
         queryVC.logName = logName;
         queryVC.goodsListDic = dic;
-
-    queryVC.goodsModel = self.orderGoodsModel;
+        NSInteger count = btn.tag - 100;
+        self.orderGoodsModel = [dataArray objectAtIndex:count];
+        queryVC.goodsModel = self.orderGoodsModel;
 //        [self.navigationController pushViewController:queryVC animated:YES];
     }
     [self.navigationController pushViewController:queryVC animated:YES];

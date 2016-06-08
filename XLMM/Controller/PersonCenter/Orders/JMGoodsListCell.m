@@ -12,6 +12,7 @@
 #import "MMClass.h"
 #import "Masonry.h"
 #import "JMOrderGoodsModel.h"
+#import "NSString+URL.h"
 
 @interface JMGoodsListCell ()
 
@@ -105,9 +106,19 @@
     
 }
 - (void)configData:(JMOrderGoodsModel *)model {
+    /**
+     *  处理图片显示...
+     */
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImageView.layer.masksToBounds = YES;
+    self.iconImageView.layer.borderWidth = 0.5;
+    self.iconImageView.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImageView.layer.cornerRadius = 5;
     
-     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];
+    
+//     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];
     
     self.goodsMoneyL.text = [NSString stringWithFormat:@"¥%.2f", [model.payment floatValue]];
     self.goodsTitleL.text = model.title;
