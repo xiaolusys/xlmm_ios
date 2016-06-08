@@ -64,7 +64,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
    // self.title = @"收货地址";
     
     [self createNavigationBarWithTitle:@"收货地址" selecotr:@selector(backBtnClicked:)];

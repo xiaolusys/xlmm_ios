@@ -70,7 +70,6 @@ static NSString *identifier = @"AccountCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     [self createNavigationBarWithTitle:@"钱包" selecotr:@selector(backBtnClicked:)];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];

@@ -83,6 +83,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createNavigationBarWithTitle:@"修改地址" selecotr:@selector(btnClicked:)];
     [self getPickViewData];
     [self createTableView];
@@ -97,7 +98,6 @@
 - (void)createTableView {
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 240) style:UITableViewStylePlain];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
