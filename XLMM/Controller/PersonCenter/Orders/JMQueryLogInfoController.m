@@ -170,8 +170,8 @@
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
-    self.logNumLabel.text = @"";
-    
+    self.logNumLabel.text = @"未揽件";
+    self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }
 /**
  *  物流信息展示列表

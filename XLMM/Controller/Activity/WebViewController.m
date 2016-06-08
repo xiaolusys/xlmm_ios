@@ -383,6 +383,7 @@
     NSLog(@"registerJsBridge!");
     [WebViewJavascriptBridge enableLogging];
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
+
     [self.bridge setWebViewDelegate:self];
     
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
