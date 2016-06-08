@@ -1515,6 +1515,7 @@ static NSString *kbrandCell = @"brandCell";
         _diction = [NSMutableDictionary dictionary];
         _diction = model.mj_keyValues;
         [_diction setValue:model.web_url forKey:@"web_url"];
+        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
 
         WebViewController *webView = [[WebViewController alloc] init];
         webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];

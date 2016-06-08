@@ -118,6 +118,7 @@
             NSLog(@"model_id = %@", [params lastObject]);
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
             [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
@@ -130,6 +131,7 @@
             NSLog(@"product_id = %@", [params lastObject]);
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
             [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;

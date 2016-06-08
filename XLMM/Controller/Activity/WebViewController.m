@@ -247,6 +247,19 @@
 
 }
 
+- (void)resolveProductShareParam:(NSDictionary *)dic {
+    NSLog(@"Product Share para=%@",dic);
+    
+    self.share_model.share_type = [dic objectForKey:@"share_type"];
+    
+    self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
+    self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
+    
+    self.share_model.title = [dic objectForKey:@"share_title"]; //标题
+    self.share_model.share_link = [dic objectForKey:@"link"];
+    
+}
+
 #pragma mark ----- 创建导航栏按钮
 - (void)createTabBarButton {
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -266,6 +279,20 @@
 
     self.shareView.model = self.share_model;
 
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    //弹出视图
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    menu.contentView = self.shareView.view;
+}
+
+- (void) universeShare:(NSDictionary *)data {
+    JMShareViewController *shareView = [[JMShareViewController alloc] init];
+    self.shareView = shareView;
+
+    [self resolveProductShareParam:data];
+    self.shareView.model = self.share_model;
+    
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
@@ -365,13 +392,14 @@
      *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"callNativeUniShareFunc");
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
-            [self rightBarButtonAction];
+            [self universeShare:data];
         }
     }];
     /**
@@ -402,6 +430,7 @@
      *  老的分享接口，带活动id
      */
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"callNativeUniShareFunc");
         [self shareForPlatform:data];
     }];
     /**
@@ -469,7 +498,7 @@
         if ([platform isEqualToString:@""]) {
             self.activityId = [responseObject objectForKey:@"id"];
             [self resolveActivityShareParam:responseObject];
-            [self rightBarButtonAction];
+            [self universeShare:data];
         }else if ([platform isEqualToString:@"wx"]) {
             [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
             [UMSocialData defaultData].extConfig.wechatSessionData.title = sharelink;
