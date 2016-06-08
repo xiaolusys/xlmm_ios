@@ -284,6 +284,9 @@
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
     [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            return ;
+        }
         [self setWuLiuMsg:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -393,14 +396,14 @@
     UIView *view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
     //    view.layer.cornerRadius = 4;
-    view.tag = 100 + currentIndex;
     self.packInfoView = view;
 
     UIButton *baseView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.packInfoView addSubview:baseView];
     self.baseView = baseView;
+    self.baseView.tag = 100 + currentIndex;
     [self.baseView addTarget:self action:@selector(baseViewBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     UILabel *lineL = [UILabel new];
     [self.packInfoView addSubview:lineL];
     lineL.backgroundColor = [UIColor lineGrayColor];
@@ -543,8 +546,9 @@
         self.orderGoodsModel = [dataArray objectAtIndex:count];
         queryVC.goodsModel = self.orderGoodsModel;
 //        [self.navigationController pushViewController:queryVC animated:YES];
+        [self.navigationController pushViewController:queryVC animated:YES];
+
     }
-    [self.navigationController pushViewController:queryVC animated:YES];
 //    NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).out_sid;
 //    NSString *logisticsCompanyCodeStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).logistics_company_code;
 //
@@ -769,17 +773,7 @@
     } else if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_TRADE_SUCCESS &&
                [[refund_statusArray objectAtIndex:index] integerValue] == REFUND_STATUS_NO_REFUND){
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
-        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor whiteColor];
-        [button setTitle:@"退货退款" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:12];
-        [button.layer setBorderWidth:0.5];
-        button.tag = 200+index;
-        button.layer.cornerRadius = 12.5;
-        [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
-        [owner.myView addSubview:button];
-        if (orderGoods.kill_title) {
+        if (!orderGoods.kill_title) {
             button.enabled = NO;
             [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
@@ -788,23 +782,22 @@
             rect.size.width = 112;
             rect.origin.x -= 40;
             button.frame = rect;
+        }else {
+            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            [button.layer setBorderWidth:0.5];
+            button.tag = 200+index;
+            button.layer.cornerRadius = 12.5;
+            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
+            [owner.myView addSubview:button];
         }
     } else if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_CONFIRM_RECEIVE &&
                [[refund_statusArray objectAtIndex:index] integerValue] == REFUND_STATUS_NO_REFUND){
-        
-        
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
-        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor whiteColor];
-        [button setTitle:@"退货退款" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:12];
-        [button.layer setBorderWidth:0.5];
-        button.tag = 200+index;
-        button.layer.cornerRadius = 12.5;
-        [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
-        [owner.myView addSubview:button];
-        if (orderGoods.kill_title) {
+        if (!orderGoods.kill_title) {
             button.enabled = NO;
             [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
@@ -813,6 +806,17 @@
             rect.size.width = 112;
             rect.origin.x -= 40;
             button.frame = rect;
+        }else {
+            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+            button.backgroundColor = [UIColor whiteColor];
+            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            [button.layer setBorderWidth:0.5];
+            button.tag = 200+index;
+            button.layer.cornerRadius = 12.5;
+            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
+            [owner.myView addSubview:button];
         }
     }
     else{
