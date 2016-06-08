@@ -77,7 +77,6 @@
     
     countSecond = 60;
     countdownSecond = countSecond;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     
 

@@ -42,7 +42,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes

@@ -498,7 +498,6 @@ static NSString *kbrandCell = @"brandCell";
 {
     NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.timeCount = 0;
     [self.endTime addObject:@""];

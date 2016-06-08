@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createNavigationBarWithTitle:@"修改昵称" selecotr:@selector(goback)];
     
     self.changeNicknameButton.layer.cornerRadius = 20;
