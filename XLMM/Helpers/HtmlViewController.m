@@ -180,7 +180,7 @@
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
             [self.navigationController pushViewController:xiangqingVC animated:YES];
         } else {
             NSLog(@"跳到H5首页");

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PerDingdanModel.h"
+//#import "PerDingdanModel.h"
+#import "JMOrderGoodsModel.h"
 
 @interface ShenQingTuikuanController : UIViewController
 
-@property (nonatomic, strong) PerDingdanModel *dingdanModel;
+@property (nonatomic, strong) JMOrderGoodsModel *dingdanModel;
 
 @property (copy, nonatomic) NSString *tid;
 @property (copy, nonatomic) NSString *oid;

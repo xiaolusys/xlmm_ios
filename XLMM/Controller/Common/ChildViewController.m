@@ -21,6 +21,8 @@
 #import "SVProgressHUD.h"
 #import "XlmmMall.h"
 #import "AFNetworking.h"
+#import "WebViewController.h"
+#import "MJExtension.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -37,6 +39,8 @@ static NSString * ksimpleCell = @"simpleCell";
     BOOL _isupdate;
     NSString *nextUrl;
     CGFloat _contentY;
+    
+    NSMutableDictionary *_childDic;
     
 }
 
@@ -405,47 +409,32 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
+    _childDic = [NSMutableDictionary dictionary];
+
+    PromoteModel *model = nil;
     if (isOrder) {
         if (_orderDataArray.count == 0) {
             return;
         }
-        
-        PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-        if (model.productModel == nil) {
-            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-            [self.navigationController pushViewController:detailsVC animated:YES];
-        } else{
-            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-                [self.navigationController pushViewController:detailsVC animated:YES];
-            } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
-            }
-        }
+        model = [_orderDataArray objectAtIndex:indexPath.row];
+
     } else {
         if (_dataArray.count == 0) {
             return;
         }
         
-        PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
-        
-        if (model.productModel == nil) {
-         
-            MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-            [self.navigationController pushViewController:detailsVC animated:YES];
-        } else{
-            if ([[model.productModel objectForKey:@"is_single_spec"] boolValue] == YES) {
-                MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-                [self.navigationController pushViewController:detailsVC animated:YES];
-                
-                
-            } else {
-                MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[model.productModel objectForKey:@"id"] isChild:self.isChildClothing];
-                [self.navigationController pushViewController:collectionVC animated:YES];
-            }
-        }
+        model = [_dataArray objectAtIndex:indexPath.row];
     }
+    
+    _childDic = model.mj_keyValues;
+    [_childDic setValue:model.web_url forKey:@"web_url"];
+    [_childDic setValue:@"ProductDetail" forKey:@"type_title"];
+    
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.webDiction = _childDic;
+    webView.isShowNavBar =false;
+    webView.isShowRightShareBtn=false;
+    [self.navigationController pushViewController:webView animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

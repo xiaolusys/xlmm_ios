@@ -21,8 +21,14 @@
 
 
 @property (nonatomic, strong) NSMutableArray *canUsedArray;
+/**
+ *  失效的优惠券
+ */
 @property (nonatomic, strong) NSMutableArray *expiredArray;
 @property (nonatomic, strong) NSMutableArray *usedArray;
+/**
+ *  无效的用户优惠券
+ */
 @property (nonatomic, strong) NSMutableArray *disableUsedArray;
 
 
@@ -454,6 +460,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 
 - (IBAction)buyongClicked:(id)sender {
     NSLog(@"quxiao ");
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         NSLog(@"取消优惠券");
         [self.delegate updateYouhuiquanWithmodel:nil];

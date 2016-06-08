@@ -17,11 +17,17 @@
 #import "HomeViewController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
-
+#import "TuihuoViewController.h"
+#import "ProductSelectionListViewController.h"
+#import "CartViewController.h"
+#import "WebViewController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
+    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    
     if (target_url == nil) {
         NSLog(@"target_url null");
         return;
@@ -68,7 +74,40 @@
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
+        //跳转到退款退货列表
+        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        [vc.navigationController pushViewController:tuihuoVC animated:YES];
+        
+    }
+    else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_choice"]) {
+        //跳转到选品上架
+        ProductSelectionListViewController *mamachoiceVC = [[ProductSelectionListViewController alloc] init];
+        [vc.navigationController pushViewController:mamachoiceVC animated:YES];
+        
     }else {
+        
+    }
+    
+    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+        //跳转到shopping cart
+//        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//        [vc.navigationController pushViewController:cartVC animated:YES];
+        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        
+        if (login == NO) {
+            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+            [vc.navigationController pushViewController:enterVC animated:YES];
+            return;
+        }else {
+            
+            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+            [vc.navigationController pushViewController:cartVC animated:YES];
+        }
+
+    }
+
+    else if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         
         NSString *parameter = [components lastObject];
@@ -77,19 +116,28 @@
         if ([firstparam isEqualToString:@"model_id"]) {
             //跳到集合页面
             NSLog(@"model_id = %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
-            MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil modelID:[params lastObject] isChild:NO];
-            
-            [vc.navigationController pushViewController:collectionVC animated:YES];
-            
-            
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            webView.isShowNavBar =false;
+            webView.isShowRightShareBtn=false;
+            [vc.navigationController pushViewController:webView animated:YES];
             
         } else if ([firstparam isEqualToString:@"product_id"]){
             //跳到商品详情
             NSLog(@"product_id = %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
-            MMDetailsViewController *details = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:[params lastObject] isChild:NO];
-            [vc.navigationController pushViewController:details animated:YES];
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            webView.isShowNavBar =false;
+            webView.isShowRightShareBtn=false;
+            [vc.navigationController pushViewController:webView animated:YES];
             
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
@@ -98,13 +146,50 @@
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v1/trades/%@/details", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
-        } else {
-            NSLog(@"跳到H5首页");
+        } else if ([firstparam isEqualToString:@"is_native"]){
+            NSLog(@"跳到H5首页 url= %@", [params lastObject]);
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            webView.isShowNavBar =true;
+            webView.isShowRightShareBtn=true;
+            [vc.navigationController pushViewController:webView animated:YES];
+        } else if([firstparam isEqualToString:@"activity_id"]){
+
+            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:@"active" forKey:@"type_title"];
+            
+            NSArray *id_params = [params[1] componentsSeparatedByString:@"&"];
+            NSString *id_param = [id_params firstObject];
+            [web_dic setValue:id_param forKey:@"activity_id"];
+            NSLog(@"跳到activity_id id=%@ url= %@", id_param, [params lastObject]);
+            
+            WebViewController *webView = [[WebViewController alloc] init];
+            webView.webDiction = web_dic;
+            webView.isShowNavBar =true;
+            webView.isShowRightShareBtn=true;
+            [vc.navigationController pushViewController:webView animated:YES];
         }
+        
     }
     
 }
 @end
-
+/**
+ *  if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+ if (login == NO) {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ 
+ [vc.navigationController pushViewController:enterVC animated:YES];
+ return;
+ }else {
+ CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+ 
+ [vc.navigationController pushViewController:cartVC animated:YES];
+ }
+ }else
+ */

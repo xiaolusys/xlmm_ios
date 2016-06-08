@@ -26,9 +26,17 @@
 #import "SVProgressHUD.h"
 #import "PersonOrderViewController.h"
 #import "AFNetworking.h"
+#import "MJExtension.h"
+#import "GoodsInfoModel.h"
+#import "JMShareView.h"
+#import "JMPopView.h"
+#import "JMOrderPayView.h"
+#import "UIView+RGSize.h"
+#import "JMChoiseLogisController.h"
+#import "JMPopLogistcsModel.h"
 
 //购物车支付界面
-@interface PurchaseViewController1 ()<YouhuiquanDelegate, UIAlertViewDelegate>{
+@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate>{
     AddressModel *addressModel;//默认收货地址
     NSString *payMethod; //支付方式
     NSString *uuid;      //uuid
@@ -65,6 +73,8 @@
 
 }
 
+@property (nonatomic,strong) BuyCartsView *cartOwner;
+
 @property (nonatomic, strong)NSMutableArray *MutCatrsArray;     //购物车数组
 @property (weak, nonatomic) IBOutlet UIImageView *zhifubaoImageView;//选中图片
 @property (weak, nonatomic) IBOutlet UIImageView *wxImageView;      //未选中图片
@@ -80,10 +90,18 @@
 @property (nonatomic, strong)NSDictionary *xlWallet;
 @property (nonatomic, strong)NSDictionary *couponInfo;
 
+@property (nonatomic,strong) JMOrderPayView *payView;
+/**
+ *  判断优惠券是否可用
+ */
 @property (nonatomic, assign)BOOL isCanCoupon;
 
-
+/**
+ *  优惠券是否满足条件
+ */
 @property (nonatomic, assign)BOOL isEnoughCoupon;
+
+
 @property (nonatomic, assign)BOOL isEnoughRight;
 @property (nonatomic, assign)BOOL isEnoughBudget;
 
@@ -92,56 +110,52 @@
 @property (nonatomic, assign)BOOL isInstallWX;
 @property (nonatomic, assign)BOOL isAgreeTerms;
 
+/**
+ *  获取商品购买商品ID
+ */
+@property (nonatomic ,strong) NSMutableString *paramstring;
+/**
+ *  优惠券信息
+ */
+@property (nonatomic,copy) NSString *couponMessage;
+
+@property (nonatomic,strong) UIView *maskView;
+
+@property (nonatomic,strong) JMChoiseLogisController *showViewVC;
+/**
+ *  物流信息Model
+ */
+@property (nonatomic,strong) JMPopLogistcsModel *logisticsModel;
+/**
+ *  物流信息的数据源
+ */
+@property (nonatomic,strong) NSMutableArray *dataSource;
+
 @end
 
 
-@implementation PurchaseViewController1
+@implementation PurchaseViewController1 {
+    NSString *_appYouhui;
+    NSString *_addressID;
+    NSString *_orderID;
+    
+    NSMutableDictionary *_logisticsDic;
+}
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    
-    //添加键盘的监听事件
-    
-    //注册通知,监听键盘弹出事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    
-    //注册通知,监听键盘消失事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
-    
-    if ([WXApi isWXAppInstalled]) {
-      //  NSLog(@"安装了微信");
-        self.isInstallWX = YES;
+- (NSMutableArray *)dataSource {
+    if (_dataSource == nil) {
+        _dataSource = [NSMutableArray array];
     }
-    else{
-        self.isInstallWX = NO;
+    return _dataSource;
+}
+
+- (JMPopLogistcsModel *)logisticsModel {
+    if (_logisticsModel == nil) {
+        _logisticsModel = [[JMPopLogistcsModel alloc] init];
     }
+    return _logisticsModel;
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-    
-}
-
-- (void)popview{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)paySuccessful{
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alterView show];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-
-}
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -186,15 +200,33 @@
         self.couponLabel.hidden = YES;
     }
     
-    [self initMsgTextField];
+//    [self initMsgTextField];
+    //can not editable
+    self.tfMsg.userInteractionEnabled = NO;
     
     [self downloadAddressData];
 
+    [self initView];
     
+    [self.choiseButton addTarget:self action:@selector(choiseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
 }
+- (void)initView {
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
+    
+    JMOrderPayView *payView = [[JMOrderPayView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 180, SCREENWIDTH, 180)];
+    self.payView = payView;
+    self.payView.delegate = self;
+    self.payView.width = SCREENWIDTH;
+    
 
-//首次进来请求数据
+    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
+    self.showViewVC = showViewVC;
+}
+#pragma mark ------ 创建一个请求
 - (void)downloadCartsData{
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
     if (self.cartsArray.count == 0) {
@@ -204,37 +236,42 @@
     for (NewCartsModel *model in self.cartsArray) {
         NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
         [paramstring appendString:str];
+        
+        
     }
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@", Root_URL,paramstring];
-//    NSLog(@"------cartsURLString = %@", urlString);
-    
-   
+    self.paramstring = paramstring;
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
     //下载购物车支付界面数据
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] ];
-        
         if (data == nil) {
-         //   NSLog(@"下载失败");
         }
         [self performSelectorOnMainThread:@selector(fetchedCartsData2:) withObject:data waitUntilDone:YES];
     });
 }
 
-//首次数据请求
+#pragma mark ---- 首次数据请求
 - (void)fetchedCartsData2:(NSData *)responseData{
     NSError *error = nil;
     if (responseData == nil) {
-        NSLog(@"无数据");
         return;
     }
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     if (error != nil) {
-        NSLog(@"解析失败");
     }
-//    NSLog(@"-----------------%@", dic);
+    /**
+     *  物流信息Model
+     */
+    NSArray *logist = dic[@"logistics_companys"];
+    NSMutableArray *dataSourceArr = [[NSMutableArray alloc] init];
+    for (NSDictionary *dicts in logist) {
+        JMPopLogistcsModel *logisticsModel = [JMPopLogistcsModel mj_objectWithKeyValues:dicts];
+        [dataSourceArr addObject:logisticsModel];
+    }
+    [self.dataSource addObjectsFromArray:dataSourceArr];
     
     NSArray *array = [dic objectForKey:@"cart_list"];
     coupon_message = [dic objectForKey:@"coupon_message"];
@@ -245,6 +282,8 @@
     
     totalPayment = [[dic objectForKey:@"total_payment"] floatValue];
     discountfee = [[dic objectForKey:@"discount_fee"] floatValue];
+    //订单ID
+    _orderID = dic[@"cart_ids"];
     for (NSDictionary *dicExtras in pay_extras) {
         //优惠券
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 2) {
@@ -270,6 +309,7 @@
             }
             rightAmount = [[dicExtras objectForKey:@"value"] floatValue];
             self.zhifulijianLabel.text = [NSString stringWithFormat:@"APP支付立减%@元哦", dicExtras[@"value"]];
+            _appYouhui = dicExtras[@"value"];
             continue;
         }
         //余额
@@ -291,13 +331,16 @@
             
         }
     }
-
+    _logisticsDic = logist[0];
+    NSString *name = _logisticsDic[@"name"];
+    self.choiseLabel.text = name;
     
     uuid = [dic objectForKey:@"uuid"];
     cartIDs = [dic objectForKey:@"cart_ids"];
     totalfee = [[dic objectForKey:@"total_fee"] floatValue];
     postfee = [[dic objectForKey:@"post_fee"] floatValue];
-    
+    self.logisticsMoney.text = [NSString stringWithFormat:@"- ¥%@",_appYouhui];
+    self.postFreeL.text = [NSString stringWithFormat:@"%.f",postfee];
     [self calculationLabelValue];
     
 //    //合计
@@ -387,7 +430,7 @@
         cartOwner.myImageView.layer.cornerRadius = 5;
         cartOwner.myImageView.layer.borderWidth = 0.5;
         cartOwner.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
-        
+        self.cartOwner = cartOwner;
         
         [self.detailsView addSubview:cartOwner.view];
         
@@ -416,7 +459,7 @@
         NSLog(@"下载失败");
         return;
     }
-    if (addressArray.count == 0) {
+    if ((addressArray == nil) || (addressArray.count == 0)) {
         self.peopleLabel.text = @"";
         self.addressLabel.text = @"";
         self.addressZeroLabel.hidden = NO;
@@ -436,6 +479,9 @@
     addressModel.addressID = [dic objectForKey:@"id"];                //地址id
     self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", addressModel.buyerName, addressModel.phoneNumber];
     self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",addressModel.provinceName, addressModel.cityName, addressModel.countyName, addressModel.streetName];
+    //用户地址ID
+    _addressID = dic[@"id"];
+    
 }
 
 - (void)backButtonClicked:(UIButton *)button{
@@ -480,117 +526,86 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+#pragma mark ------ 选择优惠券回调过来的代理方法
 - (void)updateYouhuiquanWithmodel:(YHQModel *)model{
     //优惠券一定可以使用
     yhqModel = model;
     
     couponValue = [yhqModel.coupon_value floatValue];
-    
     if (model == nil) {
         self.couponLabel.hidden = YES;
         yhqModelID = @"";
         //未使用优惠券
         self.isUserCoupon = NO;
+        couponValue = 0;
         [self calculationLabelValue];
+        
     } else {
-        self.isUserCoupon = YES;
         
-        self.couponLabel.text = [NSString stringWithFormat:@"¥%@", model.coupon_value];
-        self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
-        self.couponLabel.hidden = NO;
-        yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
-        //使用优惠券后
-        if (yhqModel && yhqModel.coupon_value) {
-            CGFloat couponV = [yhqModel.coupon_value floatValue];
-            NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
-            NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];
+        [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            //            NSDictionary *dict = [[NSDictionary alloc] init];
+            //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             
-            CGFloat aftertotalPayment = 0.00;
-            CGFloat afterdiscountfee = 0.00;
-            
-            if ([totalNS compare:couponNS] == NSOrderedDescending) {
-                aftertotalPayment = totalPayment - couponV;
-                afterdiscountfee = discountfee + couponV;
-                self.isEnoughCoupon = NO;
+            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
+            self.couponMessage = goodsModel.coupon_message;
+            if (self.couponMessage.length == 0) {
+                //goodsModel.coupon_message 为空的时候表示优惠券可以使用
+                //            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
+
+                self.isUserCoupon = YES;
+                self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
+                self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
+                self.couponLabel.hidden = NO;
+                yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+                [self calculationLabelValue];
+                
             }else {
-                aftertotalPayment = 0.00;
-                afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
-                self.isEnoughCoupon = YES;
+                //优惠券不满足条件  提示警告信息
+                [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
+                self.couponLabel.text = @"";
+                self.isUserCoupon = NO;
+                couponValue = 0;
+                [self calculationLabelValue];
             }
             
-            [self calculationLabelValue];
-//            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
-//            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
-//            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            //更新小鹿钱包提示信息。。。。。
-            // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
-            // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
-            
-        }
-
+        }];
     }
 }
-
+#pragma mark --- 选择物流按钮
+- (void)choiseButtonClick:(UIButton *)btn {
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    self.showViewVC.dataSource = self.dataSource;
+    NSInteger count = self.dataSource.count;
+    self.showViewVC.count = count;
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMChoiseLogisController alloc] init];
+    }
+    self.showViewVC.delegate = self;
+    menu.contentView = self.showViewVC.view;
+    
+}
+- (void)coverDidClickCover:(JMShareView *)cover {
+    //隐藏pop菜单
+    [JMPopView hide];
+}
+- (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
+    self.choiseLabel.text = model.name;
+    _logisticsDic = [NSMutableDictionary dictionary];
+    _logisticsDic = model.mj_keyValues;
+}
 - (IBAction)zhifubaoClicked:(id)sender {
-    
-//    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
-//    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
-//    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
-    
-    if (self.isEnoughBudget && self.isUseXLW) {
-        //支付宝可选可不选
-        self.alipayButton.selected = !self.alipayButton.selected;
-        
-        if (self.alipayButton.selected) {
-            self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-            self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-            self.wxButton.selected = NO;
-            payMethod = @"alipay";
-        }else {
-            self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-            payMethod = nil;
-        }
-    }else {
-        payMethod = @"alipay";
-        self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-        self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-    }
-}
 
+}
 
 - (IBAction)weixinZhifuClicked:(id)sender {
-    
-//    NSNumber *waitPay =[NSNumber numberWithFloat:totalPayment];
-//    NSNumber *avaiPay =[NSNumber numberWithFloat:self.availableFloat];
-//    NSLog(@"======wait======%@, %@",  avaiPay, waitPay);
-    //NSOrderedAscending = -1L, NSOrderedSame, NSOrderedDescending
-    
-    if (!self.isInstallWX) {
-        [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
-        return;
-    }
-    
-    if (self.isEnoughBudget && self.isUseXLW) {
-        //微信可选可不选
-        self.wxButton.selected = !self.wxButton.selected;
-        
-        if (self.wxButton.selected) {
-            self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-            self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-            self.alipayButton.selected = NO;
-            payMethod = @"wx";
-        }else {
-            self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-            payMethod = nil;
-        }
-    }else {
-        payMethod = @"wx";
-        self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
-        self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
-    }
 
 }
 - (IBAction)xiaoluqianbaoSelected:(id)sender {
@@ -612,46 +627,90 @@
     }
     
 }
+#pragma mark  结算按钮点击事件
 - (IBAction)buyClicked:(id)sender {
-    //检查地址
+    if (self.isUseXLW) {  // 如果选中了小鹿钱包就直接支付  否则就弹出框
+        /**  "pay_extras" =     (
+         {
+         name = "\U4f18\U60e0\U5238";
+         pid = 2;
+         type = 0;
+         "use_coupon_allowed" = 1;
+         value = 2;
+         },
+         {
+         name = "APP\U652f\U4ed8\U51cf2\U5143";
+         pid = 1;
+         type = 0;
+         value = 2;
+         },
+         {
+         channel = budget;
+         name = "\U4f59\U989d\U652f\U4ed8";
+         pid = 3;
+         type = 1;
+         "use_budget_allowed" = 1;
+         value = "285.15";
+         }
+         *  如果小鹿钱包的钱小于总价格 弹出支付视图
+         */
+        /**
+         *  余额不足
+         */
+        if (self.isEnoughBudget == NO) {
+            [self createPayPopView];
+        }else {
+            [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+            [self payMoney];
+        }
+        
+    }else {
+        [self createPayPopView];
+    }
+
+}
+#pragma mark -- 支付
+- (void)payMoney {
+    
+
     if (addressModel.addressID == nil) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请填写收货地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
-
+    
     //检查支付方式
     
-//    pid:1:value:2
+    //    pid:1:value:2
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",self.rightReduce[@"pid"],self.rightReduce[@"value"]];
-//    NSString *parms = nil;
+    //    NSString *parms = nil;
     
     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
     
-    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
-    {
-        dict = [NSString stringWithFormat:@"%@&buyer_message=%@", dict, [self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-    }
-
+    //    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
+    //    {
+    //        dict = [NSString stringWithFormat:@"%@&buyer_message=%@", dict, [self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+    //    }
     
-
-//    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
+    
+    
+    //    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
     //是否使用了优惠券
     if (self.isUserCoupon && self.isEnoughCoupon) {
         //足够
         totalPayment = 0.00;
-        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+        discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
         
         //拼提交信息
-        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
+        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, couponValue];
         dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",dict,discount,[NSNumber numberWithFloat:totalPayment], @"budget", parms];
         //提交
         [self submitBuyGoods];
     }else {
         if (self.isUserCoupon) {
             //使用不足
-            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, [yhqModel.coupon_value floatValue]];
-            discountfee = discountfee + [yhqModel.coupon_value floatValue];
+            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, couponValue];
+            discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
         }else{
             
             //未使用
@@ -662,9 +721,9 @@
         }
         
         //不足需要使用小鹿钱包或者其它支付方式
-        totalPayment = totalPayment - [yhqModel.coupon_value floatValue];
-//        discountfee = discountfee + [yhqModel.coupon_value floatValue];
-        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + [yhqModel.coupon_value floatValue]) || totalPayment == (self.availableFloat + [yhqModel.coupon_value floatValue]))) {
+        totalPayment = totalPayment - couponValue;//[yhqModel.coupon_value floatValue];
+        //        discountfee = discountfee + [yhqModel.coupon_value floatValue];
+        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + couponValue) || totalPayment == (self.availableFloat + couponValue))) {
             //使用了小鹿钱包 足够提交信息
             CGFloat value = [[self.xlWallet objectForKey:@"value"] floatValue];
             if (totalPayment > value) {
@@ -702,9 +761,8 @@
             //提交
             [self submitBuyGoods];
         }
-
+        
     }
-    
     
 }
 
@@ -742,8 +800,24 @@
 
 - (void)submitBuyGoods {
     
-   NSMutableDictionary *dic = [self stringChangeDictionary:dict];
+    NSMutableString *dicStr = [NSMutableString stringWithFormat:@"%@",dict];
+    [dicStr appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsDic[@"id"]],nil];
     
+    NSMutableDictionary *dic = [self stringChangeDictionary:dicStr];
+    /**
+     *  {
+     "addr_id" = 1;
+     "cart_ids" = 423169;
+     channel = wx;
+     "discount_fee" = "0.01";
+     "logistics_company_id" = "";
+     "pay_extras" = "pid:1:value:2";
+     payment = "0.00";
+     "post_fee" = "0.0";
+     "total_fee" = "0.0";
+     uuid = xd16060757568c3b1b421;
+     }
+     */
     NSString *postPay = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create", Root_URL];
 
     PurchaseViewController1 * __weak weakSelf = self;
@@ -755,18 +829,22 @@
         return;
     }
 
-
+    NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
+                /**
+                 *  在这里判断满多少可以使用  -- 这里是点击提交订单按钮判断
+                 */
+//                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
                 [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
             });
             return;
-        }if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
+        }
+        if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
@@ -792,6 +870,7 @@
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            NSLog(@"%@",error);
                         }
                         [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
                     }
@@ -799,15 +878,18 @@
                 }];
             });
         }
+        [SVProgressHUD dismiss];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"shoppingcart_create error %@", error);
+        [SVProgressHUD dismiss];
     }];
     
  }
 
 - (void)returnCart {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)returnOrderList {
@@ -816,22 +898,13 @@
     [self.navigationController pushViewController:order animated:YES];
 }
 
-//- (void)showXiaoluQianbaoView{
-//    
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:mamaqianbaoInfo delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//    alertView.tag = 666;
-//    
-//    [alertView show];
-//    
-//}
-
 - (void)showAlertView{
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errorCharge delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
     
 }
-
+#pragma mark ------ 警告框协议方法
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //[self.navigationController popViewControllerAnimated:YES];
     
@@ -842,6 +915,17 @@
     } else if (alertView.tag == 666){
         [self.navigationController popToRootViewControllerAnimated:YES];
         return;
+    }else if (alertView.tag == 888) {
+        
+        if (buttonIndex == 0) {
+            [alertView setHidden:YES];
+            [self hidePickerView];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }else {
+            //继续支付
+            [alertView setHidden:YES];
+        }
     }
     
     [self downloadCartsData];
@@ -857,7 +941,7 @@
     self.peopleLabel.text = [NSString stringWithFormat:@"%@ %@", model.buyerName, model.phoneNumber];
     self.addressLabel.text = [NSString stringWithFormat:@"%@-%@-%@-%@",model.provinceName, model.cityName, model.countyName, model.streetName];
 }
-
+#pragma mark ----- 计算最终需要付款的金额展示
 - (void)calculationLabelValue {
     discount = couponValue + rightAmount;
     if (discount - amontPayment > 0.000001) {
@@ -869,6 +953,7 @@
         self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", amontPayment];
         //应付
         self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+        self.goodsPayment.text = self.allPayLabel.text;
         //小鹿钱包
         self.availableLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
     }else {
@@ -882,6 +967,7 @@
                 self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
                 //应付
                 self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
+                self.goodsPayment.text = self.allPayLabel.text;
                 //小鹿钱包
                 self.availableLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
@@ -891,6 +977,7 @@
                 self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
                 //应付
                 self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", amontPayment - couponValue - rightAmount - canUseWallet];
+                self.goodsPayment.text = self.allPayLabel.text;
                 //小鹿钱包
                 self.availableLabel.text = [NSString stringWithFormat:@"%.2f", canUseWallet];
             }
@@ -909,9 +996,99 @@
             self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.2f", discount];
             //应付
             self.allPayLabel.text = [NSString stringWithFormat:@"¥%.2f", amontPayment  - discount];
+            self.goodsPayment.text = self.allPayLabel.text;
         }
     }
+    self.payView.payMent = self.goodsPayment.text;
+
 }
+#pragma mark ----  支付弹出框 点击去结算按钮的时候弹出
+- (void)createPayPopView {
+    
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.payView];
+    self.maskView.alpha = 0;
+    self.payView.top = self.view.height - 150;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.maskView.alpha = 0.3;
+        self.payView.bottom = self.view.height;
+    }];
+    
+}
+/**
+ *  隐藏
+ */
+- (void)hidePickerView {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.maskView.alpha = 0;
+        self.payView.top = self.view.height;
+    } completion:^(BOOL finished) {
+        [self.maskView removeFromSuperview];
+        [self.payView removeFromSuperview];
+    }];
+}
+
+- (void)composePayButton:(JMOrderPayView *)payButton didClick:(NSInteger)index {
+    if (index == 100) { // 点击了返回按钮 -- 弹出框  选择放弃或者继续支付
+        
+        [self payBackAlter];
+        
+    }else if (index == 101) { //点击了微信支付
+        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        
+        
+        if (!self.isInstallWX) {
+            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+            return;
+        }
+        
+        if (self.isEnoughBudget && self.isUseXLW) {
+            //微信可选可不选
+            self.wxButton.selected = !self.wxButton.selected;
+            
+            if (self.wxButton.selected) {
+                self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+                self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+                self.alipayButton.selected = NO;
+                payMethod = @"wx";
+            }else {
+                self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+                payMethod = nil;
+            }
+        }else {
+            payMethod = @"wx";
+            self.wxImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        }
+        [self hidePickerView];
+        [self payMoney];
+        
+    }else if (index == 102) { //点击了支付宝支付
+        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        if (self.isEnoughBudget && self.isUseXLW) {
+            //支付宝可选可不选
+            self.alipayButton.selected = !self.alipayButton.selected;
+            
+            if (self.alipayButton.selected) {
+                self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+                self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+                self.wxButton.selected = NO;
+                payMethod = @"alipay";
+            }else {
+                self.zhifubaoImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+                payMethod = nil;
+            }
+        }else {
+            payMethod = @"alipay";
+            self.zhifubaoImageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.wxImageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+        }
+        [self hidePickerView];
+        [self payMoney];
+    }else {
+    }
+}
+
 
 
 #pragma mark --留言处理
@@ -968,7 +1145,6 @@
     [UIView commitAnimations];
     
 }
-
 //键盘消失时
 -(void)keyboardDidHidden
 {
@@ -984,5 +1160,112 @@
     [self.tfMsg resignFirstResponder];
 
 }
+#pragma mark ---- 视图生命周期处理事件
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
+    
+    //添加键盘的监听事件
+    
+    //注册通知,监听键盘弹出事件
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    //
+    //    //注册通知,监听键盘消失事件
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+    
+    if ([WXApi isWXAppInstalled]) {
+        //  NSLog(@"安装了微信");
+        self.isInstallWX = YES;
+    }
+    else{
+        self.isInstallWX = NO;
+    }
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    
+        
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    
+}
+- (void)isApinPayGo {
+    [self.navigationController popViewControllerAnimated:YES];
 
+}
+#pragma mark --- 支付成功的弹出框
+- (void)paySuccessful{
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alterView show];
+    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    
+}
+#pragma mark ---- 点击返回按钮 弹出警告框 --> 选择放弃或者继续
+- (void)payBackAlter {
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"限时好货不等人,机不可失哦" delegate:self cancelButtonTitle:@"放弃订单" otherButtonTitles:@"继续支付", nil];
+    alterView.tag = 888;
+    [alterView show];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)popview{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
+/**
+ *  ====== 上一个版本判断优惠券的方式  这个版本判断优惠券的方式为发送一个数据 在服务端判断
+ 
+ //            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
+ //            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
+ //            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
+ 
+ //更新小鹿钱包提示信息。。。。。
+ // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
+ // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
+ 
+ 
+ 
+ //使用优惠券后
+ if (yhqModel && yhqModel.coupon_value) {
+ CGFloat couponV = [yhqModel.coupon_value floatValue];
+ NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
+ NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];   //最终需要支付的金额
+ 
+ CGFloat aftertotalPayment = 0.00;
+ CGFloat afterdiscountfee = 0.00;
+ 
+ if ([totalNS compare:couponNS] == NSOrderedDescending) {
+ aftertotalPayment = totalPayment - couponV;
+ afterdiscountfee = discountfee + couponV;
+ self.isEnoughCoupon = NO;
+ NSString *str = model.use_fee_des;
+ CGFloat canPay = [[str substringWithRange:NSMakeRange(1, str.length - 3)] floatValue];
+ 
+
+ *  在这里判断是否可用    判断商品总价格  totalFeeLabel
+ maxPay  商品总金额 == 商品总金额减去APP支付立减  +  APP支付立减的金额
+
+CGFloat maxPay = totalPayment + discountfee;
+if (maxPay >= canPay) {
+    aftertotalPayment = 0.00;
+    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+    self.isEnoughCoupon = YES;
+}else {
+    [SVProgressHUD showInfoWithStatus:model.use_fee_des];
+    self.couponLabel.text = @"";
+}
+
+}else {
+    aftertotalPayment = 0.00;
+    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
+    self.isEnoughCoupon = YES;
+    
+}
+
+
+ */

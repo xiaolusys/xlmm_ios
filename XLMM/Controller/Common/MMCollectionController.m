@@ -7,7 +7,7 @@
 //
 
 #import "MMCollectionController.h"
-#import "CollectionModel.h"
+#import "BrandGoodsModel.h"
 #import "MMClass.h"
 #import "PeopleCollectionCell.h"
 #import "MMDetailsViewController.h"
@@ -18,11 +18,9 @@
 #import "MMLoadingAnimation.h"
 #import "UIViewController+NavigationBar.h"
 
-
-
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong)NSMutableArray *dataArray;
+
 @property (nonatomic, strong)UICollectionView *collectionView;
 
 @property (nonatomic, assign)NSInteger count;
@@ -32,27 +30,26 @@
     NSTimer *theTimer;
     UILabel *titleLabel;
     NSString *offSheltTime;
-    CGFloat ratio;
-    BOOL _isFirst;
+
     
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil modelID:(NSString *)modelID isChild:(BOOL)isChild{
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/products/modellist/%@.json", Root_URL, modelID];
-        self.urlString = string;
-        _childClothing = isChild;
-        [self downLoadWithURLString:string andSelector:@selector(fetchedCollectionData:)];
+    NSLog(@"MMCollectionController initWithNibName1");
 
-    }
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+}
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -62,19 +59,17 @@
 }
 
 - (void)dealloc{
-    if ([theTimer isValid]) {
-        [theTimer invalidate];
-    }
+
 }
 
 - (void)viewDidLoad {
+    NSLog(@"MMCollectionController viewDidLoad");
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"商品集合";
+    self.title = @"品牌商品";
     //self.view.backgroundColor = [UIColor redColor];
-    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-    ratio = 0.0;
-    _isFirst = YES;
+//    self.dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+
     [self createCollectionView];
     [self createInfo];
 }
@@ -82,7 +77,7 @@
 - (void)createInfo{
     
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    titleLabel.text = @"";
+    titleLabel.text = @"品牌商品";
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:15];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -103,62 +98,47 @@
 
 - (void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 8, 5);
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.showsVerticalScrollIndicator = NO;
-    [self.collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
-    [self.view addSubview:[[UIView alloc] init]];
-    self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
-    [self.view addSubview:self.collectionView];
+    flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
+    flowLayout.minimumInteritemSpacing = 5;
+    flowLayout.minimumLineSpacing = 5;
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
+//    self.collectionView.backgroundColor = [UIColor whiteColor];
+    collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
+
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.showsVerticalScrollIndicator = FALSE;
+    [collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
+//    [self.view addSubview:[[UIView alloc] init]];
+
+    [self.view addSubview:collectionView];
+    self.collectionView  = collectionView;
+    
+    NSLog(@"Brand COUNT is %lu", (unsigned long)self.dataArray.count);
+    [self.collectionView reloadData];
+
+    
+
 }
 
-- (void)fetchedCollectionData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSArray *collections = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-   // NSLog(@"collections = %@", collections);
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-    }
-    for (NSDictionary *dic in collections) {
-    CollectionModel *model = [[CollectionModel alloc] initWithDiction:dic];
-     [self.dataArray addObject:model];
-    }
-    
-    if(self.dataArray.count ==0) return;
-    CollectionModel *tempModel = (CollectionModel *)[self.dataArray objectAtIndex:0];
-    offSheltTime = tempModel.offShelfTime;
-    theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    [self timerFireMethod:theTimer];
-    
-    [self.collectionView reloadData];
-    
-    //[self performSelector:@selector(reload) withObject:nil afterDelay:0.3];
-    
-    
-    
-}
 
 - (void)reload{
     
-    if (ratio > 1) {
-        
-    } else {
+
         [self.collectionView reloadData];
-    }
+
 }
 
 - (void)timerFireMethod:(NSTimer*)theTimer
 {
-     CollectionModel *model = [self.dataArray objectAtIndex:0];
+    if((self.dataArray == nil) || (self.dataArray.count == 0))
+        return;
+    CollectionModel *model = [self.dataArray objectAtIndex:0];
     NSString *saleTime = model.saleTime;
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     formatter.dateFormat = @"YYYY-MM-dd";
+    if((saleTime == nil) || ([saleTime isEqualToString:@""]))
+       return;
     
     NSDate *toDate = [formatter dateFromString:saleTime];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -180,7 +160,7 @@
     
 
     NSDate *todate;
-    if ([offSheltTime class] == [NSNull class]) {
+    if ((offSheltTime == nil) || ([offSheltTime isEqualToString:@""])) {
        // NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
@@ -230,67 +210,36 @@
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    NSLog(@"MMCollectionController numberOfSectionsInCollectionView");
     return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    NSLog(@"MMCollectionController numberOfItemsInSection");
     return self.dataArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-//    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-//    
-//    NSString *string = [[model.picPath URLEncodedString] imageMoreCompression];
-//   // NSLog(@"imageUrl = %@", string);
-//    UIImage *image = [UIImage imagewithURLString:string];
-//    if (image != nil) {
-//     //   NSLog(@"image = %@", image);
-//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *image.size.height/image.size.width+ 60);
-//    } else {
-//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
-//
-//    }
-    
-    
-//    
-//    if (ratio == 0) {
-//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
-//        
-//    } else {
-//        return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *ratio+ 60);
-//    }
-//    
-    
-return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
+ 
+//    NSLog(@"MMCollectionController sizeForItemAtIndexPath");
+    return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 5;
-}
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 5;
-}
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
     
     
-    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    NSString *string = model.picPath;
+    BrandGoodsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *string = model.product_img;
     
     NSMutableString *newString = [NSMutableString stringWithString:string];
    
-    if (![model.watermark_op isEqualToString:@""]) {
-        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
-        
-    } else{
-        [newString appendString:@"?"];
-    }
-//    NSLog(@"%@",[[newString imageCompression] URLEncodedString]);
-//    
-//    NSLog(@"newString = %@", newString);
+
+    NSLog(@"MMCollectionController cellForItemAtIndexPath newString = %@", newString);
     cell.imageView.alpha = 0.0f;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
 
@@ -301,32 +250,32 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
         
         
     }] ;
-    cell.nameLabel.text = model.name;
+    cell.nameLabel.text = model.product_name;
 
     
-    if ([model.agentPrice integerValue] != [model.agentPrice floatValue]) {
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
+    if ([model.product_lowest_price integerValue] != [model.product_lowest_price floatValue]) {
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.product_lowest_price floatValue]];
     } else {
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.agentPrice];
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.product_lowest_price];
     }
-    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.stdSalePrice floatValue]];
+    cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.product_std_sale_price floatValue]];
     cell.backView.layer.cornerRadius = 30;
     
-    if ([model.isSaleopen boolValue]) {
-        
-        if ([model.isSaleout boolValue]) {
-            cell.backView.hidden = NO;
-        } else{
-            cell.backView.hidden = YES;
-        }
-    } else{
-        cell.backView.hidden = NO;
-        if([model.isNewgood boolValue]){
-            UILabel *label = [cell.backView viewWithTag:100];
-            label.text = @"即将开售";
-        }
-
-    }
+//    if ([model.isSaleopen boolValue]) {
+//        
+//        if ([model.isSaleout boolValue]) {
+//            cell.backView.hidden = NO;
+//        } else{
+//            cell.backView.hidden = YES;
+//        }
+//    } else{
+//        cell.backView.hidden = NO;
+//        if([model.isNewgood boolValue]){
+//            UILabel *label = [cell.backView viewWithTag:100];
+//            label.text = @"即将开售";
+//        }
+//
+//    }
     return cell;
 
 }
@@ -334,16 +283,15 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    BrandGoodsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     
-    
-    //   http://m.xiaolu.so/rest/v1/products/15809
-    
-    CollectionModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    
-    
-    MMDetailsViewController *detailsVC = [[MMDetailsViewController alloc] initWithNibName:@"MMDetailsViewController" bundle:nil modelID:model.ID isChild:self.isChildClothing];
-  
-    [self.navigationController pushViewController:detailsVC animated:YES];
+//    WebViewController *webView = [[WebViewController alloc] init];
+//    webView.eventLink = model.web_url;
+//    webView.goodsID = model.ID;
+//    webView.diction = model.productModel;
+//
+//    [self.navigationController pushViewController:webView animated:YES];
+
 }
 
 
@@ -353,14 +301,18 @@ return CGSizeMake((SCREENWIDTH-15)/2, (SCREENWIDTH-15)/2 *8/6+ 60);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+

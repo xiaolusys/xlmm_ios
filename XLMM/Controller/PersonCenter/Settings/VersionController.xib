@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VersionController">
             <connections>
+                <outlet property="imgDeer" destination="HEd-dA-07g" id="uH0-f9-k24"/>
                 <outlet property="versionLabel" destination="gYw-n2-Oec" id="YBi-IK-Il4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

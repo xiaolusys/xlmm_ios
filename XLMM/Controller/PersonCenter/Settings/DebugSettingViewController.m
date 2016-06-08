@@ -12,6 +12,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MiPushSDK.h"
+#import "SVProgressHUD.h"
 
 //动画时间
 #define kAnimationDuration 0.2
@@ -142,7 +143,7 @@
     
 
     
-    self.tvip= [[UITextView alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 20, self.view.frame.size.width, 30)];
+    self.tvip= [[UITextView alloc] initWithFrame:CGRectMake(0.f+10, _radioButtons1.frame.size.height + 20, self.view.frame.size.width-20, 30)];
     self.tvip.text = @"输入ip地址端口号，如192.168.1.11:9000";
     self.tvip.delegate = self;
     self.tvip.scrollEnabled = NO;
@@ -174,7 +175,7 @@
     [self.tvip setInputAccessoryView:topView];
     [_scrollView addSubview:self.tvip];
 
-    self.tvpwd= [[UITextView alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 60, self.view.frame.size.width, 30)];
+    self.tvpwd= [[UITextView alloc] initWithFrame:CGRectMake(0.f+10, _radioButtons1.frame.size.height + 60, self.view.frame.size.width - 20, 30)];
     self.tvpwd.text = @"输入密码";
     self.tvpwd.delegate = self;
     self.tvpwd.tag = 101;
@@ -182,7 +183,7 @@
 
     [_scrollView addSubview:self.tvpwd];
     
-    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(0.f, _radioButtons1.frame.size.height + 100, self.view.frame.size.width, 30)];
+    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(0.f+80, _radioButtons1.frame.size.height + 100, 160, 30)];
     [self.btn  setTitle:@"提交" forState:UIControlStateNormal];//设置button的title
     self.btn.backgroundColor = [UIColor orangeColor];//button的背景颜色
     [self.btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -272,8 +273,10 @@
     }
     
     pwd = self.tvpwd.text;
-    if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""])
+    if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""]){
+        [SVProgressHUD showErrorWithStatus:@"ip or password is empty"];
         return;
+    }
     
     [serverip stringByAppendingString:@"/rest/v1/users/open_debug_for_app"];
     NSDictionary *newDic = @{@"debug_secret":pwd};
@@ -292,15 +295,18 @@
 
             Root_URL = serverip;
             
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"switch to server %@", serverip]];
+            
             [self.navigationController popToRootViewControllerAnimated:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         }
         else{
             NSLog(@"debug check failed");
+            [SVProgressHUD showErrorWithStatus:@"debug check failed"];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [SVProgressHUD showErrorWithStatus:@"debug check failed"];
     }];
 
     

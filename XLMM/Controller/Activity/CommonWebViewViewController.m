@@ -16,6 +16,18 @@
 
 @implementation CommonWebViewViewController
 
+- (instancetype)initWithUrl:(NSString *)url title:(NSString *)titleName{
+    self = [super  init];
+    self.titleName = titleName;
+    if((url != nil) && (url.length > 0)){
+        self.loadLink = url;
+    }
+    else{
+        self.loadLink = @"";
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -29,7 +41,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self updateUserAgent];
+
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
     
@@ -41,7 +54,7 @@
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
-    [self updateUserAgent];
+    //[self updateUserAgent];
     
     
     
@@ -51,12 +64,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)updateUserAgent{
+    
+    NSLog(@"CommonWebViewViewController ---------- %s",__func__);
     //get the original user-agent of webview
     NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);

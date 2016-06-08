@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
 #import "FillWuliuController.h"
-
+#import "XlmmMall.h"
 #import "MMClass.h"
 
 
@@ -81,11 +81,11 @@
     [self.view addSubview:backView];
     
     //没有订单号显示填写退货地址
-    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
-        self.topToRefundHeight.constant = 0;
-    }
+//    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
+//        self.topToRefundHeight.constant = 0;
+//    }
     
-    NSLog(@"%@", self.model.return_address);
+    NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.model.status, self.model.good_status, self.model.return_address);
     
 }
 
@@ -113,7 +113,10 @@
     if (self.model.good_status == 0) {
         self.createdLabel.text = @"申请退款";
     }else{
-          self.createdLabel.text = @"申请退货";
+        self.createdLabel.text = @"申请退货";
+        if(self.model.status == REFUND_STATUS_SELLER_AGREED){
+            self.topToRefundHeight.constant = 0;
+        }
     }
   
     self.statusLabel.text = self.model.status_display;
@@ -169,18 +172,7 @@
     backView.hidden = NO;
     backView.alpha = 0.6;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
-    [infoView addGestureRecognizer:tap];
-    
-    NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/products/%ld", Root_URL, (long)self.model.item_id];
-//    NSLog(@"url = %@", urlstring);
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//    NSLog(@"json = %@", json);
-//    NSInteger wear_by = [[json objectForKey:@"ware_by"] integerValue];
-    
-//    NSLog(@"wear_by = %ld", (long)wear_by);
-    
+    [infoView addGestureRecognizer:tap];    
     
     UILabel *addressLabel = [infoView viewWithTag:500];
     UIButton *kefuButton = [infoView viewWithTag:800];

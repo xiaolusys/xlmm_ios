@@ -430,13 +430,28 @@ static NSString *cellIdentifier = @"carryLogCell";
     }
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30);
-    //计算金额
-    NSString *key = self.allkey[section];
-    NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
-    NSMutableArray *orderArr = dic[key];
-    CarryLogModel *carryM = [orderArr firstObject];
     
-    [headerV yearLabelAndTotalMoneyLabelText:carryM.date_field total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
+    CarryLogModel *carryM = nil;
+    if((self.allkey != nil) && (self.allkey.count > 0) && (section < self.allkey.count) && (self.tableViewDataArr != nil) && self.tableViewDataArr.count > 0){
+        //NSLog(@"self.allkey.count =%lu section =%lu",(unsigned long)self.allkey.count, (unsigned long)section);
+        //NSLog(@"self.tableViewDataArr.count =%lu currentindex=%lu", (unsigned long)self.tableViewDataArr.count ,self.currentIndex);
+        //计算金额
+        NSString *key = self.allkey[section];
+        NSMutableDictionary *dic = self.tableViewDataArr[self.currentIndex];
+        NSMutableArray *orderArr = nil;
+        if((dic != nil) && (dic.count > 0)){
+            //NSLog(@"dic.count =%lu key =%@",(unsigned long)dic.count, key);
+            orderArr = dic[key];
+            if((orderArr != nil) && (orderArr.count > 0)){
+                //NSLog(@"orderArr.count =%lu",(unsigned long)orderArr.count);
+                carryM = [orderArr firstObject];
+            }
+        }
+        
+    }
+    if(carryM != nil){
+        [headerV yearLabelAndTotalMoneyLabelText:carryM.date_field total:[NSString stringWithFormat:@"%.2f", [carryM.today_carry floatValue]]];
+    }
     return headerV;
 }
 

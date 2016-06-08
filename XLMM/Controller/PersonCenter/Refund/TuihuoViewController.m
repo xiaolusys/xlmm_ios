@@ -17,6 +17,7 @@
 #import "RefundDetailsViewController.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
+#import "MJRefresh.h"
 
 
 @interface TuihuoViewController ()
@@ -28,6 +29,7 @@
 @implementation TuihuoViewController{
     NSInteger downloadCount;
     NSInteger count;
+    NSDictionary *diciontary;
 }
 
 static NSString * const reuseIdentifier = @"tuihuoCell";
@@ -65,7 +67,40 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     [self createNavigationBarWithTitle:@"退款退货" selecotr:@selector(backBtnClicked:)];
 
     [self downlaodData];
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        [self loadMore];
+        
+    }];
+    footer.hidden = YES;
+    
+    self.collectionView.mj_footer = footer;
 
+}
+
+- (void)loadMore
+{
+    NSLog(@"loadmore");
+    NSString *urlString = [diciontary objectForKey:@"next"];
+    if ([urlString class] == [NSNull class]) {
+        NSLog(@"no more");
+        
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+        
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.collectionView.mj_footer endRefreshing];
+        if (!responseObject) return;
+        
+        [self fetchedRefundData:responseObject ];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.collectionView.mj_footer endRefreshing];
+        NSLog(@"%@获取数据失败",urlString);
+    }];
 }
 
 - (void)downlaodData{
@@ -73,12 +108,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
    // http://m.xiaolu.so/rest/v1/refunds
     NSString *urlstring = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSLog(@"url = %@", urlstring);
-//        
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlstring]];
-//        [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-//    });
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:urlstring parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -122,16 +151,15 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 - (void)fetchedRefundData:(NSDictionary *)data{
 
-    NSLog(@"11");
+    NSLog(@"fetchedRefundData");
     
     if (data == nil) {
         return;
     }
     
-//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSDictionary *json = data;
+    diciontary = data;
 //    NSLog(@"json = %@", json);
-    if ([[json objectForKey:@"count"] integerValue] == 0) {
+    if ([[diciontary objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的退货列表为空");
         [self displayDefaultView];
         return;
@@ -140,7 +168,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
   
 //    [self.dataArray removeAllObjects];
     
-    NSArray *array = [json objectForKey:@"results"];
+    NSArray *array = [diciontary objectForKey:@"results"];
     for (NSDictionary *dic in array) {
         TuihuoModel *model = [TuihuoModel new];
         model.ID = [[dic objectForKey:kID] integerValue];
@@ -181,8 +209,6 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
             model.proof_pic = @[];
         }
         
-        
-        
         for (__unused NSString *imageUrl in model.proof_pic) {
             NSLog(@"imageUrl = %@", imageUrl);
             
@@ -191,42 +217,9 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     
     }
     
-    
-    if ([[json objectForKey:@"next"] class] == [NSNull class]) {
-        // 下一页为空
-    } else {
-        // 下载下一页内容
-        
-        NSString *string = [json objectForKey:@"next"];
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            NSLog(@"url = %@", string);
-//            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-//            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:data waitUntilDone:YES];
-//            
-//            
-//        });
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            if (!responseObject) return;
-            
-            [self performSelectorOnMainThread:@selector(fetchedWaipayData:) withObject:responseObject waitUntilDone:YES];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
-        }];
-
-        
-    }
-    
 //    NSLog(@"dataArray = %@", self.dataArray);
-    
     [self.collectionView reloadData];
     
-    
-    
-    
-        
-        
 }
 
 

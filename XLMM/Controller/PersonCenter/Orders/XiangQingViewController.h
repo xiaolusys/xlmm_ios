@@ -20,12 +20,16 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *xiangqingScrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *screenWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *myViewHeight;
+/**
+ *  增加点击修改地址事件
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *addressInfoImage;
+
 @property (weak, nonatomic) IBOutlet UIView *myXiangQingView;
-@property (weak, nonatomic) IBOutlet UIView *WuliuView;
-@property (weak, nonatomic) IBOutlet UILabel *zhuangtaiLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *bianhaoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunfeiLabel;
@@ -33,10 +37,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *yingfuLabel;
 @property (weak, nonatomic) IBOutlet UIButton *quxiaoBtn;
 @property (weak, nonatomic) IBOutlet UIButton *buyBtn;
+
 - (IBAction)quxiaodingdan:(id)sender;
 - (IBAction)goumai:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *totalFeeLabel;
-@property (weak, nonatomic) IBOutlet UIView *yuanqiuView;
+
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong)DingdanModel *dingdanModel;
 @property (nonatomic, copy) NSString *createString;
@@ -44,6 +49,50 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
-@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
+
+/**
+ *  显示创建订单时间
+ */
+@property (weak, nonatomic) IBOutlet UILabel *orderTimerLabel;
+/**
+ *  计算商品详情展示视图的高度
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *goodsViewHeight;
+/**
+ *  选择物流公司
+ */
+@property (weak, nonatomic) IBOutlet UILabel *logisticsLabel;
+/**
+ *  点击修改物流公司
+ */
+@property (weak, nonatomic) IBOutlet UIView *choiseLogisticsView;
+
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

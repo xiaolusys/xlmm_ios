@@ -13,6 +13,8 @@
 #import "MMClass.h"
 #import "MaMaSelectProduct.h"
 #import "SVProgressHUD.h"
+#import "ShopPreviousViewController.h"
+#import "MaMaShopViewController.h"
 
 
 
@@ -70,28 +72,43 @@ static NSString *const cellIdentifier = @"YixuanCell";
     
     [self.tableView setEditing:YES animated:YES];
 
-  //  [self createRightItem];
+    [self createRightItem];
     
 
 }
 
 - (void)createRightItem{
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"我的精选" style:UIBarButtonItemStylePlain target:self action:@selector(editClick)];
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+//    rightItem = [UIBarButtonItem appearanceWhenContainedIn:self, nil];
+    
+    // 设置导航条按钮的文字颜色
+    NSMutableDictionary *titleAttr = [NSMutableDictionary dictionary];
+    titleAttr[NSForegroundColorAttributeName] = [UIColor orangeColor];
+    [rightItem setTitleTextAttributes:titleAttr forState:UIControlStateNormal];
+    
+
+    
     
 }
 
 - (void)editClick{
     
-    if (!self.isTableViewEdit) {
-        self.navigationItem.rightBarButtonItem.title = @"Done";
-        self.tableViewEdit = YES;
-        
-    } else {
-        self.tableViewEdit = NO;
-        self.navigationItem.rightBarButtonItem.title = @"Edit";
-        [self.tableView setEditing:NO animated:YES];
-    }
+    ShopPreviousViewController *shopVC = [[ShopPreviousViewController alloc] init];
+    
+    [self.navigationController pushViewController:shopVC animated:YES];
+    
+//    if (!self.isTableViewEdit) {
+//        self.navigationItem.rightBarButtonItem.title = @"Done";
+//        self.tableViewEdit = YES;
+//        
+//    } else {
+//        self.tableViewEdit = NO;ShopPreviousViewController
+//        self.navigationItem.rightBarButtonItem.title = @"Edit";
+//        [self.tableView setEditing:NO animated:YES];
+//    }
     
 }
 

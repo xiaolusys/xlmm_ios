@@ -8,18 +8,18 @@
 
 #import "ShenQingTuiHuoController.h"
 #import "UIViewController+NavigationBar.h"
-#import "PerDingdanModel.h"
+#import "JMOrderGoodsModel.h"
 #import "UIColor+RGBColor.h"
 #import "NSString+URL.h"
 #import "UIImageView+WebCache.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
 #import "QiniuSDK.h"
+#import "SVProgressHUD.h"
 
 
 
-
-
+//JMOrderGoodsModel
 
 @interface ShenQingTuiHuoController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -151,19 +151,21 @@
     
     //[self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
     
-    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.urlString URLEncodedString]]];
+    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
     self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
-    number = [self.dingdanModel.numberString intValue];
-    maxNumber = [self.dingdanModel.numberString intValue];
+    number = [self.dingdanModel.num intValue];
+    maxNumber = [self.dingdanModel.num intValue];
     
     
-    self.nameLabel.text = self.dingdanModel.nameString;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.priceString floatValue]];
-    self.sizeNameLabel.text = self.dingdanModel.sizeString;
-    self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.numberString];
+    self.nameLabel.text = self.dingdanModel.title;
+    if(number != 0){
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
+    }
+    self.sizeNameLabel.text = self.dingdanModel.sku_name;
+    self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.num];
     
     self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", self.refundPrice];
    // refundPrice = [self.dingdanModel.priceString floatValue];
@@ -234,11 +236,14 @@
 - (void)createKeysArray{
     NSString *userUrlString = [NSString stringWithFormat:@"%@/rest/v1/users", Root_URL];
     // NSLog(@"url = %@", userUrlString);
+    NSString *userID = @"";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:userUrlString]];
-    NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    //  NSLog(@"dic = %@", diction);
-    NSDictionary *userInfo = [[diction objectForKey:@"results"] objectAtIndex:0];
-    NSString *userID = [userInfo objectForKey:@"id"];
+    if(data != nil){
+        NSDictionary *diction = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        //  NSLog(@"dic = %@", diction);
+        NSDictionary *userInfo = [[diction objectForKey:@"results"] objectAtIndex:0];
+        userID = [userInfo objectForKey:@"id"];
+    }
     for (int i = 0; i < 3; i++) {
        NSString *key = [self keysWithTime:([[NSDate date] timeIntervalSince1970] + 100 * i) AndUserID:userID];
         [self.keysArray addObject:key];
@@ -740,6 +745,10 @@
         }
         
         NSMutableString *linkstr = [[NSMutableString alloc] init];
+        if(self.imagesArray.count > 3){
+            [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
+            return;
+        }
         for (int i = 0; i < self.imagesArray.count; i++) {
             [linkstr appendString:self.linksArray[i]];
             [linkstr appendString:@","];

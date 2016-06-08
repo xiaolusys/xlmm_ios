@@ -56,5 +56,30 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCheck;
 @property (weak, nonatomic) IBOutlet UIButton *btnAgree;
+/**
+ *  总金额
+ */
+@property (weak, nonatomic) IBOutlet UILabel *goodsPayment;
+/**
+ *  优惠
+ */
+@property (weak, nonatomic) IBOutlet UILabel *logisticsMoney;
+/**
+ *  运费
+ */
+@property (weak, nonatomic) IBOutlet UILabel *postFreeL;
+/**
+ *  选择物流公司
+ */
+@property (weak, nonatomic) IBOutlet UIButton *choiseButton;
+/**
+ *  物流公司展示
+ */
+@property (weak, nonatomic) IBOutlet UILabel *choiseLabel;
+
+
+
+
+
 
 @end

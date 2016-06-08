@@ -17,7 +17,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaCarryLogViewController.h"
 #import "TuijianErweimaViewController.h"
-#import "MamaActivityViewController.h"
 #import "ActivityViewController2.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -34,7 +33,7 @@
 
 #import "DotLineView.h"
 #import "SelectedActivitiesViewController.h"
-#import "HuodongViewController.h"
+#import "WebViewController.h"
 #import "MyInvitationViewController.h"
 
 
@@ -61,11 +60,15 @@
     
     NSString *share_mmcode;
     
-    
+//    NSMutableDictionary *_diction;
     
 //    NSNumber *_money;
 //    NSNumber *_clickTotalMoney;
 }
+/**
+ *  字典中存储在webView中使用的值
+ */
+@property (nonatomic,strong) NSMutableDictionary *diction;
 
 @property (nonatomic, strong)FSLineChart *lineChart;
 
@@ -123,6 +126,12 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+}
+- (NSMutableDictionary *)diction {
+    if (!_diction) {
+        _diction = [NSMutableDictionary dictionary];
+    }
+    return _diction;
 }
 
 - (void)viewDidLoad {
@@ -300,7 +309,7 @@
     self.eventLink = [fortune objectForKey:@"mama_event_link"];
     
     //我的邀请链接
-    self.myInvitation = [fortune objectForKey:@"share_code"];
+//    self.myInvitation = [fortune objectForKey:@"share_code"];
 }
 
 - (void)huoyueduDetails{
@@ -1113,12 +1122,22 @@
 //    invitation.requestURL = self.myInvitation;
 //    [self.navigationController pushViewController:invitation animated:YES];
     
-    HuodongViewController *activity = [[HuodongViewController alloc] init];
-    activity.eventLink = self.myInvitation;
-    activity.titleName = @"我的邀请";
+    WebViewController *activity = [[WebViewController alloc] init];
+//    _diction = [NSMutableDictionary dictionary];
+//    _diction = nil;
+    NSString *active = @"myInvite";
+    NSString *titleName = @"我的邀请";
+    [self.diction setValue:self.myInvitation forKey:@"web_url"];
+    [self.diction setValue:active forKey:@"type_title"];
+    [self.diction setValue:titleName forKey:@"name_title"];
+    
+    activity.webDiction = _diction;
+    activity.isShowNavBar = true;
+    activity.isShowRightShareBtn = false;
+    
     [self.navigationController pushViewController:activity animated:YES];
 }
-
+#pragma mark ---- 我的精选
 - (IBAction)jingxuanliebiao:(id)sender {
     
     ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
@@ -1127,7 +1146,7 @@
 //    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
 //    [self.navigationController pushViewController:shop animated:YES];
 }
-
+#pragma mark --- 选品上架
 - (IBAction)xuanpinliebiao:(id)sender {
     ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
     [self.navigationController pushViewController:product animated:YES];
@@ -1142,11 +1161,6 @@
 }
 
 
-- (IBAction)huodongzhongxin:(id)sender {
-    MamaActivityViewController *activityVC = [[MamaActivityViewController alloc] init];
-    [self.navigationController pushViewController:activityVC animated:YES];
-}
-
 - (IBAction)fansList:(id)sender {
     FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
     fensiVC.fansNum = self.fansNum;
@@ -1159,10 +1173,25 @@
         [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
         return;
     }
-    HuodongViewController *activity = [[HuodongViewController alloc] init];
-    activity.eventLink = self.eventLink;
+    WebViewController *activity = [[WebViewController alloc] init];
     
-    activity.titleName = @"精品活动";
+//    _diction = nil;
+    
+    NSString *active = @"myInvite";
+    NSString *titleName = @"精品活动";
+    
+    [self.diction setValue:self.eventLink forKey:@"web_url"];
+    [self.diction setValue:active forKey:@"type_title"];
+    [self.diction setValue:titleName forKey:@"name_title"];
+    
+    activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    activity.isShowNavBar = true;
+    activity.isShowRightShareBtn = true;
+    activity.share_model.share_link = self.eventLink;
+    activity.share_model.title = @"精品活动";
+    activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
+    activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
+    activity.share_model.share_type = @"link";
     [self.navigationController pushViewController:activity animated:YES];
     
 }

@@ -19,10 +19,11 @@
     UIColor *color = [UIColor colorWithR:217 G:140 B:13 alpha:1];
     return color;
 }
-
+//--- 橙色
 + (UIColor *)buttonEnabledBackgroundColor{
     return [UIColor colorWithR:245 G:177 B:35 alpha:1];
 }
+// --- 灰色
 + (UIColor *)buttonDisabledBackgroundColor{
     return [UIColor colorWithR:227 G:227 B:227 alpha:1];
 }
@@ -48,9 +49,17 @@
 + (UIColor *)imageViewBorderColor{
    return [UIColor colorWithR:216 G:216 B:216 alpha:1];
 }
+// -- 灰色
++ (UIColor *)titleDarkGrayColor{
+    return [UIColor colorWithR:190 G:190 B:190 alpha:1];
+}
 
 + (UIColor *)textDarkGrayColor{
    return [UIColor colorWithR:98 G:98 B:98 alpha:1];
+}
+//绿色
++ (UIColor *)wechatBackColor {
+    return [UIColor colorWithR:68 G:173 B:53 alpha:1];
 }
 
 + (UIColor *)randomColor{
@@ -85,7 +94,7 @@
 }
 
 + (UIColor *)lineGrayColor{
-    return [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    return [UIColor colorWithR:240 G:240 B:240 alpha:1];
 }
 
 + (UIColor *)cartViewBackGround{
@@ -117,6 +126,10 @@
 
 + (UIColor *)buttonTitleColor{
     return [UIColor colorWithR:74 G:74 B:74 alpha:1];
+}
+
++ (UIColor *)timeLabelColor {
+    return [UIColor colorWithR:160 G:160 B:160 alpha:1];
 }
 
 @end

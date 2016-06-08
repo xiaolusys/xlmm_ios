@@ -7,6 +7,7 @@
 //
 
 #import "WebViewJavascriptBridge.h"
+#import "SVProgressHUD.h"
 
 #if __has_feature(objc_arc_weak)
     #define WVJB_WEAK __weak
@@ -133,6 +134,11 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    /**
+     *  在webView加载完成后 执行取消提示框操作
+     */
+    [SVProgressHUD dismiss];
+
     if (webView != _webView) { return; }
     
     __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;
@@ -151,6 +157,7 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
     if (webView != _webView) { return YES; }
     NSURL *url = [request URL];
     __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;

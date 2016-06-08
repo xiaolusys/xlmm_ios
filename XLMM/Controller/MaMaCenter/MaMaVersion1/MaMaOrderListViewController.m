@@ -15,6 +15,7 @@
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
 #import "SVProgressHUD.h"
+#import "JMMaMaOrderListCell.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -94,8 +95,7 @@
     [headerV addSubview:lineView];
     
     self.tableView.tableHeaderView = headerV;
-
-    [self.tableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
+    self.tableView.estimatedRowHeight = 80;
     
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -106,20 +106,17 @@
         [self loadMore];
     }];
     
-    //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    
-    [SVProgressHUD showWithStatus:@"正在加载..."];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
-        if (!responseObject)return;
-        [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:   %@", error);
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadNew];
     }];
+    
+    [self loadDate];
+    
+    
+    
 }
+
+
 
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
@@ -173,7 +170,23 @@
     }
     return keyArr;
 }
+#pragma mark -- 请求数据
+- (void)loadDate {
+    //网络请求
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
+    
+//    [SVProgressHUD showWithStatus:@"正在加载..."];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:   %@", error);
+    }];
 
+}
 //加载更多
 - (void)loadMore {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -183,6 +196,15 @@
         [self dataAnalysis:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
+}
+- (void)loadNew {
+    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
+    if (self.nextPage == nil || [self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_header endRefreshing];
+        
+        return ;
+    }
+    [self loadDate];
 }
 
 #pragma mark ---UItableView的代理
@@ -196,19 +218,29 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"MaMaOrder";
+    JMMaMaOrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[JMMaMaOrderListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+   
+    
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = orderArr[indexPath.row];
-    MaMaOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaMaOrder"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (!cell) {
-        cell = [[MaMaOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaMaOrder"];
-    }
+
     [cell fillDataOfCell:orderM];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+//    [self.tableView reloadData];
+    
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
     CarryLogHeaderView *headerV = [nibView objectAtIndex:0];
     headerV.frame = CGRectMake(0, 0, SCREENWIDTH, 30); 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   provinces.plist
+   XLMM
+
+   Created by zhang on 16/5/27.
+   Copyright (c) 2016年 上海己美. All rights reserved.
+-->
+<plist version="1.0">
+    <array>
+        <dict>
+            <key>name</key>
+            <string>北京</string>
+            <key>cities</key>
+            <array>
+                <string>东城区</string>
+                <string>西城区</string>
+                <string>朝阳区</string>
+                <string>丰台区</string>
+                <string>石景山区</string>
+                <string>海淀区</string>
+                <string>门头沟区</string>
+                <string>房山区</string>
+                <string>通州区</string>
+                <string>顺义区</string>
+                <string>昌平区</string>
+                <string>大兴区</string>
+                <string>怀柔区</string>
+                <string>平谷区</string>
+                <string>密云县</string>
+                <string>延庆县</string>
+            </array>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>甘肃</string>
+            <key>cities</key>
+            <array>
+                <string>兰州</string>
+                <string>白银</string>
+                <string>张掖</string>
+                <string>陇西</string>
+                <string>天水</string>
+            </array>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>山西</string>
+            <key>cities</key>
+            <array>
+                <string>太原</string>
+                <string>大同</string>
+                <string>运城</string>
+                <string>晋城</string>
+                <string>五台山</string>
+            </array>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>湖北</string>
+            <key>cities</key>
+            <array>
+                <string>武汉</string>
+                <string>荆州</string>
+                <string>襄阳</string>
+                <string>赣州</string>
+            </array>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>广东</string>
+            <key>cities</key>
+            <array>
+                <string>广州</string>
+                <string>佛山</string>
+                <string>中山</string>
+            </array>
+        </dict>
+    </array>
+</plist>

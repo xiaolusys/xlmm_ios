@@ -8,24 +8,44 @@
 
 #import "UIImage+ImageWithUrl.h"
 #import "NSString+URL.h"
+#import "UIImageView+WebCache.h"
 
+@interface UIImage ()
+
+
+@end
 @implementation UIImage (ImageWithUrl)
 
+
 +(UIImage *)imagewithURLString:(NSString *)urlString{
-    UIImage *image = nil;
+    UIImage *image = [[UIImage alloc] init];
     NSError *imageError = nil;
     
-    if(urlString == nil) return nil;
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError];
+//    NSArray *array = [urlString componentsSeparatedByString:@"?"];
+//    NSString *urlStr = array[0];
+    NSData *data = nil;
+    
+    if(urlString == nil){
+        return nil;
+    }else {
+//        NSURL *url = [NSURL URLWithString:urlString];
+//        __block UIImage *image = nil;
+//        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//            
+//            image = [UIImage imageWithData:data];
+//        }];
+        
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+    }
+    
     if(imageError != nil){
         NSLog(@"loadingImageError = %@", imageError);
     }
-   // NSLog(@"data = %@", data);
+    // NSLog(@"data = %@", data);
     NSLog(@"%ld", (unsigned long)data.length);
     
     image = [UIImage imageWithData:data];
-    
+
     return image;
 }
-
 @end

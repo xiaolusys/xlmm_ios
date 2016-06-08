@@ -19,7 +19,7 @@
 #import "MamaShareView.h"
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
-
+#import "NSString+URL.h"
 
 
 
@@ -265,7 +265,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     
     self.shopShareName = dic[@"shop_info"][@"name"];
     
-    self.shopShareImage = [UIImage imagewithURLString:[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"]];
+    self.shopShareImage = [UIImage imagewithURLString:[[[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"] imageShareCompression]];
 
     if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
         self.shopShareName = @"小鹿妈妈";
@@ -583,7 +583,7 @@ static NSString *cellIdentifier = @"SelectedListCell";
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     MMLOG(dic);
     self.productName = dic[@"title"];
-    self.productImage = [UIImage imagewithURLString:dic[@"share_img"]];
+    self.productImage = [UIImage imagewithURLString:[dic[@"share_img"] imageShareCompression]];
     self.productLink = dic[@"share_link"];
     self.productDes = dic[@"desc"];
     
