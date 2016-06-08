@@ -290,7 +290,9 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
-    [self resolveProductShareParam:data];
+    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+        [self resolveProductShareParam:data];
+    }
     self.shareView.model = self.share_model;
     
     JMShareView *cover = [JMShareView show];
@@ -430,7 +432,7 @@
      *  老的分享接口，带活动id
      */
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"callNativeUniShareFunc");
+        NSLog(@"callNativeShareFunc");
         [self shareForPlatform:data];
     }];
     /**
