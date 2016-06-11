@@ -49,7 +49,9 @@
 
 - (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
     _goodsModel = goodsModel;
-    [self.dataSource addObject:goodsModel];
+    if(goodsModel != nil){
+        [self.dataSource addObject:goodsModel];
+    }
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
