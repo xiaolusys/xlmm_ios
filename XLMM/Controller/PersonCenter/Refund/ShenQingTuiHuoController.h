@@ -9,9 +9,19 @@
 #import <UIKit/UIKit.h>
 //@class PerDingdanModel;
 @class JMOrderGoodsModel;
+
+typedef void(^changeBtnBlock) (BOOL btnStatus);
 @interface ShenQingTuiHuoController : UIViewController
 
 @property (nonatomic, strong) JMOrderGoodsModel *dingdanModel;
+/**
+ *  声明block属性
+ */
+@property (nonatomic,copy) changeBtnBlock changeStatusBlock;
+/**
+ *  声明调用方法
+ */
+//- (void) changeStatus:(changeBtnBlock)block;
 
 @property (assign, nonatomic) float refundPrice;
 @property (copy, nonatomic) NSString *tid;

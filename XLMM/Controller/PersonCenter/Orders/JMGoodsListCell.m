@@ -75,7 +75,7 @@
     kWeakSelf
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.contentView).offset(10);
-        make.width.height.mas_equalTo(@60);
+        make.width.height.mas_equalTo(@70);
     }];
     
     [self.goodsTitleL mas_makeConstraints:^(MASConstraintMaker *make) {

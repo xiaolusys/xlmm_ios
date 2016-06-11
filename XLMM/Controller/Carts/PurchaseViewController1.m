@@ -36,7 +36,7 @@
 #import "JMPopLogistcsModel.h"
 
 //购物车支付界面
-@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate>{
+@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{
     AddressModel *addressModel;//默认收货地址
     NSString *payMethod; //支付方式
     NSString *uuid;      //uuid
