@@ -207,6 +207,7 @@
     
     self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.shareWebView.hidden = YES;
+    self.shareWebView.tag = 102;
     [self.view addSubview:self.shareWebView];
     [self.view bringSubviewToFront:self.baseWebView];
     
@@ -289,7 +290,6 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"完成加载");
     [SVProgressHUD dismiss];
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 
     if (webView.tag != 102) {
         [self updateUserAgent];
@@ -323,7 +323,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"webview didFailLoadWithError error=%@", error);
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
 }
 
