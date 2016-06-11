@@ -773,7 +773,17 @@
     } else if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_TRADE_SUCCESS &&
                [[refund_statusArray objectAtIndex:index] integerValue] == REFUND_STATUS_NO_REFUND){
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
-        if (!orderGoods.kill_title) {
+        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        button.backgroundColor = [UIColor whiteColor];
+        [button setTitle:@"退货退款" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:12];
+        [button.layer setBorderWidth:0.5];
+        button.tag = 200+index;
+        button.layer.cornerRadius = 12.5;
+        [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
+        [owner.myView addSubview:button];
+        if (orderGoods.kill_title) {
             button.enabled = NO;
             [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
@@ -782,22 +792,21 @@
             rect.size.width = 112;
             rect.origin.x -= 40;
             button.frame = rect;
-        }else {
-            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
-            button.backgroundColor = [UIColor whiteColor];
-            [button setTitle:@"退货退款" forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            [button.layer setBorderWidth:0.5];
-            button.tag = 200+index;
-            button.layer.cornerRadius = 12.5;
-            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
-            [owner.myView addSubview:button];
         }
     } else if ([[orderStatus objectAtIndex:index] integerValue] == ORDER_STATUS_CONFIRM_RECEIVE &&
                [[refund_statusArray objectAtIndex:index] integerValue] == REFUND_STATUS_NO_REFUND){
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 55, 70, 25)];
-        if (!orderGoods.kill_title) {
+        [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
+        button.backgroundColor = [UIColor whiteColor];
+        [button setTitle:@"退货退款" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:12];
+        [button.layer setBorderWidth:0.5];
+        button.tag = 200+index;
+        button.layer.cornerRadius = 12.5;
+        [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
+        [owner.myView addSubview:button];
+        if (orderGoods.kill_title) {
             button.enabled = NO;
             [button setTitle:@"秒杀款不退不换" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
@@ -806,42 +815,23 @@
             rect.size.width = 112;
             rect.origin.x -= 40;
             button.frame = rect;
-        }else {
-            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
-            button.backgroundColor = [UIColor whiteColor];
-            [button setTitle:@"退货退款" forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:12];
-            [button.layer setBorderWidth:0.5];
-            button.tag = 200+index;
-            button.layer.cornerRadius = 12.5;
-            [button.layer setBorderColor:[UIColor orangeThemeColor].CGColor];
-            [owner.myView addSubview:button];
         }
     }
     else{
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 80, 50, 70, 40)];
         NSString *string = [refund_status_displayArray objectAtIndex:index];
-        
-        
         // 判断退款订单状态  显示给客服看。。。。。
         label.text = string;
         if ([string integerValue] == REFUND_STATUS_NO_REFUND ) {
             label.text = @"";
         }
-        
         label.numberOfLines = 0;
-        
         label.font = [UIFont systemFontOfSize:12];
         label.textAlignment = NSTextAlignmentLeft;
         label.textColor = [UIColor darkGrayColor];
         [owner.myView addSubview:label];
-        
-        
     }
     [self.myXiangQingView addSubview:owner.myView];
-    
-    
     [frontView removeFromSuperview];
 }
 
@@ -851,11 +841,9 @@
         [child removeFromSuperview];
     }
 }
-
 #pragma mark -- 退货--
 - (void)qianshou:(UIButton *)button{
     NSLog(@"确认签收");
-    
     //   192.168.1.31:9000/rest/v1/order/id/confirm_sign ;
     //  同步post
     JMOrderGoodsModel *model = [dataArray objectAtIndex:button.tag - 200];
