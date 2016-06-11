@@ -20,6 +20,8 @@
 #import "UIColor+RGBColor.h"
 #import "JMCleanView.h"
 
+#define cellHeitht 90
+
 @interface JMQueryLogInfoController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *masBackScrollView;
@@ -164,7 +166,7 @@
  */
 - (void)createGoodsListView {
     self.goodsListVC.count = _count;
-    JMCleanView *menu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136, SCREENWIDTH, _count * 80)];
+    JMCleanView *menu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136, SCREENWIDTH, _count * cellHeitht)];
     [self.masBackScrollView addSubview:menu];
     menu.contentView = self.goodsListVC.view;
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
@@ -180,13 +182,13 @@
 
     NSInteger count = self.infoArray.count;
     self.timeListVC.count = count;
-    JMCleanView *timeMenu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136 + _count * 80, SCREENWIDTH, count * 80)];
+    JMCleanView *timeMenu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136 + _count * cellHeitht, SCREENWIDTH, count * cellHeitht)];
     [self.masBackScrollView addSubview:timeMenu];
     timeMenu.contentView = self.timeListVC.view;
     timeMenu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.timeListVC.timeListArr = self.infoArray;
     
-    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * 80 + _count * 80 + 136);
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * cellHeitht + _count * cellHeitht + 136);
 }
 
 /**
@@ -197,7 +199,7 @@
     UIView *timeView = [UIView new];
     [self.masBackScrollView addSubview:timeView];
     timeView.backgroundColor = [UIColor lineGrayColor];
-    timeView.frame = CGRectMake(0, _count * 80 + 136, SCREENWIDTH, 80);
+    timeView.frame = CGRectMake(0, _count * cellHeitht + 136, SCREENWIDTH, cellHeitht);
     
     
     
@@ -235,7 +237,7 @@
         make.top.equalTo(timeView);
         make.left.equalTo(timeView).offset(20);
         make.width.mas_equalTo(@1);
-        make.height.mas_equalTo(@80);
+        make.height.mas_equalTo(cellHeitht);
     }];
     
     //confirm -- 创建成功显示图片
@@ -248,7 +250,7 @@
         make.width.height.mas_equalTo(@20);
     }];
     
-    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * 80 + 136 + 80);
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht);
     
 }
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{

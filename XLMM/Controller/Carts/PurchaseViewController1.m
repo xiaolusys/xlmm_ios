@@ -36,7 +36,7 @@
 #import "JMPopLogistcsModel.h"
 
 //购物车支付界面
-@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate>{
+@interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{
     AddressModel *addressModel;//默认收货地址
     NSString *payMethod; //支付方式
     NSString *uuid;      //uuid
@@ -829,10 +829,10 @@
         return;
     }
 
-
+    NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -881,7 +881,8 @@
         [SVProgressHUD dismiss];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"shoppingcart_create error %@", error);
+        [SVProgressHUD dismiss];
     }];
     
  }

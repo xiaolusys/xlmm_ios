@@ -15,11 +15,11 @@
 
 @property (nonatomic,copy) NSString *orderGoodsID;
 
-@property (nonatomic,assign) BOOL *is_seckill;
+@property (nonatomic,assign) BOOL is_seckill;
 
 @property (nonatomic,copy) NSString *item_id;
 
-@property (nonatomic,assign) BOOL *kill_title;
+@property (nonatomic,assign) BOOL kill_title;
 /**
  *  商品个数
  */
