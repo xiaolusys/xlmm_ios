@@ -17,6 +17,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "MJExtension.h"
 
 
 @interface ShenQingTuikuanController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -113,8 +114,9 @@
                        ];
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
-    
+        
     [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
+    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
@@ -331,9 +333,10 @@
               self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", refundPrice];
               self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
               
-              
+
               
           }
+     
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
               NSLog(@"Error: %@", error);

@@ -77,7 +77,7 @@
     
     countSecond = 60;
     countdownSecond = countSecond;
-    
+
     
 
     [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClicked:)];

@@ -14,6 +14,7 @@
 #import "FillWuliuController.h"
 #import "XlmmMall.h"
 #import "MMClass.h"
+#import "JMReturnedGoodsController.h"
 
 
 @interface RefundDetailsViewController (){
@@ -197,10 +198,43 @@
 
 - (IBAction)wuliuInfoClicked:(id)sender {
 //    NSLog(@"填写物流信息");
-    FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
-    wuliuVC.model = self.model;
+//    FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
+//    wuliuVC.model = self.model;
+//    
     
-    [self.navigationController pushViewController:wuliuVC animated:YES];
+    JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
+    reGoodsVC.model = self.model;
+    
+    
+    
+    [self.navigationController pushViewController:reGoodsVC animated:YES];
+    
+    
+    
     
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -119,12 +119,24 @@
     NSLog(@"%@",car.name);
     if (_delegate && [_delegate respondsToSelector:@selector(ClickChoiseLogis:Title:)]) {
         [_delegate ClickChoiseLogis:self Title:car.name];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+
 @end
 
 

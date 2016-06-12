@@ -43,7 +43,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     secondsCountDown = 60;
-    
+
     [self createNavigationBarWithTitle:self.config[@"title"] selecotr:@selector(backClicked:)];
     
     self.codeTextField.delegate = self;

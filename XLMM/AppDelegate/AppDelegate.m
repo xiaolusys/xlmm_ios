@@ -46,6 +46,10 @@
 @property (nonatomic, assign)NSInteger timeCount;
 
 @property (nonatomic, strong)NSString *imageUrl;
+/**
+ *  判断是否为支付页面跳转过来的
+ */
+@property (nonatomic,assign) BOOL isApinPayGo;
 
 @end
 
@@ -90,6 +94,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    self.isApinPayGo = YES;
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
@@ -656,6 +661,12 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    /**
+     *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
+     */
+    if (self.isApinPayGo) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"isApinPayGo" object:nil];
+    }
     
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
@@ -713,7 +724,7 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    
+    self.isApinPayGo = YES;
     
     [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {

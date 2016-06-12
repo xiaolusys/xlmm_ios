@@ -64,7 +64,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
    // self.title = @"收货地址";
     
     [self createNavigationBarWithTitle:@"收货地址" selecotr:@selector(backBtnClicked:)];
@@ -224,14 +223,16 @@
   
     NSLog(@"%ld", (long)indexPath.row);
     
-    if((dataArray == nil) || (dataArray.count == 0))
-        return;
+    if((dataArray == nil) || (dataArray.count == 0)) return;
+    
     
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];
     
     if (self.isSelected == YES) {
-        
-        [self.delegate addressView:self model:model];
+        if (_delegate && [_delegate respondsToSelector:@selector(addressView:model:)]) {
+            [self.delegate addressView:self model:model];
+        }
+//        [self.delegate addressView:self model:model];
         
         [self.navigationController popViewControllerAnimated:YES];
         
@@ -248,6 +249,8 @@
     
     
 }
+
+
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;

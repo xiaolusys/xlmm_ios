@@ -498,7 +498,7 @@ static NSString *kbrandCell = @"brandCell";
 {
     NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
-    
+
     self.timeCount = 0;
     [self.endTime addObject:@""];
     [self.endTime addObject:@""];
@@ -1215,6 +1215,7 @@ static NSString *kbrandCell = @"brandCell";
         huodongVC.webDiction = _diction;
         huodongVC.isShowNavBar = true;
         huodongVC.isShowRightShareBtn = true;
+        huodongVC.titleName = [dic objectForKey:@"title"];
         [self.navigationController pushViewController:huodongVC animated:YES];
     } else{
         if (login_required) {
@@ -1233,7 +1234,7 @@ static NSString *kbrandCell = @"brandCell";
             huodongVC.webDiction = _diction;
             huodongVC.isShowNavBar = true;
             huodongVC.isShowRightShareBtn = true;
-            
+            huodongVC.titleName = [dic objectForKey:@"title"];
             [self.navigationController pushViewController:huodongVC animated:YES];
         }
     }
@@ -1514,6 +1515,7 @@ static NSString *kbrandCell = @"brandCell";
         _diction = [NSMutableDictionary dictionary];
         _diction = model.mj_keyValues;
         [_diction setValue:model.web_url forKey:@"web_url"];
+        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
 
         WebViewController *webView = [[WebViewController alloc] init];
         webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
@@ -1830,7 +1832,7 @@ static NSString *kbrandCell = @"brandCell";
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 108, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];

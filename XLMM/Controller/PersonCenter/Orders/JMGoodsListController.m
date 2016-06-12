@@ -37,7 +37,7 @@
 }
 - (void)createTableView {
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, self.count * 80) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, self.count * 90) style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;
@@ -49,11 +49,13 @@
 
 - (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
     _goodsModel = goodsModel;
-    [self.dataSource addObject:goodsModel];
+    if(goodsModel != nil){
+        [self.dataSource addObject:goodsModel];
+    }
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 90;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

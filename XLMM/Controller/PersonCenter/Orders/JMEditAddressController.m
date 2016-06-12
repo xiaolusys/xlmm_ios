@@ -83,6 +83,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createNavigationBarWithTitle:@"修改地址" selecotr:@selector(btnClicked:)];
     [self getPickViewData];
     [self createTableView];
@@ -97,7 +98,6 @@
 - (void)createTableView {
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 240) style:UITableViewStylePlain];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -132,7 +132,6 @@
 - (void)sureButtonClick:(UIButton *)sender {
     NSDictionary *dic = [[NSDictionary alloc] init];
     JMEditAddressModel *model = [JMEditAddressModel new];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
         model.receiver_state = proStr ? proStr : _addressDic[@"receiver_state"];
         model.receiver_city = cityStr ? cityStr : _addressDic[@"receiver_city"];
         model.receiver_district = disStr ? disStr : _addressDic[@"receiver_district"];
@@ -140,8 +139,6 @@
         model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
         model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
         dic = model.mj_keyValues;
-        [self.delegate updateEditerWithmodel:dic];
-    }
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
@@ -157,9 +154,18 @@
         
         if (!responseObject) return;
         
+        if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
+        
+            [self.delegate updateEditerWithmodel:dic];
+            
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 #pragma mark ----  获取pickView的数据
@@ -449,6 +455,11 @@
 }
 #pragma mark ---- 确定按钮与取消按钮的点击
 - (void)sureBtnClick:(UIButton *)sender {
+    
+    proStr = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
+    cityStr = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
+    disStr = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];
+    
     self.proLabel.text = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
     self.cityLabel.text = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
     self.addressLabel.text = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];

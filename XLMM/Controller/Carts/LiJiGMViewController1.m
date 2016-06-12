@@ -98,6 +98,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    // self.title = @"确认订单";
+
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
 
     buyNumber = @1;

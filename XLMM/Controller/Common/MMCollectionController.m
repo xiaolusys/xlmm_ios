@@ -65,6 +65,7 @@
 - (void)viewDidLoad {
     NSLog(@"MMCollectionController viewDidLoad");
     [super viewDidLoad];
+
     // Do any additional setup after loading the view from its nib.
     self.title = @"品牌商品";
     //self.view.backgroundColor = [UIColor redColor];

@@ -122,12 +122,9 @@
     return _youmengShare;
 }
 
-//- (JMShareViewController *)shareView {
-//    if (!_shareView) {
-//        _shareView = [[JMShareViewController alloc] init];
-//        
-//    }
-//    return _shareView;
+//- (WebViewJavascriptBridge *)bridge {
+//
+//    return _bridge;
 //}
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
@@ -158,7 +155,9 @@
         self.navigationController.navigationBarHidden = YES;
     }
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    [SVProgressHUD dismiss];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -170,10 +169,13 @@
     
     UIWebView *baseWebView = [[UIWebView alloc] init];
     self.baseWebView = baseWebView;
+    
+    [self registerJsBridge];
+    
     [self.view addSubview:self.baseWebView];
     self.baseWebView.backgroundColor = [UIColor whiteColor];
     self.baseWebView.tag = 111;
-    self.baseWebView.delegate = self;
+//    self.baseWebView.delegate = self;
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.userInteractionEnabled = YES;
     
@@ -199,7 +201,9 @@
     }
     NSURL *url = [NSURL URLWithString:loadStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
     [self.baseWebView loadRequest:request];
+
 
     if(_isShowRightShareBtn){
         [self createTabBarButton];
@@ -246,6 +250,19 @@
 
 }
 
+- (void)resolveProductShareParam:(NSDictionary *)dic {
+    NSLog(@"Product Share para=%@",dic);
+    
+    self.share_model.share_type = [dic objectForKey:@"share_type"];
+    
+    self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
+    self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
+    
+    self.share_model.title = [dic objectForKey:@"share_title"]; //标题
+    self.share_model.share_link = [dic objectForKey:@"link"];
+    
+}
+
 #pragma mark ----- 创建导航栏按钮
 - (void)createTabBarButton {
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -271,6 +288,22 @@
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
 }
+
+- (void) universeShare:(NSDictionary *)data {
+    JMShareViewController *shareView = [[JMShareViewController alloc] init];
+    self.shareView = shareView;
+
+    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+        [self resolveProductShareParam:data];
+    }
+    self.shareView.model = self.share_model;
+    
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    //弹出视图
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    menu.contentView = self.shareView.view;
+}
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
@@ -288,12 +321,12 @@
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSLog(@"完成加载");
+    NSLog(@"完成加载 %ld",(long)webView.tag);
     [SVProgressHUD dismiss];
 
     if (webView.tag != 102) {
         [self updateUserAgent];
-        [self registerJsBridge];
+//        [self registerJsBridge];
         return;
     }
     if (webView.isLoading) {
@@ -348,10 +381,14 @@
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
     if (_bridge) {
+        NSLog(@"Already reg!");
         return ;
     }
+    NSLog(@"registerJsBridge!");
     [WebViewJavascriptBridge enableLogging];
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
+
+    [self.bridge setWebViewDelegate:self];
     
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self jsLetiOSWithData:data callBack:responseCallback];
@@ -360,13 +397,14 @@
      *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"callNativeUniShareFunc");
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
-            [self rightBarButtonAction];
+            [self universeShare:data];
         }
     }];
     /**
@@ -397,6 +435,7 @@
      *  老的分享接口，带活动id
      */
     [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"callNativeShareFunc");
         [self shareForPlatform:data];
     }];
     /**
@@ -464,7 +503,7 @@
         if ([platform isEqualToString:@""]) {
             self.activityId = [responseObject objectForKey:@"id"];
             [self resolveActivityShareParam:responseObject];
-            [self rightBarButtonAction];
+            [self universeShare:data];
         }else if ([platform isEqualToString:@"wx"]) {
             [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
             [UMSocialData defaultData].extConfig.wechatSessionData.title = sharelink;
