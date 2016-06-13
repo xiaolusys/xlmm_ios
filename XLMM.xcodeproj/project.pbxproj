@@ -159,8 +159,6 @@
 		1830723F1C97BE3700B7665E /* PersonCenterViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071A11C97BE3700B7665E /* PersonCenterViewController3.xib */; };
 		183072431C97BE3700B7665E /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071A71C97BE3700B7665E /* XiangQingViewController.m */; };
 		183072441C97BE3700B7665E /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071A81C97BE3700B7665E /* XiangQingViewController.xib */; };
-		183072451C97BE3700B7665E /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071AB1C97BE3700B7665E /* FillWuliuController.m */; };
-		183072461C97BE3700B7665E /* FillWuliuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AC1C97BE3700B7665E /* FillWuliuController.xib */; };
 		183072471C97BE3700B7665E /* PostImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AD1C97BE3700B7665E /* PostImageView.xib */; };
 		183072481C97BE3700B7665E /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */; };
 		183072491C97BE3700B7665E /* RefundDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071B01C97BE3700B7665E /* RefundDetailsViewController.m */; };
@@ -172,8 +170,6 @@
 		1830724F1C97BE3700B7665E /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */; };
 		183072501C97BE3700B7665E /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071BA1C97BE3700B7665E /* TuihuoViewController.m */; };
 		183072511C97BE3700B7665E /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071BB1C97BE3700B7665E /* TuihuoViewController.xib */; };
-		183072521C97BE3700B7665E /* WuliuCompanyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071BD1C97BE3700B7665E /* WuliuCompanyController.m */; };
-		183072531C97BE3700B7665E /* WuliuCompanyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */; };
 		183072541C97BE3700B7665E /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071C11C97BE3700B7665E /* BoundingNewPhoneController.m */; };
 		183072551C97BE3700B7665E /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071C21C97BE3700B7665E /* BoundingNewPhoneController.xib */; };
 		183072561C97BE3700B7665E /* ModifyPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071C41C97BE3700B7665E /* ModifyPhoneController.m */; };
@@ -1134,9 +1130,6 @@
 		183071A61C97BE3700B7665E /* XiangQingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangQingViewController.h; sourceTree = "<group>"; };
 		183071A71C97BE3700B7665E /* XiangQingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangQingViewController.m; sourceTree = "<group>"; };
 		183071A81C97BE3700B7665E /* XiangQingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangQingViewController.xib; sourceTree = "<group>"; };
-		183071AA1C97BE3700B7665E /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
-		183071AB1C97BE3700B7665E /* FillWuliuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillWuliuController.m; sourceTree = "<group>"; };
-		183071AC1C97BE3700B7665E /* FillWuliuController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FillWuliuController.xib; sourceTree = "<group>"; };
 		183071AD1C97BE3700B7665E /* PostImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageView.xib; sourceTree = "<group>"; };
 		183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundDetailsViewController.h; sourceTree = "<group>"; };
@@ -1152,9 +1145,6 @@
 		183071B91C97BE3700B7665E /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		183071BA1C97BE3700B7665E /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		183071BB1C97BE3700B7665E /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
-		183071BC1C97BE3700B7665E /* WuliuCompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuliuCompanyController.h; sourceTree = "<group>"; };
-		183071BD1C97BE3700B7665E /* WuliuCompanyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuliuCompanyController.m; sourceTree = "<group>"; };
-		183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuCompanyController.xib; sourceTree = "<group>"; };
 		183071C01C97BE3700B7665E /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		183071C11C97BE3700B7665E /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		183071C21C97BE3700B7665E /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
@@ -2952,9 +2942,6 @@
 			isa = PBXGroup;
 			children = (
 				0BE3130C1D05139B00CD97D6 /* returnedGoods(退货地址) */,
-				183071AA1C97BE3700B7665E /* FillWuliuController.h */,
-				183071AB1C97BE3700B7665E /* FillWuliuController.m */,
-				183071AC1C97BE3700B7665E /* FillWuliuController.xib */,
 				183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */,
 				183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */,
 				183071B01C97BE3700B7665E /* RefundDetailsViewController.m */,
@@ -2970,9 +2957,6 @@
 				183071B91C97BE3700B7665E /* TuihuoViewController.h */,
 				183071BA1C97BE3700B7665E /* TuihuoViewController.m */,
 				183071BB1C97BE3700B7665E /* TuihuoViewController.xib */,
-				183071BC1C97BE3700B7665E /* WuliuCompanyController.h */,
-				183071BD1C97BE3700B7665E /* WuliuCompanyController.m */,
-				183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */,
 			);
 			path = Refund;
 			sourceTree = "<group>";
@@ -4783,7 +4767,6 @@
 				1F4DE5971CE461AD00114BDA /* apply_for_success@2x.png in Resources */,
 				183075E01C97D49A00B7665E /* zhanwei.png in Resources */,
 				183075AA1C97D49A00B7665E /* loading动画0012.png in Resources */,
-				183072461C97BE3700B7665E /* FillWuliuController.xib in Resources */,
 				183076411C97D49A00B7665E /* unselected_icon.png in Resources */,
 				183075D71C97D49A00B7665E /* savephoto.png in Resources */,
 				321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */,
@@ -5124,7 +5107,6 @@
 				183076451C97D49A00B7665E /* wash01.png in Resources */,
 				183071D11C97BE3700B7665E /* EmptyCartView.xib in Resources */,
 				183074351C97D17800B7665E /* UMSnsAccountViewController.xib in Resources */,
-				183072531C97BE3700B7665E /* WuliuCompanyController.xib in Resources */,
 				183075751C97D49A00B7665E /* icon-daizhifu.png in Resources */,
 				1F3621D41CF924D7004359B0 /* Address.plist in Resources */,
 				183075AE1C97D49A00B7665E /* loading动画0016.png in Resources */,
@@ -5274,7 +5256,6 @@
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				325B7A0A1C97E73A0022F930 /* CountdownView.m in Sources */,
 				183073CD1C97D17800B7665E /* AFHTTPSessionManager.m in Sources */,
-				183072451C97BE3700B7665E /* FillWuliuController.m in Sources */,
 				183071FF1C97BE3700B7665E /* MaMaViewController.m in Sources */,
 				325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */,
 				183070E21C97B83900B7665E /* YHQModel.m in Sources */,
@@ -5512,7 +5493,6 @@
 				183073EA1C97D17800B7665E /* MJRefreshAutoFooter.m in Sources */,
 				183070E41C97B83900B7665E /* FanceModel.m in Sources */,
 				183070D81C97B83900B7665E /* LiJiBuyModel.m in Sources */,
-				183072521C97BE3700B7665E /* WuliuCompanyController.m in Sources */,
 				183070DA1C97B83900B7665E /* NewCartsModel.m in Sources */,
 				325B799E1C97E6F10022F930 /* PeopleCollectionCell.m in Sources */,
 				183070DC1C97B83900B7665E /* PeopleModel.m in Sources */,

@@ -11,7 +11,6 @@
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
-#import "FillWuliuController.h"
 #import "XlmmMall.h"
 #import "MMClass.h"
 #import "JMReturnedGoodsController.h"

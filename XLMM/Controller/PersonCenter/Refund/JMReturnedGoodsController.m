@@ -273,7 +273,17 @@
     CGPoint center = self.baseScrollV.center;
     center.y -= height;
     self.baseScrollV.center = center;
-
+//        CGFloat maxY = CGRectGetMaxY(self.sureButton.frame) + self.baseScrollV.frame.origin.y;
+//    
+//        CGRect kbEndFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//        CGFloat kbY = kbEndFrame.origin.y;
+//    
+//        CGFloat delta = kbY - maxY;
+//        if (delta < 0) {
+//            [UIView animateWithDuration:0.3 animations:^{
+//                self.baseScrollV.transform = CGAffineTransformMakeTranslation(0, delta);
+//            }];
+//        }
 }
 
 - (void)keyboardHide:(NSNotification *)notification
@@ -291,7 +301,9 @@
     CGPoint center = self.baseScrollV.center;
     center.y += height;
     self.baseScrollV.center = center;
-
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.baseScrollV.transform = CGAffineTransformIdentity;
+//        }];
 
 }
 
@@ -337,10 +349,10 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 #pragma mark - 点击隐藏
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
