@@ -10,4 +10,6 @@
 
 @interface JMReGoodsAddView : UIView
 
+@property (nonatomic,strong) NSDictionary *reGoodsDic;
+
 @end

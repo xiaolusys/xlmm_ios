@@ -30,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"小鹿美美服务条款" selecotr:@selector(backClicked:)];
     self.myWebView.frame = [[UIScreen mainScreen]applicationFrame];

@@ -114,10 +114,9 @@
                        ];
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
-    
-    NSDictionary *dic = [self.dingdanModel mj_keyValues];
-    
+        
     [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
+    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;

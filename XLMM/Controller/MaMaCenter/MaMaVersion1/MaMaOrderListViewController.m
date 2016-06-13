@@ -55,6 +55,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"订单列表" selecotr:@selector(backClickAction)];
     
@@ -95,7 +97,7 @@
     [headerV addSubview:lineView];
     
     self.tableView.tableHeaderView = headerV;
-    self.tableView.estimatedRowHeight = 80;
+//    self.tableView.estimatedRowHeight = 80;
     
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -238,7 +240,9 @@
     
     return cell;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];

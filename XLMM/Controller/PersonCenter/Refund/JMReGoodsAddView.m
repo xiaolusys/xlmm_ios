@@ -51,7 +51,20 @@
     }
     return self;
 }
-
+- (void)setReGoodsDic:(NSDictionary *)reGoodsDic {
+    _reGoodsDic = reGoodsDic;
+    
+    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",reGoodsDic[@"buyer_nick"]];
+    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",reGoodsDic[@"mobile"]];
+    NSArray *arr = [reGoodsDic[@"return_address"] componentsSeparatedByString:@"，"];
+    NSString *addStr = @"";
+    if (arr.count > 0) {
+        addStr = arr[0];
+    }else {
+        return ;
+    }
+    self.addressL.text = [NSString stringWithFormat:@"退货地址:%@",addStr];
+}
 - (void)preporaUI {
     UIView *topLineView = [UIView new];
     [self addSubview:topLineView];
@@ -74,6 +87,7 @@
     [self.masBackView addSubview:reGoodsAddressL];
     self.reGoodsAddressL = reGoodsAddressL;
     self.reGoodsAddressL.font = [UIFont boldSystemFontOfSize:15.];
+    self.reGoodsAddressL.text = @"退货地址";
     
     UILabel *nameL = [UILabel new];
     [self.masBackView addSubview:nameL];
@@ -84,24 +98,20 @@
     [self.masBackView addSubview:PhoneL];
     self.PhoneL = PhoneL;
     self.PhoneL.font = [UIFont systemFontOfSize:12.];
+    self.PhoneL.textAlignment = NSTextAlignmentRight;
     
     UILabel *addressL = [UILabel new];
     [self.masBackView addSubview:addressL];
     self.addressL = addressL;
-    self.addressL.backgroundColor = [UIColor titleDarkGrayColor];
+    self.addressL.textColor = [UIColor titleDarkGrayColor];
     self.addressL.font = [UIFont systemFontOfSize:12.];
+    self.addressL.numberOfLines = 0;
     
     UILabel *titleL = [UILabel new];
     [self.masBackView addSubview:titleL];
     self.titleL = titleL;
     self.titleL.text = @"为提高您的退货退款效率,请注意一下事项";
     self.titleL.font = [UIFont systemFontOfSize:12.];
-    
-    UILabel *firstL = [UILabel new];
-    [self.masBackView addSubview:firstL];
-    self.firstL = firstL;
-    self.firstL.text = @"填写退货单or小纸条一并寄回写明您的";
-    self.firstL.font = [UIFont systemFontOfSize:12.];
     
     UILabel *firstRightL = [UILabel new];
     [self.masBackView addSubview:firstRightL];
@@ -110,27 +120,34 @@
     self.firstRightL.numberOfLines = 0;
     self.firstRightL.text = @"微信昵称、联系电话、退换货原因";
     self.firstRightL.font = [UIFont systemFontOfSize:12.];
+    UILabel *firstL = [UILabel new];
     
+    [self.masBackView addSubview:firstL];
+    self.firstL = firstL;
+    self.firstL.text = [NSString stringWithFormat:@"1.填写退货单or小纸条一并寄回写明您的%@",self.firstRightL.text];
+    self.firstL.numberOfLines = 0;
+    self.firstL.font = [UIFont systemFontOfSize:12.];
+
     UILabel *secondL = [UILabel new];
     [self.masBackView addSubview:secondL];
     self.secondL = secondL;
     self.secondL.numberOfLines = 0;
     self.secondL.font = [UIFont systemFontOfSize:12.];
-    self.secondL.text = @"勿发顺丰或EMS高等邮费快递";
+    self.secondL.text = @"2.勿发顺丰或EMS高等邮费快递";
     
     UILabel *thirdL = [UILabel new];
     [self.masBackView addSubview:thirdL];
     self.thirdL = thirdL;
     self.thirdL.numberOfLines = 0;
     self.thirdL.font = [UIFont systemFontOfSize:12.];
-    self.thirdL.text = @"请先支付邮费,拒收到付件。到货验收后,贷款和运费将分开退还至您的相应账户";
+    self.thirdL.text = @"3.请先支付邮费,拒收到付件。到货验收后,贷款和运费将分开退还至您的相应账户";
     
     UILabel *fourthL = [UILabel new];
     [self.masBackView addSubview:fourthL];
     self.fourthL = fourthL;
     self.fourthL.numberOfLines = 0;
     self.fourthL.font = [UIFont systemFontOfSize:12.];
-    self.fourthL.text = @"请保持衣服吊牌完整,不影响商品后续处理";
+    self.fourthL.text = @"4.请保持衣服吊牌完整,不影响商品后续处理";
     
     
 }
@@ -152,29 +169,31 @@
         make.bottom.equalTo(weakSelf).offset(-20);
     }];
     
-    [self.topLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.masBackView).offset(20);
+    [self.reGoodsAddressL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.masBackView).offset(15);
         make.centerX.equalTo(weakSelf.masBackView.mas_centerX);
     }];
-    
+
     [self.nameL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.topLineView.mas_bottom).offset(20);
+        make.top.equalTo(weakSelf.reGoodsAddressL.mas_bottom).offset(20);
         make.left.equalTo(weakSelf.masBackView).offset(15);
     }];
     
     [self.PhoneL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakSelf.nameL.mas_centerY);
-        make.left.equalTo(weakSelf.nameL.mas_right).offset(30);
+        make.left.equalTo(weakSelf.masBackView).offset(15);
+        make.top.equalTo(weakSelf.nameL.mas_bottom).offset(5);
     }];
     
     [self.addressL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.nameL).offset(5);
+        make.top.equalTo(weakSelf.PhoneL.mas_bottom).offset(5);
         make.left.equalTo(weakSelf.nameL);
+        make.right.equalTo(weakSelf.masBackView).offset(-10);
     }];
     
     [self.cutOffView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.addressL.mas_bottom).offset(20);
+        make.top.equalTo(weakSelf.addressL.mas_bottom).offset(15);
         make.left.equalTo(weakSelf.nameL);
+        make.right.equalTo(weakSelf.masBackView);
         make.height.mas_equalTo(@1);
     }];
     
@@ -184,27 +203,30 @@
     }];
     
     [self.firstL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.titleL).offset(15);
+        make.top.equalTo(weakSelf.titleL.mas_bottom).offset(15);
         make.left.equalTo(weakSelf.nameL);
+        make.right.equalTo(weakSelf.masBackView).offset(-10);
     }];
     
-    [self.firstRightL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.firstL.mas_right);
-        make.left.equalTo(weakSelf.nameL);
-    }];
-    
+//    [self.firstRightL mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(weakSelf.firstL.mas_right);
+//        make.top.equalTo(weakSelf.titleL.mas_bottom).offset(15);
+//        make.right.equalTo(weakSelf.masBackView).offset(-10);
+//    }];
+//    
     [self.secondL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.firstL).offset(15);
+        make.top.equalTo(weakSelf.firstL.mas_bottom).offset(15);
         make.left.equalTo(weakSelf.nameL);
     }];
     
     [self.thirdL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.secondL).offset(15);
+        make.top.equalTo(weakSelf.secondL.mas_bottom).offset(15);
         make.left.equalTo(weakSelf.nameL);
+        make.right.equalTo(weakSelf.masBackView).offset(-10);
     }];
     
     [self.fourthL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.thirdL).offset(15);
+        make.top.equalTo(weakSelf.thirdL.mas_bottom).offset(15);
         make.left.equalTo(weakSelf.nameL);
     }];
     

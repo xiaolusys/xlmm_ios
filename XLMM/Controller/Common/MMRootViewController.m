@@ -498,7 +498,7 @@ static NSString *kbrandCell = @"brandCell";
 {
     NSLog(@"MMRoot viewDidLoad");
     [super viewDidLoad];
-    
+
     self.timeCount = 0;
     [self.endTime addObject:@""];
     [self.endTime addObject:@""];

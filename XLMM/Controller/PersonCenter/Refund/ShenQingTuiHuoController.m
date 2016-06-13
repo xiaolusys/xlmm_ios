@@ -46,6 +46,7 @@
     UIView *reasonView;
     UIView *selectedImageView;
     
+    BOOL isChangeBtn;
    // UIVisualEffectView *effectView;
     
    // float refundPrice;
@@ -76,6 +77,12 @@
     
     [self.imagesArray writeToFile:fullPath atomically:YES];
     
+    /**
+     *  在视图即将消失的时候
+     */
+    if (self.changeStatusBlock != nil) {
+        self.changeStatusBlock(isChangeBtn);
+    }
     
     
 }
@@ -152,6 +159,7 @@
     //[self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
     
     [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
+    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
@@ -168,7 +176,7 @@
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.num];
     
     self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.02f", self.refundPrice];
-   // refundPrice = [self.dingdanModel.priceString floatValue];
+//    refundPrice = [self.dingdanModel.priceString floatValue];
     self.refundNumLabel.text = [NSString stringWithFormat:@"%i", maxNumber];
     
     self.selectedReason.layer.cornerRadius = 4;
@@ -772,6 +780,7 @@
         AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
         [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dic = responseObject;
+            isChangeBtn = YES;
             if (dic.count == 0) return;
             
             NSLog(@"refund return, %@", responseObject);
@@ -785,6 +794,7 @@
             NSLog(@"refund return ok end");
 
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            isChangeBtn = NO;
             NSLog(@"refund return failed %@", error);
         }];
     }

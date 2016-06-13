@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     [self createNavigationBarWithTitle:@"修改昵称" selecotr:@selector(goback)];
     
     self.changeNicknameButton.layer.cornerRadius = 20;

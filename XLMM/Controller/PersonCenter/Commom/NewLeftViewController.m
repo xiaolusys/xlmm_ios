@@ -162,7 +162,7 @@
 //}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     CGRect mainSize = [UIScreen mainScreen].bounds;
     
     if (mainSize.size.height > 600) {
