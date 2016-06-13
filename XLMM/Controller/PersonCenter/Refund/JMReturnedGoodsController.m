@@ -62,6 +62,7 @@
     [self.view addSubview:baseScrollV];
     self.baseScrollV = baseScrollV;
     self.baseScrollV.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
     self.baseScrollV.scrollEnabled = YES;
 
     
@@ -163,7 +164,7 @@
 //        make.bottom.equalTo(weakSelf.baseScrollV.mas_bottom).offset(-20);
     }];
     
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    
 //    self.baseScrollV.contentOffset = CGPointMake(0, 118);
 
     
@@ -303,19 +304,22 @@
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.expressListTF = textField;
-    if ([textField.text isEqualToString:@""]) {
-        CGRect frame = CGRectMake(0, self.baseScrollV.contentSize.height - 216, self.baseScrollV.frame.size.width, 216);
-        textField.frame = frame;
-    }
+//    self.expressListTF = textField;
+//    if ([textField.text isEqualToString:@""]) {
+//        CGRect frame = CGRectMake(0, self.baseScrollV.contentSize.height - 216, self.baseScrollV.frame.size.width, 216);
+//        textField.frame = frame;
+//    }
     [textField becomeFirstResponder];
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (self.expressListTF.text.length >0) {
-        self.sureButton.enabled = NO;
-    }else {
         self.sureButton.enabled = YES;
+    }else {
+        self.sureButton.enabled = NO;
     }
+}
+- (void)viewDidLayoutSubviews {
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -325,18 +329,18 @@
     self.navigationController.navigationBarHidden = NO;
 //    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+//}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
-//- (void)viewDidDisappear:(BOOL)animated {
-//    [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 #pragma mark - 点击隐藏
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
