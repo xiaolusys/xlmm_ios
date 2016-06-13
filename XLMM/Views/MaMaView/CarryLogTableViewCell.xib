@@ -21,7 +21,7 @@
                             <constraint firstAttribute="width" constant="44" id="jQx-J0-jbs"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已确定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-YC-mX6">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="已确定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-YC-mX6">
                         <rect key="frame" x="67" y="14" width="40" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="7F1-vs-Syj"/>
@@ -34,6 +34,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="7F1-vs-Syj"/>
+                                <exclude reference="faO-yr-7Vg"/>
                             </mask>
                         </variation>
                     </label>
@@ -68,7 +69,7 @@
                             <constraint firstAttribute="height" constant="1" id="Hya-V1-fCC"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-Xo-jiO">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="佣金收益" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-Xo-jiO">
                         <rect key="frame" x="117" y="14" width="48" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="PGd-0l-YN7"/>
@@ -107,7 +108,7 @@
                 <outlet property="sourceLabel" destination="Gwf-Xo-jiO" id="t8o-C5-Sj8"/>
                 <outlet property="status" destination="f0i-YC-mX6" id="6bM-r6-CTX"/>
             </connections>
-            <point key="canvasLocation" x="433" y="396.5"/>
+            <point key="canvasLocation" x="245" y="263.5"/>
         </tableViewCell>
     </objects>
 </document>

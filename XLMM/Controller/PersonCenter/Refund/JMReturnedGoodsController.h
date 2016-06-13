@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class TuihuoModel;
 @interface JMReturnedGoodsController : UIViewController
+
+@property (strong, nonatomic) TuihuoModel *model;
 
 @end
