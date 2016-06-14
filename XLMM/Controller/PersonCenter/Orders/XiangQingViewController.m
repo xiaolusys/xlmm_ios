@@ -266,8 +266,7 @@
     self.orderTimerLabel.text = [NSString stringWithFormat:@"下单时间:%@",newStr];
     self.orderTimerLabel.textAlignment = NSTextAlignmentRight;
     //订单编号和状态
-    NSString *statusDisplay = [dicJson objectForKey:@"status_display"];
-    self.headdingdanzhuangtai.text = statusDisplay;
+    self.headdingdanzhuangtai.text = self.orderDetailModel.status_display;
     NSDictionary *dic = dicJson[@"user_adress"];
     self.addressModel = [JMEditAddressModel mj_objectWithKeyValues:dic];
     self.nameLabel.text = self.addressModel.receiver_name;
@@ -474,13 +473,17 @@
             待支付状态    只显示物流配送信息(物流信息与地址信息不可修改)  不显示包裹信息
          */
     }
-    else if (statusCount == ORDER_STATUS_PAYED && (packModel.assign_status_display )) {
-        /**
+    else if (statusCount == ORDER_STATUS_PAYED) {
+        /** && (packModel.assign_status_display )
          *  已支付状态    不显示包裹信息   物流信息与地址信息可修改
          */
         self.choiseLogisticsView.userInteractionEnabled = YES;
         self.addressInfoImage.userInteractionEnabled = YES;
-        self.packStatusL.text = packModel.assign_status_display;
+        if (packModel.assign_status_display) {
+            self.packStatusL.text = packModel.assign_status_display;
+        }else {
+            self.packStatusL.text = @"包裹正在分配";
+        }
     }
     else if (statusCount == ORDER_STATUS_SENDED) {
         /**
@@ -547,6 +550,9 @@
         self.orderGoodsModel = [dataArray objectAtIndex:count];
         queryVC.goodsModel = self.orderGoodsModel;
 //        [self.navigationController pushViewController:queryVC animated:YES];
+        
+
+        
         [self.navigationController pushViewController:queryVC animated:YES];
 
     }
@@ -591,6 +597,7 @@
         num = 0;
     }
     NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+    
     NSInteger nums = 20 + num;
     if (dic.count == 0){
         //无查物流信息，直接显示时间和商品即可  76 -- > 35 + 20
@@ -606,6 +613,7 @@
     [self  transferJMPackAgeModel:dic];
     NSString *groupKey = @"";
     NSInteger h = 0;
+    NSInteger hs = 0;
     self.goodsViewHeight.constant = packetNum * nums + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
     for(int i =0; i < logisticsInfoArray.count; i++){
         currentIndex = i;
@@ -614,6 +622,8 @@
             if(i != 0) h+= 15;
             [self createProcessView:CGRectMake(0, h, SCREENWIDTH, nums) status:[orderStatus objectAtIndex:i] JMPackAgeModel:((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i])];
             h += nums;
+            hs += nums;
+//            self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[i]];
         }
 //        NSString *packStr = @"";
 //        if (packModel.ware_by_display == nil) {
@@ -627,7 +637,12 @@
 //                packStr = [NSString stringWithFormat:@"包裹%@",arr[count]];
 //            }
 //        }
-        self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[i]];
+        NSInteger numC = hs / 55;
+        if (numC == 0) {
+            return;
+        }else {
+            self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[numC - 1]];
+        }
         self.baseView.tag = 100 + i;
         groupKey = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
@@ -854,14 +869,14 @@
     //  dingdanModel -- > 
     NSInteger i = button.tag - 200;
     self.orderGoodsModel = [dataArray objectAtIndex:i];
-    ShenQingTuiHuoController *tuikuanVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
-    tuikuanVC.refundPrice = [self.orderGoodsModel.payment floatValue];
-    tuikuanVC.dingdanModel = self.orderGoodsModel;
-    tuikuanVC.tid = tid;
-    tuikuanVC.oid = [oidArray objectAtIndex:i];
-    tuikuanVC.status = self.orderGoodsModel.status_display;
+    ShenQingTuiHuoController *tuiHuoVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
+    tuiHuoVC.refundPrice = [self.orderGoodsModel.payment floatValue];
+    tuiHuoVC.dingdanModel = self.orderGoodsModel;
+    tuiHuoVC.tid = tid;
+    tuiHuoVC.oid = [oidArray objectAtIndex:i];
+    tuiHuoVC.status = self.orderGoodsModel.status_display;
     
-    [self.navigationController pushViewController:tuikuanVC animated:YES];
+    [self.navigationController pushViewController:tuiHuoVC animated:YES];
     
 }
 - (void)tuikuan:(UIButton *)button{
@@ -871,14 +886,14 @@
 //    NSDictionary *dic = [[dataArray objectAtIndex:i] mj_keyValues];
     self.orderGoodsModel = [dataArray objectAtIndex:i];
     
-    ShenQingTuikuanController *tuiHuoVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+    ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
     
-    tuiHuoVC.dingdanModel = self.orderGoodsModel;
- 
-    tuiHuoVC.tid = tid;
-    tuiHuoVC.oid = [oidArray objectAtIndex:i];
-    tuiHuoVC.status = self.orderGoodsModel.status_display;
-    [self.navigationController pushViewController:tuiHuoVC animated:YES];
+    tuikuanVC.dingdanModel = self.orderGoodsModel;
+    
+    tuikuanVC.tid = tid;
+    tuikuanVC.oid = [oidArray objectAtIndex:i];
+    tuikuanVC.status = self.orderGoodsModel.status_display;
+    [self.navigationController pushViewController:tuikuanVC animated:YES];
 }
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){

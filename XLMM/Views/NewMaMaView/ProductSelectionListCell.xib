@@ -80,6 +80,12 @@
                         <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3b-bP-R79">
+                        <rect key="frame" x="204" y="47" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="C7U-Rt-qE5" secondAttribute="trailing" id="1BJ-6Z-qW8"/>
@@ -109,6 +115,7 @@
             <connections>
                 <outlet property="addBtnClick" destination="WA1-We-DxX" id="9mr-Dz-ZOz"/>
                 <outlet property="backPriceLabel" destination="zUp-6J-41g" id="D0k-w6-Ftw"/>
+                <outlet property="deleateLine" destination="Z3b-bP-R79" id="9C2-HP-9Hp"/>
                 <outlet property="picImageView" destination="M2d-dN-QhO" id="bQi-dc-kw6"/>
                 <outlet property="priceLabel" destination="sfp-yx-Raj" id="9Kk-r3-8Yv"/>
                 <outlet property="productName" destination="Dwf-Xj-ilj" id="9zB-qe-TTi"/>

@@ -169,15 +169,14 @@
     
     UIWebView *baseWebView = [[UIWebView alloc] init];
     self.baseWebView = baseWebView;
-    
-    [self registerJsBridge];
-    
     [self.view addSubview:self.baseWebView];
     self.baseWebView.backgroundColor = [UIColor whiteColor];
     self.baseWebView.tag = 111;
 //    self.baseWebView.delegate = self;
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.userInteractionEnabled = YES;
+    
+    [self registerJsBridge];
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];

@@ -711,6 +711,8 @@
 		1F9238D71CF45B61000AD0EF /* JMMaMaOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9238D61CF45B61000AD0EF /* JMMaMaOrderListCell.m */; };
 		1F9238D91CF46305000AD0EF /* isApp_orderList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
+		1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */; };
+		1FF26B271D1014D800F4A831 /* JMAppRefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B261D1014D800F4A831 /* JMAppRefundView.m */; };
 		1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */; };
 		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
 		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
@@ -1900,6 +1902,10 @@
 		1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isApp_orderList@2x.png"; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
+		1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAppForRefundModel.m; sourceTree = "<group>"; };
+		1FF26B251D1014D800F4A831 /* JMAppRefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppRefundView.h; sourceTree = "<group>"; };
+		1FF26B261D1014D800F4A831 /* JMAppRefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAppRefundView.m; sourceTree = "<group>"; };
 		1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonWebViewViewController.h; path = ../Activity/CommonWebViewViewController.h; sourceTree = "<group>"; };
 		1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonWebViewViewController.m; path = ../Activity/CommonWebViewViewController.m; sourceTree = "<group>"; };
 		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
@@ -2786,15 +2792,13 @@
 		183071311C97BE3700B7665E /* MaMaVersion1 */ = {
 			isa = PBXGroup;
 			children = (
+				1FC8BF2C1D0E95B60076125A /* withDrawHistory提现历史 */,
 				1F0D90501CEC162800C2334D /* Withdraw(提现) */,
 				1F9238D11CF45AB3000AD0EF /* OrderList(订单记录) */,
 				1830713B1C97BE3700B7665E /* MaMaViewController.h */,
 				1830713C1C97BE3700B7665E /* MaMaViewController.m */,
 				1830713D1C97BE3700B7665E /* PublishNewPdtViewController.h */,
 				1830713E1C97BE3700B7665E /* PublishNewPdtViewController.m */,
-				1830713F1C97BE3700B7665E /* TixianHistoryViewController.h */,
-				183071401C97BE3700B7665E /* TixianHistoryViewController.m */,
-				183071411C97BE3700B7665E /* TixianHistoryViewController.xib */,
 				1F88D5801CB77AC90050A2E2 /* MyInvitationViewController.h */,
 				1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */,
 			);
@@ -2941,6 +2945,7 @@
 		183071A91C97BE3700B7665E /* Refund */ = {
 			isa = PBXGroup;
 			children = (
+				1FF26B1B1D100BFD00F4A831 /* Applicationforrefund(申请退款) */,
 				0BE3130C1D05139B00CD97D6 /* returnedGoods(退货地址) */,
 				183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */,
 				183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */,
@@ -2951,9 +2956,6 @@
 				183071B41C97BE3700B7665E /* ShenQingTuiHuoController.m */,
 				183071B51C97BE3700B7665E /* ShenQingTuiHuoController.xib */,
 				183071AD1C97BE3700B7665E /* PostImageView.xib */,
-				183071B61C97BE3700B7665E /* ShenQingTuikuanController.h */,
-				183071B71C97BE3700B7665E /* ShenQingTuikuanController.m */,
-				183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */,
 				183071B91C97BE3700B7665E /* TuihuoViewController.h */,
 				183071BA1C97BE3700B7665E /* TuihuoViewController.m */,
 				183071BB1C97BE3700B7665E /* TuihuoViewController.xib */,
@@ -4417,6 +4419,54 @@
 			name = "OrderList(订单记录)";
 			sourceTree = "<group>";
 		};
+		1FC8BF2C1D0E95B60076125A /* withDrawHistory提现历史 */ = {
+			isa = PBXGroup;
+			children = (
+				1830713F1C97BE3700B7665E /* TixianHistoryViewController.h */,
+				183071401C97BE3700B7665E /* TixianHistoryViewController.m */,
+				183071411C97BE3700B7665E /* TixianHistoryViewController.xib */,
+			);
+			name = "withDrawHistory提现历史";
+			sourceTree = "<group>";
+		};
+		1FF26B1B1D100BFD00F4A831 /* Applicationforrefund(申请退款) */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B1D1D100C4200F4A831 /* Model */,
+				1FF26B211D10116000F4A831 /* View */,
+				1FF26B1C1D100C3F00F4A831 /* Controller */,
+			);
+			name = "Applicationforrefund(申请退款)";
+			sourceTree = "<group>";
+		};
+		1FF26B1C1D100C3F00F4A831 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183071B61C97BE3700B7665E /* ShenQingTuikuanController.h */,
+				183071B71C97BE3700B7665E /* ShenQingTuikuanController.m */,
+				183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FF26B1D1D100C4200F4A831 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */,
+				1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FF26B211D10116000F4A831 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B251D1014D800F4A831 /* JMAppRefundView.h */,
+				1FF26B261D1014D800F4A831 /* JMAppRefundView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -5319,6 +5369,7 @@
 				183073DB1C97D17800B7665E /* QNDnspodEnterprise.m in Sources */,
 				325B79D81C97E7160022F930 /* MMAdvertiseView.m in Sources */,
 				183073DE1C97D17800B7665E /* QNHosts.m in Sources */,
+				1FF26B271D1014D800F4A831 /* JMAppRefundView.m in Sources */,
 				183072891C97C00900B7665E /* UIImage+ImageWithSelectedView.m in Sources */,
 				1830728D1C97C00900B7665E /* UIViewController+NavigationBar.m in Sources */,
 				183073CE1C97D17800B7665E /* AFNetworkReachabilityManager.m in Sources */,
@@ -5398,6 +5449,7 @@
 				0B43FFA31CFE878600AE7DDD /* JMLogistics.m in Sources */,
 				183074101C97D17800B7665E /* QNResumeUpload.m in Sources */,
 				1830723C1C97BE3700B7665E /* PersonCenterViewController2.m in Sources */,
+				1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */,
 				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
@@ -5606,7 +5658,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -5644,7 +5696,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -5655,7 +5707,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5703,7 +5755,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5713,7 +5765,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5761,7 +5813,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

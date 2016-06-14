@@ -51,13 +51,22 @@
     self.view.backgroundColor = [UIColor lineGrayColor];
     [self createNavigationBarWithTitle:@"填写快递单" selecotr:@selector(backClicked:)];
     [self createUI];
-    
+    [self createRightButonItem];
     //注册键盘的通知
     [self monitorKeyboard];
 }
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"联系客服" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 - (void)createUI {
     kWeakSelf
-    
+
     UIScrollView *baseScrollV = [[UIScrollView alloc] init];
     [self.view addSubview:baseScrollV];
     self.baseScrollV = baseScrollV;
@@ -169,6 +178,12 @@
 
     
 }
+#pragma mark --- 联系客服
+- (void)rightClicked:(UIButton *)button {
+    NSString *phoneStr = [NSString stringWithFormat:@"tel:%@",self.model.mobile];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneStr]];
+}
+
 #pragma mark --- 选择物流公司
 - (void)choiseClick:(UIButton *)btn {
     JMChooseLogisticsController *logisticsVC = [[JMChooseLogisticsController alloc] init];

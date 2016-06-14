@@ -8,11 +8,24 @@
 
 #import "CartTableCellTableViewCell1.h"
 #import "MMClass.h"
+#import "Masonry.h"
 
 @implementation CartTableCellTableViewCell1
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    UILabel *deleateLine = [UILabel new];
+    [self.oldPriceLabel addSubview:deleateLine];
+    self.deleateLine = deleateLine;
+    self.deleateLine.backgroundColor = [UIColor lightGrayColor];
+    [self.deleateLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.oldPriceLabel.mas_centerY);
+        make.left.equalTo(self.oldPriceLabel);
+        make.right.equalTo(self.oldPriceLabel);
+        make.height.mas_equalTo(1);
+    }];
+    
 }
 
 - (void)drawRect:(CGRect)rect{

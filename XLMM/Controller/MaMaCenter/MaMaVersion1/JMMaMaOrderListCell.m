@@ -36,7 +36,7 @@
 /**
  *  是否显示APP
  */
-@property (nonatomic,strong) UIImageView *isAPP;
+@property (nonatomic,strong) UILabel *isAPP;
 /**
  *  实际支付
  */
@@ -71,7 +71,7 @@
     [self.contentView addSubview:iconImageView];
     self.iconImageView = iconImageView;
     
-    UIImageView *isAPP = [[UIImageView alloc] init];
+    UILabel *isAPP = [[UILabel alloc] init];
     [self.contentView addSubview:isAPP];
     self.isAPP = isAPP;
 
@@ -169,6 +169,8 @@
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM {
     
+
+    
     //    UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:100];
     
     //    self.isAPP = imageView;
@@ -179,20 +181,31 @@
     
     self.userName.text = orderM.contributor_nick;
     
-    if (orderM.carry_type_name.length == 0) {
+    if ([orderM.carry_type intValue] == 1) {
 
         self.isAppImage = NO;
-        self.isAPP.image = nil;
-    }else {
+        self.isAPP = nil;
+    }else if([orderM.carry_type intValue] == 2) {
 
         self.isAppImage = YES;
-        self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
+        self.isAPP.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+        self.isAPP.text = @"APP";
+        self.isAPP.textColor = [UIColor whiteColor];
+        self.isAPP.font = [UIFont systemFontOfSize:12.];
+//        self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
 
+    }else if([orderM.carry_type intValue] == 3) {
+        self.isAppImage = YES;
+//        self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
+        self.isAPP.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+        self.isAPP.text = @"下属订单";
+        self.isAPP.textColor = [UIColor whiteColor];
+        self.isAPP.font = [UIFont systemFontOfSize:12.];
+    }else {
+        
     }
     
-    
     //    self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
-    
     
     /**
      *  收益
@@ -223,4 +236,16 @@
     NSString *time = [hour substringToIndex:5];
     return time;
 }
+
 @end
+
+
+
+
+
+
+
+
+
+
+
