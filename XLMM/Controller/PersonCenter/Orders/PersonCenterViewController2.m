@@ -23,6 +23,8 @@
 
 @interface PersonCenterViewController2 ()<NSURLConnectionDataDelegate>
 
+@property (nonatomic,strong) UIButton *topButton;
+
 @property (nonatomic, strong)NSArray *dataArray;
 
 @end
@@ -54,6 +56,8 @@
     
     self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
+    [self createButton];
+    
     [self.collectionView registerClass:[SingleOrderViewCell class] forCellWithReuseIdentifier:@"SingleOrderCell"];
     [self.collectionView registerClass:[MoreOrdersViewCell class] forCellWithReuseIdentifier:@"MoreOrdersCell"];
     
@@ -65,7 +69,8 @@
     footer.hidden = YES;
     
     self.collectionView.mj_footer = footer;
-
+    
+    
 }
 
 - (void)loadMore
@@ -306,14 +311,79 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark -- 添加返回顶部按钮
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.topButton.frame = CGRectMake(SCREENWIDTH - 100, SCREENHEIGHT / 2, 50, 50);
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+    
 }
-*/
+- (void)topButtonClick:(UIButton *)btn {
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+
+}
+
+- (void)hiddenBackTopBtn {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.topButton.hidden = YES;
+    }];
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [UIView animateWithDuration:0.5 animations:^{
+        if (self.dataArray.count == 0) {
+            self.topButton.hidden = YES;
+        }else {
+            self.topButton.hidden = NO;
+        }
+    }];
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
+}
+
+
+
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

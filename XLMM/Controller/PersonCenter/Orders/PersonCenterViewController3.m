@@ -32,6 +32,8 @@
 
 @interface PersonCenterViewController3 ()
 
+@property (nonatomic,strong) UIButton *topButton;
+
 @end
 
 @implementation PersonCenterViewController3{
@@ -147,7 +149,7 @@
     footer.hidden = YES;
     
     self.quanbuCollectionView.mj_footer = footer;
-    
+    [self createButton];
     
 }
 
@@ -291,68 +293,6 @@
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
         cell.statusLabel.text = model.dingdanZhuangtai;
 
-        
-        
-//        for (int i = 0; i < dataArray.count; i++) {
-//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
-//            [btn removeFromSuperview];
-//        }
-//    
-//    
-//        if ([string isEqualToString:@"已发货"]) {
-//            NSLog(@"已经发货");
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//    
-//            [button setTitle:@"确认收货" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([string isEqualToString:@"待付款"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//    
-//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([string isEqualToString:@"已付款"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//    
-//            [button setTitle:@"申请退款" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([string isEqualToString:@"交易成功"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//    
-//            [button setTitle:@"退货退款" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        }
         return cell;
         
     } else {
@@ -378,68 +318,6 @@
 
         cell.statusLabel.text = model.dingdanZhuangtai;
 
-        
-//        
-//        for (int i = 0; i < dataArray.count; i++) {
-//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
-//            [btn removeFromSuperview];
-//        }
-//        
-//        
-//        if ([model.dingdanZhuangtai isEqualToString:@"已发货"]) {
-//            NSLog(@"已经发货");
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//            
-//            [button setTitle:@"确认收货" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"待付款"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//            
-//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//            
-//            [button setTitle:@"申请退款" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
-//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
-//            button.tag = indexPath.row +100;
-//            
-//            [button setTitle:@"退货退款" forState:UIControlStateNormal];
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
-//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-//            button.layer.cornerRadius = 12.5;
-//            button.titleLabel.font = [UIFont systemFontOfSize:12];
-//            button.layer.borderWidth = 0.5;
-//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
-//            [cell.contentView addSubview:button];
-//        }
         return cell;
         
     }
@@ -465,8 +343,6 @@
 - (void)querenQianshou:(UIButton *)button{
     NSLog(@"确认收货");
 
-    
-    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -484,23 +360,164 @@
 }
 
 
-
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark -- 添加返回顶部按钮
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.topButton.frame = CGRectMake(SCREENWIDTH - 100, SCREENHEIGHT / 2, 50, 50);
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)topButtonClick:(UIButton *)btn {
+    [self.quanbuCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
-*/
+#pragma mark -- 添加滚动的协议方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [UIView animateWithDuration:0.5 animations:^{
+        if (dataArray.count == 0) {
+            self.topButton.hidden = YES;
+        }else {
+            self.topButton.hidden = NO;
+        }
+    }];
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
+}
+- (void)hiddenBackTopBtn {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.topButton.hidden = YES;
+    }];
+}
 
 @end
+
+
+
+//        for (int i = 0; i < dataArray.count; i++) {
+//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+//            [btn removeFromSuperview];
+//        }
+//
+//
+//        if ([string isEqualToString:@"已发货"]) {
+//            NSLog(@"已经发货");
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"确认收货" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([string isEqualToString:@"待付款"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([string isEqualToString:@"已付款"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"申请退款" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([string isEqualToString:@"交易成功"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        }
+
+
+//
+//        for (int i = 0; i < dataArray.count; i++) {
+//            UIButton * btn = (UIButton *)[cell.contentView viewWithTag:i + 100];
+//            [btn removeFromSuperview];
+//        }
+//
+//
+//        if ([model.dingdanZhuangtai isEqualToString:@"已发货"]) {
+//            NSLog(@"已经发货");
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"确认收货" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(querenQianshou:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([model.dingdanZhuangtai isEqualToString:@"待付款"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"立即支付" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(lijizhifu:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"申请退款" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(shenqingtuikuan:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
+//            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
+//            button.tag = indexPath.row +100;
+//
+//            [button setTitle:@"退货退款" forState:UIControlStateNormal];
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [button addTarget:self action:@selector(tuihuotuikuan:) forControlEvents:UIControlEventTouchUpInside];
+//            button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//            button.layer.cornerRadius = 12.5;
+//            button.titleLabel.font = [UIFont systemFontOfSize:12];
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
+//            [cell.contentView addSubview:button];
+//        }

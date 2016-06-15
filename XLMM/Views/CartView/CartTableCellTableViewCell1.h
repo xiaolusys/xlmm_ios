@@ -40,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deleateLine;
 - (IBAction)reduceBtn:(id)sender;
 - (IBAction)addBtn:(id)sender;
 

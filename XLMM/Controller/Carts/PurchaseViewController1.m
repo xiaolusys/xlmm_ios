@@ -221,10 +221,9 @@
     self.payView = payView;
     self.payView.delegate = self;
     self.payView.width = SCREENWIDTH;
-    
 
-    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
-    self.showViewVC = showViewVC;
+//    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
+//    self.showViewVC = showViewVC;
 }
 #pragma mark ------ 创建一个请求
 - (void)downloadCartsData{
@@ -581,13 +580,15 @@
 - (void)choiseButtonClick:(UIButton *)btn {
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
+    
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMChoiseLogisController alloc] init];
+    }
     self.showViewVC.dataSource = self.dataSource;
     NSInteger count = self.dataSource.count;
     self.showViewVC.count = count;
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
-    if (self.showViewVC.view == nil) {
-        self.showViewVC = [[JMChoiseLogisController alloc] init];
-    }
+    
     self.showViewVC.delegate = self;
     menu.contentView = self.showViewVC.view;
     

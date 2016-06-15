@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A2301" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -61,6 +61,15 @@
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igt-AS-pgH">
+                        <rect key="frame" x="157" y="88" width="76" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="cTb-XU-gxJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fbh-5Z-7lt">
                         <rect key="frame" x="220" y="71" width="88" height="28"/>
                         <constraints>
@@ -82,11 +91,19 @@
                             <constraint firstAttribute="height" constant="1" id="iej-JT-JGK"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SL7-nO-hDy">
+                        <rect key="frame" x="237" y="33" width="7" height="9"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ojj-zy-SnR" secondAttribute="bottom" constant="8" id="1Iz-m7-lC6"/>
                     <constraint firstItem="ojj-zy-SnR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="1N1-fl-nK0"/>
+                    <constraint firstItem="l93-Kv-fAm" firstAttribute="top" secondItem="Igt-AS-pgH" secondAttribute="bottom" constant="19" id="6xp-wB-Ze6"/>
+                    <constraint firstItem="Igt-AS-pgH" firstAttribute="leading" secondItem="qGM-yi-dbK" secondAttribute="trailing" constant="-24" id="Gjv-2B-ijh"/>
                     <constraint firstItem="eZp-dx-RlH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="HEV-tb-OfJ"/>
                     <constraint firstItem="ojj-zy-SnR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="7" id="Kvn-k9-RTL"/>
                     <constraint firstAttribute="bottom" secondItem="l93-Kv-fAm" secondAttribute="bottom" id="Lhs-yn-PAX"/>
@@ -95,10 +112,13 @@
                     <constraint firstItem="qGM-yi-dbK" firstAttribute="leading" secondItem="Yam-ds-YuL" secondAttribute="trailing" id="P9z-xQ-QVX"/>
                     <constraint firstItem="l93-Kv-fAm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="YXE-qd-lMQ"/>
                     <constraint firstItem="DWY-hw-Yjc" firstAttribute="leading" secondItem="stQ-r5-OV0" secondAttribute="trailing" id="a1E-6i-QtO"/>
+                    <constraint firstItem="Igt-AS-pgH" firstAttribute="width" secondItem="qGM-yi-dbK" secondAttribute="width" constant="56" id="aXc-LB-T8w"/>
                     <constraint firstItem="stQ-r5-OV0" firstAttribute="leading" secondItem="ojj-zy-SnR" secondAttribute="trailing" constant="8" id="biw-gh-NZw"/>
+                    <constraint firstItem="Igt-AS-pgH" firstAttribute="leading" secondItem="qGM-yi-dbK" secondAttribute="leading" constant="-4" id="drT-8Y-eH4"/>
                     <constraint firstItem="Yam-ds-YuL" firstAttribute="baseline" secondItem="yyg-Re-YKc" secondAttribute="baseline" id="duS-QP-7cS"/>
                     <constraint firstItem="yyg-Re-YKc" firstAttribute="top" secondItem="stQ-r5-OV0" secondAttribute="bottom" constant="12" id="kRJ-45-8Jx"/>
                     <constraint firstAttribute="bottomMargin" secondItem="yyg-Re-YKc" secondAttribute="bottom" constant="2" id="kjE-lq-xaO"/>
+                    <constraint firstItem="Igt-AS-pgH" firstAttribute="centerY" secondItem="qGM-yi-dbK" secondAttribute="centerY" id="l4o-oy-rNi"/>
                     <constraint firstAttribute="trailing" secondItem="Fbh-5Z-7lt" secondAttribute="trailing" constant="12" id="oDY-gm-aAu"/>
                     <constraint firstItem="Yam-ds-YuL" firstAttribute="baseline" secondItem="qGM-yi-dbK" secondAttribute="baseline" id="rQH-Fw-5Uh"/>
                     <constraint firstItem="eZp-dx-RlH" firstAttribute="leading" secondItem="ojj-zy-SnR" secondAttribute="trailing" constant="8" id="u3O-ai-LuA"/>
@@ -106,16 +126,23 @@
                     <constraint firstItem="DWY-hw-Yjc" firstAttribute="centerY" secondItem="stQ-r5-OV0" secondAttribute="centerY" id="z2H-G9-eRw"/>
                     <constraint firstItem="Yam-ds-YuL" firstAttribute="leading" secondItem="yyg-Re-YKc" secondAttribute="trailing" id="zds-Ox-mHd"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="6xp-wB-Ze6"/>
+                        <exclude reference="Gjv-2B-ijh"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="allPriceLabel" destination="qGM-yi-dbK" id="U8k-Dk-cf4"/>
+                <outlet property="deleateLine" destination="SL7-nO-hDy" id="jwQ-Rq-yng"/>
                 <outlet property="headImageView" destination="ojj-zy-SnR" id="Ypm-rZ-qmm"/>
                 <outlet property="nameLabel" destination="eZp-dx-RlH" id="ilY-oP-6ve"/>
                 <outlet property="priceLabel" destination="yyg-Re-YKc" id="2Ct-MB-2fB"/>
                 <outlet property="reBuyButton" destination="Fbh-5Z-7lt" id="fDh-Ko-ZkD"/>
                 <outlet property="sizeLabel" destination="DWY-hw-Yjc" id="dff-rX-94v"/>
             </connections>
-            <point key="canvasLocation" x="526" y="249"/>
+            <point key="canvasLocation" x="250" y="191"/>
         </tableViewCell>
     </objects>
 </document>

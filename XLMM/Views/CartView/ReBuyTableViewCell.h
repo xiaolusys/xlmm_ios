@@ -36,6 +36,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *allPriceLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *deleateLine;
 
 - (IBAction)reBuyClicked:(id)sender;
 
