@@ -116,7 +116,7 @@
     
     NSDictionary *_orderDic;
     NSString *_goodsID; // 订单ID
-    
+    NSDictionary *_refundDic;
 }
 
 - (JMEditAddressModel *)addressModel {
@@ -178,14 +178,14 @@
     self.screenWidth.constant = SCREENWIDTH;//自定义宽度
     
     
-    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    frontView.backgroundColor = [UIColor whiteColor];
-    
-    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityView.center = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2-80);
-    [activityView startAnimating];
-    [frontView addSubview:activityView];
-    [self.view addSubview:frontView];
+//    frontView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    frontView.backgroundColor = [UIColor whiteColor];
+//
+//    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    activityView.center = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2-80);
+//    [activityView startAnimating];
+//    [frontView addSubview:activityView];
+//    [self.view addSubview:frontView];
     
     self.quxiaoBtn.layer.cornerRadius = 20;
     self.quxiaoBtn.layer.borderWidth = 1;
@@ -224,7 +224,7 @@
         _orderDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         JMOrderDetailModel *detailModel = [JMOrderDetailModel mj_objectWithKeyValues:responseObject];
         NSDictionary *dict = detailModel.user_adress;
-
+        _refundDic = _orderDic[@"extras"];
         _editAddDict = [NSMutableDictionary dictionaryWithDictionary:dict];//self.model.mj_keyValues;
         
         [self fetchedDingdanData:_orderDic];
@@ -428,7 +428,7 @@
         make.left.equalTo(self.packInfoView);
         make.width.mas_equalTo(SCREENWIDTH);
         NSInteger statusCount = [self.orderDetailModel.status integerValue];
-        if (statusCount >= ORDER_STATUS_PAYED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
+        if (statusCount >= ORDER_STATUS_PAYED) {// && statusCount < ORDER_STATUS_REFUND_CLOSE
             make.height.mas_equalTo(@35);
         }else {
             make.height.mas_equalTo(@1);
@@ -590,8 +590,8 @@
 #pragma mark ----- 物流视图的显示
 - (void)setWuLiuMsg:(NSDictionary *)dic {
     NSInteger statusCount = [self.orderDetailModel.status integerValue];
-    NSInteger num = 0; // num -- > 显示物流状态的视图
-    if (statusCount >= ORDER_STATUS_PAYED && statusCount < ORDER_STATUS_REFUND_CLOSE) {
+    NSInteger num = 0; // num -- > 显示物流状态的视图  && statusCount < ORDER_STATUS_REFUND_CLOSE
+    if (statusCount >= ORDER_STATUS_PAYED) {
         num = 35;
     }else {
         num = 0;
@@ -889,7 +889,7 @@
     ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
     
     tuikuanVC.dingdanModel = self.orderGoodsModel;
-    
+    tuikuanVC.refundDic = _refundDic;
     tuikuanVC.tid = tid;
     tuikuanVC.oid = [oidArray objectAtIndex:i];
     tuikuanVC.status = self.orderGoodsModel.status_display;

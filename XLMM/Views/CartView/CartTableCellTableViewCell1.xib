@@ -134,8 +134,8 @@
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvw-ra-cta">
-                        <rect key="frame" x="234" y="43" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvw-ra-cta">
+                        <rect key="frame" x="234" y="43" width="10" height="7"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -183,7 +183,7 @@
                 <outlet property="priceLabel" destination="QJe-Jt-wd5" id="r82-Op-KZN"/>
                 <outlet property="sizeLabel" destination="1Hu-nt-rsw" id="kvW-g3-9Uj"/>
             </connections>
-            <point key="canvasLocation" x="351.5" y="227"/>
+            <point key="canvasLocation" x="351" y="227"/>
         </tableViewCell>
     </objects>
     <resources>

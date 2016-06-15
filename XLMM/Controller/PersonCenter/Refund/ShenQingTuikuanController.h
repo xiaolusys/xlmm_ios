@@ -17,8 +17,8 @@
 @property (copy, nonatomic) NSString *tid;
 @property (copy, nonatomic) NSString *oid;
 @property (copy, nonatomic) NSString *status;
-
-
+@property (strong, nonatomic) NSDictionary *refundDic;
+@property (nonatomic,strong) NSString *refundCHannel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UIView *buttonView;

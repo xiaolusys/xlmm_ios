@@ -712,7 +712,9 @@
 		1F9238D91CF46305000AD0EF /* isApp_orderList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */; };
-		1FF26B271D1014D800F4A831 /* JMAppRefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B261D1014D800F4A831 /* JMAppRefundView.m */; };
+		1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B291D10E7CE00F4A831 /* JMRefundController.m */; };
+		1FF26B2D1D10EA2400F4A831 /* JMRefundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */; };
+		1FF26B311D113A2A00F4A831 /* backTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26B301D113A2A00F4A831 /* backTop@2x.png */; };
 		1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */; };
 		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
 		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
@@ -1904,8 +1906,11 @@
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
 		1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAppForRefundModel.m; sourceTree = "<group>"; };
-		1FF26B251D1014D800F4A831 /* JMAppRefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppRefundView.h; sourceTree = "<group>"; };
-		1FF26B261D1014D800F4A831 /* JMAppRefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAppRefundView.m; sourceTree = "<group>"; };
+		1FF26B281D10E7CE00F4A831 /* JMRefundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundController.h; sourceTree = "<group>"; };
+		1FF26B291D10E7CE00F4A831 /* JMRefundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundController.m; sourceTree = "<group>"; };
+		1FF26B2B1D10EA2400F4A831 /* JMRefundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundCell.h; sourceTree = "<group>"; };
+		1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundCell.m; sourceTree = "<group>"; };
+		1FF26B301D113A2A00F4A831 /* backTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backTop@2x.png"; sourceTree = "<group>"; };
 		1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonWebViewViewController.h; path = ../Activity/CommonWebViewViewController.h; sourceTree = "<group>"; };
 		1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonWebViewViewController.m; path = ../Activity/CommonWebViewViewController.m; sourceTree = "<group>"; };
 		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
@@ -4174,6 +4179,7 @@
 		1F14D60F1CC6057D00410EC0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1FF26B301D113A2A00F4A831 /* backTop@2x.png */,
 				1F14D6101CC6059100410EC0 /* today.png */,
 				1F14D6111CC6059100410EC0 /* today1.png */,
 				1F14D6121CC6059100410EC0 /* tomorrow.png */,
@@ -4445,6 +4451,8 @@
 				183071B61C97BE3700B7665E /* ShenQingTuikuanController.h */,
 				183071B71C97BE3700B7665E /* ShenQingTuikuanController.m */,
 				183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */,
+				1FF26B281D10E7CE00F4A831 /* JMRefundController.h */,
+				1FF26B291D10E7CE00F4A831 /* JMRefundController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -4461,8 +4469,8 @@
 		1FF26B211D10116000F4A831 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1FF26B251D1014D800F4A831 /* JMAppRefundView.h */,
-				1FF26B261D1014D800F4A831 /* JMAppRefundView.m */,
+				1FF26B2B1D10EA2400F4A831 /* JMRefundCell.h */,
+				1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -5141,6 +5149,7 @@
 				1830766C1C97D49A00B7665E /* 圈圈加载0024.png in Resources */,
 				183075821C97D49A00B7665E /* icon-jiantouyou2.png in Resources */,
 				1830764E1C97D49A00B7665E /* xiaolumamahuoyuedu.png in Resources */,
+				1FF26B311D113A2A00F4A831 /* backTop@2x.png in Resources */,
 				18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */,
 				1830767B1C97D49A00B7665E /* 圈圈加载0039.png in Resources */,
 				1F13513E1CE5BF9700D6138D /* chose_withdraw_one_nomal@2x.png in Resources */,
@@ -5316,6 +5325,7 @@
 				1F4161141CE31A4400F78C0D /* MASViewConstraint.m in Sources */,
 				1F2AE9691CF69380002EC974 /* NSObject+MJClass.m in Sources */,
 				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
+				1FF26B2D1D10EA2400F4A831 /* JMRefundCell.m in Sources */,
 				1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */,
 				183072281C97BE3700B7665E /* AddressViewController.m in Sources */,
 				0BBEFDC71D05D4D300D45078 /* JMGoodsListCell.m in Sources */,
@@ -5369,7 +5379,6 @@
 				183073DB1C97D17800B7665E /* QNDnspodEnterprise.m in Sources */,
 				325B79D81C97E7160022F930 /* MMAdvertiseView.m in Sources */,
 				183073DE1C97D17800B7665E /* QNHosts.m in Sources */,
-				1FF26B271D1014D800F4A831 /* JMAppRefundView.m in Sources */,
 				183072891C97C00900B7665E /* UIImage+ImageWithSelectedView.m in Sources */,
 				1830728D1C97C00900B7665E /* UIViewController+NavigationBar.m in Sources */,
 				183073CE1C97D17800B7665E /* AFNetworkReachabilityManager.m in Sources */,
@@ -5436,6 +5445,7 @@
 				1830740C1C97D17800B7665E /* QNReachability.m in Sources */,
 				183072851C97C00900B7665E /* NSString+URL.m in Sources */,
 				1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */,
+				1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */,
 				325B79A01C97E6F10022F930 /* ReBuyTableViewCell.m in Sources */,
 				1830722F1C97BE3700B7665E /* JifenViewController.m in Sources */,
 				183073CC1C97D17800B7665E /* AFHTTPRequestOperationManager.m in Sources */,

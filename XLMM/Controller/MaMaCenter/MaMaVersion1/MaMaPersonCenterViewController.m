@@ -1093,13 +1093,13 @@
     PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }
-
+#pragma mark --- 订单记录按钮
 - (IBAction)MamaOrderClicked:(id)sender {
     MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
     orderList.orderRecord = self.orderRecord;
     [self.navigationController pushViewController:orderList animated:YES];
 }
-
+#pragma mark --- 收益记录按钮
 - (IBAction)MamaCarryLogClicked:(id)sender {
 //    MaMaCarryLogViewController *carry = [[MaMaCarryLogViewController alloc] init];
 //    
@@ -1160,7 +1160,7 @@
     [self.navigationController pushViewController:share animated:YES];
 }
 
-
+#pragma mark --- 我的粉丝按钮
 - (IBAction)fansList:(id)sender {
     FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
     fensiVC.fansNum = self.fansNum;

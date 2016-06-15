@@ -19,11 +19,14 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "MJExtension.h"
 #import "JMAppForRefundModel.h"
-#import "JMAppRefundView.h"
 #import "UIView+RGSize.h"
+#import "JMShareView.h"
+#import "JMPopView.h"
+#import "JMRefundController.h"
+#import "SVProgressHUD.h"
 
 
-@interface ShenQingTuikuanController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate,JMAppRefundViewDelegate>
+@interface ShenQingTuikuanController ()<JMRefundControllerDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate,JMShareViewDelegate>
 
 {
     
@@ -35,7 +38,7 @@
 
 @property (nonatomic,strong) JMAppForRefundModel *apprefundModel;
 
-@property (nonatomic,strong) JMAppRefundView *appRefundView;
+@property (nonatomic,strong) JMRefundController *refundVC;
 
 @property (nonatomic,strong) UIView *maskView;
 
@@ -187,112 +190,8 @@
     
     [self loadReasonView];
     [self disableTijiaoButton];
-    [self loadData];
-    [self createRefundUI];
- 
-    
     
 }
-/**
- *  创建退款弹出视图
- */
-- (void)createRefundUI {
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0;
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
-    
-    JMAppRefundView *appRefundView = [[JMAppRefundView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 180, SCREENWIDTH, 180)];
-    self.appRefundView = appRefundView;
-    self.appRefundView.delegate = self;
-    
-}
-/**
- *  显示
- */
-- (void)createPayPopView {
-    
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.appRefundView];
-    self.maskView.alpha = 0;
-    self.appRefundView.top = self.view.height - 150;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0.3;
-        self.appRefundView.bottom = self.view.height;
-    }];
-}
-/**
- *  隐藏
- */
-- (void)hidePickerView {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0;
-        self.appRefundView.top = self.view.height;
-    } completion:^(BOOL finished) {
-        [self.maskView removeFromSuperview];
-        [self.appRefundView removeFromSuperview];
-    }];
-}
-- (void)composeRefundButton:(JMAppRefundView *)refundButton didClick:(NSInteger)index {
-//    else if (index == 101) {
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-        NSString *descStr;
-        descStr = self.inputTextView    .text;
-        
-        if ([self.inputTextView.text isEqualToString:@""]) {
-            descStr = @"七天无理由退货";
-        }
-    NSInteger count = index - 101;
-        JMAppForRefundModel *mmodel = self.dataSource[count];
-        NSDictionary *parameters = @{@"id":self.oid,
-                                     @"reason":[NSNumber numberWithInt:reasonCode],
-                                     @"num":self.refundNumLabel.text,
-                                     @"sum_price":[NSNumber numberWithFloat:refundPrice],
-                                     @"description":descStr,
-                                     @"refund_channel":mmodel.refund_channel,
-                                     };
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *dic = responseObject;
-            if (dic.count == 0) return;
-            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-        }];
-        [self hidePickerView];
-//    }
-    
-    if (index == 100) {
-        // 返回按钮 -- 放弃退款
-        [self payBackAlter];
-    }
-    
-}
-/**
- *  选择退款--请求退款方式
- */
-- (void)loadData {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/?trade_id=%@",Root_URL,self.oid];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) {
-            return ;
-        }
-        NSArray *dataArr = responseObject[@"extras"];
-        for (NSDictionary *dict in dataArr) {
-            self.apprefundModel = [JMAppForRefundModel mj_objectWithKeyValues:dict];
-            [self.dataSource addObject:self.apprefundModel];
-        }
-        self.appRefundView.payMentArr = self.dataSource;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
-
 - (void)enableTijiaoButton{
     self.commitButton.enabled = YES;
     self.commitButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
@@ -556,22 +455,58 @@
     
 }
 
-
+- (void)setRefundDic:(NSDictionary *)refundDic {
+    _refundDic = refundDic;
+    
+    
+    
+}
+- (void)Clickrefund:(JMRefundController *)click Refund:(NSString *)refund {
+    [SVProgressHUD showWithStatus:@"退款处理中....."];
+    self.refundCHannel = refund;
+    //budget 
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSString *descStr;
+    descStr = self.inputTextView.text;
+    if ([self.inputTextView.text isEqualToString:@""]) {
+        descStr = @"七天无理由退货";
+    }
+    NSDictionary *parameters = @{@"id":self.oid,
+                                 @"reason":[NSNumber numberWithInt:reasonCode],
+                                 @"num":self.refundNumLabel.text,
+                                 @"sum_price":[NSNumber numberWithFloat:refundPrice],
+                                 @"description":descStr,
+                                 @"refund_channel":self.refundCHannel,
+                                 };
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        if (dic.count == 0) return;
+        if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        [SVProgressHUD dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
+    
+}
 
 - (IBAction)commitClicked:(id)sender {
     
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
     
-    [self createPayPopView];
+    if (self.refundVC.view == nil) {
+        self.refundVC = [[JMRefundController alloc] init];
+    }
+    self.refundVC.refundDic = self.refundDic;
+    self.refundVC.delegate = self;
+    menu.contentView = self.refundVC.view;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    NSLog(@"提交");
     
 //   UIAlertView * myAlterView = [[UIAlertView alloc] initWithTitle:nil
 //                                             message:@"确定要退货吗？"
@@ -584,8 +519,17 @@
 //    
 //    
 //    [myAlterView show];
-}
 
+    
+    
+    
+    
+}
+#pragma mark --- 点击隐藏弹出视图 changeLogisticsClick
+- (void)coverDidClickCover:(JMShareView *)cover {
+    //隐藏pop菜单
+    [JMPopView hide];
+}
 /**
  *      if (alertView.tag != 88) return;
  if (buttonIndex == 1){
@@ -616,23 +560,22 @@
  }else
  *
  */
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-
-    if (alertView.tag == 666) {
-        if (buttonIndex == 0) {
-            [alertView setHidden:YES];
-            [self hidePickerView];
-            [self.navigationController popViewControllerAnimated:YES];
-        }}else {
-            [alertView setHidden:YES];
-        }
-}
-
-#pragma mark ---- 点击返回按钮 弹出警告框 --> 选择放弃或者继续
-- (void)payBackAlter {
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"是否放弃退款" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
-    alterView.tag = 666;
-    [alterView show];
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//
+//    if (alertView.tag == 666) {
+//        if (buttonIndex == 0) {
+//            [alertView setHidden:YES];
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }}else {
+//            [alertView setHidden:YES];
+//        }
+//}
+//
+//#pragma mark ---- 点击返回按钮 弹出警告框 --> 选择放弃或者继续
+//- (void)payBackAlter {
+//    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"是否放弃退款" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+//    alterView.tag = 666;
+//    [alterView show];
+//}
 
 @end
