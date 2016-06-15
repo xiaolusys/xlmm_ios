@@ -17,6 +17,7 @@
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"
+#import "WebViewController.h"
 
 
 
@@ -36,7 +37,7 @@
 
 @implementation CartViewController{
     NSInteger youhuiquanValud;
-    
+    NSDictionary *_carsGoodsDic;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -188,8 +189,10 @@
         model.sku_name = [dic objectForKey:@"sku_name"];
         model.ID = [[dic objectForKey:@"id"] intValue];
         model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
+        model.item_weburl = [dic objectForKey:@"item_weburl"];
         allPrice += model.total_fee;
         [self.dataArray addObject:model];
+        _carsGoodsDic = dic;
     }
 
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
@@ -271,7 +274,18 @@
     }
     return 0;
 }
-
+// -- 列表点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *weiUrl = model.item_weburl;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:weiUrl forKey:@"web_url"];
+    WebViewController *webVC = [[WebViewController alloc] init];
+    webVC.webDiction = dic;
+    
+    [self.navigationController pushViewController:webVC animated:YES];
+    
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString *CellIdentifier = @"simpleCellID";

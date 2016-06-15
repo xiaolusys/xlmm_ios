@@ -110,7 +110,7 @@ extern NSString *Root_URL;
 
 //加载的webView链接
 #define ABOUTFANS_URL [NSString stringWithFormat:@"%@/pages/fans-explain.html",Root_URL]
-#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/#/faq", Root_URL]
+#define COMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/faq", Root_URL] //http://m.xiaolumeimei.com/mall/faq
 #define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
 
 #define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
