@@ -14,6 +14,8 @@
 #import "XlmmMall.h"
 #import "MMClass.h"
 #import "JMReturnedGoodsController.h"
+#import "JMTimeLineView.h"
+#import "UIColor+RGBColor.h"
 
 
 @interface RefundDetailsViewController (){
@@ -86,7 +88,7 @@
 //    }
     
     NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.model.status, self.model.good_status, self.model.return_address);
-    
+    [self timeLine];
 }
 
 - (void)setHeadInfo{
@@ -212,9 +214,51 @@
     
     
 }
+
+- (void)timeLine {
+    NSInteger countNum = self.model.status;
+    NSArray *desArr = [NSArray array];
+    NSInteger count = 0;
+    int i = 0;
+    if (countNum == REFUND_STATUS_REFUND_CLOSE || countNum == REFUND_STATUS_SELLER_REJECTED || countNum == REFUND_STATUS_NO_REFUND) {
+        NSString *str = self.model.status_display;
+        
+        desArr = @[str,@""];
+        count = desArr.count;
+    }else {
+        desArr = @[@"退款待审",@"同意申请",@"退货待收",@"等待返款",@"退款成功"];
+    }
+    NSString *desStr = self.model.status_display;
+    for (i = 0; i < desArr.count; i++) {
+        if ([desStr isEqualToString:desArr[i]]) {
+            break ;
+        }else {
+            continue ;
+        }
+    }
+    count = i + 1;
+    JMTimeLineView *timeLineV = [[JMTimeLineView alloc] initWithTimeArray:nil andTimeDesArray:desArr andCurrentStatus:count andFrame:self.timeLineView.frame];
+    timeLineV.backgroundColor = [UIColor lineGrayColor];
+    [self.timeLineView addSubview:timeLineV];
+    
+    self.timeLineView.contentSize = CGSizeMake(70 * desArr.count, 60);
+    self.timeLineView.showsHorizontalScrollIndicator = NO;
+}
+
+
+
 @end
 
-
+/**
+ *  #define REFUND_STATUS_NO_REFUND  0
+ #define REFUND_STATUS_BUYER_APPLY  3
+ #define REFUND_STATUS_SELLER_AGREED  4
+ #define REFUND_STATUS_BUYER_RETURNED_GOODS  5
+ #define REFUND_STATUS_REFUND_CLOSE  1
+ #define REFUND_STATUS_SELLER_REJECTED  2
+ #define REFUND_STATUS_WAIT_RETURN_FEE  6
+ #define REFUND_STATUS_REFUND_SUCCESS 7
+ */
 
 
 
