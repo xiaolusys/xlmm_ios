@@ -160,7 +160,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
     
     NSString *titleName = self.titleName;

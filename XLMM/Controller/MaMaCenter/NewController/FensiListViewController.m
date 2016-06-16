@@ -65,6 +65,7 @@
     }
     
     [self createNavigationBarWithTitle:title selecotr:@selector(backClicked:)];
+    [self createButton];
 }
 
 - (void)createTableView {
@@ -248,7 +249,11 @@
 #pragma mark -- 添加滚动的协议方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [UIView animateWithDuration:0.5 animations:^{
-        self.topButton.hidden = NO;
+        if (self.dataArray.count == 0) {
+            self.topButton.hidden = YES;
+        }else {
+            self.topButton.hidden = NO;
+        }
     }];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
