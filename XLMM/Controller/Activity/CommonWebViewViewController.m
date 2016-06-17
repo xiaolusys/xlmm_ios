@@ -9,9 +9,10 @@
 #import "CommonWebViewViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
+#import "IMYWebView.h"
 
 @interface CommonWebViewViewController ()
-@property (nonatomic, strong)UIWebView *webView;
+
 @end
 
 @implementation CommonWebViewViewController
@@ -41,20 +42,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self updateUserAgent];
 
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
     
     if (self.loadLink.length == 0 || [self.loadLink class] == [NSNull null]) return;
     
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    self.webView.scalesPageToFit = YES;
-    [self.view addSubview:self.webView];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
+    self.baseWebView.scalesPageToFit = YES;
+    [self.view addSubview:self.baseWebView];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
+    [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
-    //[self updateUserAgent];
+    [self updateUserAgent];
     
     
     
@@ -68,7 +68,7 @@
     
     NSLog(@"CommonWebViewViewController ---------- %s",__func__);
     //get the original user-agent of webview
-    NSString *oldAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString *oldAgent = [self.baseWebView.realWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSLog(@"old agent :%@", oldAgent);
     if(oldAgent == nil) return;
     

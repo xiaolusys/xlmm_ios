@@ -42,7 +42,7 @@
         NSLog(@"loadingImageError = %@", imageError);
     }
     // NSLog(@"data = %@", data);
-    NSLog(@"%ld", (unsigned long)data.length);
+    NSLog(@"imagewithURLString data.length %ld", (unsigned long)data.length);
     
     image = [UIImage imageWithData:data];
 
