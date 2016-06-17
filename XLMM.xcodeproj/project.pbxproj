@@ -4480,7 +4480,7 @@
 			isa = PBXGroup;
 			children = (
 				1FF26B981D12A56F00F4A831 /* Model */,
-				1FF26B971D12A56C00F4A831 /* View */,
+				1FF26B971D12A56C00F4A831 /* View(时间轴) */,
 				1FF26B961D12A56500F4A831 /* Controller */,
 			);
 			name = "(退款退货类)";
@@ -4496,13 +4496,13 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		1FF26B971D12A56C00F4A831 /* View */ = {
+		1FF26B971D12A56C00F4A831 /* View(时间轴) */ = {
 			isa = PBXGroup;
 			children = (
 				1FF26B991D12A59B00F4A831 /* JMTimeLineView.h */,
 				1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */,
 			);
-			name = View;
+			name = "View(时间轴)";
 			sourceTree = "<group>";
 		};
 		1FF26B981D12A56F00F4A831 /* Model */ = {
