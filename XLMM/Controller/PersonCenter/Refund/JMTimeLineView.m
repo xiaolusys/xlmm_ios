@@ -181,7 +181,7 @@
             
             
         }else {
-            lastpoint = CGPointMake(self.progressView.center.x + 3 + 10 , yCenter + 5.);
+            lastpoint = CGPointMake(self.progressView.center.x + 1 + 10 , yCenter + 5.);
         }
         
         betweenLineOffset = 20;
