@@ -395,9 +395,9 @@
             isExecuted = YES;
         }];
         
-//        while (isExecuted == NO) {
-//            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-//        }
+        while (isExecuted == NO) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
         return result;
     }
 }
@@ -664,13 +664,21 @@
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/ios "];
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
     newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    
+    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
+    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
+    if(newrange.length > 0)
+    {
+        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
+    }
+
     NSLog(@"newAgent=%@",newAgent);
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
     
-    [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
 }
 
 @end
