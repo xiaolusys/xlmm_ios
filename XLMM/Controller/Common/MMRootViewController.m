@@ -1294,7 +1294,7 @@ static NSString *kbrandCell = @"brandCell";
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
-    //[self pushAndBannerJump:target_url];
+    NSLog(@"poster click %@ index=%ld", target_url, view.currentImageIndex);
     [JumpUtils jumpToLocation:target_url viewController:self];
 }
 

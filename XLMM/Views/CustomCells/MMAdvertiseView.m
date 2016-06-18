@@ -52,7 +52,7 @@
     //设置contentSize
     _scrollView.contentSize=CGSizeMake(width * (_imageCount), height);
     //设置当前显示的位置为中间图片
-    [_scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
+    [_scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
     NSLog(@"-MMAdvertiseView--偏移-----%f", _scrollView.contentOffset.x);
     //设置分页
     _scrollView.pagingEnabled=YES;
@@ -179,6 +179,7 @@
     }else if(offset.x<width*_currentImageIndex){ //向左滑动
         self.currentImageIndex = (_currentImageIndex+_imageCount-1)%_imageCount;
     }
+    _pageControl.currentPage = _currentImageIndex;
     NSLog(@"MMAdvertiseview reloadimage  _currentImageIndex=%ld", (long)_currentImageIndex);
 //    //UIImageView *centerImageView=(UIImageView *)[_scrollView viewWithTag:2];
 //    [ImageUtils loadImage:_centerImageView url:[self.imageurls[self.currentImageIndex] imageNormalCompression] ];
