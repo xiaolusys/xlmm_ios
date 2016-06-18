@@ -139,6 +139,9 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     NSLog(@"MYwebview webViewDidFinishLoad");
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 //    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if(self.originRequest == nil)
     {
@@ -581,6 +584,7 @@
     {
         UIWebView* webView = _realWebView;
         webView.delegate = nil;
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
     else
     {
