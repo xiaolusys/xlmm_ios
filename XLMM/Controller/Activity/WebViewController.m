@@ -325,7 +325,7 @@
     [SVProgressHUD dismiss];
 
     if (webView.tag != 102) {
-        [self updateUserAgent];
+//        [self updateUserAgent];
 //        [self registerJsBridge];
         return;
     }
@@ -360,24 +360,7 @@
     [SVProgressHUD dismiss];
 }
 
-- (void)updateUserAgent{
-    NSString *oldAgent = [self.baseWebView.realWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    if(oldAgent == nil) return;
-    
-    if(oldAgent != nil) {
-        
-        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
-        if(range.length > 0)
-        {
-            return;
-        }
-        
-    }
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
 
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-}
 
 
 #pragma mark - 注册js bridge供h5页面调用

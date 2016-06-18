@@ -54,7 +54,7 @@
     
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.loadLink]]];
     
-    [self updateUserAgent];
+//    [self updateUserAgent];
     
     
     
@@ -64,33 +64,33 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)updateUserAgent{
-    
-    NSLog(@"CommonWebViewViewController ---------- %s",__func__);
-    //get the original user-agent of webview
-    NSString *oldAgent = [self.baseWebView.realWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSLog(@"old agent :%@", oldAgent);
-    if(oldAgent == nil) return;
-    
-    //add my info to the new agent
-    if(oldAgent != nil) {
-        
-        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
-        if(range.length > 0)
-        {
-            return;
-        }
-        
-    }
-    
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
-    NSLog(@"new agent :%@", newAgent);
-    
-    //regist the new agent
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-    
-}
+//- (void)updateUserAgent{
+//    
+//    NSLog(@"CommonWebViewViewController ---------- %s",__func__);
+//    //get the original user-agent of webview
+//    NSString *oldAgent = [self.baseWebView.realWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+//    NSLog(@"old agent :%@", oldAgent);
+//    if(oldAgent == nil) return;
+//    
+//    //add my info to the new agent
+//    if(oldAgent != nil) {
+//        
+//        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
+//        if(range.length > 0)
+//        {
+//            return;
+//        }
+//        
+//    }
+//    
+//    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
+//    NSLog(@"new agent :%@", newAgent);
+//    
+//    //regist the new agent
+//    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+//    
+//}
 
 
 /*

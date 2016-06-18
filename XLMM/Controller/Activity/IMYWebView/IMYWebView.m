@@ -206,6 +206,7 @@
 - (void)callback_webViewDidFinishLoad
 {
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
+    [self updateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
     {
         [self.delegate webViewDidFinishLoad:self];
@@ -394,9 +395,9 @@
             isExecuted = YES;
         }];
         
-        while (isExecuted == NO) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-        }
+//        while (isExecuted == NO) {
+//            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+//        }
         return result;
     }
 }
@@ -643,6 +644,33 @@
      */
     [configuration.userContentController addScriptMessageHandler:self name:@"showLoading"];
     
+}
+
+- (void)updateUserAgent{
+    NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    if(oldAgent == nil) return;
+    NSLog(@"oldAgent=%@",oldAgent);
+    if(oldAgent != nil) {
+        
+        NSRange range = [oldAgent rangeOfString:@"xlmm/ios"];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    // app版本
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/ios "];
+    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    NSLog(@"newAgent=%@",newAgent);
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
+    [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
 }
 
 @end
