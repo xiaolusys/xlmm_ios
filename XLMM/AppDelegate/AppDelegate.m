@@ -122,7 +122,7 @@
     
     NSInteger count = [userDefaults integerForKey:@"StartCount"];
     
-    NSLog(@"count = %ld", count);
+    NSLog(@"count = %ld", (long)count);
     
     count++;
     

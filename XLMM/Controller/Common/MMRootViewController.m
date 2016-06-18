@@ -548,6 +548,7 @@ static NSString *kbrandCell = @"brandCell";
     [self createCollectionView];
     //设置商品scrollview的偏转
     self.collectionViewScrollview.contentOffset = CGPointMake(SCREENWIDTH, 0);
+    self.collectionViewScrollview.scrollsToTop = NO;
     [self changeBtnImg];
     
     [self createCartsView];
