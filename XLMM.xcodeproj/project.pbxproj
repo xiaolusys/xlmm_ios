@@ -852,6 +852,10 @@
 		3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E058F1CE1C3FB001018AC /* LGTextViewDelegateObject.m */; };
 		3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E05991CE1C8CC001018AC /* Circle_Normal.png */; };
 		3A1E059C1CE1C8CC001018AC /* Circle_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */; };
+		3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26601D12D6D8005C1CDA /* IMYWebView.m */; };
+		3A2E26671D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */; };
+		3A2E26681D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */; };
+		3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */; };
 		3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CF7191CE224D000F0463D /* MMClass.m */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
@@ -2115,6 +2119,14 @@
 		3A1E05901CE1C3FB001018AC /* LGViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGViews.h; sourceTree = "<group>"; };
 		3A1E05991CE1C8CC001018AC /* Circle_Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Normal.png; sourceTree = "<group>"; };
 		3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Selected.png; sourceTree = "<group>"; };
+		3A2E265F1D12D6D8005C1CDA /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
+		3A2E26601D12D6D8005C1CDA /* IMYWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMYWebView.m; sourceTree = "<group>"; };
+		3A2E26621D12D6D8005C1CDA /* IMY_NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMY_NJKWebViewProgress.h; sourceTree = "<group>"; };
+		3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMY_NJKWebViewProgress.m; sourceTree = "<group>"; };
+		3A2E26641D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
+		3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
+		3A2E26691D12F53E005C1CDA /* IosJsBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IosJsBridge.h; sourceTree = "<group>"; };
+		3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IosJsBridge.m; sourceTree = "<group>"; };
 		3A3CF7191CE224D000F0463D /* MMClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMClass.m; sourceTree = "<group>"; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
@@ -2193,6 +2205,7 @@
 		0B1602471CFB385200B154D7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3A2E265E1D12D6D8005C1CDA /* IMYWebView */,
 				1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */,
 				1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */,
 				18315F741CA3E023003A9AFD /* WebViewController.h */,
@@ -4692,6 +4705,28 @@
 			path = LGTextView;
 			sourceTree = "<group>";
 		};
+		3A2E265E1D12D6D8005C1CDA /* IMYWebView */ = {
+			isa = PBXGroup;
+			children = (
+				3A2E265F1D12D6D8005C1CDA /* IMYWebView.h */,
+				3A2E26601D12D6D8005C1CDA /* IMYWebView.m */,
+				3A2E26611D12D6D8005C1CDA /* UIWebViewProgress */,
+				3A2E26641D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.h */,
+				3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */,
+			);
+			name = IMYWebView;
+			path = XLMM/Controller/Activity/IMYWebView;
+			sourceTree = SOURCE_ROOT;
+		};
+		3A2E26611D12D6D8005C1CDA /* UIWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				3A2E26621D12D6D8005C1CDA /* IMY_NJKWebViewProgress.h */,
+				3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */,
+			);
+			path = UIWebViewProgress;
+			sourceTree = "<group>";
+		};
 		3A5DF7B51CCE135D00FFE818 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -4699,6 +4734,8 @@
 				3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */,
 				3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */,
 				3ABCA54E1CD8F468007D5145 /* ImageUtils.h */,
+				3A2E26691D12F53E005C1CDA /* IosJsBridge.h */,
+				3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5324,6 +5361,7 @@
 				325B79E61C97E7160022F930 /* YHQHeadView.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
 				183072331C97BE3700B7665E /* TousuViewController.m in Sources */,
+				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				183072031C97BE3700B7665E /* TixianSucceedViewController.m in Sources */,
 				183070E01C97B83900B7665E /* ShoppingCartModel.m in Sources */,
@@ -5427,6 +5465,7 @@
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
 				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,
+				3A2E26681D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m in Sources */,
 				0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */,
 				183071E91C97BE3700B7665E /* XidiShuomingViewController.m in Sources */,
 				0BBEFDCD1D05EC3F00D45078 /* JMTimeInfoModel.m in Sources */,
@@ -5451,10 +5490,12 @@
 				183074071C97D17800B7665E /* QNHttpManager.m in Sources */,
 				183072171C97BE3700B7665E /* MaMaShareSubsidiesViewController.m in Sources */,
 				183073D11C97D17800B7665E /* AFURLRequestSerialization.m in Sources */,
+				3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
 				183074131C97D17800B7665E /* QNUpToken.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,
+				3A2E26671D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m in Sources */,
 				1F88D5821CB77AC90050A2E2 /* MyInvitationViewController.m in Sources */,
 				183073E11C97D17800B7665E /* QNHex.m in Sources */,
 				183073EC1C97D17800B7665E /* MJRefreshComponent.m in Sources */,
@@ -5706,7 +5747,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -5744,7 +5785,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -5755,7 +5796,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5803,7 +5844,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5813,7 +5854,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5861,7 +5902,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
