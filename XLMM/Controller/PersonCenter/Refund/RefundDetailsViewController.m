@@ -11,10 +11,11 @@
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
-#import "FillWuliuController.h"
 #import "XlmmMall.h"
 #import "MMClass.h"
 #import "JMReturnedGoodsController.h"
+#import "JMTimeLineView.h"
+#import "UIColor+RGBColor.h"
 
 
 @interface RefundDetailsViewController (){
@@ -87,7 +88,7 @@
 //    }
     
     NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.model.status, self.model.good_status, self.model.return_address);
-    
+    [self timeLine];
 }
 
 - (void)setHeadInfo{
@@ -111,7 +112,7 @@
     self.imageView.layer.borderWidth = 0.5;
     self.imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.circleView.layer.cornerRadius = 5;
-    if (self.model.good_status == 0) {
+    if (self.model.has_good_return == 0) {
         self.createdLabel.text = @"申请退款";
     }else{
         self.createdLabel.text = @"申请退货";
@@ -119,7 +120,7 @@
             self.topToRefundHeight.constant = 0;
         }
     }
-  
+    
     self.statusLabel.text = self.model.status_display;
     self.createTimeLabel.text = [self stringReplaced:self.model.created];
     self.modifyTimeLabel.text = [self stringReplaced:self.model.modified];
@@ -138,29 +139,11 @@
 
 - (void)setFootInfo{
     //设置详情信息。。。。
-    
 }
-
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)addressInfoClicked:(id)sender {
     NSLog(@"退货地址信息");
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"RefundAddressInfoView" owner:nil options:nil];
@@ -213,9 +196,95 @@
     
     
 }
+
+- (void)timeLine {
+    NSInteger countNum = self.model.status;
+    NSArray *desArr = [NSArray array];
+    NSInteger count = 0;
+    int i = 0;
+    if (countNum == REFUND_STATUS_REFUND_CLOSE || countNum == REFUND_STATUS_SELLER_REJECTED || countNum == REFUND_STATUS_NO_REFUND) {
+        NSString *str = self.model.status_display;
+        if (self.model.has_good_return == 0) {
+            //            self.createdLabel.text = @"申请退款";
+            desArr = @[@"申请退款",str];
+        }else{
+            //            self.createdLabel.text = @"申请退货";
+            desArr = @[@"申请退货",str];
+        }
+        
+        count = desArr.count;
+    }else {
+        if (self.model.has_good_return == 0) {
+//            self.createdLabel.text = @"申请退款";
+            desArr = @[@"申请退款",@"同意申请",@"等待返款",@"退款成功"];
+            countNum -= 3;
+            for (i = 0; i < desArr.count; i++) {
+                if (countNum == i) {
+                    if (countNum >= 2) {
+                        i-- ;
+                    }
+                    break ;
+                }else {
+                    continue ;
+                }
+            }
+            count = i + 1;
+        }else{
+            desArr = @[@"申请退货",@"同意申请",@"填写快递单",@"仓库收货",@"等待返货",@"退货成功"];//退货待收
+            countNum -= 3;
+            for (i = 0; i < desArr.count; i++) {
+                if (countNum == i) {
+                    if (countNum >= 2) {
+                        i++;
+                    }
+                    break ;
+                }else {
+                    continue ;
+                }
+            }
+            count = i + 1;
+            self.createdLabel.text = @"申请退货";
+        }
+    }
+    
+
+    JMTimeLineView *timeLineV = [[JMTimeLineView alloc] initWithTimeArray:nil andTimeDesArray:desArr andCurrentStatus:count andFrame:self.timeLineView.frame];
+    timeLineV.backgroundColor = [UIColor lineGrayColor];
+    [self.timeLineView addSubview:timeLineV];
+    
+    self.timeLineView.contentSize = CGSizeMake(70 * desArr.count, 60);
+    self.timeLineView.showsHorizontalScrollIndicator = NO;
+
+
+}
+
+
+
 @end
 
-
+/**
+ 
+ //
+ //
+ //
+ //    NSString *desStr = self.model.status_display;
+ //    for (i = 0; i < desArr.count; i++) {
+ //        if ([desStr isEqualToString:desArr[i]]) {
+ //            break ;
+ //        }else {
+ //            continue ;
+ //        }
+ //    }
+ //    count = i + 1;
+ *  #define REFUND_STATUS_NO_REFUND  0
+ #define REFUND_STATUS_BUYER_APPLY  3
+ #define REFUND_STATUS_SELLER_AGREED  4
+ #define REFUND_STATUS_BUYER_RETURNED_GOODS  5
+ #define REFUND_STATUS_REFUND_CLOSE  1
+ #define REFUND_STATUS_SELLER_REJECTED  2
+ #define REFUND_STATUS_WAIT_RETURN_FEE  6
+ #define REFUND_STATUS_REFUND_SUCCESS 7
+ */
 
 
 

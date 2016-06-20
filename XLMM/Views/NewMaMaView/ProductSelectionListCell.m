@@ -12,13 +12,24 @@
 #import "UIColor+RGBColor.h"
 #import "NSString+URL.h"
 #import "NSString+Encrypto.h"
+#import "Masonry.h"
 
 @implementation ProductSelectionListCell
 
 - (void)awakeFromNib {
     // Initialization code
-//    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
-//    [self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
+    
+    UILabel *deleateLine = [UILabel new];
+    [self.stdPriceLabel addSubview:deleateLine];
+    self.deleateLine = deleateLine;
+    self.deleateLine.backgroundColor = [UIColor lightGrayColor];
+    [self.deleateLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.stdPriceLabel.mas_centerY);
+        make.left.equalTo(self.stdPriceLabel);
+        make.right.equalTo(self.stdPriceLabel);
+        make.height.mas_equalTo(1);
+    }];
+    
 }
  
 - (instancetype)initWithFrame:(CGRect)frame{

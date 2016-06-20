@@ -77,7 +77,7 @@
  "std_sale_price" = 199;
  title = "\U767e\U642d\U4fee\U8eab\U540a\U5e26\U8fde\U8863\U88d9/\U7070\U8272";
  "total_fee" = "49.9";
- url = "http://m.xiaolumeimei.com/rest/v1/carts/457683";
+ url = "http://m.xiaolumeimei.com/rest/v2/carts/457683";
  }
  );
  "coupon_message" = "\U8be5\U4f18\U60e0\U5238\U6ee150.0\U5143\U53ef\U7528";

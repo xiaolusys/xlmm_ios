@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deleateLine;
 
 - (void)fillDataWithModel:(BrandGoodsModel *)model;
 

@@ -14,6 +14,7 @@
 #import "TixianModel.h"
 #import "SVProgressHUD.h"
 #import "MJRefresh.h"
+#import "Masonry.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";
@@ -28,6 +29,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 @property (nonatomic,assign) BOOL isLoadMore;
 //记录当前页
 @property (nonatomic,assign) NSInteger currentPage;
+@property (nonatomic,strong) UIButton *topButton;
 
 @end
 
@@ -63,7 +65,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
      *  进入页面就刷新一次
      */
     [self.tableView.mj_header beginRefreshing];
-
+    [self createButton];
 }
 
 #pragma mark --- 创建一个数据请求
@@ -196,4 +198,79 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
+#pragma mark -- 添加返回顶部按钮
+
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+    
+}
+- (void)topButtonClick:(UIButton *)btn {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    self.topButton.hidden = YES;
+}
+
+//- (void)hiddenBackTopBtn {
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.topButton.hidden = YES;
+//    }];
+//}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [UIView animateWithDuration:0.5 animations:^{
+        if (self.dataArray.count == 0) {
+            self.topButton.hidden = YES;
+        }else {
+            self.topButton.hidden = NO;
+        }
+    }];
+}
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
+//}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

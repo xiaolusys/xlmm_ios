@@ -13,18 +13,38 @@
 #import "UIImage+ChangeGray.h"
 #import "NSString+URL.h"
 #import "SVProgressHUD.h"
+#import "Masonry.h"
+
+@interface PeopleCollectionCell ()
 
 
+
+@end
 
 @implementation PeopleCollectionCell
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    UILabel *deleateLine = [UILabel new];
+    [self.oldPriceLabel addSubview:deleateLine];
+    self.deleateLine = deleateLine;
+    self.deleateLine.backgroundColor = [UIColor lightGrayColor];
+    [self.deleateLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.oldPriceLabel.mas_centerY);
+        make.left.equalTo(self.oldPriceLabel);
+        make.right.equalTo(self.oldPriceLabel);
+        make.height.mas_equalTo(1);
+    }];
+    
 }
 
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+
+        
+        
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"PeopleCollectionCell" owner:self options:nil];
         if (arrayOfViews.count < 1) {
             return nil;

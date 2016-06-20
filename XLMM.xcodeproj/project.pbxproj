@@ -159,8 +159,6 @@
 		1830723F1C97BE3700B7665E /* PersonCenterViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071A11C97BE3700B7665E /* PersonCenterViewController3.xib */; };
 		183072431C97BE3700B7665E /* XiangQingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071A71C97BE3700B7665E /* XiangQingViewController.m */; };
 		183072441C97BE3700B7665E /* XiangQingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071A81C97BE3700B7665E /* XiangQingViewController.xib */; };
-		183072451C97BE3700B7665E /* FillWuliuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071AB1C97BE3700B7665E /* FillWuliuController.m */; };
-		183072461C97BE3700B7665E /* FillWuliuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AC1C97BE3700B7665E /* FillWuliuController.xib */; };
 		183072471C97BE3700B7665E /* PostImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AD1C97BE3700B7665E /* PostImageView.xib */; };
 		183072481C97BE3700B7665E /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */; };
 		183072491C97BE3700B7665E /* RefundDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071B01C97BE3700B7665E /* RefundDetailsViewController.m */; };
@@ -172,8 +170,6 @@
 		1830724F1C97BE3700B7665E /* ShenQingTuikuanController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */; };
 		183072501C97BE3700B7665E /* TuihuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071BA1C97BE3700B7665E /* TuihuoViewController.m */; };
 		183072511C97BE3700B7665E /* TuihuoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071BB1C97BE3700B7665E /* TuihuoViewController.xib */; };
-		183072521C97BE3700B7665E /* WuliuCompanyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071BD1C97BE3700B7665E /* WuliuCompanyController.m */; };
-		183072531C97BE3700B7665E /* WuliuCompanyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */; };
 		183072541C97BE3700B7665E /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071C11C97BE3700B7665E /* BoundingNewPhoneController.m */; };
 		183072551C97BE3700B7665E /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183071C21C97BE3700B7665E /* BoundingNewPhoneController.xib */; };
 		183072561C97BE3700B7665E /* ModifyPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183071C41C97BE3700B7665E /* ModifyPhoneController.m */; };
@@ -714,7 +710,20 @@
 		1F88D58F1CB8B5460050A2E2 /* TSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D58D1CB8B5460050A2E2 /* TSettingViewController.xib */; };
 		1F9238D71CF45B61000AD0EF /* JMMaMaOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9238D61CF45B61000AD0EF /* JMMaMaOrderListCell.m */; };
 		1F9238D91CF46305000AD0EF /* isApp_orderList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */; };
+		1FA3773A1D17D02500F2321F /* backTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FA377391D17D02500F2321F /* backTop.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
+		1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */; };
+		1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B291D10E7CE00F4A831 /* JMRefundController.m */; };
+		1FF26B2D1D10EA2400F4A831 /* JMRefundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */; };
+		1FF26B9B1D12A59B00F4A831 /* JMTimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */; };
+		1FF26C931D1776DF00F4A831 /* JMPopViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26C8E1D1776DF00F4A831 /* JMPopViewAnimationDrop.m */; };
+		1FF26C941D1776DF00F4A831 /* JMPopViewAnimationSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26C901D1776DF00F4A831 /* JMPopViewAnimationSpring.m */; };
+		1FF26C951D1776DF00F4A831 /* JMRepopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26C921D1776DF00F4A831 /* JMRepopView.m */; };
+		1FF26C991D1778C000F4A831 /* btn_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26C961D1778C000F4A831 /* btn_close@2x.png */; };
+		1FF26C9A1D1778C000F4A831 /* pop_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26C971D1778C000F4A831 /* pop_bottom@2x.png */; };
+		1FF26C9B1D1778C000F4A831 /* pop_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26C981D1778C000F4A831 /* pop_top@2x.png */; };
+		1FF26CA41D17817D00F4A831 /* JMRefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26CA31D17817D00F4A831 /* JMRefundView.m */; };
+		1FF26CA81D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */; };
 		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
 		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
@@ -851,6 +860,10 @@
 		3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1E058F1CE1C3FB001018AC /* LGTextViewDelegateObject.m */; };
 		3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E05991CE1C8CC001018AC /* Circle_Normal.png */; };
 		3A1E059C1CE1C8CC001018AC /* Circle_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */; };
+		3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26601D12D6D8005C1CDA /* IMYWebView.m */; };
+		3A2E26671D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */; };
+		3A2E26681D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */; };
+		3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */; };
 		3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CF7191CE224D000F0463D /* MMClass.m */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
@@ -1134,9 +1147,6 @@
 		183071A61C97BE3700B7665E /* XiangQingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangQingViewController.h; sourceTree = "<group>"; };
 		183071A71C97BE3700B7665E /* XiangQingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangQingViewController.m; sourceTree = "<group>"; };
 		183071A81C97BE3700B7665E /* XiangQingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangQingViewController.xib; sourceTree = "<group>"; };
-		183071AA1C97BE3700B7665E /* FillWuliuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillWuliuController.h; sourceTree = "<group>"; };
-		183071AB1C97BE3700B7665E /* FillWuliuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillWuliuController.m; sourceTree = "<group>"; };
-		183071AC1C97BE3700B7665E /* FillWuliuController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FillWuliuController.xib; sourceTree = "<group>"; };
 		183071AD1C97BE3700B7665E /* PostImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageView.xib; sourceTree = "<group>"; };
 		183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
 		183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundDetailsViewController.h; sourceTree = "<group>"; };
@@ -1152,9 +1162,6 @@
 		183071B91C97BE3700B7665E /* TuihuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuihuoViewController.h; sourceTree = "<group>"; };
 		183071BA1C97BE3700B7665E /* TuihuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuihuoViewController.m; sourceTree = "<group>"; };
 		183071BB1C97BE3700B7665E /* TuihuoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuihuoViewController.xib; sourceTree = "<group>"; };
-		183071BC1C97BE3700B7665E /* WuliuCompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuliuCompanyController.h; sourceTree = "<group>"; };
-		183071BD1C97BE3700B7665E /* WuliuCompanyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuliuCompanyController.m; sourceTree = "<group>"; };
-		183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WuliuCompanyController.xib; sourceTree = "<group>"; };
 		183071C01C97BE3700B7665E /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		183071C11C97BE3700B7665E /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		183071C21C97BE3700B7665E /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
@@ -1908,8 +1915,30 @@
 		1F9238D51CF45B61000AD0EF /* JMMaMaOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaOrderListCell.h; sourceTree = "<group>"; };
 		1F9238D61CF45B61000AD0EF /* JMMaMaOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaOrderListCell.m; sourceTree = "<group>"; };
 		1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isApp_orderList@2x.png"; sourceTree = "<group>"; };
+		1FA377391D17D02500F2321F /* backTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backTop.png; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
+		1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAppForRefundModel.m; sourceTree = "<group>"; };
+		1FF26B281D10E7CE00F4A831 /* JMRefundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundController.h; sourceTree = "<group>"; };
+		1FF26B291D10E7CE00F4A831 /* JMRefundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundController.m; sourceTree = "<group>"; };
+		1FF26B2B1D10EA2400F4A831 /* JMRefundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundCell.h; sourceTree = "<group>"; };
+		1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundCell.m; sourceTree = "<group>"; };
+		1FF26B991D12A59B00F4A831 /* JMTimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTimeLineView.h; sourceTree = "<group>"; };
+		1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTimeLineView.m; sourceTree = "<group>"; };
+		1FF26C8D1D1776DF00F4A831 /* JMPopViewAnimationDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMPopViewAnimationDrop.h; path = ../JMPopViewAnimationDrop.h; sourceTree = "<group>"; };
+		1FF26C8E1D1776DF00F4A831 /* JMPopViewAnimationDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMPopViewAnimationDrop.m; path = ../JMPopViewAnimationDrop.m; sourceTree = "<group>"; };
+		1FF26C8F1D1776DF00F4A831 /* JMPopViewAnimationSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMPopViewAnimationSpring.h; path = ../JMPopViewAnimationSpring.h; sourceTree = "<group>"; };
+		1FF26C901D1776DF00F4A831 /* JMPopViewAnimationSpring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMPopViewAnimationSpring.m; path = ../JMPopViewAnimationSpring.m; sourceTree = "<group>"; };
+		1FF26C911D1776DF00F4A831 /* JMRepopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMRepopView.h; path = ../JMRepopView.h; sourceTree = "<group>"; };
+		1FF26C921D1776DF00F4A831 /* JMRepopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMRepopView.m; path = ../JMRepopView.m; sourceTree = "<group>"; };
+		1FF26C961D1778C000F4A831 /* btn_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close@2x.png"; sourceTree = "<group>"; };
+		1FF26C971D1778C000F4A831 /* pop_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_bottom@2x.png"; sourceTree = "<group>"; };
+		1FF26C981D1778C000F4A831 /* pop_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_top@2x.png"; sourceTree = "<group>"; };
+		1FF26CA21D17817D00F4A831 /* JMRefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundView.h; sourceTree = "<group>"; };
+		1FF26CA31D17817D00F4A831 /* JMRefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundView.m; sourceTree = "<group>"; };
+		1FF26CA61D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
+		1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonWebViewViewController.h; path = ../Activity/CommonWebViewViewController.h; sourceTree = "<group>"; };
 		1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonWebViewViewController.m; path = ../Activity/CommonWebViewViewController.m; sourceTree = "<group>"; };
 		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
@@ -2111,6 +2140,14 @@
 		3A1E05901CE1C3FB001018AC /* LGViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGViews.h; sourceTree = "<group>"; };
 		3A1E05991CE1C8CC001018AC /* Circle_Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Normal.png; sourceTree = "<group>"; };
 		3A1E059A1CE1C8CC001018AC /* Circle_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Selected.png; sourceTree = "<group>"; };
+		3A2E265F1D12D6D8005C1CDA /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
+		3A2E26601D12D6D8005C1CDA /* IMYWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMYWebView.m; sourceTree = "<group>"; };
+		3A2E26621D12D6D8005C1CDA /* IMY_NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMY_NJKWebViewProgress.h; sourceTree = "<group>"; };
+		3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMY_NJKWebViewProgress.m; sourceTree = "<group>"; };
+		3A2E26641D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWeakScriptMessageDelegate.h; sourceTree = "<group>"; };
+		3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWeakScriptMessageDelegate.m; sourceTree = "<group>"; };
+		3A2E26691D12F53E005C1CDA /* IosJsBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IosJsBridge.h; sourceTree = "<group>"; };
+		3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IosJsBridge.m; sourceTree = "<group>"; };
 		3A3CF7191CE224D000F0463D /* MMClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMClass.m; sourceTree = "<group>"; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
@@ -2189,6 +2226,7 @@
 		0B1602471CFB385200B154D7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3A2E265E1D12D6D8005C1CDA /* IMYWebView */,
 				1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */,
 				1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */,
 				18315F741CA3E023003A9AFD /* WebViewController.h */,
@@ -2719,6 +2757,7 @@
 		183070FA1C97BE3700B7665E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1FF26C9D1D177AEE00F4A831 /* POPView */,
 				183070FB1C97BE3700B7665E /* ChildViewController.h */,
 				183070FC1C97BE3700B7665E /* ChildViewController.m */,
 				183070FD1C97BE3700B7665E /* ChildViewController.xib */,
@@ -2796,15 +2835,13 @@
 		183071311C97BE3700B7665E /* MaMaVersion1 */ = {
 			isa = PBXGroup;
 			children = (
+				1FC8BF2C1D0E95B60076125A /* withDrawHistory提现历史 */,
 				1F0D90501CEC162800C2334D /* Withdraw(提现) */,
 				1F9238D11CF45AB3000AD0EF /* OrderList(订单记录) */,
 				1830713B1C97BE3700B7665E /* MaMaViewController.h */,
 				1830713C1C97BE3700B7665E /* MaMaViewController.m */,
 				1830713D1C97BE3700B7665E /* PublishNewPdtViewController.h */,
 				1830713E1C97BE3700B7665E /* PublishNewPdtViewController.m */,
-				1830713F1C97BE3700B7665E /* TixianHistoryViewController.h */,
-				183071401C97BE3700B7665E /* TixianHistoryViewController.m */,
-				183071411C97BE3700B7665E /* TixianHistoryViewController.xib */,
 				1F88D5801CB77AC90050A2E2 /* MyInvitationViewController.h */,
 				1F88D5811CB77AC90050A2E2 /* MyInvitationViewController.m */,
 			);
@@ -2951,28 +2988,10 @@
 		183071A91C97BE3700B7665E /* Refund */ = {
 			isa = PBXGroup;
 			children = (
+				1FF26C9E1D1780F600F4A831 /* Applicationforrefund(申请退货) */,
+				1FF26B951D12A52F00F4A831 /* (退款退货类) */,
+				1FF26B1B1D100BFD00F4A831 /* Applicationforrefund(申请退款) */,
 				0BE3130C1D05139B00CD97D6 /* returnedGoods(退货地址) */,
-				183071AA1C97BE3700B7665E /* FillWuliuController.h */,
-				183071AB1C97BE3700B7665E /* FillWuliuController.m */,
-				183071AC1C97BE3700B7665E /* FillWuliuController.xib */,
-				183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */,
-				183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */,
-				183071B01C97BE3700B7665E /* RefundDetailsViewController.m */,
-				183071B11C97BE3700B7665E /* RefundDetailsViewController.xib */,
-				183071B21C97BE3700B7665E /* SelectedReasonsView.xib */,
-				183071B31C97BE3700B7665E /* ShenQingTuiHuoController.h */,
-				183071B41C97BE3700B7665E /* ShenQingTuiHuoController.m */,
-				183071B51C97BE3700B7665E /* ShenQingTuiHuoController.xib */,
-				183071AD1C97BE3700B7665E /* PostImageView.xib */,
-				183071B61C97BE3700B7665E /* ShenQingTuikuanController.h */,
-				183071B71C97BE3700B7665E /* ShenQingTuikuanController.m */,
-				183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */,
-				183071B91C97BE3700B7665E /* TuihuoViewController.h */,
-				183071BA1C97BE3700B7665E /* TuihuoViewController.m */,
-				183071BB1C97BE3700B7665E /* TuihuoViewController.xib */,
-				183071BC1C97BE3700B7665E /* WuliuCompanyController.h */,
-				183071BD1C97BE3700B7665E /* WuliuCompanyController.m */,
-				183071BE1C97BE3700B7665E /* WuliuCompanyController.xib */,
 			);
 			path = Refund;
 			sourceTree = "<group>";
@@ -4188,7 +4207,11 @@
 		1F14D60F1CC6057D00410EC0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1FF26C961D1778C000F4A831 /* btn_close@2x.png */,
+				1FF26C971D1778C000F4A831 /* pop_bottom@2x.png */,
+				1FF26C981D1778C000F4A831 /* pop_top@2x.png */,
 				1F14D6101CC6059100410EC0 /* today.png */,
+				1FA377391D17D02500F2321F /* backTop.png */,
 				1F14D6111CC6059100410EC0 /* today1.png */,
 				1F14D6121CC6059100410EC0 /* tomorrow.png */,
 				1F14D6131CC6059100410EC0 /* tomorrow1.png */,
@@ -4433,6 +4456,156 @@
 			name = "OrderList(订单记录)";
 			sourceTree = "<group>";
 		};
+		1FC8BF2C1D0E95B60076125A /* withDrawHistory提现历史 */ = {
+			isa = PBXGroup;
+			children = (
+				1830713F1C97BE3700B7665E /* TixianHistoryViewController.h */,
+				183071401C97BE3700B7665E /* TixianHistoryViewController.m */,
+				183071411C97BE3700B7665E /* TixianHistoryViewController.xib */,
+			);
+			name = "withDrawHistory提现历史";
+			sourceTree = "<group>";
+		};
+		1FF26B1B1D100BFD00F4A831 /* Applicationforrefund(申请退款) */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B1D1D100C4200F4A831 /* Model */,
+				1FF26B211D10116000F4A831 /* View */,
+				1FF26B1C1D100C3F00F4A831 /* Controller */,
+			);
+			name = "Applicationforrefund(申请退款)";
+			sourceTree = "<group>";
+		};
+		1FF26B1C1D100C3F00F4A831 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183071B61C97BE3700B7665E /* ShenQingTuikuanController.h */,
+				183071B71C97BE3700B7665E /* ShenQingTuikuanController.m */,
+				183071B81C97BE3700B7665E /* ShenQingTuikuanController.xib */,
+				183071AE1C97BE3700B7665E /* RefundAddressInfoView.xib */,
+				183071B21C97BE3700B7665E /* SelectedReasonsView.xib */,
+				1FF26B281D10E7CE00F4A831 /* JMRefundController.h */,
+				1FF26B291D10E7CE00F4A831 /* JMRefundController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FF26B1D1D100C4200F4A831 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */,
+				1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FF26B211D10116000F4A831 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B2B1D10EA2400F4A831 /* JMRefundCell.h */,
+				1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		1FF26B951D12A52F00F4A831 /* (退款退货类) */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B981D12A56F00F4A831 /* Model */,
+				1FF26B971D12A56C00F4A831 /* View(时间轴) */,
+				1FF26B961D12A56500F4A831 /* Controller */,
+			);
+			name = "(退款退货类)";
+			sourceTree = "<group>";
+		};
+		1FF26B961D12A56500F4A831 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183071AF1C97BE3700B7665E /* RefundDetailsViewController.h */,
+				183071B01C97BE3700B7665E /* RefundDetailsViewController.m */,
+				183071B11C97BE3700B7665E /* RefundDetailsViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FF26B971D12A56C00F4A831 /* View(时间轴) */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26B991D12A59B00F4A831 /* JMTimeLineView.h */,
+				1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */,
+			);
+			name = "View(时间轴)";
+			sourceTree = "<group>";
+		};
+		1FF26B981D12A56F00F4A831 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FF26C9D1D177AEE00F4A831 /* POPView */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26C8D1D1776DF00F4A831 /* JMPopViewAnimationDrop.h */,
+				1FF26C8E1D1776DF00F4A831 /* JMPopViewAnimationDrop.m */,
+				1FF26C8F1D1776DF00F4A831 /* JMPopViewAnimationSpring.h */,
+				1FF26C901D1776DF00F4A831 /* JMPopViewAnimationSpring.m */,
+				1FF26C911D1776DF00F4A831 /* JMRepopView.h */,
+				1FF26C921D1776DF00F4A831 /* JMRepopView.m */,
+			);
+			path = POPView;
+			sourceTree = "<group>";
+		};
+		1FF26C9E1D1780F600F4A831 /* Applicationforrefund(申请退货) */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26CA11D1780FF00F4A831 /* Model */,
+				1FF26CA01D1780FD00F4A831 /* View */,
+				1FF26C9F1D1780FB00F4A831 /* Controller */,
+			);
+			name = "Applicationforrefund(申请退货)";
+			sourceTree = "<group>";
+		};
+		1FF26C9F1D1780FB00F4A831 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				183071B31C97BE3700B7665E /* ShenQingTuiHuoController.h */,
+				183071B41C97BE3700B7665E /* ShenQingTuiHuoController.m */,
+				183071B51C97BE3700B7665E /* ShenQingTuiHuoController.xib */,
+				183071AD1C97BE3700B7665E /* PostImageView.xib */,
+				183071B91C97BE3700B7665E /* TuihuoViewController.h */,
+				183071BA1C97BE3700B7665E /* TuihuoViewController.m */,
+				183071BB1C97BE3700B7665E /* TuihuoViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FF26CA01D1780FD00F4A831 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26CA21D17817D00F4A831 /* JMRefundView.h */,
+				1FF26CA31D17817D00F4A831 /* JMRefundView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		1FF26CA11D1780FF00F4A831 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FF26CA51D1799E100F4A831 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26CA61D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.h */,
+				1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -4472,6 +4645,7 @@
 			isa = PBXGroup;
 			children = (
 				3A5214E81CC764AA00F4E699 /* Images.xcassets */,
+				1FF26CA51D1799E100F4A831 /* Global */,
 				18306F6A1C97AA1600B7665E /* AppDelegate */,
 				18306FC61C97B5BC00B7665E /* Views */,
 				183070921C97B83900B7665E /* Models */,
@@ -4613,6 +4787,28 @@
 			path = LGTextView;
 			sourceTree = "<group>";
 		};
+		3A2E265E1D12D6D8005C1CDA /* IMYWebView */ = {
+			isa = PBXGroup;
+			children = (
+				3A2E265F1D12D6D8005C1CDA /* IMYWebView.h */,
+				3A2E26601D12D6D8005C1CDA /* IMYWebView.m */,
+				3A2E26611D12D6D8005C1CDA /* UIWebViewProgress */,
+				3A2E26641D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.h */,
+				3A2E26651D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m */,
+			);
+			name = IMYWebView;
+			path = XLMM/Controller/Activity/IMYWebView;
+			sourceTree = SOURCE_ROOT;
+		};
+		3A2E26611D12D6D8005C1CDA /* UIWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				3A2E26621D12D6D8005C1CDA /* IMY_NJKWebViewProgress.h */,
+				3A2E26631D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m */,
+			);
+			path = UIWebViewProgress;
+			sourceTree = "<group>";
+		};
 		3A5DF7B51CCE135D00FFE818 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -4620,6 +4816,8 @@
 				3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */,
 				3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */,
 				3ABCA54E1CD8F468007D5145 /* ImageUtils.h */,
+				3A2E26691D12F53E005C1CDA /* IosJsBridge.h */,
+				3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4781,9 +4979,9 @@
 				1830766E1C97D49A00B7665E /* 圈圈加载0026.png in Resources */,
 				183075871C97D49A00B7665E /* icon-radio-select.png in Resources */,
 				1F4DE5971CE461AD00114BDA /* apply_for_success@2x.png in Resources */,
+				1FF26C9A1D1778C000F4A831 /* pop_bottom@2x.png in Resources */,
 				183075E01C97D49A00B7665E /* zhanwei.png in Resources */,
 				183075AA1C97D49A00B7665E /* loading动画0012.png in Resources */,
-				183072461C97BE3700B7665E /* FillWuliuController.xib in Resources */,
 				183076411C97D49A00B7665E /* unselected_icon.png in Resources */,
 				183075D71C97D49A00B7665E /* savephoto.png in Resources */,
 				321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */,
@@ -4799,6 +4997,7 @@
 				1830757E1C97D49A00B7665E /* icon-guanbi.png in Resources */,
 				183076621C97D49A00B7665E /* 圈圈加载0014.png in Resources */,
 				183075F21C97D49A00B7665E /* downarrowicon.png in Resources */,
+				1FF26C991D1778C000F4A831 /* btn_close@2x.png in Resources */,
 				183075CC1C97D49A00B7665E /* mamaheader.png in Resources */,
 				183074461C97D17900B7665E /* ios-social-sdk-share-detail.html in Resources */,
 				183076691C97D49A00B7665E /* 圈圈加载0021.png in Resources */,
@@ -4847,6 +5046,7 @@
 				183075DF1C97D49A00B7665E /* wodejingxuanyulan.png in Resources */,
 				1830765F1C97D49A00B7665E /* 圈圈加载0011.png in Resources */,
 				183075E21C97D49A00B7665E /* address_icon.png in Resources */,
+				1FF26C9B1D1778C000F4A831 /* pop_top@2x.png in Resources */,
 				183076AB1C97E26D00B7665E /* MaMaPersonCenterViewController.xib in Resources */,
 				325B79A11C97E6F10022F930 /* ReBuyTableViewCell.xib in Resources */,
 				183075B21C97D49A00B7665E /* loading动画002.png in Resources */,
@@ -5031,6 +5231,7 @@
 				183075C31C97D49A00B7665E /* homepage.png in Resources */,
 				1830725D1C97BE3700B7665E /* VersionController.xib in Resources */,
 				1830761A1C97D49A00B7665E /* mamajingxuanicon.png in Resources */,
+				1FA3773A1D17D02500F2321F /* backTop.png in Resources */,
 				1830724B1C97BE3700B7665E /* SelectedReasonsView.xib in Resources */,
 				183075DE1C97D49A00B7665E /* wodejingxuantouxiangicon.png in Resources */,
 				183076061C97D49A00B7665E /* hongbaoopen100.png in Resources */,
@@ -5124,7 +5325,6 @@
 				183076451C97D49A00B7665E /* wash01.png in Resources */,
 				183071D11C97BE3700B7665E /* EmptyCartView.xib in Resources */,
 				183074351C97D17800B7665E /* UMSnsAccountViewController.xib in Resources */,
-				183072531C97BE3700B7665E /* WuliuCompanyController.xib in Resources */,
 				183075751C97D49A00B7665E /* icon-daizhifu.png in Resources */,
 				1F3621D41CF924D7004359B0 /* Address.plist in Resources */,
 				183075AE1C97D49A00B7665E /* loading动画0016.png in Resources */,
@@ -5228,6 +5428,7 @@
 				1F700AAB1CF6E38A007B3FC0 /* JMEditAddressModel.m in Sources */,
 				183073F31C97D17800B7665E /* MJRefreshBackNormalFooter.m in Sources */,
 				183071F81C97BE3700B7665E /* WXLoginController.m in Sources */,
+				1FF26C951D1776DF00F4A831 /* JMRepopView.m in Sources */,
 				183070E61C97B83900B7665E /* JiFenModel.m in Sources */,
 				183073FD1C97D17800B7665E /* GTM_Base64.m in Sources */,
 				183073FB1C97D17800B7665E /* UIScrollView+MJRefresh.m in Sources */,
@@ -5246,6 +5447,7 @@
 				325B79E61C97E7160022F930 /* YHQHeadView.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
 				183072331C97BE3700B7665E /* TousuViewController.m in Sources */,
+				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				183072031C97BE3700B7665E /* TixianSucceedViewController.m in Sources */,
 				183070E01C97B83900B7665E /* ShoppingCartModel.m in Sources */,
@@ -5274,7 +5476,6 @@
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				325B7A0A1C97E73A0022F930 /* CountdownView.m in Sources */,
 				183073CD1C97D17800B7665E /* AFHTTPSessionManager.m in Sources */,
-				183072451C97BE3700B7665E /* FillWuliuController.m in Sources */,
 				183071FF1C97BE3700B7665E /* MaMaViewController.m in Sources */,
 				325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */,
 				183070E21C97B83900B7665E /* YHQModel.m in Sources */,
@@ -5285,6 +5486,7 @@
 				1F4161141CE31A4400F78C0D /* MASViewConstraint.m in Sources */,
 				1F2AE9691CF69380002EC974 /* NSObject+MJClass.m in Sources */,
 				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
+				1FF26B2D1D10EA2400F4A831 /* JMRefundCell.m in Sources */,
 				1F88D58E1CB8B5460050A2E2 /* TSettingViewController.m in Sources */,
 				183072281C97BE3700B7665E /* AddressViewController.m in Sources */,
 				0BBEFDC71D05D4D300D45078 /* JMGoodsListCell.m in Sources */,
@@ -5349,8 +5551,10 @@
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
 				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,
+				3A2E26681D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m in Sources */,
 				0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */,
 				183071E91C97BE3700B7665E /* XidiShuomingViewController.m in Sources */,
+				1FF26C931D1776DF00F4A831 /* JMPopViewAnimationDrop.m in Sources */,
 				0BBEFDCD1D05EC3F00D45078 /* JMTimeInfoModel.m in Sources */,
 				183071D71C97BE3700B7665E /* ChildViewController.m in Sources */,
 				325B79971C97E6F10022F930 /* CartTableCellTableViewCell1.m in Sources */,
@@ -5373,10 +5577,12 @@
 				183074071C97D17800B7665E /* QNHttpManager.m in Sources */,
 				183072171C97BE3700B7665E /* MaMaShareSubsidiesViewController.m in Sources */,
 				183073D11C97D17800B7665E /* AFURLRequestSerialization.m in Sources */,
+				3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
 				183074131C97D17800B7665E /* QNUpToken.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,
+				3A2E26671D12D6D8005C1CDA /* IMY_NJKWebViewProgress.m in Sources */,
 				1F88D5821CB77AC90050A2E2 /* MyInvitationViewController.m in Sources */,
 				183073E11C97D17800B7665E /* QNHex.m in Sources */,
 				183073EC1C97D17800B7665E /* MJRefreshComponent.m in Sources */,
@@ -5384,6 +5590,7 @@
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
 				0BCD28D81D07048200EB4C59 /* Foundation+Log.m in Sources */,
 				183072901C97C00900B7665E /* MMLoginStatus.m in Sources */,
+				1FF26B9B1D12A59B00F4A831 /* JMTimeLineView.m in Sources */,
 				183074241C97D17800B7665E /* UIImage+WebP.m in Sources */,
 				183070D11C97B83900B7665E /* BuyModel.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
@@ -5404,6 +5611,7 @@
 				1830740C1C97D17800B7665E /* QNReachability.m in Sources */,
 				183072851C97C00900B7665E /* NSString+URL.m in Sources */,
 				1F41610F1CE31A4400F78C0D /* MASCompositeConstraint.m in Sources */,
+				1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */,
 				325B79A01C97E6F10022F930 /* ReBuyTableViewCell.m in Sources */,
 				1830722F1C97BE3700B7665E /* JifenViewController.m in Sources */,
 				183073CC1C97D17800B7665E /* AFHTTPRequestOperationManager.m in Sources */,
@@ -5417,10 +5625,12 @@
 				0B43FFA31CFE878600AE7DDD /* JMLogistics.m in Sources */,
 				183074101C97D17800B7665E /* QNResumeUpload.m in Sources */,
 				1830723C1C97BE3700B7665E /* PersonCenterViewController2.m in Sources */,
+				1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */,
 				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
 				18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */,
+				1FF26CA81D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */,
 				325B799D1C97E6F10022F930 /* MMLoadingAnimation.m in Sources */,
 				183074161C97D17800B7665E /* UIViewController+RESideMenu.m in Sources */,
@@ -5496,6 +5706,7 @@
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
+				1FF26C941D1776DF00F4A831 /* JMPopViewAnimationSpring.m in Sources */,
 				18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */,
 				1F4161151CE31A4400F78C0D /* NSArray+MASAdditions.m in Sources */,
 				1830723A1C97BE3700B7665E /* PersonCenterViewController1.m in Sources */,
@@ -5512,7 +5723,6 @@
 				183073EA1C97D17800B7665E /* MJRefreshAutoFooter.m in Sources */,
 				183070E41C97B83900B7665E /* FanceModel.m in Sources */,
 				183070D81C97B83900B7665E /* LiJiBuyModel.m in Sources */,
-				183072521C97BE3700B7665E /* WuliuCompanyController.m in Sources */,
 				183070DA1C97B83900B7665E /* NewCartsModel.m in Sources */,
 				325B799E1C97E6F10022F930 /* PeopleCollectionCell.m in Sources */,
 				183070DC1C97B83900B7665E /* PeopleModel.m in Sources */,
@@ -5547,6 +5757,7 @@
 				1830740B1C97D17800B7665E /* QNUserAgent.m in Sources */,
 				183073FF1C97D17800B7665E /* QNAsyncRun.m in Sources */,
 				183074041C97D17800B7665E /* QNSystem.m in Sources */,
+				1FF26CA41D17817D00F4A831 /* JMRefundView.m in Sources */,
 				3A1E05951CE1C3FB001018AC /* LGTextField.m in Sources */,
 				183072581C97BE3700B7665E /* SettingViewController.m in Sources */,
 				1F14D61F1CC6064400410EC0 /* MMRootViewController.m in Sources */,
@@ -5602,8 +5813,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -5626,7 +5837,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -5648,8 +5859,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -5664,7 +5875,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -5675,8 +5886,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -5723,7 +5934,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5733,8 +5944,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -5781,7 +5992,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

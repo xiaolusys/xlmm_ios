@@ -8,11 +8,24 @@
 
 #import "ReBuyTableViewCell.h"
 #import "UIColor+RGBColor.h"
+#import "Masonry.h"
 
 @implementation ReBuyTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    UILabel *deleateLine = [UILabel new];
+    [self.allPriceLabel addSubview:deleateLine];
+    self.deleateLine = deleateLine;
+    self.deleateLine.backgroundColor = [UIColor lightGrayColor];
+    [self.deleateLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.allPriceLabel.mas_centerY);
+        make.left.equalTo(self.allPriceLabel);
+        make.right.equalTo(self.allPriceLabel);
+        make.height.mas_equalTo(1);
+    }];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

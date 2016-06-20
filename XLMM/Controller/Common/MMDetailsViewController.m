@@ -997,7 +997,7 @@
         
     } else{
        // NSLog(@"加入购物车");
-        //                http://youni.huyi.so/rest/v1/carts
+        //                http://youni.huyi.so/rest/v2/carts
       //  NSLog(@"item_id = %@", itemID);
       //  NSLog(@"sku_id = %@", skusID);
         

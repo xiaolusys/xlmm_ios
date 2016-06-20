@@ -19,7 +19,6 @@
 
 @property (nonatomic,copy) NSString *payMent;
 
-
 @property (nonatomic,weak) id<JMOrderPayViewDelegate> delegate;
 
 

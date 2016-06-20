@@ -24,6 +24,7 @@
                 <outlet property="refundPriceLabel" destination="c1N-xZ-wW4" id="DDo-kT-Sg3"/>
                 <outlet property="sizeLabel" destination="MHr-9R-scq" id="nWa-Fn-wNU"/>
                 <outlet property="statusLabel" destination="Yy3-Tc-8H3" id="Ila-6Z-D0m"/>
+                <outlet property="timeLineView" destination="axp-DE-hCp" id="AiL-Yg-0UY"/>
                 <outlet property="titleLabel" destination="jCx-Bw-Wyj" id="Rhs-qi-aiJ"/>
                 <outlet property="topToRefundHeight" destination="imx-5O-QkT" id="0UL-TY-aFX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,10 +39,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mzd-NC-xLN" userLabel="Container View">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="414"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="474"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axp-DE-hCp" customClass="UIScrollView">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kAL-XM-Piw" userLabel="FootView">
-                                    <rect key="frame" x="0.0" y="292" width="320" height="122"/>
+                                    <rect key="frame" x="0.0" y="352" width="320" height="122"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFU-ik-avB">
                                             <rect key="frame" x="0.0" y="1" width="320" height="120"/>
@@ -123,7 +128,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1a-dx-5hs" userLabel="Head View">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="277"/>
+                                    <rect key="frame" x="0.0" y="60" width="320" height="277"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJR-uY-NIt" userLabel="First View">
                                             <rect key="frame" x="0.0" y="1" width="320" height="137"/>
@@ -414,9 +419,13 @@
                             <constraints>
                                 <constraint firstItem="kAL-XM-Piw" firstAttribute="leading" secondItem="mzd-NC-xLN" secondAttribute="leading" id="8db-Mb-mzG"/>
                                 <constraint firstItem="kAL-XM-Piw" firstAttribute="top" secondItem="U1a-dx-5hs" secondAttribute="bottom" constant="15" id="96P-Xu-Fpq"/>
+                                <constraint firstItem="axp-DE-hCp" firstAttribute="top" secondItem="mzd-NC-xLN" secondAttribute="top" id="IZj-bY-EB9"/>
+                                <constraint firstItem="axp-DE-hCp" firstAttribute="leading" secondItem="mzd-NC-xLN" secondAttribute="leading" id="VoO-Lq-UeC"/>
+                                <constraint firstItem="U1a-dx-5hs" firstAttribute="top" secondItem="axp-DE-hCp" secondAttribute="bottom" id="XAc-Gb-n7f"/>
                                 <constraint firstAttribute="bottom" secondItem="kAL-XM-Piw" secondAttribute="bottom" id="cYt-RN-wpl"/>
-                                <constraint firstItem="U1a-dx-5hs" firstAttribute="top" secondItem="mzd-NC-xLN" secondAttribute="top" id="r3Z-8O-8JL"/>
+                                <constraint firstItem="U1a-dx-5hs" firstAttribute="top" secondItem="mzd-NC-xLN" secondAttribute="top" constant="60" id="r3Z-8O-8JL"/>
                                 <constraint firstAttribute="trailing" secondItem="kAL-XM-Piw" secondAttribute="trailing" id="rWO-DL-ceF"/>
+                                <constraint firstItem="axp-DE-hCp" firstAttribute="width" secondItem="mzd-NC-xLN" secondAttribute="width" id="tVZ-WN-KvB"/>
                                 <constraint firstAttribute="trailing" secondItem="U1a-dx-5hs" secondAttribute="trailing" id="weH-Gh-bYs"/>
                                 <constraint firstItem="U1a-dx-5hs" firstAttribute="leading" secondItem="mzd-NC-xLN" secondAttribute="leading" id="yOR-Dg-vYN"/>
                             </constraints>

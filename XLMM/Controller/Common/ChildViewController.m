@@ -23,6 +23,7 @@
 #import "AFNetworking.h"
 #import "WebViewController.h"
 #import "MJExtension.h"
+#import "Masonry.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -46,6 +47,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
+@property (nonatomic,strong) UIButton *topButton;
 
 @end
 
@@ -226,6 +228,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
     [self reloadGoods];
     NSLog(@"Child vc viewDidLoad end");
+    [self createButton];
 }
 
 - (void)saveCurrentState{
@@ -439,6 +442,9 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _contentY = scrollView.contentOffset.y;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.topButton.hidden = NO;
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -558,7 +564,38 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 
+#pragma mark -- 添加返回顶部按钮
 
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+//    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+    
+}
+- (void)topButtonClick:(UIButton *)btn {
+    [self.childCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    self.topButton.hidden = YES;
+}
+
+//- (void)hiddenBackTopBtn {
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.topButton.hidden = YES;
+//    }];
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

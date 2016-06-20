@@ -158,8 +158,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
+    
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
     self.addressViewWidth.constant = SCREENWIDTH;
     self.buyButton.layer.borderWidth = 1;
@@ -221,10 +220,9 @@
     self.payView = payView;
     self.payView.delegate = self;
     self.payView.width = SCREENWIDTH;
-    
 
-    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
-    self.showViewVC = showViewVC;
+//    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
+//    self.showViewVC = showViewVC;
 }
 #pragma mark ------ 创建一个请求
 - (void)downloadCartsData{
@@ -544,7 +542,7 @@
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
         [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //            NSDictionary *dict = [[NSDictionary alloc] init];
@@ -581,13 +579,15 @@
 - (void)choiseButtonClick:(UIButton *)btn {
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
+    
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMChoiseLogisController alloc] init];
+    }
     self.showViewVC.dataSource = self.dataSource;
     NSInteger count = self.dataSource.count;
     self.showViewVC.count = count;
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
-    if (self.showViewVC.view == nil) {
-        self.showViewVC = [[JMChoiseLogisController alloc] init];
-    }
+    
     self.showViewVC.delegate = self;
     menu.contentView = self.showViewVC.view;
     

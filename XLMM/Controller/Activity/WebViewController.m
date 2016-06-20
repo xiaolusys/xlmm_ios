@@ -36,17 +36,18 @@
 #import "MJExtension.h"
 #import "JMShareModel.h"
 
-#define kService [NSBundle mainBundle].bundleIdentifier
-#define kAccount @"so.xiaolu.m.xiaolumeimei"
+#import "IMYWebView.h"
+#import "Webkit/WKScriptMessage.h"
+#import "IosJsBridge.h"
+
+
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
-
-@property (nonatomic ,strong) UIWebView *baseWebView;
 
 //分享参数
 @property (nonatomic, copy)NSString *titleStr;
@@ -66,7 +67,7 @@
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
 
-@property (nonatomic, strong)NSNumber *activityId;
+
 
 
 
@@ -103,7 +104,7 @@
 //@property (nonatomic,assign) BOOL isLogin;
 @property (nonatomic, strong) UIImage *webViewImage;
 
-@property (nonatomic,strong) JMShareViewController *shareView;
+
 
 
 
@@ -160,24 +161,31 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
     
     NSString *titleName = self.titleName;
     
     [self createNavigationBarWithTitle:titleName selecotr:@selector(backClicked:)];
     
-    UIWebView *baseWebView = [[UIWebView alloc] init];
-    self.baseWebView = baseWebView;
-    
-    [self registerJsBridge];
-    
-    [self.view addSubview:self.baseWebView];
-    self.baseWebView.backgroundColor = [UIColor whiteColor];
-    self.baseWebView.tag = 111;
+    IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
+    super.baseWebView = baseWebView1;
+    [self.view addSubview:super.baseWebView];
+//    super.baseWebView.backgroundColor = [UIColor whiteColor];
+//    super.baseWebView.tag = 111;
 //    self.baseWebView.delegate = self;
-    self.baseWebView.scalesPageToFit = YES;
-    self.baseWebView.userInteractionEnabled = YES;
+//    super.baseWebView.scalesPageToFit = YES;
+//    super.baseWebView.userInteractionEnabled = YES;
+    super.baseWebView.viewController = self;
+    
+    if(super.baseWebView.usingUIWebView)
+    {
+        NSLog(@"7.0 UIWebView");
+        [self registerJsBridge];
+    }
+    else
+    {
+        NSLog(@"bigger than8.0 WKWebView");
+    }
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
@@ -187,33 +195,32 @@
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
     if ([active isEqualToString:@"myInvite"]) {
-        baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
         loadStr = _webDiction[@"web_url"];
     }else if ([active isEqualToString:@"active"]){
-        baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
         [self loadData];
     }else {
         statusBarView.hidden = NO;
-        baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
+        super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
         loadStr = _webDiction[@"web_url"];
     }
     NSURL *url = [NSURL URLWithString:loadStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-    [self.baseWebView loadRequest:request];
-
-
+    [super.baseWebView loadRequest:request];
+    
     if(_isShowRightShareBtn){
         [self createTabBarButton];
     }
     
-    self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    self.shareWebView.hidden = YES;
-    self.shareWebView.tag = 102;
-    [self.view addSubview:self.shareWebView];
-    [self.view bringSubviewToFront:self.baseWebView];
+//    self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    self.shareWebView.hidden = YES;
+//    self.shareWebView.tag = 102;
+//    [self.view addSubview:self.shareWebView];
+    [self.view bringSubviewToFront:super.baseWebView];
     
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
@@ -310,14 +317,7 @@
     [JMPopView hide];
     [SVProgressHUD dismiss];
 }
-- (NSString *)getMobileSNCode {
-    if (![SSKeychain passwordForService:kService account:kAccount]) {
-        NSString *uuid = [UUID gen_uuid];
-        [SSKeychain setPassword:uuid forService:kService account:kAccount];
-    }
-    NSString *devicenumber = [SSKeychain passwordForService:kService account:kAccount];
-    return devicenumber;
-}
+
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -361,23 +361,41 @@
 }
 
 - (void)updateUserAgent{
-    NSString *oldAgent = [self.baseWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString *oldAgent = [super.baseWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     if(oldAgent == nil) return;
     
+    // app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSLog(@"oldAgent=%@",oldAgent);
     if(oldAgent != nil) {
         
-        NSRange range = [oldAgent rangeOfString:@"xlmm;"];
+        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
         if(range.length > 0)
         {
             return;
         }
         
     }
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
-
+    
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
+    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    
+    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
+    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
+    if(newrange.length > 0)
+    {
+        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
+    }
+    
+    NSLog(@"newAgent=%@",newAgent);
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
 }
+
+
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
     if (_bridge) {
@@ -386,7 +404,7 @@
     }
     NSLog(@"registerJsBridge!");
     [WebViewJavascriptBridge enableLogging];
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView];
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView.realWebView];
 
     [self.bridge setWebViewDelegate:self];
     
@@ -422,7 +440,7 @@
     }];
     
     [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSString *device = [self getMobileSNCode];
+        NSString *device = [IosJsBridge getMobileSNCode];
         responseCallback(device);
     }];
     /**
@@ -449,6 +467,9 @@
         }
     }];
 }
+
+
+
 /**
  *  跳转购物车
  */
@@ -579,6 +600,7 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

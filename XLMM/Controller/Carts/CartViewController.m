@@ -17,6 +17,7 @@
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"
+#import "WebViewController.h"
 
 
 
@@ -36,7 +37,7 @@
 
 @implementation CartViewController{
     NSInteger youhuiquanValud;
-    
+    NSDictionary *_carsGoodsDic;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -84,12 +85,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.dataArray = [[NSMutableArray alloc] init];
     self.historyCarts = [[NSMutableArray alloc] init];
@@ -188,8 +190,10 @@
         model.sku_name = [dic objectForKey:@"sku_name"];
         model.ID = [[dic objectForKey:@"id"] intValue];
         model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
+        model.item_weburl = [dic objectForKey:@"item_weburl"];
         allPrice += model.total_fee;
         [self.dataArray addObject:model];
+        _carsGoodsDic = dic;
     }
 
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
@@ -271,7 +275,21 @@
     }
     return 0;
 }
+// -- 列表点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSString *weiUrl = model.item_weburl;
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
 
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString *CellIdentifier = @"simpleCellID";
@@ -493,7 +511,7 @@
     NSLog(@"确认删除");
 //    [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
@@ -563,7 +581,7 @@
 - (void)reduceNumber:(NewCartsModel *)cartModel{
     
     [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -586,7 +604,7 @@
 }
 - (void)addNumber:(NewCartsModel *)cartModel{
    [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -670,7 +688,7 @@
     self.frontView.hidden = YES;
     
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
 //    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET

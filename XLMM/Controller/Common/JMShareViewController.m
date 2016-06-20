@@ -147,15 +147,15 @@
     _imageUrlString = _model.share_img;
     _url = _model.share_link;
     _kuaizhaoLink = _url;
-    
-    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
+//    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
+    _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
     NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
-
+    NSLog(@"composeShareBtn Index=%ld", index);
     if (index == 0) {
         //微信分享
         if (_url == nil) {
@@ -169,13 +169,15 @@
             [UMSocialData defaultData].extConfig.wechatSessionData.title = _titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
-
+//            UMSocialUrlResource * urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:(UMSocialUrlResourceTypeImage) url:_url];
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功");
+                }
             }];
 
-            
         }
         [self cancelBtnClick];
     }else if (index == 1) {
@@ -255,6 +257,7 @@
 }
 
 - (void)cancelBtnClick {
+    NSLog(@"cancelBtnClick");
     
     [JMShareView hide];
     
