@@ -169,8 +169,9 @@
             [UMSocialData defaultData].extConfig.wechatSessionData.title = _titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
-
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url:_url];
+            
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];
             }];
 
