@@ -109,15 +109,18 @@
 
     else if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        
-        NSString *parameter = [components lastObject];
-        NSArray *params = [parameter componentsSeparatedByString:@"="];
-        NSString *firstparam = [params firstObject];
+        NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+
+        NSArray *params = [parameter componentsSeparatedByString:@"&"];
+        NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+        NSLog(@"firstparams %@  %@", [firstparams firstObject], [firstparams lastObject]);
+        NSString *firstparam = [firstparams firstObject];
+        NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
         if ([firstparam isEqualToString:@"model_id"]) {
             //跳到集合页面
-            NSLog(@"model_id = %@", [params lastObject]);
+            NSLog(@"model_id = %@", firstvalue);
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:firstvalue forKey:@"web_url"];
             [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
             WebViewController *webView = [[WebViewController alloc] init];
@@ -128,9 +131,9 @@
             
         } else if ([firstparam isEqualToString:@"product_id"]){
             //跳到商品详情
-            NSLog(@"product_id = %@", [params lastObject]);
+            NSLog(@"product_id = %@", firstvalue);
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:firstvalue forKey:@"web_url"];
             [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
             
             WebViewController *webView = [[WebViewController alloc] init];
@@ -142,31 +145,38 @@
             
         } else if ([firstparam isEqualToString:@"trade_id"]){
             //跳到订单详情
-            NSLog(@"trade_id = %@", [params lastObject]);
+            NSLog(@"trade_id = %@", firstvalue);
             XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, [params lastObject]];
+            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"]){
-            NSLog(@"跳到H5首页 url= %@", [params lastObject]);
+            NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
+            NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
+            NSString *secondparam = [secondparams firstObject];
+            NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
+            NSLog(@"跳到H5首页 url= %@", secondvalue);
+            
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:secondvalue forKey:@"web_url"];
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
             webView.isShowNavBar =true;
             webView.isShowRightShareBtn=true;
             [vc.navigationController pushViewController:webView animated:YES];
         } else if([firstparam isEqualToString:@"activity_id"]){
+            NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
+            NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
+            NSString *secondparam = [secondparams firstObject];
+            NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
 
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:[params lastObject] forKey:@"web_url"];
+            [web_dic setValue:secondvalue forKey:@"web_url"];
             [web_dic setValue:@"active" forKey:@"type_title"];
             
-            NSArray *id_params = [params[1] componentsSeparatedByString:@"&"];
-            NSString *id_param = [id_params firstObject];
-            [web_dic setValue:id_param forKey:@"activity_id"];
-            NSLog(@"跳到activity_id id=%@ url= %@", id_param, [params lastObject]);
+            [web_dic setValue:firstvalue forKey:@"activity_id"];
+            NSLog(@"跳到activity_id id=%@ url= %@", firstvalue, secondvalue);
             
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;

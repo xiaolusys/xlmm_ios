@@ -155,7 +155,7 @@
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
-
+    NSLog(@"composeShareBtn Index=%ld", index);
     if (index == 0) {
         //微信分享
         if (_url == nil) {
@@ -255,6 +255,7 @@
 }
 
 - (void)cancelBtnClick {
+    NSLog(@"cancelBtnClick");
     
     [JMShareView hide];
     

@@ -499,7 +499,7 @@ static NSString *kbrandCell = @"brandCell";
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
-    NSLog(@"viewDidDisappear");
+    NSLog(@"MMRoot viewDidDisappear");
     [super viewDidDisappear:animated];
     frame = self.view.frame;
 }
@@ -615,6 +615,8 @@ static NSString *kbrandCell = @"brandCell";
 {
     //进入前台时调用此函数
     NSLog(@"Rootview enter foreground");
+    [self autoUpdateVersion];
+    
     if([self checkNeedRefresh]){
         [self refreshView];
     }
@@ -1327,7 +1329,7 @@ static NSString *kbrandCell = @"brandCell";
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
-    //[self pushAndBannerJump:target_url];
+    NSLog(@"poster click %@ index=%ld", target_url, view.currentImageIndex);
     [JumpUtils jumpToLocation:target_url viewController:self];
 }
 
@@ -2235,12 +2237,13 @@ static NSString *kbrandCell = @"brandCell";
         if (!responseObject)return;
         [self fetchedUpdateData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"Get app version fail.");
     }];
     
 }
 
 - (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
+    //NSLog(@"version info %@",appInfoDic);
     NSArray *reluts = [appInfoDic objectForKey:@"results"];
     if ([reluts count] == 0) return;
     NSDictionary *infoDic = reluts[0];
@@ -2249,27 +2252,45 @@ static NSString *kbrandCell = @"brandCell";
     self.latestVersion = [infoDic objectForKey:@"version"];
     self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
+    NSString *releaseNotes = [infoDic objectForKey:@"releaseNotes"];
+    
+    releaseNotes = [NSString stringWithFormat:@"新版本升级信息：\n%@",releaseNotes];
     
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    
     NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     double doubleCurrentVersion = [app_Version doubleValue];
     
     double doubleUpdateVersion = [self.latestVersion doubleValue];
     
+    NSLog(@"Get app version store=%@ %f appversion=%@ %f ",self.latestVersion, doubleUpdateVersion,app_Version, doubleCurrentVersion);
     
-    
-    if (doubleCurrentVersion < doubleUpdateVersion) {
-        
+    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending)
+    {
+        NSLog(@"%@ is bigger",self.latestVersion);
         UIAlertView *alert;
         alert = [[UIAlertView alloc] initWithTitle:self.trackName
-                                           message:@"有新版本，是否升级！"
+                                           message:releaseNotes
                                           delegate: self
                                  cancelButtonTitle:@"取消"
                                  otherButtonTitles: @"升级", nil];
         alert.tag = 1001;
         [alert show];
+
+    }else
+    {
+        NSLog(@"%@ is bigger",app_Version);
     }
+//    if (doubleCurrentVersion < doubleUpdateVersion) {
+//        
+//        UIAlertView *alert;
+//        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+//                                           message:@"有新版本，是否升级！"
+//                                          delegate: self
+//                                 cancelButtonTitle:@"取消"
+//                                 otherButtonTitles: @"升级", nil];
+//        alert.tag = 1001;
+//        [alert show];
+//    }
     
 }
 
