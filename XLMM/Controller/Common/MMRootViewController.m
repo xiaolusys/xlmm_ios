@@ -111,6 +111,7 @@
     float allActivityHeight;
     
     NSMutableDictionary *_diction;
+    NSInteger loadingIndex;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -535,6 +536,7 @@ static NSString *kbrandCell = @"brandCell";
     
     _pageCurrentIndex = 0;
     self.currentIndex = 1;
+    loadingIndex = 1;
     
     //设置导航栏样式
     [self createInfo];
@@ -1091,23 +1093,26 @@ static NSString *kbrandCell = @"brandCell";
         return;
     }
     
-    self.collectionViewScrollview.scrollEnabled = NO;
+    loadingIndex = self.currentIndex;
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
-        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
-        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
-        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动并禁止昨今明按钮点击；
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法2
+        UICollectionView *collection = self.collectionArr[loadingIndex];
         [collection.mj_footer endRefreshing];
+        NSLog(@"endRefreshing index=%ld", (long)loadingIndex);
+        if(loadingIndex != self.currentIndex) return;
         if (!responseObject)return ;
         [self goodsResult:responseObject];
-        self.collectionViewScrollview.scrollEnabled = YES;
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        UICollectionView *collection = self.collectionArr[loadingIndex];
         [collection.mj_footer endRefreshing];
-        self.collectionViewScrollview.scrollEnabled = YES;
+        NSLog(@"endRefreshing index=%ld", (long)loadingIndex);
+
     }];
 }
 
@@ -1376,6 +1381,10 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
     
+    //去掉以前的刷新状态
+    UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection.mj_footer endRefreshing];
+    
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
@@ -1443,7 +1452,6 @@ static NSString *kbrandCell = @"brandCell";
         return 0;
     }
     else{
-        NSLog(@"arr collection");
         NSString *key = self.dickey[self.currentIndex];
         NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
         return currentArr.count;
@@ -2107,33 +2115,33 @@ static NSString *kbrandCell = @"brandCell";
     }
     
     //在中间层水平滑动
-    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
-        && scrollView.dragging){
-        int index = 1;
-        if(scrollView.contentOffset.x <= (1e-6)){
-            index = 0;
-            self.labelIndicate.text = @"距本场结束";
-        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
-            index = 1;
-            self.labelIndicate.text = @"距本场结束";
-        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
-            index = 2;
-            self.labelIndicate.text = @"距本场开始";
-        }
-        //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
-        if(self.currentIndex != index){
-            self.currentIndex = index;
-            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
-            if((currentArr != nil) && (currentArr.count == 0)){
-                [self goodsRequest];
-            }
-        }
-        else{
-            self.currentIndex = index;
-        }
-        
-        [self changeBtnImg];
-    }
+//    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
+//        && scrollView.dragging){
+//        int index = 1;
+//        if(scrollView.contentOffset.x <= (1e-6)){
+//            index = 0;
+//            self.labelIndicate.text = @"距本场结束";
+//        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
+//            index = 1;
+//            self.labelIndicate.text = @"距本场结束";
+//        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+//            index = 2;
+//            self.labelIndicate.text = @"距本场开始";
+//        }
+//        NSLog(@"index= %d,currentindex=%ld %f %f",  index, (long)self.currentIndex, scrollView.contentOffset.x, WIDTH );
+//        if(self.currentIndex != index){
+//            self.currentIndex = index;
+//            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+//            if((currentArr != nil) && (currentArr.count == 0)){
+//                [self goodsRequest];
+//            }
+//        }
+//        else{
+//            self.currentIndex = index;
+//        }
+//        
+//        [self changeBtnImg];
+//    }
     
     //在最内层的collection上进行滑动
     if (((scrollView.tag == TAG_GOODS_YESTODAY_SCROLLVIEW)
@@ -2162,6 +2170,43 @@ static NSString *kbrandCell = @"brandCell";
             }];
         }
     }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+
+    if (scrollView.tag == TAG_COLLECTION_SCROLLVIEW){
+        int index = 1;
+        if(scrollView.contentOffset.x <= (1e-6)){
+            index = 0;
+            self.labelIndicate.text = @"距本场结束";
+        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
+            index = 1;
+            self.labelIndicate.text = @"距本场结束";
+        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            index = 2;
+            self.labelIndicate.text = @"距本场开始";
+        }
+//        NSLog(@"scrollViewDidEndDecelerating index= %d,currentindex=%ld %f %f",  index, (long)self.currentIndex, scrollView.contentOffset.x, WIDTH );
+        if(self.currentIndex != index){
+            self.currentIndex = index;
+            
+            //去掉以前的刷新状态
+            UICollectionView *collection = self.collectionArr[index];
+            [collection.mj_footer endRefreshing];
+            
+            //切换到新的collectionview，并且无数据，那么就刷新
+            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+            if((currentArr != nil) && (currentArr.count == 0)){
+                [self goodsRequest];
+            }
+        }
+        else{
+            self.currentIndex = index;
+        }
+        
+        [self changeBtnImg];
+    }
+
 }
 
 -(void)enableAllGoodsCollectionScroll{
