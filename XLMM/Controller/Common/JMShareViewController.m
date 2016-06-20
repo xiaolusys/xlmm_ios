@@ -147,7 +147,6 @@
     _imageUrlString = _model.share_img;
     _url = _model.share_link;
     _kuaizhaoLink = _url;
-    
 //    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
     _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
