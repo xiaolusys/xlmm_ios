@@ -16,12 +16,15 @@
 #import "MMClass.h"
 #import "QiniuSDK.h"
 #import "SVProgressHUD.h"
-
+#import "JMRefundView.h"
+#import "JMPopViewAnimationDrop.h"
+#import "JMPopViewAnimationSpring.h"
+#import "JMFirstOpen.h"
 
 
 //JMOrderGoodsModel
 
-@interface ShenQingTuiHuoController ()<UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ShenQingTuiHuoController ()<JMRefundViewDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 
 @property (nonatomic, strong) NSArray *dataArray;
@@ -30,7 +33,9 @@
 @property (nonatomic, strong) NSMutableArray *keysArray;
 @property (nonatomic, strong) NSMutableArray *linksArray;
 
-
+@property (nonatomic,strong) UIView *maskView;
+@property (nonatomic,strong) UIView *bottomView;
+@property (nonatomic,strong) JMRefundView *popView;
 
 
 @end
@@ -236,7 +241,7 @@
     self.sendImageView3.layer.borderColor = [UIColor lineGrayColor].CGColor;
     
     
-    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     
 
 }
@@ -788,7 +793,9 @@
             if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
                 NSLog(@"refund return ok");
 
-                [self.navigationController popViewControllerAnimated:YES];
+                [self returnPopView];
+                
+                
                 
             }
             NSLog(@"refund return ok end");
@@ -836,5 +843,42 @@
 - (IBAction)deleteButtonThr:(id)sender {
     [self.imagesArray removeObjectAtIndex:2];
     [self createImageViews];
+}
+- (void)returnPopView {
+    /**
+     判断是否为第一次打开 -- 选择弹出优惠券弹窗
+     */
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0.3;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidepopView)]];
+    JMRefundView *popView = [JMRefundView defaultPopView];
+    self.popView = popView;
+    self.popView.delegate = self;
+    if ([JMFirstOpen isFirstLoadApp]) {
+        [self.view addSubview:self.maskView];
+        [self.view addSubview:self.popView];
+        [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+        
+    }else {
+    }
+}
+- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hidepopView];
+//        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:logVC animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }else {
+        //取消按钮
+        [self hidepopView];
+    }
+}
+/**
+ *  隐藏
+ */
+- (void)hidepopView {
+    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
 }
 @end

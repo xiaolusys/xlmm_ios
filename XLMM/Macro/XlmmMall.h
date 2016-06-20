@@ -31,4 +31,7 @@
 #define REFUND_STATUS_WAIT_RETURN_FEE  6
 #define REFUND_STATUS_REFUND_SUCCESS 7
 
+#import "UINavigationController+FDFullscreenPopGesture.h"
+
+
 #endif /* XlmmMall_h */
