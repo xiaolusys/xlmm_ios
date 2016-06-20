@@ -47,6 +47,7 @@
 
 @property (nonatomic,strong) UIButton *cancleBtn;
 
+@property (nonatomic,strong) UILabel *titleLa;
 
 @end
 
@@ -58,7 +59,7 @@
 
 
 - (void)viewDidLoad {
-        
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick:)];
     
@@ -90,7 +91,7 @@
     headView.image = [UIImage imageNamed:@"login_background"];
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     headView.userInteractionEnabled = YES;
-        self.headView.clipsToBounds = YES;
+    self.headView.clipsToBounds = YES;
     
     UIView *bottomView = [[UIView alloc] init];
     [self.view addSubview:bottomView];
@@ -153,6 +154,14 @@
     self.lineView = lineView;
     lineView.backgroundColor = [UIColor colorWithRed:232/255. green:223/255. blue:224/255. alpha:1.0];
     
+    UILabel *titleLa = [UILabel new];
+    [self.bottomView addSubview:titleLa];
+    self.titleLa = titleLa;
+    self.titleLa.backgroundColor = [UIColor lineGrayColor];
+    self.titleLa.textAlignment = NSTextAlignmentCenter;
+    self.titleLa.font = [UIFont systemFontOfSize:11.];
+    self.titleLa.textColor = [UIColor titleDarkGrayColor];
+    self.titleLa.text = @"使用微信登录，免注册哦~！";
     
     
 }
@@ -175,7 +184,7 @@
 - (void)update:(NSNotificationCenter *)notification {
     
     [SVProgressHUD showWithStatus:@"正在登录......"];
-
+    
     dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"userInfo"];
     
     NSArray *randomArray = [self randomArray];
@@ -384,7 +393,7 @@
     }];
     
     [self.wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.headView.mas_bottom).offset(30);
+        make.top.equalTo(weakSelf.headView.mas_bottom).offset(20);
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
         make.height.mas_equalTo(@40);
         make.width.mas_equalTo(SCREENWIDTH - 30);
@@ -406,7 +415,7 @@
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.phoneNumBtn.mas_bottom).offset(25);
+        make.top.equalTo(weakSelf.phoneNumBtn.mas_bottom).offset(20);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@1);
     }];
@@ -414,7 +423,8 @@
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.bottom.equalTo(weakSelf.view.mas_bottom);
+        //        make.bottom.equalTo(weakSelf.view.mas_bottom);
+        make.height.mas_equalTo(@40);
     }];
     
     [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -426,7 +436,7 @@
     [self.wexImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.wechatBtn).offset(10);
         make.right.equalTo(weakSelf.wexTitleLabel.mas_left);
-//        make.right.equalTo(weakSelf.bottomView.mas_centerX);
+        //        make.right.equalTo(weakSelf.bottomView.mas_centerX);
         make.width.height.mas_equalTo(@20);
     }];
     
@@ -435,6 +445,13 @@
         make.centerY.equalTo(weakSelf.wexImage.mas_centerY);
         make.right.equalTo(weakSelf.wechatBtn);
     }];
+    
+    [self.titleLa mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.registerBtn.mas_bottom);
+        make.left.right.equalTo(weakSelf.bottomView);
+        make.bottom.equalTo(weakSelf.bottomView);
+    }];
+    
     
 }
 - (void)backApointInterface {

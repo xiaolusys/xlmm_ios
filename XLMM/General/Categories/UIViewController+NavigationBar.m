@@ -12,6 +12,7 @@
 
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector{
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = title;
     label.textColor = [UIColor blackColor];
