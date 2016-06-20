@@ -311,7 +311,7 @@
     [self.view addSubview:topButton];
     self.topButton = topButton;
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.topButton.frame = CGRectMake(SCREENWIDTH - 100, SCREENHEIGHT / 2, 50, 50);
+    self.topButton.frame = CGRectMake(SCREENWIDTH - 100, SCREENHEIGHT - 100, 50, 50);
     [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];

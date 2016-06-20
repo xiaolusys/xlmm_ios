@@ -278,13 +278,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
     NSString *weiUrl = model.item_weburl;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:weiUrl forKey:@"web_url"];
-    WebViewController *webVC = [[WebViewController alloc] init];
-    webVC.webDiction = dic;
-    
-    [self.navigationController pushViewController:webVC animated:YES];
-    
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
