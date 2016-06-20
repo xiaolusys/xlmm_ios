@@ -14,6 +14,7 @@
 #import "TixianModel.h"
 #import "SVProgressHUD.h"
 #import "MJRefresh.h"
+#import "Masonry.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";
@@ -204,21 +205,25 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [self.view addSubview:topButton];
     self.topButton = topButton;
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.topButton.frame = CGRectMake(SCREENWIDTH - 100, SCREENHEIGHT - 100, 50, 50);
-    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
     
 }
 - (void)topButtonClick:(UIButton *)btn {
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    self.topButton.hidden = YES;
 }
 
-- (void)hiddenBackTopBtn {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.topButton.hidden = YES;
-    }];
-}
+//- (void)hiddenBackTopBtn {
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.topButton.hidden = YES;
+//    }];
+//}
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [UIView animateWithDuration:0.5 animations:^{
         if (self.dataArray.count == 0) {
@@ -228,9 +233,9 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         }
     }];
 }
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
-}
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
+//}
 
 @end
 
