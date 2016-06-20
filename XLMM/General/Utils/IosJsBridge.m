@@ -42,13 +42,13 @@
         [self jumpToNativeLogin:vc para:data];
     }
     else if ([name isEqualToString:@"getNativeMobileSNCode"]){
-        
+        [self getNativeMobileSNCode];
     }
     else if ([name isEqualToString:@"callNativeBack"]){
         [self callNativeBack:vc];
     }
     else if ([name isEqualToString:@"callNativeShareFunc"]){
-        
+        [self callNativeShareFunc:vc para:data];
     }
     else if ([name isEqualToString:@"showLoading"]){
         [self showLoading:data];
