@@ -203,7 +203,20 @@
     [self callback_webViewDidFailLoadWithError:error];
 }
 #pragma mark- WKUIDelegate
-///--  还没用到
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    NSLog(@"runJavaScriptAlertPanelWithMessage %@", message);
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+//                                                                             message:nil
+//                                                                      preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+//                                                        style:UIAlertActionStyleCancel
+//                                                      handler:^(UIAlertAction *action) {
+//                                                          completionHandler();
+//                                                      }]];
+//    [self presentViewController:alertController animated:YES completion:^{}];
+}
+
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
@@ -650,6 +663,7 @@
     
 }
 
+//从webview获得浏览器中的useragent，并进行更新
 - (void)updateUserAgent{
     NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     if(oldAgent == nil) return;

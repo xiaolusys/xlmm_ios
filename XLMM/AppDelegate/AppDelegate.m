@@ -19,6 +19,8 @@
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
 #import "HomeViewController.h"
+#import "IMYWebView.h"
+#import "IosJsBridge.h"
 
 #define login @"login"
 #import "NSString+URL.h"
@@ -756,17 +758,47 @@
 }
 
 #pragma mark ---- User_Agent
+//从webview获得浏览器中的useragent，并进行更新
 - (void)createUserAgent {
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    IMYWebView *webView = [[IMYWebView alloc] initWithFrame:CGRectZero];
     NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     
     //add my info to the new agent
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm;"];
+    if(oldAgent == nil) return;
+    
+    // app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSLog(@"oldAgent=%@",oldAgent);
+    if(oldAgent != nil) {
+        
+        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
+    
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
+    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    
+    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
+    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
+    if(newrange.length > 0)
+    {
+        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
+    }
+    
+    NSLog(@"newAgent=%@",newAgent);
     
     //regist the new agent
     NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
 }
+
+
 
 #pragma mark -
 #pragma mark RESideMenu Delegate
