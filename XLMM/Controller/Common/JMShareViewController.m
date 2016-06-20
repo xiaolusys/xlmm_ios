@@ -169,13 +169,15 @@
             [UMSocialData defaultData].extConfig.wechatSessionData.title = _titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
-            UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url:_url];
+//            UMSocialUrlResource * urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:(UMSocialUrlResourceTypeImage) url:_url];
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功");
+                }
             }];
 
-            
         }
         [self cancelBtnClick];
     }else if (index == 1) {

@@ -85,12 +85,16 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
 }
-
+- (void)viewDidDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.dataArray = [[NSMutableArray alloc] init];
     self.historyCarts = [[NSMutableArray alloc] init];

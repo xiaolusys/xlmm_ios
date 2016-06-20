@@ -703,7 +703,7 @@
 }
 - (void)createXiangQing:(CGRect )rect number:(NSInteger)index{
     NSInteger orderS = [[orderStatus objectAtIndex:index] integerValue];
-    BOOL isOrderS = (orderS == ORDER_STATUS_TRADE_SUCCESS) || (orderS == ORDER_STATUS_CONFIRM_RECEIVE);
+    BOOL isOrderS = orderS == ORDER_STATUS_CONFIRM_RECEIVE; //(orderS == ORDER_STATUS_TRADE_SUCCESS) || (
     
     
     XiangQingView *owner = [XiangQingView new];

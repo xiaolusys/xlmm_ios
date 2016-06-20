@@ -163,7 +163,7 @@
 //    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 
-    self.edgesForExtendedLayout=UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backButtonClicked:)];
     self.addressViewWidth.constant = SCREENWIDTH;
