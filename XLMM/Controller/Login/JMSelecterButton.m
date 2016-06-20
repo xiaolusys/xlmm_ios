@@ -99,6 +99,7 @@
     
 }
 
+//- (void)setBackgrdColor:(UIColor *)backgrdColor layerRead:(CGFloat)layerRead;
 
 @end
 

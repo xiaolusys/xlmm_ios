@@ -148,7 +148,8 @@
     _url = _model.share_link;
     _kuaizhaoLink = _url;
     
-    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
+//    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
+    _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
     NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
@@ -170,7 +171,6 @@
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
 
-            
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];
             }];

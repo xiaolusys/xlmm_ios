@@ -510,7 +510,7 @@
     NSLog(@"确认删除");
 //    [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
@@ -580,7 +580,7 @@
 - (void)reduceNumber:(NewCartsModel *)cartModel{
     
     [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -603,7 +603,7 @@
 }
 - (void)addNumber:(NewCartsModel *)cartModel{
    [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -687,7 +687,7 @@
     self.frontView.hidden = YES;
     
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/%d/delete_carts", Root_URL,deleteModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
 //    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
