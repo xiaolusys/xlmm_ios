@@ -87,9 +87,6 @@
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
 }
-- (void)viewDidDisappear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
