@@ -325,7 +325,7 @@
     [SVProgressHUD dismiss];
 
     if (webView.tag != 102) {
-//        [self updateUserAgent];
+        [self updateUserAgent];
 //        [self registerJsBridge];
         return;
     }
@@ -360,7 +360,40 @@
     [SVProgressHUD dismiss];
 }
 
-
+- (void)updateUserAgent{
+    NSString *oldAgent = [super.baseWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    if(oldAgent == nil) return;
+    
+    // app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSLog(@"oldAgent=%@",oldAgent);
+    if(oldAgent != nil) {
+        
+        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
+    
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
+    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    
+    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
+    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
+    if(newrange.length > 0)
+    {
+        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
+    }
+    
+    NSLog(@"newAgent=%@",newAgent);
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
+}
 
 
 #pragma mark - 注册js bridge供h5页面调用
