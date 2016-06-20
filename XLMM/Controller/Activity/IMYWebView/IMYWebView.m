@@ -656,7 +656,7 @@
     NSLog(@"oldAgent=%@",oldAgent);
     if(oldAgent != nil) {
         
-        NSRange range = [oldAgent rangeOfString:@"xlmm/ios"];
+        NSRange range = [oldAgent rangeOfString:@"xlmm/"];
         if(range.length > 0)
         {
             return;
