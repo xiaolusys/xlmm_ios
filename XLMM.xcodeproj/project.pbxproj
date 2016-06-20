@@ -723,6 +723,7 @@
 		1FF26C9A1D1778C000F4A831 /* pop_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26C971D1778C000F4A831 /* pop_bottom@2x.png */; };
 		1FF26C9B1D1778C000F4A831 /* pop_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26C981D1778C000F4A831 /* pop_top@2x.png */; };
 		1FF26CA41D17817D00F4A831 /* JMRefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26CA31D17817D00F4A831 /* JMRefundView.m */; };
+		1FF26CA81D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		1FF4C9BD1CBCD49E00CCDCF7 /* CommonWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */; };
 		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
 		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
@@ -1932,6 +1933,8 @@
 		1FF26C981D1778C000F4A831 /* pop_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_top@2x.png"; sourceTree = "<group>"; };
 		1FF26CA21D17817D00F4A831 /* JMRefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundView.h; sourceTree = "<group>"; };
 		1FF26CA31D17817D00F4A831 /* JMRefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundView.m; sourceTree = "<group>"; };
+		1FF26CA61D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
+		1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		1FF4C9BB1CBCD49E00CCDCF7 /* CommonWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonWebViewViewController.h; path = ../Activity/CommonWebViewViewController.h; sourceTree = "<group>"; };
 		1FF4C9BC1CBCD49E00CCDCF7 /* CommonWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonWebViewViewController.m; path = ../Activity/CommonWebViewViewController.m; sourceTree = "<group>"; };
 		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
@@ -4581,6 +4584,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		1FF26CA51D1799E100F4A831 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				1FF26CA61D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.h */,
+				1FF26CA71D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -4620,6 +4632,7 @@
 			isa = PBXGroup;
 			children = (
 				3A5214E81CC764AA00F4E699 /* Images.xcassets */,
+				1FF26CA51D1799E100F4A831 /* Global */,
 				18306F6A1C97AA1600B7665E /* AppDelegate */,
 				18306FC61C97B5BC00B7665E /* Views */,
 				183070921C97B83900B7665E /* Models */,
@@ -5576,6 +5589,7 @@
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
 				18F392D01CA55CC5000969C2 /* SelectedActivitiesViewController.m in Sources */,
+				1FF26CA81D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				0BE313151D0515D400CD97D6 /* JMReGoodsAddView.m in Sources */,
 				325B799D1C97E6F10022F930 /* MMLoadingAnimation.m in Sources */,
 				183074161C97D17800B7665E /* UIViewController+RESideMenu.m in Sources */,
