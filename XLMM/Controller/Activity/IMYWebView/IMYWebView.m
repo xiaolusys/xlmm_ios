@@ -203,7 +203,20 @@
     [self callback_webViewDidFailLoadWithError:error];
 }
 #pragma mark- WKUIDelegate
-///--  还没用到
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    NSLog(@"runJavaScriptAlertPanelWithMessage %@", message);
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+//                                                                             message:nil
+//                                                                      preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+//                                                        style:UIAlertActionStyleCancel
+//                                                      handler:^(UIAlertAction *action) {
+//                                                          completionHandler();
+//                                                      }]];
+//    [self presentViewController:alertController animated:YES completion:^{}];
+}
+
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
@@ -650,23 +663,25 @@
     
 }
 
+//从webview获得浏览器中的useragent，并进行更新
 - (void)updateUserAgent{
     NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     if(oldAgent == nil) return;
+    
+    // app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
     NSLog(@"oldAgent=%@",oldAgent);
     if(oldAgent != nil) {
         
-        NSRange range = [oldAgent rangeOfString:@"xlmm/ios"];
+        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
         if(range.length > 0)
         {
             return;
         }
         
     }
-    
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    // app版本
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     
     NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
     newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
@@ -682,7 +697,6 @@
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
     
-//    [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
 }
 
 @end
