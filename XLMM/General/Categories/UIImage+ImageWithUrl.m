@@ -34,8 +34,11 @@
 //            
 //            image = [UIImage imageWithData:data];
 //        }];
+        NSString *urlStr = [urlString URLEncodedString];
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
         
-        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlString URLEncodedString]] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+        
+        
     }
     
     if(imageError != nil){
@@ -48,4 +51,5 @@
 
     return image;
 }
+
 @end

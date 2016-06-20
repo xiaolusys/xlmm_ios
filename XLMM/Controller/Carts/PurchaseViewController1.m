@@ -548,7 +548,7 @@
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
         [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //            NSDictionary *dict = [[NSDictionary alloc] init];

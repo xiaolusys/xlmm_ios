@@ -103,7 +103,7 @@
 
     buyNumber = @1;
     zhifuSelected = @"alipay";
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/now_payinfo?sku_id=%@", Root_URL,self.skuID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/now_payinfo?sku_id=%@", Root_URL,self.skuID];
   
     NSLog(@"sku_id = %@, ",self.skuID);
     
@@ -303,7 +303,7 @@
     int i = [buyNumber intValue];
     i++;
     
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/carts/sku_num_enough", Root_URL];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/carts/sku_num_enough", Root_URL];
     NSLog(@"url = %@", string);
     NSURL *url = [NSURL URLWithString:string];
     

@@ -710,11 +710,11 @@
 		1F88D58F1CB8B5460050A2E2 /* TSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F88D58D1CB8B5460050A2E2 /* TSettingViewController.xib */; };
 		1F9238D71CF45B61000AD0EF /* JMMaMaOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9238D61CF45B61000AD0EF /* JMMaMaOrderListCell.m */; };
 		1F9238D91CF46305000AD0EF /* isApp_orderList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */; };
+		1FA3773A1D17D02500F2321F /* backTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FA377391D17D02500F2321F /* backTop.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */; };
 		1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B291D10E7CE00F4A831 /* JMRefundController.m */; };
 		1FF26B2D1D10EA2400F4A831 /* JMRefundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */; };
-		1FF26B311D113A2A00F4A831 /* backTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF26B301D113A2A00F4A831 /* backTop@2x.png */; };
 		1FF26B9B1D12A59B00F4A831 /* JMTimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */; };
 		1FF26C931D1776DF00F4A831 /* JMPopViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26C8E1D1776DF00F4A831 /* JMPopViewAnimationDrop.m */; };
 		1FF26C941D1776DF00F4A831 /* JMPopViewAnimationSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26C901D1776DF00F4A831 /* JMPopViewAnimationSpring.m */; };
@@ -1915,6 +1915,7 @@
 		1F9238D51CF45B61000AD0EF /* JMMaMaOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaOrderListCell.h; sourceTree = "<group>"; };
 		1F9238D61CF45B61000AD0EF /* JMMaMaOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaOrderListCell.m; sourceTree = "<group>"; };
 		1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isApp_orderList@2x.png"; sourceTree = "<group>"; };
+		1FA377391D17D02500F2321F /* backTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backTop.png; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
@@ -1923,7 +1924,6 @@
 		1FF26B291D10E7CE00F4A831 /* JMRefundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundController.m; sourceTree = "<group>"; };
 		1FF26B2B1D10EA2400F4A831 /* JMRefundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundCell.h; sourceTree = "<group>"; };
 		1FF26B2C1D10EA2400F4A831 /* JMRefundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundCell.m; sourceTree = "<group>"; };
-		1FF26B301D113A2A00F4A831 /* backTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backTop@2x.png"; sourceTree = "<group>"; };
 		1FF26B991D12A59B00F4A831 /* JMTimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTimeLineView.h; sourceTree = "<group>"; };
 		1FF26B9A1D12A59B00F4A831 /* JMTimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTimeLineView.m; sourceTree = "<group>"; };
 		1FF26C8D1D1776DF00F4A831 /* JMPopViewAnimationDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMPopViewAnimationDrop.h; path = ../JMPopViewAnimationDrop.h; sourceTree = "<group>"; };
@@ -4210,8 +4210,8 @@
 				1FF26C961D1778C000F4A831 /* btn_close@2x.png */,
 				1FF26C971D1778C000F4A831 /* pop_bottom@2x.png */,
 				1FF26C981D1778C000F4A831 /* pop_top@2x.png */,
-				1FF26B301D113A2A00F4A831 /* backTop@2x.png */,
 				1F14D6101CC6059100410EC0 /* today.png */,
+				1FA377391D17D02500F2321F /* backTop.png */,
 				1F14D6111CC6059100410EC0 /* today1.png */,
 				1F14D6121CC6059100410EC0 /* tomorrow.png */,
 				1F14D6131CC6059100410EC0 /* tomorrow1.png */,
@@ -5231,6 +5231,7 @@
 				183075C31C97D49A00B7665E /* homepage.png in Resources */,
 				1830725D1C97BE3700B7665E /* VersionController.xib in Resources */,
 				1830761A1C97D49A00B7665E /* mamajingxuanicon.png in Resources */,
+				1FA3773A1D17D02500F2321F /* backTop.png in Resources */,
 				1830724B1C97BE3700B7665E /* SelectedReasonsView.xib in Resources */,
 				183075DE1C97D49A00B7665E /* wodejingxuantouxiangicon.png in Resources */,
 				183076061C97D49A00B7665E /* hongbaoopen100.png in Resources */,
@@ -5308,7 +5309,6 @@
 				1830766C1C97D49A00B7665E /* 圈圈加载0024.png in Resources */,
 				183075821C97D49A00B7665E /* icon-jiantouyou2.png in Resources */,
 				1830764E1C97D49A00B7665E /* xiaolumamahuoyuedu.png in Resources */,
-				1FF26B311D113A2A00F4A831 /* backTop@2x.png in Resources */,
 				18AC6C7E1CA2A1FB00316E65 /* FansEmpty.xib in Resources */,
 				1830767B1C97D49A00B7665E /* 圈圈加载0039.png in Resources */,
 				1F13513E1CE5BF9700D6138D /* chose_withdraw_one_nomal@2x.png in Resources */,
@@ -5837,7 +5837,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -5875,7 +5875,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -5934,7 +5934,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5992,7 +5992,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

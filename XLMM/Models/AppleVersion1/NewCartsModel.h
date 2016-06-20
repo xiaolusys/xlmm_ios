@@ -49,7 +49,7 @@
  "std_sale_price" = 99;
  title = "\U65b0\U6b3e\U9632\U6652\U8d85\U5927\U96ea\U7eba\U62ab\U80a9/\U897f\U74dc\U7ea2";
  "total_fee" = "39.8";
- url = "http://staging.xiaolumeimei.com/rest/v1/carts/423265.json";
+ url = "http://staging.xiaolumeimei.com/rest/v2/carts/423265.json";
  }
  )
  */

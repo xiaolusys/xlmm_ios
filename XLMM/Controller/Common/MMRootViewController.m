@@ -1929,7 +1929,7 @@ static NSString *kbrandCell = @"brandCell";
         return;
     }
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/show_carts_num.json", Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) {

@@ -19,4 +19,6 @@
 // 定制确定按钮 -- 分别有灰色背景  橙色背景  深绿色背景、
 - (void)setSureBackgroundColor:(UIColor *)color CornerRadius:(NSInteger)corner;
 
+//- (void)setBackgrdColor:(UIColor *)backgrdColor layerRead:(CGFloat)layerRead;
+
 @end
