@@ -26,7 +26,7 @@
 @implementation JMPaySucTitleView
 
 + (instancetype)enterHeaderView {
-    JMPaySucTitleView *headView = [[JMPaySucTitleView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * JMSUCTITLEPROPORTION)];
+    JMPaySucTitleView *headView = [[JMPaySucTitleView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
     headView.backgroundColor = [UIColor whiteColor];
     return headView;
 }

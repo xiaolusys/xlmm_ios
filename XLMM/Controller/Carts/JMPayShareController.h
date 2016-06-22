@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMShareModel.h"
 
 @interface JMPayShareController : UIViewController
+
+@property (nonatomic, strong)NSNumber *activityId;
+
+@property (nonatomic,strong) JMShareModel *shareModel;
+
+@property (nonatomic,copy) NSString *limitStr;
 
 @end
