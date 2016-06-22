@@ -136,7 +136,8 @@
 //    NSLog(@"Share para=%@",dic);
     if(_model == nil) return;
     
-    if ([_model.share_type isEqualToString:@"link"]) {
+    BOOL tpyeB = ([_model.share_type isEqual:@"link"] || [_model.share_type isEqual:@"0"]);
+    if (tpyeB) {
         _isPic = NO;
     }else {
         _isPic = YES;

@@ -34,6 +34,8 @@
 #import "UIView+RGSize.h"
 #import "JMChoiseLogisController.h"
 #import "JMPopLogistcsModel.h"
+#import "JMPayShareController.h"
+#import "JMShareModel.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{
@@ -70,7 +72,12 @@
     
     float lijianpay;
     
-
+    /**
+     *  分享红包数量
+     */
+    NSString *_limitStr;
+    
+    NSString *_orderTidNum;
 }
 
 @property (nonatomic,strong) BuyCartsView *cartOwner;
@@ -130,6 +137,8 @@
  *  物流信息的数据源
  */
 @property (nonatomic,strong) NSMutableArray *dataSource;
+
+@property (nonatomic,strong) JMShareModel *share_model;
 
 @end
 
@@ -847,7 +856,10 @@
         if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
+                [self loadDataSource];
+
+//                [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
+                
             });
             return;
         }
@@ -863,7 +875,9 @@
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                        [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
+                        [self loadDataSource];
+
+//                        [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
@@ -1197,9 +1211,12 @@
 }
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alterView show];
-    [self.navigationController popViewControllerAnimated:YES];
+
+    [self loadDataSource];
+    
+//    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//    [alterView show];
+//    [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
     
 }
@@ -1209,7 +1226,74 @@
     alterView.tag = 888;
     [alterView show];
 }
+- (void)loadDataSource {
+    [SVProgressHUD showWithStatus:@"加载中..."];
+    //kWaitpay_List_URL -- 待支付   kWaitsend_List_URL -- 待发货
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:kWaitsend_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        
+        if (!responseObject) return;
+        NSArray *resoult = responseObject[@"results"];
+        if (resoult.count == 0) {
+            return ;
+        }
+        NSDictionary *shareDic = resoult[0];
+        _orderTidNum = shareDic[@"tid"];
+        
+        [self loadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    }];
+    
+}
 
+- (void)loadData {
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_orderTidNum];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        
+        if (!responseObject) return;
+        
+        [self resolveActivityShareParam:responseObject];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+}
+- (void)resolveActivityShareParam:(NSDictionary *)dic {
+    //    NSDictionary *dic = _model.mj_keyValues;
+    NSLog(@"Share para=%@",dic);
+    
+    self.share_model.share_type = [NSString stringWithFormat:@"%@",[dic objectForKey:@"code"]];
+    
+    self.share_model.share_img = [dic objectForKey:@"post_img"]; //图片
+    self.share_model.desc = [dic objectForKey:@"description"]; // 文字详情
+    
+    self.share_model.title = [dic objectForKey:@"title"]; //标题
+    self.share_model.share_link = [dic objectForKey:@"share_link"];
+    _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
+    
+    
+    
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.limitStr = _limitStr;
+    payShareVC.shareModel = self.share_model;
+    [self.navigationController pushViewController:payShareVC animated:YES];
+    
+}
+- (JMShareModel*)share_model {
+    if (!_share_model) {
+        _share_model = [[JMShareModel alloc] init];
+    }
+    return _share_model;
+}
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

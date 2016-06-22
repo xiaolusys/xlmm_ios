@@ -12,7 +12,6 @@
 #import "PersonCenterViewController2.h"
 #import "PersonCenterViewController3.h"
 #import "TuihuoViewController.h"
-#import "TousuViewController.h"
 #import "JifenViewController.h"
 #import "YouHuiQuanViewController.h"
 #import "UIImageView+WebCache.h"
@@ -27,6 +26,8 @@
 
 #import "AFHTTPRequestOperationManager.h"
 #import "CommonWebViewViewController.h"
+#import "JMComplaintSuggestController.h"
+#import "JMPayShareController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -274,11 +275,12 @@
     NSLog(@"查看余额详情");
 }
 
-
+#pragma mark -- 投诉建议
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
+//        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
+        JMPayShareController *yijianVC = [[JMPayShareController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }
