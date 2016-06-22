@@ -14,7 +14,6 @@
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
 #import "JMSharePackView.h"
-#import "JMBuyerAddressCell.h"
 #import "JMShareView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"

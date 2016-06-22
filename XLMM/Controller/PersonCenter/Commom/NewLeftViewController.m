@@ -27,7 +27,6 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "CommonWebViewViewController.h"
 #import "JMComplaintSuggestController.h"
-#import "JMBuyerAddressCell.h"
 #import "JMPayShareController.h"
 
 @interface NewLeftViewController ()
