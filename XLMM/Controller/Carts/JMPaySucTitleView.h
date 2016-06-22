@@ -10,4 +10,6 @@
 
 @interface JMPaySucTitleView : UIView
 
++ (instancetype)enterHeaderView;
+
 @end

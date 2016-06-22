@@ -10,4 +10,6 @@
 
 @interface JMSharePackView : UIView
 
++ (instancetype)enterHeaderView;
+
 @end

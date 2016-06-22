@@ -11,6 +11,8 @@
 #import "MMClass.h"
 #import "UIColor+RGBColor.h"
 
+#define JMSUCTITLEPROPORTION 0.72
+
 @interface JMPaySucTitleView ()
 
 @property (nonatomic, strong) UIImageView *topImageView;
@@ -23,6 +25,12 @@
 
 @implementation JMPaySucTitleView
 
++ (instancetype)enterHeaderView {
+    JMPaySucTitleView *headView = [[JMPaySucTitleView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * JMSUCTITLEPROPORTION)];
+    headView.backgroundColor = [UIColor whiteColor];
+    return headView;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self setUpTopUI];
@@ -31,7 +39,6 @@
 }
 
 - (void)setUpTopUI {
-    self.backgroundColor = [UIColor redColor];
     UIImageView *topImageView = [UIImageView new];
     [self addSubview:topImageView];
     self.topImageView = topImageView;
@@ -46,15 +53,15 @@
     UILabel *descLabel = [UILabel new];
     [self addSubview:descLabel];
     self.descLabel = descLabel;
-    self.descLabel.textColor = [UIColor countLabelColor];
+    self.descLabel.textColor = [UIColor buttonTitleColor];
     self.descLabel.font = [UIFont systemFontOfSize:14.];
     self.descLabel.text = @"您的订单已发至仓库，请等待发货";
     
     kWeakSelf
     [self.topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf).offset(20);
+        make.top.equalTo(weakSelf).offset(40);
         make.centerX.equalTo(weakSelf.mas_centerX);
-        make.width.height.mas_equalTo(@60);
+        make.width.height.mas_equalTo(@85);
     }];
     
     [self.paysuccessLabel mas_makeConstraints:^(MASConstraintMaker *make) {

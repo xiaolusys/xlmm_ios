@@ -36,11 +36,6 @@
     [self createTableView];
     [self topShowTitle];
     
-//    [self.tableView setTableHeaderView:self.paySuccessView];
-//    [self.tableView setTableFooterView:self.sharePackView];
-    self.tableView.rowHeight = 100;
-//    self.tableView.estimatedRowHeight = 90;
-    
 }
 - (void)createTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
@@ -48,49 +43,27 @@
     self.tableView = tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
-    self.tableView.tableFooterView = nil;
+//    self.tableView.tableFooterView = nil;
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 90;
+    
 }
 
 - (void)topShowTitle {
     
-    JMPaySucTitleView *paySuccessView = [[JMPaySucTitleView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
-    [self.view addSubview:paySuccessView];
+    JMPaySucTitleView *paySuccessView = [JMPaySucTitleView enterHeaderView];
     self.paySuccessView = paySuccessView;
     
-    JMSharePackView *sharePackView = [[JMSharePackView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 230)];
-    [self.view addSubview:sharePackView];
+    JMSharePackView *sharePackView = [JMSharePackView enterHeaderView];
     self.sharePackView = sharePackView;
     
     self.tableView.tableHeaderView = self.paySuccessView;
     self.tableView.tableFooterView = self.sharePackView;
-
-//    kWeakSelf
-    
-//    [self.paySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(weakSelf.view).offset(64);
-//        make.left.equalTo(weakSelf.tableView);
-//        make.width.mas_equalTo(SCREENWIDTH);
-//        make.height.mas_equalTo(@260);
-//    }];
-//    
-//    [self.sharePackView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.right.equalTo(weakSelf.view);
-//        make.width.mas_equalTo(SCREENWIDTH);
-//        make.height.mas_equalTo(@230);
-//    }];
-    
-    
-    
-    
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 100;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellID = @"cellID";
@@ -99,7 +72,7 @@
         cell = [[JMBuyerAddressCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

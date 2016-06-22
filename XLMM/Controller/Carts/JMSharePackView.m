@@ -12,6 +12,8 @@
 #import "JMSelecterButton.h"
 #import "UIColor+RGBColor.h"
 
+#define JMSHAREPROPORTION 0.62
+
 @interface JMSharePackView ()
 
 @property (nonatomic, strong) UIImageView *payShareImage;
@@ -23,6 +25,12 @@
 
 
 @implementation JMSharePackView
+
++ (instancetype)enterHeaderView {
+    JMSharePackView *headView = [[JMSharePackView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * JMSHAREPROPORTION)];
+    headView.backgroundColor = [UIColor orangeColor];
+    return headView;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -37,9 +45,12 @@
     self.payShareImage = payShareImage;
     self.payShareImage.image = [UIImage imageNamed:@"hongbao_back"];
     
+    
+    CGFloat PayW = SCREENWIDTH * JMSHAREPROPORTION;
+    
     UIImageView *getRedpake = [UIImageView new];
     [self.payShareImage addSubview:getRedpake];
-    getRedpake.image = [UIImage imageNamed:@""];
+    getRedpake.image = [UIImage imageNamed:@"get_fivteen_redpack"];
     
     UILabel *deductionPayMoneyL = [UILabel new];
     [self.payShareImage addSubview:deductionPayMoneyL];
@@ -50,30 +61,31 @@
     JMSelecterButton *shareGetpack = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.payShareImage addSubview:shareGetpack];
     [shareGetpack setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:20];
-    shareGetpack.titleLabel.text = @"分享领取红包";
-    shareGetpack.titleLabel.textColor = [UIColor whiteColor];
-    
+    [shareGetpack setTitle:@"分享领取红包" forState:UIControlStateNormal];
+    [shareGetpack setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.shareGetpack = shareGetpack;
     kWeakSelf
     [self.payShareImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@230);
+        make.height.mas_equalTo(PayW);
     }];
     
     [getRedpake mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.payShareImage).offset(100);
+        make.top.equalTo(weakSelf.payShareImage).offset(120);
         make.centerX.equalTo(weakSelf.payShareImage.mas_centerX);
     }];
     
     [deductionPayMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(getRedpake.mas_bottom).offset(5);
+        make.top.equalTo(getRedpake.mas_bottom).offset(10);
         make.centerX.equalTo(weakSelf.payShareImage.mas_centerX);
     }];
     
     [self.shareGetpack mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(deductionPayMoneyL.mas_bottom).offset(15);
+        make.bottom.equalTo(weakSelf.mas_bottom).offset(-25);
         make.centerX.equalTo(weakSelf.payShareImage.mas_centerX);
         make.width.mas_equalTo(SCREENWIDTH - 60);
+        make.height.mas_equalTo(@40);
     }];
 }
 
