@@ -844,8 +844,8 @@
     NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         NSDictionary *dic = responseObject;
+        NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         
         NSDictionary *dcit = dic[@"trade"];
         _orderTidNum = dcit[@"tid"];
@@ -855,7 +855,7 @@
                 /**
                  *  在这里判断满多少可以使用  -- 这里是点击提交订单按钮判断
                  */
-//                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
+                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
                 [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
             });
             return;
@@ -909,7 +909,7 @@
  }
 
 - (void)returnCart {
-//    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
