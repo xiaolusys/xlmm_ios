@@ -742,6 +742,8 @@
 		1FF4C9DF1CBCF58900CCDCF7 /* coupon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DC1CBCF58900CCDCF7 /* coupon.png */; };
 		1FF4C9E01CBCF58900CCDCF7 /* accounticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DD1CBCF58900CCDCF7 /* accounticon.png */; };
 		1FF4C9E11CBCF58900CCDCF7 /* pointicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */; };
+		1FFCF1941D1BB703000D9183 /* JMRootgoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1931D1BB703000D9183 /* JMRootgoodsCell.m */; };
+		1FFCF1981D1BDC52000D9183 /* JMRootScrolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1971D1BDC52000D9183 /* JMRootScrolCell.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -1972,6 +1974,10 @@
 		1FF4C9DC1CBCF58900CCDCF7 /* coupon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coupon.png; sourceTree = "<group>"; };
 		1FF4C9DD1CBCF58900CCDCF7 /* accounticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accounticon.png; sourceTree = "<group>"; };
 		1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointicon.png; sourceTree = "<group>"; };
+		1FFCF1921D1BB703000D9183 /* JMRootgoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootgoodsCell.h; sourceTree = "<group>"; };
+		1FFCF1931D1BB703000D9183 /* JMRootgoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootgoodsCell.m; sourceTree = "<group>"; };
+		1FFCF1961D1BDC52000D9183 /* JMRootScrolCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootScrolCell.h; sourceTree = "<group>"; };
+		1FFCF1971D1BDC52000D9183 /* JMRootScrolCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootScrolCell.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -2780,6 +2786,7 @@
 		183070FA1C97BE3700B7665E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1FFCF1951D1BCD44000D9183 /* View */,
 				1FF26C9D1D177AEE00F4A831 /* POPView */,
 				183070FB1C97BE3700B7665E /* ChildViewController.h */,
 				183070FC1C97BE3700B7665E /* ChildViewController.m */,
@@ -4706,6 +4713,17 @@
 			path = Global;
 			sourceTree = "<group>";
 		};
+		1FFCF1951D1BCD44000D9183 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FFCF1921D1BB703000D9183 /* JMRootgoodsCell.h */,
+				1FFCF1931D1BB703000D9183 /* JMRootgoodsCell.m */,
+				1FFCF1961D1BDC52000D9183 /* JMRootScrolCell.h */,
+				1FFCF1971D1BDC52000D9183 /* JMRootScrolCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -5782,6 +5800,7 @@
 				18306F6D1C97AA1600B7665E /* AppDelegate.m in Sources */,
 				183070D41C97B83900B7665E /* DetailsModel.m in Sources */,
 				325B79D61C97E7160022F930 /* JifenReusableView.m in Sources */,
+				1FFCF1981D1BDC52000D9183 /* JMRootScrolCell.m in Sources */,
 				1F4161101CE31A4400F78C0D /* MASConstraint.m in Sources */,
 				183073F11C97D17800B7665E /* MJRefreshAutoStateFooter.m in Sources */,
 				1F2AE96D1CF69380002EC974 /* NSString+MJExtension.m in Sources */,
@@ -5812,6 +5831,7 @@
 				325B79DF1C97E7160022F930 /* SingleOrderViewCell.m in Sources */,
 				1F2AE97A1CF69749002EC974 /* PayExtrasModel.m in Sources */,
 				1830721D1C97BE3700B7665E /* Account1ViewController.m in Sources */,
+				1FFCF1941D1BB703000D9183 /* JMRootgoodsCell.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
 				1FF26C941D1776DF00F4A831 /* JMPopViewAnimationSpring.m in Sources */,

@@ -280,7 +280,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
 //        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
-        JMPayShareController *yijianVC = [[JMPayShareController alloc] init];
+        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }

@@ -9,7 +9,7 @@
 #import "MMCollectionController.h"
 #import "BrandGoodsModel.h"
 #import "MMClass.h"
-#import "PeopleCollectionCell.h"
+#import "JMRootgoodsCell.h"
 #import "MMDetailsViewController.h"
 #import "MJRefresh.h"
 #import "NSString+URL.h"
@@ -112,7 +112,7 @@
     collectionView.delegate = self;
     collectionView.dataSource = self;
     collectionView.showsVerticalScrollIndicator = FALSE;
-    [collectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:@"simpleCell"];
+    [collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:@"simpleCell"];
 //    [self.view addSubview:[[UIView alloc] init]];
 
     [self.view addSubview:collectionView];
@@ -234,7 +234,7 @@
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"simpleCell" forIndexPath:indexPath];
     
     
     BrandGoodsModel *model = [self.dataArray objectAtIndex:indexPath.row];
@@ -244,23 +244,23 @@
    
 
     NSLog(@"MMCollectionController cellForItemAtIndexPath newString = %@", newString);
-    cell.imageView.alpha = 0.0f;
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.iconImage.alpha = 0.0f;
+    cell.iconImage.contentMode = UIViewContentModeScaleAspectFill;
 
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
-            cell.imageView.alpha = 1.0;
+            cell.iconImage.alpha = 1.0;
         }];
         
         
     }] ;
-    cell.nameLabel.text = model.product_name;
+    cell.titleLabel.text = model.product_name;
 
     
     if ([model.product_lowest_price integerValue] != [model.product_lowest_price floatValue]) {
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.product_lowest_price floatValue]];
+        cell.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.product_lowest_price floatValue]];
     } else {
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", model.product_lowest_price];
+        cell.PriceLabel.text = [NSString stringWithFormat:@"¥%@", model.product_lowest_price];
     }
     cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.product_std_sale_price floatValue]];
     cell.backView.layer.cornerRadius = 30;

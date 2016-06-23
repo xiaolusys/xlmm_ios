@@ -744,9 +744,7 @@
                    
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
                    
-                   
-                   
-                   
+                                      
                }
            }];
     //    return [UMSocialSnsService handleOpenURL:url];

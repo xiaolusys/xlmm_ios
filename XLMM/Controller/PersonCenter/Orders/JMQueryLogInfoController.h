@@ -14,6 +14,7 @@
 @property (nonatomic,strong) JMOrderGoodsModel *goodsModel;
 @property (nonatomic,strong) NSDictionary *goodsListDic;
 
+@property (nonatomic, strong) NSMutableArray *orderGoodsArr;
 @property (copy, nonatomic) NSString *logName;
 @property (copy, nonatomic) NSString *packetId;
 @property (copy, nonatomic) NSString *companyCode;
