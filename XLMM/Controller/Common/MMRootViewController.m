@@ -37,13 +37,13 @@
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
-#import "PeopleCollectionCell.h"
+#import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
 #import "MJRefresh.h"
 #import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
-#import "BrandCollectionCell.h"
+#import "JMRootScrolCell.h"
 #import "BrandGoodsModel.h"
 #import "XlmmMall.h"
 #import "MMDetailsViewController.h"
@@ -160,8 +160,8 @@
 @end
 
 
-static NSString *ksimpleCell = @"simpleCell";
-static NSString *kbrandCell = @"brandCell";
+static NSString *ksimpleCell = @"JMRootgoodsCell";
+static NSString *kbrandCell = @"JMRootScrolCell";
 
 @implementation MMRootViewController
 
@@ -702,7 +702,7 @@ static NSString *kbrandCell = @"brandCell";
         homeCollectionView.showsVerticalScrollIndicator = FALSE;
         
         //        [homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
-        [homeCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        [homeCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
         
         [self.collectionArr addObject:homeCollectionView];
     }
@@ -880,8 +880,8 @@ static NSString *kbrandCell = @"brandCell";
         brandCollectionView.delegate = self;
         brandCollectionView.dataSource = self;
         
-//        [brandCollectionView registerClass:[BrandCollectionCell class] forCellWithReuseIdentifier:kbrandCell];
-        [brandCollectionView registerNib:[UINib nibWithNibName:@"BrandCollectionCell" bundle:nil] forCellWithReuseIdentifier:kbrandCell];
+        [brandCollectionView registerClass:[JMRootScrolCell class] forCellWithReuseIdentifier:kbrandCell];
+//        [brandCollectionView registerNib:[UINib nibWithNibName:@"JMRootScrolCell" bundle:nil] forCellWithReuseIdentifier:kbrandCell];
         [self.brandView addSubview:brandCollectionView];
         [self.brandArr addObject:brandCollectionView];
         
@@ -1456,9 +1456,9 @@ static NSString *kbrandCell = @"brandCell";
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
         //NSLog(@"brand collection cellForItemAtIndexPath");
-        BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
+        JMRootScrolCell *cell = (JMRootScrolCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
-        int index = 0;
+        int index = 0;//JMRootgoodsCell
         for(NSMutableArray *obj in self.brandDataArr)
         {
             //NSLog(@"%@",obj);
@@ -1477,7 +1477,7 @@ static NSString *kbrandCell = @"brandCell";
     }
     else{
         //NSLog(@"arr collection cellForItemAtIndexPath");
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+        JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
         //wulei 20160421 防止超过1屏后出现重复和错乱
         //for (UIView *view in cell.contentView.subviews) {
         //    [view removeFromSuperview];

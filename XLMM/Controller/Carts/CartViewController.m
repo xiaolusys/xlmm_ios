@@ -295,7 +295,6 @@
         static NSString *CellIdentifier = @"simpleCellID";
         NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
         
-        
         CartTableCellTableViewCell1 *cell = (CartTableCellTableViewCell1 *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         if (self.dataArray.count == 0) {
             
@@ -303,7 +302,6 @@
             
             NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
             cell.cartModel= model;
-            cell.delegate = self;
             cell.myImageView.layer.borderWidth = 0.5;
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
@@ -311,8 +309,6 @@
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
             cell.nameLabel.text = model.title;
             cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
             
@@ -321,6 +317,8 @@
             cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.delegate = self;
         }
         
         
@@ -337,7 +335,6 @@
             
             NewCartsModel *model = [self.historyCarts objectAtIndex:indexPath.row];
             cell.cartModel= model;
-            cell.delegate = self;
             cell.headImageView.layer.borderWidth = 0.5;
             cell.headImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -347,7 +344,7 @@
             [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-            cell.delegate = self;
+            
             cell.cartModel = model;
             cell.nameLabel.text = model.title;
             cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
@@ -355,8 +352,11 @@
             cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
-        }
+//            cell.userInteractionEnabled = NO;
+            cell.delegate = self;
+            
         
+        }
         
         return cell;
         
@@ -738,7 +738,7 @@
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 
-
+#pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(NewCartsModel *)model{
     NSLog(@"%d", (int)model.ID);
  

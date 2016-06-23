@@ -46,14 +46,17 @@
     self.tableView.scrollEnabled = NO;
 
 }
-
-- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
-    _goodsModel = goodsModel;
-    if(goodsModel != nil){
-        [self.dataSource addObject:goodsModel];
-    }
-    
+- (void)setGoodsListArr:(NSMutableArray *)goodsListArr {
+    _goodsListArr = goodsListArr;
+    self.dataSource = goodsListArr;
 }
+//- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
+//    _goodsModel = goodsModel;
+//    if(goodsModel != nil){
+//        [self.dataSource addObject:goodsModel];
+//    }
+//    
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 90;
 }

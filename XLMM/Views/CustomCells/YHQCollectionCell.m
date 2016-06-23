@@ -45,12 +45,22 @@
     NSString *deadlineTime = yhqModel.deadline;
     NSString *couponValue = yhqModel.coupon_value;
     
-    NSMutableString *mutablestart = [createTime mutableCopy];
-    NSRange range = {10, 9};
-    [mutablestart deleteCharactersInRange:range];
-    NSMutableString *mutableend = [deadlineTime mutableCopy];
-    [mutableend deleteCharactersInRange:range];
-    NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutablestart, mutableend];
+//    NSMutableString *mutablestart = [createTime mutableCopy];
+    NSMutableString *mutableStart = [[NSMutableString alloc] initWithString:createTime];
+    [mutableStart replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+
+    
+    NSMutableString *mutableend = [[NSMutableString alloc] initWithString:deadlineTime];
+    [mutableend replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+
+    
+    
+    
+//    NSRange range = {10, 9};
+//    [mutablestart deleteCharactersInRange:range];
+//    NSMutableString *mutableend = [deadlineTime mutableCopy];
+//    [mutableend deleteCharactersInRange:range];
+    NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutableStart, mutableend];
     
     self.myimageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myimageView.layer.masksToBounds = YES;
@@ -66,3 +76,30 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -117,6 +117,8 @@
     NSDictionary *_orderDic;
     NSString *_goodsID; // 订单ID
     NSDictionary *_refundDic;
+    
+    NSMutableArray *packNumArr;//包裹个数
 }
 
 - (JMEditAddressModel *)addressModel {
@@ -398,7 +400,7 @@
     UIButton *baseView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.packInfoView addSubview:baseView];
     self.baseView = baseView;
-    self.baseView.tag = 100 + currentIndex;
+//    self.baseView.tag = 100 + packetNum;
     [self.baseView addTarget:self action:@selector(baseViewBtn:) forControlEvents:UIControlEventTouchUpInside];
 
     UILabel *lineL = [UILabel new];
@@ -536,19 +538,27 @@
     if(packetNum == 0)
         return;
     
-    NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).out_sid;
+    
+    
+    NSString *outSidStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:currentIndex]).out_sid;
     NSString *logisticsCompanyCodeStr = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:btn.tag - 100]).logistics_company_code;
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     NSString *logName = self.logisticsLabel.text;
     if((btn.tag >= 100) && (logisticsInfoArray.count > btn.tag - 100)){
-        NSDictionary *dic = [[logisticsInfoArray objectAtIndex:btn.tag - 100] mj_keyValues];
+        NSDictionary *dic = [[logisticsInfoArray objectAtIndex:currentIndex] mj_keyValues];
         queryVC.packetId = outSidStr;//@"3101040539131"
         queryVC.companyCode = logisticsCompanyCodeStr; //@"YUNDA_QR";
         queryVC.logName = logName;
         queryVC.goodsListDic = dic;
-        NSInteger count = btn.tag - 100;
-        self.orderGoodsModel = [dataArray objectAtIndex:count];
-        queryVC.goodsModel = self.orderGoodsModel;
+        NSInteger count = currentIndex; // == 5
+        NSMutableArray *orderGoodsArr = [NSMutableArray array];
+        for (int i = 0; i < count; i++) {
+            self.orderGoodsModel = [dataArray objectAtIndex:i];
+            [orderGoodsArr addObject:self.orderGoodsModel];
+        }
+        queryVC.orderGoodsArr = orderGoodsArr;
+        
+//        queryVC.goodsModel = self.orderGoodsModel;
 //        [self.navigationController pushViewController:queryVC animated:YES];
         
 
@@ -596,8 +606,9 @@
     }else {
         num = 0;
     }
+    packNumArr = [NSMutableArray array];
     NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
-    
+    NSInteger tagNum = 0; // 表示包裹信息按钮的tag
     NSInteger nums = 20 + num;
     if (dic.count == 0){
         //无查物流信息，直接显示时间和商品即可  76 -- > 35 + 20
@@ -616,7 +627,7 @@
     NSInteger hs = 0;
     self.goodsViewHeight.constant = packetNum * nums + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
     for(int i =0; i < logisticsInfoArray.count; i++){
-        currentIndex = i;
+        
         NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
         if((((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
             if(i != 0) h+= 15;
@@ -642,8 +653,14 @@
             return;
         }else {
             self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[numC - 1]];
+            tagNum = numC + 100;
+            self.baseView.tag = tagNum;
+            currentIndex += 1;
         }
-        self.baseView.tag = 100 + i;
+        NSNumber *numTag = [NSNumber numberWithInteger:tagNum];
+        [packNumArr addObject:numTag];
+        currentIndex = 0;
+        
         groupKey = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
         
         [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];

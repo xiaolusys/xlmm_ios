@@ -76,8 +76,11 @@
      *  分享红包数量
      */
     NSString *_limitStr;
-    
+    /**
+     *  订单编号
+     */
     NSString *_orderTidNum;
+
 }
 
 @property (nonatomic,strong) BuyCartsView *cartOwner;
@@ -843,6 +846,10 @@
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         NSDictionary *dic = responseObject;
+        
+        NSDictionary *dcit = dic[@"trade"];
+        _orderTidNum = dcit[@"tid"];
+        
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 /**
@@ -856,8 +863,8 @@
         if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self loadDataSource];
-
+                [self pushShareVC];
+                
 //                [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
                 
             });
@@ -875,7 +882,7 @@
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                        [self loadDataSource];
+                        [self pushShareVC];
 
 //                        [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
                     } else {
@@ -1207,18 +1214,23 @@
 }
 - (void)isApinPayGo {
     [self.navigationController popViewControllerAnimated:YES];
-
 }
+
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
-
-    [self loadDataSource];
     
-//    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [self pushShareVC];
+    
+    //    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //    [alterView show];
 //    [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
     
+}
+- (void)pushShareVC {
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _orderTidNum;
+    [self.navigationController pushViewController:payShareVC animated:YES];
 }
 #pragma mark ---- 点击返回按钮 弹出警告框 --> 选择放弃或者继续
 - (void)payBackAlter {
@@ -1226,80 +1238,17 @@
     alterView.tag = 888;
     [alterView show];
 }
-- (void)loadDataSource {
-    [SVProgressHUD showWithStatus:@"加载中..."];
-    //kWaitpay_List_URL -- 待支付   kWaitsend_List_URL -- 待发货
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:kWaitsend_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
-        
-        if (!responseObject) return;
-        NSArray *resoult = responseObject[@"results"];
-        if (resoult.count == 0) {
-            return ;
-        }
-        NSDictionary *shareDic = resoult[0];
-        _orderTidNum = shareDic[@"tid"];
-        
-        [self loadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
-    }];
-    
-}
 
-- (void)loadData {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_orderTidNum];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
-        
-        if (!responseObject) return;
-        
-        [self resolveActivityShareParam:responseObject];
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-}
-- (void)resolveActivityShareParam:(NSDictionary *)dic {
-    //    NSDictionary *dic = _model.mj_keyValues;
-    NSLog(@"Share para=%@",dic);
-    
-    self.share_model.share_type = [NSString stringWithFormat:@"%@",[dic objectForKey:@"code"]];
-    
-    self.share_model.share_img = [dic objectForKey:@"post_img"]; //图片
-    self.share_model.desc = [dic objectForKey:@"description"]; // 文字详情
-    
-    self.share_model.title = [dic objectForKey:@"title"]; //标题
-    self.share_model.share_link = [dic objectForKey:@"share_link"];
-    _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
-    
-    
-    
-    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
-    payShareVC.limitStr = _limitStr;
-    payShareVC.shareModel = self.share_model;
-    [self.navigationController pushViewController:payShareVC animated:YES];
-    
-}
-- (JMShareModel*)share_model {
-    if (!_share_model) {
-        _share_model = [[JMShareModel alloc] init];
-    }
-    return _share_model;
-}
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)popview{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
 @end
 /**
  *  ====== 上一个版本判断优惠券的方式  这个版本判断优惠券的方式为发送一个数据 在服务端判断

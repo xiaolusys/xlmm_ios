@@ -82,12 +82,18 @@
 - (void)setGoodsListDic:(NSDictionary *)goodsListDic {
     _goodsListDic = goodsListDic;
 }
-- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
-    _goodsModel = goodsModel;
-    NSMutableArray *arr = [NSMutableArray array];
-    [arr addObject:goodsModel];
-    _count = arr.count;
+
+- (void)setOrderGoodsArr:(NSMutableArray *)orderGoodsArr {
+    _orderGoodsArr = orderGoodsArr;
+    _count = orderGoodsArr.count;
 }
+
+//- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
+//    _goodsModel = goodsModel;
+//    NSMutableArray *arr = [NSMutableArray array];
+//    [arr addObject:goodsModel];
+//    _count = arr.count;
+//}
 
 - (void)getWuliuInfoFromServer {
     BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
@@ -170,7 +176,9 @@
     [self.masBackScrollView addSubview:menu];
     menu.contentView = self.goodsListVC.view;
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
-    self.goodsListVC.goodsModel = self.goodsModel;
+    self.goodsListVC.goodsListArr = self.orderGoodsArr;
+//    self.goodsListVC.goodsModel = self.orderGoodsArr[0];
+//    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
     self.logNumLabel.text = @"未揽件";
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];

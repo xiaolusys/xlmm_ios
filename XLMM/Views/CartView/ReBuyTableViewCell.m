@@ -37,6 +37,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         // Initialization code
+
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"ReBuyTableViewCell" owner:self options:nil];
         if (arrayOfViews.count < 1) {
             return nil;
@@ -48,7 +49,7 @@
         self.reBuyButton.layer.cornerRadius = 14;
         self.reBuyButton.layer.borderWidth = 1;
         self.reBuyButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-        
+
     }
     return self;
 }
@@ -62,3 +63,30 @@
     
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

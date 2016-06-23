@@ -13,8 +13,7 @@
 
 @property (nonatomic, strong)NSNumber *activityId;
 
-@property (nonatomic,strong) JMShareModel *shareModel;
 
-@property (nonatomic,copy) NSString *limitStr;
+@property (nonatomic,copy) NSString *ordNum;
 
 @end

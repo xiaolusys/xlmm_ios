@@ -7,7 +7,7 @@
 //
 
 #import "ChildViewController.h"
-#import "PeopleCollectionCell.h"
+#import "JMRootgoodsCell.h"
 #import "MMClass.h"
 #import "CollectionModel.h"
 #import "DetailsModel.h"
@@ -205,7 +205,7 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     
   //  self.childCollectionView.bounces = NO;
-    [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+    [self.childCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
     
    
     self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
@@ -388,7 +388,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
         if (_orderDataArray.count > indexPath.row) {

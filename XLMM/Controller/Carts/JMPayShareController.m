@@ -44,7 +44,19 @@
     NSString *_orderNum;
     NSString *_limitStr;
 }
+- (JMShareModel*)share_model {
+    if (!_share_model) {
+        _share_model = [[JMShareModel alloc] init];
+    }
+    return _share_model;
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self loadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lineGrayColor];
@@ -60,13 +72,7 @@
     self.tableView = tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//    self.tableView.tableFooterView = nil;
-    
-//    self.tableView.rowHeight = UITableViewAutomaticDimension;
-//    self.tableView.estimatedRowHeight = 90;
-    
 }
-
 - (void)topShowTitle {
     
     JMPaySucTitleView *paySuccessView = [JMPaySucTitleView enterHeaderView];
@@ -74,12 +80,46 @@
     
     JMSharePackView *sharePackView = [JMSharePackView enterHeaderView];
     self.sharePackView = sharePackView;
-    self.sharePackView.limitStr = self.limitStr;
     self.sharePackView.delegate = self;
     
     self.tableView.tableHeaderView = self.paySuccessView;
     self.tableView.tableFooterView = self.sharePackView;
     
+}
+
+- (void)setOrdNum:(NSString *)ordNum {
+    _ordNum = ordNum;
+}
+- (void)loadData {
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_ordNum];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        
+        if (!responseObject) return;
+        
+        [self resolveActivityShareParam:responseObject];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+}
+- (void)resolveActivityShareParam:(NSDictionary *)dic {
+    //    NSDictionary *dic = _model.mj_keyValues;
+    NSLog(@"Share para=%@",dic);
+    
+    self.share_model.share_type = [NSString stringWithFormat:@"%@",[dic objectForKey:@"code"]];
+    
+    self.share_model.share_img = [dic objectForKey:@"post_img"]; //图片
+    self.share_model.desc = [dic objectForKey:@"description"]; // 文字详情
+    
+    self.share_model.title = [dic objectForKey:@"title"]; //标题
+    self.share_model.share_link = [dic objectForKey:@"share_link"];
+    _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -97,18 +137,13 @@
     return cell;
 }
 
-- (void)setShareModel:(JMShareModel *)shareModel {
-    _shareModel = shareModel;
-}
 
 - (void)composeGetRedpackBtn:(JMSharePackView *)renPack didClick:(UIButton *)button {
     
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;
-    
-    self.shareView.model = _shareModel;
-    
+    self.shareView.model = self.share_model;
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
@@ -125,7 +160,15 @@
     count = [[self.navigationController viewControllers] indexOfObject:self];
     if (count >= 2) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-        //        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+- (void)isApinPayGo {
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
