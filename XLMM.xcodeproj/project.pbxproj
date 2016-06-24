@@ -21,6 +21,9 @@
 		0B43FFB11CFEEB8200AE7DDD /* JMPopLogistcsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB01CFEEB8200AE7DDD /* JMPopLogistcsCell.m */; };
 		0B43FFB41CFEEB9100AE7DDD /* JMPopLogistcsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */; };
 		0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7696DD1D011F010079E0CA /* JMOrderPayView.m */; };
+		0B8A29F61D1C3C2F00948252 /* JMGoodsShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8A29F31D1C3C2F00948252 /* JMGoodsShowController.m */; };
+		0B8A29F71D1C3C2F00948252 /* JMGoodsShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8A29F51D1C3C2F00948252 /* JMGoodsShowView.m */; };
+		0B8A29FA1D1C3F9700948252 /* JMBaseGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8A29F91D1C3F9700948252 /* JMBaseGoodsCell.m */; };
 		0BBEFDBB1D05CA0800D45078 /* JMQueryLogInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDBA1D05CA0800D45078 /* JMQueryLogInfoController.m */; };
 		0BBEFDC11D05D00100D45078 /* JMGoodsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC01D05D00100D45078 /* JMGoodsListController.m */; };
 		0BBEFDC41D05D0FB00D45078 /* JMLogTimeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBEFDC31D05D0FB00D45078 /* JMLogTimeListController.m */; };
@@ -925,6 +928,12 @@
 		0B43FFB31CFEEB9100AE7DDD /* JMPopLogistcsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPopLogistcsModel.m; sourceTree = "<group>"; };
 		0B7696DC1D011F010079E0CA /* JMOrderPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayView.h; sourceTree = "<group>"; };
 		0B7696DD1D011F010079E0CA /* JMOrderPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayView.m; sourceTree = "<group>"; };
+		0B8A29F21D1C3C2F00948252 /* JMGoodsShowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsShowController.h; sourceTree = "<group>"; };
+		0B8A29F31D1C3C2F00948252 /* JMGoodsShowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsShowController.m; sourceTree = "<group>"; };
+		0B8A29F41D1C3C2F00948252 /* JMGoodsShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsShowView.h; sourceTree = "<group>"; };
+		0B8A29F51D1C3C2F00948252 /* JMGoodsShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsShowView.m; sourceTree = "<group>"; };
+		0B8A29F81D1C3F9700948252 /* JMBaseGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseGoodsCell.h; sourceTree = "<group>"; };
+		0B8A29F91D1C3F9700948252 /* JMBaseGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseGoodsCell.m; sourceTree = "<group>"; };
 		0BBEFDB91D05CA0800D45078 /* JMQueryLogInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMQueryLogInfoController.h; sourceTree = "<group>"; };
 		0BBEFDBA1D05CA0800D45078 /* JMQueryLogInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMQueryLogInfoController.m; sourceTree = "<group>"; };
 		0BBEFDBF1D05D00100D45078 /* JMGoodsListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsListController.h; sourceTree = "<group>"; };
@@ -4412,6 +4421,12 @@
 				183071A61C97BE3700B7665E /* XiangQingViewController.h */,
 				183071A71C97BE3700B7665E /* XiangQingViewController.m */,
 				183071A81C97BE3700B7665E /* XiangQingViewController.xib */,
+				0B8A29F21D1C3C2F00948252 /* JMGoodsShowController.h */,
+				0B8A29F31D1C3C2F00948252 /* JMGoodsShowController.m */,
+				0B8A29F41D1C3C2F00948252 /* JMGoodsShowView.h */,
+				0B8A29F51D1C3C2F00948252 /* JMGoodsShowView.m */,
+				0B8A29F81D1C3F9700948252 /* JMBaseGoodsCell.h */,
+				0B8A29F91D1C3F9700948252 /* JMBaseGoodsCell.m */,
 				0B43FFAB1CFEEB2700AE7DDD /* chooseLogistics(选择物流) */,
 				0BBEFDB81D05C98C00D45078 /* querylogisticsInfo(查询物流信息) */,
 				0BDF29311CFD328A00350E30 /* order_editer(修改收货地址) */,
@@ -5694,11 +5709,13 @@
 				183070E11C97B83900B7665E /* TuihuoModel.m in Sources */,
 				1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */,
 				183072491C97BE3700B7665E /* RefundDetailsViewController.m in Sources */,
+				0B8A29FA1D1C3F9700948252 /* JMBaseGoodsCell.m in Sources */,
 				183072541C97BE3700B7665E /* BoundingNewPhoneController.m in Sources */,
 				0B16024F1CFB3A6600B154D7 /* JMShareView.m in Sources */,
 				183074071C97D17800B7665E /* QNHttpManager.m in Sources */,
 				183072171C97BE3700B7665E /* MaMaShareSubsidiesViewController.m in Sources */,
 				183073D11C97D17800B7665E /* AFURLRequestSerialization.m in Sources */,
+				0B8A29F71D1C3C2F00948252 /* JMGoodsShowView.m in Sources */,
 				3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
@@ -5857,6 +5874,7 @@
 				325B7A321C97E74B0022F930 /* ProductSelectionListCell.m in Sources */,
 				3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */,
 				183070E91C97B83900B7665E /* ShareClickModel.m in Sources */,
+				0B8A29F61D1C3C2F00948252 /* JMGoodsShowController.m in Sources */,
 				183070DD1C97B83900B7665E /* PerDingdanModel.m in Sources */,
 				321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */,
 				183071D31C97BE3700B7665E /* LiJiGMViewController1.m in Sources */,

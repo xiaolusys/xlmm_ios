@@ -199,6 +199,9 @@
     self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * cellHeitht + _count * cellHeitht + 136);
 }
 
+
+
+
 /**
  *  显示当没有物流信息 - > 展示的视图
  */
@@ -281,6 +284,7 @@
     
     UILabel *logNameL = [UILabel new];
     [topBackView addSubview:logNameL];
+    logNameL.font = [UIFont systemFontOfSize:13.];
     logNameL.text = @"物流配送";
     
     UILabel *lineView = [UILabel new];
@@ -293,15 +297,18 @@
     
     UILabel *logNumL = [UILabel new];
     [topBackView addSubview:logNumL];
+    logNumL.font = [UIFont systemFontOfSize:13.];
     logNumL.text = @"快递单号";
     
     UILabel *logNameLabel = [UILabel new];
     [topBackView addSubview:logNameLabel];
     self.logNameLabel = logNameLabel;
+    self.logNameLabel.font = [UIFont systemFontOfSize:13.];
     
     UILabel *logNumLabel = [UILabel new];
     [topBackView addSubview:logNumLabel];
     self.logNumLabel = logNumLabel;
+    self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     
     

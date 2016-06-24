@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -288,25 +288,6 @@
                                     <include reference="ZdV-UG-SyP"/>
                                     <include reference="gHN-Wp-geE"/>
                                     <include reference="uDV-7Q-QLc"/>
-                                </mask>
-                            </variation>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmf-qu-1Oc">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="176" id="WaY-R9-mRP">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="142"/>
-                                </constraint>
-                            </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="WaY-R9-mRP"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="WaY-R9-mRP"/>
                                 </mask>
                             </variation>
                         </view>
@@ -688,7 +669,9 @@
                                 <constraint firstItem="PaI-tH-2Qk" firstAttribute="top" secondItem="Y84-m6-3VU" secondAttribute="top" constant="1" id="VQ9-Cu-bLq">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
-                                <constraint firstAttribute="bottom" secondItem="w1G-5n-d13" secondAttribute="bottom" constant="-9" id="VcG-rJ-1la"/>
+                                <constraint firstAttribute="bottom" secondItem="w1G-5n-d13" secondAttribute="bottom" constant="-9" id="VcG-rJ-1la">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="-7"/>
+                                </constraint>
                                 <constraint firstAttribute="width" constant="320" id="cN9-fJ-Ql2"/>
                                 <constraint firstAttribute="trailing" secondItem="PaI-tH-2Qk" secondAttribute="trailing" id="cWO-wM-7r4"/>
                                 <constraint firstAttribute="trailing" secondItem="x9f-4k-epo" secondAttribute="trailing" id="eUs-SU-wum"/>
@@ -745,6 +728,25 @@
                                 </mask>
                             </variation>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmf-qu-1Oc">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="176" id="WaY-R9-mRP">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="134"/>
+                                </constraint>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="WaY-R9-mRP"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="WaY-R9-mRP"/>
+                                </mask>
+                            </variation>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -752,7 +754,7 @@
                         <constraint firstItem="KXe-lP-X7v" firstAttribute="leading" secondItem="chS-yz-c6e" secondAttribute="leading" id="1Zc-I2-MYH"/>
                         <constraint firstItem="Y84-m6-3VU" firstAttribute="top" secondItem="chS-yz-c6e" secondAttribute="top" id="4Jf-k6-wAv"/>
                         <constraint firstItem="lmf-qu-1Oc" firstAttribute="top" secondItem="Y84-m6-3VU" secondAttribute="bottom" id="8Ta-m8-b2a">
-                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                         </constraint>
                         <constraint firstAttribute="bottom" secondItem="KXe-lP-X7v" secondAttribute="bottom" id="Qvp-Eq-5Uv"/>
                         <constraint firstItem="lmf-qu-1Oc" firstAttribute="trailing" secondItem="Y84-m6-3VU" secondAttribute="trailing" id="YHJ-Yj-WOF"/>
@@ -764,8 +766,8 @@
                     <variation key="default">
                         <mask key="subviews">
                             <exclude reference="KXe-lP-X7v"/>
-                            <exclude reference="lmf-qu-1Oc"/>
                             <exclude reference="Y84-m6-3VU"/>
+                            <exclude reference="lmf-qu-1Oc"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="1Zc-I2-MYH"/>
@@ -783,8 +785,8 @@
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="subviews">
                             <include reference="KXe-lP-X7v"/>
-                            <include reference="lmf-qu-1Oc"/>
                             <include reference="Y84-m6-3VU"/>
+                            <include reference="lmf-qu-1Oc"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="1Zc-I2-MYH"/>

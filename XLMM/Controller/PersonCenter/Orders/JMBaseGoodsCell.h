@@ -1,0 +1,20 @@
+//
+//  JMBaseGoodsCell.h
+//  XLMM
+//
+//  Created by 崔人帅 on 16/6/24.
+//  Copyright © 2016年 上海己美. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "JMOrderGoodsModel.h"
+
+@class JMOrderGoodsModel;
+@interface JMBaseGoodsCell : UITableViewCell
+
+
+
+- (void)configWithModel:(JMOrderGoodsModel *)goodsModel;
+
+
+@end
