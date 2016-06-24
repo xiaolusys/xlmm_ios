@@ -744,6 +744,9 @@
 		1FF4C9E11CBCF58900CCDCF7 /* pointicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9DE1CBCF58900CCDCF7 /* pointicon.png */; };
 		1FFCF1941D1BB703000D9183 /* JMRootgoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1931D1BB703000D9183 /* JMRootgoodsCell.m */; };
 		1FFCF1981D1BDC52000D9183 /* JMRootScrolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1971D1BDC52000D9183 /* JMRootScrolCell.m */; };
+		1FFCF19F1D1CD17F000D9183 /* JMBaseGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF19A1D1CD17F000D9183 /* JMBaseGoodsCell.m */; };
+		1FFCF1A01D1CD17F000D9183 /* JMGoodsShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF19C1D1CD17F000D9183 /* JMGoodsShowController.m */; };
+		1FFCF1A11D1CD17F000D9183 /* JMGoodsShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF19E1D1CD17F000D9183 /* JMGoodsShowView.m */; };
 		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648A71C9D21CE00E2BE56 /* YixuanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A61C9D21CE00E2BE56 /* YixuanTableViewController.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
@@ -1978,6 +1981,12 @@
 		1FFCF1931D1BB703000D9183 /* JMRootgoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootgoodsCell.m; sourceTree = "<group>"; };
 		1FFCF1961D1BDC52000D9183 /* JMRootScrolCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootScrolCell.h; sourceTree = "<group>"; };
 		1FFCF1971D1BDC52000D9183 /* JMRootScrolCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootScrolCell.m; sourceTree = "<group>"; };
+		1FFCF1991D1CD17F000D9183 /* JMBaseGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseGoodsCell.h; sourceTree = "<group>"; };
+		1FFCF19A1D1CD17F000D9183 /* JMBaseGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseGoodsCell.m; sourceTree = "<group>"; };
+		1FFCF19B1D1CD17F000D9183 /* JMGoodsShowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsShowController.h; sourceTree = "<group>"; };
+		1FFCF19C1D1CD17F000D9183 /* JMGoodsShowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsShowController.m; sourceTree = "<group>"; };
+		1FFCF19D1D1CD17F000D9183 /* JMGoodsShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsShowView.h; sourceTree = "<group>"; };
+		1FFCF19E1D1CD17F000D9183 /* JMGoodsShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsShowView.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A51C9D21CE00E2BE56 /* YixuanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewController.h; sourceTree = "<group>"; };
@@ -4412,6 +4421,12 @@
 				183071A61C97BE3700B7665E /* XiangQingViewController.h */,
 				183071A71C97BE3700B7665E /* XiangQingViewController.m */,
 				183071A81C97BE3700B7665E /* XiangQingViewController.xib */,
+				1FFCF1991D1CD17F000D9183 /* JMBaseGoodsCell.h */,
+				1FFCF19A1D1CD17F000D9183 /* JMBaseGoodsCell.m */,
+				1FFCF19B1D1CD17F000D9183 /* JMGoodsShowController.h */,
+				1FFCF19C1D1CD17F000D9183 /* JMGoodsShowController.m */,
+				1FFCF19D1D1CD17F000D9183 /* JMGoodsShowView.h */,
+				1FFCF19E1D1CD17F000D9183 /* JMGoodsShowView.m */,
 				0B43FFAB1CFEEB2700AE7DDD /* chooseLogistics(选择物流) */,
 				0BBEFDB81D05C98C00D45078 /* querylogisticsInfo(查询物流信息) */,
 				0BDF29311CFD328A00350E30 /* order_editer(修改收货地址) */,
@@ -5578,6 +5593,7 @@
 				0BBEFDC11D05D00100D45078 /* JMGoodsListController.m in Sources */,
 				183074141C97D17800B7665E /* RECommonFunctions.m in Sources */,
 				183070D71C97B83900B7665E /* HistoryCartsModel.m in Sources */,
+				1FFCF1A01D1CD17F000D9183 /* JMGoodsShowController.m in Sources */,
 				325B799A1C97E6F10022F930 /* MJPullGifHeader.m in Sources */,
 				183076AA1C97E26D00B7665E /* MaMaPersonCenterViewController.m in Sources */,
 				325B79991C97E6F10022F930 /* LoadingAnimation.m in Sources */,
@@ -5620,6 +5636,7 @@
 				183074091C97D17800B7665E /* QNSessionManager.m in Sources */,
 				0BBEFDBB1D05CA0800D45078 /* JMQueryLogInfoController.m in Sources */,
 				1830740A1C97D17800B7665E /* QNStats.m in Sources */,
+				1FFCF19F1D1CD17F000D9183 /* JMBaseGoodsCell.m in Sources */,
 				1830741E1C97D17800B7665E /* SDWebImageDownloaderOperation.m in Sources */,
 				183074221C97D17800B7665E /* UIImage+GIF.m in Sources */,
 				184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */,
@@ -5700,6 +5717,7 @@
 				183072171C97BE3700B7665E /* MaMaShareSubsidiesViewController.m in Sources */,
 				183073D11C97D17800B7665E /* AFURLRequestSerialization.m in Sources */,
 				3A2E26661D12D6D8005C1CDA /* IMYWebView.m in Sources */,
+				1FFCF1A11D1CD17F000D9183 /* JMGoodsShowView.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				183073F71C97D17800B7665E /* MJRefreshStateHeader.m in Sources */,
 				1F98FE411D18D3ED0043FA32 /* JMComplaintSuggestController.m in Sources */,

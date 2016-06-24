@@ -25,6 +25,7 @@
 - (void)addNumber:(NewCartsModel*)model;
 - (void)deleteCartView:(NewCartsModel*)model;
 - (void)buyOneGood;
+- (void)tapClick:(NewCartsModel*)model;
 
 @end
 
