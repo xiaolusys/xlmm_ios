@@ -10,9 +10,10 @@
 #import "JMOrderGoodsModel.h"
 
 @class JMBaseGoodsCell;
-@class JMOrderGoodsModel;
+//@class JMOrderGoodsModel;
 @protocol JMBaseGoodsCellDelegate <NSObject>
 
+@optional
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Button:(UIButton *)button Section:(NSInteger)section Row:(NSInteger)row;
 
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row;

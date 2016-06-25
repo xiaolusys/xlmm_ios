@@ -12,6 +12,7 @@
 @class JMOrderGoodsModel;
 @protocol JMGoodsShowControllerDelegate <NSObject>
 
+
 - (void)composeWithLogistics:(JMGoodsShowController *)logistics didClickButton:(NSInteger)index;
 
 - (void)composeOptionBtnClick:(JMGoodsShowController *)baseGoods Button:(UIButton *)button Section:(NSInteger)section Row:(NSInteger)row;

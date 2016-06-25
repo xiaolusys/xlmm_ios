@@ -42,7 +42,7 @@
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface XiangQingViewController ()<NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate,JMGoodsShowControllerDelegate>{
+@interface XiangQingViewController ()<JMGoodsShowControllerDelegate,NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate>{
     
     float refundPrice;
 }
@@ -391,11 +391,13 @@
         [arr addObject:dataArray];
         self.goodsShowVC.dataSource = arr;
         self.goodsShowVC.logisticsArr = _logisticsArr;
+        self.goodsShowVC.delegate = self;
         JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
         goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
         [self.myXiangQingView addSubview:goodsShowView];
         goodsShowView.backgroundColor = [UIColor orangeColor];
         goodsShowView.contentView = self.goodsShowVC.view;
+        [_dataSource addObject:dataArray];
     }else {
         NSInteger count = [self.orderGoodsModel.status integerValue];
         if (count == ORDER_STATUS_PAYED) {
@@ -436,12 +438,12 @@
         self.goodsViewHeight.constant = goodsH;
         self.goodsShowVC.dataSource = _dataSource;
         self.goodsShowVC.logisticsArr = _logisticsArr;
+        self.goodsShowVC.delegate = self;
         JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
         goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
         [self.myXiangQingView addSubview:goodsShowView];
         goodsShowView.backgroundColor = [UIColor orangeColor];
         goodsShowView.contentView = self.goodsShowVC.view;
-        self.goodsShowVC.delegate = self;
         
     }
 
@@ -464,8 +466,12 @@
     NSArray *arr = _dataSource[section];
     queryVC.orderDataSource = arr;
     
-    NSArray *array = _logisticsArr[section];
-    queryVC.logisDataSource = array;
+    if (_logisticsArr.count == 0) {
+        return ;
+    }else {
+        NSArray *array = _logisticsArr[section];
+        queryVC.logisDataSource = array;
+    }
     
     queryVC.logName = self.logisticsLabel.text;
     [self.navigationController pushViewController:queryVC animated:YES];

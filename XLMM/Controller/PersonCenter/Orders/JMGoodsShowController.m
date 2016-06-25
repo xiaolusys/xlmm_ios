@@ -14,7 +14,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "JMPackAgeModel.h"
 
-@interface JMGoodsShowController ()<UITableViewDelegate,UITableViewDataSource,JMBaseGoodsCellDelegate>
+@interface JMGoodsShowController ()<JMBaseGoodsCellDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *tableView;
 
