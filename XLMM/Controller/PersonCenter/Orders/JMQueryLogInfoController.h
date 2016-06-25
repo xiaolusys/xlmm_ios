@@ -19,4 +19,9 @@
 @property (copy, nonatomic) NSString *packetId;
 @property (copy, nonatomic) NSString *companyCode;
 
+
+@property (nonatomic,strong) NSArray *orderDataSource;
+
+@property (nonatomic,strong) NSArray *logisDataSource;
+
 @end

@@ -95,7 +95,7 @@ extern NSString *Root_URL;
 #define kCart_History_URL [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json",Root_URL]
 #define kCart_Number_URL [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL]
 #define kAddress_List_URL [NSString stringWithFormat:@"%@/rest/v1/address.json",Root_URL]
-#define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v1/trades.json",Root_URL]
+#define kQuanbuDingdan_URL [NSString stringWithFormat:@"%@/rest/v2/trades.json",Root_URL]
 #define kWaitpay_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitpay.json",Root_URL]
 #define kWaitsend_List_URL [NSString stringWithFormat:@"%@/rest/v1/trades/waitsend.json",Root_URL]
 #define kIntegrallogURL [NSString stringWithFormat:@"%@/rest/v1/integrallog.json",Root_URL]

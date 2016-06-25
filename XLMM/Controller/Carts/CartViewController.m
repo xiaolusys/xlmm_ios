@@ -18,6 +18,7 @@
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
+#import "MJExtension.h"
 
 
 
@@ -241,6 +242,8 @@
         model.ID = [[dic objectForKey:@"id"] intValue];
         model.sku_id = [dic objectForKey:@"sku_id"];
         model.item_id = [dic objectForKey:@"item_id"];
+        model.item_weburl = [dic objectForKey:@"item_weburl"];
+
         [self.historyCarts addObject:model];
     }
     
@@ -275,9 +278,8 @@
     }
     return 0;
 }
-// -- 列表点击事件
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+#pragma mark == 点击进入商品详情
+- (void)composeImageTap:(NewCartsModel *)model {
     NSString *weiUrl = model.item_weburl;
     if (weiUrl == nil) {
         return ;
@@ -288,8 +290,38 @@
         webVC.webDiction = dic;
         [self.navigationController pushViewController:webVC animated:YES];
     }
-
+    
 }
+- (void)tapClick:(NewCartsModel *)model {
+    NSString *weiUrl = model.item_weburl;
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
+}
+// -- 列表点击事件
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    NSString *weiUrl = model.item_weburl;
+//    NSDictionary *dic = model.mj_keyValues;
+//    if (weiUrl == nil) {
+//        return ;
+//    }else {
+//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//        [dic setValue:weiUrl forKey:@"web_url"];
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        webVC.webDiction = dic;
+//        [self.navigationController pushViewController:webVC animated:YES];
+//    }
+//
+//}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString *CellIdentifier = @"simpleCellID";
@@ -352,7 +384,7 @@
             cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
-//            cell.userInteractionEnabled = NO;
+
             cell.delegate = self;
             
         

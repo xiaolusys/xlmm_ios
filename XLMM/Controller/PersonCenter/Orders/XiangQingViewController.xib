@@ -296,7 +296,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="176" id="WaY-R9-mRP">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="142"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="113"/>
                                 </constraint>
                             </constraints>
                             <variation key="default">
@@ -752,7 +752,7 @@
                         <constraint firstItem="KXe-lP-X7v" firstAttribute="leading" secondItem="chS-yz-c6e" secondAttribute="leading" id="1Zc-I2-MYH"/>
                         <constraint firstItem="Y84-m6-3VU" firstAttribute="top" secondItem="chS-yz-c6e" secondAttribute="top" id="4Jf-k6-wAv"/>
                         <constraint firstItem="lmf-qu-1Oc" firstAttribute="top" secondItem="Y84-m6-3VU" secondAttribute="bottom" id="8Ta-m8-b2a">
-                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="29"/>
                         </constraint>
                         <constraint firstAttribute="bottom" secondItem="KXe-lP-X7v" secondAttribute="bottom" id="Qvp-Eq-5Uv"/>
                         <constraint firstItem="lmf-qu-1Oc" firstAttribute="trailing" secondItem="Y84-m6-3VU" secondAttribute="trailing" id="YHJ-Yj-WOF"/>
