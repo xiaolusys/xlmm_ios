@@ -118,24 +118,7 @@
 }
 
 -(void)displayDefaultView{
-//    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
-//    UIView *defaultView = views[0];
-//    UIButton *button = [defaultView viewWithTag:100];
-//    button.layer.cornerRadius = 15;
-//    button.layer.borderWidth = 1;
-//    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-//    [button setTitle:@"我的精选" forState:UIControlStateNormal];
-//    
-//    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
-//    label.text = @"您还没有粉丝哦...";
-//    UILabel *desLabel = (UILabel *)[defaultView viewWithTag:200];
-//    desLabel.text = @"分享您的精选给好友，就会获得粉丝哦～";
-//    
-//    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 64, self.view.frame.size.width, self.view.frame.size.height);
-//    [self.view addSubview:defaultView];
-    
+
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FansEmpty" owner:nil options:nil];
     UIView *defaultView = views[0];
     UIButton *button = [defaultView viewWithTag:100];

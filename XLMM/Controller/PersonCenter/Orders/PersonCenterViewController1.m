@@ -19,6 +19,8 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "Masonry.h"
+#import "DingdanModel.h"
+#import "MJExtension.h"
 
 #define kSimpleCellIdentifier @"simpleCell"
 
@@ -329,7 +331,9 @@
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     NSString *ID = [dic objectForKey:@"id"];
    // NSLog(@"id = %@", ID);
-    
+    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
+    xiangqingVC.dingdanModel = dingdanModel;
+    xiangqingVC.goodsArr = dic[@"orders"];
     //      http://m.xiaolu.so/rest/v1/trades/86412/details    //@"%@/rest/v2/trades/%@"
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
   //  NSLog(@"urlString = %@", urlString);

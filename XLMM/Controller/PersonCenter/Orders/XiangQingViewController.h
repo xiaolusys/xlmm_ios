@@ -49,6 +49,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+/**
+ *  商品数组 
+ */
+@property (nonatomic, strong) NSArray *goodsArr;
+/**
+ *  时间轴
+ */
+@property (weak, nonatomic) IBOutlet UIView *lineTimeView;
+
 
 /**
  *  显示创建订单时间
@@ -66,7 +75,10 @@
  *  点击修改物流公司
  */
 @property (weak, nonatomic) IBOutlet UIView *choiseLogisticsView;
-
+/**
+ *  时间轴的高度
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLineViewH;
 
 @end
 

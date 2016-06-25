@@ -38,6 +38,7 @@
 #import "MJRefresh.h"
 #import "JMGoodsShowController.h"
 #import "JMGoodsShowView.h"
+#import "JMTimeLineView.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -98,6 +99,7 @@
  *  商品展示cell
  */
 @property (nonatomic,strong) JMGoodsShowController *goodsShowVC;
+
 @end
 
 @implementation XiangQingViewController{
@@ -199,7 +201,7 @@
     
     //    [self downloadData];
     
-    
+    [self timeLine];
 }
 
 - (JMGoodsShowController *)goodsShowVC {
@@ -395,6 +397,11 @@
         goodsShowView.backgroundColor = [UIColor orangeColor];
         goodsShowView.contentView = self.goodsShowVC.view;
     }else {
+        NSInteger count = [self.orderGoodsModel.status integerValue];
+        if (count == ORDER_STATUS_PAYED) {
+            self.choiseLogisticsView.userInteractionEnabled = YES;
+            self.addressInfoImage.userInteractionEnabled = YES;
+        }
         NSDictionary *dicts = dic[0];
         NSInteger number = 0;
         NSString *package = dicts[@"package_group_key"];
@@ -693,6 +700,50 @@
         }];
     });
 }
+#pragma mark -- 时间轴
+//订单创建  支付成功  产品发货 产品签收 交易完成
+- (void)timeLine {
+    NSDictionary *dic = self.goodsArr[0];
+    JMOrderGoodsModel *goodsModel = [JMOrderGoodsModel mj_objectWithKeyValues:dic];
+    NSInteger countNum = [goodsModel.status integerValue];
+    NSInteger refundNum = [goodsModel.refund_status integerValue];
+    
+    NSArray *desArr = [NSArray array];
+    NSInteger count = 0;
+    int i = 0;
+    BOOL isCountNum = !(countNum == ORDER_STATUS_REFUND_CLOSE || countNum == ORDER_STATUS_TRADE_CLOSE);
+    BOOL isRefundNum = (refundNum == REFUND_STATUS_NO_REFUND);
+    if (isCountNum && isRefundNum) {
+        self.timeLineViewH.constant = 60.;
+        desArr = @[@"订单创建",@"支付成功",@"产品发货",@"产品签收",@"交易完成"];
+        for (i = 0; i < desArr.count; i++) {
+            if (countNum == i) {
+                if (countNum >= 1) {
+                    i --;
+                }
+                break;
+            }else {
+                continue;
+            }
+        }
+        count = i + 1;
+        
+        UIScrollView *timeLineView = [[UIScrollView alloc] init];
+        [self.lineTimeView addSubview:timeLineView];
+        timeLineView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+        
+        JMTimeLineView *timeLineV = [[JMTimeLineView alloc] initWithTimeArray:nil andTimeDesArray:desArr andCurrentStatus:count andFrame:timeLineView.frame];
+        timeLineV.backgroundColor = [UIColor lineGrayColor];
+        [timeLineView addSubview:timeLineV];
+        
+        timeLineView.contentSize = CGSizeMake(70 * desArr.count, 0);
+        timeLineView.showsHorizontalScrollIndicator = NO;
+    }else {
+        self.timeLineViewH.constant = 0.;
+    }
+}
+
+
 @end
 
 
