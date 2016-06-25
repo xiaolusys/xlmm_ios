@@ -455,17 +455,13 @@
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
 
     NSArray *arr = _dataSource[section];
-    NSArray *arr2 = arr[row];
-    queryVC.orderDataSource = arr2;
+    queryVC.orderDataSource = arr;
     
     NSArray *array = _logisticsArr[section];
-    NSArray *array1 = array[row];
-    queryVC.logisDataSource = array1;
+    queryVC.logisDataSource = array;
     
     queryVC.logName = self.logisticsLabel.text;
-    
     [self.navigationController pushViewController:queryVC animated:YES];
-    
 }
 #pragma mark -- 商品可选状态
 - (void)composeOptionBtnClick:(JMGoodsShowController *)goodsShow Button:(UIButton *)button Section:(NSInteger)section Row:(NSInteger)row {
