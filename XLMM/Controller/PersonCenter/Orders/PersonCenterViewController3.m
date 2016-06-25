@@ -35,6 +35,8 @@
 
 @property (nonatomic,strong) UIButton *topButton;
 
+@property (nonatomic, strong) DingdanModel *goodsModel;
+
 @end
 
 @implementation PersonCenterViewController3{
@@ -223,12 +225,15 @@
         model.dingdanbianhao = [dic objectForKey:@"tid"];
         model.imageURLString = [dic objectForKey:@"order_pic"];
         model.dingdanTime = [dic objectForKey:@"created"];
-        model.dingdanZhuangtai = [dic objectForKey:@"status_display"];
+        model.status_display = [dic objectForKey:@"status_display"]; //status_display
         model.dingdanJine = [dic objectForKey:@"payment"];
         model.ordersArray = [dic objectForKey:@"orders"];
+        model.status = [dic objectForKey:@"status"];
+        
         
         
         [dataArray addObject:model];
+        self.goodsModel = model;
     }
 //    NSLog(@"dataArray = %@", dataArray);
 
@@ -292,7 +297,7 @@
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
         cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
         cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
-        cell.statusLabel.text = model.dingdanZhuangtai;
+        cell.statusLabel.text = model.status_display;
 
         return cell;
         
@@ -317,7 +322,7 @@
             
         }
 
-        cell.statusLabel.text = model.dingdanZhuangtai;
+        cell.statusLabel.text = model.status_display;
 
         return cell;
         
@@ -351,7 +356,9 @@
     XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     //http://m.xiaolu.so/rest/v1/trades/86412/details
     
-    xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+    self.goodsModel = [dataArray objectAtIndex:indexPath.row];
+    xiangqingVC.goodsArr = self.goodsModel.ordersArray;
+    xiangqingVC.dingdanModel = self.goodsModel;
     xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, xiangqingVC.dingdanModel.dingdanID];
     NSLog(@"url = %@", xiangqingVC.urlString);
 
@@ -472,7 +479,7 @@
 //        }
 //
 //
-//        if ([model.dingdanZhuangtai isEqualToString:@"已发货"]) {
+//        if ([model.status_display isEqualToString:@"已发货"]) {
 //            NSLog(@"已经发货");
 //            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
 //            button.tag = indexPath.row +100;
@@ -486,7 +493,7 @@
 //            button.layer.borderWidth = 0.5;
 //            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 //            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"待付款"]){
+//        } else if ([model.status_display isEqualToString:@"待付款"]){
 //            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
 //            button.tag = indexPath.row +100;
 //
@@ -499,7 +506,7 @@
 //            button.layer.borderWidth = 0.5;
 //            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 //            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"已付款"]){
+//        } else if ([model.status_display isEqualToString:@"已付款"]){
 //            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
 //            button.tag = indexPath.row +100;
 //
@@ -512,7 +519,7 @@
 //            button.layer.borderWidth = 0.5;
 //            button.layer.borderColor = [UIColor buttonBorderColor].CGColor;
 //            [cell.contentView addSubview:button];
-//        } else if ([model.dingdanZhuangtai isEqualToString:@"交易成功"]){
+//        } else if ([model.status_display isEqualToString:@"交易成功"]){
 //            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 70, 6, 80, 25)];
 //            button.tag = indexPath.row +100;
 //
