@@ -99,6 +99,7 @@
  *  商品展示cell
  */
 @property (nonatomic,strong) JMGoodsShowController *goodsShowVC;
+
 @end
 
 @implementation XiangQingViewController{
@@ -122,7 +123,8 @@
     NSDictionary *_orderDic;
     NSString *_goodsID; // 订单ID
     NSDictionary *_refundDic;
-
+    
+    
     NSMutableArray *_logisticsArr; //包裹分组信息
     NSMutableArray *_dataSource; //商品分组信息
 }
@@ -177,7 +179,7 @@
     orderStatusDisplay = [[NSMutableArray alloc] initWithCapacity:0];
     
     dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-
+    
     _logisticsArr = [NSMutableArray array];
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.xiangqingScrollView];
@@ -378,7 +380,7 @@
 
 #pragma mark ----- 物流视图的显示
 - (void)setWuLiuMsg:(NSArray *)dic {
-
+    
     [_logisticsArr removeAllObjects];
     [_dataSource removeAllObjects];
     if (dic.count == 0) {
@@ -523,93 +525,6 @@
         
     }
 }
-
-    /**
-     *  logisticsInfoArray = [[NSMutableArray alloc] initWithCapacity:0];
-     packetNum = 0;
-     NSString *groupKey = @"";
-     for (NSDictionary *dic in dicJson) {
-     JMPackAgeModel *packModel = [JMPackAgeModel mj_objectWithKeyValues:dic];
-     self.packModel = packModel;
-     [logisticsInfoArray addObject:packModel];
-     if ((packModel.package_group_key != nil) && (![packModel.package_group_key isEqualToString:groupKey])) {
-     packetNum ++;
-     }
-     groupKey = packModel.package_group_key;
-     
-     }
-
-     */
-    
-    
-//    NSInteger statusCount = [self.orderDetailModel.status integerValue];
-//    NSInteger num = 0; // num -- > 显示物流状态的视图  && statusCount < ORDER_STATUS_REFUND_CLOSE
-//    if (statusCount >= ORDER_STATUS_PAYED) {
-//        num = 35;
-//    }else {
-//        num = 0;
-//    }
-//    packNumArr = [NSMutableArray array];
-//    NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
-//    NSInteger tagNum = 0; // 表示包裹信息按钮的tag
-//    NSInteger nums = 20 + num;
-//    if (dic.count == 0){
-//        //无查物流信息，直接显示时间和商品即可  76 -- > 35 + 20
-//        self.goodsViewHeight.constant = nums + 90 * dataArray.count;
-//        [self createProcessView:CGRectMake(0, 0, SCREENWIDTH, nums) status:orderStatus[0] JMPackAgeModel:nil];
-//        NSUInteger  h=nums;
-//        for(int i=0; i < dataArray.count; i++){
-//            [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
-//            h += 90;
-//        }
-//        return;
-//    }
-//    [self  transferJMPackAgeModel:dic];
-//    NSString *groupKey = @"";
-//    NSInteger h = 0;
-//    NSInteger hs = 0;
-//    self.goodsViewHeight.constant = packetNum * nums + logisticsInfoArray.count * 90 + 15 *(packetNum - 1);
-//    for(int i =0; i < logisticsInfoArray.count; i++){
-//        
-//        NSLog(@"setWuLiuMsg logis groupkey=%@  temp groupkey=%@",((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key, groupKey);
-//        if((((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key != nil) && (![((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key isEqualToString:groupKey])) {
-//            if(i != 0) h+= 15;
-//            [self createProcessView:CGRectMake(0, h, SCREENWIDTH, nums) status:[orderStatus objectAtIndex:i] JMPackAgeModel:((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i])];
-//            h += nums;
-//            hs += nums;
-////            self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[i]];
-//        }
-////        NSString *packStr = @"";
-////        if (packModel.ware_by_display == nil) {
-////            packStr = @"物流配送";
-////        }else {
-////            NSString *newStr = [packModel.ware_by_display substringToIndex:1];
-////            NSInteger count = [newStr integerValue] - 1;
-////            if (count < 0) {
-////                packStr = @"物流配送";
-////            }else {
-////                packStr = [NSString stringWithFormat:@"包裹%@",arr[count]];
-////            }
-////        }
-//        NSInteger numC = hs / 55;
-//        if (numC == 0) {
-//            return;
-//        }else {
-//            self.packMessageL.text = [NSString stringWithFormat:@"包裹%@",arr[numC - 1]];
-//            tagNum = numC + 100;
-//            self.baseView.tag = tagNum;
-//            currentIndex += 1;
-//        }
-//        NSNumber *numTag = [NSNumber numberWithInteger:tagNum];
-//        [packNumArr addObject:numTag];
-//        currentIndex = 0;
-//        
-//        groupKey = ((JMPackAgeModel *)[logisticsInfoArray objectAtIndex:i]).package_group_key;
-//        
-//        [self createXiangQing:CGRectMake(0, h, SCREENWIDTH, 90) number:i];
-//        h += 90;
-//    }
-
 /**
  *  设置倒计时方法
  */
@@ -661,6 +576,7 @@
     
     return newString;
 }
+
 
 - (void)removeAllSubviews:(UIView *)v{
     while (v.subviews.count) {

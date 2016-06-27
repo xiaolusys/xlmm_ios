@@ -81,7 +81,7 @@
     self.numLabel = numLabel;
     self.numLabel.font = [UIFont systemFontOfSize:12.];
     self.numLabel.textColor = [UIColor dingfanxiangqingColor];
-
+    
     JMSelecterButton *optionButton = [[JMSelecterButton alloc] init];
     [self.contentView addSubview:optionButton];
     self.optionButton = optionButton;
@@ -143,9 +143,13 @@
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
         make.width.mas_equalTo(@80);
     }];
-
+    
+//    [self.tapView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.top.bottom.equalTo(weakSelf.contentView);
+//        make.right.equalTo(weakSelf.refundLabel.mas_left).offset(-40);
+//    }];
+    
 }
-
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 

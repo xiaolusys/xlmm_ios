@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "JMOrderGoodsModel.h"
 
-
 @class JMBaseGoodsCell;
 //@class JMOrderGoodsModel;
 @protocol JMBaseGoodsCellDelegate <NSObject>
@@ -23,6 +22,8 @@
 
 @class JMOrderGoodsModel;
 @interface JMBaseGoodsCell : UITableViewCell
+
+
 
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount;
 
