@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="WithdrawalsIsOk" id="7XA-Sg-DVi">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="610"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkg.png" translatesAutoresizingMaskIntoConstraints="NO" id="kAR-z5-fXp">
+                    <rect key="frame" x="121" y="90" width="210" height="130"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="130" id="kFj-w3-a5S"/>
+                        <constraint firstAttribute="width" constant="210" id="lxX-T7-Rfg"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" tag="108" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AD1-sW-mk1">
+                    <rect key="frame" x="196" y="240" width="60" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="0Em-HG-0qq"/>
+                        <constraint firstAttribute="width" constant="60" id="E6M-Kz-l6E"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" tag="106" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgAdd.png" translatesAutoresizingMaskIntoConstraints="NO" id="aYf-Xg-4G3">
+                    <rect key="frame" x="256" y="250" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="OWa-NB-DW0"/>
+                        <constraint firstAttribute="width" constant="20" id="wNs-AA-vOK"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fLy-X3-VdT">
+                    <rect key="frame" x="20" y="557" width="412" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="ho3-Pe-6Ad"/>
+                    </constraints>
+                    <state key="normal" title="马上提现">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" tag="105" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPkgjian.png" translatesAutoresizingMaskIntoConstraints="NO" id="yg9-dg-KCn">
+                    <rect key="frame" x="176" y="250" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="QJd-S4-xk8"/>
+                        <constraint firstAttribute="width" constant="20" id="n7b-Kq-mnf"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JT-bA-O2B">
+                    <rect key="frame" x="166" y="240" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="OFB-Se-9UZ"/>
+                        <constraint firstAttribute="height" constant="40" id="fuT-tq-5IK"/>
+                    </constraints>
+                </button>
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDe-vK-yUk">
+                    <rect key="frame" x="246" y="240" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="5hd-pH-gCv"/>
+                        <constraint firstAttribute="height" constant="40" id="khy-9W-ZQp"/>
+                    </constraints>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="yg9-dg-KCn" firstAttribute="centerY" secondItem="2JT-bA-O2B" secondAttribute="centerY" id="6Fs-qw-CNQ"/>
+                <constraint firstItem="AD1-sW-mk1" firstAttribute="centerY" secondItem="yg9-dg-KCn" secondAttribute="centerY" id="9er-Md-PMP"/>
+                <constraint firstItem="AD1-sW-mk1" firstAttribute="leading" secondItem="yg9-dg-KCn" secondAttribute="trailing" id="JNg-Fx-I8L"/>
+                <constraint firstItem="kAR-z5-fXp" firstAttribute="centerX" secondItem="7XA-Sg-DVi" secondAttribute="centerX" id="KaT-Cq-k3u"/>
+                <constraint firstItem="aYf-Xg-4G3" firstAttribute="centerY" secondItem="yg9-dg-KCn" secondAttribute="centerY" id="M80-sz-Jh3"/>
+                <constraint firstAttribute="bottom" secondItem="fLy-X3-VdT" secondAttribute="bottom" constant="13" id="Ocg-sb-0mE"/>
+                <constraint firstItem="yg9-dg-KCn" firstAttribute="top" secondItem="kAR-z5-fXp" secondAttribute="bottom" constant="30" id="SdY-ew-kJJ"/>
+                <constraint firstItem="aYf-Xg-4G3" firstAttribute="leading" secondItem="AD1-sW-mk1" secondAttribute="trailing" id="WDy-fb-LD6"/>
+                <constraint firstItem="aYf-Xg-4G3" firstAttribute="centerY" secondItem="dDe-vK-yUk" secondAttribute="centerY" id="YnK-P7-L6g"/>
+                <constraint firstAttribute="trailing" secondItem="fLy-X3-VdT" secondAttribute="trailing" constant="20" id="akE-De-dNk"/>
+                <constraint firstItem="yg9-dg-KCn" firstAttribute="centerX" secondItem="2JT-bA-O2B" secondAttribute="centerX" id="eEK-NC-lTu"/>
+                <constraint firstItem="fLy-X3-VdT" firstAttribute="leading" secondItem="7XA-Sg-DVi" secondAttribute="leading" constant="20" id="eYM-HA-O45"/>
+                <constraint firstItem="aYf-Xg-4G3" firstAttribute="centerX" secondItem="dDe-vK-yUk" secondAttribute="centerX" id="t9a-LZ-kie"/>
+                <constraint firstItem="kAR-z5-fXp" firstAttribute="top" secondItem="7XA-Sg-DVi" secondAttribute="top" constant="90" id="tpV-uR-ORo"/>
+                <constraint firstItem="yg9-dg-KCn" firstAttribute="leading" secondItem="kAR-z5-fXp" secondAttribute="leading" constant="55" id="zbU-ch-yty"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="270" y="415"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="redPkg.png" width="419" height="259"/>
+        <image name="redPkgAdd.png" width="40" height="40"/>
+        <image name="redPkgjian.png" width="40" height="40"/>
+    </resources>
+</document>

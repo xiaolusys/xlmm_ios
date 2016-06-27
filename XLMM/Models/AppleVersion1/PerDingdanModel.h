@@ -1,0 +1,24 @@
+//
+//  orderGoodsModel.h
+//  XLMM
+//
+//  Created by younishijie on 15/8/21.
+//  Copyright (c) 2015年 上海己美. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "PerDingdanModel.h"
+
+@interface PerDingdanModel : NSObject
+
+@property (nonatomic, copy)NSString *nameString;
+@property (nonatomic, copy)NSString *sizeString;
+@property (nonatomic, copy)NSString *numberString;
+@property (nonatomic, copy)NSString *total_fee;
+@property (nonatomic, copy)NSString *payment;
+@property (nonatomic, copy)NSString *urlString;
+@property (nonatomic, copy)NSString *orderID;
+@property (nonatomic, assign)BOOL killTitle;
+@property (nonatomic, copy) NSString *status_display;
+
+@end
