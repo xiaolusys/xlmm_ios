@@ -41,4 +41,5 @@
 + (UIColor *)wechatBackColor;
 + (UIColor *)timeLabelColor;
 + (UIColor *)titleDarkGrayColor;
++ (UIColor *)sectionViewColor;
 @end

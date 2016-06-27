@@ -37,7 +37,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         // Initialization code
-
+        self.contentView.backgroundColor = [UIColor whiteColor];
         NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"ReBuyTableViewCell" owner:self options:nil];
         if (arrayOfViews.count < 1) {
             return nil;
@@ -50,6 +50,10 @@
         self.reBuyButton.layer.borderWidth = 1;
         self.reBuyButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
 
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+        [self.headImageView addGestureRecognizer:tap];
+        self.headImageView.userInteractionEnabled = YES;
+        
     }
     return self;
 }
@@ -62,7 +66,35 @@
     }
     
 }
+- (void)tapClick:(UITapGestureRecognizer *)tap {
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(composeImageTap:)]) {
+        [_delegate composeImageTap:self.cartModel];
+    }
+    
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

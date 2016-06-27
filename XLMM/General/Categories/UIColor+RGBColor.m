@@ -131,5 +131,8 @@
 + (UIColor *)timeLabelColor {
     return [UIColor colorWithR:160 G:160 B:160 alpha:1];
 }
++ (UIColor *)sectionViewColor {
+    return [UIColor colorWithR:252 G:252 B:252 alpha:1];
+}
 
 @end

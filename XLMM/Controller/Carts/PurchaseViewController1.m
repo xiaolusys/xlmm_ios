@@ -625,11 +625,11 @@
         self.xlwButton.selected = !self.xlwButton.selected;
         
         if (self.xlwButton.selected) {
-            self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon.png"];
+            self.xiaoluimageView.image = [UIImage imageNamed:@"selected_icon"];
             self.isUseXLW = YES;
             [self calculationLabelValue];
         }else {
-            self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon.png"];
+            self.xiaoluimageView.image = [UIImage imageNamed:@"unselected_icon"];
             self.isUseXLW = NO;
             [self calculationLabelValue];
         }
@@ -683,20 +683,17 @@
 }
 #pragma mark -- 支付
 - (void)payMoney {
-    
 
     if (addressModel.addressID == nil) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请填写收货地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
-    
     //检查支付方式
     
     //    pid:1:value:2
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",self.rightReduce[@"pid"],self.rightReduce[@"value"]];
     //    NSString *parms = nil;
-    
     dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
     
     //    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
@@ -744,7 +741,7 @@
                 parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
             }
             
-            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue], @"budget", parms];
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
             //提交
             [self submitBuyGoods];
         }else {

@@ -19,6 +19,7 @@
 #import "AFNetworking.h"
 #import "UIColor+RGBColor.h"
 #import "JMCleanView.h"
+#import "JMPackAgeModel.h"
 
 #define cellHeitht 90
 
@@ -42,6 +43,7 @@
 
 @property (nonatomic,strong) NSMutableArray *infoArray;
 
+@property (nonatomic,strong) NSMutableArray *orderListDataSource;
 
 @end
 
@@ -72,6 +74,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"物流状态" selecotr:@selector(backClick)];
+    
     [self createtopUI];
     [self getWuliuInfoFromServer];
     [self createGoodsListView];
@@ -79,21 +82,19 @@
     
     
 }
-- (void)setGoodsListDic:(NSDictionary *)goodsListDic {
-    _goodsListDic = goodsListDic;
+- (void)setOrderDataSource:(NSArray *)orderDataSource {
+    _orderDataSource = orderDataSource;
+    _count = orderDataSource.count;
+//    self.infoArray = [NSMutableArray arrayWithArray:orderDataSource];
+}
+- (void)setLogisDataSource:(NSArray *)logisDataSource {
+    _logisDataSource = logisDataSource;
+    JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
+    packageModel = logisDataSource[0];
+    self.packetId = packageModel.out_sid;
+    self.companyCode = packageModel.logistics_company_code;
 }
 
-- (void)setOrderGoodsArr:(NSMutableArray *)orderGoodsArr {
-    _orderGoodsArr = orderGoodsArr;
-    _count = orderGoodsArr.count;
-}
-
-//- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
-//    _goodsModel = goodsModel;
-//    NSMutableArray *arr = [NSMutableArray array];
-//    [arr addObject:goodsModel];
-//    _count = arr.count;
-//}
 
 - (void)getWuliuInfoFromServer {
     BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
@@ -116,6 +117,7 @@
  *  数据请求  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
  */
 - (void)loadData {
+    
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     
@@ -172,15 +174,18 @@
  */
 - (void)createGoodsListView {
     self.goodsListVC.count = _count;
+    self.goodsListVC.goodsListArr = [NSMutableArray arrayWithArray:self.orderDataSource];
+    
     JMCleanView *menu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136, SCREENWIDTH, _count * cellHeitht)];
     [self.masBackScrollView addSubview:menu];
     menu.contentView = self.goodsListVC.view;
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
-    self.goodsListVC.goodsListArr = self.orderGoodsArr;
 //    self.goodsListVC.goodsModel = self.orderGoodsArr[0];
 //    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
+    self.logNameLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.text = @"未揽件";
+    self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }
 /**
@@ -286,6 +291,7 @@
     [topBackView addSubview:logNameL];
     logNameL.font = [UIFont systemFontOfSize:13.];
     logNameL.text = @"物流配送";
+    logNameL.font = [UIFont systemFontOfSize:13.];
     
     UILabel *lineView = [UILabel new];
     [topBackView addSubview:lineView];
@@ -299,6 +305,7 @@
     [topBackView addSubview:logNumL];
     logNumL.font = [UIFont systemFontOfSize:13.];
     logNumL.text = @"快递单号";
+    logNumL.font = [UIFont systemFontOfSize:13.];
     
     UILabel *logNameLabel = [UILabel new];
     [topBackView addSubview:logNameLabel];
