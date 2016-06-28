@@ -921,7 +921,7 @@
 		0B256DDD1CFC69EA000EB0B0 /* JMFirstOpen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFirstOpen.m; sourceTree = "<group>"; };
 		0B43FF9A1CFE795500AE7DDD /* JMChooseLogisticsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMChooseLogisticsController.h; sourceTree = "<group>"; };
 		0B43FF9B1CFE795500AE7DDD /* JMChooseLogisticsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMChooseLogisticsController.m; sourceTree = "<group>"; };
-		0B43FF9F1CFE83BE00AE7DDD /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
+		0B43FF9F1CFE83BE00AE7DDD /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Logistics.plist; path = ../Controller/PersonCenter/Orders/Logistics.plist; sourceTree = "<group>"; };
 		0B43FFA11CFE878600AE7DDD /* JMLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMLogistics.h; path = ../Orders/JMLogistics.h; sourceTree = "<group>"; };
 		0B43FFA21CFE878600AE7DDD /* JMLogistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMLogistics.m; path = ../Orders/JMLogistics.m; sourceTree = "<group>"; };
 		0B43FFA51CFE883100AE7DDD /* JMGroupLogistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMGroupLogistics.h; path = ../Orders/JMGroupLogistics.h; sourceTree = "<group>"; };
@@ -1850,7 +1850,7 @@
 		1F2B0C021CE9A24A00B11740 /* xiaolu_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaolu_selecter@2x.png"; sourceTree = "<group>"; };
 		1F3621D01CF92433004359B0 /* UIView+RGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RGSize.h"; sourceTree = "<group>"; };
 		1F3621D11CF92433004359B0 /* UIView+RGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RGSize.m"; sourceTree = "<group>"; };
-		1F3621D31CF924D7004359B0 /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Address.plist; sourceTree = "<group>"; };
+		1F3621D31CF924D7004359B0 /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Address.plist; path = ../Controller/PersonCenter/Orders/Address.plist; sourceTree = "<group>"; };
 		1F3621D51CF966D7004359B0 /* JMOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailModel.h; sourceTree = "<group>"; };
 		1F3621D61CF966D7004359B0 /* JMOrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailModel.m; sourceTree = "<group>"; };
 		1F3621D81CF968B8004359B0 /* JMOrderGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderGoodsModel.h; sourceTree = "<group>"; };
@@ -4436,8 +4436,6 @@
 			isa = PBXGroup;
 			children = (
 				0B43FFA41CFE880D00AE7DDD /* logistics(物流信息model) */,
-				1F3621D31CF924D7004359B0 /* Address.plist */,
-				0B43FF9F1CFE83BE00AE7DDD /* Logistics.plist */,
 				1F3621D51CF966D7004359B0 /* JMOrderDetailModel.h */,
 				1F3621D61CF966D7004359B0 /* JMOrderDetailModel.m */,
 				1F3621D81CF968B8004359B0 /* JMOrderGoodsModel.h */,
@@ -4453,6 +4451,8 @@
 		1F700AAC1CF7D3B6007B3FC0 /* plist */ = {
 			isa = PBXGroup;
 			children = (
+				1F3621D31CF924D7004359B0 /* Address.plist */,
+				0B43FF9F1CFE83BE00AE7DDD /* Logistics.plist */,
 				1F59A1EE1CF8509300104BB2 /* area.plist */,
 				1F700AAF1CF7D58E007B3FC0 /* provinces.plist */,
 			);
