@@ -113,9 +113,9 @@
 
         NSArray *params = [parameter componentsSeparatedByString:@"&"];
         NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
-        NSLog(@"firstparams %@  %@", [firstparams firstObject], [firstparams lastObject]);
         NSString *firstparam = [firstparams firstObject];
         NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+        NSLog(@"firstparams %@  %@", firstparam, firstvalue);
         if ([firstparam isEqualToString:@"model_id"]) {
             //跳到集合页面
             NSLog(@"model_id = %@", firstvalue);
@@ -151,7 +151,7 @@
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
             xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
-        } else if ([firstparam isEqualToString:@"is_native"]){
+        } else if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
             NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
             NSString *secondparam = [secondparams firstObject];
@@ -159,23 +159,34 @@
             NSLog(@"跳到H5首页 url= %@", secondvalue);
             
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:secondvalue forKey:@"web_url"];
+            if ([firstparam isEqualToString:@"is_native"]){
+                [web_dic setValue:secondvalue forKey:@"web_url"];
+            }
+            else{
+                [web_dic setValue:firstvalue forKey:@"web_url"];
+            }
             WebViewController *webView = [[WebViewController alloc] init];
             webView.webDiction = web_dic;
             webView.isShowNavBar =true;
             webView.isShowRightShareBtn=true;
             [vc.navigationController pushViewController:webView animated:YES];
-        } else if([firstparam isEqualToString:@"activity_id"]){
+        } else if([firstparam isEqualToString:@"activity_id"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
             NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
             NSString *secondparam = [secondparams firstObject];
             NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
 
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:secondvalue forKey:@"web_url"];
-            [web_dic setValue:@"active" forKey:@"type_title"];
             
-            [web_dic setValue:firstvalue forKey:@"activity_id"];
+            [web_dic setValue:@"active" forKey:@"type_title"];
+            if ([firstparam isEqualToString:@"activity_id"]){
+                [web_dic setValue:firstvalue forKey:@"activity_id"];
+                [web_dic setValue:secondvalue forKey:@"web_url"];
+            }
+            else{
+                [web_dic setValue:secondvalue forKey:@"activity_id"];
+                [web_dic setValue:firstvalue forKey:@"web_url"];
+            }
             NSLog(@"跳到activity_id id=%@ url= %@", firstvalue, secondvalue);
             
             WebViewController *webView = [[WebViewController alloc] init];
