@@ -490,7 +490,10 @@
         tuikuanVC.tid = tid;
         tuikuanVC.oid = model.orderGoodsID;
         tuikuanVC.status = model.status_display;
+        tuikuanVC.button = button;
         [self.navigationController pushViewController:tuikuanVC animated:YES];
+        
+
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
         NSLog(@"url string = %@", string);

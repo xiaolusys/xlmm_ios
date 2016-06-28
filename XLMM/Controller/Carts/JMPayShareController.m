@@ -54,7 +54,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self loadData];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isShareApinPayGo) name:@"isShareApinPayGo" object:nil];
 
 }
 - (void)viewDidLoad {
@@ -78,7 +78,7 @@
     JMPaySucTitleView *paySuccessView = [JMPaySucTitleView enterHeaderView];
     self.paySuccessView = paySuccessView;
     
-    JMSharePackView *sharePackView = [JMSharePackView enterHeaderView];
+    JMSharePackView *sharePackView = [JMSharePackView enterFooterView];
     self.sharePackView = sharePackView;
     self.sharePackView.delegate = self;
     
@@ -164,15 +164,16 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-- (void)isApinPayGo {
-    NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
+//- (void)isShareApinPayGo {
+//    NSInteger count = 0;
+//    
+//    count = [[self.navigationController viewControllers] indexOfObject:self];
+//    if (count >= 2) {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+//    }else {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+//}
 @end
 
 /**
