@@ -27,7 +27,7 @@
 
 @implementation JMSharePackView
 
-+ (instancetype)enterHeaderView {
++ (instancetype)enterFooterView {
     JMSharePackView *headView = [[JMSharePackView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 230)];
     headView.backgroundColor = [UIColor orangeColor];
     return headView;
