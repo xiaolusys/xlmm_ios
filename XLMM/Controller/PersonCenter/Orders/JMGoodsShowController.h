@@ -23,9 +23,12 @@
 
 
 @class JMOrderGoodsModel;
+@class JMPackAgeModel;
 @interface JMGoodsShowController : UIViewController
 
 @property (nonatomic,strong) JMOrderGoodsModel *goodsModel;
+
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
 
 @property (nonatomic,strong) NSMutableArray *dataSource;
 

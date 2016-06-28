@@ -90,20 +90,17 @@
  */
 - (void)fillData:(JMFetureFansModel *)model {
     
-    if (model.headimgurl.length == 0 ) {
+    if (model.headimgurl.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
         [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.headimgurl URLEncodedString]]];
     }
-    
-//    if (model.nick.length == 0) {
-//        self.nameLabel.text = @"来自手机客户端";
-//    }else {
-//        self.nameLabel.text = model.nick;
-//    }
+    self.iconImage.layer.cornerRadius = 30;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.masksToBounds = YES;
     self.nameLabel.text = model.nick;
     
-    self.phoneLabel.text = model.mobile;
     
     
 }

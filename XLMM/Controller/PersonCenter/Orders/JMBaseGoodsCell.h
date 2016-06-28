@@ -21,11 +21,12 @@
 @end
 
 @class JMOrderGoodsModel;
+@class JMPackAgeModel;
 @interface JMBaseGoodsCell : UITableViewCell
 
 
 
-- (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount;
+- (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount;
 
 @property (nonatomic, weak) id<JMBaseGoodsCellDelegate>delegate;
 
