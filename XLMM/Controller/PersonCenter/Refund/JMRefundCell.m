@@ -17,6 +17,7 @@
 
 @property (nonatomic,strong) UILabel *decLabel;
 
+@property (nonatomic, strong) UIImageView *iconImage;
 
 
 @end
@@ -31,6 +32,11 @@
 }
 
 - (void)createUI {
+    
+    UIImageView *iconImage = [UIImageView new];
+    [self.contentView addSubview:iconImage];
+    self.iconImage = iconImage;
+    
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -44,22 +50,33 @@
     self.decLabel.textColor = [UIColor titleDarkGrayColor];
     
     kWeakSelf
-    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView).offset(10);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
     
+    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
+        make.top.equalTo(weakSelf.contentView).offset(10);
+    }];
+    
     [self.decLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.nameLabel.mas_right).offset(10);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
-//        make.top.equalTo(weakSelf.contentView).offset(10);
+        make.top.equalTo(weakSelf.nameLabel).offset(5);
         make.right.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     
     
 }
-- (void)configWithModel:(JMAppForRefundModel *)model {
+- (void)configWithModel:(JMAppForRefundModel *)model Row:(NSInteger)row {
+    
+    if (row == 0) {
+        self.iconImage.image = [UIImage imageNamed:@"xiaolu_speedRefund"];
+    }else {
+        self.iconImage.image = [UIImage imageNamed:@"xiaolu_refund"];
+    }
     
     self.nameLabel.text = model.name;
     self.decLabel.text = model.desc;
