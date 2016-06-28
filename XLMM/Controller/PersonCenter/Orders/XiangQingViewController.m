@@ -735,9 +735,11 @@
         }
         count = i + 1;
         
+        self.lineTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
         UIScrollView *timeLineView = [[UIScrollView alloc] init];
         [self.lineTimeView addSubview:timeLineView];
         timeLineView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+        
         timeLineView.backgroundColor = [UIColor lineGrayColor];
         
         JMTimeLineView *timeLineV = [[JMTimeLineView alloc] initWithTimeArray:nil andTimeDesArray:desArr andCurrentStatus:count andFrame:timeLineView.frame];
@@ -748,6 +750,7 @@
         timeLineView.showsHorizontalScrollIndicator = NO;
     }else {
         self.timeLineViewH.constant = 0.;
+        self.lineTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 0);
     }
 }
 

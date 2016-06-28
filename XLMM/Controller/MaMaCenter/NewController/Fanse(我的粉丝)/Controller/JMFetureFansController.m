@@ -87,13 +87,16 @@
 - (void)loadDataSource{
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/potential_fans", Root_URL];
     
-    [self.dataArray removeAllObjects];
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (!responseObject) return;
-
+        
+        if (self.dataArray.count > 0) {
+            [self.dataArray removeAllObjects];
+        }
+        
         [self refetch:responseObject];
         
         [self endRefresh];

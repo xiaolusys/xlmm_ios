@@ -728,7 +728,7 @@
         //不足需要使用小鹿钱包或者其它支付方式
         totalPayment = totalPayment - couponValue;//[yhqModel.coupon_value floatValue];
         //        discountfee = discountfee + [yhqModel.coupon_value floatValue];
-        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + couponValue) || totalPayment == (self.availableFloat + couponValue))) {
+        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + couponValue) || fabs(totalPayment - (self.availableFloat + couponValue)) < 0.000001 )) {
             //使用了小鹿钱包 足够提交信息
             CGFloat value = [[self.xlWallet objectForKey:@"value"] floatValue];
             if (totalPayment > value) {

@@ -72,17 +72,17 @@
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
-    kWeakSelf
+//    kWeakSelf
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
-        [weakSelf loadDataSource];
+        [self loadDataSource];
     }];
 }
 - (void)createPullFooterRefresh {
-    kWeakSelf
+//    kWeakSelf
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
-        [weakSelf loadMore];
+        [self loadMore];
     }];
 }
 - (void)endRefresh {
@@ -96,14 +96,20 @@
     }
 }
 - (void)loadDataSource{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
     
-    [self.dataArray removeAllObjects];
+    
+    
+    
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (!responseObject) return;
+        
+        if (self.dataArray.count > 0) {
+            [self.dataArray removeAllObjects];
+        }
         
         [self refetch:responseObject];
         
