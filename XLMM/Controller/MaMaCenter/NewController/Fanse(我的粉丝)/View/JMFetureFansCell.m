@@ -116,11 +116,14 @@
     }else {
         self.nameLabel.text = model.nick;
     }
-    NSArray *array = [model.created componentsSeparatedByString:@"T"];
-    NSString *str = array[0];
-    NSString *string = [str substringFromIndex:5];
     
-    self.timeLabel.text = [NSString stringWithFormat:@"%@",string];
+    NSMutableString *String1 = [[NSMutableString alloc] initWithString:model.modified];
+    [String1 replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+    
+    NSString *string2 = [NSString stringWithFormat:@"%@",String1];
+    NSString *string3 = [string2 substringWithRange:NSMakeRange(5,11)];
+
+    self.timeLabel.text = [NSString stringWithFormat:@"%@",string3];
     
     self.descLabel.text = @"通过您的分享成为粉丝";
     
