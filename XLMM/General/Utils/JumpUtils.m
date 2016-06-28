@@ -32,6 +32,8 @@
         NSLog(@"target_url null");
         return;
     }
+    target_url =  [target_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
         //跳到今日上新
         [vc.navigationController popToRootViewControllerAnimated:YES];
@@ -153,9 +155,10 @@
             [vc.navigationController pushViewController:xiangqingVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
-            NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
+            
             NSString *secondparam = [secondparams firstObject];
             NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
+            NSLog(@"secondparams %@  %@", secondparam, secondvalue);
             NSLog(@"跳到H5首页 url= %@", secondvalue);
             
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
@@ -172,10 +175,9 @@
             [vc.navigationController pushViewController:webView animated:YES];
         } else if([firstparam isEqualToString:@"activity_id"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
-            NSLog(@"secondparams %@  %@", [secondparams firstObject], [secondparams lastObject]);
             NSString *secondparam = [secondparams firstObject];
             NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
-
+            NSLog(@"secondparams %@  %@", secondparam, secondvalue);
             NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
             
             [web_dic setValue:@"active" forKey:@"type_title"];
