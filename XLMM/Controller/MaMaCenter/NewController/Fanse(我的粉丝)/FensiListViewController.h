@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FensiListViewController : UIViewController
-@property (nonatomic, strong)NSNumber *fansNum;
+@property (nonatomic, strong)NSNumber *fansNum; 
 @end

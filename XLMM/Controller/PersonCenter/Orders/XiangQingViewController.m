@@ -170,6 +170,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.xiangqingScrollView.showsVerticalScrollIndicator = NO;
     
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(btnClicked:)];
     currentIndex = 0;
@@ -737,12 +738,13 @@
         UIScrollView *timeLineView = [[UIScrollView alloc] init];
         [self.lineTimeView addSubview:timeLineView];
         timeLineView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+        timeLineView.backgroundColor = [UIColor lineGrayColor];
         
         JMTimeLineView *timeLineV = [[JMTimeLineView alloc] initWithTimeArray:nil andTimeDesArray:desArr andCurrentStatus:count andFrame:timeLineView.frame];
         timeLineV.backgroundColor = [UIColor lineGrayColor];
         [timeLineView addSubview:timeLineV];
         
-        timeLineView.contentSize = CGSizeMake(70 * desArr.count, 0);
+        timeLineView.contentSize = CGSizeMake(70 * desArr.count, 60);
         timeLineView.showsHorizontalScrollIndicator = NO;
     }else {
         self.timeLineViewH.constant = 0.;

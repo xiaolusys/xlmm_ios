@@ -120,8 +120,15 @@
         cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     //在这里处理数据的赋值
+    self.goodsModel = [[JMOrderGoodsModel alloc] init];
+    self.packageModel = [[JMPackAgeModel alloc] init];
     self.goodsModel = self.dataSource[indexPath.section][indexPath.row];
-    [cell configWithModel:self.goodsModel SectionCount:indexPath.section RowCount:indexPath.row];
+    if (_isExsitingPackage) {
+        self.packageModel = self.logisticsArr[indexPath.section][indexPath.row];
+    }else {
+        self.packageModel = nil;
+    }
+    [cell configWithModel:self.goodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.selectionStyle = UITableViewCellAccessoryNone;
     
 //    if ([cell isKindOfClass:[JMBaseGoodsCell class]]) {

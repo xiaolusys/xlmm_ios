@@ -1,21 +1,22 @@
 //
-//  PersonOrderViewController.m
+//  JMMaMaCenterFansController.m
 //  XLMM
 //
-//  Created by apple on 16/3/17.
+//  Created by zhang on 16/6/27.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "PersonOrderViewController.h"
+#import "JMMaMaCenterFansController.h"
 #import "MMClass.h"
 #import "UIViewController+NavigationBar.h"
-#import "PersonCenterViewController1.h"
-#import "PersonCenterViewController2.h"
-#import "PersonCenterViewController3.h"
+#import "JMNowFansController.h"
+#import "JMFetureFansController.h"
+#import "JMAboutFansController.h"
 
 #define BTNWIDTH (SCREENWIDTH/3)
 
-@interface PersonOrderViewController ()
+@interface JMMaMaCenterFansController () 
+
 @property (nonatomic, strong)UIView *headerV;
 @property (nonatomic, strong)UIView *btnView;
 @property (nonatomic, strong)UIScrollView *scrollView;
@@ -28,9 +29,7 @@
 
 @end
 
-static NSString *identifier = @"orderStatic";
-@implementation PersonOrderViewController
-{
+@implementation JMMaMaCenterFansController {
     NSInteger _pageCurrentIndex;
     NSInteger _currentIndex;
 }
@@ -40,8 +39,6 @@ static NSString *identifier = @"orderStatic";
     }
     return _btnArr;
 }
-
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -49,39 +46,38 @@ static NSString *identifier = @"orderStatic";
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-   self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    [self createNavigationBarWithTitle:@"全部订单" selecotr:@selector(btnClicked:)];
+    [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(btnClicked:)];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self createOrderBtn];
     [self createPageView];
+    [self createFansBtn];
+    
     //判断页数
     for (UIButton *btn in self.btnArr) {
-        if (btn.tag == self.index) {
+        if (btn.tag == 100) {
             [self titleBtnClickAction:btn];
             break;
         }
     }
-    
+
     
 }
-
 - (void)createPageView {
     self.pageControll = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageControll.view.frame = CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99);
     self.pageControll.view.userInteractionEnabled = YES;
     self.pageControll.dataSource = self;
     self.pageControll.delegate = self;
-    PersonCenterViewController3 *allOrder = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
-    PersonCenterViewController2 *waitReceive = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
-    PersonCenterViewController1 *noPay = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:[NSBundle mainBundle]];
-    self.pageContent = @[allOrder, noPay, waitReceive];
-    [self.pageControll setViewControllers:@[allOrder] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
+    JMNowFansController *newFans = [[JMNowFansController alloc] init];
+    JMFetureFansController *fetureFans = [[JMFetureFansController alloc] init];
+    JMAboutFansController *aboutFans = [[JMAboutFansController alloc] init];
+    self.pageContent = @[newFans, fetureFans, aboutFans];
+    [self.pageControll setViewControllers:@[newFans] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:self.pageControll];
     [self.view addSubview:self.pageControll.view];
     [self.pageControll didMoveToParentViewController:self];
@@ -91,8 +87,7 @@ static NSString *identifier = @"orderStatic";
         }
     }
 }
-
-- (void)createOrderBtn {
+- (void)createFansBtn {
     self.headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 35)];
     
     //创建button
@@ -103,14 +98,14 @@ static NSString *identifier = @"orderStatic";
     [self.btnView addSubview:btnlineView];
     [self.headerV addSubview:self.btnView];
     
-    NSArray *nameArr = @[@"全部订单", @"待支付", @"待收货"];
+    NSArray *nameArr = @[@"粉丝列表", @"未来粉丝", @"关于粉丝"];
     for (int i = 0; i < 3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(i * BTNWIDTH, 0, BTNWIDTH, 34);
         btn.titleLabel.font =  [UIFont systemFontOfSize: 14];
         [btn setTitle:nameArr[i] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
         btn.tag = 100 + i;
         [btn addTarget:self action:@selector(titleBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.btnView addSubview:btn];
@@ -118,7 +113,6 @@ static NSString *identifier = @"orderStatic";
     }
     [self.view addSubview:self.headerV];
 }
-
 - (void)titleBtnClickAction:(UIButton *)btn {
     
     NSInteger btnTag = btn.tag;
@@ -132,7 +126,6 @@ static NSString *identifier = @"orderStatic";
     _pageCurrentIndex = _currentIndex;
     [self.pageControll setViewControllers:@[[self.pageContent objectAtIndex:_currentIndex]] direction:state?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
 }
-
 - (void)changeBtnSelect:(NSInteger)btnTag {
     for (UIButton *button in self.btnArr) {
         if ((button.tag - 100) == btnTag) {
@@ -142,12 +135,9 @@ static NSString *identifier = @"orderStatic";
         button.selected = NO;
     }
 }
-
-
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
-
 #pragma mark --pageViewControll代理方法
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     _currentIndex = [self.pageContent indexOfObject:viewController];
@@ -184,21 +174,7 @@ static NSString *identifier = @"orderStatic";
     }
     
 }
-
-
-
 @end
-
-
-
-
-
-
-
-
-
-
-
 
 
 
