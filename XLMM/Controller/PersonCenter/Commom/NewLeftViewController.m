@@ -280,9 +280,7 @@
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
         JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
-//        JMReturnedGoodsController *yijianVC = [[JMReturnedGoodsController alloc] init];
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
