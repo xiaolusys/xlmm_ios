@@ -119,7 +119,8 @@
     self.share_model.title = [dic objectForKey:@"title"]; //标题
     self.share_model.share_link = [dic objectForKey:@"share_link"];
     _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
-
+    self.sharePackView.limitStr = _limitStr;
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
