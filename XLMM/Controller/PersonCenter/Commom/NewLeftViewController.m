@@ -28,6 +28,7 @@
 #import "CommonWebViewViewController.h"
 #import "JMComplaintSuggestController.h"
 #import "JMPayShareController.h"
+#import "JMReturnedGoodsController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -280,7 +281,9 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
 //        TousuViewController *yijianVC = [[TousuViewController alloc] initWithNibName:@"TousuViewController" bundle:nil];
-        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+//        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+        JMReturnedGoodsController *yijianVC = [[JMReturnedGoodsController alloc] init];
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }

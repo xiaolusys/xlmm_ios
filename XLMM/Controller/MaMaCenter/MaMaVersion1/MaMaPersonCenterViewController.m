@@ -35,6 +35,7 @@
 #import "SelectedActivitiesViewController.h"
 #import "WebViewController.h"
 #import "MyInvitationViewController.h"
+#import "JMMaMaCenterFansController.h"
 
 
 
@@ -1162,9 +1163,12 @@
 
 #pragma mark --- 我的粉丝按钮
 - (IBAction)fansList:(id)sender {
-    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
-    fensiVC.fansNum = self.fansNum;
-    [self.navigationController pushViewController:fensiVC animated:YES];
+//    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
+//    fensiVC.fansNum = self.fansNum;
+//    [self.navigationController pushViewController:fensiVC animated:YES];
+    JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
+    mamaCenterFansVC.fansNum = self.fansNum;
+    [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
 }
 
 - (IBAction)boutiqueActivities:(id)sender {

@@ -549,17 +549,11 @@
         self.isUserCoupon = NO;
         couponValue = 0;
         [self calculationLabelValue];
-        
     } else {
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
         [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //            NSDictionary *dict = [[NSDictionary alloc] init];
-            //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             self.couponMessage = goodsModel.coupon_message;
             if (self.couponMessage.length == 0) {
@@ -583,6 +577,8 @@
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
             
         }];
     }
@@ -1045,7 +1041,7 @@
         [self.payView removeFromSuperview];
     }];
 }
-
+#pragma mark --- 选择支付方式
 - (void)composePayButton:(JMOrderPayView *)payButton didClick:(NSInteger)index {
     if (index == 100) { // 点击了返回按钮 -- 弹出框  选择放弃或者继续支付
         
