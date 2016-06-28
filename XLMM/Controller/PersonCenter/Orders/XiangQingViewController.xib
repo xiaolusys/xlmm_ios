@@ -751,20 +751,17 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="320" id="9UQ-WZ-QZQ"/>
                                 <constraint firstAttribute="height" constant="60" id="kxI-cb-6eR">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="60"/>
+                                    <variation key="heightClass=regular-widthClass=compact" constant="1"/>
                                 </constraint>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
-                                    <exclude reference="9UQ-WZ-QZQ"/>
                                     <exclude reference="kxI-cb-6eR"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="constraints">
-                                    <include reference="9UQ-WZ-QZQ"/>
                                     <include reference="kxI-cb-6eR"/>
                                 </mask>
                             </variation>
@@ -776,7 +773,7 @@
                         <constraint firstItem="KXe-lP-X7v" firstAttribute="leading" secondItem="chS-yz-c6e" secondAttribute="leading" id="1Zc-I2-MYH"/>
                         <constraint firstItem="8Ft-cj-Hcd" firstAttribute="leading" secondItem="chS-yz-c6e" secondAttribute="leading" id="2m3-26-B3L"/>
                         <constraint firstItem="Y84-m6-3VU" firstAttribute="top" secondItem="chS-yz-c6e" secondAttribute="top" id="4Jf-k6-wAv">
-                            <variation key="heightClass=regular-widthClass=compact" constant="60"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="1"/>
                         </constraint>
                         <constraint firstItem="lmf-qu-1Oc" firstAttribute="top" secondItem="Y84-m6-3VU" secondAttribute="bottom" id="8Ta-m8-b2a">
                             <variation key="heightClass=regular-widthClass=compact" constant="29"/>

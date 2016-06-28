@@ -45,6 +45,8 @@
 
 @property (nonatomic,strong) NSMutableArray *orderListDataSource;
 
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
+
 @end
 
 @implementation JMQueryLogInfoController{
@@ -93,6 +95,7 @@
     packageModel = logisDataSource[0];
     self.packetId = packageModel.out_sid;
     self.companyCode = packageModel.logistics_company_code;
+    self.packageModel = packageModel;
 }
 
 
@@ -184,7 +187,12 @@
 //    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
     self.logNameLabel.font = [UIFont systemFontOfSize:13.];
-    self.logNumLabel.text = @"未揽件";
+    if (self.packageModel.assign_status_display.length == 0) {
+        self.logNumLabel.text = @"未揽件";
+    }else {
+        self.logNumLabel.text = self.packageModel.assign_status_display;
+    }
+    
     self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }
