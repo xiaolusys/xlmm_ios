@@ -16,9 +16,11 @@
 
 @property (nonatomic, strong) UIImageView *iconImage;
 
-@property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) UILabel *descLabel;
 
 @property (nonatomic, strong) UILabel *nameLabel;
+
+@property (nonatomic, strong) UILabel *timeLabel;
 
 @end
 
@@ -37,16 +39,22 @@
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
     
-    UILabel *phoneLabel = [UILabel new];
-    [self.contentView addSubview:phoneLabel];
-    self.phoneLabel = phoneLabel;
+    UILabel *descLabel = [UILabel new];
+    [self.contentView addSubview:descLabel];
+    self.descLabel = descLabel;
+    self.descLabel.font = [UIFont systemFontOfSize:12.];
+    self.descLabel.textColor = [UIColor timeLabelColor];
     
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
+    self.nameLabel.font = [UIFont systemFontOfSize:14.];
     
-    
-    
+    UILabel *timeLabel = [UILabel new];
+    [self.contentView addSubview:timeLabel];
+    self.timeLabel = timeLabel;
+    self.timeLabel.font = [UIFont systemFontOfSize:13.];
+    self.timeLabel.textColor = [UIColor timeLabelColor];
     
 }
 - (void)layoutUI {
@@ -62,12 +70,15 @@
         make.top.equalTo(weakSelf.iconImage.mas_top).offset(10);
     }];
     
-    [self.phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.nameLabel);
         make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(15);
     }];
     
-    
+    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.contentView).offset(-10);
+        make.centerY.equalTo(weakSelf.nameLabel.mas_centerY);
+    }];
     
     
 }
@@ -99,9 +110,19 @@
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.iconImage.layer.masksToBounds = YES;
-    self.nameLabel.text = model.nick;
     
+    if ([model.nick isEqualToString:@""]) {
+        self.nameLabel.text = @"匿名用户";
+    }else {
+        self.nameLabel.text = model.nick;
+    }
+    NSArray *array = [model.created componentsSeparatedByString:@"T"];
+    NSString *str = array[0];
+    NSString *string = [str substringFromIndex:5];
     
+    self.timeLabel.text = [NSString stringWithFormat:@"%@",string];
+    
+    self.descLabel.text = @"通过您的分享成为粉丝";
     
 }
 
