@@ -19,8 +19,11 @@
                 <outlet property="numberLabel" destination="bOM-hR-IUl" id="yq5-BY-O3b"/>
                 <outlet property="priceLabel" destination="kyj-m0-RUM" id="pew-Yc-OJv"/>
                 <outlet property="reasonLabel" destination="kXS-2P-mQw" id="KZ3-Nt-FEf"/>
+                <outlet property="refundBecomTopView" destination="ybg-2e-zY7" id="ZkZ-g1-YhA"/>
                 <outlet property="refundNumLabel" destination="ZHN-lY-d7X" id="XZN-02-Ohh"/>
                 <outlet property="refundPriceLabel" destination="MNp-EV-Y8f" id="Msn-cx-S9R"/>
+                <outlet property="refundTopView" destination="ypg-Lr-SlA" id="m2y-NB-ei8"/>
+                <outlet property="refundView" destination="jO6-9Z-Q1X" id="5F8-ZC-Ad6"/>
                 <outlet property="selectedReason" destination="Vt0-u7-g7v" id="4Gd-DF-Trj"/>
                 <outlet property="sizeLabel" destination="0Hd-J0-2Rj" id="L2R-Yl-ivr"/>
                 <outlet property="sizeNameLabel" destination="XVa-hL-OfE" id="AEC-Mc-0Vj"/>
@@ -338,16 +341,27 @@
                         <constraint firstItem="mz5-NN-eNZ" firstAttribute="top" secondItem="vMf-R1-itQ" secondAttribute="bottom" constant="10" id="tVb-Ic-nFr"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jO6-9Z-Q1X">
+                    <rect key="frame" x="0.0" y="64" width="320" height="0.0"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" id="ypg-Lr-SlA"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="7Si-3k-qeZ" secondAttribute="trailing" id="A8D-VM-uGM"/>
+                <constraint firstItem="jO6-9Z-Q1X" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Deq-Lr-sXj"/>
+                <constraint firstAttribute="trailing" secondItem="jO6-9Z-Q1X" secondAttribute="trailing" id="Lt8-8W-8xM"/>
                 <constraint firstAttribute="bottom" secondItem="3Kf-Nv-VDr" secondAttribute="bottom" id="Naf-93-WPx"/>
                 <constraint firstItem="3Kf-Nv-VDr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UTI-PR-cDc"/>
                 <constraint firstItem="0CJ-1j-UGT" firstAttribute="top" secondItem="7Si-3k-qeZ" secondAttribute="bottom" constant="15" id="W3B-Co-eh0"/>
                 <constraint firstItem="0CJ-1j-UGT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bEQ-Cv-nxw"/>
+                <constraint firstItem="7Si-3k-qeZ" firstAttribute="top" secondItem="jO6-9Z-Q1X" secondAttribute="bottom" id="dlC-5Q-X1m"/>
                 <constraint firstAttribute="trailing" secondItem="3Kf-Nv-VDr" secondAttribute="trailing" id="lou-dD-Iy0"/>
                 <constraint firstAttribute="trailing" secondItem="0CJ-1j-UGT" secondAttribute="trailing" id="riM-GW-4RW"/>
+                <constraint firstItem="jO6-9Z-Q1X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uWE-VA-w9s"/>
                 <constraint firstItem="7Si-3k-qeZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ybg-2e-zY7"/>
                 <constraint firstItem="7Si-3k-qeZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ynP-BL-6bT"/>
             </constraints>

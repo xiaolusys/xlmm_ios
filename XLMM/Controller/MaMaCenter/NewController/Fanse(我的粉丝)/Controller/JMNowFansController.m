@@ -96,10 +96,7 @@
     }
 }
 - (void)loadDataSource{
-    
-    
-    
-    
+
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
     
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];

@@ -142,6 +142,10 @@
 @property (nonatomic,strong) NSMutableArray *dataSource;
 
 @property (nonatomic,strong) JMShareModel *share_model;
+/**
+ *  判断小鹿钱包是否足够支付->如果不足则调用微信或者支付宝，传payment。否则传budget。
+ */
+@property (nonatomic,assign) BOOL isXLWforAlipay;
 
 @end
 
@@ -666,8 +670,10 @@
          *  余额不足
          */
         if (self.isEnoughBudget == NO) {
+            self.isXLWforAlipay = YES;
             [self createPayPopView];
         }else {
+            self.isXLWforAlipay = NO;
             [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
             [self payMoney];
         }
@@ -737,7 +743,12 @@
                 parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
             }
             
-            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
+            if (self.isXLWforAlipay) {
+                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
+            }else {
+                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],@"budget", parms];
+            }
+            
             //提交
             [self submitBuyGoods];
         }else {
