@@ -719,9 +719,10 @@
     NSInteger count = 0;
     int i = 0;
     BOOL isCountNum = !(countNum == ORDER_STATUS_REFUND_CLOSE || countNum == ORDER_STATUS_TRADE_CLOSE);
-    BOOL isRefundNum = (refundNum == REFUND_STATUS_NO_REFUND);
+    BOOL isRefundNum = (refundNum == REFUND_STATUS_NO_REFUND || refundNum == REFUND_STATUS_REFUND_CLOSE);
     if (isCountNum && isRefundNum) {
         self.timeLineViewH.constant = 60.;
+        self.topLineH.constant = 60.;
         desArr = @[@"订单创建",@"支付成功",@"产品发货",@"产品签收",@"交易完成"];
         for (i = 0; i < desArr.count; i++) {
             if (countNum == i) {
@@ -735,7 +736,9 @@
         }
         count = i + 1;
         
-        self.lineTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
+        self.lineTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 160);
+        self.lineTimeView.backgroundColor = [UIColor orangeColor];
+        
         UIScrollView *timeLineView = [[UIScrollView alloc] init];
         [self.lineTimeView addSubview:timeLineView];
         timeLineView.frame = CGRectMake(0, 0, SCREENWIDTH, 60);
@@ -750,6 +753,7 @@
         timeLineView.showsHorizontalScrollIndicator = NO;
     }else {
         self.timeLineViewH.constant = 0.;
+        self.topLineH.constant = 0;
         self.lineTimeView.frame = CGRectMake(0, 0, SCREENWIDTH, 0);
     }
 }
