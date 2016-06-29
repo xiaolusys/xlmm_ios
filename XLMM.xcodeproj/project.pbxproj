@@ -715,6 +715,9 @@
 		1F98FE661D1A1EC20043FA32 /* get_fivteen_redpack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */; };
 		1FA3773A1D17D02500F2321F /* backTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FA377391D17D02500F2321F /* backTop.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
+		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
+		1FCDC51B1D23B60B00554777 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
+		1FCDC51D1D23B61400554777 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCDC51C1D23B61400554777 /* libsqlite3.tbd */; };
 		1FEBF2131D2362F400465847 /* JMNORefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBF2121D2362F400465847 /* JMNORefundView.m */; };
 		1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B1F1D100C8500F4A831 /* JMAppForRefundModel.m */; };
 		1FF26B2A1D10E7CE00F4A831 /* JMRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF26B291D10E7CE00F4A831 /* JMRefundController.m */; };
@@ -755,7 +758,6 @@
 		1FFCF1D01D20CB9B000D9183 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1CF1D20CB9B000D9183 /* ShopPreviousViewController.m */; };
 		1FFCF1D31D210169000D9183 /* JMFetureFansModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1D21D210169000D9183 /* JMFetureFansModel.m */; };
 		1FFCF1D61D2102EB000D9183 /* JMFetureFansCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCF1D51D2102EB000D9183 /* JMFetureFansCell.m */; };
-		2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
 		321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */; };
 		321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 321648AD1C9D25C100E2BE56 /* jianicons.png */; };
@@ -854,8 +856,6 @@
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
 		326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676271BB51FE000307EC4 /* libc++.tbd */; };
-		3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
-		3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
 		326C4E0D1C2CE9ED00A79359 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		327367011C182783008AAE86 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367001C182783008AAE86 /* libz.1.dylib */; };
 		327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */; };
@@ -1420,7 +1420,6 @@
 		1830737A1C97D17800B7665E /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		1830737B1C97D17800B7665E /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		1830737D1C97D17800B7665E /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		1830737E1C97D17800B7665E /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		183073811C97D17800B7665E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		183073831C97D17800B7665E /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		183073841C97D17800B7665E /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -1944,6 +1943,8 @@
 		1FA377391D17D02500F2321F /* backTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backTop.png; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FCDC51C1D23B61400554777 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		1FCDC5241D23BA5700554777 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = UMMobClick.framework/Headers/MobClick.h; sourceTree = "<group>"; };
 		1FEBF2111D2362F400465847 /* JMNORefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMNORefundView.h; sourceTree = "<group>"; };
 		1FEBF2121D2362F400465847 /* JMNORefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMNORefundView.m; sourceTree = "<group>"; };
 		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
@@ -2231,6 +2232,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FCDC51D1D23B61400554777 /* libsqlite3.tbd in Frameworks */,
+				1FCDC51B1D23B60B00554777 /* libz.tbd in Frameworks */,
+				1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */,
 				321857C31CA109990085FF21 /* WebKit.framework in Frameworks */,
 				1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */,
 				183073E31C97D17800B7665E /* AlipaySDK.framework in Frameworks */,
@@ -2243,14 +2247,11 @@
 				327367011C182783008AAE86 /* libz.1.dylib in Frameworks */,
 				183073E41C97D17800B7665E /* libpingpp+alipay.a in Frameworks */,
 				1830743C1C97D17900B7665E /* libSocialWechat.a in Frameworks */,
-				2E8DB96F1C169EEF00FC33C2 /* CoreTelephony.framework in Frameworks */,
 				321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */,
 				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
 				1830744A1C97D17900B7665E /* libWeChatSDK.a in Frameworks */,
 				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
 				321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */,
-				3266762C1BB5200E00307EC4 /* libz.tbd in Frameworks */,
-				3266762A1BB51FFD00307EC4 /* libsqlite3.0.tbd in Frameworks */,
 				1830743D1C97D17900B7665E /* libWeChatSDK.a in Frameworks */,
 				1830743A1C97D17800B7665E /* TencentOpenAPI.framework in Frameworks */,
 				183074381C97D17800B7665E /* libSocialSina.a in Frameworks */,
@@ -3604,7 +3605,7 @@
 			isa = PBXGroup;
 			children = (
 				1830737D1C97D17800B7665E /* libMobClickLibrary.a */,
-				1830737E1C97D17800B7665E /* MobClick.h */,
+				1FCDC5241D23BA5700554777 /* MobClick.h */,
 				1830737F1C97D17800B7665E /* UMSocial_Sdk_4.4 */,
 				1830739A1C97D17800B7665E /* UMSocial_Sdk_Extra_Frameworks */,
 				183073A91C97D17800B7665E /* UMSocial_Sdk_Instructions */,
@@ -4817,6 +4818,7 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
+				1FCDC51C1D23B61400554777 /* libsqlite3.tbd */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -6033,6 +6035,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -6048,6 +6051,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
@@ -6079,6 +6083,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -6087,6 +6092,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
@@ -6107,6 +6113,8 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/XLMM/Venders/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_4-2.4_arm64_custom",
+					"$(PROJECT_DIR)/XLMM/Venders/UmengStatistics",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -6165,6 +6173,8 @@
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/XLMM/Venders/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_4-2.4_arm64_custom",
+					"$(PROJECT_DIR)/XLMM/Venders/UmengStatistics",
 				);
 				INFOPLIST_FILE = XLMM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
