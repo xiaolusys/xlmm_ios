@@ -125,7 +125,7 @@
 
     self.timeLabel.text = [NSString stringWithFormat:@"%@",string3];
     
-    self.descLabel.text = @"通过您的分享成为粉丝";
+    self.descLabel.text = model.note;
     
 }
 

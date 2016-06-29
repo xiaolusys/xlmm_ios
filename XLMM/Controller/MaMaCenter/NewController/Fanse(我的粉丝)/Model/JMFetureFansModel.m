@@ -10,9 +10,6 @@
 
 @implementation JMFetureFansModel
 
-+ (NSDictionary *)mj_replacedKeyFromPropertyName {
-    
-    return @{@"feturenFansID":@"id"};
-}
+
 
 @end
