@@ -174,9 +174,7 @@
     
     BOOL isOrderStatus = (orderStatus == ORDER_STATUS_CONFIRM_RECEIVE);
     
-    BOOL isWarehouseOrder = (packageModel.assign_time != nil || packageModel.book_time != nil || packageModel.finish_time != nil);
-    
-    if ((orderStatus == ORDER_STATUS_PAYED) && (!isWarehouseOrder)) {
+    if (orderStatus == ORDER_STATUS_PAYED) {
         if (refundStatus == 0) {
             [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
             self.optionButton.tag = 100;
