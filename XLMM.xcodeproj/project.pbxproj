@@ -637,6 +637,7 @@
 		1F14D6201CC6064400410EC0 /* MMRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F14D61E1CC6064400410EC0 /* MMRootViewController.xib */; };
 		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
+		1F27A54B1D23CAE200A0F80B /* JMMaMaCenterTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A54A1D23CAE200A0F80B /* JMMaMaCenterTopView.m */; };
 		1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */; };
 		1F2AE9631CF69380002EC974 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2AE94D1CF69380002EC974 /* Info.plist */; };
 		1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9501CF69380002EC974 /* MJExtensionConst.m */; };
@@ -1814,6 +1815,9 @@
 		1F1D79501CE730A60042701C /* JMRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterViewController.m; sourceTree = "<group>"; };
 		1F1D79521CE7310F0042701C /* JMPhonenumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhonenumViewController.h; sourceTree = "<group>"; };
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
+		1F27A5491D23CAE200A0F80B /* JMMaMaCenterTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaCenterTopView.h; sourceTree = "<group>"; };
+		1F27A54A1D23CAE200A0F80B /* JMMaMaCenterTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaCenterTopView.m; sourceTree = "<group>"; };
+		1F27A54C1D23DC8500A0F80B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		1F2AE9491CF5D5BB002EC974 /* JMEditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressController.h; sourceTree = "<group>"; };
 		1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressController.m; sourceTree = "<group>"; };
 		1F2AE94D1CF69380002EC974 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1944,7 +1948,6 @@
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FCDC51C1D23B61400554777 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		1FCDC5241D23BA5700554777 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = UMMobClick.framework/Headers/MobClick.h; sourceTree = "<group>"; };
 		1FEBF2111D2362F400465847 /* JMNORefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMNORefundView.h; sourceTree = "<group>"; };
 		1FEBF2121D2362F400465847 /* JMNORefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMNORefundView.m; sourceTree = "<group>"; };
 		1FF26B1E1D100C8500F4A831 /* JMAppForRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAppForRefundModel.h; sourceTree = "<group>"; };
@@ -2854,6 +2857,8 @@
 			children = (
 				183076A71C97E26D00B7665E /* MaMaPersonCenterViewController.h */,
 				183076A81C97E26D00B7665E /* MaMaPersonCenterViewController.m */,
+				1F27A5491D23CAE200A0F80B /* JMMaMaCenterTopView.h */,
+				1F27A54A1D23CAE200A0F80B /* JMMaMaCenterTopView.m */,
 				183076A91C97E26D00B7665E /* MaMaPersonCenterViewController.xib */,
 				183071321C97BE3700B7665E /* MaClassifyCarryLogViewController.h */,
 				183071331C97BE3700B7665E /* MaClassifyCarryLogViewController.m */,
@@ -3605,7 +3610,7 @@
 			isa = PBXGroup;
 			children = (
 				1830737D1C97D17800B7665E /* libMobClickLibrary.a */,
-				1FCDC5241D23BA5700554777 /* MobClick.h */,
+				1F27A54C1D23DC8500A0F80B /* MobClick.h */,
 				1830737F1C97D17800B7665E /* UMSocial_Sdk_4.4 */,
 				1830739A1C97D17800B7665E /* UMSocial_Sdk_Extra_Frameworks */,
 				183073A91C97D17800B7665E /* UMSocial_Sdk_Instructions */,
@@ -5810,6 +5815,7 @@
 				0B256DDE1CFC69EA000EB0B0 /* JMFirstOpen.m in Sources */,
 				183074081C97D17800B7665E /* QNResponseInfo.m in Sources */,
 				1F2AE9741CF6947D002EC974 /* GoodsInfoModel.m in Sources */,
+				1F27A54B1D23CAE200A0F80B /* JMMaMaCenterTopView.m in Sources */,
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,
 				183073F91C97D17800B7665E /* MJRefreshConst.m in Sources */,
 				1830742A1C97D17800B7665E /* SVProgressHUD.m in Sources */,

@@ -36,6 +36,7 @@
 #import "WebViewController.h"
 #import "MyInvitationViewController.h"
 #import "JMMaMaCenterFansController.h"
+#import "JMMaMaCenterTopView.h"
 
 
 
@@ -135,6 +136,17 @@
     return _diction;
 }
 
+#pragma mark --- 顶部视图创建
+- (void)createMMCenterTopViwe {
+    JMMaMaCenterTopView *mamtopView = [[JMMaMaCenterTopView alloc] init];
+    [self.mmCenterTopView addSubview:mamtopView];
+    mamtopView.frame = CGRectMake(0, -20, SCREENWIDTH, 240);
+    
+    
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -186,7 +198,8 @@
     [self prepareData];
     [self createChart:dataArray];
 
-
+    // 创建顶部视图
+    [self createMMCenterTopViwe];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headimageClicked:)];
     [self.jineLabel addGestureRecognizer:tap];

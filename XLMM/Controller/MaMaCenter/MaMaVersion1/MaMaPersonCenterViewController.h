@@ -10,6 +10,11 @@
 
 @interface MaMaPersonCenterViewController : UIViewController
 
+/**
+ *  妈妈中心顶部视图
+ */
+@property (weak, nonatomic) IBOutlet UIView *mmCenterTopView;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *clickedViewHeight;
 @property (weak, nonatomic) IBOutlet UILabel *huoyuedulabel;
 @property (weak, nonatomic) IBOutlet UIView *huoyueduView;
