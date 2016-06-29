@@ -15,4 +15,6 @@
 
 @property (nonatomic,strong) JMOrderGoodsModel *goodsModel;
 
+@property (nonatomic, strong) NSMutableArray *goodsListArr;
+
 @end

@@ -19,6 +19,7 @@
 #import "AFNetworking.h"
 #import "UIColor+RGBColor.h"
 #import "JMCleanView.h"
+#import "JMPackAgeModel.h"
 
 #define cellHeitht 90
 
@@ -42,6 +43,9 @@
 
 @property (nonatomic,strong) NSMutableArray *infoArray;
 
+@property (nonatomic,strong) NSMutableArray *orderListDataSource;
+
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
 
 @end
 
@@ -72,6 +76,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"物流状态" selecotr:@selector(backClick)];
+    
     [self createtopUI];
     [self getWuliuInfoFromServer];
     [self createGoodsListView];
@@ -79,15 +84,20 @@
     
     
 }
-- (void)setGoodsListDic:(NSDictionary *)goodsListDic {
-    _goodsListDic = goodsListDic;
+- (void)setOrderDataSource:(NSArray *)orderDataSource {
+    _orderDataSource = orderDataSource;
+    _count = orderDataSource.count;
+//    self.infoArray = [NSMutableArray arrayWithArray:orderDataSource];
 }
-- (void)setGoodsModel:(JMOrderGoodsModel *)goodsModel {
-    _goodsModel = goodsModel;
-    NSMutableArray *arr = [NSMutableArray array];
-    [arr addObject:goodsModel];
-    _count = arr.count;
+- (void)setLogisDataSource:(NSArray *)logisDataSource {
+    _logisDataSource = logisDataSource;
+    JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
+    packageModel = logisDataSource[0];
+    self.packetId = packageModel.out_sid;
+    self.companyCode = packageModel.logistics_company_code;
+    self.packageModel = packageModel;
 }
+
 
 - (void)getWuliuInfoFromServer {
     BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
@@ -110,6 +120,7 @@
  *  数据请求  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
  */
 - (void)loadData {
+    
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     
@@ -166,13 +177,23 @@
  */
 - (void)createGoodsListView {
     self.goodsListVC.count = _count;
+    self.goodsListVC.goodsListArr = [NSMutableArray arrayWithArray:self.orderDataSource];
+    
     JMCleanView *menu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136, SCREENWIDTH, _count * cellHeitht)];
     [self.masBackScrollView addSubview:menu];
     menu.contentView = self.goodsListVC.view;
     menu.contentView.backgroundColor = [UIColor lineGrayColor];
-    self.goodsListVC.goodsModel = self.goodsModel;
+//    self.goodsListVC.goodsModel = self.orderGoodsArr[0];
+//    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
-    self.logNumLabel.text = @"未揽件";
+    self.logNameLabel.font = [UIFont systemFontOfSize:13.];
+    if (self.packageModel.assign_status_display.length == 0) {
+        self.logNumLabel.text = @"未揽件";
+    }else {
+        self.logNumLabel.text = self.packageModel.assign_status_display;
+    }
+    
+    self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }
 /**
@@ -201,11 +222,9 @@
     timeView.backgroundColor = [UIColor lineGrayColor];
     timeView.frame = CGRectMake(0, _count * cellHeitht + 136, SCREENWIDTH, cellHeitht);
     
-    
-    
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-    timeLabel.text = _goodsListDic[@"process_time"];
+    timeLabel.text = self.packageModel.process_time;
     timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeView).offset(10);
@@ -214,7 +233,7 @@
     
     UILabel *titleLabel = [UILabel new];
     [timeView addSubview:titleLabel];
-    NSString *titleStr = _goodsListDic[@"assign_status_display"];
+    NSString *titleStr = self.packageModel.assign_status_display;
     if (titleStr != nil) {
         titleLabel.text = titleStr;
         self.logNumLabel.text = titleStr;
@@ -250,7 +269,54 @@
         make.width.height.mas_equalTo(@20);
     }];
     
-    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht);
+    
+    
+    UIView *timeViewTwo = [UIView new];
+    [self.masBackScrollView addSubview:timeViewTwo];
+    timeViewTwo.backgroundColor = [UIColor lineGrayColor];
+    timeViewTwo.frame = CGRectMake(0, _count * cellHeitht + 226, SCREENWIDTH, cellHeitht);
+
+    UILabel *timeLabelTwo = [UILabel new];
+    [timeViewTwo addSubview:timeLabelTwo];
+    timeLabelTwo.text = self.packageModel.assign_time;
+    timeLabelTwo.textColor = [UIColor titleDarkGrayColor];
+    [timeLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeViewTwo).offset(10);
+        make.left.equalTo(timeViewTwo).offset(40);
+    }];
+    
+    UILabel *titleLabelTwo = [UILabel new];
+    [timeViewTwo addSubview:titleLabelTwo];
+    titleLabelTwo.text = @"订单创建成功";
+    titleLabelTwo.numberOfLines = 0;
+    titleLabelTwo.font = [UIFont systemFontOfSize:13.];
+    
+    [titleLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeLabelTwo.mas_bottom).offset(15);
+        make.left.equalTo(timeViewTwo).offset(40);
+    }];
+    
+    UILabel *lineLTwo = [UILabel new];
+    [timeViewTwo addSubview:lineLTwo];
+    lineLTwo.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    
+    [lineLTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeViewTwo);
+        make.left.equalTo(timeViewTwo).offset(20);
+        make.width.mas_equalTo(@1);
+        make.height.mas_equalTo(cellHeitht);
+    }];
+
+    UIImageView *successImageTwo = [UIImageView new];
+    [timeViewTwo addSubview:successImageTwo];
+    successImageTwo.image = [UIImage imageNamed:@"confirm"];
+    
+    [successImageTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(timeViewTwo).offset(10);
+        make.width.height.mas_equalTo(@20);
+    }];
+    
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht * 2);
     
 }
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{
@@ -274,6 +340,7 @@
     UILabel *logNameL = [UILabel new];
     [topBackView addSubview:logNameL];
     logNameL.text = @"物流配送";
+    logNameL.font = [UIFont systemFontOfSize:13.];
     
     UILabel *lineView = [UILabel new];
     [topBackView addSubview:lineView];
@@ -286,6 +353,7 @@
     UILabel *logNumL = [UILabel new];
     [topBackView addSubview:logNumL];
     logNumL.text = @"快递单号";
+    logNumL.font = [UIFont systemFontOfSize:13.];
     
     UILabel *logNameLabel = [UILabel new];
     [topBackView addSubview:logNameLabel];

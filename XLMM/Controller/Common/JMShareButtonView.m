@@ -61,7 +61,7 @@
     
 }
 - (void)btnClick:(UIButton *)button {
-    NSLog(@"sharebutton btnClick %ld", button.tag);
+    NSLog(@"sharebutton btnClick %ld", (long)button.tag);
     //点击工具条的时候
     if (_delegate && [_delegate respondsToSelector:@selector(composeShareBtn:didClickBtn:)]) {
         NSLog(@"11");

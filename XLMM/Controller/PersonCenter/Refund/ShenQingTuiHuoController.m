@@ -793,16 +793,17 @@
             if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
                 NSLog(@"refund return ok");
 
-                [self returnPopView];
+//                [self returnPopView];
                 
-                
+                [self.navigationController popViewControllerAnimated:YES];
                 
             }
             NSLog(@"refund return ok end");
-
+            [SVProgressHUD dismiss];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             isChangeBtn = NO;
             NSLog(@"refund return failed %@", error);
+            [SVProgressHUD dismiss];
         }];
     }
 

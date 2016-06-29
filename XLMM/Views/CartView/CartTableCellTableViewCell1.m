@@ -44,6 +44,10 @@
         }
         self = [arrayOfViews objectAtIndex:0];
         
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+        [self.myImageView addGestureRecognizer:tap];
+        self.myImageView.userInteractionEnabled = YES;
+        
     }
     return self;
 }
@@ -81,7 +85,11 @@
     
 }
 
-
+- (void)tapClick:(UITapGestureRecognizer *)tap {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapClick:)]) {
+        [_delegate tapClick:_cartModel];
+    }
+}
 
 
 

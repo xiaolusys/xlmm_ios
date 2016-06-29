@@ -7,7 +7,7 @@
 //
 
 #import "PostersViewController.h"
-#import "PeopleCollectionCell.h"
+#import "JMRootgoodsCell.h"
 #import "MMClass.h"
 #import "CollectionModel.h"
 #import "DetailsModel.h"
@@ -129,7 +129,7 @@ static NSString * ksimpleCell = @"simpleCell";
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
     
     //  self.childCollectionView.bounces = NO;
-    [self.childCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+    [self.childCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
     self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     // [self downloadData];
@@ -453,7 +453,7 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
     
     if (isOrder) {
         PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];

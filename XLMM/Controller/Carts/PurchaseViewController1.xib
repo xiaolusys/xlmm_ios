@@ -220,6 +220,7 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unselected_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="a5d-XD-A32">
                                                     <rect key="frame" x="284" y="13" width="22" height="22"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="7B1-Mn-Mg2"/>
                                                         <constraint firstAttribute="width" constant="22" id="V0G-Rs-izS"/>
@@ -237,6 +238,7 @@
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="WET-1Y-rZm">
                                                     <rect key="frame" x="12" y="13" width="22" height="22"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="lqJ-Ce-pVi"/>
                                                         <constraint firstAttribute="height" constant="22" id="wwQ-MS-NQC"/>
@@ -244,6 +246,10 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jl1-GD-G5z">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="xiaoluqianbaoSelected:" destination="-1" eventType="touchUpInside" id="B4t-mR-agq"/>
                                                     </connections>
@@ -553,18 +559,18 @@
                                                 <constraint firstAttribute="width" constant="12" id="vhj-zz-n4N"/>
                                             </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egy-tc-PYU">
-                                            <rect key="frame" x="0.0" y="96" width="320" height="50"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="ZIz-si-Kca"/>
-                                            </constraints>
-                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="自动分配" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAf-7J-dRf">
                                             <rect key="frame" x="249" y="108" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egy-tc-PYU">
+                                            <rect key="frame" x="0.0" y="96" width="320" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="ZIz-si-Kca"/>
+                                            </constraints>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>

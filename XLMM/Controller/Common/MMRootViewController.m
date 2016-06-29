@@ -37,13 +37,13 @@
 #import "ActivityModel.h"
 #import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
-#import "PeopleCollectionCell.h"
+#import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
 #import "MJRefresh.h"
 #import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
-#import "BrandCollectionCell.h"
+#import "JMRootScrolCell.h"
 #import "BrandGoodsModel.h"
 #import "XlmmMall.h"
 #import "MMDetailsViewController.h"
@@ -111,7 +111,6 @@
     float allActivityHeight;
     
     NSMutableDictionary *_diction;
-    NSInteger loadingIndex;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -161,8 +160,8 @@
 @end
 
 
-static NSString *ksimpleCell = @"simpleCell";
-static NSString *kbrandCell = @"brandCell";
+static NSString *ksimpleCell = @"JMRootgoodsCell";
+static NSString *kbrandCell = @"JMRootScrolCell";
 
 @implementation MMRootViewController
 
@@ -536,7 +535,6 @@ static NSString *kbrandCell = @"brandCell";
     
     _pageCurrentIndex = 0;
     self.currentIndex = 1;
-    loadingIndex = 1;
     
     //设置导航栏样式
     [self createInfo];
@@ -704,7 +702,7 @@ static NSString *kbrandCell = @"brandCell";
         homeCollectionView.showsVerticalScrollIndicator = FALSE;
         
         //        [homeCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
-        [homeCollectionView registerClass:[PeopleCollectionCell class] forCellWithReuseIdentifier:ksimpleCell];
+        [homeCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
         
         [self.collectionArr addObject:homeCollectionView];
     }
@@ -882,7 +880,8 @@ static NSString *kbrandCell = @"brandCell";
         brandCollectionView.delegate = self;
         brandCollectionView.dataSource = self;
         
-        [brandCollectionView registerClass:[BrandCollectionCell class] forCellWithReuseIdentifier:kbrandCell];
+        [brandCollectionView registerClass:[JMRootScrolCell class] forCellWithReuseIdentifier:kbrandCell];
+//        [brandCollectionView registerNib:[UINib nibWithNibName:@"JMRootScrolCell" bundle:nil] forCellWithReuseIdentifier:kbrandCell];
         [self.brandView addSubview:brandCollectionView];
         [self.brandArr addObject:brandCollectionView];
         
@@ -986,15 +985,15 @@ static NSString *kbrandCell = @"brandCell";
     NSDate *date = [NSDate date];
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     if ([d hour] < 0 || [d minute] < 0) {
-        self.labelTime.text = @"00:00:00";
+        self.labelTime.text = @"00时00分00秒";
         //   NSLog(@"已下架");
     } else{
         NSString *string;
         if ((long)[d day] == 0) {
-            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+            string = [NSString stringWithFormat:@"%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
         }
         else{
-            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)[d day]*24+(long)[d hour], (long)[d minute], (long)[d second]];
+            string = [NSString stringWithFormat:@"%02ld时%02ld分%02ld秒", (long)[d day]*24+(long)[d hour], (long)[d minute], (long)[d second]];
             
         }
         
@@ -1093,26 +1092,23 @@ static NSString *kbrandCell = @"brandCell";
         return;
     }
     
-    loadingIndex = self.currentIndex;
+    self.collectionViewScrollview.scrollEnabled = NO;
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
-        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动并禁止昨今明按钮点击；
-        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法2
-        UICollectionView *collection = self.collectionArr[loadingIndex];
+        //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
-        NSLog(@"endRefreshing index=%ld", (long)loadingIndex);
-        if(loadingIndex != self.currentIndex) return;
         if (!responseObject)return ;
         [self goodsResult:responseObject];
-
+        self.collectionViewScrollview.scrollEnabled = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UICollectionView *collection = self.collectionArr[loadingIndex];
+        UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
-        NSLog(@"endRefreshing index=%ld", (long)loadingIndex);
-
+        self.collectionViewScrollview.scrollEnabled = YES;
     }];
 }
 
@@ -1381,10 +1377,6 @@ static NSString *kbrandCell = @"brandCell";
     NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
     
-    //去掉以前的刷新状态
-    UICollectionView *collection = self.collectionArr[self.currentIndex];
-    [collection.mj_footer endRefreshing];
-    
     //如果没有数据重新请求，有的话不作操作
     NSString *key = self.dickey[tag];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
@@ -1452,6 +1444,7 @@ static NSString *kbrandCell = @"brandCell";
         return 0;
     }
     else{
+        NSLog(@"arr collection");
         NSString *key = self.dickey[self.currentIndex];
         NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
         return currentArr.count;
@@ -1463,9 +1456,9 @@ static NSString *kbrandCell = @"brandCell";
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
        && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
         //NSLog(@"brand collection cellForItemAtIndexPath");
-        BrandCollectionCell *cell = (BrandCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
+        JMRootScrolCell *cell = (JMRootScrolCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
-        int index = 0;
+        int index = 0;//JMRootgoodsCell
         for(NSMutableArray *obj in self.brandDataArr)
         {
             //NSLog(@"%@",obj);
@@ -1484,7 +1477,7 @@ static NSString *kbrandCell = @"brandCell";
     }
     else{
         //NSLog(@"arr collection cellForItemAtIndexPath");
-        PeopleCollectionCell *cell = (PeopleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
+        JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ksimpleCell forIndexPath:indexPath];
         //wulei 20160421 防止超过1屏后出现重复和错乱
         //for (UIView *view in cell.contentView.subviews) {
         //    [view removeFromSuperview];
@@ -2115,33 +2108,33 @@ static NSString *kbrandCell = @"brandCell";
     }
     
     //在中间层水平滑动
-//    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
-//        && scrollView.dragging){
-//        int index = 1;
-//        if(scrollView.contentOffset.x <= (1e-6)){
-//            index = 0;
-//            self.labelIndicate.text = @"距本场结束";
-//        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
-//            index = 1;
-//            self.labelIndicate.text = @"距本场结束";
-//        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
-//            index = 2;
-//            self.labelIndicate.text = @"距本场开始";
-//        }
-//        NSLog(@"index= %d,currentindex=%ld %f %f",  index, (long)self.currentIndex, scrollView.contentOffset.x, WIDTH );
-//        if(self.currentIndex != index){
-//            self.currentIndex = index;
-//            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
-//            if((currentArr != nil) && (currentArr.count == 0)){
-//                [self goodsRequest];
-//            }
-//        }
-//        else{
-//            self.currentIndex = index;
-//        }
-//        
-//        [self changeBtnImg];
-//    }
+    if ((scrollView.tag == TAG_COLLECTION_SCROLLVIEW)
+        && scrollView.dragging){
+        int index = 1;
+        if(scrollView.contentOffset.x <= (1e-6)){
+            index = 0;
+            self.labelIndicate.text = @"距本场结束";
+        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
+            index = 1;
+            self.labelIndicate.text = @"距本场结束";
+        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
+            index = 2;
+            self.labelIndicate.text = @"距本场开始";
+        }
+        //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
+        if(self.currentIndex != index){
+            self.currentIndex = index;
+            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
+            if((currentArr != nil) && (currentArr.count == 0)){
+                [self goodsRequest];
+            }
+        }
+        else{
+            self.currentIndex = index;
+        }
+        
+        [self changeBtnImg];
+    }
     
     //在最内层的collection上进行滑动
     if (((scrollView.tag == TAG_GOODS_YESTODAY_SCROLLVIEW)
@@ -2170,43 +2163,6 @@ static NSString *kbrandCell = @"brandCell";
             }];
         }
     }
-}
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-
-    if (scrollView.tag == TAG_COLLECTION_SCROLLVIEW){
-        int index = 1;
-        if(scrollView.contentOffset.x <= (1e-6)){
-            index = 0;
-            self.labelIndicate.text = @"距本场结束";
-        }else if(scrollView.contentOffset.x - WIDTH <= (1e-6)){
-            index = 1;
-            self.labelIndicate.text = @"距本场结束";
-        }else{ //if(scrollView.contentOffset.x - 2 * WIDTH <= (1e-6)){
-            index = 2;
-            self.labelIndicate.text = @"距本场开始";
-        }
-//        NSLog(@"scrollViewDidEndDecelerating index= %d,currentindex=%ld %f %f",  index, (long)self.currentIndex, scrollView.contentOffset.x, WIDTH );
-        if(self.currentIndex != index){
-            self.currentIndex = index;
-            
-            //去掉以前的刷新状态
-            UICollectionView *collection = self.collectionArr[index];
-            [collection.mj_footer endRefreshing];
-            
-            //切换到新的collectionview，并且无数据，那么就刷新
-            NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
-            if((currentArr != nil) && (currentArr.count == 0)){
-                [self goodsRequest];
-            }
-        }
-        else{
-            self.currentIndex = index;
-        }
-        
-        [self changeBtnImg];
-    }
-
 }
 
 -(void)enableAllGoodsCollectionScroll{
@@ -2320,22 +2276,22 @@ static NSString *kbrandCell = @"brandCell";
                                  otherButtonTitles: @"升级", nil];
         alert.tag = 1001;
         [alert show];
-
+        
     }else
     {
         NSLog(@"%@ is bigger",app_Version);
     }
-//    if (doubleCurrentVersion < doubleUpdateVersion) {
-//        
-//        UIAlertView *alert;
-//        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-//                                           message:@"有新版本，是否升级！"
-//                                          delegate: self
-//                                 cancelButtonTitle:@"取消"
-//                                 otherButtonTitles: @"升级", nil];
-//        alert.tag = 1001;
-//        [alert show];
-//    }
+    //    if (doubleCurrentVersion < doubleUpdateVersion) {
+    //
+    //        UIAlertView *alert;
+    //        alert = [[UIAlertView alloc] initWithTitle:self.trackName
+    //                                           message:@"有新版本，是否升级！"
+    //                                          delegate: self
+    //                                 cancelButtonTitle:@"取消"
+    //                                 otherButtonTitles: @"升级", nil];
+    //        alert.tag = 1001;
+    //        [alert show];
+    //    }
     
 }
 

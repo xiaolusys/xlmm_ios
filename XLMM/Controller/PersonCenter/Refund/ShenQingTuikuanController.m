@@ -24,6 +24,7 @@
 #import "JMPopView.h"
 #import "JMRefundController.h"
 #import "SVProgressHUD.h"
+#import "JMOrderGoodsModel.h"
 
 
 @interface ShenQingTuikuanController ()<JMRefundControllerDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate,JMShareViewDelegate>
@@ -65,7 +66,9 @@
     }
     return _apprefundModel;
 }
-
+- (void)setDingdanModel:(JMOrderGoodsModel *)dingdanModel {
+    _dingdanModel = dingdanModel;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -485,6 +488,7 @@
         NSDictionary *dic = responseObject;
         if (dic.count == 0) return;
         if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+            self.button.hidden = YES;
             [self.navigationController popViewControllerAnimated:YES];
         }
         [SVProgressHUD dismiss];

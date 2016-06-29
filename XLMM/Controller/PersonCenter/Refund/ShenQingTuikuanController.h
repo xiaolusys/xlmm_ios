@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) JMOrderGoodsModel *dingdanModel;
 
+@property (nonatomic, strong) UIButton *button;
 @property (copy, nonatomic) NSString *tid;
 @property (copy, nonatomic) NSString *oid;
 @property (copy, nonatomic) NSString *status;

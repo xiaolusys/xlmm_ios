@@ -16,6 +16,7 @@
 
 - (void)reBuyAddCarts:(NewCartsModel*)model;
 
+- (void)composeImageTap:(NewCartsModel*)model;
 
 @end
 

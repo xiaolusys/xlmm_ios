@@ -45,12 +45,29 @@
     NSString *deadlineTime = yhqModel.deadline;
     NSString *couponValue = yhqModel.coupon_value;
     
-    NSMutableString *mutablestart = [createTime mutableCopy];
-    NSRange range = {10, 9};
-    [mutablestart deleteCharactersInRange:range];
-    NSMutableString *mutableend = [deadlineTime mutableCopy];
-    [mutableend deleteCharactersInRange:range];
-    NSString *newString = [NSString stringWithFormat:@"%@ 至 %@", mutablestart, mutableend];
+//    NSMutableString *mutablestart = [createTime mutableCopy];
+    NSMutableString *mutableStart = [[NSMutableString alloc] initWithString:createTime];
+    [mutableStart replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+    NSString *start;
+    if(mutableStart.length > 3){
+        start = [mutableStart substringToIndex:(mutableStart.length-3)];
+    }
+
+    
+    NSMutableString *mutableend = [[NSMutableString alloc] initWithString:deadlineTime];
+    [mutableend replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+    NSString *deadline;
+    if(mutableend.length > 3){
+        deadline = [mutableend substringToIndex:(mutableend.length-3)];
+    }
+    
+    
+    
+//    NSRange range = {10, 9};
+//    [mutablestart deleteCharactersInRange:range];
+//    NSMutableString *mutableend = [deadlineTime mutableCopy];
+//    [mutableend deleteCharactersInRange:range];
+    NSString *newString = [NSString stringWithFormat:@"%@至%@", start, deadline];
     
     self.myimageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myimageView.layer.masksToBounds = YES;
@@ -59,10 +76,37 @@
     self.xianzhiLabel.text = yhqModel.pros_desc;
     self.requireLabel.text = yhqModel.use_fee_des;
     self.sourceTitleL.text = yhqModel.title;
-    self.valueLabel.text = [NSString stringWithFormat:@"¥%d", [couponValue intValue]];
+    self.valueLabel.text = [NSString stringWithFormat:@"¥%.1f", [couponValue floatValue]];
     self.timeLabel.text = newString;
     
     NSLog(@"fillCellWithYHQModel end");
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,7 @@
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
+#import "MJExtension.h"
 
 
 
@@ -241,6 +242,8 @@
         model.ID = [[dic objectForKey:@"id"] intValue];
         model.sku_id = [dic objectForKey:@"sku_id"];
         model.item_id = [dic objectForKey:@"item_id"];
+        model.item_weburl = [dic objectForKey:@"item_weburl"];
+
         [self.historyCarts addObject:model];
     }
     
@@ -275,9 +278,8 @@
     }
     return 0;
 }
-// -- 列表点击事件
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+#pragma mark == 点击进入商品详情
+- (void)composeImageTap:(NewCartsModel *)model {
     NSString *weiUrl = model.item_weburl;
     if (weiUrl == nil) {
         return ;
@@ -288,13 +290,42 @@
         webVC.webDiction = dic;
         [self.navigationController pushViewController:webVC animated:YES];
     }
-
+    
 }
+- (void)tapClick:(NewCartsModel *)model {
+    NSString *weiUrl = model.item_weburl;
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
+}
+// -- 列表点击事件
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//    NSString *weiUrl = model.item_weburl;
+//    NSDictionary *dic = model.mj_keyValues;
+//    if (weiUrl == nil) {
+//        return ;
+//    }else {
+//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//        [dic setValue:weiUrl forKey:@"web_url"];
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        webVC.webDiction = dic;
+//        [self.navigationController pushViewController:webVC animated:YES];
+//    }
+//
+//}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString *CellIdentifier = @"simpleCellID";
         NSLog(@"self.dataArray.count = %ld", (long)self.dataArray.count);
-        
         
         CartTableCellTableViewCell1 *cell = (CartTableCellTableViewCell1 *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         if (self.dataArray.count == 0) {
@@ -303,7 +334,6 @@
             
             NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
             cell.cartModel= model;
-            cell.delegate = self;
             cell.myImageView.layer.borderWidth = 0.5;
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
@@ -311,8 +341,6 @@
             [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
             cell.nameLabel.text = model.title;
             cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
             
@@ -321,6 +349,8 @@
             cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.delegate = self;
         }
         
         
@@ -337,7 +367,6 @@
             
             NewCartsModel *model = [self.historyCarts objectAtIndex:indexPath.row];
             cell.cartModel= model;
-            cell.delegate = self;
             cell.headImageView.layer.borderWidth = 0.5;
             cell.headImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -347,7 +376,7 @@
             [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-            cell.delegate = self;
+            
             cell.cartModel = model;
             cell.nameLabel.text = model.title;
             cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
@@ -355,8 +384,11 @@
             cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
-        }
+
+            cell.delegate = self;
+            
         
+        }
         
         return cell;
         
@@ -738,7 +770,7 @@
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 
-
+#pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(NewCartsModel *)model{
     NSLog(@"%d", (int)model.ID);
  
