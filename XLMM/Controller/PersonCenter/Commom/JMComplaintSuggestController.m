@@ -15,6 +15,7 @@
 #import "Masonry.h"
 #import "MMClass.h"
 #import "AFNetworking.h"
+#import "WebViewController.h"
 
 
 @interface JMComplaintSuggestController ()<UITextViewDelegate,JMCompSugViewDelegate>
@@ -46,7 +47,7 @@
     self.keyView.backgroundColor = [UIColor clearColor];
     [self.keyView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKyeborad)]];
     
-    [self setUpNavigationBar];
+    [self createRightButonItem];
     [self createComSug];
     [self setUpTextView];
     
@@ -62,22 +63,24 @@
     self.textView.delegate = self;
 }
 
-- (void)setUpNavigationBar {
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"历史记录" forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:13.];
-    [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-//    [btn sizeToFit];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    rightItem.enabled = NO;
-    self.rightItem = rightItem;
+#pragma mark ---- 导航栏右侧体现历史
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"投诉历史" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
-- (void)dismiss {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+
+- (void)rightClicked:(UIButton *)button{
+
+    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:HISTORYCOMMONPROBLEM_URL title:@"投诉历史"];
+    [self.navigationController pushViewController:common animated:YES];
+
 }
+
 #pragma mark -- 创建按钮工具条 提交按钮
 - (void)createComSug {
     JMCompSugView *compSugV = [[JMCompSugView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];

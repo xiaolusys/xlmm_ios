@@ -20,7 +20,7 @@
 
 @property (nonatomic,copy) NSString *limitStr;
 
-+ (instancetype)enterHeaderView;
++ (instancetype)enterFooterView;
 
 @property (nonatomic, weak) id<JMSharePackViewDelegate> delegate;
 

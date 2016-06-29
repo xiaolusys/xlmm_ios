@@ -45,6 +45,8 @@
 
 @property (nonatomic,strong) NSMutableArray *orderListDataSource;
 
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
+
 @end
 
 @implementation JMQueryLogInfoController{
@@ -93,6 +95,7 @@
     packageModel = logisDataSource[0];
     self.packetId = packageModel.out_sid;
     self.companyCode = packageModel.logistics_company_code;
+    self.packageModel = packageModel;
 }
 
 
@@ -184,7 +187,12 @@
 //    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
     self.logNameLabel.font = [UIFont systemFontOfSize:13.];
-    self.logNumLabel.text = @"未揽件";
+    if (self.packageModel.assign_status_display.length == 0) {
+        self.logNumLabel.text = @"未揽件";
+    }else {
+        self.logNumLabel.text = self.packageModel.assign_status_display;
+    }
+    
     self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }
@@ -214,11 +222,9 @@
     timeView.backgroundColor = [UIColor lineGrayColor];
     timeView.frame = CGRectMake(0, _count * cellHeitht + 136, SCREENWIDTH, cellHeitht);
     
-    
-    
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-    timeLabel.text = _goodsListDic[@"process_time"];
+    timeLabel.text = self.packageModel.process_time;
     timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeView).offset(10);
@@ -227,7 +233,7 @@
     
     UILabel *titleLabel = [UILabel new];
     [timeView addSubview:titleLabel];
-    NSString *titleStr = _goodsListDic[@"assign_status_display"];
+    NSString *titleStr = self.packageModel.assign_status_display;
     if (titleStr != nil) {
         titleLabel.text = titleStr;
         self.logNumLabel.text = titleStr;
@@ -263,7 +269,54 @@
         make.width.height.mas_equalTo(@20);
     }];
     
-    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht);
+    
+    
+    UIView *timeViewTwo = [UIView new];
+    [self.masBackScrollView addSubview:timeViewTwo];
+    timeViewTwo.backgroundColor = [UIColor lineGrayColor];
+    timeViewTwo.frame = CGRectMake(0, _count * cellHeitht + 226, SCREENWIDTH, cellHeitht);
+
+    UILabel *timeLabelTwo = [UILabel new];
+    [timeViewTwo addSubview:timeLabelTwo];
+    timeLabelTwo.text = self.packageModel.assign_time;
+    timeLabelTwo.textColor = [UIColor titleDarkGrayColor];
+    [timeLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeViewTwo).offset(10);
+        make.left.equalTo(timeViewTwo).offset(40);
+    }];
+    
+    UILabel *titleLabelTwo = [UILabel new];
+    [timeViewTwo addSubview:titleLabelTwo];
+    titleLabelTwo.text = @"订单创建成功";
+    titleLabelTwo.numberOfLines = 0;
+    titleLabelTwo.font = [UIFont systemFontOfSize:13.];
+    
+    [titleLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeLabelTwo.mas_bottom).offset(15);
+        make.left.equalTo(timeViewTwo).offset(40);
+    }];
+    
+    UILabel *lineLTwo = [UILabel new];
+    [timeViewTwo addSubview:lineLTwo];
+    lineLTwo.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    
+    [lineLTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(timeViewTwo);
+        make.left.equalTo(timeViewTwo).offset(20);
+        make.width.mas_equalTo(@1);
+        make.height.mas_equalTo(cellHeitht);
+    }];
+
+    UIImageView *successImageTwo = [UIImageView new];
+    [timeViewTwo addSubview:successImageTwo];
+    successImageTwo.image = [UIImage imageNamed:@"confirm"];
+    
+    [successImageTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(timeViewTwo).offset(10);
+        make.width.height.mas_equalTo(@20);
+    }];
+    
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht * 2);
     
 }
 -(NSString*) spaceFormatTimeString:(NSString*)timeString{

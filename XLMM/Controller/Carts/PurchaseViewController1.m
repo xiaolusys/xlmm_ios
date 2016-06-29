@@ -142,6 +142,10 @@
 @property (nonatomic,strong) NSMutableArray *dataSource;
 
 @property (nonatomic,strong) JMShareModel *share_model;
+/**
+ *  判断小鹿钱包是否足够支付->如果不足则调用微信或者支付宝，传payment。否则传budget。
+ */
+@property (nonatomic,assign) BOOL isXLWforAlipay;
 
 @end
 
@@ -549,17 +553,11 @@
         self.isUserCoupon = NO;
         couponValue = 0;
         [self calculationLabelValue];
-        
     } else {
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
         [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //            NSDictionary *dict = [[NSDictionary alloc] init];
-            //            dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             self.couponMessage = goodsModel.coupon_message;
             if (self.couponMessage.length == 0) {
@@ -583,6 +581,8 @@
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
             
         }];
     }
@@ -670,8 +670,10 @@
          *  余额不足
          */
         if (self.isEnoughBudget == NO) {
+            self.isXLWforAlipay = YES;
             [self createPayPopView];
         }else {
+            self.isXLWforAlipay = NO;
             [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
             [self payMoney];
         }
@@ -732,7 +734,7 @@
         //不足需要使用小鹿钱包或者其它支付方式
         totalPayment = totalPayment - couponValue;//[yhqModel.coupon_value floatValue];
         //        discountfee = discountfee + [yhqModel.coupon_value floatValue];
-        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + couponValue) || totalPayment == (self.availableFloat + couponValue))) {
+        if (self.isUseXLW && (self.isEnoughBudget || totalPayment < (self.availableFloat + couponValue) || fabs(totalPayment - (self.availableFloat + couponValue)) < 0.000001 )) {
             //使用了小鹿钱包 足够提交信息
             CGFloat value = [[self.xlWallet objectForKey:@"value"] floatValue];
             if (totalPayment > value) {
@@ -741,7 +743,12 @@
                 parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [self.xlWallet objectForKey:@"pid"], totalPayment];
             }
             
-            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
+            if (self.isXLWforAlipay) {
+                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
+            }else {
+                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],@"budget", parms];
+            }
+            
             //提交
             [self submitBuyGoods];
         }else {
@@ -1045,7 +1052,7 @@
         [self.payView removeFromSuperview];
     }];
 }
-
+#pragma mark --- 选择支付方式
 - (void)composePayButton:(JMOrderPayView *)payButton didClick:(NSInteger)index {
     if (index == 100) { // 点击了返回按钮 -- 弹出框  选择放弃或者继续支付
         
@@ -1210,7 +1217,15 @@
     
 }
 - (void)isApinPayGo {
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark --- 支付成功的弹出框

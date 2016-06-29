@@ -14,6 +14,7 @@
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"
 #import "JMOrderGoodsModel.h"
+#import "JMPackAgeModel.h"
 
 @interface JMBaseGoodsCell ()
 
@@ -150,7 +151,7 @@
 //    }];
     
 }
-- (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
+- (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
@@ -173,7 +174,9 @@
     
     BOOL isOrderStatus = (orderStatus == ORDER_STATUS_CONFIRM_RECEIVE);
     
-    if (orderStatus == ORDER_STATUS_PAYED) {
+    BOOL isWarehouseOrder = (packageModel.assign_time != nil || packageModel.book_time != nil || packageModel.finish_time != nil);
+    
+    if ((orderStatus == ORDER_STATUS_PAYED) && (!isWarehouseOrder)) {
         if (refundStatus == 0) {
             [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
             self.optionButton.tag = 100;

@@ -80,6 +80,8 @@
  */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLineViewH;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLineH;
+
 @end
 
 
