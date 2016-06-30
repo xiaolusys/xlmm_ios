@@ -98,7 +98,7 @@
 }
 
 + (UIColor *)cartViewBackGround{
-    return [UIColor colorWithR:74 G:74 B:74 alpha:1];
+    return [UIColor colorWithR:44 G:44 B:44 alpha:1];
 }
 
 + (UIColor *)rootViewButtonColor{

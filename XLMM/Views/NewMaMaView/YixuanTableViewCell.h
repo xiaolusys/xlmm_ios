@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MaMaSelectProduct.h"
+#import "JMAlreadyChooseModel.h"
+
 
 @class YixuanTableViewCell;
 
@@ -27,13 +28,13 @@
 
 @property (nonatomic, strong) NSString *pdtID;
 
-@property (nonatomic, strong) MaMaSelectProduct *model;
+@property (nonatomic, strong) JMAlreadyChooseModel *model;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @property (weak, nonatomic) id<ProductxiajiaDelegate>delegate;
 
-- (void)fillData:(MaMaSelectProduct *)model;
+- (void)fillData:(JMAlreadyChooseModel *)model;
 
 @end
