@@ -576,6 +576,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     
 }
+#pragma mark --- 第一次打开程序
 - (void)returnPopView {
     /**
      判断是否为第一次打开 -- 选择弹出优惠券弹窗
@@ -599,6 +600,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if (index == 100) {
         [self hidepopView];
         JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+        BOOL isFirstLogin = [JMFirstOpen isFirstLoadApp];
+        logVC.isFirstLogin = isFirstLogin;
         [self.navigationController pushViewController:logVC animated:YES];
     }else {
         //取消按钮
