@@ -988,15 +988,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSDate *date = [NSDate date];
     NSDateComponents *d = [calendar components:unitFlags fromDate:date toDate:todate options:0];
     if ([d hour] < 0 || [d minute] < 0) {
-        self.labelTime.text = @"00:00:00";
+        self.labelTime.text = @"00时00分00秒";
         //   NSLog(@"已下架");
     } else{
         NSString *string;
         if ((long)[d day] == 0) {
-            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)[d hour], (long)[d minute], (long)[d second]];
+            string = [NSString stringWithFormat:@"%02ld时%02ld分%02ld秒",(long)[d hour], (long)[d minute], (long)[d second]];
         }
         else{
-            string = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)[d day]*24+(long)[d hour], (long)[d minute], (long)[d second]];
+            string = [NSString stringWithFormat:@"%02ld时%02ld分%02ld秒", (long)[d day]*24+(long)[d hour], (long)[d minute], (long)[d second]];
             
         }
         
