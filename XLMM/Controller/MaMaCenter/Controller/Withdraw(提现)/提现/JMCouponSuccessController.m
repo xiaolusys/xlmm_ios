@@ -1,43 +1,35 @@
 //
-//  TixianSucceedViewController.m
+//  JMCouponSuccessController.m
 //  XLMM
 //
-//  Created by younishijie on 16/1/11.
+//  Created by zhang on 16/7/1.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "TixianSucceedViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "PublishNewPdtViewController.h"
-#import "UIColor+RGBColor.h"
+#import "JMCouponSuccessController.h"
 #import "Masonry.h"
 #import "MMClass.h"
-#import "JMBillDetailController.h"
+#import "UIViewController+NavigationBar.h"
 
-@interface TixianSucceedViewController ()
-
-{
-    NSInteger _numValue;
-}
+@interface JMCouponSuccessController ()
 /*
-    头视图
+ 头视图
  */
 @property (nonatomic,strong) UIView *headView;
 @property (nonatomic,strong) UIImageView *successImageView;
 @property (nonatomic,strong) UILabel *cuccessLabel;
 @property (nonatomic,strong) UILabel *promptLabel;
+
 /*
-    下侧视图
+ 下侧视图
  */
 @property (nonatomic,strong) UIView *bottomView;
-@property (nonatomic,strong) UILabel *activeLabel;
 @property (nonatomic,strong) UIButton *completeBtn;
 
-//@property (nonatomic,assign) NSInteger numValue;
 
 @end
 
-@implementation TixianSucceedViewController
+@implementation JMCouponSuccessController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -48,36 +40,16 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
+- (void)backClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
-    if (self.tixianjine == 100) {
-        _numValue = 10;
-    } else if (self.tixianjine == 200){
-        _numValue = 20;
-    }else {
-    }
-
+    
     [self createLayout];
-    [self createRightButonItem];
-}
-
-- (void)backClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)setActiveNum:(float)activeNum {
-    
-//    activeNum = _activeNum;
-    _activeNum = activeNum;
-}
-
-- (void)setSurplusMoney:(float)surplusMoney {
-    
-    _surplusMoney = surplusMoney;
-    
 }
 #pragma mark -- 布局
 - (void)createLayout {
@@ -96,7 +68,7 @@
     [self.headView addSubview:cuccessLabel];
     self.cuccessLabel = cuccessLabel;
     self.cuccessLabel.font = [UIFont boldSystemFontOfSize:18.];
-    self.cuccessLabel.text = @"申请成功！";
+    self.cuccessLabel.text = @"兑换成功！";
     self.cuccessLabel.textAlignment = NSTextAlignmentCenter;
     
     
@@ -104,26 +76,18 @@
     [self.headView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
-    self.promptLabel.text = @"提现金额已冻结，24小时之内到账";
+    self.promptLabel.text = @"恭喜您获得一张价值20元的优惠券，请及时使用哦";
     self.promptLabel.textAlignment = NSTextAlignmentCenter;
-
+    
     
     UIView *bottomView = [[UIView alloc] init];
     [self.view addSubview:bottomView];
     self.bottomView = bottomView;
     bottomView.backgroundColor = [UIColor lineGrayColor];
-    
-    UILabel *activeLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:activeLabel];
-    self.activeLabel = activeLabel;
-    self.activeLabel.textAlignment = NSTextAlignmentCenter;
-    self.activeLabel.font = [UIFont systemFontOfSize:12.];
-    
-    
-    
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
-    self.promptLabel.font = [UIFont systemFontOfSize:12.];
 
+
+    self.promptLabel.font = [UIFont systemFontOfSize:12.];
+    
     
     UIButton *completeBtn = [[UIButton alloc] init];
     [self.bottomView addSubview:completeBtn];
@@ -138,7 +102,7 @@
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_offset(SCREENWIDTH);
         make.bottom.equalTo(self.promptLabel.mas_bottom).offset(30);
-//        make.height.mas_offset(@(571/2));
+        //        make.height.mas_offset(@(571/2));
     }];
     
     [self.successImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,85 +132,89 @@
         make.width.mas_offset(SCREENWIDTH);
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
-    
-    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(21/2);
-        make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.width.mas_offset(SCREENWIDTH);
-    }];
-    
+
     [self.completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(35);
+        make.top.equalTo(self.bottomView).offset(40);
         make.left.equalTo(self.bottomView.mas_left).offset(15);
         make.width.mas_offset(SCREENWIDTH - 30);
         make.height.mas_offset(40);
-//        make.bottom.equalTo(self.bottomView.mas_bottom).offset(70);
+        //        make.bottom.equalTo(self.bottomView.mas_bottom).offset(70);
     }];
-    
-    
-    
-}
-
-#pragma mark ----- 提现详情界面 
-
-- (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-//    label.textColor = [UIColor textDarkGrayColor];
-//    label.font = [UIFont systemFontOfSize:14];
-//    label.textAlignment = NSTextAlignmentRight;
-//    [rightBtn addSubview:label];
-//    label.text = @"查看详情";
-    [rightBtn setTitle:@"查看详情" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
-    
-}
-
-- (void)rightClicked:(UIButton *)button{
-
-    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
-    
-    billDetail.withdrawMoney = _surplusMoney;
-    
-    billDetail.activeValue = _activeValueNum;
-    
-    [self.navigationController pushViewController:billDetail animated:YES];
-    
-    
-}
-- (void)setActiveValueNum:(NSInteger)activeValueNum {
-    
-    _activeValueNum = activeValueNum;
 
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (void)finishButton:(UIButton *)btn {
     
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
-- (IBAction)fabuClicked:(id)sender {
-    
- //NSLog(@"发布产品");
-    
-    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-    [self.navigationController pushViewController:publish animated:YES];
-}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

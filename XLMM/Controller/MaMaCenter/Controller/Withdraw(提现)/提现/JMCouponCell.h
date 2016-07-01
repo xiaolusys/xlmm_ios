@@ -10,4 +10,8 @@
 
 @interface JMCouponCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *couponImage;
+
+@property (nonatomic, strong) UILabel *moneyLabel;
+
 @end

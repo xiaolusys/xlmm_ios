@@ -12,7 +12,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
-#import "FensiTableViewCell.h"
+#import "JMFetureFansCell.h"
 #import "VisitorModel.h"
 
 @interface TodayVisitorViewController ()
@@ -122,9 +122,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FensiCell"];
+    JMFetureFansCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FensiCell"];
     if (cell == nil) {
-        cell = [[FensiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FensiCell"];
+        cell = [[JMFetureFansCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FensiCell"];
     }
     VisitorModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell fillVisitorData:model];

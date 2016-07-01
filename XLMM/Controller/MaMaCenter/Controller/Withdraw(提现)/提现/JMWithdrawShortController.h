@@ -13,5 +13,9 @@
  *  我的余额
  */
 @property (nonatomic, assign) CGFloat myBalance;
+/**
+ *  提现原因
+ */
+@property (nonatomic, strong) NSString *descStr;
 
 @end

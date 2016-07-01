@@ -13,12 +13,12 @@
 #import "JMLogistics.h"
 #import "AFNetworking.h"
 
-@interface JMChooseLogisticsController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JMChooseLogisticsController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray * groups;  // 保存所有的数据
 @property (nonatomic, strong) UITableView *tableView;
 
-
+@property (nonatomic, strong) UITextField *textF;
 
 @end
 
@@ -48,7 +48,7 @@
     [self createNavigationBarWithTitle:@"选择物流" selecotr:@selector(btnClicked:)];
 
     [self createTableView];
-    
+    [self createRightButonItem];
 }
 
 
@@ -110,6 +110,45 @@
     //    return arrayIndex;
     //
     return [self.groups valueForKeyPath:@"title"];
+}
+
+#pragma mark ---- 导航栏右侧体现历史
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"填写物流公司" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)rightClicked:(UIButton *)button{
+   
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入一个物流公司" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 100;
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *textF = [alert textFieldAtIndex:0];
+    self.textF = textF;
+    self.textF.placeholder = @"请输入物流公司";
+    [alert show];
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 100) {
+        if (buttonIndex == 0) {
+            //取消
+            
+        }else {
+            NSString *str = self.textF.text;
+            if (_delegate && [_delegate respondsToSelector:@selector(ClickChoiseLogis:Title:)]) {
+                [_delegate ClickChoiseLogis:self Title:str];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }
+        
+    }
+    
 }
 // 点击了哪一行
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -9,8 +9,12 @@
 #import "JMMaMaCenterTopView.h"
 #import "Masonry.h"
 #import "MMClass.h"
+#import "JMMaMaExtraModel.h"
+#import "MJExtension.h"
+#import "NSString+URL.h"
 
 @interface JMMaMaCenterTopView ()
+
 /**
  *  返回上一页按钮
  */
@@ -23,6 +27,7 @@
  *  MaMa是不是会员
  */
 @property (nonatomic, strong) UIButton *isVipMamaButton;
+@property (nonatomic, strong) UILabel *buttonLabel;
 /**
  *  Vip剩余时间
  */
@@ -49,6 +54,7 @@
 @property (nonatomic, strong) UIButton *activenessButton;
 @property (nonatomic, strong) UILabel *activenessLabel;
 
+@property (nonatomic, strong) JMMaMaExtraModel *extraModel;
 
 
 @end
@@ -64,7 +70,31 @@
     }
     return self;
 }
-
+- (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
+    _centerModel = centerModel;
+    self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:centerModel.extra_info];
+    
+    
+    self.buttonLabel.text = self.centerModel.mama_level_display;
+    self.activenessLabel.text = self.centerModel.active_value_num;
+    self.accumulatedEarningsLabel.text = self.centerModel.carry_value;
+    self.balanceLabel.text = self.centerModel.cash_value;
+    
+    NSString *limtStr = self.extraModel.surplus_days;
+    NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
+    NSInteger count = limtStr.length;
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,6)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(6,count)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(count + 6,1)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(0, 6)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0] range:NSMakeRange(6, count)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(6+count, 1)];
+    self.remainingTimeLabel.attributedText = str;
+    
+    [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    
+}
 - (void)createUI {
     // ====== 返回按钮 ====== //
     UIButton *backPageButton = [UIButton new];
@@ -86,7 +116,7 @@
     self.mamaIconImage.layer.cornerRadius = 25.;
     self.mamaIconImage.layer.borderWidth = 1.;
     self.mamaIconImage.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.mamaIconImage.image = [UIImage imageNamed:@"zhanwei"];
+//    self.mamaIconImage.image = [UIImage imageNamed:@"zhanwei"];
     
     UIButton *isVipMamaButton = [UIButton new];
     [self addSubview:isVipMamaButton];
@@ -95,11 +125,6 @@
     self.isVipMamaButton.layer.cornerRadius = 10.;
     self.isVipMamaButton.layer.borderWidth = 1.;
     self.isVipMamaButton.layer.borderColor = [UIColor whiteColor].CGColor;
-//    [self.isVipMamaButton setTitle:@"普通妈妈" forState:UIControlStateNormal];
-//    self.isVipMamaButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-//    self.isVipMamaButton.imageEdgeInsets = UIEdgeInsetsMake(3, 6, 3, 6);
-//    [self.isVipMamaButton setImage:[UIImage imageNamed:@"mamaUser_DiamondsIcon.jpg"] forState:UIControlStateNormal];
-//    [self.isVipMamaButton setImage:[UIImage imageNamed:@"mamaUser_DiamondsIcon.jpg"] forState:UIControlStateSelected];
 
     UIImageView *buttonImage = [UIImageView new];
     [self.isVipMamaButton addSubview:buttonImage];
@@ -108,41 +133,14 @@
     
     UILabel *buttonLabel = [UILabel new];
     [self.isVipMamaButton addSubview:buttonLabel];
-    buttonLabel.text = @"普通妈妈";
-    buttonLabel.textColor = [UIColor whiteColor];
-    buttonLabel.font = [UIFont systemFontOfSize:14.];
-    
-    /**
-     *      UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-     [btn setImage:image forState:UIControlStateNormal];
-     [btn setImage:highImage forState:UIControlStateSelected];
-     [btn setTitle:title forState:UIControlStateNormal];
-     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-     btn.tag = self.subviews.count + 1;
-     if (btn.tag == 1) {
-     btn.selected = YES;
-     }
-     [btn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -6, 0.0, 0.0)];
-     [self addSubview:btn];
-     */
+    self.buttonLabel = buttonLabel;
+    self.buttonLabel.textColor = [UIColor whiteColor];
+    self.buttonLabel.font = [UIFont systemFontOfSize:14.];
     
     UILabel *remainingTimeLabel = [UILabel new];
     [self addSubview:remainingTimeLabel];
     self.remainingTimeLabel = remainingTimeLabel;
     self.remainingTimeLabel.font = [UIFont systemFontOfSize:14.];
-//    self.remainingTimeLabel.text = @"会员剩余期限188天";
-    NSString *limtStr = @"188";
-    NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
-    NSInteger count = limtStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,6)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(6,count)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(count + 6,1)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(0, 6)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0] range:NSMakeRange(6, count)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(6+count, 1)];
-    self.remainingTimeLabel.attributedText = str;
-    
     
     UIImageView *vipExamination = [UIImageView new];
     [self addSubview:vipExamination];
@@ -172,19 +170,16 @@
     [self.balanceButton addSubview:balanceLabel];
     self.balanceLabel = balanceLabel;
     self.balanceLabel.font = [UIFont boldSystemFontOfSize:18.];
-    self.balanceLabel.text = @"234.454";
     
     UILabel *accumulatedEarningsLabel = [UILabel new];
     [self.accumulatedEarningsButton addSubview:accumulatedEarningsLabel];
     self.accumulatedEarningsLabel = accumulatedEarningsLabel;
     self.accumulatedEarningsLabel.font = [UIFont boldSystemFontOfSize:18.];
-    self.accumulatedEarningsLabel.text = @"234.454";
-    
+
     UILabel *activenessLabel = [UILabel new];
     [self.activenessButton addSubview:activenessLabel];
     self.activenessLabel = activenessLabel;
     self.activenessLabel.font = [UIFont boldSystemFontOfSize:18.];
-    self.activenessLabel.text = @"234.454";
     
     UILabel *firstLabel = [UILabel new];
     [self.balanceButton addSubview:firstLabel];

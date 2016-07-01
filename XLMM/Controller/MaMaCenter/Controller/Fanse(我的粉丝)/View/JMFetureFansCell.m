@@ -11,6 +11,7 @@
 #import "MMClass.h"
 #import "JMFetureFansModel.h"
 #import "NSString+URL.h"
+#import "VisitorModel.h"
 
 @interface JMFetureFansCell ()
 
@@ -82,23 +83,7 @@
     
     
 }
-/**
- *      if (model.fans_thumbnail.length == 0) {
- self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
- }else {
- [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail URLEncodedString]]];
- }
- 
- self.picImageView.layer.cornerRadius = 30;
- self.picImageView.layer.borderWidth = 0.5;
- self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
- self.picImageView.layer.masksToBounds = YES;
- self.name.text = model.fans_nick;
- 
- self.desLabel.text = model.fans_description;
- self.timeLabel.text = [self dealTime:model.created];
- *
- */
+
 - (void)fillData:(JMFetureFansModel *)model {
     
     if (model.headimgurl.length == 0) {
@@ -116,17 +101,65 @@
     }else {
         self.nameLabel.text = model.nick;
     }
+    self.timeLabel.text = [self dealDate:model.modified];
+    self.descLabel.text = model.note;
+}
+
+- (void)fillVisitorData:(VisitorModel *)model {
+    if (model.visitor_img.length == 0) {
+        self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
+    }else {
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img URLEncodedString]]];
+    }
     
-    NSMutableString *String1 = [[NSMutableString alloc] initWithString:model.modified];
+    self.iconImage.layer.cornerRadius = 30;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.masksToBounds = YES;
+    self.nameLabel.text = model.visitor_nick;
+    
+    self.descLabel.text = model.visitor_description;
+    
+    self.timeLabel.text = [self dealDate:model.created];
+}
+- (void)configNowFnas:(FanceModel *)model {
+    if (model.fans_thumbnail.length == 0) {
+        self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
+    }else {
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail URLEncodedString]]];
+    }
+    
+    self.iconImage.layer.cornerRadius = 30;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.masksToBounds = YES;
+    self.nameLabel.text = model.fans_nick;
+    
+    self.descLabel.text = model.fans_description;
+    self.timeLabel.text = [self dealDate:model.created];
+    
+}
+- (NSString *)dealTime:(NSString *)str {
+    NSArray *arr = [str componentsSeparatedByString:@"T"];
+    NSString *year = arr[0];
+    NSString *time = [year substringFromIndex:5];
+    return time;
+}
+
+- (NSString *)dealVisitorTime:(NSString *)str {
+    NSArray *arr = [str componentsSeparatedByString:@"T"];
+    NSString *year = arr[1];
+    NSString *time = [year substringToIndex:5];
+    return time;
+}
+
+- (NSString *)dealDate:(NSString *)str {
+    NSMutableString *String1 = [[NSMutableString alloc] initWithString:str];
     [String1 replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
     
     NSString *string2 = [NSString stringWithFormat:@"%@",String1];
     NSString *string3 = [string2 substringWithRange:NSMakeRange(5,11)];
-
-    self.timeLabel.text = [NSString stringWithFormat:@"%@",string3];
-    
-    self.descLabel.text = model.note;
-    
+    return string3;
 }
 
 @end

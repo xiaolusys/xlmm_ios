@@ -16,6 +16,7 @@
 #import "FensiTableViewCell.h"
 #import "AFNetworking.h"
 #import "MJExtension.h"
+#import "JMFetureFansCell.h"
 
 
 @interface JMNowFansController () <UITableViewDelegate,UITableViewDataSource>
@@ -65,10 +66,6 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"FensiTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FensiCell"];
-   
-    
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -172,13 +169,13 @@
     return 80;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    FensiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FensiCell"];
+    static NSString *cellID = @"FensiCell";
+    JMFetureFansCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
-        cell = [[FensiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FensiCell"];
+        cell = [[JMFetureFansCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     FanceModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [cell fillData:model];
+    [cell configNowFnas:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

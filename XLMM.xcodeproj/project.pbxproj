@@ -660,6 +660,10 @@
 		1F27A5FE1D2524C000A0F80B /* JMAlreadyChooseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A5FD1D2524C000A0F80B /* JMAlreadyChooseModel.m */; };
 		1F27A6041D254A2F00A0F80B /* JMWithdrawShortController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6031D254A2E00A0F80B /* JMWithdrawShortController.m */; };
 		1F27A6071D254FCB00A0F80B /* JMCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6061D254FCB00A0F80B /* JMCouponCell.m */; };
+		1F27A60A1D26078B00A0F80B /* JMCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6091D26078B00A0F80B /* JMCouponView.m */; };
+		1F27A60D1D261F5100A0F80B /* JMCouponSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A60C1D261F5100A0F80B /* JMCouponSuccessController.m */; };
+		1F27A6101D2627EB00A0F80B /* JMMaMaCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A60F1D2627EB00A0F80B /* JMMaMaCenterModel.m */; };
+		1F27A6131D26291000A0F80B /* JMMaMaExtraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6121D26291000A0F80B /* JMMaMaExtraModel.m */; };
 		1F2AE94B1CF5D5BB002EC974 /* JMEditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */; };
 		1F2AE9631CF69380002EC974 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2AE94D1CF69380002EC974 /* Info.plist */; };
 		1F2AE9641CF69380002EC974 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2AE9501CF69380002EC974 /* MJExtensionConst.m */; };
@@ -1857,6 +1861,14 @@
 		1F27A6031D254A2E00A0F80B /* JMWithdrawShortController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMWithdrawShortController.m; sourceTree = "<group>"; };
 		1F27A6051D254FCB00A0F80B /* JMCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponCell.h; sourceTree = "<group>"; };
 		1F27A6061D254FCB00A0F80B /* JMCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponCell.m; sourceTree = "<group>"; };
+		1F27A6081D26078B00A0F80B /* JMCouponView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponView.h; sourceTree = "<group>"; };
+		1F27A6091D26078B00A0F80B /* JMCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponView.m; sourceTree = "<group>"; };
+		1F27A60B1D261F5100A0F80B /* JMCouponSuccessController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponSuccessController.h; sourceTree = "<group>"; };
+		1F27A60C1D261F5100A0F80B /* JMCouponSuccessController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponSuccessController.m; sourceTree = "<group>"; };
+		1F27A60E1D2627EB00A0F80B /* JMMaMaCenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaCenterModel.h; sourceTree = "<group>"; };
+		1F27A60F1D2627EB00A0F80B /* JMMaMaCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaCenterModel.m; sourceTree = "<group>"; };
+		1F27A6111D26291000A0F80B /* JMMaMaExtraModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaExtraModel.h; sourceTree = "<group>"; };
+		1F27A6121D26291000A0F80B /* JMMaMaExtraModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaExtraModel.m; sourceTree = "<group>"; };
 		1F2AE9491CF5D5BB002EC974 /* JMEditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressController.h; sourceTree = "<group>"; };
 		1F2AE94A1CF5D5BB002EC974 /* JMEditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressController.m; sourceTree = "<group>"; };
 		1F2AE94D1CF69380002EC974 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -4429,6 +4441,10 @@
 		1F27A5C91D2520E200A0F80B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1F27A60E1D2627EB00A0F80B /* JMMaMaCenterModel.h */,
+				1F27A60F1D2627EB00A0F80B /* JMMaMaCenterModel.m */,
+				1F27A6111D26291000A0F80B /* JMMaMaExtraModel.h */,
+				1F27A6121D26291000A0F80B /* JMMaMaExtraModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4491,6 +4507,8 @@
 				1F27A5BE1D2520E200A0F80B /* TixianViewController.m */,
 				1F27A6021D254A2E00A0F80B /* JMWithdrawShortController.h */,
 				1F27A6031D254A2E00A0F80B /* JMWithdrawShortController.m */,
+				1F27A60B1D261F5100A0F80B /* JMCouponSuccessController.h */,
+				1F27A60C1D261F5100A0F80B /* JMCouponSuccessController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -4500,6 +4518,8 @@
 			children = (
 				1F27A6051D254FCB00A0F80B /* JMCouponCell.h */,
 				1F27A6061D254FCB00A0F80B /* JMCouponCell.m */,
+				1F27A6081D26078B00A0F80B /* JMCouponView.h */,
+				1F27A6091D26078B00A0F80B /* JMCouponView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -5914,6 +5934,7 @@
 				1F4161171CE31A4400F78C0D /* View+MASAdditions.m in Sources */,
 				0B7696DE1D011F010079E0CA /* JMOrderPayView.m in Sources */,
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
+				1F27A6101D2627EB00A0F80B /* JMMaMaCenterModel.m in Sources */,
 				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				183073EB1C97D17800B7665E /* MJRefreshBackFooter.m in Sources */,
 				3A2E26681D12D6D8005C1CDA /* WYWeakScriptMessageDelegate.m in Sources */,
@@ -5998,6 +6019,7 @@
 				1830723C1C97BE3700B7665E /* PersonCenterViewController2.m in Sources */,
 				1FF26B201D100C8500F4A831 /* JMAppForRefundModel.m in Sources */,
 				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
+				1F27A60A1D26078B00A0F80B /* JMCouponView.m in Sources */,
 				183073DA1C97D17800B7665E /* QNRecord.m in Sources */,
 				183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */,
 				1FF26CA81D1799EA00F4A831 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
@@ -6070,6 +6092,7 @@
 				1830725C1C97BE3700B7665E /* VersionController.m in Sources */,
 				1F27A5EA1D2520E200A0F80B /* PublishNewPdtViewController.m in Sources */,
 				1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */,
+				1F27A6131D26291000A0F80B /* JMMaMaExtraModel.m in Sources */,
 				1F3621D21CF92433004359B0 /* UIView+RGSize.m in Sources */,
 				0B256DDA1CFBDC22000EB0B0 /* JMShareModel.m in Sources */,
 				3A1E05201CE1B208001018AC /* DebugSettingViewController.m in Sources */,
@@ -6080,6 +6103,7 @@
 				1FFCF1941D1BB703000D9183 /* JMRootgoodsCell.m in Sources */,
 				183071DD1C97BE3700B7665E /* MMCollectionController.m in Sources */,
 				183074251C97D17800B7665E /* UIImageView+HighlightedWebCache.m in Sources */,
+				1F27A60D1D261F5100A0F80B /* JMCouponSuccessController.m in Sources */,
 				1FF26C941D1776DF00F4A831 /* JMPopViewAnimationSpring.m in Sources */,
 				18EE10E01C9C134300E52313 /* PersonOrderViewController.m in Sources */,
 				1F4161151CE31A4400F78C0D /* NSArray+MASAdditions.m in Sources */,

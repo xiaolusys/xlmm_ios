@@ -20,7 +20,6 @@
 #import "ActivityViewController2.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "ProductSelectionListViewController.h"
-#import "FensiListViewController.h"
 #import "MaMaShareSubsidiesViewController.h"
 #import "UIViewController+NavigationBar.h"
 #import "SVProgressHUD.h"
@@ -37,6 +36,9 @@
 #import "JMMaMaCenterFansController.h"
 #import "JMMaMaCenterTopView.h"
 #import "JMWithdrawShortController.h"
+#import "JMMaMaCenterModel.h"
+#import "JMMaMaExtraModel.h"
+#import "MJExtension.h"
 
 
 
@@ -120,6 +122,14 @@
  *  妈妈中心顶部视图
  */
 @property (nonatomic, strong) JMMaMaCenterTopView *mamatopView;
+/**
+ *  妈妈中心数据源
+ */
+@property (nonatomic, strong) JMMaMaCenterModel *mamaCenterModel;
+/**
+ *  妈妈中心额外数据源
+ */
+@property (nonatomic, strong) JMMaMaExtraModel *extraModel;
 
 @end
 
@@ -128,11 +138,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
 }
 - (NSMutableDictionary *)diction {
     if (!_diction) {
@@ -154,46 +166,39 @@
     
     widthOfChart = 50;
     self.headViewWidth.constant = SCREENWIDTH;
-    
     self.earningsRecord = @"0.00";
     self.orderRecord = @"0";
     self.carryValue = [NSNumber numberWithInt:0];
-    
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
-    
     self.mamaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.rootScrollView];
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm", Root_URL];
-    
     //点击分享补贴
     UITapGestureRecognizer *tapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareView)];
     [self.shareSubsidies addGestureRecognizer:tapShare];
+
+    [self createWeekDay];
+    [self prepareData];
+    [self createChart:dataArray];
+    // 创建顶部视图
+    [self createMMCenterTopViwe];
     
-//    [self downloadData];
-   // [self downloadDataWithUrlString:string selector:@selector(fetchedMaMaData:)];
+    [self loadDataSource];
+    
+}
+- (void)loadDataSource {
     [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
-//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/shopping", Root_URL] selector:@selector(fetchedDingdanjilu:)];
-    
     //主页新的数据
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self updateMaMaHome:responseObject];
+        if (responseObject == nil) {
+            return ;
+        }else {
+            [self updateMaMaHome:responseObject];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
-    
-    
-    
-    [self createWeekDay];
-    
-    
-    [self prepareData];
-    [self createChart:dataArray];
-
-    // 创建顶部视图
-    [self createMMCenterTopViwe];
-    
 }
 #pragma mark --- 顶部视图创建
 - (void)createMMCenterTopViwe {
@@ -208,15 +213,16 @@
     if (index == 100) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (index == 111) {
-        
-        if ([self.carryValue floatValue] > 100) {
+        NSInteger code = [self.extraModel.could_cash_out integerValue];
+        if (code == 0) {
             TixianViewController *vc = [[TixianViewController alloc] init];
             vc.carryNum = self.carryValue;
             vc.activeValue = [self.activeValueNum integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else {
             JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-            shortVC.myBalance = [self.carryValue floatValue];
+            shortVC.myBalance = 33;//[self.carryValue floatValue];
+            shortVC.descStr = self.extraModel.cashout_reason;
             [self.navigationController pushViewController:shortVC animated:YES];
         }
         
@@ -245,57 +251,45 @@
     
 }
 
+
+
 //新接口数据
 - (void)updateMaMaHome:(NSDictionary *)dic {
-    NSDictionary *fortune = [dic objectForKey:@"mama_fortune"];
-    if (fortune == nil) {
-        return;
-    }
-    if ([fortune class] == [NSNull class]) {
-        self.huoyuedulabel.text = @"0";
-        self.huoyueduString = nil;
-        
-        
+    
+    NSDictionary *fortuneDic = dic[@"mama_fortune"];
+    self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
+    NSDictionary *extraDic = self.mamaCenterModel.extra_info;
+    self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
+    
+    self.mamatopView.centerModel = self.mamaCenterModel;
+    
+    NSInteger ActiveNum = [self.mamaCenterModel.active_value_num integerValue];
+    if (ActiveNum == 0) {
         [self createHuoYueDuView];
+    }
+    nickName = self.mamaCenterModel.mama_name;
 
-        return;
-    }
-    if ([fortune[@"active_value_num"] class] == [NSNull class] || [fortune[@"active_value_num"] integerValue]==0) {
-        self.activeValueNum = [NSNumber numberWithInteger:0];
-    }else {
-        self.activeValueNum = fortune[@"active_value_num"];
-    }
+    // 账户金额
+    self.carryValue = [NSNumber numberWithInteger:[self.mamaCenterModel.cash_value integerValue]];
+    self.activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];
     
-    nickName = [fortune objectForKey:@"mama_name"];
     
-    //账户金额
-    self.jineLabel.text = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"cash_value"] floatValue]];
-    self.carryValue = [fortune objectForKey:@"cash_value"];
-    
-    self.huoyuedulabel.text = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"active_value_num"]];
-  
-    self.huoyueduString = [[fortune objectForKey:@"active_value_num"] stringValue];
-    mamahuoyueduValue = [[fortune objectForKey:@"active_value_num"] floatValue];
+    self.huoyueduString = self.mamaCenterModel.active_value_num;
+    mamahuoyueduValue = [self.mamaCenterModel.active_value_num floatValue];
     [self createHuoYueDuView];
 
-    if ([[fortune objectForKey:@"fans_num"] class] == [NSNull class] || [[fortune objectForKey:@"fans_num"] integerValue]==0) {
-        self.fansNum = [NSNumber numberWithInteger:0];
-    }else {
-        self.fansNum = [fortune objectForKey:@"fans_num"];
-    }
+    self.fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];
     //邀请数，粉丝，订单，收益
-    self.inviteLabel.text = [NSString stringWithFormat:@"%@位", [fortune objectForKey:@"invite_num"]];
-    self.fensilabel.text = [NSString stringWithFormat:@"%@人", [fortune objectForKey:@"fans_num"]];
-    self.order.text = [NSString stringWithFormat:@"%@个", [fortune objectForKey:@"order_num"]];
-    self.account.text = [NSString stringWithFormat:@"%.2f元", [[fortune objectForKey:@"carry_value"] floatValue]];
-    self.earningsRecord = [NSString stringWithFormat:@"%.2f", [[fortune objectForKey:@"carry_value"] floatValue]];
-    self.orderRecord = [NSString stringWithFormat:@"%@", [fortune objectForKey:@"order_num"]];
+    self.inviteLabel.text = [NSString stringWithFormat:@"%@位", self.mamaCenterModel.invite_num];
+    self.fensilabel.text = [NSString stringWithFormat:@"%@人", self.mamaCenterModel.fans_num];
+    self.order.text = [NSString stringWithFormat:@"%@个", self.mamaCenterModel.order_num];
+    self.account.text = [NSString stringWithFormat:@"%.2f元", [self.mamaCenterModel.carry_value floatValue]];
+    self.earningsRecord = [NSString stringWithFormat:@"%.2f", [self.mamaCenterModel.carry_value floatValue]];
+    self.orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];
     
     //精选活动链接
-    self.eventLink = [fortune objectForKey:@"mama_event_link"];
-    
-    //我的邀请链接
-//    self.myInvitation = [fortune objectForKey:@"share_code"];
+    self.eventLink = self.mamaCenterModel.mama_event_link;
+
 }
 
 - (void)createHuoYueDuView{
@@ -1139,7 +1133,7 @@
     
     activity.webDiction = _diction;
     activity.isShowNavBar = true;
-    activity.isShowRightShareBtn = false;
+    activity.isShowRightShareBtn = true;
     
     [self.navigationController pushViewController:activity animated:YES];
 }
@@ -1168,9 +1162,7 @@
 
 #pragma mark --- 我的粉丝按钮
 - (IBAction)fansList:(id)sender {
-//    FensiListViewController *fensiVC = [[FensiListViewController alloc] init];
-//    fensiVC.fansNum = self.fansNum;
-//    [self.navigationController pushViewController:fensiVC animated:YES];
+
     JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
     mamaCenterFansVC.fansNum = self.fansNum;
     [self.navigationController pushViewController:mamaCenterFansVC animated:YES];

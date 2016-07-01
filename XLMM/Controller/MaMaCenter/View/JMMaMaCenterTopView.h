@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMMaMaCenterModel.h"
 
 @class JMMaMaCenterTopView;
 @protocol JMMaMaCenterTopViewDelegate <NSObject>
@@ -18,5 +19,7 @@
 @interface JMMaMaCenterTopView : UIImageView
 
 @property (nonatomic, weak) id<JMMaMaCenterTopViewDelegate>delegate;
+
+@property (nonatomic, strong) JMMaMaCenterModel *centerModel;
 
 @end

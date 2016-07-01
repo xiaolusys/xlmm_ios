@@ -121,6 +121,8 @@
     _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
     self.sharePackView.limitStr = _limitStr;
     
+    
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
