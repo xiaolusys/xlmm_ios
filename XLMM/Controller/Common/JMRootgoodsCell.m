@@ -68,7 +68,7 @@
     self.deletLine.backgroundColor = [UIColor titleDarkGrayColor];
     
     UIView *backView = [UIView new];
-    [self.contentView addSubview:backView];
+    [self.iconImage addSubview:backView];
     self.backView = backView;
     self.backView.backgroundColor = [UIColor blackColor];
     self.backView.alpha = 0.7;
@@ -80,6 +80,7 @@
     self.backLabel = backLabel;
     self.backLabel.textColor = [UIColor whiteColor];
     self.backLabel.font = [UIFont systemFontOfSize:13.];
+    self.backLabel.text = @"已抢光";
 //    self.backLabel = backLabel;    
 }
 - (void)layoutUI {
@@ -120,8 +121,8 @@
     }];
     
     [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.contentView.mas_centerX);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.centerX.equalTo(weakSelf.iconImage.mas_centerX);
+        make.centerY.equalTo(weakSelf.iconImage.mas_centerY);
         make.width.height.mas_equalTo(@60);
     }];
     

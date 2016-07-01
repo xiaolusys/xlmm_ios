@@ -186,6 +186,7 @@
 
 #pragma mark --- 选择物流公司
 - (void)choiseClick:(UIButton *)btn {
+    
     JMChooseLogisticsController *logisticsVC = [[JMChooseLogisticsController alloc] init];
     logisticsVC.delegate = self;
     [self.navigationController pushViewController:logisticsVC animated:YES];

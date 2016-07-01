@@ -681,11 +681,10 @@
     }else {
         [self createPayPopView];
     }
-
 }
 #pragma mark -- 支付
 - (void)payMoney {
-
+    self.buyButton.userInteractionEnabled = NO;
     if (addressModel.addressID == nil) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请填写收货地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -796,7 +795,7 @@
 }
 
 - (IBAction)btnAgreeClicked:(id)sender {
-    NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
+    NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
@@ -1029,7 +1028,6 @@
 }
 #pragma mark ----  支付弹出框 点击去结算按钮的时候弹出
 - (void)createPayPopView {
-    
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.payView];
     self.maskView.alpha = 0;
@@ -1193,14 +1191,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
     
-    //添加键盘的监听事件
-    
-    //注册通知,监听键盘弹出事件
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    //
-    //    //注册通知,监听键盘消失事件
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
-    
     if ([WXApi isWXAppInstalled]) {
         //  NSLog(@"安装了微信");
         self.isInstallWX = YES;
@@ -1210,10 +1200,7 @@
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
-    
-        
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+
     
 }
 - (void)isApinPayGo {
@@ -1230,16 +1217,11 @@
 
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
-    
     [self pushShareVC];
-    
-    //    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"支付成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//    [alterView show];
-//    [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-    
 }
 - (void)pushShareVC {
+    
     JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
     payShareVC.ordNum = _orderTidNum;
     [self.navigationController pushViewController:payShareVC animated:YES];
@@ -1262,55 +1244,8 @@
 
 
 @end
-/**
- *  ====== 上一个版本判断优惠券的方式  这个版本判断优惠券的方式为发送一个数据 在服务端判断
- 
- //            self.youhuijineLabel.text = [NSString stringWithFormat:@"已节省¥%.1f", afterdiscountfee];
- //            self.allPayLabel.text = [NSString stringWithFormat:@"¥%.1f", aftertotalPayment];
- //            self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.1f", aftertotalPayment];
- 
- //更新小鹿钱包提示信息。。。。。
- // 余额足够 显示  小鹿钱包 ＝ 总金额 － 优惠券金额 － 立减金额。
- // 余额不足   显示  小鹿钱包 ＝ 余额数。。。
- 
- 
- 
- //使用优惠券后
- if (yhqModel && yhqModel.coupon_value) {
- CGFloat couponV = [yhqModel.coupon_value floatValue];
- NSNumber *couponNS = [NSNumber numberWithFloat:couponV];
- NSNumber *totalNS = [NSNumber numberWithFloat:totalPayment];   //最终需要支付的金额
- 
- CGFloat aftertotalPayment = 0.00;
- CGFloat afterdiscountfee = 0.00;
- 
- if ([totalNS compare:couponNS] == NSOrderedDescending) {
- aftertotalPayment = totalPayment - couponV;
- afterdiscountfee = discountfee + couponV;
- self.isEnoughCoupon = NO;
- NSString *str = model.use_fee_des;
- CGFloat canPay = [[str substringWithRange:NSMakeRange(1, str.length - 3)] floatValue];
- 
-
- *  在这里判断是否可用    判断商品总价格  totalFeeLabel
- maxPay  商品总金额 == 商品总金额减去APP支付立减  +  APP支付立减的金额
-
-CGFloat maxPay = totalPayment + discountfee;
-if (maxPay >= canPay) {
-    aftertotalPayment = 0.00;
-    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
-    self.isEnoughCoupon = YES;
-}else {
-    [SVProgressHUD showInfoWithStatus:model.use_fee_des];
-    self.couponLabel.text = @"";
-}
-
-}else {
-    aftertotalPayment = 0.00;
-    afterdiscountfee = [[self.couponInfo objectForKey:@"total_payment"] floatValue];
-    self.isEnoughCoupon = YES;
-    
-}
 
 
- */
+
+
+
