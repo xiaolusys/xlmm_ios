@@ -39,6 +39,10 @@
 
 - (void)createUI {
 
+    UIView *rootView = [UIView new];
+    [self addSubview:rootView];
+    
+    
     UIView *baseView = [UIView new];
     [self addSubview:baseView];
     self.baseView = baseView;
@@ -72,6 +76,14 @@
     CGFloat topH = self.frame.size.width / topImageWH;
     
     kWeakSelf
+    CGFloat H = (SCREENWIDTH * 0.7) * 1.3 + 60;
+    [rootView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(SCREENWIDTH *0.7);
+        make.height.mas_equalTo(H);
+        make.centerX.equalTo(weakSelf.mas_centerX);
+        make.centerY.equalTo(weakSelf.mas_centerY);
+    }];
+    
     [self.baseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf);
         make.width.mas_equalTo(weakSelf.mas_width);

@@ -16,6 +16,10 @@
 
 @property (nonatomic, strong) UIButton *fiftyButton;
 
+@property (nonatomic, strong) UILabel *moneyLabel;
+
+
+
 @end
 
 @implementation JMCouponView
@@ -32,7 +36,26 @@
     _myCouponBlance = myCouponBlance;
     
     
-    
+    if (self.myCouponBlance >= 50) {
+        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
+        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+    }else if (self.myCouponBlance >= 20 && self.myCouponBlance < 50) {
+        self.twentyButton.enabled = YES;
+        self.fiftyButton.enabled = NO;
+        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
+        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanbukeyongbg"] forState:UIControlStateNormal];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+    }else if (self.myCouponBlance < 20) {
+        self.twentyButton.enabled = NO;
+        self.fiftyButton.enabled = NO;
+        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquanbukeyongbg"] forState:UIControlStateNormal];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanbukeyongbg"] forState:UIControlStateNormal];
+    }
+
+
 }
 - (void)createUI {
   
@@ -48,43 +71,24 @@
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     btn.adjustsImageWhenHighlighted = NO;
     btn.tag = self.subviews.count + 1;
-    
+//    self.twentyButton = btn;
     [btn setBackgroundImage:image forState:UIControlStateNormal];
     [btn setBackgroundImage:highImage forState:UIControlStateSelected];
     
     UILabel *moneyLabel = [UILabel new];
     [btn addSubview:moneyLabel];
+    self.moneyLabel = moneyLabel;
+    self.moneyLabel.font = [UIFont systemFontOfSize:60.];
+    
+    self.moneyLabel.textColor = [UIColor redColor];
     if (btn.tag == 1) {
-        moneyLabel.text = @"¥20";
+        self.moneyLabel.text = @"¥20";
+        self.twentyButton = btn;
     }else {
-        moneyLabel.text = @"¥50";
-    }
-    moneyLabel.textColor = [UIColor redColor];
-    moneyLabel.font = [UIFont systemFontOfSize:60.];
-    
-    NSString *imageNomal;
-    if (self.myCouponBlance >= 50) {
-        imageNomal = @"newyouhuiquankeyongbg";
-        [btn setImage:[UIImage imageNamed:imageNomal] forState:UIControlStateNormal];
-    }else if (self.myCouponBlance >= 20 && self.myCouponBlance < 50) {
-        if (btn.tag == 1) {
-            moneyLabel.textColor = [UIColor timeLabelColor];
-            imageNomal = @"newyouhuiquanbukeyongbg";
-            [btn setImage:[UIImage imageNamed:imageNomal] forState:UIControlStateNormal];
-            btn.enabled = NO;
-        }else {
-            imageNomal = @"newyouhuiquankeyongbg";
-            [btn setImage:[UIImage imageNamed:imageNomal] forState:UIControlStateNormal];
-        }
-    }else if (self.myCouponBlance < 20) {
-        moneyLabel.textColor = [UIColor timeLabelColor];
-        imageNomal = @"newyouhuiquanbukeyongbg";
-        btn.enabled = NO;
-        [btn setImage:[UIImage imageNamed:imageNomal] forState:UIControlStateNormal];
+        self.moneyLabel.text = @"¥50";
+        self.fiftyButton = btn;
     }
     
-    
-
     
     
     UILabel *goforLabel = [UILabel new];
@@ -98,7 +102,7 @@
     timeLabel.font = [UIFont systemFontOfSize:12.];
     timeLabel.textColor = [UIColor timeLabelColor];
     
-    [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(btn).offset(60);
         make.top.equalTo(btn);
     }];
@@ -127,9 +131,10 @@
     for (int i = 0 ; i < count; i++) {
         
         UIButton *btn = self.subviews[i];
-        
         Y = i * H + 5 * (i + 1);
         btn.frame = CGRectMake(X, Y, W, H);
+        
+        
     }
 }
 - (void)btnClick:(UIButton *)button {
