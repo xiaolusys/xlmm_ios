@@ -1127,6 +1127,7 @@
 //    _diction = nil;
     NSString *active = @"myInvite";
     NSString *titleName = @"我的邀请";
+    [self.diction setValue:@4 forKey:@"activity_id"];
     [self.diction setValue:self.myInvitation forKey:@"web_url"];
     [self.diction setValue:active forKey:@"type_title"];
     [self.diction setValue:titleName forKey:@"name_title"];
