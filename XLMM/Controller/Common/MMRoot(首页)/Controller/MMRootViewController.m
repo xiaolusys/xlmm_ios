@@ -257,20 +257,47 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     return _endTime;
 }
-
+#pragma 领取优惠券
 - (void)updataAfterLogin:(NSNotification *)notification{
     // 微信登录
     [self loginUpdateIsXiaoluMaMa];
-    
-    
+    [self isGetCoupon];
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
     //  NSLog(@"手机登录");
     [self loginUpdateIsXiaoluMaMa];
+    [self isGetCoupon];
+}
+#pragma mark -- 判断用户是否领取优惠券
+- (void)isGetCoupon {
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
+    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            NSInteger code = [responseObject[@"code"] integerValue];
+            NSInteger flag = [responseObject[@"pop_flag"] integerValue];
+            if (code == 0) {
+                if (flag == 0) {
+                    [self returnPopView];
+                }else {
+                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                }
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"请登录"];
+            }
+
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
     
 }
-
 - (BOOL)isXiaolumama{
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
     BOOL isXLMM = [users boolForKey:@"isXLMM"];
@@ -599,10 +626,32 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)composePayButton:(JMRepopView *)payButton didClick:(NSInteger)index {
     if (index == 100) {
         [self hidepopView];
-        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-        BOOL isFirstLogin = [JMFirstOpen isFirstLoadApp];
-        logVC.isFirstLogin = isFirstLogin;
-        [self.navigationController pushViewController:logVC animated:YES];
+        BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+        if (islogin) {
+            AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
+            [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if (responseObject == nil) {
+                    return ;
+                }else {
+                    NSInteger code = [responseObject[@"code"] integerValue];
+                    if (code == 0) {
+                        [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                    }else {
+                        [SVProgressHUD showErrorWithStatus:@"请登录"];
+                    }
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                
+            }];
+        }else {
+            JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+            BOOL isFirstLogin = [JMFirstOpen isFirstLoadApp];
+            logVC.isFirstLogin = isFirstLogin;
+            [self.navigationController pushViewController:logVC animated:YES];
+        }
+        
     }else {
         //取消按钮
         [self hidepopView];

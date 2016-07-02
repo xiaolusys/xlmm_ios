@@ -19,7 +19,6 @@
 #import "JMRefundView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
-#import "JMFirstOpen.h"
 
 
 //JMOrderGoodsModel
@@ -240,9 +239,7 @@
     self.sendImageView3.layer.borderWidth = 0;
     self.sendImageView3.layer.borderColor = [UIColor lineGrayColor].CGColor;
     
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
-    
+
 
 }
 
@@ -723,9 +720,7 @@
 - (IBAction)commitClicked:(id)sender {
     
     NSLog(@"提交");
-    
-    
-    
+    [SVProgressHUD showWithStatus:@"退货处理中....."];
     //申请退货 上传图片bug修复
     
     for (int i = 0; i< self.imagesArray.count && i < self.keysArray.count; i++) {
@@ -735,80 +730,94 @@
         
 
     }
-    UIAlertView * myAlterView = [[UIAlertView alloc] initWithTitle:nil
-                                                           message:@"确定要退货吗？"
-                                                          delegate:nil
-                                                 cancelButtonTitle:@"取消"
-                                                 otherButtonTitles:@"确定"
-                                 ,nil];
-    myAlterView.tag = 88;
-    myAlterView.delegate = self;
     
-    
-    [myAlterView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag != 88) return;
-    if (buttonIndex == 1){
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-        NSString *descStr = self.inputTextView.text;
-        if ([self.inputTextView.text isEqualToString:@""]) {
-            descStr = @"七天无理由退货";
-        }
-        
-        NSMutableString *linkstr = [[NSMutableString alloc] init];
-        if(self.imagesArray.count > 3){
-            [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
-            return;
-        }
-        for (int i = 0; i < self.imagesArray.count; i++) {
-            [linkstr appendString:self.linksArray[i]];
-            [linkstr appendString:@","];
-        }
-        
-        NSRange range = {linkstr.length - 1, 1};
-        if (linkstr.length >0 ) {
-            [linkstr deleteCharactersInRange:range];
-            
-        }
-        NSLog(@"str = %@", linkstr);
-        
-        NSDictionary *parameters = @{@"id":self.oid,
-                                     @"reason":[NSNumber numberWithInt:reasonCode],
-                                     @"num":self.refundNumLabel.text,
-                                     @"sum_price":[NSNumber numberWithFloat:self.refundPrice],
-                                     @"description":descStr,
-                                     @"proof_pic":linkstr,
-                                     };
-        
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *dic = responseObject;
-            isChangeBtn = YES;
-            if (dic.count == 0) return;
-            
-            NSLog(@"refund return, %@", responseObject);
-            
-            if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
-                NSLog(@"refund return ok");
-
-//                [self returnPopView];
-                
-                [self.navigationController popViewControllerAnimated:YES];
-                
-            }
-            NSLog(@"refund return ok end");
-            [SVProgressHUD dismiss];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            isChangeBtn = NO;
-            NSLog(@"refund return failed %@", error);
-            [SVProgressHUD dismiss];
-        }];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSString *descStr = self.inputTextView.text;
+    if ([self.inputTextView.text isEqualToString:@""]) {
+        descStr = @"七天无理由退货";
     }
+    
+    NSMutableString *linkstr = [[NSMutableString alloc] init];
+    if(self.imagesArray.count > 3){
+        [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
+        return;
+    }
+    for (int i = 0; i < self.imagesArray.count; i++) {
+        [linkstr appendString:self.linksArray[i]];
+        [linkstr appendString:@","];
+    }
+    
+    NSRange range = {linkstr.length - 1, 1};
+    if (linkstr.length >0 ) {
+        [linkstr deleteCharactersInRange:range];
+        
+    }
+    NSLog(@"str = %@", linkstr);
+    
+    NSDictionary *parameters = @{@"id":self.oid,
+                                 @"reason":[NSNumber numberWithInt:reasonCode],
+                                 @"num":self.refundNumLabel.text,
+                                 @"sum_price":[NSNumber numberWithFloat:self.refundPrice],
+                                 @"description":descStr,
+                                 @"proof_pic":linkstr,
+                                 };
+    
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        isChangeBtn = YES;
+        if (dic.count == 0) return;
+        
+        NSLog(@"refund return, %@", responseObject);
+        
+        if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+            NSLog(@"refund return ok");
+            self.button.hidden = YES;
+            [self returnPopView];
+        }else {
+            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
+        }
+        NSLog(@"refund return ok end");
+        [SVProgressHUD dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        isChangeBtn = NO;
+        NSLog(@"refund return failed %@", error);
+        [SVProgressHUD dismiss];
+    }];
 
 }
 
+#pragma mark -- 弹出视图
+- (void)returnPopView {
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0.3;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRefundpopView)]];
+    JMRefundView *popView = [JMRefundView defaultPopView];
+    self.popView = popView;
+    self.popView.titleStr = @"退货请求提交成功，客服会在24小时完成审核，您可以在退货界面查询进展，审核通过后您需要在退货界面填写退货快递单号，方便我们为你快速处理退款。";
+    self.popView.delegate = self;
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.popView];
+    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+    
+}
+- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hideRefundpopView];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self hideRefundpopView];
+    }
+    //    [self.navigationController popViewControllerAnimated:YES];
+}
+/**
+ *  隐藏
+ */
+- (void)hideRefundpopView {
+    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (IBAction)sendImages:(id)sender {
     NSLog(@"选择图片");
@@ -845,41 +854,24 @@
     [self.imagesArray removeObjectAtIndex:2];
     [self createImageViews];
 }
-- (void)returnPopView {
-    /**
-     判断是否为第一次打开 -- 选择弹出优惠券弹窗
-     */
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0.3;
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidepopView)]];
-    JMRefundView *popView = [JMRefundView defaultPopView];
-    self.popView = popView;
-    self.popView.delegate = self;
-    if ([JMFirstOpen isFirstLoadApp]) {
-        [self.view addSubview:self.maskView];
-        [self.view addSubview:self.popView];
-        [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
-        
-    }else {
-    }
-}
-- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
-    if (index == 100) {
-        [self hidepopView];
-//        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-//        [self.navigationController pushViewController:logVC animated:YES];
-        [self.navigationController popViewControllerAnimated:YES];
 
-    }else {
-        //取消按钮
-        [self hidepopView];
-    }
-}
-/**
- *  隐藏
- */
-- (void)hidepopView {
-    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
-}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

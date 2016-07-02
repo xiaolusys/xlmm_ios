@@ -25,9 +25,11 @@
 #import "JMRefundController.h"
 #import "SVProgressHUD.h"
 #import "JMOrderGoodsModel.h"
+#import "JMRefundView.h"
+#import "JMPopViewAnimationSpring.h"
 
 
-@interface ShenQingTuikuanController ()<JMRefundControllerDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate,JMShareViewDelegate>
+@interface ShenQingTuikuanController ()<JMRefundViewDelegate,JMRefundControllerDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate,JMShareViewDelegate>
 
 {
     
@@ -42,6 +44,8 @@
 @property (nonatomic,strong) JMRefundController *refundVC;
 
 @property (nonatomic,strong) UIView *maskView;
+
+@property (nonatomic, strong) JMRefundView *popView;
 
 @end
 
@@ -487,9 +491,12 @@
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = responseObject;
         if (dic.count == 0) return;
-        if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+        NSInteger code = [dic[@"code"] integerValue];
+        if (code == 0) {
             self.button.hidden = YES;
-            [self.navigationController popViewControllerAnimated:YES];
+            
+            [self returnPopView];
+            
         }
         [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -510,24 +517,38 @@
     self.refundVC.refundDic = self.refundDic;
     self.refundVC.delegate = self;
     menu.contentView = self.refundVC.view;
-    
-    
-//   UIAlertView * myAlterView = [[UIAlertView alloc] initWithTitle:nil
-//                                             message:@"确定要退货吗？"
-//                                            delegate:nil
-//                                   cancelButtonTitle:@"取消"
-//                                   otherButtonTitles:@"确定"
-//                   ,nil];
-//    myAlterView.tag = 88;
-//    myAlterView.delegate = self;
-//    
-//    
-//    [myAlterView show];
 
     
-    
-    
-    
+}
+#pragma mark -- 弹出视图
+- (void)returnPopView {
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0.3;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRefundpopView)]];
+    JMRefundView *popView = [JMRefundView defaultPopView];
+    self.popView = popView;
+    self.popView.titleStr = @"1:极速退款,退款即时到账哦!请注意查收。\n 2:退款请求提交成功，客服会在24小时完成审核，您可以在退款界面查询进展，审核通过后请注意查看钱包余额，谢谢。";
+    self.popView.delegate = self;
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.popView];
+    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+}
+- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hideRefundpopView];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self hideRefundpopView];
+    }
+    //    [self.navigationController popViewControllerAnimated:YES];
+}
+/**
+ *  隐藏
+ */
+- (void)hideRefundpopView {
+    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark --- 点击隐藏弹出视图 changeLogisticsClick
 - (void)coverDidClickCover:(JMShareView *)cover {

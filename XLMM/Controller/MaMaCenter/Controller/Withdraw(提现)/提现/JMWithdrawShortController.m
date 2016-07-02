@@ -60,7 +60,6 @@
 }
 - (void)setMyBalance:(CGFloat)myBalance {
     _myBalance = myBalance;
-
 }
 
 // /rest/v1/pmt/cashout/exchange_coupon?template_id=62&exchange_num=3   72 20 73 50

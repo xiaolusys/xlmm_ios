@@ -23,5 +23,6 @@
 
 + (instancetype)defaultPopView;
 
+@property (nonatomic, copy) NSString *titleStr;
 
 @end

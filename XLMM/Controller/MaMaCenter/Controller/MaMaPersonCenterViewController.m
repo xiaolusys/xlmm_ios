@@ -214,14 +214,14 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else if (index == 111) {
         NSInteger code = [self.extraModel.could_cash_out integerValue];
-        if (code == 0) {
+        if (code == 1) {
             TixianViewController *vc = [[TixianViewController alloc] init];
             vc.carryNum = self.carryValue;
             vc.activeValue = [self.activeValueNum integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else {
             JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-            shortVC.myBalance = 33;//[self.carryValue floatValue];
+            shortVC.myBalance = [self.carryValue floatValue];
             shortVC.descStr = self.extraModel.cashout_reason;
             [self.navigationController pushViewController:shortVC animated:YES];
         }

@@ -28,7 +28,7 @@ typedef void(^changeBtnBlock) (BOOL btnStatus);
 @property (copy, nonatomic) NSString *oid;
 @property (copy, nonatomic) NSString *status;
 
-
+@property (nonatomic, strong) UIButton *button;
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 

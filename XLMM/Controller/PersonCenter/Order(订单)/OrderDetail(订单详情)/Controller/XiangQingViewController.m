@@ -547,8 +547,8 @@
         tuiHuoVC.dingdanModel = model;
         tuiHuoVC.tid = tid;
         tuiHuoVC.oid = model.orderGoodsID;
-        tuiHuoVC.status = self.orderGoodsModel.status_display;
-        
+        tuiHuoVC.status = model.status_display;
+        tuiHuoVC.button = button;
         [self.navigationController pushViewController:tuiHuoVC animated:YES];
         
     }else {
@@ -557,9 +557,6 @@
 }
 #pragma mark -- 弹出视图
 - (void)returnPopView {
-    /**
-     判断是否为第一次打开 -- 选择弹出优惠券弹窗
-     */
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.maskView.backgroundColor = [UIColor blackColor];
     self.maskView.alpha = 0.3;
@@ -567,8 +564,6 @@
     JMNORefundView *popView = [JMNORefundView defaultPopView];
     self.popView = popView;
     self.popView.delegate = self;
-    
-    
 
 }
 - (void)composeNoRefundButton:(JMNORefundView *)refundButton didClick:(NSInteger)index {
