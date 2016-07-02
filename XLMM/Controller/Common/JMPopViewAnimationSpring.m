@@ -12,7 +12,8 @@
 
 + (void)showView:(UIView *)popupView overlayView:(UIView *)overlayView {
     popupView.center = CGPointMake(overlayView.center.x, overlayView.center.y);
-
+    
+    overlayView.alpha = 0.3;
     CAKeyframeAnimation *popAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     popAnimation.duration = 0.4;
     popAnimation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.01f, 0.01f, 1.0f)],

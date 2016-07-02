@@ -415,7 +415,6 @@
     vc.carryNum = self.carryValue;
     vc.activeValue = [self.activeValueNum integerValue];
     
-    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -39,10 +39,13 @@
 #import "JMGoodsShowController.h"
 #import "JMGoodsShowView.h"
 #import "JMTimeLineView.h"
+#import "JMPackAgeModel.h"
+#import "JMNORefundView.h"
+#import "JMPopViewAnimationSpring.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface XiangQingViewController ()<JMGoodsShowControllerDelegate,NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate>{
+@interface XiangQingViewController ()<JMNORefundViewDelegate,JMGoodsShowControllerDelegate,NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate>{
     
     float refundPrice;
 }
@@ -99,6 +102,12 @@
  *  商品展示cell
  */
 @property (nonatomic,strong) JMGoodsShowController *goodsShowVC;
+/**
+ *  包裹信息Model
+ */
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
+
+@property (nonatomic, strong) JMNORefundView *popView;
 
 @end
 
@@ -483,16 +492,33 @@
     NSArray *arr = _dataSource[section];
     JMOrderGoodsModel *model = arr[row];
     if (button.tag == 100) {
-        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+        self.packageModel = [[JMPackAgeModel alloc] init];
+        if (_logisticsArr.count > 0) {
+            NSArray *arr = _logisticsArr[section];
+            self.packageModel = arr[row];
+        }else {
+            self.packageModel = nil;
+        }
         
-        tuikuanVC.dingdanModel = model;
-        tuikuanVC.refundDic = _refundDic;
-        tuikuanVC.tid = tid;
-        tuikuanVC.oid = model.orderGoodsID;
-        tuikuanVC.status = model.status_display;
-        tuikuanVC.button = button;
-        [self.navigationController pushViewController:tuikuanVC animated:YES];
+        BOOL isWarehouseOrder = (self.packageModel.assign_time != nil || self.packageModel.book_time != nil || self.packageModel.finish_time != nil);
         
+        if (isWarehouseOrder) {
+            [self returnPopView];
+            [self.view addSubview:self.maskView];
+            [self.view addSubview:self.popView];
+            [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+        
+        }else {
+            ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+            
+            tuikuanVC.dingdanModel = model;
+            tuikuanVC.refundDic = _refundDic;
+            tuikuanVC.tid = tid;
+            tuikuanVC.oid = model.orderGoodsID;
+            tuikuanVC.status = model.status_display;
+            tuikuanVC.button = button;
+            [self.navigationController pushViewController:tuikuanVC animated:YES];
+        }
 
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
@@ -529,6 +555,38 @@
         
     }
 }
+#pragma mark -- 弹出视图
+- (void)returnPopView {
+    /**
+     判断是否为第一次打开 -- 选择弹出优惠券弹窗
+     */
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0.3;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRefundpopView)]];
+    JMNORefundView *popView = [JMNORefundView defaultPopView];
+    self.popView = popView;
+    self.popView.delegate = self;
+    
+    
+
+}
+- (void)composeNoRefundButton:(JMNORefundView *)refundButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hideRefundpopView];
+    }else {
+        [self hideRefundpopView];
+    }
+    
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+/**
+ *  隐藏
+ */
+- (void)hideRefundpopView {
+    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
+}
+
 /**
  *  设置倒计时方法
  */
