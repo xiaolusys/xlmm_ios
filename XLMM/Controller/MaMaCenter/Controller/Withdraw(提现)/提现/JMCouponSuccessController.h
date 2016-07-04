@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign) NSInteger moneyNum;
 
+@property (nonatomic, assign) CGFloat withDrawMoney;
+
 @end
