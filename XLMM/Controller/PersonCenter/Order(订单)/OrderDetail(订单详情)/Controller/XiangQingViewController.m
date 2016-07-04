@@ -381,84 +381,57 @@
 
 #pragma mark 包裹信息的分包判断
 - (void)setWuLiuMsg:(NSArray *)orderArray {
-    
-//    [_logisticsArr removeAllObjects];
     [_dataSource removeAllObjects];
-    if (orderArray.count == 0) {
-        CGFloat goodsH = 90 * dataArray.count;
-        self.goodsViewHeight.constant = goodsH;
-        
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:dataArray];
-        self.goodsShowVC.dataSource = arr;
-        self.goodsShowVC.logisticsArr = _logisticsArr;
-        self.goodsShowVC.delegate = self;
-        JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
-        goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
-        [self.myXiangQingView addSubview:goodsShowView];
-        goodsShowView.backgroundColor = [UIColor orangeColor];
-        goodsShowView.contentView = self.goodsShowVC.view;
-        [_dataSource addObject:dataArray];
-    }else {
-        NSInteger count = [self.orderDetailModel.status integerValue];
-        if (count == ORDER_STATUS_PAYED) {
-            self.choiseLogisticsView.userInteractionEnabled = YES;
-            self.addressInfoImage.userInteractionEnabled = YES;
-        }
-        NSDictionary *dicts = orderArray[0];
-        NSInteger number = 0;
-        NSString *package = dicts[@"package_order_id"];
-//        NSMutableArray *logisArr = [NSMutableArray array];
-        NSMutableArray *dataArr = [NSMutableArray array];
-        for (NSDictionary *dict in orderArray) {
-//            self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:dict];
-//            [logisArr addObject:self.packageModel];
-            [dataArr addObject:dataArray[number]];
-            number ++;
-            if (number == orderArray.count) {
-//                [_logisticsArr addObject:logisArr];
-                [_dataSource addObject:dataArr];
-            }else {
-                NSDictionary * dict2 = orderArray[number];
-                NSString *package2 = dict2[@"package_order_id"];
+    NSInteger count = [self.orderDetailModel.status integerValue];
+    if (count == ORDER_STATUS_PAYED) {
+        self.choiseLogisticsView.userInteractionEnabled = YES;
+        self.addressInfoImage.userInteractionEnabled = YES;
+    }
+    NSDictionary *dicts = orderArray[0];
+    NSInteger number = 0;
+    NSString *package = dicts[@"package_order_id"];
+    NSMutableArray *dataArr = [NSMutableArray array];
+    for (int i = 0; i < orderArray.count; i++) {
+        [dataArr addObject:dataArray[number]];
+        number++;
+        if (number == orderArray.count) {
+            [_dataSource addObject:dataArr];
+        }else {
+            NSDictionary *dict2 = orderArray[number];
+            NSString *package2 = dict2[@"package_order_id"];
+            if (package == package2) {
                 
-                if (package == package2) {
-                    
-                }else {
-                    package = package2;
-//                    [_logisticsArr addObject:logisArr];
-                    [_dataSource addObject:dataArr];
-//                    logisArr = [NSMutableArray array];
-                    dataArr = [NSMutableArray array];
-                }
+            }else {
+                package = package2;
+                [_dataSource addObject:dataArr];
+                dataArr = [NSMutableArray array];
             }
         }
-        NSInteger numCount = 0;
-        if (package.length == 0) {
-            numCount = 0;
-        }else {
-            numCount = _dataSource.count;
-        }
-        CGFloat goodsH = 90 * dataArray.count + 35 * numCount;
-        self.goodsViewHeight.constant = goodsH;
-        self.goodsShowVC.dataSource = _dataSource;
-        self.goodsShowVC.logisticsArr = _logisticsArr;
-        self.goodsShowVC.packOrderID = package;
-        self.goodsShowVC.delegate = self;
-        JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
-        goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
-        [self.myXiangQingView addSubview:goodsShowView];
-        goodsShowView.backgroundColor = [UIColor orangeColor];
-        goodsShowView.contentView = self.goodsShowVC.view;
         
     }
-
+    NSInteger numCount = 0;
+    if (package.length == 0) {
+        numCount = 0;
+    }else {
+        numCount = _dataSource.count;
+    }
+    CGFloat goodsH = 90 * dataArray.count + 35 * numCount;
+    self.goodsViewHeight.constant = goodsH;
+    self.goodsShowVC.dataSource = _dataSource;
+    self.goodsShowVC.logisticsArr = _logisticsArr;
+    self.goodsShowVC.packOrderID = package;
+    self.goodsShowVC.delegate = self;
+    JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
+    goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
+    [self.myXiangQingView addSubview:goodsShowView];
+    goodsShowView.backgroundColor = [UIColor orangeColor];
+    goodsShowView.contentView = self.goodsShowVC.view;
 }
 - (void)composeWithLogistics:(JMGoodsShowController *)logistics didClickButton:(NSInteger)index {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     
     NSArray *arr = _dataSource[index];
-    NSArray *logisArr = _logisticsArr[index];
+    NSArray *logisArr = _logisticsArr;
     queryVC.orderDataSource = arr;
     queryVC.logisDataSource = logisArr;
 
@@ -468,15 +441,11 @@
 }
 - (void)composeOptionTapClick:(JMGoodsShowController *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
-
-    NSArray *arr = _dataSource[section];
-    queryVC.orderDataSource = arr;
-    
+    queryVC.orderDataSource = _dataSource[section];
     if (_logisticsArr.count == 0) {
         return ;
     }else {
-        NSArray *array = _logisticsArr;
-        queryVC.logisDataSource = array;
+        queryVC.logisDataSource = _logisticsArr;
     }
     
     queryVC.logName = self.logisticsLabel.text;
@@ -490,8 +459,7 @@
     if (button.tag == 100) {
         self.packageModel = [[JMPackAgeModel alloc] init];
         if (_logisticsArr.count > 0) {
-            NSArray *arr = _logisticsArr[section];
-            self.packageModel = arr[row];
+            self.packageModel = _logisticsArr[row];
         }else {
             self.packageModel = nil;
         }

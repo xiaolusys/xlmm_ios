@@ -163,7 +163,9 @@
 static NSString *ksimpleCell = @"JMRootgoodsCell";
 static NSString *kbrandCell = @"JMRootScrolCell";
 
-@implementation MMRootViewController
+@implementation MMRootViewController {
+    BOOL _isFirstOpenApp;
+}
 
 //- (UIScrollView *)backScrollview {
 //    if (!_backScrollview) {
@@ -261,43 +263,20 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)updataAfterLogin:(NSNotification *)notification{
     // 微信登录
     [self loginUpdateIsXiaoluMaMa];
-    [self isGetCoupon];
+    if (_isFirstOpenApp) {
+        [self isGetCoupon];
+    }
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
     //  NSLog(@"手机登录");
     [self loginUpdateIsXiaoluMaMa];
-    [self isGetCoupon];
-}
-#pragma mark -- 判断用户是否领取优惠券
-- (void)isGetCoupon {
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
-    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (responseObject == nil) {
-            return ;
-        }else {
-            NSInteger code = [responseObject[@"code"] integerValue];
-            NSInteger flag = [responseObject[@"pop_flag"] integerValue];
-            if (code == 0) {
-                if (flag == 0) {
-                    [self returnPopView];
-                }else {
-                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
-                }
-            }else {
-                [SVProgressHUD showErrorWithStatus:@"请登录"];
-            }
-
-        }
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
-    }];
+    if (_isFirstOpenApp) {
+        [self isGetCoupon];
+    }
     
 }
+
 - (BOOL)isXiaolumama{
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
     BOOL isXLMM = [users boolForKey:@"isXLMM"];
@@ -598,9 +577,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     [self autoUpdateVersion];
     
+    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];
+    if (_isFirstOpenApp) {
+       [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
+    }else {
+    }
     
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     
 }
 #pragma mark --- 第一次打开程序
@@ -615,45 +597,44 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     JMRepopView *popView = [JMRepopView defaultPopView];
     self.popView = popView;
     self.popView.delegate = self;
-    if ([JMFirstOpen isFirstLoadApp]) {
-        [self.view addSubview:self.maskView];
-        [self.view addSubview:self.popView];
-        [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
-        
-    }else {
-    }
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.popView];
+    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
 }
 - (void)composePayButton:(JMRepopView *)payButton didClick:(NSInteger)index {
     if (index == 100) {
         [self hidepopView];
         BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
         if (islogin) {
-            AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-            [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if (responseObject == nil) {
-                    return ;
-                }else {
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
-                    if (code == 0) {
-                        if (isPicked == 1) {
-                            [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
-                        }else {
-                            [self pickCoupon];
-                        }
+            if (_isFirstOpenApp) {
+                AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+                [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    if (responseObject == nil) {
+                        return ;
                     }else {
-                        [SVProgressHUD showErrorWithStatus:@"请登录"];
+                        NSInteger code = [responseObject[@"code"] integerValue];
+                        NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+                        if (code == 0) {
+                            if (isPicked == 1) {
+                                [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                            }else {
+                                [self pickCoupon];
+                            }
+                        }else {
+                            [SVProgressHUD showErrorWithStatus:@"请登录"];
+                        }
                     }
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-                
-            }];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    
+                    
+                }];
+            }else {
+            
+            }
+            
         }else {
             JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-            BOOL isFirstLogin = [JMFirstOpen isFirstLoadApp];
-            logVC.isFirstLogin = isFirstLogin;
             [self.navigationController pushViewController:logVC animated:YES];
         }
         
@@ -661,6 +642,35 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         //取消按钮
         [self hidepopView];
     }
+}
+#pragma mark -- 判断用户是否领取优惠券
+- (void)isGetCoupon {
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            NSInteger code = [responseObject[@"code"] integerValue];
+            NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+            if (code == 0) {
+                if (isPicked == 0) {
+                    [self returnPopView];
+                }else {
+                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                }
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"请登录"];
+            }
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
 }
 - (void)pickCoupon {
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];

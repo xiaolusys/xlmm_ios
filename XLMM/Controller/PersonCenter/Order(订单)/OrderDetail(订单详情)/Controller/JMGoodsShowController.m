@@ -14,12 +14,18 @@
 #import "UIViewController+NavigationBar.h"
 #import "JMPackAgeModel.h"
 #import "JMOrderGoodsModel.h"
+#import "JMPopLogistcsModel.h"
+#import "MJExtension.h"
 
 @interface JMGoodsShowController ()<JMBaseGoodsCellDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *tableView;
 
 @property (nonatomic, strong) UILabel *descLabel;
+
+@property (nonatomic, strong) JMPopLogistcsModel *logisticsModel;
+
+@property (nonatomic, strong) NSMutableArray *logisticsArray;
 
 @end
 
@@ -28,6 +34,13 @@
     NSInteger _packageCount;
     BOOL _isExsitingPackage;
     BOOL _isExsitingorder;
+    BOOL _isLogisticsInfo;
+}
+- (NSMutableArray *)logisticsArray {
+    if (_logisticsArray == nil) {
+        _logisticsArray = [NSMutableArray array];
+    }
+    return _logisticsArray;
 }
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
@@ -38,13 +51,21 @@
 }
 - (void)setLogisticsArr:(NSMutableArray *)logisticsArr {
     _logisticsArr = logisticsArr;
-//    if (logisticsArr.count == 0) {
-//        //没有包裹信息
-//        _isExsitingPackage = NO;
-//    }else {
-//        //有包裹信息
-//        _isExsitingPackage = YES;
-//    }
+    
+    for (JMPackAgeModel *packageModel in logisticsArr) {
+        NSDictionary *logistics = packageModel.logistics_company;
+        if (logistics.count == 0) {
+            _isLogisticsInfo = NO;
+            return ;
+        }else {
+            _isLogisticsInfo = YES;
+            JMPopLogistcsModel *logisticsModel = [JMPopLogistcsModel mj_objectWithKeyValues:logistics];
+            self.logisticsModel = logisticsModel;
+            [self.logisticsArray addObject:logisticsModel];
+        }
+        
+    }
+
 }
 - (void)setPackOrderID:(NSString *)packOrderID {
     _packOrderID = packOrderID;
@@ -89,6 +110,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+    
     if (_isExsitingPackage) {
         UIButton *view = [UIButton buttonWithType:UIButtonTypeSystem];
         view.frame = CGRectMake(0, 0, SCREENWIDTH, 35);
@@ -101,11 +123,23 @@
         }];
         label.font = [UIFont systemFontOfSize:13.];
         label.textColor = [UIColor timeLabelColor];
-        if (_isExsitingorder) {
-            label.text = [NSString stringWithFormat:@"包裹%@",arr[section]];
+        label.text = [NSString stringWithFormat:@"包裹%@ :",arr[section]];
+        
+        if (_isLogisticsInfo) {
+            self.logisticsModel = self.logisticsArray[section];
+            // 显示包裹分包信息中的物流
+            UILabel *logisticeLabel = [UILabel new];
+            [view addSubview:logisticeLabel];
+            logisticeLabel.font = [UIFont systemFontOfSize:13.];
+            logisticeLabel.textColor = [UIColor timeLabelColor];
+            [logisticeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(label.mas_right).offset(10);
+                make.centerY.equalTo(view.mas_centerY);
+            }];
+            logisticeLabel.text = self.logisticsModel.name;
         }else {
-            label.text = @"无包裹查询信息";
         }
+        
         
         [view addTarget:self action:@selector(packageClick:) forControlEvents:UIControlEventTouchUpInside];
         view.tag = 100 + section;
@@ -118,7 +152,7 @@
         descLabel.font = [UIFont systemFontOfSize:13.];
         descLabel.textColor = [UIColor timeLabelColor];
         self.descLabel = descLabel;
-        NSArray *arr = self.logisticsArr[section];
+        NSArray *arr = self.logisticsArr;
         JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
         packageModel = arr[0];
         self.descLabel.text = packageModel.assign_status_display;

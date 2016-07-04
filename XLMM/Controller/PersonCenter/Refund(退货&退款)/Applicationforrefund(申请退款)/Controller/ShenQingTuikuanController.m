@@ -497,6 +497,8 @@
             
             [self returnPopView];
             
+        }else {
+            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
         [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -537,7 +539,7 @@
 - (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
     if (index == 100) {
         [self hideRefundpopView];
-        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
     }else {
         [self hideRefundpopView];
     }

@@ -69,11 +69,16 @@
 /**
  *  收货地址
  */
-@property (nonatomic,strong) NSMutableDictionary *user_adress;
+@property (nonatomic,strong) NSDictionary *user_adress;
 /**
  *  包裹信息
  */
 @property (nonatomic,strong) NSMutableArray *package_orders;
+/**
+ *  退款方式
+ */
+@property (nonatomic,strong) NSDictionary *extras;
+
 
 @end
 

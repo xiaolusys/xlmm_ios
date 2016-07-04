@@ -31,7 +31,7 @@
  *  包裹ID
  */
 @property (nonatomic, copy) NSString *packageID;
-@property (nonatomic, copy) NSString *logistics_company;
+@property (nonatomic, copy) NSDictionary *logistics_company;
 @property (nonatomic, copy) NSString *note;
 @property (nonatomic, copy) NSString *out_sid;
 /**
