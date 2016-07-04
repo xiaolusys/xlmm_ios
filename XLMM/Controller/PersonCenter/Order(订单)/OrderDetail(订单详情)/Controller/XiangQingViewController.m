@@ -231,7 +231,7 @@
         JMOrderDetailModel *detailModel = [JMOrderDetailModel mj_objectWithKeyValues:responseObject];
         NSDictionary *dict = detailModel.user_adress;
         _refundDic = _orderDic[@"extras"];
-        _editAddDict = [NSMutableDictionary dictionaryWithDictionary:dict];//self.model.mj_keyValues;
+        _editAddDict = [NSMutableDictionary dictionaryWithDictionary:dict];
         
         [self fetchedDingdanData:_orderDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -10,6 +10,6 @@
 
 @interface JMCouponSuccessController : UIViewController
 
-
+@property (nonatomic, assign) NSInteger moneyNum;
 
 @end

@@ -76,7 +76,7 @@
     [self.headView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
-    self.promptLabel.text = @"恭喜您获得一张价值20元的优惠券，请及时使用哦";
+    self.promptLabel.text = [NSString stringWithFormat:@"恭喜您获得一张价值%ld元的优惠券，请及时使用哦",self.moneyNum];
     self.promptLabel.textAlignment = NSTextAlignmentCenter;
     
     

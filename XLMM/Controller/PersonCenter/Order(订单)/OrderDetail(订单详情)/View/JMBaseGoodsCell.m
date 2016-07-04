@@ -59,7 +59,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewClick:)];
     [self.iconImage addGestureRecognizer:tap];
     
-    
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
