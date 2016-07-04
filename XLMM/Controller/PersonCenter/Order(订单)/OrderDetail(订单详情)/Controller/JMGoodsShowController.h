@@ -34,6 +34,8 @@
 
 @property (nonatomic,strong) NSMutableArray *logisticsArr;
 
+@property (nonatomic, strong) NSString *packOrderID;
+
 @property (nonatomic, weak) id<JMGoodsShowControllerDelegate>delegate;
 
 @end

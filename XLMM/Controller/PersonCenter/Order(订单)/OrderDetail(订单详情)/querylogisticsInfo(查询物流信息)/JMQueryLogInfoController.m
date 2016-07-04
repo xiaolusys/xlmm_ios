@@ -94,7 +94,7 @@
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
     packageModel = logisDataSource[0];
     self.packetId = packageModel.out_sid;
-    self.companyCode = packageModel.logistics_company_code;
+    self.companyCode = packageModel.logistics_company;
     self.packageModel = packageModel;
 }
 
@@ -224,7 +224,8 @@
     
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-    timeLabel.text = self.packageModel.process_time;
+    NSString *timeStr = [self dealVisitorTime:self.packageModel.pay_time];
+    timeLabel.text = [NSString stringWithFormat:@"%@",timeStr];
     timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeView).offset(10);
@@ -278,7 +279,8 @@
 
     UILabel *timeLabelTwo = [UILabel new];
     [timeViewTwo addSubview:timeLabelTwo];
-    timeLabelTwo.text = self.packageModel.assign_time;
+    NSString *timeStr2 = [self dealVisitorTime:self.packageModel.process_time];
+    timeLabelTwo.text = [NSString stringWithFormat:@"%@",timeStr2];
     timeLabelTwo.textColor = [UIColor titleDarkGrayColor];
     [timeLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeViewTwo).offset(10);
@@ -319,11 +321,16 @@
     self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht * 2);
     
 }
--(NSString*) spaceFormatTimeString:(NSString*)timeString{
+-(NSString*)spaceFormatTimeString:(NSString*)timeString{
     NSMutableString *ms = [NSMutableString stringWithString:timeString];
     NSRange range = {10,1};
     [ms replaceCharactersInRange:range withString:@" "];
     return ms;
+}
+- (NSString *)dealVisitorTime:(NSString *)str {
+    NSArray *arr = [str componentsSeparatedByString:@"T"];
+    NSString *time = [arr componentsJoinedByString:@" "];
+    return time;
 }
 /**
  *  显示顶部视图 -- > 物流公司与快递单号

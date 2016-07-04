@@ -28,6 +28,10 @@
 @property (nonatomic,copy) NSString *oid;
 
 @property (nonatomic,copy) NSString *outer_id;
+/**
+ *  包裹分包信息
+ */
+@property (nonatomic,copy) NSString *package_order_id;
 
 @property (nonatomic,copy) NSString *payment;
 /**
@@ -68,7 +72,31 @@
 
 @end
 
+/**
+ *   {
+ "discount_fee" = "15.1";
+ id = 412740;
+ "is_seckill" = 0;
+ "item_id" = 55697;
+ "kill_title" = 0;
+ num = 1;
+ oid = xo16062857726e925fefc;
+ "outer_id" = 819293150031;
+ "package_order_id" = "";
+ payment = "74.8";
+ "pic_path" = "http://image.xiaolu.so/MG_14666752120661.jpg";
+ "refund_id" = 48227;
+ "refund_status" = 7;
+ "refund_status_display" = "\U9000\U6b3e\U6210\U529f";
+ "sku_id" = 204086;
+ "sku_name" = M;
+ status = 6;
+ "status_display" = "\U9000\U6b3e\U5173\U95ed";
+ title = "\U663e\U7626\U7f51\U7eb1\U5370\U82b1\U8fde\U8863\U88d9/\U9ed1\U8272";
+ "total_fee" = "89.90000000000001";
+ }
 
+ */
 
 
 

@@ -61,7 +61,7 @@
 
 @property (nonatomic,copy) NSString *trade_type;
 
-@property (nonatomic,copy) NSString *url;
+//@property (nonatomic,copy) NSString *url;
 /**
  *  商品信息
  */
@@ -70,6 +70,10 @@
  *  收货地址
  */
 @property (nonatomic,strong) NSMutableDictionary *user_adress;
+/**
+ *  包裹信息
+ */
+@property (nonatomic,strong) NSMutableArray *package_orders;
 
 @end
 
