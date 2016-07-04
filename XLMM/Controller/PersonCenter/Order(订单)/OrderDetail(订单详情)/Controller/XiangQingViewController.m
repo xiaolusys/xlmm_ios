@@ -338,6 +338,12 @@
         self.logisticsLabel.text = model.name;
         
     }
+    
+    for (NSDictionary *packDic in dicJson[@"package_orders"]) {
+        self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
+        [_logisticsArr addObject:self.packageModel];
+    }
+    
 
 }
 #pragma mark ---- 点击修改物流公司
@@ -376,7 +382,7 @@
 #pragma mark 包裹信息的分包判断
 - (void)setWuLiuMsg:(NSArray *)orderArray {
     
-    [_logisticsArr removeAllObjects];
+//    [_logisticsArr removeAllObjects];
     [_dataSource removeAllObjects];
     if (orderArray.count == 0) {
         CGFloat goodsH = 90 * dataArray.count;
@@ -402,15 +408,15 @@
         NSDictionary *dicts = orderArray[0];
         NSInteger number = 0;
         NSString *package = dicts[@"package_order_id"];
-        NSMutableArray *logisArr = [NSMutableArray array];
+//        NSMutableArray *logisArr = [NSMutableArray array];
         NSMutableArray *dataArr = [NSMutableArray array];
         for (NSDictionary *dict in orderArray) {
-            self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:dict];
-            [logisArr addObject:self.packageModel];
+//            self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:dict];
+//            [logisArr addObject:self.packageModel];
             [dataArr addObject:dataArray[number]];
             number ++;
             if (number == orderArray.count) {
-                [_logisticsArr addObject:logisArr];
+//                [_logisticsArr addObject:logisArr];
                 [_dataSource addObject:dataArr];
             }else {
                 NSDictionary * dict2 = orderArray[number];
@@ -420,9 +426,9 @@
                     
                 }else {
                     package = package2;
-                    [_logisticsArr addObject:logisArr];
+//                    [_logisticsArr addObject:logisArr];
                     [_dataSource addObject:dataArr];
-                    logisArr = [NSMutableArray array];
+//                    logisArr = [NSMutableArray array];
                     dataArr = [NSMutableArray array];
                 }
             }
@@ -469,7 +475,7 @@
     if (_logisticsArr.count == 0) {
         return ;
     }else {
-        NSArray *array = _logisticsArr[section];
+        NSArray *array = _logisticsArr;
         queryVC.logisDataSource = array;
     }
     

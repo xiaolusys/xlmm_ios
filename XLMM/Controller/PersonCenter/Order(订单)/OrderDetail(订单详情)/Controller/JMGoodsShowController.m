@@ -142,7 +142,7 @@
     self.packageModel = [[JMPackAgeModel alloc] init];
     self.goodsModel = self.dataSource[indexPath.section][indexPath.row];
     if (_isExsitingPackage) {
-        self.packageModel = self.logisticsArr[indexPath.section][indexPath.row];
+        self.packageModel = self.logisticsArr[indexPath.section];
     }else {
         self.packageModel = nil;
     }
