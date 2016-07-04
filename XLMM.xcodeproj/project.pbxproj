@@ -499,7 +499,7 @@
 		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
 		1F27A5641D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */; };
-		1F27A5651D2516A000A0F80B /* vipGrade_ Examination@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5631D2516A000A0F80B /* vipGrade_ Examination@2x.png */; };
+		1F27A5651D2516A000A0F80B /* vipGrade_Examination@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */; };
 		1F27A5CD1D2520E200A0F80B /* MaMaHuoyueduViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A56C1D2520E200A0F80B /* MaMaHuoyueduViewController.m */; };
 		1F27A5CE1D2520E200A0F80B /* MaMaHuoyueduViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A56D1D2520E200A0F80B /* MaMaHuoyueduViewController.xib */; };
 		1F27A5CF1D2520E200A0F80B /* ActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A5701D2520E200A0F80B /* ActivityViewController2.m */; };
@@ -1601,7 +1601,7 @@
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
 		1F27A54C1D23DC8500A0F80B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mamaUser_DiamondsIcon@2x.png"; sourceTree = "<group>"; };
-		1F27A5631D2516A000A0F80B /* vipGrade_ Examination@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vipGrade_ Examination@2x.png"; sourceTree = "<group>"; };
+		1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vipGrade_Examination@2x.png"; sourceTree = "<group>"; };
 		1F27A56B1D2520E200A0F80B /* MaMaHuoyueduViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaHuoyueduViewController.h; sourceTree = "<group>"; };
 		1F27A56C1D2520E200A0F80B /* MaMaHuoyueduViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaMaHuoyueduViewController.m; sourceTree = "<group>"; };
 		1F27A56D1D2520E200A0F80B /* MaMaHuoyueduViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaMaHuoyueduViewController.xib; sourceTree = "<group>"; };
@@ -3479,7 +3479,7 @@
 				183074A11C97D49A00B7665E /* 3lun@2x.png */,
 				183074A21C97D49A00B7665E /* 4lun@2x.png */,
 				1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */,
-				1F27A5631D2516A000A0F80B /* vipGrade_ Examination@2x.png */,
+				1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */,
 				183074A31C97D49A00B7665E /* havenodingdan.png */,
 				183074A41C97D49A00B7665E /* homepage.png */,
 				183074AA1C97D49A00B7665E /* mamaback.png */,
@@ -5929,7 +5929,7 @@
 				183076491C97D49A00B7665E /* weixin_icon.png in Resources */,
 				1FF533341D27762F003DEABF /* btn_close@2x.png in Resources */,
 				1830766F1C97D49A00B7665E /* 圈圈加载0027.png in Resources */,
-				1F27A5651D2516A000A0F80B /* vipGrade_ Examination@2x.png in Resources */,
+				1F27A5651D2516A000A0F80B /* vipGrade_Examination@2x.png in Resources */,
 				183076221C97D49A00B7665E /* newyouhuiquankeyongbg.png in Resources */,
 				1830761C1C97D49A00B7665E /* mamaxuanpinicon.png in Resources */,
 				183076451C97D49A00B7665E /* wash01.png in Resources */,
