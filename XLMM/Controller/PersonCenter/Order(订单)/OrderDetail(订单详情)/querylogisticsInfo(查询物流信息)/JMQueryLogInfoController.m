@@ -94,14 +94,15 @@
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
     packageModel = logisDataSource[0];
     self.packetId = packageModel.out_sid;
-    self.companyCode = packageModel.logistics_company;
+    NSDictionary *logisticsDic = packageModel.logistics_company;
+    self.companyCode = logisticsDic[@"id"];
     self.packageModel = packageModel;
 }
 
 
 - (void)getWuliuInfoFromServer {
     BOOL islogisInfo = ((self.packetId == nil) || ([self.packetId isEqualToString:@""])
-                        || (self.companyCode == nil || ([self.companyCode isEqualToString:@""])));
+                        || (self.companyCode == nil));
     self.islogisInfo = islogisInfo;
     if(self.islogisInfo){
         //        [SVProgressHUD showErrorWithStatus:@"快递单号信息不全"];
@@ -140,7 +141,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"wuliu info get failed.");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"查询失败,您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
     }];
     

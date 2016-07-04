@@ -40,7 +40,7 @@
 + (BOOL)isFirstLoadApp {
     NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:kAppLoadNum];
     
-    if (num > 1) {
+    if (num == 1) {
         //第一次打开
         return YES;
     }else {

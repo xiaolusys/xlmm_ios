@@ -81,32 +81,7 @@
     }
     
 }
-- (void)getCoupon {
-    if (self.isFirstLogin) {
-        //领取优惠券
-        NSString *urlStr = @"http://192.168.1.31:9000/rest/v1/usercoupons/get_register_gift_coupon";
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        //http://192.168.1.31:9000/rest/v1/usercoupons/get_register_gift_coupon
-        
-        [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (responseObject == nil) {
-                return ;
-            }else {
-                
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            
-        }];
-        
-        
-        
-    }else {
-        return ;
-    }
-    
-}
+
 
 - (void)initUI {
     

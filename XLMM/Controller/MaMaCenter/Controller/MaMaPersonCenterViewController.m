@@ -139,6 +139,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
+    [self loadDataSource];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -182,7 +183,7 @@
     // 创建顶部视图
     [self createMMCenterTopViwe];
     
-    [self loadDataSource];
+    
     
 }
 - (void)loadDataSource {
@@ -213,8 +214,8 @@
     if (index == 100) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (index == 111) {
-        NSInteger code = [self.extraModel.could_cash_out integerValue];
-        if (code == 1) {
+        NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
+        if (code == 0) {
             TixianViewController *vc = [[TixianViewController alloc] init];
             vc.carryNum = self.carryValue;
             vc.activeValue = [self.activeValueNum integerValue];

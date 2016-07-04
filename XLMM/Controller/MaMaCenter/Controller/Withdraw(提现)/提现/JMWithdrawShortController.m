@@ -39,6 +39,8 @@
     NSInteger _choiseMoney;
     NSString *_imageStrTwo;
     NSString *_imageStrFive;
+    NSInteger _withdrawMoneyNum;
+    CGFloat _mywithBlance;
 }
 //- (JMCouponView *)couponView {
 //    if (_couponView == nil) {
@@ -51,15 +53,14 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lineGrayColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
-    
-    
-    
+
     [self createCoupon];
     
     
 }
 - (void)setMyBalance:(CGFloat)myBalance {
     _myBalance = myBalance;
+    _mywithBlance = myBalance;
 }
 
 // /rest/v1/pmt/cashout/exchange_coupon?template_id=62&exchange_num=3   72 20 73 50
@@ -69,7 +70,7 @@
     JMCouponView *couponView = [[JMCouponView alloc] initWithFrame:CGRectMake(0, 200 , SCREENWIDTH, 220)];
     [self.view addSubview:couponView];
     self.couponView = couponView;
-    self.couponView.myCouponBlance = self.myBalance;
+    self.couponView.myCouponBlance = _mywithBlance;
     couponView.delegate = self;
     
     /*
@@ -90,7 +91,7 @@
     [self.myBlanceView addSubview:blanceMoneyLabel];
     self.blanceMoneyLabel = blanceMoneyLabel;
     self.blanceMoneyLabel.font = [UIFont systemFontOfSize:12.];
-    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",self.myBalance];
+    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_mywithBlance];
     
     UIView *headView = [UIView new];
     [self.view addSubview:headView];
@@ -186,7 +187,13 @@
         }else {
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
             if (code == 0) {
+                _mywithBlance -= _withdrawMoneyNum;
+                if (_mywithBlance < 20) {
+                    self.sureButton.enabled = NO;
+                }
+                self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_mywithBlance];
                 JMCouponSuccessController *vc = [[JMCouponSuccessController alloc] init];
+                vc.moneyNum = _withdrawMoneyNum;
                 [self.navigationController pushViewController:vc animated:YES];
             }else {
                 [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
@@ -229,7 +236,9 @@
     
     if (index == 1) {
         _choiseMoney = 72;
+        _withdrawMoneyNum = 20;
     }else {
+        _withdrawMoneyNum = 50;
         _choiseMoney = 73;
     }
     
@@ -251,6 +260,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
