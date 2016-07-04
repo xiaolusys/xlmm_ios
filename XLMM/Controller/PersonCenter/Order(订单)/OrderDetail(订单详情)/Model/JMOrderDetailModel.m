@@ -8,11 +8,13 @@
 
 #import "JMOrderDetailModel.h"
 #import "JMOrderGoodsModel.h"
+#import "JMPackAgeModel.h"
 
 @implementation JMOrderDetailModel
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"orders":[JMOrderGoodsModel class]};
+    return @{@"orders":[JMOrderGoodsModel class],
+             @"package_orders":[JMPackAgeModel class]};
 }
 
 

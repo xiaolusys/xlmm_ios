@@ -629,14 +629,19 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
         if (islogin) {
             AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
             [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if (responseObject == nil) {
                     return ;
                 }else {
                     NSInteger code = [responseObject[@"code"] integerValue];
+                    NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
                     if (code == 0) {
-                        [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                        if (isPicked == 1) {
+                            [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                        }else {
+                            [self pickCoupon];
+                        }
                     }else {
                         [SVProgressHUD showErrorWithStatus:@"请登录"];
                     }
@@ -656,6 +661,24 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         //取消按钮
         [self hidepopView];
     }
+}
+- (void)pickCoupon {
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
+    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            NSInteger code = [responseObject[@"code"] integerValue];
+            if (code == 0) {
+                [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"领取失败"];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 /**
  *  隐藏

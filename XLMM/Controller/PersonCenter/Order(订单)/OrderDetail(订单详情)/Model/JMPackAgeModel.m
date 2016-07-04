@@ -10,4 +10,11 @@
 
 @implementation JMPackAgeModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    
+    return @{@"packageID":@"id"};
+}
+
+
+
 @end

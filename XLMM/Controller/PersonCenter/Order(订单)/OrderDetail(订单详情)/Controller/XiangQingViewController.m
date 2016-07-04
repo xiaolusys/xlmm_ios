@@ -87,6 +87,10 @@
  */
 @property (nonatomic,strong) JMEditAddressModel *addressModel;
 /**
+ *  包裹信息模型
+ */
+@property (nonatomic,strong) JMPackAgeModel *packageModel;
+/**
  *  蒙版视图
  */
 @property (nonatomic,strong) UIView *maskView;
@@ -95,17 +99,9 @@
  */
 @property (nonatomic,strong) UIButton *baseView;
 /**
- *  包裹信息模型
- */
-@property (nonatomic,strong) JMPackAgeModel *packModel;
-/**
  *  商品展示cell
  */
 @property (nonatomic,strong) JMGoodsShowController *goodsShowVC;
-/**
- *  包裹信息Model
- */
-@property (nonatomic,strong) JMPackAgeModel *packageModel;
 
 @property (nonatomic, strong) JMNORefundView *popView;
 
@@ -132,8 +128,7 @@
     NSDictionary *_orderDic;
     NSString *_goodsID; // 订单ID
     NSDictionary *_refundDic;
-    
-    
+
     NSMutableArray *_logisticsArr; //包裹分组信息
     NSMutableArray *_dataSource; //商品分组信息
 }
@@ -156,11 +151,11 @@
     }
     return _orderGoodsModel;
 }
-- (JMPackAgeModel *)packModel {
-    if (_packModel == nil) {
-        _packModel = [JMPackAgeModel new];
+- (JMPackAgeModel *)packageModel {
+    if (_packageModel == nil) {
+        _packageModel = [JMPackAgeModel new];
     }
-    return _packModel;
+    return _packageModel;
 }
 - (NSMutableDictionary *)editAddDict {
     if (_editAddDict == nil) {
@@ -194,7 +189,6 @@
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.xiangqingScrollView];
     self.screenWidth.constant = SCREENWIDTH;//自定义宽度
-    
     self.quxiaoBtn.layer.cornerRadius = 20;
     self.quxiaoBtn.layer.borderWidth = 1;
     self.quxiaoBtn.layer.borderColor = [UIColor colorWithR:245 G:166 B:35 alpha:1].CGColor;
@@ -222,9 +216,7 @@
 }
 
 
-- (void)btnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void)downloadData{
     [SVProgressHUD showWithStatus:@"加载中..."];
@@ -291,16 +283,8 @@
     tid = [dicJson objectForKey:@"id"]; //交易id号 内部使用
     
     [self removeAllSubviews:self.myXiangQingView];
-    //        if((tradeStatus == ORDER_STATUS_PAYED) || (tradeStatus == ORDER_STATUS_SENDED)){
-    //需要查物流信息，查询到信息后
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
-    [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if(!responseObject) return;
-        [self setWuLiuMsg:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+
+    [self setWuLiuMsg:dicJson[@"orders"]];
     
     self.totalFeeLabel.text = [NSString stringWithFormat:@"¥%.02f",[[dicJson objectForKey:@"total_fee"] floatValue]];
     self.yunfeiLabel.text = [NSString stringWithFormat:@"＋¥%.02f", [[dicJson objectForKey:@"post_fee"] floatValue]];
@@ -354,6 +338,7 @@
         self.logisticsLabel.text = model.name;
         
     }
+
 }
 #pragma mark ---- 点击修改物流公司
 - (void)logisticsChange {
@@ -388,12 +373,12 @@
     [JMPopView hide];
 }
 
-#pragma mark ----- 物流视图的显示
-- (void)setWuLiuMsg:(NSArray *)dic {
+#pragma mark 包裹信息的分包判断
+- (void)setWuLiuMsg:(NSArray *)orderArray {
     
     [_logisticsArr removeAllObjects];
     [_dataSource removeAllObjects];
-    if (dic.count == 0) {
+    if (orderArray.count == 0) {
         CGFloat goodsH = 90 * dataArray.count;
         self.goodsViewHeight.constant = goodsH;
         
@@ -409,27 +394,27 @@
         goodsShowView.contentView = self.goodsShowVC.view;
         [_dataSource addObject:dataArray];
     }else {
-        NSInteger count = [self.orderGoodsModel.status integerValue];
+        NSInteger count = [self.orderDetailModel.status integerValue];
         if (count == ORDER_STATUS_PAYED) {
             self.choiseLogisticsView.userInteractionEnabled = YES;
             self.addressInfoImage.userInteractionEnabled = YES;
         }
-        NSDictionary *dicts = dic[0];
+        NSDictionary *dicts = orderArray[0];
         NSInteger number = 0;
-        NSString *package = dicts[@"package_group_key"];
+        NSString *package = dicts[@"package_order_id"];
         NSMutableArray *logisArr = [NSMutableArray array];
         NSMutableArray *dataArr = [NSMutableArray array];
-        for (NSDictionary *dict in dic) {
-            self.packModel = [JMPackAgeModel mj_objectWithKeyValues:dict];
-            [logisArr addObject:self.packModel];
+        for (NSDictionary *dict in orderArray) {
+            self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:dict];
+            [logisArr addObject:self.packageModel];
             [dataArr addObject:dataArray[number]];
             number ++;
-            if (number == dic.count) {
+            if (number == orderArray.count) {
                 [_logisticsArr addObject:logisArr];
                 [_dataSource addObject:dataArr];
             }else {
-                NSDictionary * dict2 = dic[number];
-                NSString *package2 = dict2[@"package_group_key"];
+                NSDictionary * dict2 = orderArray[number];
+                NSString *package2 = dict2[@"package_order_id"];
                 
                 if (package == package2) {
                     
@@ -443,11 +428,16 @@
             }
         }
         NSInteger numCount = 0;
-        numCount = _dataSource.count;
+        if (package.length == 0) {
+            numCount = 0;
+        }else {
+            numCount = _dataSource.count;
+        }
         CGFloat goodsH = 90 * dataArray.count + 35 * numCount;
         self.goodsViewHeight.constant = goodsH;
         self.goodsShowVC.dataSource = _dataSource;
         self.goodsShowVC.logisticsArr = _logisticsArr;
+        self.goodsShowVC.packOrderID = package;
         self.goodsShowVC.delegate = self;
         JMGoodsShowView *goodsShowView = [[JMGoodsShowView alloc] init];
         goodsShowView.frame = CGRectMake(0, 0, SCREENWIDTH, goodsH);
@@ -814,7 +804,9 @@
     }
 }
 
-
+- (void)btnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
 
 

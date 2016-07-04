@@ -13,36 +13,6 @@
  *  物流状态
  */
 @property (nonatomic,copy) NSString *assign_status_display;
-
-@property (nonatomic,copy) NSString *logistics_company_code;
-
-@property (nonatomic,copy) NSString *logistics_company_name;
-
-@property (nonatomic,copy) NSString *num;
-
-@property (nonatomic,copy) NSString *out_sid;
-
-@property (nonatomic,copy) NSString *package_group_key;
-
-@property (nonatomic,copy) NSString *payment;
-
-@property (nonatomic,copy) NSString *pic_path;
-/**
- *  时间
- */
-@property (nonatomic,copy) NSString *process_time;
-/**
- *  商品标题
- */
-@property (nonatomic,copy) NSString *title;
-/**
- *  仓库编号
- */
-@property (nonatomic,copy) NSString *ware_by_display;
-/**
- *  支付时间
- */
-@property (nonatomic,copy) NSString *pay_time;
 /**
  *  发货时间
  */
@@ -57,10 +27,64 @@
  *  入仓分配/质检时间
  */
 @property (nonatomic,copy) NSString *assign_time;
+/**
+ *  包裹ID
+ */
+@property (nonatomic, copy) NSString *packageID;
+@property (nonatomic, copy) NSString *logistics_company;
+@property (nonatomic, copy) NSString *note;
+@property (nonatomic, copy) NSString *out_sid;
+/**
+ *  时间
+ */
+@property (nonatomic,copy) NSString *process_time;
+/**
+ *  仓库编号
+ */
+@property (nonatomic,copy) NSString *ware_by_display;
+/**
+ *  支付时间
+ */
+@property (nonatomic,copy) NSString *pay_time;
+
+
+
 
 @end
 
-/*
+
+/**
+ *  === 新数据 === 
+ "package_orders" =     (
+ {
+ "assign_status_display" = "\U5df2\U53d6\U6d88";
+ "assign_time" = "<null>";
+ "book_time" = "<null>";
+ "cancel_time" = "<null>";
+ "finish_time" = "<null>";
+ id = "";
+ "logistics_company" = "<null>";
+ note = "";
+ "out_sid" = "";
+ "pay_time" = "2016-06-28T20:33:22";
+ "process_time" = "2016-06-28T20:33:22";
+ "ware_by_display" = "\U5e7f\U5dde\U4ed3";
+ }
+ );
+
+ */
+
+
+/* ======= 老数据 ===
+ //需要查物流信息，查询到信息后
+ AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+ NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
+ [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+ if(!responseObject) return;
+ [self setWuLiuMsg:responseObject];
+ } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+ 
+ }];
  <__NSCFArray 0x7fa1e1c87a50>(
  {
  "assign_status_display" = "\U5df2\U53d6\U6d88";

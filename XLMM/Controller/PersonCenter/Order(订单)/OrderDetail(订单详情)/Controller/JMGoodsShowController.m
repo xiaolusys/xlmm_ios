@@ -13,6 +13,7 @@
 #import "JMQueryLogInfoController.h"
 #import "UIViewController+NavigationBar.h"
 #import "JMPackAgeModel.h"
+#import "JMOrderGoodsModel.h"
 
 @interface JMGoodsShowController ()<JMBaseGoodsCellDelegate,UITableViewDelegate,UITableViewDataSource>
 
@@ -26,20 +27,32 @@
     NSInteger _count;
     NSInteger _packageCount;
     BOOL _isExsitingPackage;
+    BOOL _isExsitingorder;
 }
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
     for (NSArray *arr in dataSource) {
-        _count += arr.count;
+         _count += arr.count;
     }
+    
 }
 - (void)setLogisticsArr:(NSMutableArray *)logisticsArr {
     _logisticsArr = logisticsArr;
-    if (logisticsArr.count == 0) {
-        //没有包裹信息
+//    if (logisticsArr.count == 0) {
+//        //没有包裹信息
+//        _isExsitingPackage = NO;
+//    }else {
+//        //有包裹信息
+//        _isExsitingPackage = YES;
+//    }
+}
+- (void)setPackOrderID:(NSString *)packOrderID {
+    _packOrderID = packOrderID;
+    if (packOrderID.length == 0) {
+        _packageCount = 0;
         _isExsitingPackage = NO;
     }else {
-        //有包裹信息
+        _packageCount = _logisticsArr.count;
         _isExsitingPackage = YES;
     }
 }
@@ -52,7 +65,7 @@
 }
 - (void)createTableView {
     UITableView *tableView = [[UITableView alloc] init];
-    tableView.frame = CGRectMake(0, 0, SCREENWIDTH, _count * 90 + self.logisticsArr.count * 35);
+    tableView.frame = CGRectMake(0, 0, SCREENWIDTH, _count * 90 + _packageCount * 35);
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;
@@ -88,7 +101,12 @@
         }];
         label.font = [UIFont systemFontOfSize:13.];
         label.textColor = [UIColor timeLabelColor];
-        label.text = [NSString stringWithFormat:@"包裹%@",arr[section]];
+        if (_isExsitingorder) {
+            label.text = [NSString stringWithFormat:@"包裹%@",arr[section]];
+        }else {
+            label.text = @"无包裹查询信息";
+        }
+        
         [view addTarget:self action:@selector(packageClick:) forControlEvents:UIControlEventTouchUpInside];
         view.tag = 100 + section;
         UILabel *descLabel = [UILabel new];
@@ -130,12 +148,7 @@
     }
     [cell configWithModel:self.goodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.selectionStyle = UITableViewCellAccessoryNone;
-    
-//    if ([cell isKindOfClass:[JMBaseGoodsCell class]]) {
-//        JMBaseGoodsCell *baseCell = (JMBaseGoodsCell *)cell;
-//        baseCell.delegate = self;
-//        return baseCell;
-//    }
+
     cell.delegate = self;
     return cell;
 }

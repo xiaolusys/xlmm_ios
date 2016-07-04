@@ -94,7 +94,7 @@
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
     packageModel = logisDataSource[0];
     self.packetId = packageModel.out_sid;
-    self.companyCode = packageModel.logistics_company_code;
+    self.companyCode = packageModel.logistics_company;
     self.packageModel = packageModel;
 }
 
