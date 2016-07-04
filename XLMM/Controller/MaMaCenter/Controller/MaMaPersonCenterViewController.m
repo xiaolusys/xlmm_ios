@@ -215,16 +215,22 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else if (index == 111) {
         NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
-        if (code == 0) {
+        if (code == 1) {
             TixianViewController *vc = [[TixianViewController alloc] init];
             vc.carryNum = self.carryValue;
             vc.activeValue = [self.activeValueNum integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else {
-            JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-            shortVC.myBalance = [self.carryValue floatValue];
-            shortVC.descStr = self.extraModel.cashout_reason;
-            [self.navigationController pushViewController:shortVC animated:YES];
+            if ([self.carryValue floatValue] - 20 < 0.000001) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"余额不足" message:@"余额不足,不可提现" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+            }else {
+                JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
+                shortVC.myBalance = [self.carryValue floatValue];
+                shortVC.descStr = self.extraModel.cashout_reason;
+                [self.navigationController pushViewController:shortVC animated:YES];
+            }
+            
         }
         
         

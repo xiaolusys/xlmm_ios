@@ -194,6 +194,7 @@
                 self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_mywithBlance];
                 JMCouponSuccessController *vc = [[JMCouponSuccessController alloc] init];
                 vc.moneyNum = _withdrawMoneyNum;
+                vc.withDrawMoney = _mywithBlance;
                 [self.navigationController pushViewController:vc animated:YES];
             }else {
                 [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
