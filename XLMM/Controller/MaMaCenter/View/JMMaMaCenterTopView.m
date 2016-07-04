@@ -145,7 +145,10 @@
     UIImageView *vipExamination = [UIImageView new];
     [self addSubview:vipExamination];
     self.vipExamination = vipExamination;
-    self.vipExamination.image = [UIImage imageNamed:@"vipGrade_ Examination"];
+    self.vipExamination.userInteractionEnabled = YES;
+    self.vipExamination.image = [UIImage imageNamed:@"vipGrade_Examination"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVipClick:)];
+    [self.vipExamination addGestureRecognizer:tap];
 
     // ====== 收益相关 ====== //
     UIButton *balanceButton = [UIButton new];
@@ -320,7 +323,11 @@
 //    self.getRedpake.attributedText = str;
 //    
 //}
-
+- (void)tapVipClick:(UITapGestureRecognizer *)tap {
+    if (_delegate && [_delegate respondsToSelector:@selector(composeTapBackPageup:Tap:)]) {
+        [_delegate composeTapBackPageup:self Tap:tap];
+    }
+}
 
 - (void)backPageupClick:(UIButton *)button {
     if (_delegate && [_delegate respondsToSelector:@selector(composeBackPageup:Index:)]) {

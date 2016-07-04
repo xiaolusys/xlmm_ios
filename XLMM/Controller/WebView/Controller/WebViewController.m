@@ -206,7 +206,11 @@
         [self loadData];
     }else {
         statusBarView.hidden = NO;
-        super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
+        if (_isShowNavBar) {
+            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        }else {
+            super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
+        }
         loadStr = _webDiction[@"web_url"];
     }
     NSURL *url = [NSURL URLWithString:loadStr];
