@@ -197,7 +197,7 @@
         _carsGoodsDic = dic;
     }
 
-    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+    self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
     
     [self.cartTableView reloadData];
 }
@@ -342,11 +342,11 @@
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
-            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.price];
             
             //    cell.contentView.backgroundColor = [UIColor redColor];
             cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
-            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.std_sale_price];
+            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -379,9 +379,9 @@
             
             cell.cartModel = model;
             cell.nameLabel.text = model.title;
-            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", model.price];
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.price];
             
-            cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.0f", model.std_sale_price];
+            cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.std_sale_price];
             
             cell.sizeLabel.text = model.sku_name;
 
@@ -464,7 +464,7 @@
             UILabel *youhuiquanLabel = (UILabel *)[footerView viewWithTag:400];
             
             youhuiquanLabel.text = [NSString stringWithFormat:@"¥%ld", youhuiquanValud];
-            pricelabel.text = [NSString stringWithFormat:@"¥%.1f", allPrice];
+            pricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
           
             
             nameLabel.text = @"可使用优惠券";
