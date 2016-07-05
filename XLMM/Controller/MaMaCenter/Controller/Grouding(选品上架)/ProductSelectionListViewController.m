@@ -50,9 +50,13 @@
 
 @property (nonatomic, copy) NSString *numbersOfSelected;
 /**
- *  是否刷新
+ *  下拉的标志
  */
-@property (nonatomic,assign) BOOL isRefreshing;
+@property (nonatomic,assign) BOOL isPullDown;
+/**
+ *  上拉的标志
+ */
+@property (nonatomic, assign) BOOL isLoadMore;
 /**
  *  选品上架数据源
  */
@@ -73,13 +77,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self.tableView.mj_header beginRefreshing];
+    
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     
     [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-    // http://m.xiaolumeimei.com/rest/v1/products/my_choice_pro?page_size=20&category=0
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=0", Root_URL];
-    [self loadData:url];
+
     self.numberLabel.text = self.numbersOfSelected;
 }
 
@@ -100,18 +104,8 @@
     self.tableView.rowHeight = 96;
     category = 0;
     //注册cell
-//    [self.tableView registerNib:[UINib nibWithNibName:@"ProductSelectionListCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     [self.view addSubview:self.tableView];
-    
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        // 进入刷新状态后会自动调用这个block
-        NSLog(@"loadMore");
-        [self loadMore];
-    }];
-    
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadNew:_urlStr];
-    }];
+
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     
@@ -119,83 +113,10 @@
    
     [self createrightItem];
     
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
 }
 #pragma mark --- 加载数据
-- (void)loadData:(NSString *)url {
-//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
-    
-    NSLog(@"url = %@", url);
-    
-    
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject)return;
-
-        [self dealData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-}
-
-- (void)dealMoreData:(NSDictionary *)dic{
-    NSLog(@"dic");
-    self.nextUrl = dic[@"next"];
-    NSArray *array = [dic objectForKey:@"results"];
-    
-    
-    
-    for (NSDictionary *dic in array) {
-        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dic];
-        [self.dataArr addObject:self.listModel];
-    }
-    
-    
-    
-    
-//    for (NSDictionary *pdt in array) {
-//        MaMaSelectProduct *productM = [[MaMaSelectProduct alloc] init];
-//        [productM setValuesForKeysWithDictionary:pdt];
-//        [self.dataArr addObject:productM];
-//    }
-    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-
-    NSLog(@"%ld", (unsigned long)self.dataArr.count);
-    [self.tableView reloadData];
-}
-- (void)loadNew:(NSString *)url {
-    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
-    if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
-        [self.tableView.mj_header endRefreshing];
-
-        return ;
-    }
-    
-//    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=20&category=0", Root_URL];
-    
-    [self loadData:url];
-}
-
-- (void)loadMore{
-    NSLog(@"下载更多。。。");
-    
-    [self.tableView.mj_footer performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
-    
-    if (self.nextUrl == nil || [self.nextUrl class] == [NSNull class]) {
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        
-        
-        return;
-    }
-    
-    
-    [[AFHTTPRequestOperationManager manager] GET:self.nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self dealMoreData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    NSLog(@"next = %@", self.nextUrl);
-}
 
 - (void)createrightItem{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
@@ -386,18 +307,35 @@
     }
 }
 
-- (void)fetchedDatalist:(NSData *)data{
+#pragma mark 刷新界面
+- (void)createPullHeaderRefresh {
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [self loadDataSource];
+    }];
+}
+- (void)createPullFooterRefresh {
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [self loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
+
+- (void)fetchedDatalist:(NSDictionary *)dic{
     [SVProgressHUD dismiss];
-    if (data == nil) {
-        return;
-    }
+
     self.nextUrl = nil;
-    NSError *error = nil;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error != nil) {
-        NSLog(@"error = %@", error);
-        return;
-    }
+
     NSArray *array = [dic objectForKey:@"results"];
     self.nextUrl = dic[@"next"];
     
@@ -405,33 +343,55 @@
     if (array.count == 0) {
         return;
     }
-  //  NSLog(@"list = %@", array);
-    [self.dataArr removeAllObjects];
+
     for (NSDictionary *dic in array) {
         self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dic];
         [self.dataArr addObject:self.listModel];
     }
-    [self.tableView reloadData];
-    [self.tableView setContentOffset:CGPointMake(0, -64) animated:YES];
     
 }
+- (void)loadDataSource {
+    [self.dataArr removeAllObjects];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return ;
+        [self fetchedDatalist:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
+    }];
+    
+}
+- (void)loadMore {
+    if ([self.nextUrl class] == [NSNull class]) {
+        [self endRefresh];
+        return;
+    }
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:self.nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return;
+        
+        [self fetchedDatalist:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
+    }];
 
-
+}
 /**
  *  全部
  */
 - (void)downloadAlllist{
     [SVProgressHUD showWithStatus:@"加载中..."];
-  //  NSLog(@"all");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 0;
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", _urlStr);
     
-    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
+    [self loadDataSource];
     
-    [self loadNew:_urlStr];
 }
 /**
  *  童装
@@ -440,27 +400,21 @@
     [SVProgressHUD showWithStatus:@"加载中..."];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-  //  NSLog(@"child");
     category = 1;
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", _urlStr);
-    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
-    
-    [self loadNew:_urlStr];
+    [self loadDataSource];
 }
 /**
  *  女装
  */
 - (void)downloadLadylist{
     [SVProgressHUD showWithStatus:@"加载中..."];
-   // NSLog(@"lady");
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     category = 2;
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    NSLog(@"string = %@", _urlStr);
-    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
-    [self loadNew:_urlStr];
+    [self loadDataSource];
+    
 }
 /**
  *  佣金排序
@@ -468,11 +422,8 @@
 - (void)downloadOrderlist1{
     [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-  //  NSLog(@"yongjin");
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"rebet_amount"];
-   // NSLog(@"string = %@", string);
-    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
-    [self loadNew:_urlStr];
+    [self loadDataSource];
 }
 /**
  *  售卖排序
@@ -480,42 +431,12 @@
 - (void)downloadOrderlist2{
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-   // NSLog(@"xiaoliang");
      _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@", Root_URL, category, @"sale_num"];
-//    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:_urlStr andSelector:@selector(fetchedDatalist:)];
-    [self loadNew:_urlStr];
+    [self loadDataSource];
 }
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-#pragma mark --数据处理
-- (void)dealData:(NSDictionary *)data {
-    if (data.count == 0)return;
-    NSLog(@"data = %@", data);
-    
-    [self.dataArr removeAllObjects];
-    self.nextUrl = nil;
-    NSArray *array = data[@"results"];
-    
-    self.nextUrl = data[@"next"];
-    
-    NSLog(@"next = %@", self.nextUrl);
-    
-    for (NSDictionary *dic in array) {
-        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dic];
-        [self.dataArr addObject:self.listModel];
-    }
-
-    [SVProgressHUD dismiss];
-    
-    [self.tableView reloadData];
-    
-    
-   
-}
-
 
 #pragma mark -- uitableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -590,65 +511,7 @@
 
     
 }
-//- (void)productSelectionListBtnClick:(ProductSelectionListCell *)cell btn:(UIButton *)btn {
-//    [SVProgressHUD showWithStatus:@"加载中，请稍后..."];
-//    if (btn.selected) {
-//        //网络请求
-//        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
-//        NSDictionary *parameters = @{@"product":cell.pdtID};
-//        
-//        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-//            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];
-//            cell.statusLabel.text = @"加入精选";
-//           btn.selected = NO;
-////            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
-//            //修改数据源中的数据
-//            cell.pdtModel.in_customer_shop = @0;
-//            
-//            self.numberLabel.text = self.numbersOfSelected;
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"上下架－－Error: %@", error);
-//        }];
-//        
-//    }else {
-//        //网络请求
-//        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/add_pro_to_shop", Root_URL];
-//        NSDictionary *parameters = @{@"product":cell.pdtID};
-//        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            //已上架
-//            [SVProgressHUD showSuccessWithStatus:@"上架成功"];
-//            //[btn setTitle:@"下架" forState:UIControlStateNormal];
-//            [btn setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
-//            cell.statusLabel.text = @"已加入";
-//
-//           btn.selected = YES;
-////            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
-//            //修改数据源中的数据
-//            cell.pdtModel.in_customer_shop = @1;
-//            
-//            self.numberLabel.text = self.numbersOfSelected;
-//
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"上下架－－Error: %@", error);
-//        }];
-//        
-//    }
-//}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
