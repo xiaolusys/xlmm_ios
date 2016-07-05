@@ -295,15 +295,15 @@
         cell.nameLabel.text = [details objectForKey:@"title"];
         cell.sizeLabel.text = [details objectForKey:@"sku_name"];
         cell.numberLabel.text = [NSString stringWithFormat:@"x%@", [details objectForKey:@"num"]];
-        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"total_fee"] floatValue]];
-        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [[details objectForKey:@"payment"] floatValue]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [[details objectForKey:@"total_fee"] floatValue]];
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.2f", [[details objectForKey:@"payment"] floatValue]];
         cell.statusLabel.text = model.status_display;
 
         return cell;
         
     } else {
         MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
-        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.dingdanJine floatValue]];
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.dingdanJine floatValue]];
         for (int i = 1101; i <= 1106; i++) {
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             imageView.hidden = YES;

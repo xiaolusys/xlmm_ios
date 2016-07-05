@@ -120,7 +120,7 @@
 //     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];
     
-    self.goodsMoneyL.text = [NSString stringWithFormat:@"¥%.1f", [model.payment floatValue]];
+    self.goodsMoneyL.text = [NSString stringWithFormat:@"¥%.2f", [model.payment floatValue]];
     self.goodsTitleL.text = model.title;
     self.goodsSizeL.text = [NSString stringWithFormat:@"尺寸: %@",model.sku_name];
     self.goodsColorL.text = [NSString stringWithFormat:@"颜色: %@",model.num]; // 颜色没有啊

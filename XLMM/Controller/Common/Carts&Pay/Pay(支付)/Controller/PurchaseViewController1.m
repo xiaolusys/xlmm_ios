@@ -435,7 +435,7 @@
         cartOwner.sizeLabel.text = model.sizeName;
         cartOwner.numberLabel.text = [NSString stringWithFormat:@"x%@",[[NSNumber numberWithInteger:model.buyNumber ]stringValue]];
         
-        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", [model.price floatValue]];
+        cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.2f", [model.price floatValue]];
      
        // cartOwner.myImageView.image = [UIImage imagewithURLString:[model.imageURL URLEncodedString]];
         [cartOwner.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL URLEncodedString]]];
@@ -695,7 +695,7 @@
     //    pid:1:value:2
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",self.rightReduce[@"pid"],self.rightReduce[@"value"]];
     //    NSString *parms = nil;
-    dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.1f", postfee],[NSString stringWithFormat:@"%.1f", totalfee],uuid];
+    dict = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",cartIDs,addressModel.addressID,[NSString stringWithFormat:@"%.2f", postfee],[NSString stringWithFormat:@"%.2f", totalfee],uuid];
     
     //    if(![[self.tfMsg.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
     //    {
