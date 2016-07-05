@@ -38,7 +38,7 @@
     //@"退货请求提交成功，客服会在24小时完成审核，您可以在退货界面查询进展，审核通过后您需要在退货界面填写退货快递单号，方便我们为你快速处理退款。";
 }
 + (instancetype)defaultPopView {
-    return [[JMRefundView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH - 120 , (SCREENWIDTH - 160) + 60)];
+    return [[JMRefundView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH , SCREENHEIGHT)];
 }
 
 - (void)createUI {
@@ -57,6 +57,7 @@
     self.titleLabel.font = [UIFont systemFontOfSize:13.];
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.textColor = [UIColor dingfanxiangqingColor];
+    self.titleLabel.backgroundColor = [UIColor lineGrayColor];
 
     JMSelecterButton *cancleBtn = [[JMSelecterButton alloc] init];
     [self addSubview:cancleBtn];
@@ -65,28 +66,23 @@
     [self.cancleBtn setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"确定" TitleFont:13. CornerRadius:10];
     self.cancleBtn.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [self.cancleBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    CGFloat W = (self.frame.size.width - 100) - 20;
 
     kWeakSelf
     [self.baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(weakSelf).offset(20);
-        make.right.equalTo(weakSelf).offset(-20);
-        make.bottom.equalTo(weakSelf).offset(-100);
+        make.centerX.equalTo(weakSelf.mas_centerX);
+        make.centerY.equalTo(weakSelf.mas_centerY);
     }];
     
-
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.baseView.mas_centerX);
-        make.centerY.equalTo(weakSelf.baseView.mas_centerY);
-        make.width.mas_equalTo(W);
+        make.top.left.equalTo(weakSelf.baseView).offset(10);
+        make.bottom.right.equalTo(weakSelf.baseView).offset(-10);
+        make.width.mas_equalTo(@200);
     }];
     
     [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(weakSelf.baseView.mas_width);
+        make.width.mas_equalTo(@200);
         make.height.mas_equalTo(@40);
-        make.centerX.equalTo(weakSelf.baseView.mas_centerX);
+        make.centerX.equalTo(weakSelf.mas_centerX);
         make.top.equalTo(weakSelf.baseView.mas_bottom).offset(20);
     }];
     

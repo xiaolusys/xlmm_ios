@@ -154,7 +154,7 @@
     
     self.nameLabel.text = self.dingdanModel.title;
     if(number != 0){
-        self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f",[self.dingdanModel.total_fee floatValue]/number];
+        self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.dingdanModel.total_fee floatValue]/number];
     }
     self.sizeNameLabel.text = self.dingdanModel.sku_name;
     self.numberLabel.text = [NSString stringWithFormat:@"x%@", self.dingdanModel.num];
@@ -493,6 +493,7 @@
         if (dic.count == 0) return;
         NSInteger code = [dic[@"code"] integerValue];
         if (code == 0) {
+            [SVProgressHUD dismiss];
             self.button.hidden = YES;
             
             [self returnPopView];
@@ -500,7 +501,6 @@
         }else {
             [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
-        [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
     }];
@@ -524,6 +524,7 @@
 }
 #pragma mark -- 弹出视图
 - (void)returnPopView {
+    
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.maskView.backgroundColor = [UIColor blackColor];
     self.maskView.alpha = 0.3;

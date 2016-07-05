@@ -54,6 +54,7 @@
 #import "JMRepopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
+#import "Masonry.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -156,6 +157,8 @@
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic,strong) UIView *bottomView;
 @property (nonatomic,strong) JMRepopView *popView;
+
+@property (nonatomic, strong) UIButton *topButton;
 
 @end
 
@@ -492,7 +495,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
     }
-    
+    [self createTopButton];
     
 }
 #pragma mark --- 第一次打开程序
@@ -2039,9 +2042,22 @@ static NSString *kbrandCell = @"JMRootScrolCell";
  }
  */
 
-#pragma mark UIscrollViewDelegate
+#pragma mark UIscrollViewDelegate  滚动视图代理方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     //NSLog(@"scrollViewWillBeginDragging");
+    CGPoint offset = scrollView.contentOffset;
+//    CGRect bounds = scrollView.bounds;
+//    CGSize size = scrollView.contentSize;
+//    UIEdgeInsets inset = scrollView.contentInset;
+    CGFloat currentOffset = offset.y;
+//    CGFloat maximunOffset = size.height;
+    
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
+
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
@@ -2294,10 +2310,58 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
 }
 
-#pragma mark 返回顶部
-
+#pragma mark 返回顶部  image == >backTop
+- (void)createTopButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+}
+- (void)topButtonClick:(UIButton *)btn {
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+    self.backScrollview.scrollEnabled = YES;
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
+}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
