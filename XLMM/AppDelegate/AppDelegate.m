@@ -96,7 +96,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.isApinPayGo = YES;
+//    self.isApinPayGo = YES;
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
@@ -663,6 +663,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    
     /**
      *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
      */

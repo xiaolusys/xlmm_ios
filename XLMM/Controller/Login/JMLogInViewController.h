@@ -11,4 +11,6 @@
 @interface JMLogInViewController : UIViewController
 @property (nonatomic,strong) NSString *returnUrl;
 
+@property (nonatomic, assign) BOOL isFirstLogin;
+
 @end

@@ -82,6 +82,7 @@
     
 }
 
+
 - (void)initUI {
     
     
@@ -274,6 +275,7 @@
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
     [userdefaults synchronize];
+    
     
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
