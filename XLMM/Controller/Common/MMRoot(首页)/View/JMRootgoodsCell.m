@@ -194,7 +194,7 @@
     }
     
     
-    //NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
+//    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
     
     
     self.iconImage.alpha = 0.3;
@@ -217,26 +217,16 @@
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
-        if (model.productModel == nil) {
-            if ([model.isSaleout boolValue]) {
-                
-                self.backView.hidden = NO;
-                
-            } else {
-                self.backView.hidden = YES;
-            }
-            
-        } else {
-            if ([model.isSaleout boolValue] && [[model.productModel objectForKey:@"is_single_spec"] boolValue]) {
-                
-                self.backView.hidden = NO;
-                
-            } else {
-                self.backView.hidden = YES;
-            }
+
+        if ([model.isSaleout boolValue]) {
+            self.backView.hidden = NO;
+        }
+        else {
+            self.backView.hidden = YES;
         }
         
-    } else {
+    }
+    else {
         self.backView.hidden = NO;
         //NSLog(@"isnew %d", [model.isNewgood boolValue]);
         if([model.isNewgood boolValue]){
