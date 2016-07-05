@@ -855,11 +855,12 @@
         
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                /**
-                 *  在这里判断满多少可以使用  -- 这里是点击提交订单按钮判断
-                 */
-                [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"info"]];
-                [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
+                [SVProgressHUD dismiss];
+                NSString *errorStr = dic[@"info"];
+                NSString *messageStr = [NSString stringWithFormat:@"%@,请在购物车重新选择提交.",errorStr];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"支付异常" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                alert.tag = 100;
+                [alert show];
             });
             return;
         }
@@ -867,9 +868,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [self pushShareVC];
-                
-//                [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
-                
             });
             return;
         }
@@ -886,8 +884,6 @@
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                         [self pushShareVC];
-
-//                        [self performSelector:@selector(returnOrderList) withObject:nil afterDelay:1.0];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
@@ -950,6 +946,8 @@
             //继续支付
             [alertView setHidden:YES];
         }
+    }else if (alertView.tag == 100) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
     
     [self downloadCartsData];
@@ -1191,6 +1189,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
     
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(purchaseViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    
+    self.buyButton.userInteractionEnabled = YES;
     if ([WXApi isWXAppInstalled]) {
         //  NSLog(@"安装了微信");
         self.isInstallWX = YES;
@@ -1200,7 +1205,10 @@
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
-
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:app];
     
 }
 - (void)isApinPayGo {
@@ -1212,7 +1220,13 @@
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
-//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)purchaseViewWillEnterForeground:(NSNotification *)notification
+{
+    //进入前台时调用此函数
+    NSLog(@"purchaseViewWillEnterForeground ");
+    self.buyButton.userInteractionEnabled = YES;
 }
 
 #pragma mark --- 支付成功的弹出框
@@ -1225,6 +1239,7 @@
     JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
     payShareVC.ordNum = _orderTidNum;
     [self.navigationController pushViewController:payShareVC animated:YES];
+//    [self presentViewController:payShareVC animated:YES completion:nil];
 }
 #pragma mark ---- 点击返回按钮 弹出警告框 --> 选择放弃或者继续
 - (void)payBackAlter {
