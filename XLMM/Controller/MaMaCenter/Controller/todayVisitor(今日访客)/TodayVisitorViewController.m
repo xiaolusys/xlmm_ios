@@ -60,7 +60,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"FensiTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FensiCell"];
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         if([self.nextPage class] == [NSNull class]) {

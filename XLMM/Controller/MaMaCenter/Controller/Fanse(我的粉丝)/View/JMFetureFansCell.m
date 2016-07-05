@@ -101,7 +101,7 @@
     }else {
         self.nameLabel.text = model.nick;
     }
-    self.timeLabel.text = [self dealDate:model.modified];
+    self.timeLabel.text = [self composeString:model.modified];
     self.descLabel.text = model.note;
 }
 
@@ -120,7 +120,7 @@
     
     self.descLabel.text = model.visitor_description;
     
-    self.timeLabel.text = [self dealDate:model.created];
+    self.timeLabel.text = [self composeString:model.created];
 }
 - (void)configNowFnas:(FanceModel *)model {
     if (model.fans_thumbnail.length == 0) {
@@ -136,7 +136,7 @@
     self.nameLabel.text = model.fans_nick;
     
     self.descLabel.text = model.fans_description;
-    self.timeLabel.text = [self dealDate:model.created];
+    self.timeLabel.text = [self composeString:model.created];
     
 }
 - (NSString *)dealTime:(NSString *)str {
@@ -161,7 +161,12 @@
     NSString *string3 = [string2 substringWithRange:NSMakeRange(5,11)];
     return string3;
 }
-
+- (NSString *)composeString:(NSString *)str {
+    NSArray *arr = [str componentsSeparatedByString:@"T"];
+    NSString *string1 = [arr componentsJoinedByString:@" "];
+    NSString *string2 = [string1 substringWithRange:NSMakeRange(5,11)];
+    return string2;
+}
 @end
 
 

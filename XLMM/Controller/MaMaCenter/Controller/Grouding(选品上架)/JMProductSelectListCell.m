@@ -200,8 +200,8 @@
     self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     
     self.nameLabtl.text = model.name;
-    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.f",[model.agent_price floatValue]];
-    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.f",[model.std_sale_price floatValue]];
+    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[model.agent_price floatValue]];
+    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[model.std_sale_price floatValue]];
     self.saleNumLabel.text = self.leveModel.sale_num_des;
     
     self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  %@",self.leveModel.rebet_amount_des];
