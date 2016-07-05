@@ -4610,13 +4610,13 @@
 				1F498B471D2772D0007E77FC /* Account1ViewController.h */,
 				1F498B481D2772D0007E77FC /* Account1ViewController.m */,
 				1F498B491D2772D0007E77FC /* AccountEmpty.xib */,
-				1F498B4A1D2772D0007E77FC /* Concern(关注) */,
 				1F498B4E1D2772D0007E77FC /* WithdrawalsEmpty.xib */,
 				1F498B4F1D2772D0007E77FC /* WithdrawalsIsOk.xib */,
 				1F498B501D2772D0007E77FC /* WithdrawCashViewController.h */,
 				1F498B511D2772D0007E77FC /* WithdrawCashViewController.m */,
 				1F498B521D2772D0007E77FC /* WithdrawCashViewController.xib */,
 				1F498B531D2772D0007E77FC /* WithdrwaIsNo.xib */,
+				1F498B4A1D2772D0007E77FC /* Concern(关注) */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
