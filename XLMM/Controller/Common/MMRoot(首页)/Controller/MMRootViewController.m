@@ -263,17 +263,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)updataAfterLogin:(NSNotification *)notification{
     // 微信登录
     [self loginUpdateIsXiaoluMaMa];
-    if (_isFirstOpenApp) {
-        [self isGetCoupon];
-    }
+    
 }
 
 - (void)phoneNumberLogin:(NSNotification *)notification{
     //  NSLog(@"手机登录");
     [self loginUpdateIsXiaoluMaMa];
-    if (_isFirstOpenApp) {
-        [self isGetCoupon];
-    }
+    
     
 }
 
@@ -314,7 +310,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         self.navigationItem.rightBarButtonItem = nil;
         [users setBool:NO forKey:@"isXLMM"];
     }];
-    
+    [self isGetCoupon];
     
     //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     //    if (data == nil) {
@@ -520,7 +516,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self hidepopView];
         BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
         if (islogin) {
-            if (_isFirstOpenApp) {
                 AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
                 [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -543,9 +538,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                     
                     
                 }];
-            }else {
-            
-            }
             
         }else {
             JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
@@ -571,7 +563,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                 if (isPicked == 0) {
                     [self returnPopView];
                 }else {
-                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+//                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
                 [SVProgressHUD showErrorWithStatus:@"请登录"];
