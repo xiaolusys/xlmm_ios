@@ -76,8 +76,13 @@
     
     
     self.buttonLabel.text = self.centerModel.mama_level_display;
-    self.activenessLabel.text = self.centerModel.active_value_num;
-    self.accumulatedEarningsLabel.text = self.centerModel.carry_value;
+    
+    CGFloat activeValueNum = [self.centerModel.active_value_num floatValue];
+    self.activenessLabel.text = [NSString stringWithFormat:@"%.2f",activeValueNum];
+    
+    CGFloat carryValue = [self.centerModel.carry_value floatValue];
+    self.accumulatedEarningsLabel.text = [NSString stringWithFormat:@"%.2f",carryValue];
+    
     self.balanceLabel.text = self.centerModel.cash_value;
     
     NSString *limtStr = self.extraModel.surplus_days;
