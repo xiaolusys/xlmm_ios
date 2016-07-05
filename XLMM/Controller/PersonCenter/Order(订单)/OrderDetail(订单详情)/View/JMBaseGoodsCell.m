@@ -163,7 +163,7 @@
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.payment floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.f",payment];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f",payment];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
     NSInteger orderStatus = [goodsModel.status integerValue];

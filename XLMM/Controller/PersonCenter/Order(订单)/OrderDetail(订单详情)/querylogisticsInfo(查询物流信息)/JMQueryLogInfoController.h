@@ -19,6 +19,7 @@
 @property (copy, nonatomic) NSString *packetId;
 @property (copy, nonatomic) NSString *companyCode;
 
+@property (nonatomic, assign) NSInteger index;
 
 @property (nonatomic,strong) NSArray *orderDataSource;
 

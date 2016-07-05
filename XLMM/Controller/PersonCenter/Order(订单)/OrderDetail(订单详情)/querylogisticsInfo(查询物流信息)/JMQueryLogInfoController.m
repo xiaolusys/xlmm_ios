@@ -92,7 +92,7 @@
 - (void)setLogisDataSource:(NSArray *)logisDataSource {
     _logisDataSource = logisDataSource;
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
-    packageModel = logisDataSource[0];
+    packageModel = logisDataSource[self.index];
     self.packetId = packageModel.out_sid;
     NSDictionary *logisticsDic = packageModel.logistics_company;
     self.companyCode = logisticsDic[@"id"];
@@ -174,7 +174,7 @@
     
 }
 /**
- *  商品详情的展示列表
+ *  商品详情的展示列表  3101063787725,3101063787976,3101064389806,
  */
 - (void)createGoodsListView {
     self.goodsListVC.count = _count;

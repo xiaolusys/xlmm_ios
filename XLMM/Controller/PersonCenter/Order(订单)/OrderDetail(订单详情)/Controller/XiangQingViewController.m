@@ -430,6 +430,7 @@
 - (void)composeWithLogistics:(JMGoodsShowController *)logistics didClickButton:(NSInteger)index {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     
+    queryVC.index = index;
     NSArray *arr = _dataSource[index];
     NSArray *logisArr = _logisticsArr;
     queryVC.orderDataSource = arr;
@@ -441,6 +442,7 @@
 }
 - (void)composeOptionTapClick:(JMGoodsShowController *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
+    queryVC.index = section;
     queryVC.orderDataSource = _dataSource[section];
     if (_logisticsArr.count == 0) {
         return ;

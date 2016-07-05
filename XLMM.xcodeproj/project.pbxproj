@@ -772,6 +772,7 @@
 		1FF533691D2778DF003DEABF /* EmptyYHQView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533611D2778DF003DEABF /* EmptyYHQView.xib */; };
 		1FF5336A1D2778DF003DEABF /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533631D2778DF003DEABF /* YouHuiQuanViewController.m */; };
 		1FF5336B1D2778DF003DEABF /* YouHuiQuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533641D2778DF003DEABF /* YouHuiQuanViewController.xib */; };
+		1FF5336F1D2B67EB003DEABF /* JMBackTopWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5336E1D2B67EB003DEABF /* JMBackTopWindow.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
 		321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */; };
 		321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 321648AD1C9D25C100E2BE56 /* jianicons.png */; };
@@ -2044,6 +2045,8 @@
 		1FF533621D2778DF003DEABF /* YouHuiQuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouHuiQuanViewController.h; sourceTree = "<group>"; };
 		1FF533631D2778DF003DEABF /* YouHuiQuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouHuiQuanViewController.m; sourceTree = "<group>"; };
 		1FF533641D2778DF003DEABF /* YouHuiQuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YouHuiQuanViewController.xib; sourceTree = "<group>"; };
+		1FF5336D1D2B67EB003DEABF /* JMBackTopWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBackTopWindow.h; sourceTree = "<group>"; };
+		1FF5336E1D2B67EB003DEABF /* JMBackTopWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBackTopWindow.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A81C9D230B00E2BE56 /* YixuanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewCell.h; sourceTree = "<group>"; };
@@ -4251,6 +4254,7 @@
 		1F27A6421D275FB400A0F80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FF5336C1D2B67BB003DEABF /* backTop返回顶部 */,
 				1F27A6431D275FB400A0F80B /* JMRepopView.h */,
 				1F27A6441D275FB400A0F80B /* JMRepopView.m */,
 				1F27A6451D275FB400A0F80B /* JMRootgoodsCell.h */,
@@ -5224,6 +5228,15 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1FF5336C1D2B67BB003DEABF /* backTop返回顶部 */ = {
+			isa = PBXGroup;
+			children = (
+				1FF5336D1D2B67EB003DEABF /* JMBackTopWindow.h */,
+				1FF5336E1D2B67EB003DEABF /* JMBackTopWindow.m */,
+			);
+			name = "backTop返回顶部";
 			sourceTree = "<group>";
 		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
@@ -6324,6 +6337,7 @@
 				1F4161151CE31A4400F78C0D /* NSArray+MASAdditions.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
+				1FF5336F1D2B67EB003DEABF /* JMBackTopWindow.m in Sources */,
 				1F498C631D2772D0007E77FC /* ShenQingTuiHuoController.m in Sources */,
 				1F27A5DE1D2520E200A0F80B /* MaClassifyCarryLogViewController.m in Sources */,
 				1F27A5E41D2520E200A0F80B /* YixuanTableViewController.m in Sources */,
