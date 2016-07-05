@@ -40,12 +40,12 @@
 #import "JMGoodsShowView.h"
 #import "JMTimeLineView.h"
 #import "JMPackAgeModel.h"
-#import "JMNORefundView.h"
 #import "JMPopViewAnimationSpring.h"
+#import "JMRefundView.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface XiangQingViewController ()<JMNORefundViewDelegate,JMGoodsShowControllerDelegate,NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate>{
+@interface XiangQingViewController ()<JMRefundViewDelegate,JMGoodsShowControllerDelegate,NSURLConnectionDataDelegate, UIAlertViewDelegate,JMEditAddressControllerDelegate,JMShareViewDelegate,JMPopLogistcsControllerDelegate>{
     
     float refundPrice;
 }
@@ -103,7 +103,7 @@
  */
 @property (nonatomic,strong) JMGoodsShowController *goodsShowVC;
 
-@property (nonatomic, strong) JMNORefundView *popView;
+@property (nonatomic, strong) JMRefundView *popView;
 
 @end
 
@@ -470,9 +470,7 @@
         
         if (isWarehouseOrder) {
             [self returnPopView];
-            [self.view addSubview:self.maskView];
-            [self.view addSubview:self.popView];
-            [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+            
         
         }else {
             ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
@@ -527,12 +525,16 @@
     self.maskView.backgroundColor = [UIColor blackColor];
     self.maskView.alpha = 0.3;
     [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRefundpopView)]];
-    JMNORefundView *popView = [JMNORefundView defaultPopView];
+    JMRefundView *popView = [JMRefundView defaultPopView];
     self.popView = popView;
+    self.popView.titleStr = @"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。";
     self.popView.delegate = self;
-
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.popView];
+    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
+    
 }
-- (void)composeNoRefundButton:(JMNORefundView *)refundButton didClick:(NSInteger)index {
+- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
     if (index == 100) {
         [self hideRefundpopView];
     }else {
@@ -541,6 +543,7 @@
     
 //    [self.navigationController popViewControllerAnimated:YES];
 }
+
 /**
  *  隐藏
  */

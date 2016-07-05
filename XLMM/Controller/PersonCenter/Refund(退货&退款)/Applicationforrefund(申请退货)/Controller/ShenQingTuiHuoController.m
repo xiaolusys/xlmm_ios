@@ -769,16 +769,16 @@
         if (dic.count == 0) return;
         
         NSLog(@"refund return, %@", responseObject);
-        
-        if ([[dic objectForKey:@"res"] isEqualToString:@"ok"]) {
+        NSInteger code = [dic[@"code"] integerValue];
+        if (code == 0) {
             NSLog(@"refund return ok");
+            [SVProgressHUD dismiss];
             self.button.hidden = YES;
             [self returnPopView];
         }else {
             [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
         NSLog(@"refund return ok end");
-        [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         isChangeBtn = NO;
         NSLog(@"refund return failed %@", error);
