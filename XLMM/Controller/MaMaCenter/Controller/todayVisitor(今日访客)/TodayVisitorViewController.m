@@ -127,7 +127,7 @@
     }
     VisitorModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell fillVisitorData:model];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
