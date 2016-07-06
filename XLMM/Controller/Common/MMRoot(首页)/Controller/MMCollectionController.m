@@ -247,7 +247,7 @@
     cell.iconImage.alpha = 0.0f;
     cell.iconImage.contentMode = UIViewContentModeScaleAspectFill;
 
-    [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             cell.iconImage.alpha = 1.0;
         }];

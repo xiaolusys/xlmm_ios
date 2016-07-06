@@ -725,9 +725,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
         
-        
-        
-        NSLog(@"posterImages url = %@", [childModel.imageURL URLEncodedString]);
+        NSLog(@"posterImages url = %@", [childModel.imageURL JMUrlEncodedString]);
         //        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
         //        if (image0 == nil) {
         //            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
@@ -739,8 +737,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, 150)];
-    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
-    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] JMUrlEncodedString] imageNormalCompression]]);
+    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] JMUrlEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         //通过加载图片得到其高度
         float h;
         if((image == nil) || (image.size.width == 0)){

@@ -286,7 +286,7 @@
         NSDictionary *details = [model.ordersArray objectAtIndex:0];
 //        NSLog(@"detail %@", details);
         
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
        // cell.orderImageView.clipsToBounds = YES;
 //        [self.prp_imageViewsetContentMode:UIViewContentModeScaleAspectFill];
@@ -312,7 +312,7 @@
             NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
 //            NSLog(@"imageView = %@", imageView);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;

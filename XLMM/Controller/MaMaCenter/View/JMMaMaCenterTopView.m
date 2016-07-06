@@ -97,7 +97,7 @@
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(6+count, 1)];
     self.remainingTimeLabel.attributedText = str;
     
-    [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     
 }
 - (void)createUI {
