@@ -55,6 +55,7 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
 #import "Masonry.h"
+#import "UMMobClick/MobClick.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -377,7 +378,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [saleTimer invalidate];
     }
     saleTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(saleTimerCallback:) userInfo:nil repeats:YES];
-    
+    [MobClick beginLogPageView:@"main"];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -415,6 +416,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     self.navigationController.navigationBarHidden = YES;
     frame = self.view.frame;
+    [MobClick endLogPageView:@"main"];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -1233,6 +1235,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark ---- 点击活动事件处理
 - (void)activityClick:(NSDictionary *)dic {
+    [MobClick event:@"activity"];
+    
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {

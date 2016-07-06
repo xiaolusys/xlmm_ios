@@ -26,7 +26,7 @@
 #import "UIImage+ImageWithSelectedView.h"
 //#import "MMLoadingAnimation.h"
 #import "AFNetworking.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 #import "MJRefresh.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
@@ -1006,7 +1006,7 @@
                                      @"sku_id":skusID};
         //统计加入购物车的次数
         NSDictionary *dict = @{@"item_id": itemID};
-        [MobClick event:@"purchase" attributes:dict];
+//        [MobClick event:@"purchase" attributes:dict];
         
         
         [manager POST:kCart_URL parameters:parameters
