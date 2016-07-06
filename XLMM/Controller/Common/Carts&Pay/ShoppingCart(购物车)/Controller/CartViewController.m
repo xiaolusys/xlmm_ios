@@ -19,7 +19,7 @@
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
 #import "MJExtension.h"
-
+#import "UMMobClick/MobClick.h"
 
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
@@ -55,7 +55,7 @@
     [self downloadData];
     [self downloadHistoryData];
     
-
+    [MobClick beginLogPageView:@"cart"];
 }
 
 -(void)displayDefaultView{
@@ -87,6 +87,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    
+    [MobClick endLogPageView:@"cart"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -759,7 +761,7 @@
 
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");
-    
+    [MobClick event:@"purchase"];
     
     PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
     
@@ -773,7 +775,7 @@
 #pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(NewCartsModel *)model{
     NSLog(@"%d", (int)model.ID);
- 
+    [MobClick event:@"buy_again_click"];
     
  
     

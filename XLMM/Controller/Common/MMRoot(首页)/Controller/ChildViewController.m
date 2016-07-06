@@ -24,6 +24,7 @@
 #import "WebViewController.h"
 #import "MJExtension.h"
 #import "Masonry.h"
+#import "UMMobClick/MobClick.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -87,14 +88,23 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
-    
+    if(self.childClothing){
+        [MobClick beginLogPageView:@"child"];
+    }
+    else{
+        [MobClick beginLogPageView:@"women"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-
+    if(self.childClothing){
+        [MobClick endLogPageView:@"child"];
+    }
+    else{
+        [MobClick endLogPageView:@"women"];
+    }
 }
 
 

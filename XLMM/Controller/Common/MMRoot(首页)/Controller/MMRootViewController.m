@@ -1233,7 +1233,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark ---- 点击活动事件处理
 - (void)activityClick:(NSDictionary *)dic {
-    [MobClick event:@"activity"];
+    [MobClick event:@"activity_click"];
     
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
@@ -1323,6 +1323,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark --点击
 //poster click
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
+    [MobClick event:@"banner_click"];
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
@@ -1339,6 +1340,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     UIView *viewClicked=[gestureRecognizer view];
     if (viewClicked==self.womenImgView) {
         NSLog(@"womenImgView");
+        [MobClick event:@"women_click"];
         //跳到时尚女装
         ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
         womanVC.urlString = kLADY_LIST_URL;
@@ -1349,6 +1351,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }else if(viewClicked==self.childImgView) {
         
         NSLog(@"childImgView");
+        [MobClick event:@"child_click"];
         //跳到潮童专区
         ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
         childVC.urlString = kCHILD_LIST_URL;
@@ -2017,6 +2020,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark 点击按钮进入购物车界面
 - (void)gotoCarts:(id)sender{
+    [MobClick event:@"cart_click"];
+    
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
