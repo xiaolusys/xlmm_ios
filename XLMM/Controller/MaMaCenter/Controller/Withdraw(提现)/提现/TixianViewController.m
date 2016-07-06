@@ -86,12 +86,6 @@
     return _buttonArray;
 }
 
-
-- (void)setCantixianjine:(float)cantixianjine {
-    
-    _cantixianjine = cantixianjine;
-}
-
 /*
  提现界面＝＝＝＝
  */
@@ -128,16 +122,16 @@
     [self.myBlanceView addSubview:blanceMoneyLabel];
     self.blanceMoneyLabel = blanceMoneyLabel;
     self.blanceMoneyLabel.font = [UIFont systemFontOfSize:12.];
-    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_cantixianjine];
+    self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",self.cantixianjine];
     
     /*
      判断
      */
-    if (_cantixianjine < 100) {
+    if (self.cantixianjine < 100) {
         self.bottomView.hidden = YES;
         _oneHunderBtn.enabled = NO;
         _twoHUnderBtn.enabled = NO;
-    }else if (_cantixianjine < 200 && _cantixianjine >=100) {
+    }else if (self.cantixianjine < 200 && self.cantixianjine >=100) {
         self.bottomView.hidden = NO;
         _twoHUnderBtn.enabled = NO;
         _oneHunderBtn.enabled = YES;
@@ -351,7 +345,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.cantixianjine = [self.carryNum floatValue];
 
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
     [self createWithdraw];
@@ -434,7 +427,8 @@
             case 0:
                 vc.tixianjine = tixianjine;
                 vc.activeValueNum = _activeValue;
-                vc.surplusMoney = _cantixianjine;
+                vc.surplusMoney = self.cantixianjine;
+                vc.isActiveValue = YES;
                 [self.navigationController pushViewController:vc animated:YES];
                 break;
             case 1:

@@ -10,4 +10,5 @@
 
 @interface Account1ViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)NSNumber *accountMoney;
+@property (nonatomic, strong) NSDictionary *personCenterDict;
 @end

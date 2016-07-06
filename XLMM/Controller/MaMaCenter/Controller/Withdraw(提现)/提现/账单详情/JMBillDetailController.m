@@ -14,6 +14,7 @@
 #import "TixianModel.h"
 #import "NSString+DeleteT.h"
 #import "TixianViewController.h"
+#import "JMWithdrawCashController.h"
 
 @interface JMBillDetailController ()<UIAlertViewDelegate>
 
@@ -22,7 +23,7 @@
 //出账金额
 @property (nonatomic,strong) UILabel *takeoutMoney;
 //提取现金金额图片
-@property (nonatomic,strong) UIImageView *moneyImageView;
+@property (nonatomic,strong) UILabel *moneyImageView;
 
 /*
     金额冻结--系统处理中--提现成功
@@ -131,54 +132,64 @@
 //    
 }
 
+
 - (void)loadDataSource {
-    NSString *nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
-    
+    NSString *nextStr = @"";
+    if (self.isActiveValue) {
+        nextStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout", Root_URL];
+    }else {
+        nextStr = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager GET:nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"%@",responseObject);
-        
-        
-        NSArray *results = responseObject[@"results"];
-        NSDictionary *dict = results[0];
-        self.dict = dict;
-        
-        [self createDate:dict];
-        
-        
-        
+    [manager GET:nextStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            NSArray *results = responseObject[@"results"];
+            NSDictionary *dict = results[0];
+            self.dict = dict;
+            if (self.isActiveValue) {
+                [self createDate:dict];
+            }else {
+                [self createNoActive:dict];
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
 
 
 }
+- (void)createNoActive:(NSDictionary *)dict {
+    _iceTimeLabel.text = dict[@"budget_date"];
+    _disTimeLabel.text = dict[@"budget_date"];
+    _sucTimeLabel.text = dict[@"budget_date"];
+    _withdrawToAccountValueLabel.text = @"微信红包";
+    _moneyImageView.text = [NSString stringWithFormat:@"%.2f",self.withDrawF];
+    _balanceValueLabel.text = [NSString stringWithFormat:@"%.2f",self.withdrawMoney];
+    _setUpTimeValueLabel.text = dict[@"budget_date"];
+    
+    //成功
+    _cuccessImageView.image = [UIImage imageNamed:@"success_Image"];
+    _rightImageView.image = [UIImage imageNamed:@"left_line_selected"];
+    
+    
+}
 - (void)createDate:(NSDictionary *)dict {
     
     NSString *codeState = dict[@"status"];
     
     NSInteger valueMoney = [dict[@"value_money"] integerValue];
-    
+
+    _moneyImageView.text = [NSString stringWithFormat:@"%ld",valueMoney];
     if (valueMoney == 100) {
-        //100的图片
-        
-        _moneyImageView.image = [UIImage imageNamed:@"oneHunder_Withdraw"];//100的图片
-        
         //消耗活跃值 --  判断金额
         _consumeActiveValueLabel.text = @"10点";
-        
     }else {
-        //200的图片
-        _moneyImageView.image = [UIImage imageNamed:@"twoHunder_Withdraw"];//200的图片
-
-        
         _consumeActiveValueLabel.text = @"20点";
-
-        
-        
     }
+    
     
     //时间 -- 判断系统的处理时间的格式
     NSString *created = dict[@"created"];
@@ -193,7 +204,7 @@
     
     
     //剩余零钱 --  从外部传入
-    _balanceValueLabel.text = [NSString stringWithFormat:@"%ld",(long)_withdrawMoney];
+    _balanceValueLabel.text = [NSString stringWithFormat:@"%.2f",self.withdrawMoney];
     //剩余活跃值
     _surplusActiveValueLabel.text = [NSString stringWithFormat:@"%ld",(long)_activeValue];
     
@@ -231,7 +242,6 @@
     }
     _sucTimeLabel.text = timeStr;
 
-    
     NSString *isSuccess = dict[@"get_status_display"];
     //判断取消按钮是否存在
     if ([isSuccess isEqualToString:@"审核通过"]) {
@@ -246,12 +256,6 @@
     }
     
     
-}
-
-
-- (void)setWithdrawMoney:(NSInteger)withdrawMoney {
-    
-    _withdrawMoney = withdrawMoney;
 }
 
 
@@ -274,10 +278,12 @@
     self.takeoutMoney.font = [UIFont systemFontOfSize:13.];
     self.takeoutMoney.textAlignment = NSTextAlignmentCenter;
     
-    UIImageView *moneyImageView = [[UIImageView alloc] init];
+    UILabel *moneyImageView = [[UILabel alloc] init];
     [self.headView addSubview:moneyImageView];
     self.moneyImageView = moneyImageView;
-    self.moneyImageView.image = [UIImage imageNamed:@"oneHunder_Withdraw"];
+    self.moneyImageView.font = [UIFont systemFontOfSize:40.];
+    self.moneyImageView.textColor = [UIColor buttonEnabledBackgroundColor];
+//    self.moneyImageView.image = [UIImage imageNamed:@"oneHunder_Withdraw"];
     //---判断是100的图片还是200得图片
     
    //=======================================
@@ -406,27 +412,32 @@
     self.balanceValueLabel = balanceValueLabel;
     balanceValueLabel.font = [UIFont systemFontOfSize:12.];
 
-    UILabel *consumeActiveLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:consumeActiveLabel];
-    self.consumeActiveLabel = consumeActiveLabel;
-    consumeActiveLabel.text = @"消耗活跃值:";
-    consumeActiveLabel.font = [UIFont systemFontOfSize:12.];
+    if (self.isActiveValue) {
+        UILabel *consumeActiveLabel = [[UILabel alloc] init];
+        [self.bottomView addSubview:consumeActiveLabel];
+        self.consumeActiveLabel = consumeActiveLabel;
+        consumeActiveLabel.text = @"消耗活跃值:";
+        consumeActiveLabel.font = [UIFont systemFontOfSize:12.];
+        
+        UILabel *surplusActiveLabel = [[UILabel alloc] init];
+        [self.bottomView addSubview:surplusActiveLabel];
+        self.surplusActiveLabel = surplusActiveLabel;
+        surplusActiveLabel.text = @"剩余活跃值:";
+        surplusActiveLabel.font = [UIFont systemFontOfSize:12.];
+        
+        UILabel *consumeActiveValueLabel = [[UILabel alloc] init];
+        [self.bottomView addSubview:consumeActiveValueLabel];
+        self.consumeActiveValueLabel = consumeActiveValueLabel;
+        consumeActiveValueLabel.font = [UIFont systemFontOfSize:12.];
 
-    UILabel *consumeActiveValueLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:consumeActiveValueLabel];
-    self.consumeActiveValueLabel = consumeActiveValueLabel;
-    consumeActiveValueLabel.font = [UIFont systemFontOfSize:12.];
+        UILabel *surplusActiveValueLabel = [[UILabel alloc] init];
+        [self.bottomView addSubview:surplusActiveValueLabel];
+        self.surplusActiveValueLabel = surplusActiveValueLabel;
+        surplusActiveValueLabel.font = [UIFont systemFontOfSize:12.];
+    }
+    
 
-    UILabel *surplusActiveLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:surplusActiveLabel];
-    self.surplusActiveLabel = surplusActiveLabel;
-    surplusActiveLabel.text = @"剩余活跃值:";
-    surplusActiveLabel.font = [UIFont systemFontOfSize:12.];
-
-    UILabel *surplusActiveValueLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:surplusActiveValueLabel];
-    self.surplusActiveValueLabel = surplusActiveValueLabel;
-    surplusActiveValueLabel.font = [UIFont systemFontOfSize:12.];
+    
 
 }
 
@@ -438,7 +449,7 @@
         make.top.equalTo(self.view.mas_top).offset(64);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@205);
+        make.height.mas_equalTo(@220);
     }];
     
     [self.takeoutMoney mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -451,15 +462,13 @@
     [self.moneyImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.takeoutMoney.mas_bottom).offset(5);
         make.centerX.equalTo(self.headView.mas_centerX);
-        make.width.mas_equalTo(@(180/2));
-        make.height.mas_equalTo(@(55/2));
     }];
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.headView.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(SCREENHEIGHT - 205 - 64);
+        make.height.mas_equalTo(SCREENHEIGHT - 220 - 64);
     }];
     
     //====================   连线视图
@@ -496,7 +505,7 @@
     
     // 连线视图下面数据控件
     [self.iceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iceImageView.mas_bottom).offset(18);
+        make.top.equalTo(self.iceImageView.mas_bottom).offset(15);
         make.left.equalTo(self.iceImageView.mas_left);
         make.width.mas_equalTo((SCREENWIDTH - 60)/3);
         make.height.mas_equalTo(@12);
@@ -510,7 +519,7 @@
     }];
     
     [self.disLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iceImageView.mas_bottom).offset(18);
+        make.top.equalTo(self.iceImageView.mas_bottom).offset(15);
         make.centerX.equalTo(self.headView.mas_centerX);
         make.width.mas_equalTo((SCREENWIDTH - 60)/3);
         make.height.mas_equalTo(@12);
@@ -524,7 +533,7 @@
     }];
     
     [self.sucLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iceImageView.mas_bottom).offset(18);
+        make.top.equalTo(self.iceImageView.mas_bottom).offset(15);
         make.right.equalTo(self.cuccessImageView.mas_right);
         make.width.mas_equalTo((SCREENWIDTH - 60)/3);
         make.height.mas_equalTo(@12);
@@ -596,34 +605,35 @@
         make.height.mas_equalTo(@14);
     }];
     
-    
-    [self.consumeActiveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.balanceValueLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountLabel.mas_left);
-        make.width.mas_equalTo(@84);
-        make.height.mas_equalTo(@14);
-    }];
-    
-    [self.consumeActiveValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.balanceValueLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
-        make.width.mas_equalTo(SCREENWIDTH - 110);
-        make.height.mas_equalTo(@14);
-    }];
-    
-    [self.surplusActiveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.consumeActiveLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountLabel.mas_left);
-        make.width.mas_equalTo(@84);
-        make.height.mas_equalTo(@14);
-    }];
-    
-    [self.surplusActiveValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.consumeActiveLabel.mas_bottom).offset(20);
-        make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
-        make.width.mas_equalTo(SCREENWIDTH - 110);
-        make.height.mas_equalTo(@14);
-    }];
+    if (self.isActiveValue) {
+        [self.consumeActiveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.balanceValueLabel.mas_bottom).offset(20);
+            make.left.equalTo(self.withdrawToAccountLabel.mas_left);
+            make.width.mas_equalTo(@84);
+            make.height.mas_equalTo(@14);
+        }];
+        
+        [self.consumeActiveValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.balanceValueLabel.mas_bottom).offset(20);
+            make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
+            make.width.mas_equalTo(SCREENWIDTH - 110);
+            make.height.mas_equalTo(@14);
+        }];
+        
+        [self.surplusActiveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.consumeActiveLabel.mas_bottom).offset(20);
+            make.left.equalTo(self.withdrawToAccountLabel.mas_left);
+            make.width.mas_equalTo(@84);
+            make.height.mas_equalTo(@14);
+        }];
+        
+        [self.surplusActiveValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.consumeActiveLabel.mas_bottom).offset(20);
+            make.left.equalTo(self.withdrawToAccountValueLabel.mas_left);
+            make.width.mas_equalTo(SCREENWIDTH - 110);
+            make.height.mas_equalTo(@14);
+        }];
+    }
     
 }
 
@@ -773,7 +783,7 @@
     
     
     for (UIViewController *temp in self.navigationController.viewControllers) {
-        if ([temp isKindOfClass:[TixianViewController class]]) {
+        if ([temp isKindOfClass:[TixianViewController class]] || [temp isKindOfClass:[JMWithdrawCashController class]]) {
             [self.navigationController popToViewController:temp animated:YES];
         }
     }
