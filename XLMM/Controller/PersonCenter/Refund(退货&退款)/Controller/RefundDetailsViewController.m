@@ -104,7 +104,7 @@
     
     self.reasonLabel.text = self.model.reason;
     if ([self.model.pic_path isKindOfClass:[NSString class]] ) {
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[self.model.pic_path URLEncodedString]]];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[self.model.pic_path JMUrlEncodedString]]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     self.imageView.layer.masksToBounds = YES;

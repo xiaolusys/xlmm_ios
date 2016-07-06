@@ -170,7 +170,7 @@
         
         NSDictionary *details = [orderArray objectAtIndex:0];
         
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
         
         cell.nameLabel.text = [details objectForKey:@"title"];
         cell.sizeLabel.text = [details objectForKey:@"sku_name"];
@@ -217,7 +217,7 @@
             NSDictionary *details = [orderArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             NSLog(@"imageView = %@", imageView);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;

@@ -55,7 +55,7 @@
         self.sourceLabel.text = [self dateDeal:carryModel.created];
     }else if(type == 1) {
         //佣金
-        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
         self.sourceLabel.text = carryModel.contributor_nick;
     }else if(type == 2) {
         //点击
@@ -64,7 +64,7 @@
         
     }else if(type == 3) {
 //        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
-        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+        [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
         self.sourceLabel.text = [self dateDeal:carryModel.created];
     }
 

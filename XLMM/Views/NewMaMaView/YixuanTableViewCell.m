@@ -29,7 +29,7 @@
 }
 
 - (void)fillData:(JMAlreadyChooseModel *)model{
-    [self.headImageView sd_setImageWithURL:[ NSURL URLWithString:[model.pic_path URLEncodedString]]];
+    [self.headImageView sd_setImageWithURL:[ NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
     self.headImageView.layer.cornerRadius = 4;
     self.headImageView.layer.borderWidth = 1;
     self.headImageView.layer.borderColor   = [UIColor imageViewBorderColor].CGColor;

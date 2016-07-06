@@ -26,7 +26,7 @@
     if (model.fans_thumbnail.length == 0) {
         self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail URLEncodedString]]];
+        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail JMUrlEncodedString]]];
     }
     
     self.picImageView.layer.cornerRadius = 30;
@@ -44,7 +44,7 @@
     if (model.visitor_img.length == 0) {
         self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img URLEncodedString]]];
+        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img JMUrlEncodedString]]];
     }
     
     self.picImageView.layer.cornerRadius = 30;

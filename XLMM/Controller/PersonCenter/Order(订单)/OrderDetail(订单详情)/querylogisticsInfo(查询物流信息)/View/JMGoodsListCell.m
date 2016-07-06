@@ -96,7 +96,7 @@
     /**
      *  处理图片显示...
      */
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImageView.layer.masksToBounds = YES;
     self.iconImageView.layer.borderWidth = 0.5;

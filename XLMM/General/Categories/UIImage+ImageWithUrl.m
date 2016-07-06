@@ -44,7 +44,7 @@
     if(imageError != nil){
         NSLog(@"loadingImageError = %@", imageError);
         //默认后台返回的是转码过的，app直接访问，如果访问出错再转码尝试一次
-        NSString *urlStr = [urlString URLEncodedString];
+        NSString *urlStr = [urlString JMUrlEncodedString];
         data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError];
     }
     // NSLog(@"data = %@", data);
