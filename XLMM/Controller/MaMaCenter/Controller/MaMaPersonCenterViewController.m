@@ -111,7 +111,7 @@
 @property (nonatomic, strong)NSNumber *fansNum;
 
 @property (nonatomic, strong)NSNumber *visitorDate;
-@property (nonatomic, strong)NSNumber *carryValue;
+@property (nonatomic, assign) CGFloat carryValue;
 
 @property (nonatomic, strong) NSNumber *weekDay;
 
@@ -169,7 +169,7 @@
     self.headViewWidth.constant = SCREENWIDTH;
     self.earningsRecord = @"0.00";
     self.orderRecord = @"0";
-    self.carryValue = [NSNumber numberWithInt:0];
+    self.carryValue = 0;
     [self.mamaTableView registerNib:[UINib nibWithNibName:@"MaMaOrderTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MaMaOrder"];
     self.mamaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.rootScrollView];
@@ -217,16 +217,16 @@
         NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
         if (code == 1) {
             TixianViewController *vc = [[TixianViewController alloc] init];
-            vc.carryNum = self.carryValue;
+            vc.cantixianjine = self.carryValue;
             vc.activeValue = [self.activeValueNum integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else {
-            if ([self.carryValue floatValue] - 20 < 0.000001) {
+            if (self.carryValue - 20 < 0.000001) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"余额不足" message:@"余额不足,不可提现" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
             }else {
                 JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-                shortVC.myBalance = [self.carryValue floatValue];
+                shortVC.myBalance = self.carryValue;
                 shortVC.descStr = self.extraModel.cashout_reason;
                 [self.navigationController pushViewController:shortVC animated:YES];
             }
@@ -286,8 +286,9 @@
     nickName = self.mamaCenterModel.mama_name;
 
     // 账户金额
-    self.carryValue = [NSNumber numberWithInteger:[self.mamaCenterModel.cash_value integerValue]];
+    self.carryValue = [self.mamaCenterModel.cash_value floatValue];
     self.activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];
+    
     
     
     self.huoyueduString = self.mamaCenterModel.active_value_num;

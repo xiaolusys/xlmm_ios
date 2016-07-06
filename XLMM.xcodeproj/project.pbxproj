@@ -772,6 +772,11 @@
 		1FF533691D2778DF003DEABF /* EmptyYHQView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533611D2778DF003DEABF /* EmptyYHQView.xib */; };
 		1FF5336A1D2778DF003DEABF /* YouHuiQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533631D2778DF003DEABF /* YouHuiQuanViewController.m */; };
 		1FF5336B1D2778DF003DEABF /* YouHuiQuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533641D2778DF003DEABF /* YouHuiQuanViewController.xib */; };
+		1FF533721D2CA39C003DEABF /* JMWithdrawCashController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533711D2CA39C003DEABF /* JMWithdrawCashController.m */; };
+		1FF5337A1D2D0E18003DEABF /* running0.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533761D2D0E18003DEABF /* running0.png */; };
+		1FF5337B1D2D0E18003DEABF /* running1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533771D2D0E18003DEABF /* running1.png */; };
+		1FF5337C1D2D0E18003DEABF /* running2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533781D2D0E18003DEABF /* running2.png */; };
+		1FF5337D1D2D0E18003DEABF /* running3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF533791D2D0E18003DEABF /* running3.png */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
 		321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */; };
 		321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 321648AD1C9D25C100E2BE56 /* jianicons.png */; };
@@ -2044,6 +2049,12 @@
 		1FF533621D2778DF003DEABF /* YouHuiQuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouHuiQuanViewController.h; sourceTree = "<group>"; };
 		1FF533631D2778DF003DEABF /* YouHuiQuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouHuiQuanViewController.m; sourceTree = "<group>"; };
 		1FF533641D2778DF003DEABF /* YouHuiQuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YouHuiQuanViewController.xib; sourceTree = "<group>"; };
+		1FF533701D2CA39C003DEABF /* JMWithdrawCashController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWithdrawCashController.h; sourceTree = "<group>"; };
+		1FF533711D2CA39C003DEABF /* JMWithdrawCashController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMWithdrawCashController.m; sourceTree = "<group>"; };
+		1FF533761D2D0E18003DEABF /* running0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = running0.png; sourceTree = "<group>"; };
+		1FF533771D2D0E18003DEABF /* running1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = running1.png; sourceTree = "<group>"; };
+		1FF533781D2D0E18003DEABF /* running2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = running2.png; sourceTree = "<group>"; };
+		1FF533791D2D0E18003DEABF /* running3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = running3.png; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A81C9D230B00E2BE56 /* YixuanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewCell.h; sourceTree = "<group>"; };
@@ -3360,6 +3371,7 @@
 		1830744F1C97D49A00B7665E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1FF533741D2D0E18003DEABF /* Refresh */,
 				1FF533271D27762F003DEABF /* Home */,
 				1F700AAC1CF7D3B6007B3FC0 /* plist */,
 				1F0D90471CEBF40A00C2334D /* Login */,
@@ -4607,15 +4619,12 @@
 		1F498B461D2772D0007E77FC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1FF533731D2D0246003DEABF /* orderWithdraw */,
+				1FF533701D2CA39C003DEABF /* JMWithdrawCashController.h */,
+				1FF533711D2CA39C003DEABF /* JMWithdrawCashController.m */,
 				1F498B471D2772D0007E77FC /* Account1ViewController.h */,
 				1F498B481D2772D0007E77FC /* Account1ViewController.m */,
 				1F498B491D2772D0007E77FC /* AccountEmpty.xib */,
-				1F498B4E1D2772D0007E77FC /* WithdrawalsEmpty.xib */,
-				1F498B4F1D2772D0007E77FC /* WithdrawalsIsOk.xib */,
-				1F498B501D2772D0007E77FC /* WithdrawCashViewController.h */,
-				1F498B511D2772D0007E77FC /* WithdrawCashViewController.m */,
-				1F498B521D2772D0007E77FC /* WithdrawCashViewController.xib */,
-				1F498B531D2772D0007E77FC /* WithdrwaIsNo.xib */,
 				1F498B4A1D2772D0007E77FC /* Concern(关注) */,
 			);
 			path = Controller;
@@ -5226,6 +5235,38 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1FF533731D2D0246003DEABF /* orderWithdraw */ = {
+			isa = PBXGroup;
+			children = (
+				1F498B4E1D2772D0007E77FC /* WithdrawalsEmpty.xib */,
+				1F498B4F1D2772D0007E77FC /* WithdrawalsIsOk.xib */,
+				1F498B501D2772D0007E77FC /* WithdrawCashViewController.h */,
+				1F498B511D2772D0007E77FC /* WithdrawCashViewController.m */,
+				1F498B521D2772D0007E77FC /* WithdrawCashViewController.xib */,
+				1F498B531D2772D0007E77FC /* WithdrwaIsNo.xib */,
+			);
+			name = orderWithdraw;
+			sourceTree = "<group>";
+		};
+		1FF533741D2D0E18003DEABF /* Refresh */ = {
+			isa = PBXGroup;
+			children = (
+				1FF533751D2D0E18003DEABF /* running */,
+			);
+			path = Refresh;
+			sourceTree = "<group>";
+		};
+		1FF533751D2D0E18003DEABF /* running */ = {
+			isa = PBXGroup;
+			children = (
+				1FF533761D2D0E18003DEABF /* running0.png */,
+				1FF533771D2D0E18003DEABF /* running1.png */,
+				1FF533781D2D0E18003DEABF /* running2.png */,
+				1FF533791D2D0E18003DEABF /* running3.png */,
+			);
+			path = running;
+			sourceTree = "<group>";
+		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -5601,6 +5642,7 @@
 				183074461C97D17900B7665E /* ios-social-sdk-share-detail.html in Resources */,
 				183076691C97D49A00B7665E /* 圈圈加载0021.png in Resources */,
 				1830757B1C97D49A00B7665E /* icon-gerenzhongxin.png in Resources */,
+				1FF5337A1D2D0E18003DEABF /* running0.png in Resources */,
 				183075C11C97D49A00B7665E /* 4lun@2x.png in Resources */,
 				183075891C97D49A00B7665E /* icon-shengyu.png in Resources */,
 				1830768D1C97D49A00B7665E /* weixinnind.png in Resources */,
@@ -5638,6 +5680,7 @@
 				1F498C321D2772D0007E77FC /* ChangeNicknameViewController.xib in Resources */,
 				183075AF1C97D49A00B7665E /* loading动画0017.png in Resources */,
 				1830758E1C97D49A00B7665E /* icon-shouye2.png in Resources */,
+				1FF5337C1D2D0E18003DEABF /* running2.png in Resources */,
 				1F498C1A1D2772D0007E77FC /* WithdrwaIsNo.xib in Resources */,
 				325B79E11C97E7160022F930 /* StartActivityView.xib in Resources */,
 				1F498B431D27719C007E77FC /* Logistics.plist in Resources */,
@@ -5720,6 +5763,7 @@
 				183076631C97D49A00B7665E /* 圈圈加载0015.png in Resources */,
 				1FF533681D2778DF003DEABF /* AddYouhuiquanViewController.xib in Resources */,
 				183075B11C97D49A00B7665E /* loading动画0019.png in Resources */,
+				1FF5337B1D2D0E18003DEABF /* running1.png in Resources */,
 				325B79D11C97E7160022F930 /* Head2View.xib in Resources */,
 				183075E81C97D49A00B7665E /* childIcon.png in Resources */,
 				1F4DE5501CE4365600114BDA /* circle_wallet_Normal@2x.png in Resources */,
@@ -5895,6 +5939,7 @@
 				183075771C97D49A00B7665E /* icon-duihao.png in Resources */,
 				183075FB1C97D49A00B7665E /* gyxlmmheadicon.png in Resources */,
 				183075901C97D49A00B7665E /* icon-tuihuanhuo.png in Resources */,
+				1FF5337D1D2D0E18003DEABF /* running3.png in Resources */,
 				1F27A5641D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png in Resources */,
 				1830762B1C97D49A00B7665E /* refundSuccessful.png in Resources */,
 				183076471C97D49A00B7665E /* wash03.png in Resources */,
@@ -6026,6 +6071,7 @@
 				325B7A141C97E73A0022F930 /* PicHeaderCollectionReusableView.m in Sources */,
 				183073EE1C97D17800B7665E /* MJRefreshHeader.m in Sources */,
 				1F2AE9681CF69380002EC974 /* MJPropertyType.m in Sources */,
+				1FF533721D2CA39C003DEABF /* JMWithdrawCashController.m in Sources */,
 				1F27A61C1D27597100A0F80B /* JMFirstOpen.m in Sources */,
 				183073D21C97D17800B7665E /* AFURLResponseSerialization.m in Sources */,
 				183073DC1C97D17800B7665E /* QNDnspodFree.m in Sources */,
@@ -6465,7 +6511,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -6505,7 +6551,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6566,7 +6612,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -6626,7 +6672,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

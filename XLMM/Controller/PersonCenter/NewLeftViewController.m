@@ -33,7 +33,9 @@
 @property (nonatomic, strong)NSNumber *accountMoney;
 @end
 
-@implementation NewLeftViewController
+@implementation NewLeftViewController {
+    NSDictionary *_persinCenterDict;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -62,6 +64,7 @@
 
 - (void)updateUserInfo:(NSDictionary *)dic {
     NSLog(@"dic = %@", dic);
+    _persinCenterDict = dic;
     NSString *nickName = [dic objectForKey:@"nick"];
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
     
@@ -437,6 +440,7 @@
 //        Account1ViewController *account = [[Account1ViewController alloc] initWithNibName:@"Account1ViewController" bundle:nil];
         Account1ViewController *account = [[Account1ViewController alloc] init];
         account.accountMoney = self.accountMoney;
+        account.personCenterDict = _persinCenterDict;
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:account];
