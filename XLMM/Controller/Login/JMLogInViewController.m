@@ -16,7 +16,7 @@
 #import "RegisterViewController.h"
 #import "NSString+Encrypto.h"
 #import "MiPushSDK.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 #import "AFNetworking.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
@@ -313,7 +313,7 @@
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
     [SVProgressHUD dismiss];
-    [MobClick profileSignInWithPUID:@"playerID"];
+//    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
