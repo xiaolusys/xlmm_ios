@@ -36,6 +36,7 @@
 #import "JMPopLogistcsModel.h"
 #import "JMPayShareController.h"
 #import "JMShareModel.h"
+#import "UMMobClick/MobClick.h"
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{
@@ -609,6 +610,8 @@
     [JMPopView hide];
 }
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
+    [MobClick event:@"logistics_choose"];
+    
     self.choiseLabel.text = model.name;
     _logisticsDic = [NSMutableDictionary dictionary];
     _logisticsDic = model.mj_keyValues;
@@ -815,6 +818,8 @@
 
 - (void)submitBuyGoods {
     
+    [MobClick event:@"commit_buy"];
+    
     NSMutableString *dicStr = [NSMutableString stringWithFormat:@"%@",dict];
     [dicStr appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsDic[@"id"]],nil];
     
@@ -855,6 +860,9 @@
         
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [dic objectForKey:@"code"]};
+                [MobClick event:@"buy_fail" attributes:temp_dict];
+                
                 [SVProgressHUD dismiss];
                 NSString *errorStr = dic[@"info"];
                 NSString *messageStr = [NSString stringWithFormat:@"%@,请在购物车重新选择提交.",errorStr];
@@ -866,6 +874,8 @@
         }
         if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [MobClick event:@"buy_succ"];
+                
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [self pushShareVC];
             });
@@ -883,13 +893,17 @@
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [MobClick event:@"buy_succ"];
                         [self pushShareVC];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                            [MobClick event:@"buy_cancel"];
                             [self.navigationController popViewControllerAnimated:YES];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",error.code]};
+                            [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
                         }
                         [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
@@ -1203,12 +1217,16 @@
     else{
         self.isInstallWX = NO;
     }
+    
+    [MobClick beginLogPageView:@"purchase"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationWillEnterForegroundNotification
                                                   object:app];
+    
+    [MobClick endLogPageView:@"purchase"];
     
 }
 - (void)isApinPayGo {
@@ -1231,6 +1249,8 @@
 
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
+    [MobClick event:@"buy_succ"];
+    
     [self pushShareVC];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
@@ -1253,6 +1273,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)popview{
+    [MobClick event:@"buy_cancel"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

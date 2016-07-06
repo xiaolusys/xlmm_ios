@@ -13,7 +13,7 @@
 #import "UIColor+RGBColor.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-
+#import "UMMobClick/MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -508,6 +508,7 @@
 }
 
 - (IBAction)commitClicked:(id)sender {
+    [MobClick event:@"refund"];
     
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;

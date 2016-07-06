@@ -35,7 +35,7 @@
 #import "JMPopView.h"
 #import "MJExtension.h"
 #import "JMShareModel.h"
-
+#import "UMMobClick/MobClick.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -162,6 +162,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    [MobClick event:@"activity"];
     
     NSString *titleName = self.titleName;
     
