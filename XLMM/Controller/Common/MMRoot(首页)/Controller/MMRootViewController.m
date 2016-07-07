@@ -740,7 +740,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, 150)];
     NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
-    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [imgView sd_setImageWithURL: [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         //通过加载图片得到其高度
         float h;
         if((image == nil) || (image.size.width == 0)){
