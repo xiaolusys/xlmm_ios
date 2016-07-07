@@ -19,7 +19,7 @@
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
 #import "MJExtension.h"
-
+#import "UMMobClick/MobClick.h"
 
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
@@ -55,7 +55,7 @@
     [self downloadData];
     [self downloadHistoryData];
     
-
+    [MobClick beginLogPageView:@"cart"];
 }
 
 -(void)displayDefaultView{
@@ -87,6 +87,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    
+    [MobClick endLogPageView:@"cart"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -338,7 +340,7 @@
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
@@ -373,7 +375,7 @@
 
             cell.headImageView.layer.cornerRadius = 5;
             cell.headImageView.layer.masksToBounds = YES;
-            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             
@@ -759,7 +761,7 @@
 
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");
-    
+    [MobClick event:@"purchase"];
     
     PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
     
@@ -773,7 +775,7 @@
 #pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(NewCartsModel *)model{
     NSLog(@"%d", (int)model.ID);
- 
+    [MobClick event:@"buy_again_click"];
     
  
     

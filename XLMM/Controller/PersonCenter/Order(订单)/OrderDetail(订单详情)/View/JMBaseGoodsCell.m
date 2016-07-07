@@ -114,6 +114,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImage);
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
+        make.right.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -153,7 +154,7 @@
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;

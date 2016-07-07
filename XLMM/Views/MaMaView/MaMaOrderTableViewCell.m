@@ -25,7 +25,7 @@
 }
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM {
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.imageV.layer.masksToBounds = YES;
     self.imageV.layer.cornerRadius = 5;
     self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;

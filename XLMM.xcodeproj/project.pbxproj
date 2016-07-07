@@ -694,6 +694,9 @@
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		1FCDC51B1D23B60B00554777 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
+		1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */; };
+		1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */; };
+		1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */; };
 		1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */; };
 		1FF4C9D61CBCF57800CCDCF7 /* waitpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */; };
 		1FF4C9D71CBCF57800CCDCF7 /* refund.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF4C9D21CBCF57800CCDCF7 /* refund.png */; };
@@ -747,6 +750,9 @@
 		1FF533DE1D2D256C003DEABF /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533CC1D2D256C003DEABF /* UIImageView+HighlightedWebCache.m */; };
 		1FF533DF1D2D256C003DEABF /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533CE1D2D256C003DEABF /* UIImageView+WebCache.m */; };
 		1FF533E01D2D256C003DEABF /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533D01D2D256C003DEABF /* UIView+WebCacheOperation.m */; };
+		1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533E21D2DF8AA003DEABF /* JMOrderDetailController.m */; };
+		1FF533E81D2DFAB9003DEABF /* JMOrderDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533E71D2DFAB9003DEABF /* JMOrderDetailHeaderView.m */; };
+		1FF533EB1D2DFACB003DEABF /* JMOrderDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF533EA1D2DFACB003DEABF /* JMOrderDetailFooterView.m */; };
 		321648AB1C9D230B00E2BE56 /* YixuanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 321648A91C9D230B00E2BE56 /* YixuanTableViewCell.m */; };
 		321648AC1C9D230B00E2BE56 /* YixuanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 321648AA1C9D230B00E2BE56 /* YixuanTableViewCell.xib */; };
 		321648AE1C9D25C100E2BE56 /* jianicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 321648AD1C9D25C100E2BE56 /* jianicons.png */; };
@@ -1935,6 +1941,12 @@
 		1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "get_fivteen_redpack@2x.png"; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
+		1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayOutdateView.m; sourceTree = "<group>"; };
+		1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAllOrderModel.h; sourceTree = "<group>"; };
+		1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAllOrderModel.m; sourceTree = "<group>"; };
+		1FD158CF1D2E8387006C4B14 /* JMOrderDetailSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailSectionView.h; sourceTree = "<group>"; };
+		1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailSectionView.m; sourceTree = "<group>"; };
 		1FF4C9D01CBCF57800CCDCF7 /* waitsend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitsend.png; sourceTree = "<group>"; };
 		1FF4C9D11CBCF57800CCDCF7 /* waitpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitpay.png; sourceTree = "<group>"; };
 		1FF4C9D21CBCF57800CCDCF7 /* refund.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refund.png; sourceTree = "<group>"; };
@@ -2012,6 +2024,12 @@
 		1FF533CE1D2D256C003DEABF /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		1FF533CF1D2D256C003DEABF /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		1FF533D01D2D256C003DEABF /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		1FF533E11D2DF8AA003DEABF /* JMOrderDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailController.h; sourceTree = "<group>"; };
+		1FF533E21D2DF8AA003DEABF /* JMOrderDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailController.m; sourceTree = "<group>"; };
+		1FF533E61D2DFAB9003DEABF /* JMOrderDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailHeaderView.h; sourceTree = "<group>"; };
+		1FF533E71D2DFAB9003DEABF /* JMOrderDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailHeaderView.m; sourceTree = "<group>"; };
+		1FF533E91D2DFACB003DEABF /* JMOrderDetailFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderDetailFooterView.h; sourceTree = "<group>"; };
+		1FF533EA1D2DFACB003DEABF /* JMOrderDetailFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderDetailFooterView.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321648A81C9D230B00E2BE56 /* YixuanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YixuanTableViewCell.h; sourceTree = "<group>"; };
@@ -4730,6 +4748,8 @@
 		1F498BA41D2772D0007E77FC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1FF533E11D2DF8AA003DEABF /* JMOrderDetailController.h */,
+				1FF533E21D2DF8AA003DEABF /* JMOrderDetailController.m */,
 				1F498BA51D2772D0007E77FC /* JMGoodsShowController.h */,
 				1F498BA61D2772D0007E77FC /* JMGoodsShowController.m */,
 				1F498BA71D2772D0007E77FC /* XiangQingViewController.h */,
@@ -4813,6 +4833,12 @@
 		1F498BCA1D2772D0007E77FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */,
+				1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */,
+				1FD158CF1D2E8387006C4B14 /* JMOrderDetailSectionView.h */,
+				1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */,
+				1FF533E51D2DFA8C003DEABF /* header */,
+				1FF533E41D2DFA8A003DEABF /* footer */,
 				1F498BCB1D2772D0007E77FC /* JMBaseGoodsCell.h */,
 				1F498BCC1D2772D0007E77FC /* JMBaseGoodsCell.m */,
 				1F498BCD1D2772D0007E77FC /* JMGoodsShowView.h */,
@@ -5064,6 +5090,8 @@
 		1FF533541D27789D003DEABF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */,
+				1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5173,6 +5201,24 @@
 				1FF533D01D2D256C003DEABF /* UIView+WebCacheOperation.m */,
 			);
 			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		1FF533E41D2DFA8A003DEABF /* footer */ = {
+			isa = PBXGroup;
+			children = (
+				1FF533E91D2DFACB003DEABF /* JMOrderDetailFooterView.h */,
+				1FF533EA1D2DFACB003DEABF /* JMOrderDetailFooterView.m */,
+			);
+			name = footer;
+			sourceTree = "<group>";
+		};
+		1FF533E51D2DFA8C003DEABF /* header */ = {
+			isa = PBXGroup;
+			children = (
+				1FF533E61D2DFAB9003DEABF /* JMOrderDetailHeaderView.h */,
+				1FF533E71D2DFAB9003DEABF /* JMOrderDetailHeaderView.m */,
+			);
+			name = header;
 			sourceTree = "<group>";
 		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
@@ -6234,6 +6280,7 @@
 				183070DE1C97B83900B7665E /* PosterModel.m in Sources */,
 				1FF533DC1D2D256C003DEABF /* UIImage+MultiFormat.m in Sources */,
 				183073F51C97D17800B7665E /* MJRefreshGifHeader.m in Sources */,
+				1FF533EB1D2DFACB003DEABF /* JMOrderDetailFooterView.m in Sources */,
 				183073D71C97D17800B7665E /* QNDnsManager.m in Sources */,
 				321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */,
 				183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */,
@@ -6247,6 +6294,7 @@
 				1FF533DA1D2D256C003DEABF /* UIButton+WebCache.m in Sources */,
 				183073CE1C97D17800B7665E /* AFNetworkReachabilityManager.m in Sources */,
 				1F27A5E01D2520E200A0F80B /* JMLevelinfoModel.m in Sources */,
+				1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */,
 				1F498C611D2772D0007E77FC /* JMRefundCell.m in Sources */,
 				1830740E1C97D17800B7665E /* QNConfiguration.m in Sources */,
 				183072881C97C00900B7665E /* UIImage+ColorImage.m in Sources */,
@@ -6292,6 +6340,7 @@
 				1F498C1D1D2772D0007E77FC /* JMCompSugView.m in Sources */,
 				1F498C361D2772D0007E77FC /* VersionController.m in Sources */,
 				183070D11C97B83900B7665E /* BuyModel.m in Sources */,
+				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F27A5F31D2520E200A0F80B /* JMBillDetailController.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
 				1F498C3C1D2772D0007E77FC /* NewLeftViewController.m in Sources */,
@@ -6305,6 +6354,7 @@
 				1FF533DE1D2D256C003DEABF /* UIImageView+HighlightedWebCache.m in Sources */,
 				1FF533D61D2D256C003DEABF /* SDWebImageDownloader.m in Sources */,
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,
+				1FF533E81D2DFAB9003DEABF /* JMOrderDetailHeaderView.m in Sources */,
 				1F498C2D1D2772D0007E77FC /* BoundingNewPhoneController.m in Sources */,
 				183073F91C97D17800B7665E /* MJRefreshConst.m in Sources */,
 				1830742A1C97D17800B7665E /* SVProgressHUD.m in Sources */,
@@ -6409,6 +6459,7 @@
 				1FF533D71D2D256C003DEABF /* SDWebImageDownloaderOperation.m in Sources */,
 				1F4161151CE31A4400F78C0D /* NSArray+MASAdditions.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
+				1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
 				1FF533DB1D2D256C003DEABF /* UIImage+GIF.m in Sources */,
 				1F498C631D2772D0007E77FC /* ShenQingTuiHuoController.m in Sources */,
@@ -6424,6 +6475,7 @@
 				325B7A161C97E73A0022F930 /* TixianTableViewCell.m in Sources */,
 				1F498C3A1D2772D0007E77FC /* ThirdAccountViewController.m in Sources */,
 				1F27A5CD1D2520E200A0F80B /* MaMaHuoyueduViewController.m in Sources */,
+				1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */,
 				1F498C341D2772D0007E77FC /* TSettingViewController.m in Sources */,
 				3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */,
 				325B79D41C97E7160022F930 /* JiFenCollectionCell.m in Sources */,

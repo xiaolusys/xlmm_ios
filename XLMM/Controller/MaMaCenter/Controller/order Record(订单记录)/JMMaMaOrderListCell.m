@@ -174,7 +174,7 @@
     //    UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:100];
     
     //    self.isAPP = imageView;
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.iconImageView.layer.masksToBounds = YES;
     self.iconImageView.layer.cornerRadius = 5;
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;

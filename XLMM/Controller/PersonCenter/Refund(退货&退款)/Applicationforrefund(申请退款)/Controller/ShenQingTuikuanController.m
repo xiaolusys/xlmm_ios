@@ -13,7 +13,7 @@
 #import "UIColor+RGBColor.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-
+#import "UMMobClick/MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -142,7 +142,7 @@
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
         
-    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
+    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path JMUrlEncodedString]]];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
@@ -508,6 +508,7 @@
 }
 
 - (IBAction)commitClicked:(id)sender {
+    [MobClick event:@"refund"];
     
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;

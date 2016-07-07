@@ -725,9 +725,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         childModel.firstName = [[childDic objectForKey:@"subject"] objectAtIndex:0];
         childModel.secondName = [[childDic objectForKey:@"subject"] objectAtIndex:1];
         
-        
-        
-        NSLog(@"posterImages url = %@", [childModel.imageURL URLEncodedString]);
+        NSLog(@"posterImages url = %@", [childModel.imageURL JMUrlEncodedString]);
         //        UIImage *image0 = [UIImage imagewithURLString:[[childModel.imageURL URLEncodedString] imageNormalCompression]];
         //        if (image0 == nil) {
         //            image0 = [UIImage imageNamed:@"placeHolderPosterImage.png"];
@@ -739,9 +737,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH, 150)];
-    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]]);
-    [imgView sd_setImageWithURL: [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] URLEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        //通过加载图片得到其高度
+    NSLog(@"poster url %@", [NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] JMUrlEncodedString] imageNormalCompression]]);
+    [imgView sd_setImageWithURL:[NSURL URLWithString:[[[childArray[0] objectForKey:@"pic_link"] JMUrlEncodedString] imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //通过加载图片得到其高度wa
         float h;
         if((image == nil) || (image.size.width == 0)){
             h = 150;
@@ -1235,7 +1233,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark ---- 点击活动事件处理
 - (void)activityClick:(NSDictionary *)dic {
-    [MobClick event:@"activity"];
+    [MobClick event:@"activity_click"];
     
     login_required = [[dic objectForKey:@"login_required"] boolValue];
     NSLog(@"Activity login required %d", login_required);
@@ -1325,6 +1323,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark --点击
 //poster click
 - (void)tapgesture:(UITapGestureRecognizer *)gesture{
+    [MobClick event:@"banner_click"];
     MMAdvertiseView *view =(MMAdvertiseView *)[gesture.view superview];
     PosterModel *model = self.posterDataArray[view.currentImageIndex];
     NSString *target_url = model.target_link;
@@ -1341,6 +1340,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     UIView *viewClicked=[gestureRecognizer view];
     if (viewClicked==self.womenImgView) {
         NSLog(@"womenImgView");
+        [MobClick event:@"women_click"];
         //跳到时尚女装
         ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
         womanVC.urlString = kLADY_LIST_URL;
@@ -1351,6 +1351,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }else if(viewClicked==self.childImgView) {
         
         NSLog(@"childImgView");
+        [MobClick event:@"child_click"];
         //跳到潮童专区
         ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
         childVC.urlString = kCHILD_LIST_URL;
@@ -2019,6 +2020,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark 点击按钮进入购物车界面
 - (void)gotoCarts:(id)sender{
+    [MobClick event:@"cart_click"];
+    
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
     if (login == NO) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];

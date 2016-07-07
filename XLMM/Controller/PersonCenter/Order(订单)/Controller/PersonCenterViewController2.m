@@ -20,6 +20,8 @@
 #import "Masonry.h"
 #import "MJExtension.h"
 #import "DingdanModel.h"
+#import "JMAllOrderModel.h"
+#import "JMOrderDetailController.h"
 
 
 #define kSimpleCellIdentifier @"simpleCell"
@@ -170,7 +172,7 @@
         
         NSDictionary *details = [orderArray objectAtIndex:0];
         
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
         
         cell.nameLabel.text = [details objectForKey:@"title"];
         cell.sizeLabel.text = [details objectForKey:@"sku_name"];
@@ -217,7 +219,7 @@
             NSDictionary *details = [orderArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             NSLog(@"imageView = %@", imageView);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
@@ -276,18 +278,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 //    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
-    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    NSString *ID = [dic objectForKey:@"id"];
-//    NSLog(@"id = %@", ID);
-    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
-    xiangqingVC.dingdanModel = dingdanModel;
-    xiangqingVC.goodsArr = dic[@"orders"];
+//    NSString *ID = [dic objectForKey:@"id"];
+////    NSLog(@"id = %@", ID);
+//    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
+//    xiangqingVC.dingdanModel = dingdanModel;
+//    xiangqingVC.goodsArr = dic[@"orders"];
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
 //    NSLog(@"urlString = %@", urlString);
-    xiangqingVC.urlString = urlString;
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
+//    xiangqingVC.urlString = urlString;
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
+    JMAllOrderModel *orderModel = [JMAllOrderModel mj_objectWithKeyValues:dic];
+    
+    JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    orderDetailVC.allOrderModel = orderModel;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, orderModel.goodsID];
+    [self.navigationController pushViewController:orderDetailVC animated:YES];
+    
 }
 
 -(void)displayDefaultView{

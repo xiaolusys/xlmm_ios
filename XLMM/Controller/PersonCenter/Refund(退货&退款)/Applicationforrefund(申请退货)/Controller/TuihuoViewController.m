@@ -297,7 +297,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (model.pic_path == nil || [model.pic_path class] == [NSNull class] || [model.pic_path isEqualToString:@""]) {
         cell.myImageView.image = nil;
     } else {
-        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
         cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         cell.myImageView.layer.masksToBounds = YES;

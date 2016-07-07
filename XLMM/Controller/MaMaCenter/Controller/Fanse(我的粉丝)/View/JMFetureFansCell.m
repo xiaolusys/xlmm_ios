@@ -89,7 +89,7 @@
     if (model.headimgurl.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.headimgurl URLEncodedString]]];
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.headimgurl JMUrlEncodedString]]];
     }
     self.iconImage.layer.cornerRadius = 30;
     self.iconImage.layer.borderWidth = 0.5;
@@ -109,7 +109,7 @@
     if (model.visitor_img.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img URLEncodedString]]];
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img JMUrlEncodedString]]];
     }
     
     self.iconImage.layer.cornerRadius = 30;
@@ -126,7 +126,7 @@
     if (model.fans_thumbnail.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail URLEncodedString]]];
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail JMUrlEncodedString]]];
     }
     
     self.iconImage.layer.cornerRadius = 30;
