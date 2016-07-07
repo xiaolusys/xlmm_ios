@@ -1370,8 +1370,14 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //循环遍历改变背景
     [self changeBtnImg];
-    
-    
+    if(self.currentIndex == 0){
+        [MobClick event:@"yestoday"];
+    }else if(self.currentIndex == 1){
+        [MobClick event:@"today"];
+    }else if(self.currentIndex == 2){
+        [MobClick event:@"tomorrow"];
+    }
+
     //改变scrollview的偏移
     NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
@@ -1412,7 +1418,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         self.labelIndicate.text = @"距本场结束";
-    } if(self.currentIndex == 2){
+    }else if(self.currentIndex == 2){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
@@ -2138,6 +2144,14 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
         if(self.currentIndex != index){
             self.currentIndex = index;
+            if(self.currentIndex == 0){
+                [MobClick event:@"yestoday"];
+            }else if(self.currentIndex == 1){
+                [MobClick event:@"today"];
+            }else if(self.currentIndex == 2){
+                [MobClick event:@"tomorrow"];
+            }
+            
             NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
             if((currentArr != nil) && (currentArr.count == 0)){
                 [self goodsRequest];
