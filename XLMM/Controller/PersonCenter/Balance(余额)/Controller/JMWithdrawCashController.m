@@ -322,6 +322,17 @@
 - (void)backClick:(UIButton *)btn {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"BlanceWithDrawCash"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"BlanceWithDrawCash"];
+}
 
 
 @end

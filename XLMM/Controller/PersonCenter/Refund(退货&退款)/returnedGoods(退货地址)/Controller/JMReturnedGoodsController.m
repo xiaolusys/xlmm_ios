@@ -356,20 +356,16 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-//    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    [MobClick beginLogPageView:@"JMReturnedGoodsController"];
+    
 }
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
-//}
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"JMReturnedGoodsController"];
 }
-//- (void)viewDidDisappear:(BOOL)animated {
-//    [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
+
+
 #pragma mark - 点击隐藏
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

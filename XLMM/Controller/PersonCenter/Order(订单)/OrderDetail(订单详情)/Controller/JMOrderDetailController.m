@@ -562,10 +562,12 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"OrderDetail"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"OrderDetail"];
 }
 @end
 

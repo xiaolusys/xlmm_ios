@@ -55,7 +55,6 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
 #import "Masonry.h"
-#import "UMMobClick/MobClick.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300

@@ -24,7 +24,6 @@
 #import "WebViewController.h"
 #import "MJExtension.h"
 #import "Masonry.h"
-#import "UMMobClick/MobClick.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 

@@ -416,6 +416,16 @@
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"QueryLogInfo"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"QueryLogInfo"];
+}
 
 @end
 

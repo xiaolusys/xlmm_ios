@@ -188,10 +188,14 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"JMRefundBaseController"];
+
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"JMRefundBaseController"];
+
 }
 @end
 

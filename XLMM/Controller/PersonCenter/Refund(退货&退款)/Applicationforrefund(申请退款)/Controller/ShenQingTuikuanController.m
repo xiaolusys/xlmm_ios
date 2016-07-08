@@ -76,7 +76,8 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHiden:) name:UIKeyboardWillHideNotification object:nil];
-    
+    [MobClick beginLogPageView:@"ShenQingTuikuanController"];
+
 }
 
 
@@ -87,7 +88,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     
-    
+    [MobClick endLogPageView:@"ShenQingTuikuanController"];
+
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification{

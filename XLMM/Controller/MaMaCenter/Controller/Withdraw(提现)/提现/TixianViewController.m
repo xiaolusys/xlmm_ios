@@ -341,6 +341,17 @@
     _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
     _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"TixianViewController"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"TixianViewController"];
+}
 #pragma mark ---- viewDidLoad
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -458,16 +469,6 @@
     [alertView show];
     
     
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
 }
 
 //- (IBAction)fabuClicked:(id)sender {

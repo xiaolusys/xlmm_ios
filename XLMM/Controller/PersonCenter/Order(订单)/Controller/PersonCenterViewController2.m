@@ -40,15 +40,15 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = NO;
-    
-
+    self.navigationController.navigationBarHidden = NO;
     [self downlaodData];
+    [MobClick beginLogPageView:@"PersonWaitTakeGoodsOrder"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"PersonWaitTakeGoodsOrder"];
 }
 
 //待收货订单。。。。。。

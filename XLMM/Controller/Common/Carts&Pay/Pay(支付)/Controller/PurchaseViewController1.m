@@ -36,7 +36,7 @@
 #import "JMPopLogistcsModel.h"
 #import "JMPayShareController.h"
 #import "JMShareModel.h"
-#import "UMMobClick/MobClick.h"
+
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{

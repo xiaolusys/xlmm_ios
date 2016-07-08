@@ -95,12 +95,14 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"MaClassifyCarryLogViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"MaClassifyCarryLogViewController"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
