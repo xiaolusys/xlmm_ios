@@ -57,10 +57,12 @@
 - (void)setOrderDetailModel:(JMOrderDetailModel *)orderDetailModel {
     _orderDetailModel = orderDetailModel;
     
-    if ([orderDetailModel.channel isEqualToString:@"wx_pub"]) {
-        _imageStr = @"zhifubao";
+    if ([orderDetailModel.channel isEqualToString:@"budget"]) {
+        _imageStr = @"payWay_xiaoluPay";
+    }else if ([orderDetailModel.channel isEqualToString:@"wx_pub"]) {
+        _imageStr = @"weixinIcon";
     }else {
-        _imageStr = @"weixinzhifu";
+        _imageStr = @"zhifubaoiconthird";
     }
     self.payWayImage.image = [UIImage imageNamed:_imageStr];
     self.goodsAllMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.total_fee floatValue]];

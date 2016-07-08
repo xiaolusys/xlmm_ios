@@ -16,6 +16,7 @@
 #import "JMReturnedGoodsController.h"
 #import "JMTimeLineView.h"
 #import "UIColor+RGBColor.h"
+#import "JMRefundModel.h"
 
 
 @interface RefundDetailsViewController (){
@@ -87,24 +88,25 @@
 //        self.topToRefundHeight.constant = 0;
 //    }
     
-    NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.model.status, self.model.good_status, self.model.return_address);
+    NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.refundModelr.status, [self.refundModelr.good_status integerValue], self.refundModelr.return_address);
     [self timeLine];
 }
 
 - (void)setHeadInfo{
-    self.bianhaoLabel.text = self.model.refund_no;
+    self.bianhaoLabel.text = self.refundModelr.refund_no;
 
-    self.displayLabel.text = self.model.status_display;
-    self.titleLabel.text = self.model.title;
-    self.sizeLabel.text = self.model.sku_name;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.1f", self.model.payment];
-    self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)self.model.refund_num];
-    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", self.model.refund_fee];
+    self.displayLabel.text = self.refundModelr.status_display;
+    self.titleLabel.text = self.refundModelr.title;
+    self.sizeLabel.text = self.refundModelr.sku_name;
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [self.refundModelr.payment floatValue]];
+    NSInteger refundNum = [self.refundModelr.refund_num integerValue];
+    self.numberLabel.text = [NSString stringWithFormat:@"%ld", refundNum];
+    self.refundPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [self.refundModelr.refund_fee floatValue]];
     
     
-    self.reasonLabel.text = self.model.reason;
-    if ([self.model.pic_path isKindOfClass:[NSString class]] ) {
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[self.model.pic_path JMUrlEncodedString]]];
+    self.reasonLabel.text = self.refundModelr.reason;
+    if ([self.refundModelr.pic_path isKindOfClass:[NSString class]] ) {
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[self.refundModelr.pic_path JMUrlEncodedString]]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     self.imageView.layer.masksToBounds = YES;
@@ -112,18 +114,18 @@
     self.imageView.layer.borderWidth = 0.5;
     self.imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
     self.circleView.layer.cornerRadius = 5;
-    if (self.model.has_good_return == 0) {
+    if (self.refundModelr.has_good_return == 0) {
         self.createdLabel.text = @"申请退款";
     }else{
         self.createdLabel.text = @"申请退货";
-        if(self.model.status == REFUND_STATUS_SELLER_AGREED){
+        if([self.refundModelr.status integerValue] == REFUND_STATUS_SELLER_AGREED){
             self.topToRefundHeight.constant = 0;
         }
     }
     
-    self.statusLabel.text = self.model.status_display;
-    self.createTimeLabel.text = [self stringReplaced:self.model.created];
-    self.modifyTimeLabel.text = [self stringReplaced:self.model.modified];
+    self.statusLabel.text = self.refundModelr.status_display;
+    self.createTimeLabel.text = [self stringReplaced:self.refundModelr.created];
+    self.modifyTimeLabel.text = [self stringReplaced:self.refundModelr.modified];
 
 }
 
@@ -162,7 +164,7 @@
     UIButton *kefuButton = [infoView viewWithTag:800];
     [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
     
-    addressLabel.text = self.model.return_address;
+    addressLabel.text = self.refundModelr.return_address;
     
     [self.view addSubview:infoView];
     
@@ -186,7 +188,7 @@
 //    
     
     JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
-    reGoodsVC.model = self.model;
+    reGoodsVC.refundModelr = self.refundModelr;
     
     
     
@@ -198,13 +200,13 @@
 }
 
 - (void)timeLine {
-    NSInteger countNum = self.model.status;
+    NSInteger countNum = [self.refundModelr.status integerValue];
     NSArray *desArr = [NSArray array];
     NSInteger count = 0;
     int i = 0;
     if (countNum == REFUND_STATUS_REFUND_CLOSE || countNum == REFUND_STATUS_SELLER_REJECTED || countNum == REFUND_STATUS_NO_REFUND) {
-        NSString *str = self.model.status_display;
-        if (self.model.has_good_return == 0) {
+        NSString *str = self.refundModelr.status_display;
+        if (self.refundModelr.has_good_return == 0) {
             //            self.createdLabel.text = @"申请退款";
             desArr = @[@"申请退款",str];
         }else{
@@ -214,7 +216,7 @@
         
         count = desArr.count;
     }else {
-        if (self.model.has_good_return == 0) {
+        if (self.refundModelr.has_good_return == 0) {
 //            self.createdLabel.text = @"申请退款";
             desArr = @[@"申请退款",@"同意申请",@"等待返款",@"退款成功"];
             countNum -= 3;

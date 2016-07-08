@@ -330,18 +330,18 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-   
-    
-    RefundDetailsViewController *xiangqingVC = [[RefundDetailsViewController alloc] init];
-
-    xiangqingVC.model = model;
-    
-    NSLog(@"refundmodel = %@", xiangqingVC.model);
-    
-    
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
-    
+//    JMRefundModel *refundModelr = [self.dataArray objectAtIndex:indexPath.row];
+//   
+//    
+//    RefundDetailsViewController *xiangqingVC = [[RefundDetailsViewController alloc] init];
+//
+//    xiangqingVC.refundModelr = refundModelr;
+//    
+//    NSLog(@"refundmodel = %@", xiangqingVC.refundModelr);
+//    
+//    
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
+//    
 
 
 }

@@ -16,6 +16,7 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "MJExtension.h"
+#import "RefundDetailsViewController.h"
 
 @interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -150,6 +151,14 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 130;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    JMRefundModel *refundModel = self.dataSource[indexPath.row];
+    
+    RefundDetailsViewController *refundDetailVC = [[RefundDetailsViewController alloc] init];
+    refundDetailVC.refundModelr = refundModel;
+    [self.navigationController pushViewController:refundDetailVC animated:YES];
+    
 }
 -(void)displayDefaultView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
