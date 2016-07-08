@@ -27,6 +27,7 @@
 @end
 
 @implementation JMRefundController
+
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
@@ -77,23 +78,6 @@
 - (void)goBack:(UITapGestureRecognizer *)tap {
     [self cancelBtnClick];
 }
-/**
- *  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"放弃退款!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
- alterView.tag = 888;
- [alterView show];
- 
- - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
- if (alertView.tag != 888) {
- return ;
- }
- if (buttonIndex == 0) {
- [alertView setHidden:YES];
- }else {
- [self cancelBtnClick];
- [alertView setHidden:YES];
- }
- }
- */
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 20;
 }
@@ -121,11 +105,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMAppForRefundModel *model = self.dataSource[indexPath.row];
-    
+    NSDictionary *dic = [model mj_keyValues];
     [self cancelBtnClick];
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(Clickrefund:Refund:)]) {
-        [_delegate Clickrefund:self Refund:model.refund_channel];
+
+    if (_delegate && [_delegate respondsToSelector:@selector(Clickrefund:OrderGoods:Refund:)]) {
+        [_delegate Clickrefund:self OrderGoods:self.ordergoodsModel Refund:dic];
     }
     
 }

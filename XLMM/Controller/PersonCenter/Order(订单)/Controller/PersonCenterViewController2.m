@@ -20,6 +20,8 @@
 #import "Masonry.h"
 #import "MJExtension.h"
 #import "DingdanModel.h"
+#import "JMAllOrderModel.h"
+#import "JMOrderDetailController.h"
 
 
 #define kSimpleCellIdentifier @"simpleCell"
@@ -276,18 +278,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 //    NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
-    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    NSString *ID = [dic objectForKey:@"id"];
-//    NSLog(@"id = %@", ID);
-    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
-    xiangqingVC.dingdanModel = dingdanModel;
-    xiangqingVC.goodsArr = dic[@"orders"];
+//    NSString *ID = [dic objectForKey:@"id"];
+////    NSLog(@"id = %@", ID);
+//    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
+//    xiangqingVC.dingdanModel = dingdanModel;
+//    xiangqingVC.goodsArr = dic[@"orders"];
     //      http://m.xiaolu.so/rest/v1/trades/86412/details
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
 //    NSLog(@"urlString = %@", urlString);
-    xiangqingVC.urlString = urlString;
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
+//    xiangqingVC.urlString = urlString;
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
+    JMAllOrderModel *orderModel = [JMAllOrderModel mj_objectWithKeyValues:dic];
+    
+    JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    orderDetailVC.allOrderModel = orderModel;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, orderModel.goodsID];
+    [self.navigationController pushViewController:orderDetailVC animated:YES];
+    
 }
 
 -(void)displayDefaultView{

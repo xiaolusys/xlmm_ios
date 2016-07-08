@@ -9,15 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @class JMRefundController;
+@class JMOrderGoodsModel;
 @protocol JMRefundControllerDelegate <NSObject>
 
-- (void)Clickrefund:(JMRefundController *)click Refund:(NSString *)refund;
+- (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic;
 
 @end
 
 @interface JMRefundController : UIViewController
 
 @property (nonatomic,strong) NSDictionary *refundDic;
+
+@property (nonatomic, strong) JMOrderGoodsModel *ordergoodsModel;
 
 @property (nonatomic,weak) id<JMRefundControllerDelegate>delegate;
 

@@ -21,8 +21,7 @@
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     
-    return @{@"goodsID":@"id",
-             @"logistic_company_code":@"logistic_company"};
+    return @{@"goodsID":@"id"};
 }
 
 @end

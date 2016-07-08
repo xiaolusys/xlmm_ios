@@ -9,7 +9,6 @@
 #import "JMPaySucTitleView.h"
 #import "Masonry.h"
 #import "MMClass.h"
-#import "UIColor+RGBColor.h"
 
 #define JMSUCTITLEPROPORTION 0.72
 

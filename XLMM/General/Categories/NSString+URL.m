@@ -20,7 +20,6 @@
 
     return encodedString;
 }
-
 //   http://image.xiaolu.so/MG-1448717389408-高腰蕾丝修身短裤01.png?imageMogr2/format/jpg/quality/80
 
 - (NSString *)imageCompression{

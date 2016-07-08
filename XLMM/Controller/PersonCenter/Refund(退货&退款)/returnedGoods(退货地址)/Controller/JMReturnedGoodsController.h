@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 
-@class TuihuoModel;
+@class JMRefundModel;
 @interface JMReturnedGoodsController : UIViewController
 
-@property (strong, nonatomic) TuihuoModel *model;
+@property (strong, nonatomic) JMRefundModel *refundModelr;
 
 @end

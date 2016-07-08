@@ -17,6 +17,7 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "TuihuoModel.h"
+#import "JMRefundModel.h"
 
 @interface JMReturnedGoodsController ()<JMChooseLogisticsControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate> {
     BOOL _isPopup;
@@ -78,9 +79,9 @@
     JMReGoodsAddView *reGoodsV = [JMReGoodsAddView new];
     [self.baseScrollV addSubview:reGoodsV];
     self.reGoodsV =reGoodsV;
-    NSString *nameStr = self.model.buyer_nick;
-    NSString *phoneStr = self.model.mobile;
-    NSString *addStr = self.model.return_address;
+    NSString *nameStr = self.refundModelr.buyer_nick;
+    NSString *phoneStr = self.refundModelr.mobile;
+    NSString *addStr = self.refundModelr.return_address;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:nameStr forKey:@"buyer_nick"];
     [dict setValue:phoneStr forKey:@"mobile"];
@@ -180,7 +181,7 @@
 }
 #pragma mark --- 联系客服
 - (void)rightClicked:(UIButton *)button {
-    NSString *phoneStr = [NSString stringWithFormat:@"tel:%@",self.model.mobile];
+    NSString *phoneStr = [NSString stringWithFormat:@"tel:%@",self.refundModelr.mobile];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneStr]];
 }
 
@@ -227,7 +228,7 @@
             
             
             
-            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)self.model.order_id],
+            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)self.refundModelr.order_id],
                                          @"modify":@2,
                                          @"company":self.expressL.text,
                                          @"sid":self.expressListTF.text

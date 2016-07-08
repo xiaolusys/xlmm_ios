@@ -23,6 +23,10 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "Masonry.h"
+#import "JMOrderDetailController.h"
+#import "JMAllOrderModel.h"
+#import "MJExtension.h"
+#import "JMOrderGoodsModel.h"
 
 
 
@@ -35,7 +39,9 @@
 
 @property (nonatomic,strong) UIButton *topButton;
 
-@property (nonatomic, strong) DingdanModel *goodsModel;
+@property (nonatomic, strong) JMOrderGoodsModel *goodsModel;
+
+@property (nonatomic, strong) JMAllOrderModel *allOrderModel;
 
 @end
 
@@ -219,22 +225,11 @@
         return;
     }
     for (NSDictionary *dic in array) {
-        DingdanModel *model = [DingdanModel new];
-        model.dingdanID = [dic objectForKey:@"id"];
-        model.dingdanURL = [dic objectForKey:@"url"];
-        model.dingdanbianhao = [dic objectForKey:@"tid"];
-        model.imageURLString = [dic objectForKey:@"order_pic"];
-        model.dingdanTime = [dic objectForKey:@"created"];
-        model.status_display = [dic objectForKey:@"status_display"]; //status_display
-        model.dingdanJine = [dic objectForKey:@"payment"];
-        model.ordersArray = [dic objectForKey:@"orders"];
-        model.status = [dic objectForKey:@"status"];
-        
-        
-        
-        [dataArray addObject:model];
-        self.goodsModel = model;
+        JMAllOrderModel *allOrderModel = [JMAllOrderModel mj_objectWithKeyValues:dic];
+        self.allOrderModel = allOrderModel;
+        [dataArray addObject:self.allOrderModel];
     }
+
 //    NSLog(@"dataArray = %@", dataArray);
 
     [self.quanbuCollectionView reloadData];
@@ -278,12 +273,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
    // QuanbuCollectionCell *cell = (QuanbuCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSimpleCellIdentifier forIndexPath:indexPath];
-    DingdanModel *model = [dataArray objectAtIndex:indexPath.row];
-    NSLog(@"model.ordersArray.count  %lu", (unsigned long)model.ordersArray.count );
-    if (model.ordersArray.count == 1) {
+    JMAllOrderModel *model = [dataArray objectAtIndex:indexPath.row];
+    NSLog(@"model.ordersArray.count  %lu", (unsigned long)model.orders.count );
+    if (model.orders.count == 1) {
         SingleOrderViewCell *cell = (SingleOrderViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"SingleOrderCell" forIndexPath:indexPath];
         
-        NSDictionary *details = [model.ordersArray objectAtIndex:0];
+        NSDictionary *details = [[model.orders objectAtIndex:0] mj_keyValues];
 //        NSLog(@"detail %@", details);
         
         [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
@@ -303,13 +298,13 @@
         
     } else {
         MoreOrdersViewCell *cell = (MoreOrdersViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MoreOrdersCell" forIndexPath:indexPath];
-        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.dingdanJine floatValue]];
+        cell.paymentLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.payment floatValue]];
         for (int i = 1101; i <= 1106; i++) {
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
             imageView.hidden = YES;
         }
-        for (int i = 1101; i < model.ordersArray.count + 1101; i++) {
-            NSDictionary *details = [model.ordersArray objectAtIndex:i - 1101];
+        for (int i = 1101; i < model.orders.count + 1101; i++) {
+            NSDictionary *details = [[model.orders objectAtIndex:i - 1101] mj_keyValues];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
 //            NSLog(@"imageView = %@", imageView);
             [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
@@ -353,18 +348,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"allorders didSelectItemAtIndexPath %@", indexPath);
-    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-    //http://m.xiaolu.so/rest/v1/trades/86412/details
+//    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//    //http://m.xiaolu.so/rest/v1/trades/86412/details
+//    
+    self.allOrderModel = [dataArray objectAtIndex:indexPath.row];
+//    xiangqingVC.goodsArr = self.goodsModel.ordersArray;
+//    xiangqingVC.dingdanModel = self.goodsModel;
+//    xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, xiangqingVC.dingdanModel.dingdanID];
+//    NSLog(@"url = %@", xiangqingVC.urlString);
+//
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
     
-    self.goodsModel = [dataArray objectAtIndex:indexPath.row];
-    xiangqingVC.goodsArr = self.goodsModel.ordersArray;
-    xiangqingVC.dingdanModel = self.goodsModel;
-    xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, xiangqingVC.dingdanModel.dingdanID];
-    NSLog(@"url = %@", xiangqingVC.urlString);
-
+    JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    orderDetailVC.allOrderModel = self.allOrderModel;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, self.allOrderModel.goodsID];
     
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
-    
+    [self.navigationController pushViewController:orderDetailVC animated:YES];
 }
 
 
